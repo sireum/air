@@ -8,7 +8,6 @@ val sireumScalacVersion = "3.1.2"
 
 val commonSettings = Seq(
   organization := "org.sireum",
-  incOptions := incOptions.value.withNameHashing(true),
   incOptions := incOptions.value.withLogRecompileOnMacro(false),
   retrieveManaged := true,
   scalaVersion := scalaVer,

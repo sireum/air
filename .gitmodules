@@ -1,0 +1,4 @@
+[submodule "runtime"]
+	path = runtime
+	url = git@github.com:sireum/v3-runtime.git
+	branch = master

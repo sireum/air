@@ -52,7 +52,10 @@ lazy val slang = Project(
   base = file("slang"),
   settings = commonSettings ++ Seq(
     name := "slang",
+    testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-l", "SireumAadlTest"),
+    unmanagedBase in Test := baseDirectory.value / "test_lib",
     libraryDependencies ++= Seq(
+      "org.scalatest" %% "scalatest" % "3.0.1" % "test"
     )
   )
 ).dependsOn(sireumMacros, sireumLibrary)

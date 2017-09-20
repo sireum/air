@@ -5,6 +5,7 @@
 /platform
 /sbt
 /lib_managed
+/slang/test_lib
 /project/project
 /distros/sireum-v3
 /distros/*.zip

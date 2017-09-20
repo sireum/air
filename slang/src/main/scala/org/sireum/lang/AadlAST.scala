@@ -5,8 +5,9 @@ package org.sireum.lang.ast
 import org.sireum._
 
 
+@datatype trait MyTop{}
 
-@datatype class AadlXml(components: ISZ[String]){}
+@datatype class AadlXml(components: ISZ[String]) extends MyTop
 
 @datatype class Component(identifier: String,
                           category: Category.Type,
@@ -18,22 +19,24 @@ import org.sireum._
                           properties: ISZ[Property],
                           flows: ISZ[Flow],
                           modes: ISZ[Mode],
-                          annexes: ISZ[Annex])
+                          annexes: ISZ[Annex]) extends MyTop
 
 
-@datatype class Classifier() // FIXME: no members in xsd
+@datatype class Classifier() extends MyTop // FIXME: no members in xsd
 
 @enum object Category {
   'Abstract
   'Bus
   'Data
   'Device
+  'Memory
   'Process
   'Processor
-  'Thread
-  'Port
   'Subprogram
+  'SubprogramGroup
   'System
+  'Thread
+  'ThreadGroup
   'VirtualBus
   'VirtualProcessor
 }
@@ -42,7 +45,7 @@ import org.sireum._
                         direction : Direction.Type,
                         typ: Typ.Type,
                         classifier: Classifier,
-                        properties: ISZ[Property])
+                        properties: ISZ[Property]) extends MyTop
 
 @enum object Direction {
   'In
@@ -63,32 +66,28 @@ import org.sireum._
 @datatype class Connection(name: String,
                            src: EndPoint,
                            dst: EndPoint,
-                           properties: ISZ[Property])
+                           properties: ISZ[Property]) extends MyTop
 
 @datatype class EndPoint(component: String,
-                         feature: String)
+                         feature: String) extends MyTop
 
 
 @datatype class Property(name: String,
-                         propertyValues: ISZ[PropertyValue])
+                         propertyValues: ISZ[PropertyValue]) extends MyTop
 
-@datatype trait PropertyValue{}
+@datatype trait PropertyValue extends MyTop {}
 
-object PropertyValue {
+@datatype class ClassifierProp(name: String) extends PropertyValue
 
-  @datatype class ClassifierProp(name: String) extends PropertyValue
+@datatype class UnitProp(value: String,
+                         unit: String) extends PropertyValue
 
-  @datatype class UnitProp(value: String,
-                           unit: String) extends PropertyValue
+@datatype class RangeProp(ValueLow: String,
+                          ValueHigh: String,
+                          Unit: String) extends PropertyValue
 
-  @datatype class RangeProp(ValueLow: String,
-                            ValueHigh: String,
-                            Unit: String) extends PropertyValue
+@datatype class Mode(name: String) extends MyTop
 
-}
+@datatype class Flow(name: String) extends MyTop
 
-@datatype class Mode(name: String)
-
-@datatype class Flow(name: String)
-
-@datatype class Annex(name: String) // FIXME: aadl.xsd is incomplete
+@datatype class Annex(name: String) extends MyTop // FIXME: aadl.xsd is incomplete

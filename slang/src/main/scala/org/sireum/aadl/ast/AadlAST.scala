@@ -5,24 +5,24 @@ package org.sireum.aadl.ast
 import org.sireum._
 
 
-@datatype trait MyTop{}
+@datatype trait AadlTop
 
-@datatype class AadlXml(components: ISZ[String]) extends MyTop
+@datatype class AadlXml(components: ISZ[String]) extends AadlTop
 
-@datatype class Component(identifier: String,
+@datatype class Component(identifier: Option[String],
                           category: ComponentCategory.Type,
 
-                          classifier: Classifier,
+                          classifier: Option[Classifier],
                           features: ISZ[Feature],
                           subComponents: ISZ[Component],
                           connections: ISZ[Connection],
                           properties: ISZ[Property],
                           flows: ISZ[Flow],
                           modes: ISZ[Mode],
-                          annexes: ISZ[Annex]) extends MyTop
+                          annexes: ISZ[Annex]) extends AadlTop
 
 
-@datatype class Classifier(name: String) extends MyTop
+@datatype class Classifier(name: String) extends AadlTop
 
 @enum object ComponentCategory {
   'Abstract
@@ -44,8 +44,8 @@ import org.sireum._
 @datatype class Feature(identifier: String,
                         direction : Direction.Type,
                         category: FeatureCategory.Type,
-                        classifier: Classifier,
-                        properties: ISZ[Property]) extends MyTop
+                        classifier: Option[Classifier],
+                        properties: ISZ[Property]) extends AadlTop
 
 @enum object Direction {
   'In
@@ -67,31 +67,36 @@ import org.sireum._
   'SubprogramAccessGroup
 }
 
-@datatype class Connection(name: String,
+@datatype class Connection(name: Option[String],
                            src: EndPoint,
                            dst: EndPoint,
-                           properties: ISZ[Property]) extends MyTop
+                           properties: ISZ[Property]) extends AadlTop
 
 @datatype class EndPoint(component: String,
-                         feature: String) extends MyTop
+                         feature: String) extends AadlTop
 
 
 @datatype class Property(name: String,
-                         propertyValues: ISZ[PropertyValue]) extends MyTop
+                         propertyValues: ISZ[PropertyValue]) extends AadlTop
 
 @datatype trait PropertyValue
 
 @datatype class ClassifierProp(name: String) extends PropertyValue
 
-@datatype class UnitProp(value: String,
-                           unit: String) extends PropertyValue
-
 @datatype class RangeProp(ValueLow: String,
                           ValueHigh: String,
-                          Unit: String) extends PropertyValue
+                          Unit: Option[String]) extends PropertyValue
 
-@datatype class Mode(name: String) extends MyTop
+@datatype class ReferenceProp(value: String) extends PropertyValue
 
-@datatype class Flow(name: String) extends MyTop
+@datatype class UnitProp(value: String,
+                         unit: String) extends PropertyValue
 
-@datatype class Annex(name: String) extends MyTop
+@datatype class ValueProp(value: String) extends PropertyValue
+
+
+@datatype class Mode(name: String) extends AadlTop
+
+@datatype class Flow(name: String) extends AadlTop
+
+@datatype class Annex(name: String) extends AadlTop

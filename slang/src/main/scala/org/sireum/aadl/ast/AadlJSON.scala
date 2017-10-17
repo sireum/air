@@ -12,7 +12,7 @@ object JSON {
 
   object Printer {
 
-    @pure def printMyTop(o: MyTop): ST = {
+    @pure def printAadlTop(o: AadlTop): ST = {
       o match {
         case o: AadlXml => return printAadlXml(o)
         case o: Component => return printComponent(o)
@@ -37,9 +37,9 @@ object JSON {
     @pure def printComponent(o: Component): ST = {
       return printObject(ISZ(
         ("type", st""""Component""""),
-        ("identifier", printString(o.identifier)),
+        ("identifier", printOption(o.identifier, printString)),
         ("category", printComponentCategory(o.category)),
-        ("classifier", printClassifier(o.classifier)),
+        ("classifier", printOption(o.classifier, printClassifier)),
         ("features", printISZ(F, o.features, printFeature)),
         ("subComponents", printISZ(F, o.subComponents, printComponent)),
         ("connections", printISZ(F, o.connections, printConnection)),
@@ -86,7 +86,7 @@ object JSON {
         ("identifier", printString(o.identifier)),
         ("direction", printDirection(o.direction)),
         ("category", printFeatureCategory(o.category)),
-        ("classifier", printClassifier(o.classifier)),
+        ("classifier", printOption(o.classifier, printClassifier)),
         ("properties", printISZ(F, o.properties, printProperty))
       ))
     }
@@ -126,7 +126,7 @@ object JSON {
     @pure def printConnection(o: Connection): ST = {
       return printObject(ISZ(
         ("type", st""""Connection""""),
-        ("name", printString(o.name)),
+        ("name", printOption(o.name, printString)),
         ("src", printEndPoint(o.src)),
         ("dst", printEndPoint(o.dst)),
         ("properties", printISZ(F, o.properties, printProperty))
@@ -152,8 +152,10 @@ object JSON {
     @pure def printPropertyValue(o: PropertyValue): ST = {
       o match {
         case o: ClassifierProp => return printClassifierProp(o)
-        case o: UnitProp => return printUnitProp(o)
         case o: RangeProp => return printRangeProp(o)
+        case o: ReferenceProp => return printReferenceProp(o)
+        case o: UnitProp => return printUnitProp(o)
+        case o: ValueProp => return printValueProp(o)
       }
     }
 
@@ -161,6 +163,22 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""ClassifierProp""""),
         ("name", printString(o.name))
+      ))
+    }
+
+    @pure def printRangeProp(o: RangeProp): ST = {
+      return printObject(ISZ(
+        ("type", st""""RangeProp""""),
+        ("ValueLow", printString(o.ValueLow)),
+        ("ValueHigh", printString(o.ValueHigh)),
+        ("Unit", printOption(o.Unit, printString))
+      ))
+    }
+
+    @pure def printReferenceProp(o: ReferenceProp): ST = {
+      return printObject(ISZ(
+        ("type", st""""ReferenceProp""""),
+        ("value", printString(o.value))
       ))
     }
 
@@ -172,12 +190,10 @@ object JSON {
       ))
     }
 
-    @pure def printRangeProp(o: RangeProp): ST = {
+    @pure def printValueProp(o: ValueProp): ST = {
       return printObject(ISZ(
-        ("type", st""""RangeProp""""),
-        ("ValueLow", printString(o.ValueLow)),
-        ("ValueHigh", printString(o.ValueHigh)),
-        ("Unit", printString(o.Unit))
+        ("type", st""""ValueProp""""),
+        ("value", printString(o.value))
       ))
     }
 
@@ -207,7 +223,7 @@ object JSON {
   @record class Parser(input: String) {
     val parser: Json.Parser = Json.Parser.create(input)
 
-    def parseMyTop(): MyTop = {
+    def parseAadlTop(): AadlTop = {
       val t = parser.parseObjectTypes(ISZ("AadlXml", "Component", "Classifier", "Feature", "Connection", "EndPoint", "Property", "Mode", "Flow", "Annex"))
       t match {
         case "AadlXml" => val r = parseAadlXmlT(T); return r
@@ -249,13 +265,13 @@ object JSON {
         parser.parseObjectType("Component")
       }
       parser.parseObjectKey("identifier")
-      val identifier = parser.parseString()
+      val identifier = parser.parseOption(parser.parseString _)
       parser.parseObjectNext()
       parser.parseObjectKey("category")
       val category = parseComponentCategory()
       parser.parseObjectNext()
       parser.parseObjectKey("classifier")
-      val classifier = parseClassifier()
+      val classifier = parser.parseOption(parseClassifier _)
       parser.parseObjectNext()
       parser.parseObjectKey("features")
       val features = parser.parseISZ(parseFeature _)
@@ -346,7 +362,7 @@ object JSON {
       val category = parseFeatureCategory()
       parser.parseObjectNext()
       parser.parseObjectKey("classifier")
-      val classifier = parseClassifier()
+      val classifier = parser.parseOption(parseClassifier _)
       parser.parseObjectNext()
       parser.parseObjectKey("properties")
       val properties = parser.parseISZ(parseProperty _)
@@ -412,7 +428,7 @@ object JSON {
         parser.parseObjectType("Connection")
       }
       parser.parseObjectKey("name")
-      val name = parser.parseString()
+      val name = parser.parseOption(parser.parseString _)
       parser.parseObjectNext()
       parser.parseObjectKey("src")
       val src = parseEndPoint()
@@ -463,11 +479,13 @@ object JSON {
     }
 
     def parsePropertyValue(): PropertyValue = {
-      val t = parser.parseObjectTypes(ISZ("ClassifierProp", "UnitProp", "RangeProp"))
+      val t = parser.parseObjectTypes(ISZ("ClassifierProp", "RangeProp", "ReferenceProp", "UnitProp", "ValueProp"))
       t match {
         case "ClassifierProp" => val r = parseClassifierPropT(T); return r
-        case "UnitProp" => val r = parseUnitPropT(T); return r
         case "RangeProp" => val r = parseRangePropT(T); return r
+        case "ReferenceProp" => val r = parseReferencePropT(T); return r
+        case "UnitProp" => val r = parseUnitPropT(T); return r
+        case "ValueProp" => val r = parseValuePropT(T); return r
         case _ => halt(parser.errorMessage)
       }
     }
@@ -485,6 +503,42 @@ object JSON {
       val name = parser.parseString()
       parser.parseObjectNext()
       return ClassifierProp(name)
+    }
+
+    def parseRangeProp(): RangeProp = {
+      val r = parseRangePropT(F)
+      return r
+    }
+
+    def parseRangePropT(typeParsed: B): RangeProp = {
+      if (!typeParsed) {
+        parser.parseObjectType("RangeProp")
+      }
+      parser.parseObjectKey("ValueLow")
+      val ValueLow = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("ValueHigh")
+      val ValueHigh = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("Unit")
+      val Unit = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
+      return RangeProp(ValueLow, ValueHigh, Unit)
+    }
+
+    def parseReferenceProp(): ReferenceProp = {
+      val r = parseReferencePropT(F)
+      return r
+    }
+
+    def parseReferencePropT(typeParsed: B): ReferenceProp = {
+      if (!typeParsed) {
+        parser.parseObjectType("ReferenceProp")
+      }
+      parser.parseObjectKey("value")
+      val value = parser.parseString()
+      parser.parseObjectNext()
+      return ReferenceProp(value)
     }
 
     def parseUnitProp(): UnitProp = {
@@ -505,25 +559,19 @@ object JSON {
       return UnitProp(value, unit)
     }
 
-    def parseRangeProp(): RangeProp = {
-      val r = parseRangePropT(F)
+    def parseValueProp(): ValueProp = {
+      val r = parseValuePropT(F)
       return r
     }
 
-    def parseRangePropT(typeParsed: B): RangeProp = {
+    def parseValuePropT(typeParsed: B): ValueProp = {
       if (!typeParsed) {
-        parser.parseObjectType("RangeProp")
+        parser.parseObjectType("ValueProp")
       }
-      parser.parseObjectKey("ValueLow")
-      val ValueLow = parser.parseString()
+      parser.parseObjectKey("value")
+      val value = parser.parseString()
       parser.parseObjectNext()
-      parser.parseObjectKey("ValueHigh")
-      val ValueHigh = parser.parseString()
-      parser.parseObjectNext()
-      parser.parseObjectKey("Unit")
-      val Unit = parser.parseString()
-      parser.parseObjectNext()
-      return RangeProp(ValueLow, ValueHigh, Unit)
+      return ValueProp(value)
     }
 
     def parseMode(): Mode = {
@@ -589,8 +637,8 @@ object JSON {
     return r
   }
 
-  def fromMyTop(o: MyTop, isCompact: B): String = {
-    val st = Printer.printMyTop(o)
+  def fromAadlTop(o: AadlTop, isCompact: B): String = {
+    val st = Printer.printAadlTop(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -598,12 +646,12 @@ object JSON {
     }
   }
 
-  def toMyTop(s: String): MyTop = {
-    def fMyTop(parser: Parser): MyTop = {
-      var r = parser.parseMyTop()
+  def toAadlTop(s: String): AadlTop = {
+    def fAadlTop(parser: Parser): AadlTop = {
+      var r = parser.parseAadlTop()
       return r
     }
-    val r = to(s, fMyTop)
+    val r = to(s, fAadlTop)
     return r
   }
 
@@ -769,6 +817,42 @@ object JSON {
     return r
   }
 
+  def fromRangeProp(o: RangeProp, isCompact: B): String = {
+    val st = Printer.printRangeProp(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toRangeProp(s: String): RangeProp = {
+    def fRangeProp(parser: Parser): RangeProp = {
+      var r = parser.parseRangeProp()
+      return r
+    }
+    val r = to(s, fRangeProp)
+    return r
+  }
+
+  def fromReferenceProp(o: ReferenceProp, isCompact: B): String = {
+    val st = Printer.printReferenceProp(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toReferenceProp(s: String): ReferenceProp = {
+    def fReferenceProp(parser: Parser): ReferenceProp = {
+      var r = parser.parseReferenceProp()
+      return r
+    }
+    val r = to(s, fReferenceProp)
+    return r
+  }
+
   def fromUnitProp(o: UnitProp, isCompact: B): String = {
     val st = Printer.printUnitProp(o)
     if (isCompact) {
@@ -787,8 +871,8 @@ object JSON {
     return r
   }
 
-  def fromRangeProp(o: RangeProp, isCompact: B): String = {
-    val st = Printer.printRangeProp(o)
+  def fromValueProp(o: ValueProp, isCompact: B): String = {
+    val st = Printer.printValueProp(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -796,12 +880,12 @@ object JSON {
     }
   }
 
-  def toRangeProp(s: String): RangeProp = {
-    def fRangeProp(parser: Parser): RangeProp = {
-      var r = parser.parseRangeProp()
+  def toValueProp(s: String): ValueProp = {
+    def fValueProp(parser: Parser): ValueProp = {
+      var r = parser.parseValueProp()
       return r
     }
-    val r = to(s, fRangeProp)
+    val r = to(s, fValueProp)
     return r
   }
 

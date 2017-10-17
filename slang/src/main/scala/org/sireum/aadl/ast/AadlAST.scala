@@ -10,7 +10,7 @@ import org.sireum._
 @datatype class AadlXml(components: ISZ[String]) extends MyTop
 
 @datatype class Component(identifier: String,
-                          category: Category.Type,
+                          category: ComponentCategory.Type,
 
                           classifier: Classifier,
                           features: ISZ[Feature],
@@ -22,9 +22,9 @@ import org.sireum._
                           annexes: ISZ[Annex]) extends MyTop
 
 
-@datatype class Classifier() extends MyTop // FIXME: no members in xsd
+@datatype class Classifier(name: String) extends MyTop
 
-@enum object Category {
+@enum object ComponentCategory {
   'Abstract
   'Bus
   'Data
@@ -43,7 +43,7 @@ import org.sireum._
 
 @datatype class Feature(identifier: String,
                         direction : Direction.Type,
-                        typ: Typ.Type,
+                        category: FeatureCategory.Type,
                         classifier: Classifier,
                         properties: ISZ[Property]) extends MyTop
 
@@ -54,14 +54,18 @@ import org.sireum._
   'None
 }
 
-@enum object Typ{
-  'Acccess
-  'Data
-  'Event
-  'EventData
-  'Feature
+@enum object FeatureCategory {
+  'AbstractFeature
+  'BusAccess
+  'DataAccess
+  'DataPort
+  'EventPort
+  'EventDataPort
+  'FeatureGroup
+  'Parameter
+  'SubprogramAccess
+  'SubprogramAccessGroup
 }
-
 
 @datatype class Connection(name: String,
                            src: EndPoint,
@@ -75,12 +79,12 @@ import org.sireum._
 @datatype class Property(name: String,
                          propertyValues: ISZ[PropertyValue]) extends MyTop
 
-@datatype trait PropertyValue extends MyTop {}
+@datatype trait PropertyValue
 
 @datatype class ClassifierProp(name: String) extends PropertyValue
 
 @datatype class UnitProp(value: String,
-                         unit: String) extends PropertyValue
+                           unit: String) extends PropertyValue
 
 @datatype class RangeProp(ValueLow: String,
                           ValueHigh: String,
@@ -90,4 +94,4 @@ import org.sireum._
 
 @datatype class Flow(name: String) extends MyTop
 
-@datatype class Annex(name: String) extends MyTop // FIXME: aadl.xsd is incomplete
+@datatype class Annex(name: String) extends MyTop

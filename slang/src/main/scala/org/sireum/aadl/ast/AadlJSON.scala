@@ -24,7 +24,6 @@ object JSON {
         case o: Mode => return printMode(o)
         case o: Flow => return printFlow(o)
         case o: Annex => return printAnnex(o)
-        case _ => return printAnnex(Annex(""))
       }
     }
 
@@ -39,7 +38,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Component""""),
         ("identifier", printString(o.identifier)),
-        ("category", printCategory(o.category)),
+        ("category", printComponentCategory(o.category)),
         ("classifier", printClassifier(o.classifier)),
         ("features", printISZ(F, o.features, printFeature)),
         ("subComponents", printISZ(F, o.subComponents, printComponent)),
@@ -53,29 +52,30 @@ object JSON {
 
     @pure def printClassifier(o: Classifier): ST = {
       return printObject(ISZ(
-        ("type", st""""Classifier"""")
+        ("type", st""""Classifier""""),
+        ("name", printString(o.name))
       ))
     }
 
-    @pure def printCategory(o: Category.Type): ST = {
+    @pure def printComponentCategory(o: ComponentCategory.Type): ST = {
       val value: String = o match {
-        case Category.Abstract => "Abstract"
-        case Category.Bus => "Bus"
-        case Category.Data => "Data"
-        case Category.Device => "Device"
-        case Category.Memory => "Memory"
-        case Category.Process => "Process"
-        case Category.Processor => "Processor"
-        case Category.Subprogram => "Subprogram"
-        case Category.SubprogramGroup => "SubprogramGroup"
-        case Category.System => "System"
-        case Category.Thread => "Thread"
-        case Category.ThreadGroup => "ThreadGroup"
-        case Category.VirtualBus => "VirtualBus"
-        case Category.VirtualProcessor => "VirtualProcessor"
+        case ComponentCategory.Abstract => "Abstract"
+        case ComponentCategory.Bus => "Bus"
+        case ComponentCategory.Data => "Data"
+        case ComponentCategory.Device => "Device"
+        case ComponentCategory.Memory => "Memory"
+        case ComponentCategory.Process => "Process"
+        case ComponentCategory.Processor => "Processor"
+        case ComponentCategory.Subprogram => "Subprogram"
+        case ComponentCategory.SubprogramGroup => "SubprogramGroup"
+        case ComponentCategory.System => "System"
+        case ComponentCategory.Thread => "Thread"
+        case ComponentCategory.ThreadGroup => "ThreadGroup"
+        case ComponentCategory.VirtualBus => "VirtualBus"
+        case ComponentCategory.VirtualProcessor => "VirtualProcessor"
       }
       return printObject(ISZ(
-        ("type", printString("Category")),
+        ("type", printString("ComponentCategory")),
         ("value", printString(value))
       ))
     }
@@ -85,7 +85,7 @@ object JSON {
         ("type", st""""Feature""""),
         ("identifier", printString(o.identifier)),
         ("direction", printDirection(o.direction)),
-        ("typ", printTyp(o.typ)),
+        ("category", printFeatureCategory(o.category)),
         ("classifier", printClassifier(o.classifier)),
         ("properties", printISZ(F, o.properties, printProperty))
       ))
@@ -104,16 +104,21 @@ object JSON {
       ))
     }
 
-    @pure def printTyp(o: Typ.Type): ST = {
+    @pure def printFeatureCategory(o: FeatureCategory.Type): ST = {
       val value: String = o match {
-        case Typ.Acccess => "Acccess"
-        case Typ.Data => "Data"
-        case Typ.Event => "Event"
-        case Typ.EventData => "EventData"
-        case Typ.Feature => "Feature"
+        case FeatureCategory.AbstractFeature => "AbstractFeature"
+        case FeatureCategory.BusAccess => "BusAccess"
+        case FeatureCategory.DataAccess => "DataAccess"
+        case FeatureCategory.DataPort => "DataPort"
+        case FeatureCategory.EventPort => "EventPort"
+        case FeatureCategory.EventDataPort => "EventDataPort"
+        case FeatureCategory.FeatureGroup => "FeatureGroup"
+        case FeatureCategory.Parameter => "Parameter"
+        case FeatureCategory.SubprogramAccess => "SubprogramAccess"
+        case FeatureCategory.SubprogramAccessGroup => "SubprogramAccessGroup"
       }
       return printObject(ISZ(
-        ("type", printString("Typ")),
+        ("type", printString("FeatureCategory")),
         ("value", printString(value))
       ))
     }
@@ -247,7 +252,7 @@ object JSON {
       val identifier = parser.parseString()
       parser.parseObjectNext()
       parser.parseObjectKey("category")
-      val category = parseCategory()
+      val category = parseComponentCategory()
       parser.parseObjectNext()
       parser.parseObjectKey("classifier")
       val classifier = parseClassifier()
@@ -285,36 +290,39 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("Classifier")
       }
-      return Classifier()
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      return Classifier(name)
     }
 
-    def parseCategory(): Category.Type = {
-      val r = parseCategoryT(F)
+    def parseComponentCategory(): ComponentCategory.Type = {
+      val r = parseComponentCategoryT(F)
       return r
     }
 
-    def parseCategoryT(typeParsed: B): Category.Type = {
+    def parseComponentCategoryT(typeParsed: B): ComponentCategory.Type = {
       if (!typeParsed) {
-        parser.parseObjectType("Category")
+        parser.parseObjectType("ComponentCategory")
       }
       parser.parseObjectKey("value")
       val s = parser.parseString()
       parser.parseObjectNext()
       s match {
-        case "Abstract" => return Category.Abstract
-        case "Bus" => return Category.Bus
-        case "Data" => return Category.Data
-        case "Device" => return Category.Device
-        case "Memory" => return Category.Memory
-        case "Process" => return Category.Process
-        case "Processor" => return Category.Processor
-        case "Subprogram" => return Category.Subprogram
-        case "SubprogramGroup" => return Category.SubprogramGroup
-        case "System" => return Category.System
-        case "Thread" => return Category.Thread
-        case "ThreadGroup" => return Category.ThreadGroup
-        case "VirtualBus" => return Category.VirtualBus
-        case "VirtualProcessor" => return Category.VirtualProcessor
+        case "Abstract" => return ComponentCategory.Abstract
+        case "Bus" => return ComponentCategory.Bus
+        case "Data" => return ComponentCategory.Data
+        case "Device" => return ComponentCategory.Device
+        case "Memory" => return ComponentCategory.Memory
+        case "Process" => return ComponentCategory.Process
+        case "Processor" => return ComponentCategory.Processor
+        case "Subprogram" => return ComponentCategory.Subprogram
+        case "SubprogramGroup" => return ComponentCategory.SubprogramGroup
+        case "System" => return ComponentCategory.System
+        case "Thread" => return ComponentCategory.Thread
+        case "ThreadGroup" => return ComponentCategory.ThreadGroup
+        case "VirtualBus" => return ComponentCategory.VirtualBus
+        case "VirtualProcessor" => return ComponentCategory.VirtualProcessor
         case _ => halt(parser.errorMessage)
       }
     }
@@ -334,8 +342,8 @@ object JSON {
       parser.parseObjectKey("direction")
       val direction = parseDirection()
       parser.parseObjectNext()
-      parser.parseObjectKey("typ")
-      val typ = parseTyp()
+      parser.parseObjectKey("category")
+      val category = parseFeatureCategory()
       parser.parseObjectNext()
       parser.parseObjectKey("classifier")
       val classifier = parseClassifier()
@@ -343,7 +351,7 @@ object JSON {
       parser.parseObjectKey("properties")
       val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
-      return Feature(identifier, direction, typ, classifier, properties)
+      return Feature(identifier, direction, category, classifier, properties)
     }
 
     def parseDirection(): Direction.Type = {
@@ -367,24 +375,29 @@ object JSON {
       }
     }
 
-    def parseTyp(): Typ.Type = {
-      val r = parseTypT(F)
+    def parseFeatureCategory(): FeatureCategory.Type = {
+      val r = parseFeatureCategoryT(F)
       return r
     }
 
-    def parseTypT(typeParsed: B): Typ.Type = {
+    def parseFeatureCategoryT(typeParsed: B): FeatureCategory.Type = {
       if (!typeParsed) {
-        parser.parseObjectType("Typ")
+        parser.parseObjectType("FeatureCategory")
       }
       parser.parseObjectKey("value")
       val s = parser.parseString()
       parser.parseObjectNext()
       s match {
-        case "Acccess" => return Typ.Acccess
-        case "Data" => return Typ.Data
-        case "Event" => return Typ.Event
-        case "EventData" => return Typ.EventData
-        case "Feature" => return Typ.Feature
+        case "AbstractFeature" => return FeatureCategory.AbstractFeature
+        case "BusAccess" => return FeatureCategory.BusAccess
+        case "DataAccess" => return FeatureCategory.DataAccess
+        case "DataPort" => return FeatureCategory.DataPort
+        case "EventPort" => return FeatureCategory.EventPort
+        case "EventDataPort" => return FeatureCategory.EventDataPort
+        case "FeatureGroup" => return FeatureCategory.FeatureGroup
+        case "Parameter" => return FeatureCategory.Parameter
+        case "SubprogramAccess" => return FeatureCategory.SubprogramAccess
+        case "SubprogramAccessGroup" => return FeatureCategory.SubprogramAccessGroup
         case _ => halt(parser.errorMessage)
       }
     }

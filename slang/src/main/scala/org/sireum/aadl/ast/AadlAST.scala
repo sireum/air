@@ -7,7 +7,7 @@ import org.sireum._
 
 @datatype trait AadlTop
 
-@datatype class AadlXml(components: ISZ[String]) extends AadlTop
+@datatype class AadlXml(components: ISZ[Component]) extends AadlTop
 
 @datatype class Component(identifier: Option[String],
                           category: ComponentCategory.Type,
@@ -70,7 +70,17 @@ import org.sireum._
 @datatype class Connection(name: Option[String],
                            src: EndPoint,
                            dst: EndPoint,
+                           kind: ConnectionKind.Type,
                            properties: ISZ[Property]) extends AadlTop
+
+@enum object ConnectionKind {
+  'Feature
+  'Access
+  'Parameter
+  'Port
+  'ModeTransition
+  'FeatureGroup
+}
 
 @datatype class EndPoint(component: String,
                          feature: String) extends AadlTop

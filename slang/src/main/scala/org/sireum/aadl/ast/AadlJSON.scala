@@ -30,7 +30,7 @@ object JSON {
     @pure def printAadlXml(o: AadlXml): ST = {
       return printObject(ISZ(
         ("type", st""""AadlXml""""),
-        ("components", printISZ(T, o.components, printString))
+        ("components", printISZ(F, o.components, printComponent))
       ))
     }
 
@@ -129,7 +129,23 @@ object JSON {
         ("name", printOption(o.name, printString)),
         ("src", printEndPoint(o.src)),
         ("dst", printEndPoint(o.dst)),
+        ("kind", printConnectionKind(o.kind)),
         ("properties", printISZ(F, o.properties, printProperty))
+      ))
+    }
+
+    @pure def printConnectionKind(o: ConnectionKind.Type): ST = {
+      val value: String = o match {
+        case ConnectionKind.Feature => "Feature"
+        case ConnectionKind.Access => "Access"
+        case ConnectionKind.Parameter => "Parameter"
+        case ConnectionKind.Port => "Port"
+        case ConnectionKind.ModeTransition => "ModeTransition"
+        case ConnectionKind.FeatureGroup => "FeatureGroup"
+      }
+      return printObject(ISZ(
+        ("type", printString("ConnectionKind")),
+        ("value", printString(value))
       ))
     }
 
@@ -250,7 +266,7 @@ object JSON {
         parser.parseObjectType("AadlXml")
       }
       parser.parseObjectKey("components")
-      val components = parser.parseISZ(parser.parseString _)
+      val components = parser.parseISZ(parseComponent _)
       parser.parseObjectNext()
       return AadlXml(components)
     }
@@ -436,10 +452,36 @@ object JSON {
       parser.parseObjectKey("dst")
       val dst = parseEndPoint()
       parser.parseObjectNext()
+      parser.parseObjectKey("kind")
+      val kind = parseConnectionKind()
+      parser.parseObjectNext()
       parser.parseObjectKey("properties")
       val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
-      return Connection(name, src, dst, properties)
+      return Connection(name, src, dst, kind, properties)
+    }
+
+    def parseConnectionKind(): ConnectionKind.Type = {
+      val r = parseConnectionKindT(F)
+      return r
+    }
+
+    def parseConnectionKindT(typeParsed: B): ConnectionKind.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("ConnectionKind")
+      }
+      parser.parseObjectKey("value")
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      s match {
+        case "Feature" => return ConnectionKind.Feature
+        case "Access" => return ConnectionKind.Access
+        case "Parameter" => return ConnectionKind.Parameter
+        case "Port" => return ConnectionKind.Port
+        case "ModeTransition" => return ConnectionKind.ModeTransition
+        case "FeatureGroup" => return ConnectionKind.FeatureGroup
+        case _ => halt(parser.errorMessage)
+      }
     }
 
     def parseEndPoint(): EndPoint = {

@@ -241,7 +241,7 @@ object JSON {
 
     def parseAadlTop(): AadlTop = {
       val t = parser.parseObjectTypes(ISZ("AadlXml", "Component", "Classifier", "Feature", "Connection", "EndPoint", "Property", "Mode", "Flow", "Annex"))
-      t match {
+      t.native match {
         case "AadlXml" => val r = parseAadlXmlT(T); return r
         case "Component" => val r = parseComponentT(T); return r
         case "Classifier" => val r = parseClassifierT(T); return r
@@ -340,7 +340,7 @@ object JSON {
       parser.parseObjectKey("value")
       val s = parser.parseString()
       parser.parseObjectNext()
-      s match {
+      s.native match {
         case "Abstract" => return ComponentCategory.Abstract
         case "Bus" => return ComponentCategory.Bus
         case "Data" => return ComponentCategory.Data
@@ -398,7 +398,7 @@ object JSON {
       parser.parseObjectKey("value")
       val s = parser.parseString()
       parser.parseObjectNext()
-      s match {
+      s.native match {
         case "In" => return Direction.In
         case "Out" => return Direction.Out
         case "InOut" => return Direction.InOut
@@ -419,7 +419,7 @@ object JSON {
       parser.parseObjectKey("value")
       val s = parser.parseString()
       parser.parseObjectNext()
-      s match {
+      s.native match {
         case "AbstractFeature" => return FeatureCategory.AbstractFeature
         case "BusAccess" => return FeatureCategory.BusAccess
         case "DataAccess" => return FeatureCategory.DataAccess
@@ -473,7 +473,7 @@ object JSON {
       parser.parseObjectKey("value")
       val s = parser.parseString()
       parser.parseObjectNext()
-      s match {
+      s.native match {
         case "Feature" => return ConnectionKind.Feature
         case "Access" => return ConnectionKind.Access
         case "Parameter" => return ConnectionKind.Parameter
@@ -522,7 +522,7 @@ object JSON {
 
     def parsePropertyValue(): PropertyValue = {
       val t = parser.parseObjectTypes(ISZ("ClassifierProp", "RangeProp", "ReferenceProp", "UnitProp", "ValueProp"))
-      t match {
+      t.native match {
         case "ClassifierProp" => val r = parseClassifierPropT(T); return r
         case "RangeProp" => val r = parseRangePropT(T); return r
         case "ReferenceProp" => val r = parseReferencePropT(T); return r
@@ -690,7 +690,7 @@ object JSON {
 
   def toAadlTop(s: String): AadlTop = {
     def fAadlTop(parser: Parser): AadlTop = {
-      var r = parser.parseAadlTop()
+      val r = parser.parseAadlTop()
       return r
     }
     val r = to(s, fAadlTop)
@@ -708,7 +708,7 @@ object JSON {
 
   def toAadlXml(s: String): AadlXml = {
     def fAadlXml(parser: Parser): AadlXml = {
-      var r = parser.parseAadlXml()
+      val r = parser.parseAadlXml()
       return r
     }
     val r = to(s, fAadlXml)
@@ -726,7 +726,7 @@ object JSON {
 
   def toComponent(s: String): Component = {
     def fComponent(parser: Parser): Component = {
-      var r = parser.parseComponent()
+      val r = parser.parseComponent()
       return r
     }
     val r = to(s, fComponent)
@@ -744,7 +744,7 @@ object JSON {
 
   def toClassifier(s: String): Classifier = {
     def fClassifier(parser: Parser): Classifier = {
-      var r = parser.parseClassifier()
+      val r = parser.parseClassifier()
       return r
     }
     val r = to(s, fClassifier)
@@ -762,7 +762,7 @@ object JSON {
 
   def toFeature(s: String): Feature = {
     def fFeature(parser: Parser): Feature = {
-      var r = parser.parseFeature()
+      val r = parser.parseFeature()
       return r
     }
     val r = to(s, fFeature)
@@ -780,7 +780,7 @@ object JSON {
 
   def toConnection(s: String): Connection = {
     def fConnection(parser: Parser): Connection = {
-      var r = parser.parseConnection()
+      val r = parser.parseConnection()
       return r
     }
     val r = to(s, fConnection)
@@ -798,7 +798,7 @@ object JSON {
 
   def toEndPoint(s: String): EndPoint = {
     def fEndPoint(parser: Parser): EndPoint = {
-      var r = parser.parseEndPoint()
+      val r = parser.parseEndPoint()
       return r
     }
     val r = to(s, fEndPoint)
@@ -816,7 +816,7 @@ object JSON {
 
   def toProperty(s: String): Property = {
     def fProperty(parser: Parser): Property = {
-      var r = parser.parseProperty()
+      val r = parser.parseProperty()
       return r
     }
     val r = to(s, fProperty)
@@ -834,7 +834,7 @@ object JSON {
 
   def toPropertyValue(s: String): PropertyValue = {
     def fPropertyValue(parser: Parser): PropertyValue = {
-      var r = parser.parsePropertyValue()
+      val r = parser.parsePropertyValue()
       return r
     }
     val r = to(s, fPropertyValue)
@@ -852,7 +852,7 @@ object JSON {
 
   def toClassifierProp(s: String): ClassifierProp = {
     def fClassifierProp(parser: Parser): ClassifierProp = {
-      var r = parser.parseClassifierProp()
+      val r = parser.parseClassifierProp()
       return r
     }
     val r = to(s, fClassifierProp)
@@ -870,7 +870,7 @@ object JSON {
 
   def toRangeProp(s: String): RangeProp = {
     def fRangeProp(parser: Parser): RangeProp = {
-      var r = parser.parseRangeProp()
+      val r = parser.parseRangeProp()
       return r
     }
     val r = to(s, fRangeProp)
@@ -888,7 +888,7 @@ object JSON {
 
   def toReferenceProp(s: String): ReferenceProp = {
     def fReferenceProp(parser: Parser): ReferenceProp = {
-      var r = parser.parseReferenceProp()
+      val r = parser.parseReferenceProp()
       return r
     }
     val r = to(s, fReferenceProp)
@@ -906,7 +906,7 @@ object JSON {
 
   def toUnitProp(s: String): UnitProp = {
     def fUnitProp(parser: Parser): UnitProp = {
-      var r = parser.parseUnitProp()
+      val r = parser.parseUnitProp()
       return r
     }
     val r = to(s, fUnitProp)
@@ -924,7 +924,7 @@ object JSON {
 
   def toValueProp(s: String): ValueProp = {
     def fValueProp(parser: Parser): ValueProp = {
-      var r = parser.parseValueProp()
+      val r = parser.parseValueProp()
       return r
     }
     val r = to(s, fValueProp)
@@ -942,7 +942,7 @@ object JSON {
 
   def toMode(s: String): Mode = {
     def fMode(parser: Parser): Mode = {
-      var r = parser.parseMode()
+      val r = parser.parseMode()
       return r
     }
     val r = to(s, fMode)
@@ -960,7 +960,7 @@ object JSON {
 
   def toFlow(s: String): Flow = {
     def fFlow(parser: Parser): Flow = {
-      var r = parser.parseFlow()
+      val r = parser.parseFlow()
       return r
     }
     val r = to(s, fFlow)
@@ -978,7 +978,7 @@ object JSON {
 
   def toAnnex(s: String): Annex = {
     def fAnnex(parser: Parser): Annex = {
-      var r = parser.parseAnnex()
+      val r = parser.parseAnnex()
       return r
     }
     val r = to(s, fAnnex)

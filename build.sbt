@@ -1,25 +1,15 @@
-val scalaVer = "2.12.3"
+val scalaVer = "2.12.4"
 
-val metaVersion = "1.8.0"
-
-val paradiseVersion = "3.0.0-M10"
-
-val sireumScalacVersion = "3.1.2"
+val sireumScalacVersion = "3.2.1"
 
 val commonSettings = Seq(
   organization := "org.sireum",
   incOptions := incOptions.value.withLogRecompileOnMacro(false),
-  retrieveManaged := true,
   scalaVersion := scalaVer,
-  sources in(Compile, doc) := Seq.empty,
   scalacOptions := Seq("-target:jvm-1.8", "-deprecation",
     "-Ydelambdafy:method", "-feature", "-unchecked", "-Xfatal-warnings"),
   parallelExecution in Test := true,
-  libraryDependencies ++= Seq(
-    "org.scalameta" %% "scalameta" % metaVersion
-  ),
   resolvers += Resolver.sonatypeRepo("public"),
-  addCompilerPlugin("org.scalameta" % "paradise" % paradiseVersion cross CrossVersion.full),
   addCompilerPlugin("org.sireum" %% "scalac-plugin" % sireumScalacVersion)
 )
 

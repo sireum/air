@@ -15,7 +15,7 @@ class JsonGen extends FreeSpec {
     "test gen" in {
       val rootDir: File = new File(getClass.getResource(".").getPath, "../../../../../../../../").getCanonicalFile
 
-      val aadlPackagePath = new File(rootDir, "jvm/src/main/scala/org/sireum/aadl/schema")
+      val aadlPackagePath = new File(rootDir, "jvm/src/main/scala/org/sireum/aadl/skema")
       val src = new File(aadlPackagePath, "ast/AadlAST.scala")
       val dest = new File(aadlPackagePath, "ast/AadlJSON.scala")
 

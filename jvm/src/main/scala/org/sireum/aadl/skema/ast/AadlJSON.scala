@@ -3,7 +3,7 @@
 
 // This file is auto-generated from AadlAST.scala
 
-package org.sireum.aadl.schema.ast
+package org.sireum.aadl.skema.ast
 
 import org.sireum._
 import org.sireum.Json.Printer._

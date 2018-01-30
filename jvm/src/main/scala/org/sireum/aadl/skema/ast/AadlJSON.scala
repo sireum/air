@@ -5,44 +5,38 @@
 
 package org.sireum.aadl.skema.ast
 
-import org.sireum._
 import org.sireum.Json.Printer._
+import org.sireum._
 
 object JSON {
 
   object Printer {
 
-    @pure def printAadlTop(o: AadlTop): ST = {
-      o match {
-        case o: AadlXml => return printAadlXml(o)
-        case o: Component => return printComponent(o)
-        case o: Classifier => return printClassifier(o)
-        case o: Feature => return printFeature(o)
-        case o: Connection => return printConnection(o)
-        case o: EndPoint => return printEndPoint(o)
-        case o: Property => return printProperty(o)
-        case o: Mode => return printMode(o)
-        case o: Flow => return printFlow(o)
-        case o: Annex => return printAnnex(o)
-      }
-    }
-
     @pure def printAadlXml(o: AadlXml): ST = {
       return printObject(ISZ(
         ("type", st""""AadlXml""""),
-        ("components", printISZ(F, o.components, printComponent))
+        ("components", printISZ(F, o.components, printComponent)),
+        ("errorLib", printISZ(F, o.errorLib, printEmv2Library))
+      ))
+    }
+
+    @pure def printName(o: Name): ST = {
+      return printObject(ISZ(
+        ("type", st""""Name""""),
+        ("name", printISZ(T, o.name, printString))
       ))
     }
 
     @pure def printComponent(o: Component): ST = {
       return printObject(ISZ(
         ("type", st""""Component""""),
-        ("identifier", printOption(o.identifier, printString)),
+        ("identifier", printName(o.identifier)),
         ("category", printComponentCategory(o.category)),
         ("classifier", printOption(o.classifier, printClassifier)),
         ("features", printISZ(F, o.features, printFeature)),
         ("subComponents", printISZ(F, o.subComponents, printComponent)),
         ("connections", printISZ(F, o.connections, printConnection)),
+        ("connectionInstances", printISZ(F, o.connectionInstances, printConnectionInstance)),
         ("properties", printISZ(F, o.properties, printProperty)),
         ("flows", printISZ(F, o.flows, printFlow)),
         ("modes", printISZ(F, o.modes, printMode)),
@@ -83,7 +77,7 @@ object JSON {
     @pure def printFeature(o: Feature): ST = {
       return printObject(ISZ(
         ("type", st""""Feature""""),
-        ("identifier", printString(o.identifier)),
+        ("identifier", printName(o.identifier)),
         ("direction", printDirection(o.direction)),
         ("category", printFeatureCategory(o.category)),
         ("classifier", printOption(o.classifier, printClassifier)),
@@ -126,11 +120,32 @@ object JSON {
     @pure def printConnection(o: Connection): ST = {
       return printObject(ISZ(
         ("type", st""""Connection""""),
-        ("name", printOption(o.name, printString)),
+        ("name", printName(o.name)),
         ("src", printEndPoint(o.src)),
         ("dst", printEndPoint(o.dst)),
         ("kind", printConnectionKind(o.kind)),
+        ("connectionInstances", printISZ(F, o.connectionInstances, printName)),
         ("properties", printISZ(F, o.properties, printProperty))
+      ))
+    }
+
+    @pure def printConnectionInstance(o: ConnectionInstance): ST = {
+      return printObject(ISZ(
+        ("type", st""""ConnectionInstance""""),
+        ("name", printName(o.name)),
+        ("src", printEndPoint(o.src)),
+        ("dst", printEndPoint(o.dst)),
+        ("kind", printConnectionKind(o.kind)),
+        ("connectionRefs", printISZ(F, o.connectionRefs, printConnectionReference)),
+        ("properties", printISZ(F, o.properties, printProperty))
+      ))
+    }
+
+    @pure def printConnectionReference(o: ConnectionReference): ST = {
+      return printObject(ISZ(
+        ("type", st""""ConnectionReference""""),
+        ("name", printName(o.name)),
+        ("context", printName(o.context))
       ))
     }
 
@@ -160,7 +175,7 @@ object JSON {
     @pure def printProperty(o: Property): ST = {
       return printObject(ISZ(
         ("type", st""""Property""""),
-        ("name", printString(o.name)),
+        ("name", printName(o.name)),
         ("propertyValues", printISZ(F, o.propertyValues, printPropertyValue))
       ))
     }
@@ -216,21 +231,110 @@ object JSON {
     @pure def printMode(o: Mode): ST = {
       return printObject(ISZ(
         ("type", st""""Mode""""),
-        ("name", printString(o.name))
+        ("name", printName(o.name))
+      ))
+    }
+
+    @pure def printFlowKind(o: FlowKind.Type): ST = {
+      val value: String = o match {
+        case FlowKind.Source => "Source"
+        case FlowKind.Sink => "Sink"
+        case FlowKind.Path => "Path"
+      }
+      return printObject(ISZ(
+        ("type", printString("FlowKind")),
+        ("value", printString(value))
       ))
     }
 
     @pure def printFlow(o: Flow): ST = {
       return printObject(ISZ(
         ("type", st""""Flow""""),
-        ("name", printString(o.name))
+        ("name", printName(o.name)),
+        ("kind", printFlowKind(o.kind)),
+        ("source", printOption(o.source, printString)),
+        ("sink", printOption(o.sink, printString))
       ))
     }
 
     @pure def printAnnex(o: Annex): ST = {
       return printObject(ISZ(
         ("type", st""""Annex""""),
-        ("name", printString(o.name))
+        ("name", printString(o.name)),
+        ("clause", printAnnexClause(o.clause))
+      ))
+    }
+
+    @pure def printAnnexClause(o: AnnexClause): ST = {
+      o match {
+        case o: Emv2Library => return printEmv2Library(o)
+        case o: Emv2Propagation => return printEmv2Propagation(o)
+        case o: Emv2Flow => return printEmv2Flow(o)
+        case o: Emv2Clause => return printEmv2Clause(o)
+        case o: OtherAnnex => return printOtherAnnex(o)
+      }
+    }
+
+    @pure def printEmv2Annex(o: Emv2Annex): ST = {
+      o match {
+        case o: Emv2Library => return printEmv2Library(o)
+        case o: Emv2Propagation => return printEmv2Propagation(o)
+        case o: Emv2Flow => return printEmv2Flow(o)
+        case o: Emv2Clause => return printEmv2Clause(o)
+      }
+    }
+
+    @pure def printPropagationDirection(o: PropagationDirection.Type): ST = {
+      val value: String = o match {
+        case PropagationDirection.In => "In"
+        case PropagationDirection.Out => "Out"
+      }
+      return printObject(ISZ(
+        ("type", printString("PropagationDirection")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def printEmv2Library(o: Emv2Library): ST = {
+      return printObject(ISZ(
+        ("type", st""""Emv2Library""""),
+        ("name", printName(o.name)),
+        ("tokens", printISZ(T, o.tokens, printString))
+      ))
+    }
+
+    @pure def printEmv2Propagation(o: Emv2Propagation): ST = {
+      return printObject(ISZ(
+        ("type", st""""Emv2Propagation""""),
+        ("direction", printPropagationDirection(o.direction)),
+        ("propagationPoint", printISZ(T, o.propagationPoint, printString)),
+        ("errorTokens", printISZ(T, o.errorTokens, printString))
+      ))
+    }
+
+    @pure def printEmv2Flow(o: Emv2Flow): ST = {
+      return printObject(ISZ(
+        ("type", st""""Emv2Flow""""),
+        ("identifier", printName(o.identifier)),
+        ("kind", printFlowKind(o.kind)),
+        ("sourcePropagation", printOption(o.sourcePropagation, printEmv2Propagation)),
+        ("sinkPropagation", printOption(o.sinkPropagation, printEmv2Propagation))
+      ))
+    }
+
+    @pure def printEmv2Clause(o: Emv2Clause): ST = {
+      return printObject(ISZ(
+        ("type", st""""Emv2Clause""""),
+        ("libraries", printISZ(T, o.libraries, printString)),
+        ("propagations", printISZ(F, o.propagations, printEmv2Propagation)),
+        ("flows", printISZ(F, o.flows, printEmv2Flow))
+      ))
+    }
+
+    @pure def printOtherAnnex(o: OtherAnnex): ST = {
+      return printObject(ISZ(
+        ("type", st""""OtherAnnex""""),
+        ("clause", printString(o.clause))
       ))
     }
 
@@ -238,23 +342,6 @@ object JSON {
 
   @record class Parser(input: String) {
     val parser: Json.Parser = Json.Parser.create(input)
-
-    def parseAadlTop(): AadlTop = {
-      val t = parser.parseObjectTypes(ISZ("AadlXml", "Component", "Classifier", "Feature", "Connection", "EndPoint", "Property", "Mode", "Flow", "Annex"))
-      t.native match {
-        case "AadlXml" => val r = parseAadlXmlT(T); return r
-        case "Component" => val r = parseComponentT(T); return r
-        case "Classifier" => val r = parseClassifierT(T); return r
-        case "Feature" => val r = parseFeatureT(T); return r
-        case "Connection" => val r = parseConnectionT(T); return r
-        case "EndPoint" => val r = parseEndPointT(T); return r
-        case "Property" => val r = parsePropertyT(T); return r
-        case "Mode" => val r = parseModeT(T); return r
-        case "Flow" => val r = parseFlowT(T); return r
-        case "Annex" => val r = parseAnnexT(T); return r
-        case _ => halt(parser.errorMessage)
-      }
-    }
 
     def parseAadlXml(): AadlXml = {
       val r = parseAadlXmlT(F)
@@ -268,7 +355,25 @@ object JSON {
       parser.parseObjectKey("components")
       val components = parser.parseISZ(parseComponent _)
       parser.parseObjectNext()
-      return AadlXml(components)
+      parser.parseObjectKey("errorLib")
+      val errorLib = parser.parseISZ(parseEmv2Library _)
+      parser.parseObjectNext()
+      return AadlXml(components, errorLib)
+    }
+
+    def parseName(): Name = {
+      val r = parseNameT(F)
+      return r
+    }
+
+    def parseNameT(typeParsed: B): Name = {
+      if (!typeParsed) {
+        parser.parseObjectType("Name")
+      }
+      parser.parseObjectKey("name")
+      val name = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      return Name(name)
     }
 
     def parseComponent(): Component = {
@@ -281,7 +386,7 @@ object JSON {
         parser.parseObjectType("Component")
       }
       parser.parseObjectKey("identifier")
-      val identifier = parser.parseOption(parser.parseString _)
+      val identifier = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("category")
       val category = parseComponentCategory()
@@ -298,6 +403,9 @@ object JSON {
       parser.parseObjectKey("connections")
       val connections = parser.parseISZ(parseConnection _)
       parser.parseObjectNext()
+      parser.parseObjectKey("connectionInstances")
+      val connectionInstances = parser.parseISZ(parseConnectionInstance _)
+      parser.parseObjectNext()
       parser.parseObjectKey("properties")
       val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
@@ -310,7 +418,7 @@ object JSON {
       parser.parseObjectKey("annexes")
       val annexes = parser.parseISZ(parseAnnex _)
       parser.parseObjectNext()
-      return Component(identifier, category, classifier, features, subComponents, connections, properties, flows, modes, annexes)
+      return Component(identifier, category, classifier, features, subComponents, connections, connectionInstances, properties, flows, modes, annexes)
     }
 
     def parseClassifier(): Classifier = {
@@ -369,7 +477,7 @@ object JSON {
         parser.parseObjectType("Feature")
       }
       parser.parseObjectKey("identifier")
-      val identifier = parser.parseString()
+      val identifier = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("direction")
       val direction = parseDirection()
@@ -444,7 +552,7 @@ object JSON {
         parser.parseObjectType("Connection")
       }
       parser.parseObjectKey("name")
-      val name = parser.parseOption(parser.parseString _)
+      val name = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("src")
       val src = parseEndPoint()
@@ -455,10 +563,61 @@ object JSON {
       parser.parseObjectKey("kind")
       val kind = parseConnectionKind()
       parser.parseObjectNext()
+      parser.parseObjectKey("connectionInstances")
+      val connectionInstances = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
       parser.parseObjectKey("properties")
       val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
-      return Connection(name, src, dst, kind, properties)
+      return Connection(name, src, dst, kind, connectionInstances, properties)
+    }
+
+    def parseConnectionInstance(): ConnectionInstance = {
+      val r = parseConnectionInstanceT(F)
+      return r
+    }
+
+    def parseConnectionInstanceT(typeParsed: B): ConnectionInstance = {
+      if (!typeParsed) {
+        parser.parseObjectType("ConnectionInstance")
+      }
+      parser.parseObjectKey("name")
+      val name = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("src")
+      val src = parseEndPoint()
+      parser.parseObjectNext()
+      parser.parseObjectKey("dst")
+      val dst = parseEndPoint()
+      parser.parseObjectNext()
+      parser.parseObjectKey("kind")
+      val kind = parseConnectionKind()
+      parser.parseObjectNext()
+      parser.parseObjectKey("connectionRefs")
+      val connectionRefs = parser.parseISZ(parseConnectionReference _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("properties")
+      val properties = parser.parseISZ(parseProperty _)
+      parser.parseObjectNext()
+      return ConnectionInstance(name, src, dst, kind, connectionRefs, properties)
+    }
+
+    def parseConnectionReference(): ConnectionReference = {
+      val r = parseConnectionReferenceT(F)
+      return r
+    }
+
+    def parseConnectionReferenceT(typeParsed: B): ConnectionReference = {
+      if (!typeParsed) {
+        parser.parseObjectType("ConnectionReference")
+      }
+      parser.parseObjectKey("name")
+      val name = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("context")
+      val context = parseName()
+      parser.parseObjectNext()
+      return ConnectionReference(name, context)
     }
 
     def parseConnectionKind(): ConnectionKind.Type = {
@@ -512,7 +671,7 @@ object JSON {
         parser.parseObjectType("Property")
       }
       parser.parseObjectKey("name")
-      val name = parser.parseString()
+      val name = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("propertyValues")
       val propertyValues = parser.parseISZ(parsePropertyValue _)
@@ -626,9 +785,29 @@ object JSON {
         parser.parseObjectType("Mode")
       }
       parser.parseObjectKey("name")
-      val name = parser.parseString()
+      val name = parseName()
       parser.parseObjectNext()
       return Mode(name)
+    }
+
+    def parseFlowKind(): FlowKind.Type = {
+      val r = parseFlowKindT(F)
+      return r
+    }
+
+    def parseFlowKindT(typeParsed: B): FlowKind.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("FlowKind")
+      }
+      parser.parseObjectKey("value")
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      s.native match {
+        case "Source" => return FlowKind.Source
+        case "Sink" => return FlowKind.Sink
+        case "Path" => return FlowKind.Path
+        case _ => halt(parser.errorMessage)
+      }
     }
 
     def parseFlow(): Flow = {
@@ -641,9 +820,18 @@ object JSON {
         parser.parseObjectType("Flow")
       }
       parser.parseObjectKey("name")
-      val name = parser.parseString()
+      val name = parseName()
       parser.parseObjectNext()
-      return Flow(name)
+      parser.parseObjectKey("kind")
+      val kind = parseFlowKind()
+      parser.parseObjectNext()
+      parser.parseObjectKey("source")
+      val source = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("sink")
+      val sink = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
+      return Flow(name, kind, source, sink)
     }
 
     def parseAnnex(): Annex = {
@@ -658,7 +846,151 @@ object JSON {
       parser.parseObjectKey("name")
       val name = parser.parseString()
       parser.parseObjectNext()
-      return Annex(name)
+      parser.parseObjectKey("clause")
+      val clause = parseAnnexClause()
+      parser.parseObjectNext()
+      return Annex(name, clause)
+    }
+
+    def parseAnnexClause(): AnnexClause = {
+      val t = parser.parseObjectTypes(ISZ("Emv2Library", "Emv2Propagation", "Emv2Flow", "Emv2Clause", "OtherAnnex"))
+      t.native match {
+        case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
+        case "Emv2Propagation" => val r = parseEmv2PropagationT(T); return r
+        case "Emv2Flow" => val r = parseEmv2FlowT(T); return r
+        case "Emv2Clause" => val r = parseEmv2ClauseT(T); return r
+        case "OtherAnnex" => val r = parseOtherAnnexT(T); return r
+        case _ => halt(parser.errorMessage)
+      }
+    }
+
+    def parseEmv2Annex(): Emv2Annex = {
+      val t = parser.parseObjectTypes(ISZ("Emv2Library", "Emv2Propagation", "Emv2Flow", "Emv2Clause"))
+      t.native match {
+        case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
+        case "Emv2Propagation" => val r = parseEmv2PropagationT(T); return r
+        case "Emv2Flow" => val r = parseEmv2FlowT(T); return r
+        case "Emv2Clause" => val r = parseEmv2ClauseT(T); return r
+        case _ => halt(parser.errorMessage)
+      }
+    }
+
+    def parsePropagationDirection(): PropagationDirection.Type = {
+      val r = parsePropagationDirectionT(F)
+      return r
+    }
+
+    def parsePropagationDirectionT(typeParsed: B): PropagationDirection.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("PropagationDirection")
+      }
+      parser.parseObjectKey("value")
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      s.native match {
+        case "In" => return PropagationDirection.In
+        case "Out" => return PropagationDirection.Out
+        case _ => halt(parser.errorMessage)
+      }
+    }
+
+    def parseEmv2Library(): Emv2Library = {
+      val r = parseEmv2LibraryT(F)
+      return r
+    }
+
+    def parseEmv2LibraryT(typeParsed: B): Emv2Library = {
+      if (!typeParsed) {
+        parser.parseObjectType("Emv2Library")
+      }
+      parser.parseObjectKey("name")
+      val name = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("tokens")
+      val tokens = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      return Emv2Library(name, tokens)
+    }
+
+    def parseEmv2Propagation(): Emv2Propagation = {
+      val r = parseEmv2PropagationT(F)
+      return r
+    }
+
+    def parseEmv2PropagationT(typeParsed: B): Emv2Propagation = {
+      if (!typeParsed) {
+        parser.parseObjectType("Emv2Propagation")
+      }
+      parser.parseObjectKey("direction")
+      val direction = parsePropagationDirection()
+      parser.parseObjectNext()
+      parser.parseObjectKey("propagationPoint")
+      val propagationPoint = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("errorTokens")
+      val errorTokens = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      return Emv2Propagation(direction, propagationPoint, errorTokens)
+    }
+
+    def parseEmv2Flow(): Emv2Flow = {
+      val r = parseEmv2FlowT(F)
+      return r
+    }
+
+    def parseEmv2FlowT(typeParsed: B): Emv2Flow = {
+      if (!typeParsed) {
+        parser.parseObjectType("Emv2Flow")
+      }
+      parser.parseObjectKey("identifier")
+      val identifier = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("kind")
+      val kind = parseFlowKind()
+      parser.parseObjectNext()
+      parser.parseObjectKey("sourcePropagation")
+      val sourcePropagation = parser.parseOption(parseEmv2Propagation _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("sinkPropagation")
+      val sinkPropagation = parser.parseOption(parseEmv2Propagation _)
+      parser.parseObjectNext()
+      return Emv2Flow(identifier, kind, sourcePropagation, sinkPropagation)
+    }
+
+    def parseEmv2Clause(): Emv2Clause = {
+      val r = parseEmv2ClauseT(F)
+      return r
+    }
+
+    def parseEmv2ClauseT(typeParsed: B): Emv2Clause = {
+      if (!typeParsed) {
+        parser.parseObjectType("Emv2Clause")
+      }
+      parser.parseObjectKey("libraries")
+      val libraries = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("propagations")
+      val propagations = parser.parseISZ(parseEmv2Propagation _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("flows")
+      val flows = parser.parseISZ(parseEmv2Flow _)
+      parser.parseObjectNext()
+      return Emv2Clause(libraries, propagations, flows)
+    }
+
+    def parseOtherAnnex(): OtherAnnex = {
+      val r = parseOtherAnnexT(F)
+      return r
+    }
+
+    def parseOtherAnnexT(typeParsed: B): OtherAnnex = {
+      if (!typeParsed) {
+        parser.parseObjectType("OtherAnnex")
+      }
+      parser.parseObjectKey("clause")
+      val clause = parser.parseString()
+      parser.parseObjectNext()
+      return OtherAnnex(clause)
     }
 
     def eof(): B = {
@@ -679,24 +1011,6 @@ object JSON {
     return r
   }
 
-  def fromAadlTop(o: AadlTop, isCompact: B): String = {
-    val st = Printer.printAadlTop(o)
-    if (isCompact) {
-      return st.renderCompact
-    } else {
-      return st.render
-    }
-  }
-
-  def toAadlTop(s: String): AadlTop = {
-    def fAadlTop(parser: Parser): AadlTop = {
-      val r = parser.parseAadlTop()
-      return r
-    }
-    val r = to(s, fAadlTop)
-    return r
-  }
-
   def fromAadlXml(o: AadlXml, isCompact: B): String = {
     val st = Printer.printAadlXml(o)
     if (isCompact) {
@@ -712,6 +1026,25 @@ object JSON {
       return r
     }
     val r = to(s, fAadlXml)
+    return r
+  }
+
+  def fromName(o: Name, isCompact: B): String = {
+    val st = Printer.printName(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toName(s: String): Name = {
+    def fName(parser: Parser): Name = {
+      val r = parser.parseName()
+      return r
+    }
+
+    val r = to(s, fName)
     return r
   }
 
@@ -784,6 +1117,44 @@ object JSON {
       return r
     }
     val r = to(s, fConnection)
+    return r
+  }
+
+  def fromConnectionInstance(o: ConnectionInstance, isCompact: B): String = {
+    val st = Printer.printConnectionInstance(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toConnectionInstance(s: String): ConnectionInstance = {
+    def fConnectionInstance(parser: Parser): ConnectionInstance = {
+      val r = parser.parseConnectionInstance()
+      return r
+    }
+
+    val r = to(s, fConnectionInstance)
+    return r
+  }
+
+  def fromConnectionReference(o: ConnectionReference, isCompact: B): String = {
+    val st = Printer.printConnectionReference(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toConnectionReference(s: String): ConnectionReference = {
+    def fConnectionReference(parser: Parser): ConnectionReference = {
+      val r = parser.parseConnectionReference()
+      return r
+    }
+
+    val r = to(s, fConnectionReference)
     return r
   }
 
@@ -982,6 +1353,139 @@ object JSON {
       return r
     }
     val r = to(s, fAnnex)
+    return r
+  }
+
+  def fromAnnexClause(o: AnnexClause, isCompact: B): String = {
+    val st = Printer.printAnnexClause(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toAnnexClause(s: String): AnnexClause = {
+    def fAnnexClause(parser: Parser): AnnexClause = {
+      val r = parser.parseAnnexClause()
+      return r
+    }
+
+    val r = to(s, fAnnexClause)
+    return r
+  }
+
+  def fromEmv2Annex(o: Emv2Annex, isCompact: B): String = {
+    val st = Printer.printEmv2Annex(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toEmv2Annex(s: String): Emv2Annex = {
+    def fEmv2Annex(parser: Parser): Emv2Annex = {
+      val r = parser.parseEmv2Annex()
+      return r
+    }
+
+    val r = to(s, fEmv2Annex)
+    return r
+  }
+
+  def fromEmv2Library(o: Emv2Library, isCompact: B): String = {
+    val st = Printer.printEmv2Library(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toEmv2Library(s: String): Emv2Library = {
+    def fEmv2Library(parser: Parser): Emv2Library = {
+      val r = parser.parseEmv2Library()
+      return r
+    }
+
+    val r = to(s, fEmv2Library)
+    return r
+  }
+
+  def fromEmv2Propagation(o: Emv2Propagation, isCompact: B): String = {
+    val st = Printer.printEmv2Propagation(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toEmv2Propagation(s: String): Emv2Propagation = {
+    def fEmv2Propagation(parser: Parser): Emv2Propagation = {
+      val r = parser.parseEmv2Propagation()
+      return r
+    }
+
+    val r = to(s, fEmv2Propagation)
+    return r
+  }
+
+  def fromEmv2Flow(o: Emv2Flow, isCompact: B): String = {
+    val st = Printer.printEmv2Flow(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toEmv2Flow(s: String): Emv2Flow = {
+    def fEmv2Flow(parser: Parser): Emv2Flow = {
+      val r = parser.parseEmv2Flow()
+      return r
+    }
+
+    val r = to(s, fEmv2Flow)
+    return r
+  }
+
+  def fromEmv2Clause(o: Emv2Clause, isCompact: B): String = {
+    val st = Printer.printEmv2Clause(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toEmv2Clause(s: String): Emv2Clause = {
+    def fEmv2Clause(parser: Parser): Emv2Clause = {
+      val r = parser.parseEmv2Clause()
+      return r
+    }
+
+    val r = to(s, fEmv2Clause)
+    return r
+  }
+
+  def fromOtherAnnex(o: OtherAnnex, isCompact: B): String = {
+    val st = Printer.printOtherAnnex(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toOtherAnnex(s: String): OtherAnnex = {
+    def fOtherAnnex(parser: Parser): OtherAnnex = {
+      val r = parser.parseOtherAnnex()
+      return r
+    }
+
+    val r = to(s, fOtherAnnex)
     return r
   }
 

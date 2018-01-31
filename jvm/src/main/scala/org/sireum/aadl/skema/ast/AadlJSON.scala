@@ -5,8 +5,8 @@
 
 package org.sireum.aadl.skema.ast
 
-import org.sireum.Json.Printer._
 import org.sireum._
+import org.sireum.Json.Printer._
 
 object JSON {
 
@@ -1043,7 +1043,6 @@ object JSON {
       val r = parser.parseName()
       return r
     }
-
     val r = to(s, fName)
     return r
   }
@@ -1134,7 +1133,6 @@ object JSON {
       val r = parser.parseConnectionInstance()
       return r
     }
-
     val r = to(s, fConnectionInstance)
     return r
   }
@@ -1153,7 +1151,6 @@ object JSON {
       val r = parser.parseConnectionReference()
       return r
     }
-
     val r = to(s, fConnectionReference)
     return r
   }
@@ -1370,7 +1367,6 @@ object JSON {
       val r = parser.parseAnnexClause()
       return r
     }
-
     val r = to(s, fAnnexClause)
     return r
   }
@@ -1389,7 +1385,6 @@ object JSON {
       val r = parser.parseEmv2Annex()
       return r
     }
-
     val r = to(s, fEmv2Annex)
     return r
   }
@@ -1408,7 +1403,6 @@ object JSON {
       val r = parser.parseEmv2Library()
       return r
     }
-
     val r = to(s, fEmv2Library)
     return r
   }
@@ -1427,7 +1421,6 @@ object JSON {
       val r = parser.parseEmv2Propagation()
       return r
     }
-
     val r = to(s, fEmv2Propagation)
     return r
   }
@@ -1446,7 +1439,6 @@ object JSON {
       val r = parser.parseEmv2Flow()
       return r
     }
-
     val r = to(s, fEmv2Flow)
     return r
   }
@@ -1465,7 +1457,6 @@ object JSON {
       val r = parser.parseEmv2Clause()
       return r
     }
-
     val r = to(s, fEmv2Clause)
     return r
   }
@@ -1484,7 +1475,6 @@ object JSON {
       val r = parser.parseOtherAnnex()
       return r
     }
-
     val r = to(s, fOtherAnnex)
     return r
   }

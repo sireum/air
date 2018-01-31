@@ -4,8 +4,9 @@ import java.io.File
 
 import com.sksamuel.diffpatch.DiffMatchPatch
 import org.scalatest.FreeSpec
-import org.sireum.lang.util._
-import org.sireum.lang.tools._
+import org.sireum.util.FileUtil
+import org.sireum.lang.util.AccumulatingReporter
+import org.sireum.lang.tools.{SerializerGen, SerializerGenJvm}
 import org.sireum.{ISZ, None => SNone}
 
 class JsonGen extends FreeSpec {
@@ -26,7 +27,7 @@ class JsonGen extends FreeSpec {
       reporter.printMessages()
 
       rOpt match {
-        case Some(r) =>
+        case org.sireum.Some(r) =>
           val expected = FileUtil.readFile(dest)
           val result = r
           if (result != expected) {

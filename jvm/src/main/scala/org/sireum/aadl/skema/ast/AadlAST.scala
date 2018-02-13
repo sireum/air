@@ -5,7 +5,7 @@ package org.sireum.aadl.skema.ast
 import org.sireum._
 
 
-@datatype class AadlXml(components: ISZ[Component], errorLib: ISZ[Emv2Library])
+@datatype class Aadl(components: ISZ[Component], errorLib: ISZ[Emv2Library])
 
 @datatype class Name(name: ISZ[String])
 
@@ -70,8 +70,8 @@ import org.sireum._
 @datatype class Connection(name: Name,
                            src: EndPoint,
                            dst: EndPoint,
-                           kind: ConnectionKind.Type,
-                           connectionInstances: ISZ[Name],
+                           isBiDirectional: B,
+                           connectionInstances: Name,
                            properties: ISZ[Property])
 
 @datatype class ConnectionInstance(name: Name,
@@ -82,7 +82,8 @@ import org.sireum._
                                    properties: ISZ[Property])
 
 @datatype class ConnectionReference(name: Name,
-                                    context: Name)
+                                    context: Name,
+                                    isParent: B)
 
 @enum object ConnectionKind {
   'Feature
@@ -93,8 +94,8 @@ import org.sireum._
   'FeatureGroup
 }
 
-@datatype class EndPoint(component: String,
-                         feature: String)
+@datatype class EndPoint(component: Name,
+                         feature: Name)
 
 @datatype class Property(name: Name,
                          propertyValues: ISZ[PropertyValue])
@@ -132,7 +133,7 @@ import org.sireum._
 
 @sig trait AnnexClause
 
-@sig trait Emv2Annex
+@sig trait Emv2Annex extends AnnexClause
 
 @enum object PropagationDirection {
   'In
@@ -140,19 +141,19 @@ import org.sireum._
 }
 
 @datatype class Emv2Library(name: Name,
-                            tokens: ISZ[String]) extends Emv2Annex with AnnexClause
+                            tokens: ISZ[String]) extends Emv2Annex
 
 @datatype class Emv2Propagation(direction: PropagationDirection.Type,
                                 propagationPoint: ISZ[String],
-                                errorTokens: ISZ[String]) extends Emv2Annex with AnnexClause
+                                errorTokens: ISZ[String]) extends Emv2Annex
 
 @datatype class Emv2Flow(identifier: Name,
                          kind: FlowKind.Type,
                          sourcePropagation: Option[Emv2Propagation],
-                         sinkPropagation: Option[Emv2Propagation]) extends Emv2Annex with AnnexClause
+                         sinkPropagation: Option[Emv2Propagation]) extends Emv2Annex
 
 @datatype class Emv2Clause(libraries: ISZ[String],
                            propagations: ISZ[Emv2Propagation],
-                           flows: ISZ[Emv2Flow]) extends Emv2Annex with AnnexClause
+                           flows: ISZ[Emv2Flow]) extends Emv2Annex
 
 @datatype class OtherAnnex(clause: String) extends AnnexClause

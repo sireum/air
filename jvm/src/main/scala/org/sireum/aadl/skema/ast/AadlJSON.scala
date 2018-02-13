@@ -12,9 +12,9 @@ object JSON {
 
   object Printer {
 
-    @pure def printAadlXml(o: AadlXml): ST = {
+    @pure def printAadl(o: Aadl): ST = {
       return printObject(ISZ(
-        ("type", st""""AadlXml""""),
+        ("type", st""""Aadl""""),
         ("components", printISZ(F, o.components, printComponent)),
         ("errorLib", printISZ(F, o.errorLib, printEmv2Library))
       ))
@@ -123,8 +123,8 @@ object JSON {
         ("name", printName(o.name)),
         ("src", printEndPoint(o.src)),
         ("dst", printEndPoint(o.dst)),
-        ("kind", printConnectionKind(o.kind)),
-        ("connectionInstances", printISZ(F, o.connectionInstances, printName)),
+        ("isBiDirectional", printB(o.isBiDirectional)),
+        ("connectionInstances", printName(o.connectionInstances)),
         ("properties", printISZ(F, o.properties, printProperty))
       ))
     }
@@ -145,7 +145,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""ConnectionReference""""),
         ("name", printName(o.name)),
-        ("context", printName(o.context))
+        ("context", printName(o.context)),
+        ("isParent", printB(o.isParent))
       ))
     }
 
@@ -167,8 +168,8 @@ object JSON {
     @pure def printEndPoint(o: EndPoint): ST = {
       return printObject(ISZ(
         ("type", st""""EndPoint""""),
-        ("component", printString(o.component)),
-        ("feature", printString(o.feature))
+        ("component", printName(o.component)),
+        ("feature", printName(o.feature))
       ))
     }
 
@@ -343,14 +344,14 @@ object JSON {
   @record class Parser(input: String) {
     val parser: Json.Parser = Json.Parser.create(input)
 
-    def parseAadlXml(): AadlXml = {
-      val r = parseAadlXmlT(F)
+    def parseAadl(): Aadl = {
+      val r = parseAadlT(F)
       return r
     }
 
-    def parseAadlXmlT(typeParsed: B): AadlXml = {
+    def parseAadlT(typeParsed: B): Aadl = {
       if (!typeParsed) {
-        parser.parseObjectType("AadlXml")
+        parser.parseObjectType("Aadl")
       }
       parser.parseObjectKey("components")
       val components = parser.parseISZ(parseComponent _)
@@ -358,7 +359,7 @@ object JSON {
       parser.parseObjectKey("errorLib")
       val errorLib = parser.parseISZ(parseEmv2Library _)
       parser.parseObjectNext()
-      return AadlXml(components, errorLib)
+      return Aadl(components, errorLib)
     }
 
     def parseName(): Name = {
@@ -560,16 +561,16 @@ object JSON {
       parser.parseObjectKey("dst")
       val dst = parseEndPoint()
       parser.parseObjectNext()
-      parser.parseObjectKey("kind")
-      val kind = parseConnectionKind()
+      parser.parseObjectKey("isBiDirectional")
+      val isBiDirectional = parser.parseB()
       parser.parseObjectNext()
       parser.parseObjectKey("connectionInstances")
-      val connectionInstances = parser.parseISZ(parseName _)
+      val connectionInstances = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("properties")
       val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
-      return Connection(name, src, dst, kind, connectionInstances, properties)
+      return Connection(name, src, dst, isBiDirectional, connectionInstances, properties)
     }
 
     def parseConnectionInstance(): ConnectionInstance = {
@@ -617,7 +618,10 @@ object JSON {
       parser.parseObjectKey("context")
       val context = parseName()
       parser.parseObjectNext()
-      return ConnectionReference(name, context)
+      parser.parseObjectKey("isParent")
+      val isParent = parser.parseB()
+      parser.parseObjectNext()
+      return ConnectionReference(name, context, isParent)
     }
 
     def parseConnectionKind(): ConnectionKind.Type = {
@@ -653,10 +657,10 @@ object JSON {
         parser.parseObjectType("EndPoint")
       }
       parser.parseObjectKey("component")
-      val component = parser.parseString()
+      val component = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("feature")
-      val feature = parser.parseString()
+      val feature = parseName()
       parser.parseObjectNext()
       return EndPoint(component, feature)
     }
@@ -1011,8 +1015,8 @@ object JSON {
     return r
   }
 
-  def fromAadlXml(o: AadlXml, isCompact: B): String = {
-    val st = Printer.printAadlXml(o)
+  def fromAadl(o: Aadl, isCompact: B): String = {
+    val st = Printer.printAadl(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1020,12 +1024,13 @@ object JSON {
     }
   }
 
-  def toAadlXml(s: String): AadlXml = {
-    def fAadlXml(parser: Parser): AadlXml = {
-      val r = parser.parseAadlXml()
+  def toAadl(s: String): Aadl = {
+    def fAadl(parser: Parser): Aadl = {
+      val r = parser.parseAadl()
       return r
     }
-    val r = to(s, fAadlXml)
+
+    val r = to(s, fAadl)
     return r
   }
 
@@ -1043,7 +1048,6 @@ object JSON {
       val r = parser.parseName()
       return r
     }
-
     val r = to(s, fName)
     return r
   }
@@ -1134,7 +1138,6 @@ object JSON {
       val r = parser.parseConnectionInstance()
       return r
     }
-
     val r = to(s, fConnectionInstance)
     return r
   }
@@ -1153,7 +1156,6 @@ object JSON {
       val r = parser.parseConnectionReference()
       return r
     }
-
     val r = to(s, fConnectionReference)
     return r
   }
@@ -1370,7 +1372,6 @@ object JSON {
       val r = parser.parseAnnexClause()
       return r
     }
-
     val r = to(s, fAnnexClause)
     return r
   }
@@ -1389,7 +1390,6 @@ object JSON {
       val r = parser.parseEmv2Annex()
       return r
     }
-
     val r = to(s, fEmv2Annex)
     return r
   }
@@ -1408,7 +1408,6 @@ object JSON {
       val r = parser.parseEmv2Library()
       return r
     }
-
     val r = to(s, fEmv2Library)
     return r
   }
@@ -1427,7 +1426,6 @@ object JSON {
       val r = parser.parseEmv2Propagation()
       return r
     }
-
     val r = to(s, fEmv2Propagation)
     return r
   }
@@ -1446,7 +1444,6 @@ object JSON {
       val r = parser.parseEmv2Flow()
       return r
     }
-
     val r = to(s, fEmv2Flow)
     return r
   }
@@ -1465,7 +1462,6 @@ object JSON {
       val r = parser.parseEmv2Clause()
       return r
     }
-
     val r = to(s, fEmv2Clause)
     return r
   }
@@ -1484,7 +1480,6 @@ object JSON {
       val r = parser.parseOtherAnnex()
       return r
     }
-
     val r = to(s, fOtherAnnex)
     return r
   }

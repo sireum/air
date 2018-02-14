@@ -11,7 +11,7 @@ object MsgPack {
 
   object Constants {
 
-    val AadlXml: Z = 0
+    val Aadl: Z = 0
 
     val Name: Z = 1
 
@@ -69,8 +69,8 @@ object MsgPack {
 
     def writer: MessagePack.Writer
 
-    def writeAadlXml(o: AadlXml): Unit = {
-      writer.writeZ(Constants.AadlXml)
+    def writeAadl(o: Aadl): Unit = {
+      writer.writeZ(Constants.Aadl)
       writer.writeISZ(o.components, writeComponent)
       writer.writeISZ(o.errorLib, writeEmv2Library)
     }
@@ -126,8 +126,8 @@ object MsgPack {
       writeName(o.name)
       writeEndPoint(o.src)
       writeEndPoint(o.dst)
-      writeConnectionKind(o.kind)
-      writer.writeISZ(o.connectionInstances, writeName)
+      writeB(o.isBiDirectional)
+      writeName(o.connectionInstances)
       writer.writeISZ(o.properties, writeProperty)
     }
 
@@ -145,6 +145,7 @@ object MsgPack {
       writer.writeZ(Constants.ConnectionReference)
       writeName(o.name)
       writeName(o.context)
+      writeB(o.isParent)
     }
 
     def writeConnectionKind(o: ConnectionKind.Type): Unit = {
@@ -153,8 +154,8 @@ object MsgPack {
 
     def writeEndPoint(o: EndPoint): Unit = {
       writer.writeZ(Constants.EndPoint)
-      writeString(o.component)
-      writeString(o.feature)
+      writeName(o.component)
+      writeName(o.feature)
     }
 
     def writeProperty(o: Property): Unit = {
@@ -392,18 +393,18 @@ object MsgPack {
 
     def reader: MessagePack.Reader
 
-    def readAadlXml(): AadlXml = {
-      val r = readAadlXmlT(F)
+    def readAadl(): Aadl = {
+      val r = readAadlT(F)
       return r
     }
 
-    def readAadlXmlT(typeParsed: B): AadlXml = {
+    def readAadlT(typeParsed: B): Aadl = {
       if (!typeParsed) {
-        reader.expectZ(Constants.AadlXml)
+        reader.expectZ(Constants.Aadl)
       }
       val components = reader.readISZ(readComponent _)
       val errorLib = reader.readISZ(readEmv2Library _)
-      return AadlXml(components, errorLib)
+      return Aadl(components, errorLib)
     }
 
     def readName(): Name = {
@@ -499,10 +500,10 @@ object MsgPack {
       val name = readName()
       val src = readEndPoint()
       val dst = readEndPoint()
-      val kind = readConnectionKind()
-      val connectionInstances = reader.readISZ(readName _)
+      val isBiDirectional = reader.readB()
+      val connectionInstances = readName()
       val properties = reader.readISZ(readProperty _)
-      return Connection(name, src, dst, kind, connectionInstances, properties)
+      return Connection(name, src, dst, isBiDirectional, connectionInstances, properties)
     }
 
     def readConnectionInstance(): ConnectionInstance = {
@@ -534,7 +535,8 @@ object MsgPack {
       }
       val name = readName()
       val context = readName()
-      return ConnectionReference(name, context)
+      val isParent = reader.readB()
+      return ConnectionReference(name, context, isParent)
     }
 
     def readConnectionKind(): ConnectionKind.Type = {
@@ -551,8 +553,8 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.EndPoint)
       }
-      val component = reader.readString()
-      val feature = reader.readString()
+      val component = readName()
+      val feature = readName()
       return EndPoint(component, feature)
     }
 
@@ -808,18 +810,18 @@ object MsgPack {
     return r
   }
 
-  def fromAadlXml(o: AadlXml, poolString: B): ISZ[U8] = {
+  def fromAadl(o: Aadl, poolString: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(poolString))
-    w.writeAadlXml(o)
+    w.writeAadl(o)
     return w.result
   }
 
-  def toAadlXml(data: ISZ[U8]): AadlXml = {
-    def fAadlXml(reader: Reader): AadlXml = {
-      val r = reader.readAadlXml()
+  def toAadl(data: ISZ[U8]): Aadl = {
+    def fAadl(reader: Reader): Aadl = {
+      val r = reader.readAadl()
       return r
     }
-    val r = to(data, fAadlXml)
+    val r = to(data, fAadl)
     return r
   }
 

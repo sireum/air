@@ -127,7 +127,7 @@ object MsgPack {
       writeEndPoint(o.src)
       writeEndPoint(o.dst)
       writeB(o.isBiDirectional)
-      writeName(o.connectionInstances)
+      writer.writeISZ(o.connectionInstances, writeName)
       writer.writeISZ(o.properties, writeProperty)
     }
 
@@ -501,7 +501,7 @@ object MsgPack {
       val src = readEndPoint()
       val dst = readEndPoint()
       val isBiDirectional = reader.readB()
-      val connectionInstances = readName()
+      val connectionInstances = reader.readISZ(readName _)
       val properties = reader.readISZ(readProperty _)
       return Connection(name, src, dst, isBiDirectional, connectionInstances, properties)
     }

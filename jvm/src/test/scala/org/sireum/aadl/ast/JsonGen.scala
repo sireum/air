@@ -10,7 +10,7 @@ import org.sireum.util.FileUtil
 import org.sireum.{None => SNone}
 
 class JsonGen extends FreeSpec {
-  val regen = false
+  val regen = true
 
   "JsonGen" - {
     "test gen" in {

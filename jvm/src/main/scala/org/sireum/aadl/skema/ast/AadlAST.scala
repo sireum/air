@@ -71,7 +71,7 @@ import org.sireum._
                            src: EndPoint,
                            dst: EndPoint,
                            isBiDirectional: B,
-                           connectionInstances: Name,
+                           connectionInstances: ISZ[Name],
                            properties: ISZ[Property])
 
 @datatype class ConnectionInstance(name: Name,

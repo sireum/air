@@ -5,8 +5,8 @@
 
 package org.sireum.aadl.skema.ast
 
-import org.sireum.Json.Printer._
 import org.sireum._
+import org.sireum.Json.Printer._
 
 object JSON {
 

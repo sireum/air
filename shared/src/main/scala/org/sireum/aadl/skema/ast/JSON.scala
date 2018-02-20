@@ -476,24 +476,14 @@ object JSON {
         parser.parseObjectType("ComponentCategory")
       }
       parser.parseObjectKey("value")
+      var i = parser.offset
       val s = parser.parseString()
       parser.parseObjectNext()
-      s.native match {
-        case "Abstract" => return ComponentCategory.Abstract
-        case "Bus" => return ComponentCategory.Bus
-        case "Data" => return ComponentCategory.Data
-        case "Device" => return ComponentCategory.Device
-        case "Memory" => return ComponentCategory.Memory
-        case "Process" => return ComponentCategory.Process
-        case "Processor" => return ComponentCategory.Processor
-        case "Subprogram" => return ComponentCategory.Subprogram
-        case "SubprogramGroup" => return ComponentCategory.SubprogramGroup
-        case "System" => return ComponentCategory.System
-        case "Thread" => return ComponentCategory.Thread
-        case "ThreadGroup" => return ComponentCategory.ThreadGroup
-        case "VirtualBus" => return ComponentCategory.VirtualBus
-        case "VirtualProcessor" => return ComponentCategory.VirtualProcessor
-        case _ => halt(parser.errorMessage)
+      ComponentCategory.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for ComponentCategory.")
+          return ComponentCategory.byOrdinal(0).get
       }
     }
 
@@ -534,14 +524,14 @@ object JSON {
         parser.parseObjectType("Direction")
       }
       parser.parseObjectKey("value")
+      var i = parser.offset
       val s = parser.parseString()
       parser.parseObjectNext()
-      s.native match {
-        case "In" => return Direction.In
-        case "Out" => return Direction.Out
-        case "InOut" => return Direction.InOut
-        case "None" => return Direction.None
-        case _ => halt(parser.errorMessage)
+      Direction.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for Direction.")
+          return Direction.byOrdinal(0).get
       }
     }
 
@@ -555,20 +545,14 @@ object JSON {
         parser.parseObjectType("FeatureCategory")
       }
       parser.parseObjectKey("value")
+      var i = parser.offset
       val s = parser.parseString()
       parser.parseObjectNext()
-      s.native match {
-        case "AbstractFeature" => return FeatureCategory.AbstractFeature
-        case "BusAccess" => return FeatureCategory.BusAccess
-        case "DataAccess" => return FeatureCategory.DataAccess
-        case "DataPort" => return FeatureCategory.DataPort
-        case "EventPort" => return FeatureCategory.EventPort
-        case "EventDataPort" => return FeatureCategory.EventDataPort
-        case "FeatureGroup" => return FeatureCategory.FeatureGroup
-        case "Parameter" => return FeatureCategory.Parameter
-        case "SubprogramAccess" => return FeatureCategory.SubprogramAccess
-        case "SubprogramAccessGroup" => return FeatureCategory.SubprogramAccessGroup
-        case _ => halt(parser.errorMessage)
+      FeatureCategory.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for FeatureCategory.")
+          return FeatureCategory.byOrdinal(0).get
       }
     }
 
@@ -663,16 +647,14 @@ object JSON {
         parser.parseObjectType("ConnectionKind")
       }
       parser.parseObjectKey("value")
+      var i = parser.offset
       val s = parser.parseString()
       parser.parseObjectNext()
-      s.native match {
-        case "Feature" => return ConnectionKind.Feature
-        case "Access" => return ConnectionKind.Access
-        case "Parameter" => return ConnectionKind.Parameter
-        case "Port" => return ConnectionKind.Port
-        case "ModeTransition" => return ConnectionKind.ModeTransition
-        case "FeatureGroup" => return ConnectionKind.FeatureGroup
-        case _ => halt(parser.errorMessage)
+      ConnectionKind.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for ConnectionKind.")
+          return ConnectionKind.byOrdinal(0).get
       }
     }
 
@@ -720,7 +702,7 @@ object JSON {
         case "ReferenceProp" => val r = parseReferencePropT(T); return r
         case "UnitProp" => val r = parseUnitPropT(T); return r
         case "ValueProp" => val r = parseValuePropT(T); return r
-        case _ => halt(parser.errorMessage)
+        case _ => val r = parseValuePropT(T); return r
       }
     }
 
@@ -833,13 +815,14 @@ object JSON {
         parser.parseObjectType("FlowKind")
       }
       parser.parseObjectKey("value")
+      var i = parser.offset
       val s = parser.parseString()
       parser.parseObjectNext()
-      s.native match {
-        case "Source" => return FlowKind.Source
-        case "Sink" => return FlowKind.Sink
-        case "Path" => return FlowKind.Path
-        case _ => halt(parser.errorMessage)
+      FlowKind.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for FlowKind.")
+          return FlowKind.byOrdinal(0).get
       }
     }
 
@@ -893,7 +876,7 @@ object JSON {
         case "Emv2Flow" => val r = parseEmv2FlowT(T); return r
         case "Emv2Clause" => val r = parseEmv2ClauseT(T); return r
         case "OtherAnnex" => val r = parseOtherAnnexT(T); return r
-        case _ => halt(parser.errorMessage)
+        case _ => val r = parseOtherAnnexT(T); return r
       }
     }
 
@@ -904,7 +887,7 @@ object JSON {
         case "Emv2Propagation" => val r = parseEmv2PropagationT(T); return r
         case "Emv2Flow" => val r = parseEmv2FlowT(T); return r
         case "Emv2Clause" => val r = parseEmv2ClauseT(T); return r
-        case _ => halt(parser.errorMessage)
+        case _ => val r = parseEmv2ClauseT(T); return r
       }
     }
 
@@ -918,12 +901,14 @@ object JSON {
         parser.parseObjectType("PropagationDirection")
       }
       parser.parseObjectKey("value")
+      var i = parser.offset
       val s = parser.parseString()
       parser.parseObjectNext()
-      s.native match {
-        case "In" => return PropagationDirection.In
-        case "Out" => return PropagationDirection.Out
-        case _ => halt(parser.errorMessage)
+      PropagationDirection.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for PropagationDirection.")
+          return PropagationDirection.byOrdinal(0).get
       }
     }
 

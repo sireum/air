@@ -506,6 +506,7 @@ object MsgPack {
     }
 
     def readPropertyValue(): PropertyValue = {
+      val i = reader.curr
       val t = reader.readZ()
       t match {
         case Constants.ClassifierProp => val r = readClassifierPropT(T); return r
@@ -513,7 +514,10 @@ object MsgPack {
         case Constants.ReferenceProp => val r = readReferencePropT(T); return r
         case Constants.UnitProp => val r = readUnitPropT(T); return r
         case Constants.ValueProp => val r = readValuePropT(T); return r
-        case _ => halt(s"Unexpected type code $t.")
+        case _ =>
+          reader.error(i, s"$t is not a valid type of PropertyValue.")
+          val r = readValuePropT(T)
+          return r
       }
     }
 
@@ -634,6 +638,7 @@ object MsgPack {
     }
 
     def readAnnexClause(): AnnexClause = {
+      val i = reader.curr
       val t = reader.readZ()
       t match {
         case Constants.Emv2Library => val r = readEmv2LibraryT(T); return r
@@ -641,18 +646,25 @@ object MsgPack {
         case Constants.Emv2Flow => val r = readEmv2FlowT(T); return r
         case Constants.Emv2Clause => val r = readEmv2ClauseT(T); return r
         case Constants.OtherAnnex => val r = readOtherAnnexT(T); return r
-        case _ => halt(s"Unexpected type code $t.")
+        case _ =>
+          reader.error(i, s"$t is not a valid type of AnnexClause.")
+          val r = readOtherAnnexT(T)
+          return r
       }
     }
 
     def readEmv2Annex(): Emv2Annex = {
+      val i = reader.curr
       val t = reader.readZ()
       t match {
         case Constants.Emv2Library => val r = readEmv2LibraryT(T); return r
         case Constants.Emv2Propagation => val r = readEmv2PropagationT(T); return r
         case Constants.Emv2Flow => val r = readEmv2FlowT(T); return r
         case Constants.Emv2Clause => val r = readEmv2ClauseT(T); return r
-        case _ => halt(s"Unexpected type code $t.")
+        case _ =>
+          reader.error(i, s"$t is not a valid type of Emv2Annex.")
+          val r = readEmv2ClauseT(T)
+          return r
       }
     }
 

@@ -1,6 +1,31 @@
 // #Sireum
 // @formatter:off
 
+/*
+ Copyright (c) 2017, Robby, Kansas State University
+ All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of source code must retain the above copyright notice, this
+    list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 // This file is auto-generated from AadlAST.scala
 
 package org.sireum.aadl.skema.ast
@@ -31,8 +56,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Component""""),
         ("identifier", printName(o.identifier)),
-        ("category", printComponentCategory(o.category)),
-        ("classifier", printOption(o.classifier, printClassifier)),
+        ("category", printComponentCategoryType(o.category)),
+        ("classifier", printOption(F, o.classifier, printClassifier)),
         ("features", printISZ(F, o.features, printFeature)),
         ("subComponents", printISZ(F, o.subComponents, printComponent)),
         ("connections", printISZ(F, o.connections, printConnection)),
@@ -51,7 +76,7 @@ object JSON {
       ))
     }
 
-    @pure def printComponentCategory(o: ComponentCategory.Type): ST = {
+    @pure def printComponentCategoryType(o: ComponentCategory.Type): ST = {
       val value: String = o match {
         case ComponentCategory.Abstract => "Abstract"
         case ComponentCategory.Bus => "Bus"
@@ -78,14 +103,14 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Feature""""),
         ("identifier", printName(o.identifier)),
-        ("direction", printDirection(o.direction)),
-        ("category", printFeatureCategory(o.category)),
-        ("classifier", printOption(o.classifier, printClassifier)),
+        ("direction", printDirectionType(o.direction)),
+        ("category", printFeatureCategoryType(o.category)),
+        ("classifier", printOption(F, o.classifier, printClassifier)),
         ("properties", printISZ(F, o.properties, printProperty))
       ))
     }
 
-    @pure def printDirection(o: Direction.Type): ST = {
+    @pure def printDirectionType(o: Direction.Type): ST = {
       val value: String = o match {
         case Direction.In => "In"
         case Direction.Out => "Out"
@@ -98,7 +123,7 @@ object JSON {
       ))
     }
 
-    @pure def printFeatureCategory(o: FeatureCategory.Type): ST = {
+    @pure def printFeatureCategoryType(o: FeatureCategory.Type): ST = {
       val value: String = o match {
         case FeatureCategory.AbstractFeature => "AbstractFeature"
         case FeatureCategory.BusAccess => "BusAccess"
@@ -135,7 +160,7 @@ object JSON {
         ("name", printName(o.name)),
         ("src", printEndPoint(o.src)),
         ("dst", printEndPoint(o.dst)),
-        ("kind", printConnectionKind(o.kind)),
+        ("kind", printConnectionKindType(o.kind)),
         ("connectionRefs", printISZ(F, o.connectionRefs, printConnectionReference)),
         ("properties", printISZ(F, o.properties, printProperty))
       ))
@@ -150,7 +175,7 @@ object JSON {
       ))
     }
 
-    @pure def printConnectionKind(o: ConnectionKind.Type): ST = {
+    @pure def printConnectionKindType(o: ConnectionKind.Type): ST = {
       val value: String = o match {
         case ConnectionKind.Feature => "Feature"
         case ConnectionKind.Access => "Access"
@@ -203,7 +228,7 @@ object JSON {
         ("type", st""""RangeProp""""),
         ("ValueLow", printString(o.ValueLow)),
         ("ValueHigh", printString(o.ValueHigh)),
-        ("Unit", printOption(o.Unit, printString))
+        ("Unit", printOption(T, o.Unit, printString))
       ))
     }
 
@@ -236,7 +261,7 @@ object JSON {
       ))
     }
 
-    @pure def printFlowKind(o: FlowKind.Type): ST = {
+    @pure def printFlowKindType(o: FlowKind.Type): ST = {
       val value: String = o match {
         case FlowKind.Source => "Source"
         case FlowKind.Sink => "Sink"
@@ -252,9 +277,9 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Flow""""),
         ("name", printName(o.name)),
-        ("kind", printFlowKind(o.kind)),
-        ("source", printOption(o.source, printString)),
-        ("sink", printOption(o.sink, printString))
+        ("kind", printFlowKindType(o.kind)),
+        ("source", printOption(T, o.source, printString)),
+        ("sink", printOption(T, o.sink, printString))
       ))
     }
 
@@ -285,7 +310,7 @@ object JSON {
       }
     }
 
-    @pure def printPropagationDirection(o: PropagationDirection.Type): ST = {
+    @pure def printPropagationDirectionType(o: PropagationDirection.Type): ST = {
       val value: String = o match {
         case PropagationDirection.In => "In"
         case PropagationDirection.Out => "Out"
@@ -307,7 +332,7 @@ object JSON {
     @pure def printEmv2Propagation(o: Emv2Propagation): ST = {
       return printObject(ISZ(
         ("type", st""""Emv2Propagation""""),
-        ("direction", printPropagationDirection(o.direction)),
+        ("direction", printPropagationDirectionType(o.direction)),
         ("propagationPoint", printISZ(T, o.propagationPoint, printString)),
         ("errorTokens", printISZ(T, o.errorTokens, printString))
       ))
@@ -317,9 +342,9 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Emv2Flow""""),
         ("identifier", printName(o.identifier)),
-        ("kind", printFlowKind(o.kind)),
-        ("sourcePropagation", printOption(o.sourcePropagation, printEmv2Propagation)),
-        ("sinkPropagation", printOption(o.sinkPropagation, printEmv2Propagation))
+        ("kind", printFlowKindType(o.kind)),
+        ("sourcePropagation", printOption(F, o.sourcePropagation, printEmv2Propagation)),
+        ("sinkPropagation", printOption(F, o.sinkPropagation, printEmv2Propagation))
       ))
     }
 
@@ -343,6 +368,10 @@ object JSON {
 
   @record class Parser(input: String) {
     val parser: Json.Parser = Json.Parser.create(input)
+
+    def errorOpt: Option[Json.ErrorMsg] = {
+      return parser.errorOpt
+    }
 
     def parseAadl(): Aadl = {
       val r = parseAadlT(F)
@@ -390,7 +419,7 @@ object JSON {
       val identifier = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("category")
-      val category = parseComponentCategory()
+      val category = parseComponentCategoryType()
       parser.parseObjectNext()
       parser.parseObjectKey("classifier")
       val classifier = parser.parseOption(parseClassifier _)
@@ -437,7 +466,7 @@ object JSON {
       return Classifier(name)
     }
 
-    def parseComponentCategory(): ComponentCategory.Type = {
+    def parseComponentCategoryType(): ComponentCategory.Type = {
       val r = parseComponentCategoryT(F)
       return r
     }
@@ -481,10 +510,10 @@ object JSON {
       val identifier = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("direction")
-      val direction = parseDirection()
+      val direction = parseDirectionType()
       parser.parseObjectNext()
       parser.parseObjectKey("category")
-      val category = parseFeatureCategory()
+      val category = parseFeatureCategoryType()
       parser.parseObjectNext()
       parser.parseObjectKey("classifier")
       val classifier = parser.parseOption(parseClassifier _)
@@ -495,7 +524,7 @@ object JSON {
       return Feature(identifier, direction, category, classifier, properties)
     }
 
-    def parseDirection(): Direction.Type = {
+    def parseDirectionType(): Direction.Type = {
       val r = parseDirectionT(F)
       return r
     }
@@ -516,7 +545,7 @@ object JSON {
       }
     }
 
-    def parseFeatureCategory(): FeatureCategory.Type = {
+    def parseFeatureCategoryType(): FeatureCategory.Type = {
       val r = parseFeatureCategoryT(F)
       return r
     }
@@ -592,7 +621,7 @@ object JSON {
       val dst = parseEndPoint()
       parser.parseObjectNext()
       parser.parseObjectKey("kind")
-      val kind = parseConnectionKind()
+      val kind = parseConnectionKindType()
       parser.parseObjectNext()
       parser.parseObjectKey("connectionRefs")
       val connectionRefs = parser.parseISZ(parseConnectionReference _)
@@ -624,7 +653,7 @@ object JSON {
       return ConnectionReference(name, context, isParent)
     }
 
-    def parseConnectionKind(): ConnectionKind.Type = {
+    def parseConnectionKindType(): ConnectionKind.Type = {
       val r = parseConnectionKindT(F)
       return r
     }
@@ -794,7 +823,7 @@ object JSON {
       return Mode(name)
     }
 
-    def parseFlowKind(): FlowKind.Type = {
+    def parseFlowKindType(): FlowKind.Type = {
       val r = parseFlowKindT(F)
       return r
     }
@@ -827,7 +856,7 @@ object JSON {
       val name = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("kind")
-      val kind = parseFlowKind()
+      val kind = parseFlowKindType()
       parser.parseObjectNext()
       parser.parseObjectKey("source")
       val source = parser.parseOption(parser.parseString _)
@@ -879,7 +908,7 @@ object JSON {
       }
     }
 
-    def parsePropagationDirection(): PropagationDirection.Type = {
+    def parsePropagationDirectionType(): PropagationDirection.Type = {
       val r = parsePropagationDirectionT(F)
       return r
     }
@@ -926,7 +955,7 @@ object JSON {
         parser.parseObjectType("Emv2Propagation")
       }
       parser.parseObjectKey("direction")
-      val direction = parsePropagationDirection()
+      val direction = parsePropagationDirectionType()
       parser.parseObjectNext()
       parser.parseObjectKey("propagationPoint")
       val propagationPoint = parser.parseISZ(parser.parseString _)
@@ -950,7 +979,7 @@ object JSON {
       val identifier = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("kind")
-      val kind = parseFlowKind()
+      val kind = parseFlowKindType()
       parser.parseObjectNext()
       parser.parseObjectKey("sourcePropagation")
       val sourcePropagation = parser.parseOption(parseEmv2Propagation _)
@@ -1002,17 +1031,16 @@ object JSON {
       return r
     }
 
-    def errorOpt: Option[Json.ErrorMsg] = {
-      return parser.errorOpt
-    }
-
   }
 
-  def to[T](s: String, f: Parser => T): T = {
+  def to[T](s: String, f: Parser => T): Either[T, Json.ErrorMsg] = {
     val parser = Parser(s)
     val r = f(parser)
     parser.eof()
-    return r
+    parser.errorOpt match {
+      case Some(e) => return Either.Right(e)
+      case _ => return Either.Left(r)
+    }
   }
 
   def fromAadl(o: Aadl, isCompact: B): String = {
@@ -1024,7 +1052,7 @@ object JSON {
     }
   }
 
-  def toAadl(s: String): Aadl = {
+  def toAadl(s: String): Either[Aadl, Json.ErrorMsg] = {
     def fAadl(parser: Parser): Aadl = {
       val r = parser.parseAadl()
       return r
@@ -1042,7 +1070,7 @@ object JSON {
     }
   }
 
-  def toName(s: String): Name = {
+  def toName(s: String): Either[Name, Json.ErrorMsg] = {
     def fName(parser: Parser): Name = {
       val r = parser.parseName()
       return r
@@ -1060,7 +1088,7 @@ object JSON {
     }
   }
 
-  def toComponent(s: String): Component = {
+  def toComponent(s: String): Either[Component, Json.ErrorMsg] = {
     def fComponent(parser: Parser): Component = {
       val r = parser.parseComponent()
       return r
@@ -1078,7 +1106,7 @@ object JSON {
     }
   }
 
-  def toClassifier(s: String): Classifier = {
+  def toClassifier(s: String): Either[Classifier, Json.ErrorMsg] = {
     def fClassifier(parser: Parser): Classifier = {
       val r = parser.parseClassifier()
       return r
@@ -1096,7 +1124,7 @@ object JSON {
     }
   }
 
-  def toFeature(s: String): Feature = {
+  def toFeature(s: String): Either[Feature, Json.ErrorMsg] = {
     def fFeature(parser: Parser): Feature = {
       val r = parser.parseFeature()
       return r
@@ -1114,7 +1142,7 @@ object JSON {
     }
   }
 
-  def toConnection(s: String): Connection = {
+  def toConnection(s: String): Either[Connection, Json.ErrorMsg] = {
     def fConnection(parser: Parser): Connection = {
       val r = parser.parseConnection()
       return r
@@ -1132,7 +1160,7 @@ object JSON {
     }
   }
 
-  def toConnectionInstance(s: String): ConnectionInstance = {
+  def toConnectionInstance(s: String): Either[ConnectionInstance, Json.ErrorMsg] = {
     def fConnectionInstance(parser: Parser): ConnectionInstance = {
       val r = parser.parseConnectionInstance()
       return r
@@ -1150,7 +1178,7 @@ object JSON {
     }
   }
 
-  def toConnectionReference(s: String): ConnectionReference = {
+  def toConnectionReference(s: String): Either[ConnectionReference, Json.ErrorMsg] = {
     def fConnectionReference(parser: Parser): ConnectionReference = {
       val r = parser.parseConnectionReference()
       return r
@@ -1168,7 +1196,7 @@ object JSON {
     }
   }
 
-  def toEndPoint(s: String): EndPoint = {
+  def toEndPoint(s: String): Either[EndPoint, Json.ErrorMsg] = {
     def fEndPoint(parser: Parser): EndPoint = {
       val r = parser.parseEndPoint()
       return r
@@ -1186,7 +1214,7 @@ object JSON {
     }
   }
 
-  def toProperty(s: String): Property = {
+  def toProperty(s: String): Either[Property, Json.ErrorMsg] = {
     def fProperty(parser: Parser): Property = {
       val r = parser.parseProperty()
       return r
@@ -1204,7 +1232,7 @@ object JSON {
     }
   }
 
-  def toPropertyValue(s: String): PropertyValue = {
+  def toPropertyValue(s: String): Either[PropertyValue, Json.ErrorMsg] = {
     def fPropertyValue(parser: Parser): PropertyValue = {
       val r = parser.parsePropertyValue()
       return r
@@ -1222,7 +1250,7 @@ object JSON {
     }
   }
 
-  def toClassifierProp(s: String): ClassifierProp = {
+  def toClassifierProp(s: String): Either[ClassifierProp, Json.ErrorMsg] = {
     def fClassifierProp(parser: Parser): ClassifierProp = {
       val r = parser.parseClassifierProp()
       return r
@@ -1240,7 +1268,7 @@ object JSON {
     }
   }
 
-  def toRangeProp(s: String): RangeProp = {
+  def toRangeProp(s: String): Either[RangeProp, Json.ErrorMsg] = {
     def fRangeProp(parser: Parser): RangeProp = {
       val r = parser.parseRangeProp()
       return r
@@ -1258,7 +1286,7 @@ object JSON {
     }
   }
 
-  def toReferenceProp(s: String): ReferenceProp = {
+  def toReferenceProp(s: String): Either[ReferenceProp, Json.ErrorMsg] = {
     def fReferenceProp(parser: Parser): ReferenceProp = {
       val r = parser.parseReferenceProp()
       return r
@@ -1276,7 +1304,7 @@ object JSON {
     }
   }
 
-  def toUnitProp(s: String): UnitProp = {
+  def toUnitProp(s: String): Either[UnitProp, Json.ErrorMsg] = {
     def fUnitProp(parser: Parser): UnitProp = {
       val r = parser.parseUnitProp()
       return r
@@ -1294,7 +1322,7 @@ object JSON {
     }
   }
 
-  def toValueProp(s: String): ValueProp = {
+  def toValueProp(s: String): Either[ValueProp, Json.ErrorMsg] = {
     def fValueProp(parser: Parser): ValueProp = {
       val r = parser.parseValueProp()
       return r
@@ -1312,7 +1340,7 @@ object JSON {
     }
   }
 
-  def toMode(s: String): Mode = {
+  def toMode(s: String): Either[Mode, Json.ErrorMsg] = {
     def fMode(parser: Parser): Mode = {
       val r = parser.parseMode()
       return r
@@ -1330,7 +1358,7 @@ object JSON {
     }
   }
 
-  def toFlow(s: String): Flow = {
+  def toFlow(s: String): Either[Flow, Json.ErrorMsg] = {
     def fFlow(parser: Parser): Flow = {
       val r = parser.parseFlow()
       return r
@@ -1348,7 +1376,7 @@ object JSON {
     }
   }
 
-  def toAnnex(s: String): Annex = {
+  def toAnnex(s: String): Either[Annex, Json.ErrorMsg] = {
     def fAnnex(parser: Parser): Annex = {
       val r = parser.parseAnnex()
       return r
@@ -1366,7 +1394,7 @@ object JSON {
     }
   }
 
-  def toAnnexClause(s: String): AnnexClause = {
+  def toAnnexClause(s: String): Either[AnnexClause, Json.ErrorMsg] = {
     def fAnnexClause(parser: Parser): AnnexClause = {
       val r = parser.parseAnnexClause()
       return r
@@ -1384,7 +1412,7 @@ object JSON {
     }
   }
 
-  def toEmv2Annex(s: String): Emv2Annex = {
+  def toEmv2Annex(s: String): Either[Emv2Annex, Json.ErrorMsg] = {
     def fEmv2Annex(parser: Parser): Emv2Annex = {
       val r = parser.parseEmv2Annex()
       return r
@@ -1402,7 +1430,7 @@ object JSON {
     }
   }
 
-  def toEmv2Library(s: String): Emv2Library = {
+  def toEmv2Library(s: String): Either[Emv2Library, Json.ErrorMsg] = {
     def fEmv2Library(parser: Parser): Emv2Library = {
       val r = parser.parseEmv2Library()
       return r
@@ -1420,7 +1448,7 @@ object JSON {
     }
   }
 
-  def toEmv2Propagation(s: String): Emv2Propagation = {
+  def toEmv2Propagation(s: String): Either[Emv2Propagation, Json.ErrorMsg] = {
     def fEmv2Propagation(parser: Parser): Emv2Propagation = {
       val r = parser.parseEmv2Propagation()
       return r
@@ -1438,7 +1466,7 @@ object JSON {
     }
   }
 
-  def toEmv2Flow(s: String): Emv2Flow = {
+  def toEmv2Flow(s: String): Either[Emv2Flow, Json.ErrorMsg] = {
     def fEmv2Flow(parser: Parser): Emv2Flow = {
       val r = parser.parseEmv2Flow()
       return r
@@ -1456,7 +1484,7 @@ object JSON {
     }
   }
 
-  def toEmv2Clause(s: String): Emv2Clause = {
+  def toEmv2Clause(s: String): Either[Emv2Clause, Json.ErrorMsg] = {
     def fEmv2Clause(parser: Parser): Emv2Clause = {
       val r = parser.parseEmv2Clause()
       return r
@@ -1474,7 +1502,7 @@ object JSON {
     }
   }
 
-  def toOtherAnnex(s: String): OtherAnnex = {
+  def toOtherAnnex(s: String): Either[OtherAnnex, Json.ErrorMsg] = {
     def fOtherAnnex(parser: Parser): OtherAnnex = {
       val r = parser.parseOtherAnnex()
       return r

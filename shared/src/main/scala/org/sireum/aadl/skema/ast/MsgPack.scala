@@ -1,6 +1,31 @@
 // #Sireum
 // @formatter:off
 
+/*
+ Copyright (c) 2017, Robby, Kansas State University
+ All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of source code must retain the above copyright notice, this
+    list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 // This file is auto-generated from AadlAST.scala
 
 package org.sireum.aadl.skema.ast
@@ -11,57 +36,57 @@ object MsgPack {
 
   object Constants {
 
-    val Aadl: Z = 0
+    val Aadl: Z = -32
 
-    val Name: Z = 1
+    val Name: Z = -31
 
-    val Component: Z = 2
+    val Component: Z = -30
 
-    val Classifier: Z = 3
+    val Classifier: Z = -29
 
-    val Feature: Z = 4
+    val Feature: Z = -28
 
-    val Connection: Z = 5
+    val Connection: Z = -27
 
-    val ConnectionInstance: Z = 6
+    val ConnectionInstance: Z = -26
 
-    val ConnectionReference: Z = 7
+    val ConnectionReference: Z = -25
 
-    val EndPoint: Z = 8
+    val EndPoint: Z = -24
 
-    val Property: Z = 9
+    val Property: Z = -23
 
-    val ClassifierProp: Z = 10
+    val ClassifierProp: Z = -22
 
-    val RangeProp: Z = 11
+    val RangeProp: Z = -21
 
-    val ReferenceProp: Z = 12
+    val ReferenceProp: Z = -20
 
-    val UnitProp: Z = 13
+    val UnitProp: Z = -19
 
-    val ValueProp: Z = 14
+    val ValueProp: Z = -18
 
-    val Mode: Z = 15
+    val Mode: Z = -17
 
-    val Flow: Z = 16
+    val Flow: Z = -16
 
-    val Annex: Z = 17
+    val Annex: Z = -15
 
-    val Emv2Library: Z = 18
+    val Emv2Library: Z = -14
 
-    val Emv2Propagation: Z = 19
+    val Emv2Propagation: Z = -13
 
-    val Emv2Flow: Z = 20
+    val Emv2Flow: Z = -12
 
-    val Emv2Clause: Z = 21
+    val Emv2Clause: Z = -11
 
-    val OtherAnnex: Z = 22
+    val OtherAnnex: Z = -10
 
   }
 
   object Writer {
 
-    @record class Default(val writer: MessagePack.Writer) extends Writer
+    @record class Default(val writer: MessagePack.Writer.Impl) extends Writer
 
   }
 
@@ -77,13 +102,13 @@ object MsgPack {
 
     def writeName(o: Name): Unit = {
       writer.writeZ(Constants.Name)
-      writer.writeISZ(o.name, writeString)
+      writer.writeISZ(o.name, writer.writeString)
     }
 
     def writeComponent(o: Component): Unit = {
       writer.writeZ(Constants.Component)
       writeName(o.identifier)
-      writeComponentCategory(o.category)
+      writeComponentCategoryType(o.category)
       writer.writeOption(o.classifier, writeClassifier)
       writer.writeISZ(o.features, writeFeature)
       writer.writeISZ(o.subComponents, writeComponent)
@@ -97,27 +122,27 @@ object MsgPack {
 
     def writeClassifier(o: Classifier): Unit = {
       writer.writeZ(Constants.Classifier)
-      writeString(o.name)
+      writer.writeString(o.name)
     }
 
-    def writeComponentCategory(o: ComponentCategory.Type): Unit = {
+    def writeComponentCategoryType(o: ComponentCategory.Type): Unit = {
       writer.writeZ(o.ordinal)
     }
 
     def writeFeature(o: Feature): Unit = {
       writer.writeZ(Constants.Feature)
       writeName(o.identifier)
-      writeDirection(o.direction)
-      writeFeatureCategory(o.category)
+      writeDirectionType(o.direction)
+      writeFeatureCategoryType(o.category)
       writer.writeOption(o.classifier, writeClassifier)
       writer.writeISZ(o.properties, writeProperty)
     }
 
-    def writeDirection(o: Direction.Type): Unit = {
+    def writeDirectionType(o: Direction.Type): Unit = {
       writer.writeZ(o.ordinal)
     }
 
-    def writeFeatureCategory(o: FeatureCategory.Type): Unit = {
+    def writeFeatureCategoryType(o: FeatureCategory.Type): Unit = {
       writer.writeZ(o.ordinal)
     }
 
@@ -126,7 +151,7 @@ object MsgPack {
       writeName(o.name)
       writeEndPoint(o.src)
       writeEndPoint(o.dst)
-      writeB(o.isBiDirectional)
+      writer.writeB(o.isBiDirectional)
       writer.writeISZ(o.connectionInstances, writeName)
       writer.writeISZ(o.properties, writeProperty)
     }
@@ -136,7 +161,7 @@ object MsgPack {
       writeName(o.name)
       writeEndPoint(o.src)
       writeEndPoint(o.dst)
-      writeConnectionKind(o.kind)
+      writeConnectionKindType(o.kind)
       writer.writeISZ(o.connectionRefs, writeConnectionReference)
       writer.writeISZ(o.properties, writeProperty)
     }
@@ -145,10 +170,10 @@ object MsgPack {
       writer.writeZ(Constants.ConnectionReference)
       writeName(o.name)
       writeName(o.context)
-      writeB(o.isParent)
+      writer.writeB(o.isParent)
     }
 
-    def writeConnectionKind(o: ConnectionKind.Type): Unit = {
+    def writeConnectionKindType(o: ConnectionKind.Type): Unit = {
       writer.writeZ(o.ordinal)
     }
 
@@ -176,30 +201,30 @@ object MsgPack {
 
     def writeClassifierProp(o: ClassifierProp): Unit = {
       writer.writeZ(Constants.ClassifierProp)
-      writeString(o.name)
+      writer.writeString(o.name)
     }
 
     def writeRangeProp(o: RangeProp): Unit = {
       writer.writeZ(Constants.RangeProp)
-      writeString(o.ValueLow)
-      writeString(o.ValueHigh)
-      writer.writeOption(o.Unit, writeString)
+      writer.writeString(o.ValueLow)
+      writer.writeString(o.ValueHigh)
+      writer.writeOption(o.Unit, writer.writeString)
     }
 
     def writeReferenceProp(o: ReferenceProp): Unit = {
       writer.writeZ(Constants.ReferenceProp)
-      writeString(o.value)
+      writer.writeString(o.value)
     }
 
     def writeUnitProp(o: UnitProp): Unit = {
       writer.writeZ(Constants.UnitProp)
-      writeString(o.value)
-      writeString(o.unit)
+      writer.writeString(o.value)
+      writer.writeString(o.unit)
     }
 
     def writeValueProp(o: ValueProp): Unit = {
       writer.writeZ(Constants.ValueProp)
-      writeString(o.value)
+      writer.writeString(o.value)
     }
 
     def writeMode(o: Mode): Unit = {
@@ -207,21 +232,21 @@ object MsgPack {
       writeName(o.name)
     }
 
-    def writeFlowKind(o: FlowKind.Type): Unit = {
+    def writeFlowKindType(o: FlowKind.Type): Unit = {
       writer.writeZ(o.ordinal)
     }
 
     def writeFlow(o: Flow): Unit = {
       writer.writeZ(Constants.Flow)
       writeName(o.name)
-      writeFlowKind(o.kind)
-      writer.writeOption(o.source, writeString)
-      writer.writeOption(o.sink, writeString)
+      writeFlowKindType(o.kind)
+      writer.writeOption(o.source, writer.writeString)
+      writer.writeOption(o.sink, writer.writeString)
     }
 
     def writeAnnex(o: Annex): Unit = {
       writer.writeZ(Constants.Annex)
-      writeString(o.name)
+      writer.writeString(o.name)
       writeAnnexClause(o.clause)
     }
 
@@ -244,137 +269,41 @@ object MsgPack {
       }
     }
 
-    def writePropagationDirection(o: PropagationDirection.Type): Unit = {
+    def writePropagationDirectionType(o: PropagationDirection.Type): Unit = {
       writer.writeZ(o.ordinal)
     }
 
     def writeEmv2Library(o: Emv2Library): Unit = {
       writer.writeZ(Constants.Emv2Library)
       writeName(o.name)
-      writer.writeISZ(o.tokens, writeString)
+      writer.writeISZ(o.tokens, writer.writeString)
     }
 
     def writeEmv2Propagation(o: Emv2Propagation): Unit = {
       writer.writeZ(Constants.Emv2Propagation)
-      writePropagationDirection(o.direction)
-      writer.writeISZ(o.propagationPoint, writeString)
-      writer.writeISZ(o.errorTokens, writeString)
+      writePropagationDirectionType(o.direction)
+      writer.writeISZ(o.propagationPoint, writer.writeString)
+      writer.writeISZ(o.errorTokens, writer.writeString)
     }
 
     def writeEmv2Flow(o: Emv2Flow): Unit = {
       writer.writeZ(Constants.Emv2Flow)
       writeName(o.identifier)
-      writeFlowKind(o.kind)
+      writeFlowKindType(o.kind)
       writer.writeOption(o.sourcePropagation, writeEmv2Propagation)
       writer.writeOption(o.sinkPropagation, writeEmv2Propagation)
     }
 
     def writeEmv2Clause(o: Emv2Clause): Unit = {
       writer.writeZ(Constants.Emv2Clause)
-      writer.writeISZ(o.libraries, writeString)
+      writer.writeISZ(o.libraries, writer.writeString)
       writer.writeISZ(o.propagations, writeEmv2Propagation)
       writer.writeISZ(o.flows, writeEmv2Flow)
     }
 
     def writeOtherAnnex(o: OtherAnnex): Unit = {
       writer.writeZ(Constants.OtherAnnex)
-      writeString(o.clause)
-    }
-
-    def writeB(b: B): Unit = {
-      writer.writeB(b)
-    }
-
-    def writeC(c: C): Unit = {
-      writer.writeC(c)
-    }
-
-    def writeZ(n: Z): Unit = {
-      writer.writeZ(n)
-    }
-
-    def writeZ8(n: Z8): Unit = {
-      writer.writeZ8(n)
-    }
-
-    def writeZ16(n: Z16): Unit = {
-      writer.writeZ16(n)
-    }
-
-    def writeZ32(n: Z32): Unit = {
-      writer.writeZ32(n)
-    }
-
-    def writeZ64(n: Z64): Unit = {
-      writer.writeZ64(n)
-    }
-
-    def writeN(n: N): Unit = {
-      writer.writeN(n)
-    }
-
-    def writeN8(n: N8): Unit = {
-      writer.writeN8(n)
-    }
-
-    def writeN16(n: N16): Unit = {
-      writer.writeN16(n)
-    }
-
-    def writeN32(n: N32): Unit = {
-      writer.writeN32(n)
-    }
-
-    def writeN64(n: N64): Unit = {
-      writer.writeN64(n)
-    }
-
-    def writeS8(n: S8): Unit = {
-      writer.writeS8(n)
-    }
-
-    def writeS16(n: S16): Unit = {
-      writer.writeS16(n)
-    }
-
-    def writeS32(n: S32): Unit = {
-      writer.writeS32(n)
-    }
-
-    def writeS64(n: S64): Unit = {
-      writer.writeS64(n)
-    }
-
-    def writeU8(n: U8): Unit = {
-      writer.writeU8(n)
-    }
-
-    def writeU16(n: U16): Unit = {
-      writer.writeU16(n)
-    }
-
-    def writeU32(n: U32): Unit = {
-      writer.writeU32(n)
-    }
-
-    def writeU64(n: U64): Unit = {
-      writer.writeU64(n)
-    }
-
-    def writeR(n: R): Unit = {
-      writer.writeR(n)
-    }
-
-    def writeF32(n: F32): Unit = {
-      writer.writeF32(n)
-    }
-
-    def writeF64(n: F64): Unit = {
-      writer.writeF64(n)
-    }
-
-    def writeString(s: String): Unit = {
-      writer.writeString(s)
+      writer.writeString(o.clause)
     }
 
     def result: ISZ[U8] = {
@@ -385,7 +314,11 @@ object MsgPack {
 
   object Reader {
 
-    @record class Default(val reader: MessagePack.Reader) extends Reader
+    @record class Default(val reader: MessagePack.Reader.Impl) extends Reader {
+      def errorOpt: Option[MessagePack.ErrorMsg] = {
+        return reader.errorOpt
+      }
+    }
 
   }
 
@@ -430,7 +363,7 @@ object MsgPack {
         reader.expectZ(Constants.Component)
       }
       val identifier = readName()
-      val category = readComponentCategory()
+      val category = readComponentCategoryType()
       val classifier = reader.readOption(readClassifier _)
       val features = reader.readISZ(readFeature _)
       val subComponents = reader.readISZ(readComponent _)
@@ -456,7 +389,7 @@ object MsgPack {
       return Classifier(name)
     }
 
-    def readComponentCategory(): ComponentCategory.Type = {
+    def readComponentCategoryType(): ComponentCategory.Type = {
       val r = reader.readZ()
       return ComponentCategory.byOrdinal(r).get
     }
@@ -471,19 +404,19 @@ object MsgPack {
         reader.expectZ(Constants.Feature)
       }
       val identifier = readName()
-      val direction = readDirection()
-      val category = readFeatureCategory()
+      val direction = readDirectionType()
+      val category = readFeatureCategoryType()
       val classifier = reader.readOption(readClassifier _)
       val properties = reader.readISZ(readProperty _)
       return Feature(identifier, direction, category, classifier, properties)
     }
 
-    def readDirection(): Direction.Type = {
+    def readDirectionType(): Direction.Type = {
       val r = reader.readZ()
       return Direction.byOrdinal(r).get
     }
 
-    def readFeatureCategory(): FeatureCategory.Type = {
+    def readFeatureCategoryType(): FeatureCategory.Type = {
       val r = reader.readZ()
       return FeatureCategory.byOrdinal(r).get
     }
@@ -518,7 +451,7 @@ object MsgPack {
       val name = readName()
       val src = readEndPoint()
       val dst = readEndPoint()
-      val kind = readConnectionKind()
+      val kind = readConnectionKindType()
       val connectionRefs = reader.readISZ(readConnectionReference _)
       val properties = reader.readISZ(readProperty _)
       return ConnectionInstance(name, src, dst, kind, connectionRefs, properties)
@@ -539,7 +472,7 @@ object MsgPack {
       return ConnectionReference(name, context, isParent)
     }
 
-    def readConnectionKind(): ConnectionKind.Type = {
+    def readConnectionKindType(): ConnectionKind.Type = {
       val r = reader.readZ()
       return ConnectionKind.byOrdinal(r).get
     }
@@ -665,7 +598,7 @@ object MsgPack {
       return Mode(name)
     }
 
-    def readFlowKind(): FlowKind.Type = {
+    def readFlowKindType(): FlowKind.Type = {
       val r = reader.readZ()
       return FlowKind.byOrdinal(r).get
     }
@@ -680,7 +613,7 @@ object MsgPack {
         reader.expectZ(Constants.Flow)
       }
       val name = readName()
-      val kind = readFlowKind()
+      val kind = readFlowKindType()
       val source = reader.readOption(reader.readString _)
       val sink = reader.readOption(reader.readString _)
       return Flow(name, kind, source, sink)
@@ -723,7 +656,7 @@ object MsgPack {
       }
     }
 
-    def readPropagationDirection(): PropagationDirection.Type = {
+    def readPropagationDirectionType(): PropagationDirection.Type = {
       val r = reader.readZ()
       return PropagationDirection.byOrdinal(r).get
     }
@@ -751,7 +684,7 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.Emv2Propagation)
       }
-      val direction = readPropagationDirection()
+      val direction = readPropagationDirectionType()
       val propagationPoint = reader.readISZ(reader.readString _)
       val errorTokens = reader.readISZ(reader.readString _)
       return Emv2Propagation(direction, propagationPoint, errorTokens)
@@ -767,7 +700,7 @@ object MsgPack {
         reader.expectZ(Constants.Emv2Flow)
       }
       val identifier = readName()
-      val kind = readFlowKind()
+      val kind = readFlowKindType()
       val sourcePropagation = reader.readOption(readEmv2Propagation _)
       val sinkPropagation = reader.readOption(readEmv2Propagation _)
       return Emv2Flow(identifier, kind, sourcePropagation, sinkPropagation)
@@ -803,20 +736,23 @@ object MsgPack {
 
   }
 
-  def to[T](data: ISZ[U8], f: Reader => T): T = {
+  def to[T](data: ISZ[U8], f: Reader => T): Either[T, MessagePack.ErrorMsg] = {
     val rd = Reader.Default(MessagePack.reader(data))
     rd.reader.init()
     val r = f(rd)
-    return r
+    rd.errorOpt match {
+      case Some(e) => return Either.Right(e)
+      case _ => return Either.Left(r)
+    }
   }
 
-  def fromAadl(o: Aadl, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromAadl(o: Aadl, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeAadl(o)
     return w.result
   }
 
-  def toAadl(data: ISZ[U8]): Aadl = {
+  def toAadl(data: ISZ[U8]): Either[Aadl, MessagePack.ErrorMsg] = {
     def fAadl(reader: Reader): Aadl = {
       val r = reader.readAadl()
       return r
@@ -825,13 +761,13 @@ object MsgPack {
     return r
   }
 
-  def fromName(o: Name, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromName(o: Name, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeName(o)
     return w.result
   }
 
-  def toName(data: ISZ[U8]): Name = {
+  def toName(data: ISZ[U8]): Either[Name, MessagePack.ErrorMsg] = {
     def fName(reader: Reader): Name = {
       val r = reader.readName()
       return r
@@ -840,13 +776,13 @@ object MsgPack {
     return r
   }
 
-  def fromComponent(o: Component, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromComponent(o: Component, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeComponent(o)
     return w.result
   }
 
-  def toComponent(data: ISZ[U8]): Component = {
+  def toComponent(data: ISZ[U8]): Either[Component, MessagePack.ErrorMsg] = {
     def fComponent(reader: Reader): Component = {
       val r = reader.readComponent()
       return r
@@ -855,13 +791,13 @@ object MsgPack {
     return r
   }
 
-  def fromClassifier(o: Classifier, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromClassifier(o: Classifier, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeClassifier(o)
     return w.result
   }
 
-  def toClassifier(data: ISZ[U8]): Classifier = {
+  def toClassifier(data: ISZ[U8]): Either[Classifier, MessagePack.ErrorMsg] = {
     def fClassifier(reader: Reader): Classifier = {
       val r = reader.readClassifier()
       return r
@@ -870,13 +806,13 @@ object MsgPack {
     return r
   }
 
-  def fromFeature(o: Feature, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromFeature(o: Feature, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeFeature(o)
     return w.result
   }
 
-  def toFeature(data: ISZ[U8]): Feature = {
+  def toFeature(data: ISZ[U8]): Either[Feature, MessagePack.ErrorMsg] = {
     def fFeature(reader: Reader): Feature = {
       val r = reader.readFeature()
       return r
@@ -885,13 +821,13 @@ object MsgPack {
     return r
   }
 
-  def fromConnection(o: Connection, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromConnection(o: Connection, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeConnection(o)
     return w.result
   }
 
-  def toConnection(data: ISZ[U8]): Connection = {
+  def toConnection(data: ISZ[U8]): Either[Connection, MessagePack.ErrorMsg] = {
     def fConnection(reader: Reader): Connection = {
       val r = reader.readConnection()
       return r
@@ -900,13 +836,13 @@ object MsgPack {
     return r
   }
 
-  def fromConnectionInstance(o: ConnectionInstance, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromConnectionInstance(o: ConnectionInstance, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeConnectionInstance(o)
     return w.result
   }
 
-  def toConnectionInstance(data: ISZ[U8]): ConnectionInstance = {
+  def toConnectionInstance(data: ISZ[U8]): Either[ConnectionInstance, MessagePack.ErrorMsg] = {
     def fConnectionInstance(reader: Reader): ConnectionInstance = {
       val r = reader.readConnectionInstance()
       return r
@@ -915,13 +851,13 @@ object MsgPack {
     return r
   }
 
-  def fromConnectionReference(o: ConnectionReference, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromConnectionReference(o: ConnectionReference, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeConnectionReference(o)
     return w.result
   }
 
-  def toConnectionReference(data: ISZ[U8]): ConnectionReference = {
+  def toConnectionReference(data: ISZ[U8]): Either[ConnectionReference, MessagePack.ErrorMsg] = {
     def fConnectionReference(reader: Reader): ConnectionReference = {
       val r = reader.readConnectionReference()
       return r
@@ -930,13 +866,13 @@ object MsgPack {
     return r
   }
 
-  def fromEndPoint(o: EndPoint, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromEndPoint(o: EndPoint, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeEndPoint(o)
     return w.result
   }
 
-  def toEndPoint(data: ISZ[U8]): EndPoint = {
+  def toEndPoint(data: ISZ[U8]): Either[EndPoint, MessagePack.ErrorMsg] = {
     def fEndPoint(reader: Reader): EndPoint = {
       val r = reader.readEndPoint()
       return r
@@ -945,13 +881,13 @@ object MsgPack {
     return r
   }
 
-  def fromProperty(o: Property, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromProperty(o: Property, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeProperty(o)
     return w.result
   }
 
-  def toProperty(data: ISZ[U8]): Property = {
+  def toProperty(data: ISZ[U8]): Either[Property, MessagePack.ErrorMsg] = {
     def fProperty(reader: Reader): Property = {
       val r = reader.readProperty()
       return r
@@ -960,13 +896,13 @@ object MsgPack {
     return r
   }
 
-  def fromPropertyValue(o: PropertyValue, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromPropertyValue(o: PropertyValue, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writePropertyValue(o)
     return w.result
   }
 
-  def toPropertyValue(data: ISZ[U8]): PropertyValue = {
+  def toPropertyValue(data: ISZ[U8]): Either[PropertyValue, MessagePack.ErrorMsg] = {
     def fPropertyValue(reader: Reader): PropertyValue = {
       val r = reader.readPropertyValue()
       return r
@@ -975,13 +911,13 @@ object MsgPack {
     return r
   }
 
-  def fromClassifierProp(o: ClassifierProp, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromClassifierProp(o: ClassifierProp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeClassifierProp(o)
     return w.result
   }
 
-  def toClassifierProp(data: ISZ[U8]): ClassifierProp = {
+  def toClassifierProp(data: ISZ[U8]): Either[ClassifierProp, MessagePack.ErrorMsg] = {
     def fClassifierProp(reader: Reader): ClassifierProp = {
       val r = reader.readClassifierProp()
       return r
@@ -990,13 +926,13 @@ object MsgPack {
     return r
   }
 
-  def fromRangeProp(o: RangeProp, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromRangeProp(o: RangeProp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeRangeProp(o)
     return w.result
   }
 
-  def toRangeProp(data: ISZ[U8]): RangeProp = {
+  def toRangeProp(data: ISZ[U8]): Either[RangeProp, MessagePack.ErrorMsg] = {
     def fRangeProp(reader: Reader): RangeProp = {
       val r = reader.readRangeProp()
       return r
@@ -1005,13 +941,13 @@ object MsgPack {
     return r
   }
 
-  def fromReferenceProp(o: ReferenceProp, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromReferenceProp(o: ReferenceProp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeReferenceProp(o)
     return w.result
   }
 
-  def toReferenceProp(data: ISZ[U8]): ReferenceProp = {
+  def toReferenceProp(data: ISZ[U8]): Either[ReferenceProp, MessagePack.ErrorMsg] = {
     def fReferenceProp(reader: Reader): ReferenceProp = {
       val r = reader.readReferenceProp()
       return r
@@ -1020,13 +956,13 @@ object MsgPack {
     return r
   }
 
-  def fromUnitProp(o: UnitProp, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromUnitProp(o: UnitProp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeUnitProp(o)
     return w.result
   }
 
-  def toUnitProp(data: ISZ[U8]): UnitProp = {
+  def toUnitProp(data: ISZ[U8]): Either[UnitProp, MessagePack.ErrorMsg] = {
     def fUnitProp(reader: Reader): UnitProp = {
       val r = reader.readUnitProp()
       return r
@@ -1035,13 +971,13 @@ object MsgPack {
     return r
   }
 
-  def fromValueProp(o: ValueProp, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromValueProp(o: ValueProp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeValueProp(o)
     return w.result
   }
 
-  def toValueProp(data: ISZ[U8]): ValueProp = {
+  def toValueProp(data: ISZ[U8]): Either[ValueProp, MessagePack.ErrorMsg] = {
     def fValueProp(reader: Reader): ValueProp = {
       val r = reader.readValueProp()
       return r
@@ -1050,13 +986,13 @@ object MsgPack {
     return r
   }
 
-  def fromMode(o: Mode, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromMode(o: Mode, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeMode(o)
     return w.result
   }
 
-  def toMode(data: ISZ[U8]): Mode = {
+  def toMode(data: ISZ[U8]): Either[Mode, MessagePack.ErrorMsg] = {
     def fMode(reader: Reader): Mode = {
       val r = reader.readMode()
       return r
@@ -1065,13 +1001,13 @@ object MsgPack {
     return r
   }
 
-  def fromFlow(o: Flow, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromFlow(o: Flow, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeFlow(o)
     return w.result
   }
 
-  def toFlow(data: ISZ[U8]): Flow = {
+  def toFlow(data: ISZ[U8]): Either[Flow, MessagePack.ErrorMsg] = {
     def fFlow(reader: Reader): Flow = {
       val r = reader.readFlow()
       return r
@@ -1080,13 +1016,13 @@ object MsgPack {
     return r
   }
 
-  def fromAnnex(o: Annex, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromAnnex(o: Annex, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeAnnex(o)
     return w.result
   }
 
-  def toAnnex(data: ISZ[U8]): Annex = {
+  def toAnnex(data: ISZ[U8]): Either[Annex, MessagePack.ErrorMsg] = {
     def fAnnex(reader: Reader): Annex = {
       val r = reader.readAnnex()
       return r
@@ -1095,13 +1031,13 @@ object MsgPack {
     return r
   }
 
-  def fromAnnexClause(o: AnnexClause, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromAnnexClause(o: AnnexClause, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeAnnexClause(o)
     return w.result
   }
 
-  def toAnnexClause(data: ISZ[U8]): AnnexClause = {
+  def toAnnexClause(data: ISZ[U8]): Either[AnnexClause, MessagePack.ErrorMsg] = {
     def fAnnexClause(reader: Reader): AnnexClause = {
       val r = reader.readAnnexClause()
       return r
@@ -1110,13 +1046,13 @@ object MsgPack {
     return r
   }
 
-  def fromEmv2Annex(o: Emv2Annex, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromEmv2Annex(o: Emv2Annex, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeEmv2Annex(o)
     return w.result
   }
 
-  def toEmv2Annex(data: ISZ[U8]): Emv2Annex = {
+  def toEmv2Annex(data: ISZ[U8]): Either[Emv2Annex, MessagePack.ErrorMsg] = {
     def fEmv2Annex(reader: Reader): Emv2Annex = {
       val r = reader.readEmv2Annex()
       return r
@@ -1125,13 +1061,13 @@ object MsgPack {
     return r
   }
 
-  def fromEmv2Library(o: Emv2Library, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromEmv2Library(o: Emv2Library, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeEmv2Library(o)
     return w.result
   }
 
-  def toEmv2Library(data: ISZ[U8]): Emv2Library = {
+  def toEmv2Library(data: ISZ[U8]): Either[Emv2Library, MessagePack.ErrorMsg] = {
     def fEmv2Library(reader: Reader): Emv2Library = {
       val r = reader.readEmv2Library()
       return r
@@ -1140,13 +1076,13 @@ object MsgPack {
     return r
   }
 
-  def fromEmv2Propagation(o: Emv2Propagation, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromEmv2Propagation(o: Emv2Propagation, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeEmv2Propagation(o)
     return w.result
   }
 
-  def toEmv2Propagation(data: ISZ[U8]): Emv2Propagation = {
+  def toEmv2Propagation(data: ISZ[U8]): Either[Emv2Propagation, MessagePack.ErrorMsg] = {
     def fEmv2Propagation(reader: Reader): Emv2Propagation = {
       val r = reader.readEmv2Propagation()
       return r
@@ -1155,13 +1091,13 @@ object MsgPack {
     return r
   }
 
-  def fromEmv2Flow(o: Emv2Flow, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromEmv2Flow(o: Emv2Flow, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeEmv2Flow(o)
     return w.result
   }
 
-  def toEmv2Flow(data: ISZ[U8]): Emv2Flow = {
+  def toEmv2Flow(data: ISZ[U8]): Either[Emv2Flow, MessagePack.ErrorMsg] = {
     def fEmv2Flow(reader: Reader): Emv2Flow = {
       val r = reader.readEmv2Flow()
       return r
@@ -1170,13 +1106,13 @@ object MsgPack {
     return r
   }
 
-  def fromEmv2Clause(o: Emv2Clause, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromEmv2Clause(o: Emv2Clause, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeEmv2Clause(o)
     return w.result
   }
 
-  def toEmv2Clause(data: ISZ[U8]): Emv2Clause = {
+  def toEmv2Clause(data: ISZ[U8]): Either[Emv2Clause, MessagePack.ErrorMsg] = {
     def fEmv2Clause(reader: Reader): Emv2Clause = {
       val r = reader.readEmv2Clause()
       return r
@@ -1185,13 +1121,13 @@ object MsgPack {
     return r
   }
 
-  def fromOtherAnnex(o: OtherAnnex, poolString: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(poolString))
+  def fromOtherAnnex(o: OtherAnnex, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
     w.writeOtherAnnex(o)
     return w.result
   }
 
-  def toOtherAnnex(data: ISZ[U8]): OtherAnnex = {
+  def toOtherAnnex(data: ISZ[U8]): Either[OtherAnnex, MessagePack.ErrorMsg] = {
     def fOtherAnnex(reader: Reader): OtherAnnex = {
       val r = reader.readOtherAnnex()
       return r

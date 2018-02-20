@@ -23,7 +23,16 @@ class JsonGen extends FreeSpec {
 
       val reporter = Reporter.create
       val rOpt =
-        SerializerGenJvm(allowSireumPackage = true, SerializerGen.Mode.JSON, None, src, dest, SNone(), reporter)
+        SerializerGenJvm(
+          allowSireumPackage = true,
+          SerializerGen.Mode.JSON,
+          None,
+          Seq(src),
+          dest,
+          SNone(),
+          SNone(),
+          reporter
+        )
 
       reporter.printMessages()
 

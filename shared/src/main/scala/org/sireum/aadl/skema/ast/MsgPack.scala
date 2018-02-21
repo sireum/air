@@ -96,28 +96,28 @@ object MsgPack {
 
     def writeAadl(o: Aadl): Unit = {
       writer.writeZ(Constants.Aadl)
-      writer.writeISZ(o.components, writeComponent)
-      writer.writeISZ(o.errorLib, writeEmv2Library)
+      writer.writeISZ(o.components, writeComponent _)
+      writer.writeISZ(o.errorLib, writeEmv2Library _)
     }
 
     def writeName(o: Name): Unit = {
       writer.writeZ(Constants.Name)
-      writer.writeISZ(o.name, writer.writeString)
+      writer.writeISZ(o.name, writer.writeString _)
     }
 
     def writeComponent(o: Component): Unit = {
       writer.writeZ(Constants.Component)
       writeName(o.identifier)
       writeComponentCategoryType(o.category)
-      writer.writeOption(o.classifier, writeClassifier)
-      writer.writeISZ(o.features, writeFeature)
-      writer.writeISZ(o.subComponents, writeComponent)
-      writer.writeISZ(o.connections, writeConnection)
-      writer.writeISZ(o.connectionInstances, writeConnectionInstance)
-      writer.writeISZ(o.properties, writeProperty)
-      writer.writeISZ(o.flows, writeFlow)
-      writer.writeISZ(o.modes, writeMode)
-      writer.writeISZ(o.annexes, writeAnnex)
+      writer.writeOption(o.classifier, writeClassifier _)
+      writer.writeISZ(o.features, writeFeature _)
+      writer.writeISZ(o.subComponents, writeComponent _)
+      writer.writeISZ(o.connections, writeConnection _)
+      writer.writeISZ(o.connectionInstances, writeConnectionInstance _)
+      writer.writeISZ(o.properties, writeProperty _)
+      writer.writeISZ(o.flows, writeFlow _)
+      writer.writeISZ(o.modes, writeMode _)
+      writer.writeISZ(o.annexes, writeAnnex _)
     }
 
     def writeClassifier(o: Classifier): Unit = {
@@ -134,8 +134,8 @@ object MsgPack {
       writeName(o.identifier)
       writeDirectionType(o.direction)
       writeFeatureCategoryType(o.category)
-      writer.writeOption(o.classifier, writeClassifier)
-      writer.writeISZ(o.properties, writeProperty)
+      writer.writeOption(o.classifier, writeClassifier _)
+      writer.writeISZ(o.properties, writeProperty _)
     }
 
     def writeDirectionType(o: Direction.Type): Unit = {
@@ -152,8 +152,8 @@ object MsgPack {
       writeEndPoint(o.src)
       writeEndPoint(o.dst)
       writer.writeB(o.isBiDirectional)
-      writer.writeISZ(o.connectionInstances, writeName)
-      writer.writeISZ(o.properties, writeProperty)
+      writer.writeISZ(o.connectionInstances, writeName _)
+      writer.writeISZ(o.properties, writeProperty _)
     }
 
     def writeConnectionInstance(o: ConnectionInstance): Unit = {
@@ -162,8 +162,8 @@ object MsgPack {
       writeEndPoint(o.src)
       writeEndPoint(o.dst)
       writeConnectionKindType(o.kind)
-      writer.writeISZ(o.connectionRefs, writeConnectionReference)
-      writer.writeISZ(o.properties, writeProperty)
+      writer.writeISZ(o.connectionRefs, writeConnectionReference _)
+      writer.writeISZ(o.properties, writeProperty _)
     }
 
     def writeConnectionReference(o: ConnectionReference): Unit = {
@@ -186,7 +186,7 @@ object MsgPack {
     def writeProperty(o: Property): Unit = {
       writer.writeZ(Constants.Property)
       writeName(o.name)
-      writer.writeISZ(o.propertyValues, writePropertyValue)
+      writer.writeISZ(o.propertyValues, writePropertyValue _)
     }
 
     def writePropertyValue(o: PropertyValue): Unit = {
@@ -208,7 +208,7 @@ object MsgPack {
       writer.writeZ(Constants.RangeProp)
       writer.writeString(o.ValueLow)
       writer.writeString(o.ValueHigh)
-      writer.writeOption(o.Unit, writer.writeString)
+      writer.writeOption(o.Unit, writer.writeString _)
     }
 
     def writeReferenceProp(o: ReferenceProp): Unit = {
@@ -240,8 +240,8 @@ object MsgPack {
       writer.writeZ(Constants.Flow)
       writeName(o.name)
       writeFlowKindType(o.kind)
-      writer.writeOption(o.source, writer.writeString)
-      writer.writeOption(o.sink, writer.writeString)
+      writer.writeOption(o.source, writer.writeString _)
+      writer.writeOption(o.sink, writer.writeString _)
     }
 
     def writeAnnex(o: Annex): Unit = {
@@ -276,29 +276,29 @@ object MsgPack {
     def writeEmv2Library(o: Emv2Library): Unit = {
       writer.writeZ(Constants.Emv2Library)
       writeName(o.name)
-      writer.writeISZ(o.tokens, writer.writeString)
+      writer.writeISZ(o.tokens, writer.writeString _)
     }
 
     def writeEmv2Propagation(o: Emv2Propagation): Unit = {
       writer.writeZ(Constants.Emv2Propagation)
       writePropagationDirectionType(o.direction)
-      writer.writeISZ(o.propagationPoint, writer.writeString)
-      writer.writeISZ(o.errorTokens, writer.writeString)
+      writer.writeISZ(o.propagationPoint, writer.writeString _)
+      writer.writeISZ(o.errorTokens, writer.writeString _)
     }
 
     def writeEmv2Flow(o: Emv2Flow): Unit = {
       writer.writeZ(Constants.Emv2Flow)
       writeName(o.identifier)
       writeFlowKindType(o.kind)
-      writer.writeOption(o.sourcePropagation, writeEmv2Propagation)
-      writer.writeOption(o.sinkPropagation, writeEmv2Propagation)
+      writer.writeOption(o.sourcePropagation, writeEmv2Propagation _)
+      writer.writeOption(o.sinkPropagation, writeEmv2Propagation _)
     }
 
     def writeEmv2Clause(o: Emv2Clause): Unit = {
       writer.writeZ(Constants.Emv2Clause)
-      writer.writeISZ(o.libraries, writer.writeString)
-      writer.writeISZ(o.propagations, writeEmv2Propagation)
-      writer.writeISZ(o.flows, writeEmv2Flow)
+      writer.writeISZ(o.libraries, writer.writeString _)
+      writer.writeISZ(o.propagations, writeEmv2Propagation _)
+      writer.writeISZ(o.flows, writeEmv2Flow _)
     }
 
     def writeOtherAnnex(o: OtherAnnex): Unit = {
@@ -769,7 +769,7 @@ object MsgPack {
       val r = reader.readAadl()
       return r
     }
-    val r = to(data, fAadl)
+    val r = to(data, fAadl _)
     return r
   }
 
@@ -784,7 +784,7 @@ object MsgPack {
       val r = reader.readName()
       return r
     }
-    val r = to(data, fName)
+    val r = to(data, fName _)
     return r
   }
 
@@ -799,7 +799,7 @@ object MsgPack {
       val r = reader.readComponent()
       return r
     }
-    val r = to(data, fComponent)
+    val r = to(data, fComponent _)
     return r
   }
 
@@ -814,7 +814,7 @@ object MsgPack {
       val r = reader.readClassifier()
       return r
     }
-    val r = to(data, fClassifier)
+    val r = to(data, fClassifier _)
     return r
   }
 
@@ -829,7 +829,7 @@ object MsgPack {
       val r = reader.readFeature()
       return r
     }
-    val r = to(data, fFeature)
+    val r = to(data, fFeature _)
     return r
   }
 
@@ -844,7 +844,7 @@ object MsgPack {
       val r = reader.readConnection()
       return r
     }
-    val r = to(data, fConnection)
+    val r = to(data, fConnection _)
     return r
   }
 
@@ -859,7 +859,7 @@ object MsgPack {
       val r = reader.readConnectionInstance()
       return r
     }
-    val r = to(data, fConnectionInstance)
+    val r = to(data, fConnectionInstance _)
     return r
   }
 
@@ -874,7 +874,7 @@ object MsgPack {
       val r = reader.readConnectionReference()
       return r
     }
-    val r = to(data, fConnectionReference)
+    val r = to(data, fConnectionReference _)
     return r
   }
 
@@ -889,7 +889,7 @@ object MsgPack {
       val r = reader.readEndPoint()
       return r
     }
-    val r = to(data, fEndPoint)
+    val r = to(data, fEndPoint _)
     return r
   }
 
@@ -904,7 +904,7 @@ object MsgPack {
       val r = reader.readProperty()
       return r
     }
-    val r = to(data, fProperty)
+    val r = to(data, fProperty _)
     return r
   }
 
@@ -919,7 +919,7 @@ object MsgPack {
       val r = reader.readPropertyValue()
       return r
     }
-    val r = to(data, fPropertyValue)
+    val r = to(data, fPropertyValue _)
     return r
   }
 
@@ -934,7 +934,7 @@ object MsgPack {
       val r = reader.readClassifierProp()
       return r
     }
-    val r = to(data, fClassifierProp)
+    val r = to(data, fClassifierProp _)
     return r
   }
 
@@ -949,7 +949,7 @@ object MsgPack {
       val r = reader.readRangeProp()
       return r
     }
-    val r = to(data, fRangeProp)
+    val r = to(data, fRangeProp _)
     return r
   }
 
@@ -964,7 +964,7 @@ object MsgPack {
       val r = reader.readReferenceProp()
       return r
     }
-    val r = to(data, fReferenceProp)
+    val r = to(data, fReferenceProp _)
     return r
   }
 
@@ -979,7 +979,7 @@ object MsgPack {
       val r = reader.readUnitProp()
       return r
     }
-    val r = to(data, fUnitProp)
+    val r = to(data, fUnitProp _)
     return r
   }
 
@@ -994,7 +994,7 @@ object MsgPack {
       val r = reader.readValueProp()
       return r
     }
-    val r = to(data, fValueProp)
+    val r = to(data, fValueProp _)
     return r
   }
 
@@ -1009,7 +1009,7 @@ object MsgPack {
       val r = reader.readMode()
       return r
     }
-    val r = to(data, fMode)
+    val r = to(data, fMode _)
     return r
   }
 
@@ -1024,7 +1024,7 @@ object MsgPack {
       val r = reader.readFlow()
       return r
     }
-    val r = to(data, fFlow)
+    val r = to(data, fFlow _)
     return r
   }
 
@@ -1039,7 +1039,7 @@ object MsgPack {
       val r = reader.readAnnex()
       return r
     }
-    val r = to(data, fAnnex)
+    val r = to(data, fAnnex _)
     return r
   }
 
@@ -1054,7 +1054,7 @@ object MsgPack {
       val r = reader.readAnnexClause()
       return r
     }
-    val r = to(data, fAnnexClause)
+    val r = to(data, fAnnexClause _)
     return r
   }
 
@@ -1069,7 +1069,7 @@ object MsgPack {
       val r = reader.readEmv2Annex()
       return r
     }
-    val r = to(data, fEmv2Annex)
+    val r = to(data, fEmv2Annex _)
     return r
   }
 
@@ -1084,7 +1084,7 @@ object MsgPack {
       val r = reader.readEmv2Library()
       return r
     }
-    val r = to(data, fEmv2Library)
+    val r = to(data, fEmv2Library _)
     return r
   }
 
@@ -1099,7 +1099,7 @@ object MsgPack {
       val r = reader.readEmv2Propagation()
       return r
     }
-    val r = to(data, fEmv2Propagation)
+    val r = to(data, fEmv2Propagation _)
     return r
   }
 
@@ -1114,7 +1114,7 @@ object MsgPack {
       val r = reader.readEmv2Flow()
       return r
     }
-    val r = to(data, fEmv2Flow)
+    val r = to(data, fEmv2Flow _)
     return r
   }
 
@@ -1129,7 +1129,7 @@ object MsgPack {
       val r = reader.readEmv2Clause()
       return r
     }
-    val r = to(data, fEmv2Clause)
+    val r = to(data, fEmv2Clause _)
     return r
   }
 
@@ -1144,7 +1144,7 @@ object MsgPack {
       val r = reader.readOtherAnnex()
       return r
     }
-    val r = to(data, fOtherAnnex)
+    val r = to(data, fOtherAnnex _)
     return r
   }
 

@@ -40,15 +40,15 @@ object JSON {
     @pure def printAadl(o: Aadl): ST = {
       return printObject(ISZ(
         ("type", st""""Aadl""""),
-        ("components", printISZ(F, o.components, printComponent)),
-        ("errorLib", printISZ(F, o.errorLib, printEmv2Library))
+        ("components", printISZ(F, o.components, printComponent _)),
+        ("errorLib", printISZ(F, o.errorLib, printEmv2Library _))
       ))
     }
 
     @pure def printName(o: Name): ST = {
       return printObject(ISZ(
         ("type", st""""Name""""),
-        ("name", printISZ(T, o.name, printString))
+        ("name", printISZ(T, o.name, printString _))
       ))
     }
 
@@ -57,15 +57,15 @@ object JSON {
         ("type", st""""Component""""),
         ("identifier", printName(o.identifier)),
         ("category", printComponentCategoryType(o.category)),
-        ("classifier", printOption(F, o.classifier, printClassifier)),
-        ("features", printISZ(F, o.features, printFeature)),
-        ("subComponents", printISZ(F, o.subComponents, printComponent)),
-        ("connections", printISZ(F, o.connections, printConnection)),
-        ("connectionInstances", printISZ(F, o.connectionInstances, printConnectionInstance)),
-        ("properties", printISZ(F, o.properties, printProperty)),
-        ("flows", printISZ(F, o.flows, printFlow)),
-        ("modes", printISZ(F, o.modes, printMode)),
-        ("annexes", printISZ(F, o.annexes, printAnnex))
+        ("classifier", printOption(F, o.classifier, printClassifier _)),
+        ("features", printISZ(F, o.features, printFeature _)),
+        ("subComponents", printISZ(F, o.subComponents, printComponent _)),
+        ("connections", printISZ(F, o.connections, printConnection _)),
+        ("connectionInstances", printISZ(F, o.connectionInstances, printConnectionInstance _)),
+        ("properties", printISZ(F, o.properties, printProperty _)),
+        ("flows", printISZ(F, o.flows, printFlow _)),
+        ("modes", printISZ(F, o.modes, printMode _)),
+        ("annexes", printISZ(F, o.annexes, printAnnex _))
       ))
     }
 
@@ -105,8 +105,8 @@ object JSON {
         ("identifier", printName(o.identifier)),
         ("direction", printDirectionType(o.direction)),
         ("category", printFeatureCategoryType(o.category)),
-        ("classifier", printOption(F, o.classifier, printClassifier)),
-        ("properties", printISZ(F, o.properties, printProperty))
+        ("classifier", printOption(F, o.classifier, printClassifier _)),
+        ("properties", printISZ(F, o.properties, printProperty _))
       ))
     }
 
@@ -149,8 +149,8 @@ object JSON {
         ("src", printEndPoint(o.src)),
         ("dst", printEndPoint(o.dst)),
         ("isBiDirectional", printB(o.isBiDirectional)),
-        ("connectionInstances", printISZ(F, o.connectionInstances, printName)),
-        ("properties", printISZ(F, o.properties, printProperty))
+        ("connectionInstances", printISZ(F, o.connectionInstances, printName _)),
+        ("properties", printISZ(F, o.properties, printProperty _))
       ))
     }
 
@@ -161,8 +161,8 @@ object JSON {
         ("src", printEndPoint(o.src)),
         ("dst", printEndPoint(o.dst)),
         ("kind", printConnectionKindType(o.kind)),
-        ("connectionRefs", printISZ(F, o.connectionRefs, printConnectionReference)),
-        ("properties", printISZ(F, o.properties, printProperty))
+        ("connectionRefs", printISZ(F, o.connectionRefs, printConnectionReference _)),
+        ("properties", printISZ(F, o.properties, printProperty _))
       ))
     }
 
@@ -202,7 +202,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Property""""),
         ("name", printName(o.name)),
-        ("propertyValues", printISZ(F, o.propertyValues, printPropertyValue))
+        ("propertyValues", printISZ(F, o.propertyValues, printPropertyValue _))
       ))
     }
 
@@ -228,7 +228,7 @@ object JSON {
         ("type", st""""RangeProp""""),
         ("ValueLow", printString(o.ValueLow)),
         ("ValueHigh", printString(o.ValueHigh)),
-        ("Unit", printOption(T, o.Unit, printString))
+        ("Unit", printOption(T, o.Unit, printString _))
       ))
     }
 
@@ -278,8 +278,8 @@ object JSON {
         ("type", st""""Flow""""),
         ("name", printName(o.name)),
         ("kind", printFlowKindType(o.kind)),
-        ("source", printOption(T, o.source, printString)),
-        ("sink", printOption(T, o.sink, printString))
+        ("source", printOption(T, o.source, printString _)),
+        ("sink", printOption(T, o.sink, printString _))
       ))
     }
 
@@ -325,7 +325,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Emv2Library""""),
         ("name", printName(o.name)),
-        ("tokens", printISZ(T, o.tokens, printString))
+        ("tokens", printISZ(T, o.tokens, printString _))
       ))
     }
 
@@ -333,8 +333,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Emv2Propagation""""),
         ("direction", printPropagationDirectionType(o.direction)),
-        ("propagationPoint", printISZ(T, o.propagationPoint, printString)),
-        ("errorTokens", printISZ(T, o.errorTokens, printString))
+        ("propagationPoint", printISZ(T, o.propagationPoint, printString _)),
+        ("errorTokens", printISZ(T, o.errorTokens, printString _))
       ))
     }
 
@@ -343,17 +343,17 @@ object JSON {
         ("type", st""""Emv2Flow""""),
         ("identifier", printName(o.identifier)),
         ("kind", printFlowKindType(o.kind)),
-        ("sourcePropagation", printOption(F, o.sourcePropagation, printEmv2Propagation)),
-        ("sinkPropagation", printOption(F, o.sinkPropagation, printEmv2Propagation))
+        ("sourcePropagation", printOption(F, o.sourcePropagation, printEmv2Propagation _)),
+        ("sinkPropagation", printOption(F, o.sinkPropagation, printEmv2Propagation _))
       ))
     }
 
     @pure def printEmv2Clause(o: Emv2Clause): ST = {
       return printObject(ISZ(
         ("type", st""""Emv2Clause""""),
-        ("libraries", printISZ(T, o.libraries, printString)),
-        ("propagations", printISZ(F, o.propagations, printEmv2Propagation)),
-        ("flows", printISZ(F, o.flows, printEmv2Flow))
+        ("libraries", printISZ(T, o.libraries, printString _)),
+        ("propagations", printISZ(F, o.propagations, printEmv2Propagation _)),
+        ("flows", printISZ(F, o.flows, printEmv2Flow _))
       ))
     }
 
@@ -1042,7 +1042,7 @@ object JSON {
       val r = parser.parseAadl()
       return r
     }
-    val r = to(s, fAadl)
+    val r = to(s, fAadl _)
     return r
   }
 
@@ -1060,7 +1060,7 @@ object JSON {
       val r = parser.parseName()
       return r
     }
-    val r = to(s, fName)
+    val r = to(s, fName _)
     return r
   }
 
@@ -1078,7 +1078,7 @@ object JSON {
       val r = parser.parseComponent()
       return r
     }
-    val r = to(s, fComponent)
+    val r = to(s, fComponent _)
     return r
   }
 
@@ -1096,7 +1096,7 @@ object JSON {
       val r = parser.parseClassifier()
       return r
     }
-    val r = to(s, fClassifier)
+    val r = to(s, fClassifier _)
     return r
   }
 
@@ -1114,7 +1114,7 @@ object JSON {
       val r = parser.parseFeature()
       return r
     }
-    val r = to(s, fFeature)
+    val r = to(s, fFeature _)
     return r
   }
 
@@ -1132,7 +1132,7 @@ object JSON {
       val r = parser.parseConnection()
       return r
     }
-    val r = to(s, fConnection)
+    val r = to(s, fConnection _)
     return r
   }
 
@@ -1150,7 +1150,7 @@ object JSON {
       val r = parser.parseConnectionInstance()
       return r
     }
-    val r = to(s, fConnectionInstance)
+    val r = to(s, fConnectionInstance _)
     return r
   }
 
@@ -1168,7 +1168,7 @@ object JSON {
       val r = parser.parseConnectionReference()
       return r
     }
-    val r = to(s, fConnectionReference)
+    val r = to(s, fConnectionReference _)
     return r
   }
 
@@ -1186,7 +1186,7 @@ object JSON {
       val r = parser.parseEndPoint()
       return r
     }
-    val r = to(s, fEndPoint)
+    val r = to(s, fEndPoint _)
     return r
   }
 
@@ -1204,7 +1204,7 @@ object JSON {
       val r = parser.parseProperty()
       return r
     }
-    val r = to(s, fProperty)
+    val r = to(s, fProperty _)
     return r
   }
 
@@ -1222,7 +1222,7 @@ object JSON {
       val r = parser.parsePropertyValue()
       return r
     }
-    val r = to(s, fPropertyValue)
+    val r = to(s, fPropertyValue _)
     return r
   }
 
@@ -1240,7 +1240,7 @@ object JSON {
       val r = parser.parseClassifierProp()
       return r
     }
-    val r = to(s, fClassifierProp)
+    val r = to(s, fClassifierProp _)
     return r
   }
 
@@ -1258,7 +1258,7 @@ object JSON {
       val r = parser.parseRangeProp()
       return r
     }
-    val r = to(s, fRangeProp)
+    val r = to(s, fRangeProp _)
     return r
   }
 
@@ -1276,7 +1276,7 @@ object JSON {
       val r = parser.parseReferenceProp()
       return r
     }
-    val r = to(s, fReferenceProp)
+    val r = to(s, fReferenceProp _)
     return r
   }
 
@@ -1294,7 +1294,7 @@ object JSON {
       val r = parser.parseUnitProp()
       return r
     }
-    val r = to(s, fUnitProp)
+    val r = to(s, fUnitProp _)
     return r
   }
 
@@ -1312,7 +1312,7 @@ object JSON {
       val r = parser.parseValueProp()
       return r
     }
-    val r = to(s, fValueProp)
+    val r = to(s, fValueProp _)
     return r
   }
 
@@ -1330,7 +1330,7 @@ object JSON {
       val r = parser.parseMode()
       return r
     }
-    val r = to(s, fMode)
+    val r = to(s, fMode _)
     return r
   }
 
@@ -1348,7 +1348,7 @@ object JSON {
       val r = parser.parseFlow()
       return r
     }
-    val r = to(s, fFlow)
+    val r = to(s, fFlow _)
     return r
   }
 
@@ -1366,7 +1366,7 @@ object JSON {
       val r = parser.parseAnnex()
       return r
     }
-    val r = to(s, fAnnex)
+    val r = to(s, fAnnex _)
     return r
   }
 
@@ -1384,7 +1384,7 @@ object JSON {
       val r = parser.parseAnnexClause()
       return r
     }
-    val r = to(s, fAnnexClause)
+    val r = to(s, fAnnexClause _)
     return r
   }
 
@@ -1402,7 +1402,7 @@ object JSON {
       val r = parser.parseEmv2Annex()
       return r
     }
-    val r = to(s, fEmv2Annex)
+    val r = to(s, fEmv2Annex _)
     return r
   }
 
@@ -1420,7 +1420,7 @@ object JSON {
       val r = parser.parseEmv2Library()
       return r
     }
-    val r = to(s, fEmv2Library)
+    val r = to(s, fEmv2Library _)
     return r
   }
 
@@ -1438,7 +1438,7 @@ object JSON {
       val r = parser.parseEmv2Propagation()
       return r
     }
-    val r = to(s, fEmv2Propagation)
+    val r = to(s, fEmv2Propagation _)
     return r
   }
 
@@ -1456,7 +1456,7 @@ object JSON {
       val r = parser.parseEmv2Flow()
       return r
     }
-    val r = to(s, fEmv2Flow)
+    val r = to(s, fEmv2Flow _)
     return r
   }
 
@@ -1474,7 +1474,7 @@ object JSON {
       val r = parser.parseEmv2Clause()
       return r
     }
-    val r = to(s, fEmv2Clause)
+    val r = to(s, fEmv2Clause _)
     return r
   }
 
@@ -1492,7 +1492,7 @@ object JSON {
       val r = parser.parseOtherAnnex()
       return r
     }
-    val r = to(s, fOtherAnnex)
+    val r = to(s, fOtherAnnex _)
     return r
   }
 

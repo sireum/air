@@ -8,7 +8,7 @@ It was inspired by [Ocarina's AADL to XML translator](https://github.com/OpenAAD
 1. Clone both the [Sireum v3 repository](https://github.com/sireum/v3) and this repository:
     ```bash
     git clone --recursive -b master git@github.com:sireum/v3.git sireum-v3
-    git clone git@github.com:sireum/aadl-slang-schema.git sireum-v3/aadl/skema
+    git clone git@github.com:sireum/air.git sireum-v3/aadl/ir
 
 2. Follow the instructions for installing the [Sireum IVE Development](http://logika.sireum.org/doc/01-getting-started/index.html#bd)
 

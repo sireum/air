@@ -1,6 +1,6 @@
 // #Sireum
 
-package org.sireum.aadl.skema.ast
+package org.sireum.aadl.ir
 
 import org.sireum._
 

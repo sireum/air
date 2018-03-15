@@ -28,7 +28,7 @@
 
 // This file is auto-generated from AadlAST.scala
 
-package org.sireum.aadl.skema.ast
+package org.sireum.aadl.ir
 
 import org.sireum._
 import org.sireum.Json.Printer._

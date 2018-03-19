@@ -1,9 +1,9 @@
-# Skema: AADL IR in Slang, JSON, and MessagePack
+# AIR: AADL IR in Slang, JSON, and MessagePack
 
-Skema provides an IR in [Slang](https://github.com/sireum/slang) for AADL instance models.
+AIR provides an IR in [Slang](https://github.com/sireum/slang) for AADL instance models.
 It was inspired by [Ocarina's AADL to XML translator](https://github.com/OpenAADL/ocarina/tree/master/resources/runtime/aadl_xml).
 
-## Skema Development
+## AIR Development
 
 1. Clone both the [Sireum v3 repository](https://github.com/sireum/v3) and this repository:
     ```bash

@@ -95,7 +95,8 @@ import org.sireum._
 }
 
 @datatype class EndPoint(component: Name,
-                         feature: Name)
+                         feature: Name,
+                         direction: Direction.Type)
 
 @datatype class Property(name: Name,
                          propertyValues: ISZ[PropertyValue])

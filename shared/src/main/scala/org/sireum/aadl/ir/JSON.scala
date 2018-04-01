@@ -30,8 +30,8 @@
 
 package org.sireum.aadl.ir
 
-import org.sireum._
 import org.sireum.Json.Printer._
+import org.sireum._
 
 object JSON {
 
@@ -194,7 +194,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""EndPoint""""),
         ("component", printName(o.component)),
-        ("feature", printName(o.feature))
+        ("feature", printName(o.feature)),
+        ("direction", printDirectionType(o.direction))
       ))
     }
 
@@ -673,7 +674,10 @@ object JSON {
       parser.parseObjectKey("feature")
       val feature = parseName()
       parser.parseObjectNext()
-      return EndPoint(component, feature)
+      parser.parseObjectKey("direction")
+      val direction = parseDirectionType()
+      parser.parseObjectNext()
+      return EndPoint(component, feature, direction)
     }
 
     def parseProperty(): Property = {

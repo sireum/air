@@ -181,6 +181,7 @@ object MsgPack {
       writer.writeZ(Constants.EndPoint)
       writeName(o.component)
       writeName(o.feature)
+      writeDirectionType(o.direction)
     }
 
     def writeProperty(o: Property): Unit = {
@@ -488,7 +489,8 @@ object MsgPack {
       }
       val component = readName()
       val feature = readName()
-      return EndPoint(component, feature)
+      val direction = readDirectionType()
+      return EndPoint(component, feature, direction)
     }
 
     def readProperty(): Property = {

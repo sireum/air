@@ -2,7 +2,7 @@
 // @formatter:off
 
 /*
- Copyright (c) 2017, Robby, Kansas State University
+ Copyright (c) 2018, Robby, Kansas State University
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -195,7 +195,7 @@ object JSON {
         ("type", st""""EndPoint""""),
         ("component", printName(o.component)),
         ("feature", printName(o.feature)),
-        ("direction", printDirectionType(o.direction))
+        ("direction", printOption(F, o.direction, printDirectionType _))
       ))
     }
 
@@ -675,7 +675,7 @@ object JSON {
       val feature = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("direction")
-      val direction = parseDirectionType()
+      val direction = parser.parseOption(parseDirectionType _)
       parser.parseObjectNext()
       return EndPoint(component, feature, direction)
     }

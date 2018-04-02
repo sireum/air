@@ -2,7 +2,7 @@
 // @formatter:off
 
 /*
- Copyright (c) 2017, Robby, Kansas State University
+ Copyright (c) 2018, Robby, Kansas State University
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -181,7 +181,7 @@ object MsgPack {
       writer.writeZ(Constants.EndPoint)
       writeName(o.component)
       writeName(o.feature)
-      writeDirectionType(o.direction)
+      writer.writeOption(o.direction, writeDirectionType _)
     }
 
     def writeProperty(o: Property): Unit = {
@@ -489,7 +489,7 @@ object MsgPack {
       }
       val component = readName()
       val feature = readName()
-      val direction = readDirectionType()
+      val direction = reader.readOption(readDirectionType _)
       return EndPoint(component, feature, direction)
     }
 

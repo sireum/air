@@ -60,27 +60,29 @@ object MsgPack {
 
     val RangeProp: Z = -21
 
-    val ReferenceProp: Z = -20
+    val RecordProp: Z = -20
 
-    val UnitProp: Z = -19
+    val ReferenceProp: Z = -19
 
-    val ValueProp: Z = -18
+    val UnitProp: Z = -18
 
-    val Mode: Z = -17
+    val ValueProp: Z = -17
 
-    val Flow: Z = -16
+    val Mode: Z = -16
 
-    val Annex: Z = -15
+    val Flow: Z = -15
 
-    val Emv2Library: Z = -14
+    val Annex: Z = -14
 
-    val Emv2Propagation: Z = -13
+    val Emv2Library: Z = -13
 
-    val Emv2Flow: Z = -12
+    val Emv2Propagation: Z = -12
 
-    val Emv2Clause: Z = -11
+    val Emv2Flow: Z = -11
 
-    val OtherAnnex: Z = -10
+    val Emv2Clause: Z = -10
+
+    val OtherAnnex: Z = -9
 
   }
 
@@ -194,6 +196,7 @@ object MsgPack {
       o match {
         case o: ClassifierProp => writeClassifierProp(o)
         case o: RangeProp => writeRangeProp(o)
+        case o: RecordProp => writeRecordProp(o)
         case o: ReferenceProp => writeReferenceProp(o)
         case o: UnitProp => writeUnitProp(o)
         case o: ValueProp => writeValueProp(o)
@@ -207,9 +210,13 @@ object MsgPack {
 
     def writeRangeProp(o: RangeProp): Unit = {
       writer.writeZ(Constants.RangeProp)
-      writer.writeString(o.ValueLow)
-      writer.writeString(o.ValueHigh)
-      writer.writeOption(o.Unit, writer.writeString _)
+      writeUnitProp(o.low)
+      writeUnitProp(o.high)
+    }
+
+    def writeRecordProp(o: RecordProp): Unit = {
+      writer.writeZ(Constants.RecordProp)
+      writer.writeISZ(o.properties, writeProperty _)
     }
 
     def writeReferenceProp(o: ReferenceProp): Unit = {
@@ -220,7 +227,7 @@ object MsgPack {
     def writeUnitProp(o: UnitProp): Unit = {
       writer.writeZ(Constants.UnitProp)
       writer.writeString(o.value)
-      writer.writeString(o.unit)
+      writer.writeOption(o.unit, writer.writeString _)
     }
 
     def writeValueProp(o: ValueProp): Unit = {
@@ -513,6 +520,7 @@ object MsgPack {
       t match {
         case Constants.ClassifierProp => val r = readClassifierPropT(T); return r
         case Constants.RangeProp => val r = readRangePropT(T); return r
+        case Constants.RecordProp => val r = readRecordPropT(T); return r
         case Constants.ReferenceProp => val r = readReferencePropT(T); return r
         case Constants.UnitProp => val r = readUnitPropT(T); return r
         case Constants.ValueProp => val r = readValuePropT(T); return r
@@ -545,10 +553,22 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.RangeProp)
       }
-      val ValueLow = reader.readString()
-      val ValueHigh = reader.readString()
-      val Unit = reader.readOption(reader.readString _)
-      return RangeProp(ValueLow, ValueHigh, Unit)
+      val low = readUnitProp()
+      val high = readUnitProp()
+      return RangeProp(low, high)
+    }
+
+    def readRecordProp(): RecordProp = {
+      val r = readRecordPropT(F)
+      return r
+    }
+
+    def readRecordPropT(typeParsed: B): RecordProp = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.RecordProp)
+      }
+      val properties = reader.readISZ(readProperty _)
+      return RecordProp(properties)
     }
 
     def readReferenceProp(): ReferenceProp = {
@@ -574,7 +594,7 @@ object MsgPack {
         reader.expectZ(Constants.UnitProp)
       }
       val value = reader.readString()
-      val unit = reader.readString()
+      val unit = reader.readOption(reader.readString _)
       return UnitProp(value, unit)
     }
 
@@ -952,6 +972,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fRangeProp _)
+    return r
+  }
+
+  def fromRecordProp(o: RecordProp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeRecordProp(o)
+    return w.result
+  }
+
+  def toRecordProp(data: ISZ[U8]): Either[RecordProp, MessagePack.ErrorMsg] = {
+    def fRecordProp(reader: Reader): RecordProp = {
+      val r = reader.readRecordProp()
+      return r
+    }
+    val r = to(data, fRecordProp _)
     return r
   }
 

@@ -105,14 +105,15 @@ import org.sireum._
 
 @datatype class ClassifierProp(name: String) extends PropertyValue
 
-@datatype class RangeProp(ValueLow: String,
-                          ValueHigh: String,
-                          Unit: Option[String]) extends PropertyValue
+@datatype class RangeProp(low: UnitProp,
+                          high: UnitProp) extends PropertyValue
+
+@datatype class RecordProp(properties: ISZ[Property]) extends PropertyValue
 
 @datatype class ReferenceProp(value: String) extends PropertyValue
 
 @datatype class UnitProp(value: String,
-                         unit: String) extends PropertyValue
+                         unit: Option[String]) extends PropertyValue
 
 @datatype class ValueProp(value: String) extends PropertyValue
 

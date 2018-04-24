@@ -30,8 +30,8 @@
 
 package org.sireum.aadl.ir
 
-import org.sireum.Json.Printer._
 import org.sireum._
+import org.sireum.Json.Printer._
 
 object JSON {
 
@@ -211,6 +211,7 @@ object JSON {
       o match {
         case o: ClassifierProp => return printClassifierProp(o)
         case o: RangeProp => return printRangeProp(o)
+        case o: RecordProp => return printRecordProp(o)
         case o: ReferenceProp => return printReferenceProp(o)
         case o: UnitProp => return printUnitProp(o)
         case o: ValueProp => return printValueProp(o)
@@ -227,9 +228,15 @@ object JSON {
     @pure def printRangeProp(o: RangeProp): ST = {
       return printObject(ISZ(
         ("type", st""""RangeProp""""),
-        ("ValueLow", printString(o.ValueLow)),
-        ("ValueHigh", printString(o.ValueHigh)),
-        ("Unit", printOption(T, o.Unit, printString _))
+        ("low", printUnitProp(o.low)),
+        ("high", printUnitProp(o.high))
+      ))
+    }
+
+    @pure def printRecordProp(o: RecordProp): ST = {
+      return printObject(ISZ(
+        ("type", st""""RecordProp""""),
+        ("properties", printISZ(F, o.properties, printProperty _))
       ))
     }
 
@@ -244,7 +251,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""UnitProp""""),
         ("value", printString(o.value)),
-        ("unit", printString(o.unit))
+        ("unit", printOption(T, o.unit, printString _))
       ))
     }
 
@@ -699,10 +706,11 @@ object JSON {
     }
 
     def parsePropertyValue(): PropertyValue = {
-      val t = parser.parseObjectTypes(ISZ("ClassifierProp", "RangeProp", "ReferenceProp", "UnitProp", "ValueProp"))
+      val t = parser.parseObjectTypes(ISZ("ClassifierProp", "RangeProp", "RecordProp", "ReferenceProp", "UnitProp", "ValueProp"))
       t.native match {
         case "ClassifierProp" => val r = parseClassifierPropT(T); return r
         case "RangeProp" => val r = parseRangePropT(T); return r
+        case "RecordProp" => val r = parseRecordPropT(T); return r
         case "ReferenceProp" => val r = parseReferencePropT(T); return r
         case "UnitProp" => val r = parseUnitPropT(T); return r
         case "ValueProp" => val r = parseValuePropT(T); return r
@@ -734,16 +742,28 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("RangeProp")
       }
-      parser.parseObjectKey("ValueLow")
-      val ValueLow = parser.parseString()
+      parser.parseObjectKey("low")
+      val low = parseUnitProp()
       parser.parseObjectNext()
-      parser.parseObjectKey("ValueHigh")
-      val ValueHigh = parser.parseString()
+      parser.parseObjectKey("high")
+      val high = parseUnitProp()
       parser.parseObjectNext()
-      parser.parseObjectKey("Unit")
-      val Unit = parser.parseOption(parser.parseString _)
+      return RangeProp(low, high)
+    }
+
+    def parseRecordProp(): RecordProp = {
+      val r = parseRecordPropT(F)
+      return r
+    }
+
+    def parseRecordPropT(typeParsed: B): RecordProp = {
+      if (!typeParsed) {
+        parser.parseObjectType("RecordProp")
+      }
+      parser.parseObjectKey("properties")
+      val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
-      return RangeProp(ValueLow, ValueHigh, Unit)
+      return RecordProp(properties)
     }
 
     def parseReferenceProp(): ReferenceProp = {
@@ -774,7 +794,7 @@ object JSON {
       val value = parser.parseString()
       parser.parseObjectNext()
       parser.parseObjectKey("unit")
-      val unit = parser.parseString()
+      val unit = parser.parseOption(parser.parseString _)
       parser.parseObjectNext()
       return UnitProp(value, unit)
     }
@@ -1263,6 +1283,24 @@ object JSON {
       return r
     }
     val r = to(s, fRangeProp _)
+    return r
+  }
+
+  def fromRecordProp(o: RecordProp, isCompact: B): String = {
+    val st = Printer.printRecordProp(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toRecordProp(s: String): Either[RecordProp, Json.ErrorMsg] = {
+    def fRecordProp(parser: Parser): RecordProp = {
+      val r = parser.parseRecordProp()
+      return r
+    }
+    val r = to(s, fRecordProp _)
     return r
   }
 

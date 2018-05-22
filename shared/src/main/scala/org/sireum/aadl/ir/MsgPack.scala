@@ -284,7 +284,9 @@ object MsgPack {
     def writeEmv2Library(o: Emv2Library): Unit = {
       writer.writeZ(Constants.Emv2Library)
       writeName(o.name)
+      writer.writeISZ(o.useTypes, writer.writeString _)
       writer.writeISZ(o.tokens, writer.writeString _)
+      writer.writeHashMap(o.alias, writer.writeString _, writer.writeString _)
     }
 
     def writeEmv2Propagation(o: Emv2Propagation): Unit = {
@@ -705,8 +707,10 @@ object MsgPack {
         reader.expectZ(Constants.Emv2Library)
       }
       val name = readName()
+      val useTypes = reader.readISZ(reader.readString _)
       val tokens = reader.readISZ(reader.readString _)
-      return Emv2Library(name, tokens)
+      val alias = reader.readHashMap(reader.readString _, reader.readString _)
+      return Emv2Library(name, useTypes, tokens, alias)
     }
 
     def readEmv2Propagation(): Emv2Propagation = {

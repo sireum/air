@@ -333,7 +333,9 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Emv2Library""""),
         ("name", printName(o.name)),
-        ("tokens", printISZ(T, o.tokens, printString _))
+        ("useTypes", printISZ(T, o.useTypes, printString _)),
+        ("tokens", printISZ(T, o.tokens, printString _)),
+        ("alias", printHashMap(T, o.alias, printString _, printString _))
       ))
     }
 
@@ -948,10 +950,16 @@ object JSON {
       parser.parseObjectKey("name")
       val name = parseName()
       parser.parseObjectNext()
+      parser.parseObjectKey("useTypes")
+      val useTypes = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
       parser.parseObjectKey("tokens")
       val tokens = parser.parseISZ(parser.parseString _)
       parser.parseObjectNext()
-      return Emv2Library(name, tokens)
+      parser.parseObjectKey("alias")
+      val alias = parser.parseHashMap(parser.parseString _, parser.parseString _)
+      parser.parseObjectNext()
+      return Emv2Library(name, useTypes, tokens, alias)
     }
 
     def parseEmv2Propagation(): Emv2Propagation = {

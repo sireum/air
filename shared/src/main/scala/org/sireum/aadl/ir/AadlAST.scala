@@ -142,8 +142,9 @@ import org.sireum._
   'Out
 }
 
-@datatype class Emv2Library(name: Name,
-                            tokens: ISZ[String]) extends Emv2Annex
+@datatype class Emv2Library(name: Name, useTypes: ISZ[String],
+                            tokens: ISZ[String],
+                            alias: HashMap[String, String]) extends Emv2Annex
 
 @datatype class Emv2Propagation(direction: PropagationDirection.Type,
                                 propagationPoint: ISZ[String],

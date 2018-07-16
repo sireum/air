@@ -41,11 +41,21 @@ import org.sireum._
   'VirtualProcessor
 }
 
-@datatype class Feature(identifier: Name,
-                        direction : Direction.Type,
-                        category: FeatureCategory.Type,
-                        classifier: Option[Classifier],
-                        properties: ISZ[Property])
+@sig trait Feature
+
+@datatype class FeatureEnd(identifier: Name,
+                           direction: Direction.Type,
+                           category: FeatureCategory.Type,
+                           classifier: Option[Classifier],
+                           properties: ISZ[Property]) extends Feature
+
+@datatype class FeatureGroup(identifier: Name,
+                             features: ISZ[Feature],
+                             isInverse: B,
+                             //                             category: FeatureCategory.Type,
+                             //                             classifier: Option[Classifier],
+                             //                             properties: ISZ[Property]
+                            ) extends Feature
 
 @enum object Direction {
   'In
@@ -110,7 +120,7 @@ import org.sireum._
 
 @datatype class RecordProp(properties: ISZ[Property]) extends PropertyValue
 
-@datatype class ReferenceProp(value: String) extends PropertyValue
+@datatype class ReferenceProp(value: Name) extends PropertyValue
 
 @datatype class UnitProp(value: String,
                          unit: Option[String]) extends PropertyValue

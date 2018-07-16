@@ -44,45 +44,47 @@ object MsgPack {
 
     val Classifier: Z = -29
 
-    val Feature: Z = -28
+    val FeatureEnd: Z = -28
 
-    val Connection: Z = -27
+    val FeatureGroup: Z = -27
 
-    val ConnectionInstance: Z = -26
+    val Connection: Z = -26
 
-    val ConnectionReference: Z = -25
+    val ConnectionInstance: Z = -25
 
-    val EndPoint: Z = -24
+    val ConnectionReference: Z = -24
 
-    val Property: Z = -23
+    val EndPoint: Z = -23
 
-    val ClassifierProp: Z = -22
+    val Property: Z = -22
 
-    val RangeProp: Z = -21
+    val ClassifierProp: Z = -21
 
-    val RecordProp: Z = -20
+    val RangeProp: Z = -20
 
-    val ReferenceProp: Z = -19
+    val RecordProp: Z = -19
 
-    val UnitProp: Z = -18
+    val ReferenceProp: Z = -18
 
-    val ValueProp: Z = -17
+    val UnitProp: Z = -17
 
-    val Mode: Z = -16
+    val ValueProp: Z = -16
 
-    val Flow: Z = -15
+    val Mode: Z = -15
 
-    val Annex: Z = -14
+    val Flow: Z = -14
 
-    val Emv2Library: Z = -13
+    val Annex: Z = -13
 
-    val Emv2Propagation: Z = -12
+    val Emv2Library: Z = -12
 
-    val Emv2Flow: Z = -11
+    val Emv2Propagation: Z = -11
 
-    val Emv2Clause: Z = -10
+    val Emv2Flow: Z = -10
 
-    val OtherAnnex: Z = -9
+    val Emv2Clause: Z = -9
+
+    val OtherAnnex: Z = -8
 
   }
 
@@ -132,12 +134,26 @@ object MsgPack {
     }
 
     def writeFeature(o: Feature): Unit = {
-      writer.writeZ(Constants.Feature)
+      o match {
+        case o: FeatureEnd => writeFeatureEnd(o)
+        case o: FeatureGroup => writeFeatureGroup(o)
+      }
+    }
+
+    def writeFeatureEnd(o: FeatureEnd): Unit = {
+      writer.writeZ(Constants.FeatureEnd)
       writeName(o.identifier)
       writeDirectionType(o.direction)
       writeFeatureCategoryType(o.category)
       writer.writeOption(o.classifier, writeClassifier _)
       writer.writeISZ(o.properties, writeProperty _)
+    }
+
+    def writeFeatureGroup(o: FeatureGroup): Unit = {
+      writer.writeZ(Constants.FeatureGroup)
+      writeName(o.identifier)
+      writer.writeISZ(o.features, writeFeature _)
+      writer.writeB(o.isInverse)
     }
 
     def writeDirectionType(o: Direction.Type): Unit = {
@@ -221,7 +237,7 @@ object MsgPack {
 
     def writeReferenceProp(o: ReferenceProp): Unit = {
       writer.writeZ(Constants.ReferenceProp)
-      writer.writeString(o.value)
+      writeName(o.value)
     }
 
     def writeUnitProp(o: UnitProp): Unit = {
@@ -405,20 +421,48 @@ object MsgPack {
     }
 
     def readFeature(): Feature = {
-      val r = readFeatureT(F)
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.FeatureEnd => val r = readFeatureEndT(T); return r
+        case Constants.FeatureGroup => val r = readFeatureGroupT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of Feature.")
+          val r = readFeatureGroupT(T)
+          return r
+      }
+    }
+
+    def readFeatureEnd(): FeatureEnd = {
+      val r = readFeatureEndT(F)
       return r
     }
 
-    def readFeatureT(typeParsed: B): Feature = {
+    def readFeatureEndT(typeParsed: B): FeatureEnd = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Feature)
+        reader.expectZ(Constants.FeatureEnd)
       }
       val identifier = readName()
       val direction = readDirectionType()
       val category = readFeatureCategoryType()
       val classifier = reader.readOption(readClassifier _)
       val properties = reader.readISZ(readProperty _)
-      return Feature(identifier, direction, category, classifier, properties)
+      return FeatureEnd(identifier, direction, category, classifier, properties)
+    }
+
+    def readFeatureGroup(): FeatureGroup = {
+      val r = readFeatureGroupT(F)
+      return r
+    }
+
+    def readFeatureGroupT(typeParsed: B): FeatureGroup = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.FeatureGroup)
+      }
+      val identifier = readName()
+      val features = reader.readISZ(readFeature _)
+      val isInverse = reader.readB()
+      return FeatureGroup(identifier, features, isInverse)
     }
 
     def readDirectionType(): Direction.Type = {
@@ -582,7 +626,7 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.ReferenceProp)
       }
-      val value = reader.readString()
+      val value = readName()
       return ReferenceProp(value)
     }
 
@@ -856,6 +900,38 @@ object MsgPack {
       return r
     }
     val r = to(data, fFeature _)
+    return r
+  }
+
+  def fromFeatureEnd(o: FeatureEnd, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeFeatureEnd(o)
+    return w.result
+  }
+
+  def toFeatureEnd(data: ISZ[U8]): Either[FeatureEnd, MessagePack.ErrorMsg] = {
+    def fFeatureEnd(reader: Reader): FeatureEnd = {
+      val r = reader.readFeatureEnd()
+      return r
+    }
+
+    val r = to(data, fFeatureEnd _)
+    return r
+  }
+
+  def fromFeatureGroup(o: FeatureGroup, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeFeatureGroup(o)
+    return w.result
+  }
+
+  def toFeatureGroup(data: ISZ[U8]): Either[FeatureGroup, MessagePack.ErrorMsg] = {
+    def fFeatureGroup(reader: Reader): FeatureGroup = {
+      val r = reader.readFeatureGroup()
+      return r
+    }
+
+    val r = to(data, fFeatureGroup _)
     return r
   }
 

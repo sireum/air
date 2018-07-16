@@ -100,13 +100,29 @@ object JSON {
     }
 
     @pure def printFeature(o: Feature): ST = {
+      o match {
+        case o: FeatureEnd => return printFeatureEnd(o)
+        case o: FeatureGroup => return printFeatureGroup(o)
+      }
+    }
+
+    @pure def printFeatureEnd(o: FeatureEnd): ST = {
       return printObject(ISZ(
-        ("type", st""""Feature""""),
+        ("type", st""""FeatureEnd""""),
         ("identifier", printName(o.identifier)),
         ("direction", printDirectionType(o.direction)),
         ("category", printFeatureCategoryType(o.category)),
         ("classifier", printOption(F, o.classifier, printClassifier _)),
         ("properties", printISZ(F, o.properties, printProperty _))
+      ))
+    }
+
+    @pure def printFeatureGroup(o: FeatureGroup): ST = {
+      return printObject(ISZ(
+        ("type", st""""FeatureGroup""""),
+        ("identifier", printName(o.identifier)),
+        ("features", printISZ(F, o.features, printFeature _)),
+        ("isInverse", printB(o.isInverse))
       ))
     }
 
@@ -243,7 +259,7 @@ object JSON {
     @pure def printReferenceProp(o: ReferenceProp): ST = {
       return printObject(ISZ(
         ("type", st""""ReferenceProp""""),
-        ("value", printString(o.value))
+        ("value", printName(o.value))
       ))
     }
 
@@ -498,13 +514,22 @@ object JSON {
     }
 
     def parseFeature(): Feature = {
-      val r = parseFeatureT(F)
+      val t = parser.parseObjectTypes(ISZ("FeatureEnd", "FeatureGroup"))
+      t.native match {
+        case "FeatureEnd" => val r = parseFeatureEndT(T); return r
+        case "FeatureGroup" => val r = parseFeatureGroupT(T); return r
+        case _ => val r = parseFeatureGroupT(T); return r
+      }
+    }
+
+    def parseFeatureEnd(): FeatureEnd = {
+      val r = parseFeatureEndT(F)
       return r
     }
 
-    def parseFeatureT(typeParsed: B): Feature = {
+    def parseFeatureEndT(typeParsed: B): FeatureEnd = {
       if (!typeParsed) {
-        parser.parseObjectType("Feature")
+        parser.parseObjectType("FeatureEnd")
       }
       parser.parseObjectKey("identifier")
       val identifier = parseName()
@@ -521,7 +546,28 @@ object JSON {
       parser.parseObjectKey("properties")
       val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
-      return Feature(identifier, direction, category, classifier, properties)
+      return FeatureEnd(identifier, direction, category, classifier, properties)
+    }
+
+    def parseFeatureGroup(): FeatureGroup = {
+      val r = parseFeatureGroupT(F)
+      return r
+    }
+
+    def parseFeatureGroupT(typeParsed: B): FeatureGroup = {
+      if (!typeParsed) {
+        parser.parseObjectType("FeatureGroup")
+      }
+      parser.parseObjectKey("identifier")
+      val identifier = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("features")
+      val features = parser.parseISZ(parseFeature _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("isInverse")
+      val isInverse = parser.parseB()
+      parser.parseObjectNext()
+      return FeatureGroup(identifier, features, isInverse)
     }
 
     def parseDirectionType(): Direction.Type = {
@@ -778,7 +824,7 @@ object JSON {
         parser.parseObjectType("ReferenceProp")
       }
       parser.parseObjectKey("value")
-      val value = parser.parseString()
+      val value = parseName()
       parser.parseObjectNext()
       return ReferenceProp(value)
     }
@@ -1147,6 +1193,44 @@ object JSON {
       return r
     }
     val r = to(s, fFeature _)
+    return r
+  }
+
+  def fromFeatureEnd(o: FeatureEnd, isCompact: B): String = {
+    val st = Printer.printFeatureEnd(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toFeatureEnd(s: String): Either[FeatureEnd, Json.ErrorMsg] = {
+    def fFeatureEnd(parser: Parser): FeatureEnd = {
+      val r = parser.parseFeatureEnd()
+      return r
+    }
+
+    val r = to(s, fFeatureEnd _)
+    return r
+  }
+
+  def fromFeatureGroup(o: FeatureGroup, isCompact: B): String = {
+    val st = Printer.printFeatureGroup(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toFeatureGroup(s: String): Either[FeatureGroup, Json.ErrorMsg] = {
+    def fFeatureGroup(parser: Parser): FeatureGroup = {
+      val r = parser.parseFeatureGroup()
+      return r
+    }
+
+    val r = to(s, fFeatureGroup _)
     return r
   }
 

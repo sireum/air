@@ -81,9 +81,13 @@ object MTransformer {
 
   val PostResultClassifier: MOption[Classifier] = MNone()
 
-  val PreResultFeature: PreResult[Feature] = PreResult(T, MNone())
+  val PreResultFeatureEnd: PreResult[FeatureEnd] = PreResult(T, MNone())
 
-  val PostResultFeature: MOption[Feature] = MNone()
+  val PostResultFeatureEnd: MOption[FeatureEnd] = MNone()
+
+  val PreResultFeatureGroup: PreResult[FeatureGroup] = PreResult(T, MNone())
+
+  val PostResultFeatureGroup: MOption[FeatureGroup] = MNone()
 
   val PreResultConnection: PreResult[Connection] = PreResult(T, MNone())
 
@@ -184,7 +188,30 @@ import MTransformer._
   }
 
   def preFeature(o: Feature): PreResult[Feature] = {
-    return PreResultFeature
+    o match {
+      case o: FeatureEnd =>
+        val r: PreResult[Feature] = preFeatureEnd(o) match {
+          case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
+          case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
+          case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
+        }
+        return r
+      case o: FeatureGroup =>
+        val r: PreResult[Feature] = preFeatureGroup(o) match {
+          case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
+          case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
+          case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
+        }
+        return r
+    }
+  }
+
+  def preFeatureEnd(o: FeatureEnd): PreResult[FeatureEnd] = {
+    return PreResultFeatureEnd
+  }
+
+  def preFeatureGroup(o: FeatureGroup): PreResult[FeatureGroup] = {
+    return PreResultFeatureGroup
   }
 
   def preConnection(o: Connection): PreResult[Connection] = {
@@ -364,7 +391,30 @@ import MTransformer._
   }
 
   def postFeature(o: Feature): MOption[Feature] = {
-    return PostResultFeature
+    o match {
+      case o: FeatureEnd =>
+        val r: MOption[Feature] = postFeatureEnd(o) match {
+          case MSome(result: Feature) => MSome[Feature](result)
+          case MSome(_) => halt("Can only produce object of type Feature")
+          case _ => MNone[Feature]()
+        }
+        return r
+      case o: FeatureGroup =>
+        val r: MOption[Feature] = postFeatureGroup(o) match {
+          case MSome(result: Feature) => MSome[Feature](result)
+          case MSome(_) => halt("Can only produce object of type Feature")
+          case _ => MNone[Feature]()
+        }
+        return r
+    }
+  }
+
+  def postFeatureEnd(o: FeatureEnd): MOption[FeatureEnd] = {
+    return PostResultFeatureEnd
+  }
+
+  def postFeatureGroup(o: FeatureGroup): MOption[FeatureGroup] = {
+    return PostResultFeatureGroup
   }
 
   def postConnection(o: Connection): MOption[Connection] = {
@@ -648,6 +698,46 @@ import MTransformer._
     val r: MOption[Feature] = if (preR.continu) {
       val o2: Feature = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[Feature] = o2 match {
+        case o2: FeatureEnd =>
+          val r0: MOption[Name] = transformName(o2.identifier)
+          val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
+          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
+          else
+            MNone()
+        case o2: FeatureGroup =>
+          val r0: MOption[Name] = transformName(o2.identifier)
+          val r1: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: Feature = r.getOrElse(o)
+    val postR: MOption[Feature] = postFeature(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformFeatureEnd(o: FeatureEnd): MOption[FeatureEnd] = {
+    val preR: PreResult[FeatureEnd] = preFeatureEnd(o)
+    val r: MOption[FeatureEnd] = if (preR.continu) {
+      val o2: FeatureEnd = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[Name] = transformName(o2.identifier)
       val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
       val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
@@ -661,8 +751,36 @@ import MTransformer._
       MNone()
     }
     val hasChanged: B = r.nonEmpty
-    val o2: Feature = r.getOrElse(o)
-    val postR: MOption[Feature] = postFeature(o2)
+    val o2: FeatureEnd = r.getOrElse(o)
+    val postR: MOption[FeatureEnd] = postFeatureEnd(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformFeatureGroup(o: FeatureGroup): MOption[FeatureGroup] = {
+    val preR: PreResult[FeatureGroup] = preFeatureGroup(o)
+    val r: MOption[FeatureGroup] = if (preR.continu) {
+      val o2: FeatureGroup = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.identifier)
+      val r1: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: FeatureGroup = r.getOrElse(o)
+    val postR: MOption[FeatureGroup] = postFeatureGroup(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -843,8 +961,9 @@ import MTransformer._
           else
             MNone()
         case o2: ReferenceProp =>
-          if (hasChanged)
-            MSome(o2)
+          val r0: MOption[Name] = transformName(o2.value)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(value = r0.getOrElse(o2.value)))
           else
             MNone()
         case o2: UnitProp =>

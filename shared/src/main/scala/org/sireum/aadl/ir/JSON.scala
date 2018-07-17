@@ -1210,7 +1210,6 @@ object JSON {
       val r = parser.parseFeatureEnd()
       return r
     }
-
     val r = to(s, fFeatureEnd _)
     return r
   }
@@ -1229,7 +1228,6 @@ object JSON {
       val r = parser.parseFeatureGroup()
       return r
     }
-
     val r = to(s, fFeatureGroup _)
     return r
   }

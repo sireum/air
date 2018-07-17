@@ -914,7 +914,6 @@ object MsgPack {
       val r = reader.readFeatureEnd()
       return r
     }
-
     val r = to(data, fFeatureEnd _)
     return r
   }
@@ -930,7 +929,6 @@ object MsgPack {
       val r = reader.readFeatureGroup()
       return r
     }
-
     val r = to(data, fFeatureGroup _)
     return r
   }

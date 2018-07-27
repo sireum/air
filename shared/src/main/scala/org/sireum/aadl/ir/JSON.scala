@@ -122,7 +122,10 @@ object JSON {
         ("type", st""""FeatureGroup""""),
         ("identifier", printName(o.identifier)),
         ("features", printISZ(F, o.features, printFeature _)),
-        ("isInverse", printB(o.isInverse))
+        ("isInverse", printB(o.isInverse)),
+        ("category", printFeatureCategoryType(o.category)),
+        ("classifier", printOption(F, o.classifier, printClassifier _)),
+        ("properties", printISZ(F, o.properties, printProperty _))
       ))
     }
 
@@ -567,7 +570,16 @@ object JSON {
       parser.parseObjectKey("isInverse")
       val isInverse = parser.parseB()
       parser.parseObjectNext()
-      return FeatureGroup(identifier, features, isInverse)
+      parser.parseObjectKey("category")
+      val category = parseFeatureCategoryType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("classifier")
+      val classifier = parser.parseOption(parseClassifier _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("properties")
+      val properties = parser.parseISZ(parseProperty _)
+      parser.parseObjectNext()
+      return FeatureGroup(identifier, features, isInverse, category, classifier, properties)
     }
 
     def parseDirectionType(): Direction.Type = {

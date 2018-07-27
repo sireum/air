@@ -710,8 +710,10 @@ import MTransformer._
         case o2: FeatureGroup =>
           val r0: MOption[Name] = transformName(o2.identifier)
           val r1: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features)))
+          val r2: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
+          val r3: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features), classifier = r2.getOrElse(o2.classifier), properties = r3.getOrElse(o2.properties)))
           else
             MNone()
       }
@@ -769,8 +771,10 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[Name] = transformName(o2.identifier)
       val r1: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features)))
+      val r2: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
+      val r3: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features), classifier = r2.getOrElse(o2.classifier), properties = r3.getOrElse(o2.properties)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {

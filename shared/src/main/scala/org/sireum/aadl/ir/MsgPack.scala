@@ -154,6 +154,9 @@ object MsgPack {
       writeName(o.identifier)
       writer.writeISZ(o.features, writeFeature _)
       writer.writeB(o.isInverse)
+      writeFeatureCategoryType(o.category)
+      writer.writeOption(o.classifier, writeClassifier _)
+      writer.writeISZ(o.properties, writeProperty _)
     }
 
     def writeDirectionType(o: Direction.Type): Unit = {
@@ -462,7 +465,10 @@ object MsgPack {
       val identifier = readName()
       val features = reader.readISZ(readFeature _)
       val isInverse = reader.readB()
-      return FeatureGroup(identifier, features, isInverse)
+      val category = readFeatureCategoryType()
+      val classifier = reader.readOption(readClassifier _)
+      val properties = reader.readISZ(readProperty _)
+      return FeatureGroup(identifier, features, isInverse, category, classifier, properties)
     }
 
     def readDirectionType(): Direction.Type = {

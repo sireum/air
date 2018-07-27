@@ -620,10 +620,12 @@ import Transformer._
         case o2: FeatureGroup =>
           val r0: Result[Context, Name] = transformName(ctx, o2.identifier)
           val r1: Result[Context, IS[Z, Feature]] = transformISZ(r0.ctx, o2.features, transformFeature _)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), features = r1.resultOpt.getOrElse(o2.features))))
+          val r2: Result[Context, Option[Classifier]] = transformOption(r1.ctx, o2.classifier, transformClassifier _)
+          val r3: Result[Context, IS[Z, Property]] = transformISZ(r2.ctx, o2.properties, transformProperty _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            Result(r3.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), features = r1.resultOpt.getOrElse(o2.features), classifier = r2.resultOpt.getOrElse(o2.classifier), properties = r3.resultOpt.getOrElse(o2.properties))))
           else
-            Result(r1.ctx, None())
+            Result(r3.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -679,10 +681,12 @@ import Transformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: Result[Context, Name] = transformName(ctx, o2.identifier)
       val r1: Result[Context, IS[Z, Feature]] = transformISZ(r0.ctx, o2.features, transformFeature _)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        Result(r1.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), features = r1.resultOpt.getOrElse(o2.features))))
+      val r2: Result[Context, Option[Classifier]] = transformOption(r1.ctx, o2.classifier, transformClassifier _)
+      val r3: Result[Context, IS[Z, Property]] = transformISZ(r2.ctx, o2.properties, transformProperty _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+        Result(r3.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), features = r1.resultOpt.getOrElse(o2.features), classifier = r2.resultOpt.getOrElse(o2.classifier), properties = r3.resultOpt.getOrElse(o2.properties))))
       else
-        Result(r1.ctx, None())
+        Result(r3.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       Result(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {

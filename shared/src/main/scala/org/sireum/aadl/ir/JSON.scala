@@ -165,8 +165,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Connection""""),
         ("name", printName(o.name)),
-        ("src", printEndPoint(o.src)),
-        ("dst", printEndPoint(o.dst)),
+        ("src", printISZ(F, o.src, printEndPoint _)),
+        ("dst", printISZ(F, o.dst, printEndPoint _)),
         ("isBiDirectional", printB(o.isBiDirectional)),
         ("connectionInstances", printISZ(F, o.connectionInstances, printName _)),
         ("properties", printISZ(F, o.properties, printProperty _))
@@ -637,10 +637,10 @@ object JSON {
       val name = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("src")
-      val src = parseEndPoint()
+      val src = parser.parseISZ(parseEndPoint _)
       parser.parseObjectNext()
       parser.parseObjectKey("dst")
-      val dst = parseEndPoint()
+      val dst = parser.parseISZ(parseEndPoint _)
       parser.parseObjectNext()
       parser.parseObjectKey("isBiDirectional")
       val isBiDirectional = parser.parseB()

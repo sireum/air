@@ -710,8 +710,8 @@ import Transformer._
       val o2: Connection = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: Result[Context, Name] = transformName(ctx, o2.name)
-      val r1: Result[Context, EndPoint] = transformEndPoint(r0.ctx, o2.src)
-      val r2: Result[Context, EndPoint] = transformEndPoint(r1.ctx, o2.dst)
+      val r1: Result[Context, IS[Z, EndPoint]] = transformISZ(r0.ctx, o2.src, transformEndPoint _)
+      val r2: Result[Context, IS[Z, EndPoint]] = transformISZ(r1.ctx, o2.dst, transformEndPoint _)
       val r3: Result[Context, IS[Z, Name]] = transformISZ(r2.ctx, o2.connectionInstances, transformName _)
       val r4: Result[Context, IS[Z, Property]] = transformISZ(r3.ctx, o2.properties, transformProperty _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)

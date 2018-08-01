@@ -800,8 +800,8 @@ import MTransformer._
       val o2: Connection = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[Name] = transformName(o2.name)
-      val r1: MOption[EndPoint] = transformEndPoint(o2.src)
-      val r2: MOption[EndPoint] = transformEndPoint(o2.dst)
+      val r1: MOption[IS[Z, EndPoint]] = transformISZ(o2.src, transformEndPoint _)
+      val r2: MOption[IS[Z, EndPoint]] = transformISZ(o2.dst, transformEndPoint _)
       val r3: MOption[IS[Z, Name]] = transformISZ(o2.connectionInstances, transformName _)
       val r4: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)

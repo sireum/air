@@ -170,8 +170,8 @@ object MsgPack {
     def writeConnection(o: Connection): Unit = {
       writer.writeZ(Constants.Connection)
       writeName(o.name)
-      writeEndPoint(o.src)
-      writeEndPoint(o.dst)
+      writer.writeISZ(o.src, writeEndPoint _)
+      writer.writeISZ(o.dst, writeEndPoint _)
       writer.writeB(o.isBiDirectional)
       writer.writeISZ(o.connectionInstances, writeName _)
       writer.writeISZ(o.properties, writeProperty _)
@@ -491,8 +491,8 @@ object MsgPack {
         reader.expectZ(Constants.Connection)
       }
       val name = readName()
-      val src = readEndPoint()
-      val dst = readEndPoint()
+      val src = reader.readISZ(readEndPoint _)
+      val dst = reader.readISZ(readEndPoint _)
       val isBiDirectional = reader.readB()
       val connectionInstances = reader.readISZ(readName _)
       val properties = reader.readISZ(readProperty _)

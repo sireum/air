@@ -34,6 +34,23 @@ public class AadlASTJavaFactory {
         SubprogramGroup, System, Thread, ThreadGroup, VirtualBus, VirtualProcessor
     }
 
+    public enum Direction {
+        In, Out, InOut, None
+    }
+
+    public enum FeatureCategory {
+        AbstractFeature, BusAccess, DataAccess, DataPort, EventPort, EventDataPort,
+        FeatureGroup, Parameter, SubprogramAccess, SubprogramAccessGroup
+    }
+
+    public enum ConnectionKind {
+        Feature, Access, Parameter, Port, ModeTransition, FeatureGroup
+    }
+
+    public enum FlowKind {
+        Source, Sink, Path
+    }
+
     private static AadlASTFactory f = new AadlASTFactory();
 
     public static Aadl aadl(List<Component> components,
@@ -45,20 +62,112 @@ public class AadlASTJavaFactory {
         return f.name(name);
     }
 
-    public static Component AadlFactory(Name identifier,
-                              ComponentCategory category,
-                              Classifier classifier,
-                              List<Feature> features,
-                              List<Component> subComponents,
-                              List<Connection> connections,
-                              List<ConnectionInstance> connectionInstances,
-                              List<Property> properties,
-                              List<Flow> flows,
-                              List<Mode> modes,
-                              List<Annex> annexes) {
+    public static Component component(Name identifier,
+                                      ComponentCategory category,
+                                      Classifier classifier,
+                                      List<Feature> features,
+                                      List<Component> subComponents,
+                                      List<Connection> connections,
+                                      List<ConnectionInstance> connectionInstances,
+                                      List<Property> properties,
+                                      List<Flow> flows,
+                                      List<Mode> modes,
+                                      List<Annex> annexes) {
         return f.component(identifier,
                 category, classifier, features, subComponents, connections,
                 connectionInstances, properties, flows, modes, annexes);
     }
 
+    public static Classifier classifier(String name) {
+        return f.classifier(name);
+    }
+
+    public static FeatureEnd featureEnd(Name identifier,
+                                        Direction direction,
+                                        FeatureCategory category,
+                                        Classifier classifier,
+                                        List<Property> properties) {
+        return f.featureEnd(identifier, direction, category, classifier, properties);
+    }
+
+    public static FeatureGroup featureGroup(Name identifier,
+                                        List<Feature> features,
+                                        boolean isInverse,
+                                        FeatureCategory category,
+                                        Classifier classifier,
+                                        List<Property> properties) {
+        return f.featureGroup(identifier, features, isInverse, category, classifier, properties);
+    }
+
+    public static Connection connection(Name name,
+                                        EndPoint src,
+                                        EndPoint dst,
+                                        boolean isBiDirectional,
+                                        List<Name> connectionInstances,
+                                        List<Property> properties) {
+        return f.connection(name, src, dst, isBiDirectional, connectionInstances, properties);
+    }
+
+    public static ConnectionInstance connectionInstance(Name name,
+                                                        EndPoint src,
+                                                        EndPoint dst,
+                                                        ConnectionKind kind,
+                                                        List<ConnectionReference> connectionRefs,
+                                                        List<Property> properties) {
+        return f.connectionInstance(name, src, dst, kind, connectionRefs, properties);
+    }
+
+    public static ConnectionReference connectionReference(Name name,
+                                                          Name context,
+                                                          boolean isParent) {
+        return f.connectionReference(name, context, isParent);
+    }
+
+    public static EndPoint endPoint(Name component,
+                                    Name feature,
+                                    Direction direction) {
+        return f.endPoint(component, feature, direction);
+    }
+
+    public static Property property(Name name,
+                                    List<PropertyValue> propertyValues) {
+        return f.property(name, propertyValues);
+    }
+
+    public static ClassifierProp classifierProp(String name) {
+        return f.classifierProp(name);
+    }
+
+    public static RangeProp rangeProp(UnitProp low,
+                                      UnitProp high) {
+        return f.rangeProp(low, high);
+    }
+
+    public static RecordProp recordProp(List<Property> properties) {
+        return f.recordProp(properties);
+    }
+
+    public static ReferenceProp referenceProp(Name value) {
+        return f.referenceProp(value);
+    }
+
+    public static UnitProp unitProp(String value,
+                                    String unit) {
+        return f.unitProp(value, unit);
+    }
+
+    public static ValueProp valueProp(String value) {
+        return f.valueProp(value);
+    }
+
+    public static Mode mode(Name name) {
+        return f.mode(name);
+    }
+
+    public static Flow flow(Name name,
+                            FlowKind kind,
+                            String source,
+                            String sink) {
+        return f.flow(name, kind, source, sink);
+    }
 }

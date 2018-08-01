@@ -26,26 +26,10 @@
 package org.sireum.aadl.ir
 
 import java.util.{List => JList}
+
 import org.sireum._
 
 class AadlASTFactory {
-
-  val ComponentCategoryMap: scala.collection.Map[AadlASTJavaFactory.ComponentCategory, ComponentCategory.Type] =
-    scala.collection.Map(
-      (AadlASTJavaFactory.ComponentCategory.Abstract, ComponentCategory.Abstract),
-      (AadlASTJavaFactory.ComponentCategory.Bus, ComponentCategory.Bus),
-      (AadlASTJavaFactory.ComponentCategory.Data, ComponentCategory.Data),
-      (AadlASTJavaFactory.ComponentCategory.Device, ComponentCategory.Device),
-      (AadlASTJavaFactory.ComponentCategory.Memory, ComponentCategory.Memory),
-      (AadlASTJavaFactory.ComponentCategory.Process, ComponentCategory.Process),
-      (AadlASTJavaFactory.ComponentCategory.Processor, ComponentCategory.Processor),
-      (AadlASTJavaFactory.ComponentCategory.Subprogram, ComponentCategory.Subprogram),
-      (AadlASTJavaFactory.ComponentCategory.SubprogramGroup, ComponentCategory.SubprogramGroup),
-      (AadlASTJavaFactory.ComponentCategory.Thread, ComponentCategory.Thread),
-      (AadlASTJavaFactory.ComponentCategory.ThreadGroup, ComponentCategory.ThreadGroup),
-      (AadlASTJavaFactory.ComponentCategory.VirtualBus, ComponentCategory.VirtualBus),
-      (AadlASTJavaFactory.ComponentCategory.VirtualProcessor, ComponentCategory.VirtualProcessor)
-    )
 
   def aadl(components: JList[Component], errorLib: JList[Emv2Library]): Aadl =
     Aadl(isz(components), isz(errorLib))
@@ -64,11 +48,10 @@ class AadlASTFactory {
     properties: JList[Property],
     flows: JList[Flow],
     modes: JList[Mode],
-    annexes: JList[Annex]
-  ): Component =
+    annexes: JList[Annex]): Component =
     Component(
       identifier,
-      ComponentCategoryMap(category),
+      ComponentCategory.byName(category.name).get,
       if (classifier != null) Some(classifier) else None(),
       isz(features),
       isz(subComponents),
@@ -80,9 +63,142 @@ class AadlASTFactory {
       isz(annexes)
     )
 
+  def classifier(name: Predef.String): Classifier =
+    Classifier(name);
+
+  def featureEnd(identifier: Name,
+                 direction: AadlASTJavaFactory.Direction,
+                 category: AadlASTJavaFactory.FeatureCategory,
+                 classifier: Classifier,
+                 properties: JList[Property]): FeatureEnd =
+    FeatureEnd(
+      identifier,
+      Direction.byName(direction.name()).get,
+      FeatureCategory.byName(category.name()).get,
+      if (classifier != null) Some(classifier) else None(),
+      isz(properties)
+    )
+
+  def featureGroup(identifier: Name,
+                   features: JList[Feature],
+                   isInverse: Boolean,
+                   category: AadlASTJavaFactory.FeatureCategory,
+                   classifier: Classifier,
+                   properties: JList[Property]): FeatureGroup =
+    FeatureGroup(
+      identifier,
+      isz(features),
+      isInverse,
+      FeatureCategory.byName(category.name()).get,
+      if (classifier != null) Some(classifier) else None(),
+      isz(properties)
+    )
+
+  def connection(name : Name,
+                 src: EndPoint,
+                 dst: EndPoint,
+                 isBiDirectional: Boolean,
+                 connectionInstances: JList[Name],
+                 properties: JList[Property]) =
+    Connection(
+      name,
+      src,
+      dst,
+      isBiDirectional,
+      isz(connectionInstances),
+      isz(properties)
+    )
+
+  def connectionInstance(name : Name,
+                         src: EndPoint,
+                         dst: EndPoint,
+                         kind: AadlASTJavaFactory.ConnectionKind,
+                         connectionRefs: JList[ConnectionReference],
+                         properties: JList[Property]) =
+    ConnectionInstance(
+      name,
+      src,
+      dst,
+      ConnectionKind.byName(kind.name()).get,
+      isz(connectionRefs),
+      isz(properties)
+    )
+
+  def connectionReference(component: Name,
+                          feature: Name,
+                          isParent: Boolean) =
+    ConnectionReference(
+      component,
+      feature,
+      isParent
+    )
+
+  def endPoint(component: Name,
+               feature: Name,
+               direction: AadlASTJavaFactory.Direction) =
+    EndPoint(
+      component,
+      feature,
+      if(direction != null) Some(Direction.byName(direction.name()).get) else None()
+  )
+
+  def property(name: Name,
+               propertyValues: JList[PropertyValue]) =
+    Property(
+      name,
+      isz(propertyValues)
+    )
+
+  def classifierProp(name: Predef.String) =
+    ClassifierProp(name)
+
+  def rangeProp(low: UnitProp,
+                high: UnitProp) =
+    RangeProp(
+      low,
+      high
+    )
+
+  def recordProp(properties: JList[Property]) =
+    RecordProp(
+      isz(properties)
+    )
+
+  def referenceProp(value: Name) =
+    ReferenceProp(
+      value
+    )
+
+  def unitProp(value: Predef.String,
+               unit: Predef.String) =
+    UnitProp(
+      value,
+      if(unit != null) Some(unit) else None()
+    )
+
+  def valueProp(value: Predef.String) =
+    ValueProp(
+      value
+    )
+
+  def mode(name: Name) =
+    Mode(
+      name
+    )
+
+  def flow(name: Name,
+           kind: AadlASTJavaFactory.FlowKind,
+           source: Predef.String,
+           sink: Predef.String) =
+    Flow(
+      name,
+      FlowKind.byName(kind.name()).get,
+      if(source != null) Some(source) else None(),
+      if(sink != null) Some(sink) else None()
+    )
+
   def isz[T](l: JList[T]): ISZ[T] = {
     import scala.collection.JavaConverters._
     ISZ(l.asScala: _*)
   }
-
 }

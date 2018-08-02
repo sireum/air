@@ -95,15 +95,15 @@ class AadlASTFactory {
     )
 
   def connection(name : Name,
-                 src: EndPoint,
-                 dst: EndPoint,
+                 src: JList[EndPoint],
+                 dst: JList[EndPoint],
                  isBiDirectional: Boolean,
                  connectionInstances: JList[Name],
                  properties: JList[Property]) =
     Connection(
       name,
-      src,
-      dst,
+      isz(src),
+      isz(dst),
       isBiDirectional,
       isz(connectionInstances),
       isz(properties)

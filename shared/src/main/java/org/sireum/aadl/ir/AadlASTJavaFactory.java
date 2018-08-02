@@ -100,8 +100,8 @@ public class AadlASTJavaFactory {
     }
 
     public static Connection connection(Name name,
-                                        EndPoint src,
-                                        EndPoint dst,
+                                        List<EndPoint> src,
+                                        List<EndPoint> dst,
                                         boolean isBiDirectional,
                                         List<Name> connectionInstances,
                                         List<Property> properties) {

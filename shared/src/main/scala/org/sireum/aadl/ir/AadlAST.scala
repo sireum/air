@@ -70,7 +70,7 @@ import org.sireum._
 
   def category: FeatureCategory.Type
 
-  def classifier: Option[Classifier]
+ // def classifier: Option[Classifier]
 
   def properties: ISZ[Property]
 }
@@ -88,7 +88,7 @@ import org.sireum._
                               features: ISZ[Feature],
                               isInverse: B,
                               val category: FeatureCategory.Type,
-                              val classifier: Option[Classifier],
+                             // val classifier: Option[Classifier],
                               val properties: ISZ[Property]
                             ) extends Feature
 
@@ -116,6 +116,7 @@ import org.sireum._
                             name: Name,
                             src: ISZ[EndPoint],
                             dst: ISZ[EndPoint],
+                            kind: ConnectionKind.Type,
                             isBiDirectional: B,
                             connectionInstances: ISZ[Name],
                             properties: ISZ[Property]
@@ -141,7 +142,7 @@ import org.sireum._
   'FeatureGroup
 }
 
-@datatype class EndPoint(component: Name, feature: Name, direction: Option[Direction.Type])
+@datatype class EndPoint(component: Name, feature: Option[Name], direction: Option[Direction.Type])
 
 @datatype class Property(name: Name, propertyValues: ISZ[PropertyValue])
 
@@ -167,7 +168,7 @@ import org.sireum._
   'Path
 }
 
-@datatype class Flow(name: Name, kind: FlowKind.Type, source: Option[String], sink: Option[String])
+@datatype class Flow(name: Name, kind: FlowKind.Type, source: Option[Feature], sink: Option[Feature])
 
 @datatype class Annex(name: String, clause: AnnexClause)
 

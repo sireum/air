@@ -451,7 +451,11 @@ object Transformer {
 
   }
 
-  @pure def transformISZ[Context, T](ctx: Context, s: IS[Z, T], f: (Context, T) => Result[Context, T]@pure): Result[Context, IS[Z, T]] = {
+  @pure def transformISZ[Context, T](
+    ctx: Context,
+    s: IS[Z, T],
+    f: (Context, T) => Result[Context, T] @pure
+  ): Result[Context, IS[Z, T]] = {
     val s2: MS[Z, T] = s.toMS
     var changed: B = F
     var ctxi = ctx
@@ -469,7 +473,11 @@ object Transformer {
     }
   }
 
-  @pure def transformOption[Context, T](ctx: Context, option: Option[T], f: (Context, T) => Result[Context, T]@pure): Result[Context, Option[T]] = {
+  @pure def transformOption[Context, T](
+    ctx: Context,
+    option: Option[T],
+    f: (Context, T) => Result[Context, T] @pure
+  ): Result[Context, Option[T]] = {
     option match {
       case Some(v) =>
         val r = f(ctx, v)
@@ -483,7 +491,7 @@ object Transformer {
 
 }
 
-import Transformer._
+import org.sireum.aadl.ir.Transformer._
 
 @datatype class Transformer[Context](pp: PrePost[Context]) {
 
@@ -620,12 +628,20 @@ import Transformer._
         case o2: FeatureGroup =>
           val r0: Result[Context, Name] = transformName(ctx, o2.identifier)
           val r1: Result[Context, IS[Z, Feature]] = transformISZ(r0.ctx, o2.features, transformFeature _)
-          val r2: Result[Context, Option[Classifier]] = transformOption(r1.ctx, o2.classifier, transformClassifier _)
-          val r3: Result[Context, IS[Z, Property]] = transformISZ(r2.ctx, o2.properties, transformProperty _)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
-            Result(r3.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), features = r1.resultOpt.getOrElse(o2.features), classifier = r2.resultOpt.getOrElse(o2.classifier), properties = r3.resultOpt.getOrElse(o2.properties))))
+          val r2: Result[Context, IS[Z, Property]] = transformISZ(r1.ctx, o2.properties, transformProperty _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            Result(
+              r2.ctx,
+              Some(
+                o2(
+                  identifier = r0.resultOpt.getOrElse(o2.identifier),
+                  features = r1.resultOpt.getOrElse(o2.features),
+                  properties = r2.resultOpt.getOrElse(o2.properties)
+                )
+              )
+            )
           else
-            Result(r3.ctx, None())
+            Result(r2.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -681,12 +697,19 @@ import Transformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: Result[Context, Name] = transformName(ctx, o2.identifier)
       val r1: Result[Context, IS[Z, Feature]] = transformISZ(r0.ctx, o2.features, transformFeature _)
-      val r2: Result[Context, Option[Classifier]] = transformOption(r1.ctx, o2.classifier, transformClassifier _)
-      val r3: Result[Context, IS[Z, Property]] = transformISZ(r2.ctx, o2.properties, transformProperty _)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
-        Result(r3.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), features = r1.resultOpt.getOrElse(o2.features), classifier = r2.resultOpt.getOrElse(o2.classifier), properties = r3.resultOpt.getOrElse(o2.properties))))
+      val r2: Result[Context, IS[Z, Property]] = transformISZ(r1.ctx, o2.properties, transformProperty _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        Result(
+          r2.ctx,
+          Some(
+            o2(
+              identifier = r0.resultOpt.getOrElse(o2.identifier),
+              features = r1.resultOpt.getOrElse(o2.features), properties = r2.resultOpt.getOrElse(o2.properties)
+            )
+          )
+        )
       else
-        Result(r3.ctx, None())
+        Result(r2.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       Result(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -800,7 +823,7 @@ import Transformer._
       val o2: EndPoint = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: Result[Context, Name] = transformName(ctx, o2.component)
-      val r1: Result[Context, Name] = transformName(r0.ctx, o2.feature)
+      val r1: Result[Context, Option[Name]] = transformOption(r0.ctx, o2.feature, transformName _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
         Result(r1.ctx, Some(o2(component = r0.resultOpt.getOrElse(o2.component), feature = r1.resultOpt.getOrElse(o2.feature))))
       else
@@ -942,10 +965,17 @@ import Transformer._
       val o2: Flow = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: Result[Context, Name] = transformName(ctx, o2.name)
-      if (hasChanged || r0.resultOpt.nonEmpty)
-        Result(r0.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name))))
+      val r1: Result[Context, Option[Feature]] = transformOption(r0.ctx, o2.source, transformFeature _)
+      val r2: Result[Context, Option[Feature]] = transformOption(r1.ctx, o2.sink, transformFeature _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        Result(
+          r2.ctx,
+          Some(
+            o2(
+              name = r0.resultOpt.getOrElse(o2.name), source = r1.resultOpt.getOrElse(o2.source),
+              sink = r2.resultOpt.getOrElse(o2.sink))))
       else
-        Result(r0.ctx, None())
+        Result(r2.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       Result(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -1253,10 +1283,11 @@ import Transformer._
     }
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: UnitProp = r.resultOpt.getOrElse(o)
+
     val postR: Result[Context, UnitProp] = pp.postUnitProp(r.ctx, o2) match {
       case Result(postCtx, Some(result: UnitProp)) => Result(postCtx, Some[UnitProp](result))
       case Result(_, Some(_)) => halt("Can only produce object of type UnitProp")
-      case Result(postCtx, _) => Result(postCtx, None[UnitProp]())
+     case Result(postCtx, _) => Result(postCtx, None[UnitProp]())
     }
     if (postR.resultOpt.nonEmpty) {
       return postR

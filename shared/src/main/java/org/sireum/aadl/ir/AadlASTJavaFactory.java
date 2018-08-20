@@ -91,21 +91,22 @@ public class AadlASTJavaFactory {
     }
 
     public static FeatureGroup featureGroup(Name identifier,
-                                        List<Feature> features,
-                                        boolean isInverse,
-                                        FeatureCategory category,
-                                        Classifier classifier,
-                                        List<Property> properties) {
-        return f.featureGroup(identifier, features, isInverse, category, classifier, properties);
+                                            List<Feature> features,
+                                            boolean isInverse,
+                                            FeatureCategory category,
+                                            //Classifier classifier,
+                                            List<Property> properties) {
+        return f.featureGroup(identifier, features, isInverse, category, properties);
     }
 
     public static Connection connection(Name name,
                                         List<EndPoint> src,
                                         List<EndPoint> dst,
+                                        ConnectionKind kind,
                                         boolean isBiDirectional,
                                         List<Name> connectionInstances,
                                         List<Property> properties) {
-        return f.connection(name, src, dst, isBiDirectional, connectionInstances, properties);
+        return f.connection(name, src, dst, kind, isBiDirectional, connectionInstances, properties);
     }
 
     public static ConnectionInstance connectionInstance(Name name,
@@ -166,8 +167,8 @@ public class AadlASTJavaFactory {
 
     public static Flow flow(Name name,
                             FlowKind kind,
-                            String source,
-                            String sink) {
+                            Feature source,
+                            Feature sink) {
         return f.flow(name, kind, source, sink);
     }
 }

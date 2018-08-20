@@ -30,8 +30,8 @@
 
 package org.sireum.aadl.ir
 
-import org.sireum._
 import org.sireum.Json.Printer._
+import org.sireum._
 
 object JSON {
 
@@ -124,7 +124,6 @@ object JSON {
         ("features", printISZ(F, o.features, printFeature _)),
         ("isInverse", printB(o.isInverse)),
         ("category", printFeatureCategoryType(o.category)),
-        ("classifier", printOption(F, o.classifier, printClassifier _)),
         ("properties", printISZ(F, o.properties, printProperty _))
       ))
     }
@@ -167,6 +166,7 @@ object JSON {
         ("name", printName(o.name)),
         ("src", printISZ(F, o.src, printEndPoint _)),
         ("dst", printISZ(F, o.dst, printEndPoint _)),
+        ("kind", printConnectionKindType(o.kind)),
         ("isBiDirectional", printB(o.isBiDirectional)),
         ("connectionInstances", printISZ(F, o.connectionInstances, printName _)),
         ("properties", printISZ(F, o.properties, printProperty _))
@@ -213,7 +213,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""EndPoint""""),
         ("component", printName(o.component)),
-        ("feature", printName(o.feature)),
+        ("feature", printOption(F, o.feature, printName _)),
         ("direction", printOption(F, o.direction, printDirectionType _))
       ))
     }
@@ -305,8 +305,8 @@ object JSON {
         ("type", st""""Flow""""),
         ("name", printName(o.name)),
         ("kind", printFlowKindType(o.kind)),
-        ("source", printOption(T, o.source, printString _)),
-        ("sink", printOption(T, o.sink, printString _))
+        ("source", printOption(F, o.source, printFeature _)),
+        ("sink", printOption(F, o.sink, printFeature _))
       ))
     }
 
@@ -573,13 +573,10 @@ object JSON {
       parser.parseObjectKey("category")
       val category = parseFeatureCategoryType()
       parser.parseObjectNext()
-      parser.parseObjectKey("classifier")
-      val classifier = parser.parseOption(parseClassifier _)
-      parser.parseObjectNext()
       parser.parseObjectKey("properties")
       val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
-      return FeatureGroup(identifier, features, isInverse, category, classifier, properties)
+      return FeatureGroup(identifier, features, isInverse, category, properties)
     }
 
     def parseDirectionType(): Direction.Type = {
@@ -642,6 +639,9 @@ object JSON {
       parser.parseObjectKey("dst")
       val dst = parser.parseISZ(parseEndPoint _)
       parser.parseObjectNext()
+      parser.parseObjectKey("kind")
+      val kind = parseConnectionKindType()
+      parser.parseObjectNext()
       parser.parseObjectKey("isBiDirectional")
       val isBiDirectional = parser.parseB()
       parser.parseObjectNext()
@@ -651,7 +651,7 @@ object JSON {
       parser.parseObjectKey("properties")
       val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
-      return Connection(name, src, dst, isBiDirectional, connectionInstances, properties)
+      return Connection(name, src, dst, kind, isBiDirectional, connectionInstances, properties)
     }
 
     def parseConnectionInstance(): ConnectionInstance = {
@@ -739,7 +739,7 @@ object JSON {
       val component = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("feature")
-      val feature = parseName()
+      val feature = parser.parseOption(parseName _)
       parser.parseObjectNext()
       parser.parseObjectKey("direction")
       val direction = parser.parseOption(parseDirectionType _)
@@ -926,10 +926,10 @@ object JSON {
       val kind = parseFlowKindType()
       parser.parseObjectNext()
       parser.parseObjectKey("source")
-      val source = parser.parseOption(parser.parseString _)
+      val source = parser.parseOption(parseFeature _)
       parser.parseObjectNext()
       parser.parseObjectKey("sink")
-      val sink = parser.parseOption(parser.parseString _)
+      val sink = parser.parseOption(parseFeature _)
       parser.parseObjectNext()
       return Flow(name, kind, source, sink)
     }

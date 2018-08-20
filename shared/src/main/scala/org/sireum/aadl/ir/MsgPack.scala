@@ -155,7 +155,6 @@ object MsgPack {
       writer.writeISZ(o.features, writeFeature _)
       writer.writeB(o.isInverse)
       writeFeatureCategoryType(o.category)
-      writer.writeOption(o.classifier, writeClassifier _)
       writer.writeISZ(o.properties, writeProperty _)
     }
 
@@ -172,6 +171,7 @@ object MsgPack {
       writeName(o.name)
       writer.writeISZ(o.src, writeEndPoint _)
       writer.writeISZ(o.dst, writeEndPoint _)
+      writeConnectionKindType(o.kind)
       writer.writeB(o.isBiDirectional)
       writer.writeISZ(o.connectionInstances, writeName _)
       writer.writeISZ(o.properties, writeProperty _)
@@ -201,7 +201,7 @@ object MsgPack {
     def writeEndPoint(o: EndPoint): Unit = {
       writer.writeZ(Constants.EndPoint)
       writeName(o.component)
-      writeName(o.feature)
+      writer.writeOption(o.feature, writeName _)
       writer.writeOption(o.direction, writeDirectionType _)
     }
 
@@ -267,8 +267,8 @@ object MsgPack {
       writer.writeZ(Constants.Flow)
       writeName(o.name)
       writeFlowKindType(o.kind)
-      writer.writeOption(o.source, writer.writeString _)
-      writer.writeOption(o.sink, writer.writeString _)
+      writer.writeOption(o.source, writeFeature _)
+      writer.writeOption(o.sink, writeFeature _)
     }
 
     def writeAnnex(o: Annex): Unit = {
@@ -466,9 +466,8 @@ object MsgPack {
       val features = reader.readISZ(readFeature _)
       val isInverse = reader.readB()
       val category = readFeatureCategoryType()
-      val classifier = reader.readOption(readClassifier _)
       val properties = reader.readISZ(readProperty _)
-      return FeatureGroup(identifier, features, isInverse, category, classifier, properties)
+      return FeatureGroup(identifier, features, isInverse, category, properties)
     }
 
     def readDirectionType(): Direction.Type = {
@@ -493,10 +492,11 @@ object MsgPack {
       val name = readName()
       val src = reader.readISZ(readEndPoint _)
       val dst = reader.readISZ(readEndPoint _)
+      val kind = readConnectionKindType()
       val isBiDirectional = reader.readB()
       val connectionInstances = reader.readISZ(readName _)
       val properties = reader.readISZ(readProperty _)
-      return Connection(name, src, dst, isBiDirectional, connectionInstances, properties)
+      return Connection(name, src, dst, kind, isBiDirectional, connectionInstances, properties)
     }
 
     def readConnectionInstance(): ConnectionInstance = {
@@ -547,7 +547,7 @@ object MsgPack {
         reader.expectZ(Constants.EndPoint)
       }
       val component = readName()
-      val feature = readName()
+      val feature = reader.readOption(readName _)
       val direction = reader.readOption(readDirectionType _)
       return EndPoint(component, feature, direction)
     }
@@ -692,8 +692,8 @@ object MsgPack {
       }
       val name = readName()
       val kind = readFlowKindType()
-      val source = reader.readOption(reader.readString _)
-      val sink = reader.readOption(reader.readString _)
+      val source = reader.readOption(readFeature _)
+      val sink = reader.readOption(readFeature _)
       return Flow(name, kind, source, sink)
     }
 

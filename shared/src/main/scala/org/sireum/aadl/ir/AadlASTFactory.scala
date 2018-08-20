@@ -83,20 +83,21 @@ class AadlASTFactory {
                    features: JList[Feature],
                    isInverse: Boolean,
                    category: AadlASTJavaFactory.FeatureCategory,
-                   classifier: Classifier,
+                   //classifier: Classifier,
                    properties: JList[Property]): FeatureGroup =
     FeatureGroup(
       identifier,
       isz(features),
       isInverse,
       FeatureCategory.byName(category.name()).get,
-      if (classifier != null) Some(classifier) else None(),
+      //if (classifier != null) Some(classifier) else None(),
       isz(properties)
     )
 
   def connection(name : Name,
                  src: JList[EndPoint],
                  dst: JList[EndPoint],
+    kind: AadlASTJavaFactory.ConnectionKind,
                  isBiDirectional: Boolean,
                  connectionInstances: JList[Name],
                  properties: JList[Property]) =
@@ -104,6 +105,7 @@ class AadlASTFactory {
       name,
       isz(src),
       isz(dst),
+      ConnectionKind.byName(kind.name()).get,
       isBiDirectional,
       isz(connectionInstances),
       isz(properties)
@@ -138,7 +140,7 @@ class AadlASTFactory {
                direction: AadlASTJavaFactory.Direction) =
     EndPoint(
       component,
-      feature,
+      if (feature != null) Some(feature) else None(),
       if(direction != null) Some(Direction.byName(direction.name()).get) else None()
   )
 
@@ -187,9 +189,7 @@ class AadlASTFactory {
     )
 
   def flow(name: Name,
-           kind: AadlASTJavaFactory.FlowKind,
-           source: Predef.String,
-           sink: Predef.String) =
+           kind: AadlASTJavaFactory.FlowKind, source: Feature, sink: Feature) =
     Flow(
       name,
       FlowKind.byName(kind.name()).get,

@@ -1,5 +1,7 @@
 # AIR: AADL IR in Slang, JSON, and MessagePack
 
+[![Build Status](https://travis-ci.org/sireum/air.svg?branch=master)](https://travis-ci.org/sireum/air) [![](https://jitpack.io/v/sireum/air.svg)](https://jitpack.io/#sireum/air)
+
 AIR provides an IR in [Slang](https://github.com/sireum/slang) for AADL instance models.
 It was inspired by [Ocarina's AADL to XML translator](https://github.com/OpenAADL/ocarina/tree/master/resources/runtime/aadl_xml).
 

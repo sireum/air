@@ -22,51 +22,11 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import $file.Air
+import ammonite.ops.up
 
-import mill._
-import mill.scalalib._
-import org.sireum.mill.SireumModule._
+object air extends Air.Module {
 
-trait Module extends CrossJvmJsPublish {
+  final override def millSourcePath = super.millSourcePath / up
 
-  final override def description: String = "Sireum AADL Intermediate Representation (AIR)"
-
-  final override def artifactNameOpt: Option[String] = Some("air")
-
-  final override def jvmArtifactNameOpt: Option[String] = Some("air-jvm")
-
-  final override def subUrl: String = "air"
-
-  final override def developers = Seq(
-    Developers.jason,
-    Developers.hari
-  )
-
-  final override def jvmTestIvyDeps = Agg.empty
-
-  final override def jsTestIvyDeps = Agg.empty
-
-  final override def jvmDeps = Seq()
-
-  final override def jsDeps = Seq()
-
-  final override def testIvyDeps = Agg(
-    ivy"org.scalatest::scalatest::$scalaTestVersion"
-  )
-
-  final override def ivyDeps = Agg(
-    ivy"com.github.sireum.runtime::library::master-SNAPSHOT"
-  )
-
-  final override lazy val scalacPluginIvyDeps = Agg(
-    ivy"org.sireum::scalac-plugin:$scalacPluginVersion"
-  )
-
-  final override def testScalacPluginIvyDeps = scalacPluginIvyDeps
-
-  final override def deps = Seq()
-
-  final override val jvmTestFrameworks = Seq("org.scalatest.tools.Framework")
-
-  final override def jsTestFrameworks = jvmTestFrameworks
 }

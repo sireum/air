@@ -1,0 +1,12 @@
+jdk:
+  - oraclejdk8
+before_install:
+  - ./test.sh
+install:
+  - export BUILD_DIR=$( cd "$( dirname "." )" &> /dev/null && pwd )
+  - $BUILD_DIR/mill-standalone all air.shared.m2 air.jvm.m2 air.js.m2
+  - mkdir -p ~/.m2/repository
+  - cp -Rv out/air/shared/m2/dest/* ~/.m2/repository/
+  - cp -Rv out/air/jvm/m2/dest/* ~/.m2/repository/
+  - cp -Rv out/air/js/m2/dest/* ~/.m2/repository/
+

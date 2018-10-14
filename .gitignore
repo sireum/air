@@ -2,4 +2,7 @@ target/
 out
 /.idea
 /.idea_modules
-mill-standalone
+/mill-standalone
+/sireum
+/versions.properties
+

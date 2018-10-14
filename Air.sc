@@ -33,7 +33,7 @@ trait Module extends CrossJvmJsPublish {
 
   final override def artifactNameOpt: Option[String] = Some("air")
 
-  final override def jvmArtifactNameOpt: Option[String] = Some("air-jvm")
+  final override def sharedArtifactNameOpt: Option[String] = Some("air-shared")
 
   final override def subUrl: String = "air"
 

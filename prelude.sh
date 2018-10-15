@@ -12,3 +12,5 @@ fi
 if [ ! -e versions.properties ]; then
   curl -Lo versions.properties https://raw.githubusercontent.com/sireum/kekinian/master/versions.properties
 fi
+rm -fR runtime
+git clone --depth=1 https://github.com/sireum/runtime

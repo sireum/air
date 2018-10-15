@@ -22,20 +22,41 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+import $file.runtime.Runtime
 import $file.Air
 import ammonite.ops._
+
+object runtime extends mill.Module {
+
+  object macros extends Runtime.Module.Macros
+
+  object test extends Runtime.Module.Test {
+    final override def macrosObject = macros
+  }
+
+  object library extends Runtime.Module.Library {
+    final override def macrosObject = macros
+    final override def testObject = test
+  }
+
+}
+
 
 object air extends Air.Module {
 
   final override def millSourcePath = super.millSourcePath / up
 
+  final override def libraryObject = runtime.library
+  
+  final override def testObject = runtime.test
 }
 
 def regen() = T.command {
   val path = pwd / 'shared / 'src / 'main / 'scala / 'org / 'sireum / 'aadl / 'ir
   %(pwd / 'sireum, 'tools, 'transgen, "-l", pwd / "license.txt", "-m", "immutable,mutable",
     path / "AadlAST.scala")(path)
-  %(pwd / 'sireum, 'tools, 'sergen, "-p", "org.sireum.lang.tipe", "-l", pwd / "license.txt",
+  %(pwd / 'sireum, 'tools, 'sergen, "-p", "org.sireum.aadl.ir", "-l", pwd / "license.txt",
     "-m", "json,msgpack", path / "AAdlAST.scala")(path)
 }
 

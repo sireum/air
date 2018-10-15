@@ -50,13 +50,13 @@ trait Module extends CrossJvmJsPublish {
 
   final override def jsDeps = Seq()
 
-  final override def testIvyDeps = Agg(
-    ivy"org.scalatest::scalatest::$scalaTestVersion"
-  )
+  final override def ivyDeps =
+    if (isSourceDep) Agg.empty
+    else Agg(jpLatest(isCross = true, "sireum", "runtime", "library"))
 
-  final override def ivyDeps = Agg(
-    jpLatest(isCross = true, "sireum", "runtime", "library")
-  )
+  final override def testIvyDeps =
+    if (isSourceDep) Agg.empty
+    else Agg(jpLatest(isCross = true, "sireum", "runtime", "test"))
 
   final override lazy val scalacPluginIvyDeps = Agg(
     ivy"org.sireum::scalac-plugin:$scalacPluginVersion"
@@ -64,9 +64,17 @@ trait Module extends CrossJvmJsPublish {
 
   final override def testScalacPluginIvyDeps = scalacPluginIvyDeps
 
-  final override def deps = Seq()
+  final override def deps =
+    if (isSourceDep) Seq(libraryObject) else Seq()
+
+  final override def testDeps =
+    if (isSourceDep) Seq(testObject.shared) else Seq()
 
   final override val jvmTestFrameworks = Seq("org.scalatest.tools.Framework")
 
   final override def jsTestFrameworks = jvmTestFrameworks
+
+  def testObject: CrossJvmJsPublish
+
+  def libraryObject: CrossJvmJsPublish
 }

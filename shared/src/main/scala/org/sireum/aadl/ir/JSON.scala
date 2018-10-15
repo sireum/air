@@ -28,7 +28,7 @@
 
 // This file is auto-generated from AadlAST.scala
 
-package org.sireum.lang.tipe
+package org.sireum.aadl.ir
 
 import org.sireum._
 import org.sireum.Json.Printer._
@@ -37,358 +37,358 @@ object JSON {
 
   object Printer {
 
-    @pure def print_aadlirAadl(o: org.sireum.aadl.ir.Aadl): ST = {
+    @pure def printAadl(o: Aadl): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.Aadl""""),
-        ("components", printISZ(F, o.components, print_aadlirComponent _)),
-        ("errorLib", printISZ(F, o.errorLib, print_aadlirEmv2Library _))
+        ("type", st""""Aadl""""),
+        ("components", printISZ(F, o.components, printComponent _)),
+        ("errorLib", printISZ(F, o.errorLib, printEmv2Library _))
       ))
     }
 
-    @pure def print_aadlirName(o: org.sireum.aadl.ir.Name): ST = {
+    @pure def printName(o: Name): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.Name""""),
+        ("type", st""""Name""""),
         ("name", printISZ(T, o.name, printString _))
       ))
     }
 
-    @pure def print_aadlirComponent(o: org.sireum.aadl.ir.Component): ST = {
+    @pure def printComponent(o: Component): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.Component""""),
-        ("identifier", print_aadlirName(o.identifier)),
-        ("category", print_aadlirComponentCategoryType(o.category)),
-        ("classifier", printOption(F, o.classifier, print_aadlirClassifier _)),
-        ("features", printISZ(F, o.features, print_aadlirFeature _)),
-        ("subComponents", printISZ(F, o.subComponents, print_aadlirComponent _)),
-        ("connections", printISZ(F, o.connections, print_aadlirConnection _)),
-        ("connectionInstances", printISZ(F, o.connectionInstances, print_aadlirConnectionInstance _)),
-        ("properties", printISZ(F, o.properties, print_aadlirProperty _)),
-        ("flows", printISZ(F, o.flows, print_aadlirFlow _)),
-        ("modes", printISZ(F, o.modes, print_aadlirMode _)),
-        ("annexes", printISZ(F, o.annexes, print_aadlirAnnex _))
+        ("type", st""""Component""""),
+        ("identifier", printName(o.identifier)),
+        ("category", printComponentCategoryType(o.category)),
+        ("classifier", printOption(F, o.classifier, printClassifier _)),
+        ("features", printISZ(F, o.features, printFeature _)),
+        ("subComponents", printISZ(F, o.subComponents, printComponent _)),
+        ("connections", printISZ(F, o.connections, printConnection _)),
+        ("connectionInstances", printISZ(F, o.connectionInstances, printConnectionInstance _)),
+        ("properties", printISZ(F, o.properties, printProperty _)),
+        ("flows", printISZ(F, o.flows, printFlow _)),
+        ("modes", printISZ(F, o.modes, printMode _)),
+        ("annexes", printISZ(F, o.annexes, printAnnex _))
       ))
     }
 
-    @pure def print_aadlirClassifier(o: org.sireum.aadl.ir.Classifier): ST = {
+    @pure def printClassifier(o: Classifier): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.Classifier""""),
+        ("type", st""""Classifier""""),
         ("name", printString(o.name))
       ))
     }
 
-    @pure def print_aadlirComponentCategoryType(o: org.sireum.aadl.ir.ComponentCategory.Type): ST = {
+    @pure def printComponentCategoryType(o: ComponentCategory.Type): ST = {
       val value: String = o match {
-        case org.sireum.aadl.ir.ComponentCategory.Abstract => "Abstract"
-        case org.sireum.aadl.ir.ComponentCategory.Bus => "Bus"
-        case org.sireum.aadl.ir.ComponentCategory.Data => "Data"
-        case org.sireum.aadl.ir.ComponentCategory.Device => "Device"
-        case org.sireum.aadl.ir.ComponentCategory.Memory => "Memory"
-        case org.sireum.aadl.ir.ComponentCategory.Process => "Process"
-        case org.sireum.aadl.ir.ComponentCategory.Processor => "Processor"
-        case org.sireum.aadl.ir.ComponentCategory.Subprogram => "Subprogram"
-        case org.sireum.aadl.ir.ComponentCategory.SubprogramGroup => "SubprogramGroup"
-        case org.sireum.aadl.ir.ComponentCategory.System => "System"
-        case org.sireum.aadl.ir.ComponentCategory.Thread => "Thread"
-        case org.sireum.aadl.ir.ComponentCategory.ThreadGroup => "ThreadGroup"
-        case org.sireum.aadl.ir.ComponentCategory.VirtualBus => "VirtualBus"
-        case org.sireum.aadl.ir.ComponentCategory.VirtualProcessor => "VirtualProcessor"
+        case ComponentCategory.Abstract => "Abstract"
+        case ComponentCategory.Bus => "Bus"
+        case ComponentCategory.Data => "Data"
+        case ComponentCategory.Device => "Device"
+        case ComponentCategory.Memory => "Memory"
+        case ComponentCategory.Process => "Process"
+        case ComponentCategory.Processor => "Processor"
+        case ComponentCategory.Subprogram => "Subprogram"
+        case ComponentCategory.SubprogramGroup => "SubprogramGroup"
+        case ComponentCategory.System => "System"
+        case ComponentCategory.Thread => "Thread"
+        case ComponentCategory.ThreadGroup => "ThreadGroup"
+        case ComponentCategory.VirtualBus => "VirtualBus"
+        case ComponentCategory.VirtualProcessor => "VirtualProcessor"
       }
       return printObject(ISZ(
-        ("type", printString("org.sireum.aadl.ir.ComponentCategory")),
+        ("type", printString("ComponentCategory")),
         ("value", printString(value))
       ))
     }
 
-    @pure def print_aadlirFeature(o: org.sireum.aadl.ir.Feature): ST = {
+    @pure def printFeature(o: Feature): ST = {
       o match {
-        case o: org.sireum.aadl.ir.FeatureEnd => return print_aadlirFeatureEnd(o)
-        case o: org.sireum.aadl.ir.FeatureGroup => return print_aadlirFeatureGroup(o)
+        case o: FeatureEnd => return printFeatureEnd(o)
+        case o: FeatureGroup => return printFeatureGroup(o)
       }
     }
 
-    @pure def print_aadlirFeatureEnd(o: org.sireum.aadl.ir.FeatureEnd): ST = {
+    @pure def printFeatureEnd(o: FeatureEnd): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.FeatureEnd""""),
-        ("identifier", print_aadlirName(o.identifier)),
-        ("direction", print_aadlirDirectionType(o.direction)),
-        ("category", print_aadlirFeatureCategoryType(o.category)),
-        ("classifier", printOption(F, o.classifier, print_aadlirClassifier _)),
-        ("properties", printISZ(F, o.properties, print_aadlirProperty _))
+        ("type", st""""FeatureEnd""""),
+        ("identifier", printName(o.identifier)),
+        ("direction", printDirectionType(o.direction)),
+        ("category", printFeatureCategoryType(o.category)),
+        ("classifier", printOption(F, o.classifier, printClassifier _)),
+        ("properties", printISZ(F, o.properties, printProperty _))
       ))
     }
 
-    @pure def print_aadlirFeatureGroup(o: org.sireum.aadl.ir.FeatureGroup): ST = {
+    @pure def printFeatureGroup(o: FeatureGroup): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.FeatureGroup""""),
-        ("identifier", print_aadlirName(o.identifier)),
-        ("features", printISZ(F, o.features, print_aadlirFeature _)),
+        ("type", st""""FeatureGroup""""),
+        ("identifier", printName(o.identifier)),
+        ("features", printISZ(F, o.features, printFeature _)),
         ("isInverse", printB(o.isInverse)),
-        ("category", print_aadlirFeatureCategoryType(o.category)),
-        ("properties", printISZ(F, o.properties, print_aadlirProperty _))
+        ("category", printFeatureCategoryType(o.category)),
+        ("properties", printISZ(F, o.properties, printProperty _))
       ))
     }
 
-    @pure def print_aadlirDirectionType(o: org.sireum.aadl.ir.Direction.Type): ST = {
+    @pure def printDirectionType(o: Direction.Type): ST = {
       val value: String = o match {
-        case org.sireum.aadl.ir.Direction.In => "In"
-        case org.sireum.aadl.ir.Direction.Out => "Out"
-        case org.sireum.aadl.ir.Direction.InOut => "InOut"
-        case org.sireum.aadl.ir.Direction.None => "None"
+        case Direction.In => "In"
+        case Direction.Out => "Out"
+        case Direction.InOut => "InOut"
+        case Direction.None => "None"
       }
       return printObject(ISZ(
-        ("type", printString("org.sireum.aadl.ir.Direction")),
+        ("type", printString("Direction")),
         ("value", printString(value))
       ))
     }
 
-    @pure def print_aadlirFeatureCategoryType(o: org.sireum.aadl.ir.FeatureCategory.Type): ST = {
+    @pure def printFeatureCategoryType(o: FeatureCategory.Type): ST = {
       val value: String = o match {
-        case org.sireum.aadl.ir.FeatureCategory.AbstractFeature => "AbstractFeature"
-        case org.sireum.aadl.ir.FeatureCategory.BusAccess => "BusAccess"
-        case org.sireum.aadl.ir.FeatureCategory.DataAccess => "DataAccess"
-        case org.sireum.aadl.ir.FeatureCategory.DataPort => "DataPort"
-        case org.sireum.aadl.ir.FeatureCategory.EventPort => "EventPort"
-        case org.sireum.aadl.ir.FeatureCategory.EventDataPort => "EventDataPort"
-        case org.sireum.aadl.ir.FeatureCategory.FeatureGroup => "FeatureGroup"
-        case org.sireum.aadl.ir.FeatureCategory.Parameter => "Parameter"
-        case org.sireum.aadl.ir.FeatureCategory.SubprogramAccess => "SubprogramAccess"
-        case org.sireum.aadl.ir.FeatureCategory.SubprogramAccessGroup => "SubprogramAccessGroup"
+        case FeatureCategory.AbstractFeature => "AbstractFeature"
+        case FeatureCategory.BusAccess => "BusAccess"
+        case FeatureCategory.DataAccess => "DataAccess"
+        case FeatureCategory.DataPort => "DataPort"
+        case FeatureCategory.EventPort => "EventPort"
+        case FeatureCategory.EventDataPort => "EventDataPort"
+        case FeatureCategory.FeatureGroup => "FeatureGroup"
+        case FeatureCategory.Parameter => "Parameter"
+        case FeatureCategory.SubprogramAccess => "SubprogramAccess"
+        case FeatureCategory.SubprogramAccessGroup => "SubprogramAccessGroup"
       }
       return printObject(ISZ(
-        ("type", printString("org.sireum.aadl.ir.FeatureCategory")),
+        ("type", printString("FeatureCategory")),
         ("value", printString(value))
       ))
     }
 
-    @pure def print_aadlirConnection(o: org.sireum.aadl.ir.Connection): ST = {
+    @pure def printConnection(o: Connection): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.Connection""""),
-        ("name", print_aadlirName(o.name)),
-        ("src", printISZ(F, o.src, print_aadlirEndPoint _)),
-        ("dst", printISZ(F, o.dst, print_aadlirEndPoint _)),
-        ("kind", print_aadlirConnectionKindType(o.kind)),
+        ("type", st""""Connection""""),
+        ("name", printName(o.name)),
+        ("src", printISZ(F, o.src, printEndPoint _)),
+        ("dst", printISZ(F, o.dst, printEndPoint _)),
+        ("kind", printConnectionKindType(o.kind)),
         ("isBiDirectional", printB(o.isBiDirectional)),
-        ("connectionInstances", printISZ(F, o.connectionInstances, print_aadlirName _)),
-        ("properties", printISZ(F, o.properties, print_aadlirProperty _))
+        ("connectionInstances", printISZ(F, o.connectionInstances, printName _)),
+        ("properties", printISZ(F, o.properties, printProperty _))
       ))
     }
 
-    @pure def print_aadlirConnectionInstance(o: org.sireum.aadl.ir.ConnectionInstance): ST = {
+    @pure def printConnectionInstance(o: ConnectionInstance): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.ConnectionInstance""""),
-        ("name", print_aadlirName(o.name)),
-        ("src", print_aadlirEndPoint(o.src)),
-        ("dst", print_aadlirEndPoint(o.dst)),
-        ("kind", print_aadlirConnectionKindType(o.kind)),
-        ("connectionRefs", printISZ(F, o.connectionRefs, print_aadlirConnectionReference _)),
-        ("properties", printISZ(F, o.properties, print_aadlirProperty _))
+        ("type", st""""ConnectionInstance""""),
+        ("name", printName(o.name)),
+        ("src", printEndPoint(o.src)),
+        ("dst", printEndPoint(o.dst)),
+        ("kind", printConnectionKindType(o.kind)),
+        ("connectionRefs", printISZ(F, o.connectionRefs, printConnectionReference _)),
+        ("properties", printISZ(F, o.properties, printProperty _))
       ))
     }
 
-    @pure def print_aadlirConnectionReference(o: org.sireum.aadl.ir.ConnectionReference): ST = {
+    @pure def printConnectionReference(o: ConnectionReference): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.ConnectionReference""""),
-        ("name", print_aadlirName(o.name)),
-        ("context", print_aadlirName(o.context)),
+        ("type", st""""ConnectionReference""""),
+        ("name", printName(o.name)),
+        ("context", printName(o.context)),
         ("isParent", printB(o.isParent))
       ))
     }
 
-    @pure def print_aadlirConnectionKindType(o: org.sireum.aadl.ir.ConnectionKind.Type): ST = {
+    @pure def printConnectionKindType(o: ConnectionKind.Type): ST = {
       val value: String = o match {
-        case org.sireum.aadl.ir.ConnectionKind.Feature => "Feature"
-        case org.sireum.aadl.ir.ConnectionKind.Access => "Access"
-        case org.sireum.aadl.ir.ConnectionKind.Parameter => "Parameter"
-        case org.sireum.aadl.ir.ConnectionKind.Port => "Port"
-        case org.sireum.aadl.ir.ConnectionKind.ModeTransition => "ModeTransition"
-        case org.sireum.aadl.ir.ConnectionKind.FeatureGroup => "FeatureGroup"
+        case ConnectionKind.Feature => "Feature"
+        case ConnectionKind.Access => "Access"
+        case ConnectionKind.Parameter => "Parameter"
+        case ConnectionKind.Port => "Port"
+        case ConnectionKind.ModeTransition => "ModeTransition"
+        case ConnectionKind.FeatureGroup => "FeatureGroup"
       }
       return printObject(ISZ(
-        ("type", printString("org.sireum.aadl.ir.ConnectionKind")),
+        ("type", printString("ConnectionKind")),
         ("value", printString(value))
       ))
     }
 
-    @pure def print_aadlirEndPoint(o: org.sireum.aadl.ir.EndPoint): ST = {
+    @pure def printEndPoint(o: EndPoint): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.EndPoint""""),
-        ("component", print_aadlirName(o.component)),
-        ("feature", printOption(F, o.feature, print_aadlirName _)),
-        ("direction", printOption(F, o.direction, print_aadlirDirectionType _))
+        ("type", st""""EndPoint""""),
+        ("component", printName(o.component)),
+        ("feature", printOption(F, o.feature, printName _)),
+        ("direction", printOption(F, o.direction, printDirectionType _))
       ))
     }
 
-    @pure def print_aadlirProperty(o: org.sireum.aadl.ir.Property): ST = {
+    @pure def printProperty(o: Property): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.Property""""),
-        ("name", print_aadlirName(o.name)),
-        ("propertyValues", printISZ(F, o.propertyValues, print_aadlirPropertyValue _))
+        ("type", st""""Property""""),
+        ("name", printName(o.name)),
+        ("propertyValues", printISZ(F, o.propertyValues, printPropertyValue _))
       ))
     }
 
-    @pure def print_aadlirPropertyValue(o: org.sireum.aadl.ir.PropertyValue): ST = {
+    @pure def printPropertyValue(o: PropertyValue): ST = {
       o match {
-        case o: org.sireum.aadl.ir.ClassifierProp => return print_aadlirClassifierProp(o)
-        case o: org.sireum.aadl.ir.RangeProp => return print_aadlirRangeProp(o)
-        case o: org.sireum.aadl.ir.RecordProp => return print_aadlirRecordProp(o)
-        case o: org.sireum.aadl.ir.ReferenceProp => return print_aadlirReferenceProp(o)
-        case o: org.sireum.aadl.ir.UnitProp => return print_aadlirUnitProp(o)
-        case o: org.sireum.aadl.ir.ValueProp => return print_aadlirValueProp(o)
+        case o: ClassifierProp => return printClassifierProp(o)
+        case o: RangeProp => return printRangeProp(o)
+        case o: RecordProp => return printRecordProp(o)
+        case o: ReferenceProp => return printReferenceProp(o)
+        case o: UnitProp => return printUnitProp(o)
+        case o: ValueProp => return printValueProp(o)
       }
     }
 
-    @pure def print_aadlirClassifierProp(o: org.sireum.aadl.ir.ClassifierProp): ST = {
+    @pure def printClassifierProp(o: ClassifierProp): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.ClassifierProp""""),
+        ("type", st""""ClassifierProp""""),
         ("name", printString(o.name))
       ))
     }
 
-    @pure def print_aadlirRangeProp(o: org.sireum.aadl.ir.RangeProp): ST = {
+    @pure def printRangeProp(o: RangeProp): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.RangeProp""""),
-        ("low", print_aadlirUnitProp(o.low)),
-        ("high", print_aadlirUnitProp(o.high))
+        ("type", st""""RangeProp""""),
+        ("low", printUnitProp(o.low)),
+        ("high", printUnitProp(o.high))
       ))
     }
 
-    @pure def print_aadlirRecordProp(o: org.sireum.aadl.ir.RecordProp): ST = {
+    @pure def printRecordProp(o: RecordProp): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.RecordProp""""),
-        ("properties", printISZ(F, o.properties, print_aadlirProperty _))
+        ("type", st""""RecordProp""""),
+        ("properties", printISZ(F, o.properties, printProperty _))
       ))
     }
 
-    @pure def print_aadlirReferenceProp(o: org.sireum.aadl.ir.ReferenceProp): ST = {
+    @pure def printReferenceProp(o: ReferenceProp): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.ReferenceProp""""),
-        ("value", print_aadlirName(o.value))
+        ("type", st""""ReferenceProp""""),
+        ("value", printName(o.value))
       ))
     }
 
-    @pure def print_aadlirUnitProp(o: org.sireum.aadl.ir.UnitProp): ST = {
+    @pure def printUnitProp(o: UnitProp): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.UnitProp""""),
+        ("type", st""""UnitProp""""),
         ("value", printString(o.value)),
         ("unit", printOption(T, o.unit, printString _))
       ))
     }
 
-    @pure def print_aadlirValueProp(o: org.sireum.aadl.ir.ValueProp): ST = {
+    @pure def printValueProp(o: ValueProp): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.ValueProp""""),
+        ("type", st""""ValueProp""""),
         ("value", printString(o.value))
       ))
     }
 
-    @pure def print_aadlirMode(o: org.sireum.aadl.ir.Mode): ST = {
+    @pure def printMode(o: Mode): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.Mode""""),
-        ("name", print_aadlirName(o.name))
+        ("type", st""""Mode""""),
+        ("name", printName(o.name))
       ))
     }
 
-    @pure def print_aadlirFlowKindType(o: org.sireum.aadl.ir.FlowKind.Type): ST = {
+    @pure def printFlowKindType(o: FlowKind.Type): ST = {
       val value: String = o match {
-        case org.sireum.aadl.ir.FlowKind.Source => "Source"
-        case org.sireum.aadl.ir.FlowKind.Sink => "Sink"
-        case org.sireum.aadl.ir.FlowKind.Path => "Path"
+        case FlowKind.Source => "Source"
+        case FlowKind.Sink => "Sink"
+        case FlowKind.Path => "Path"
       }
       return printObject(ISZ(
-        ("type", printString("org.sireum.aadl.ir.FlowKind")),
+        ("type", printString("FlowKind")),
         ("value", printString(value))
       ))
     }
 
-    @pure def print_aadlirFlow(o: org.sireum.aadl.ir.Flow): ST = {
+    @pure def printFlow(o: Flow): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.Flow""""),
-        ("name", print_aadlirName(o.name)),
-        ("kind", print_aadlirFlowKindType(o.kind)),
-        ("source", printOption(F, o.source, print_aadlirFeature _)),
-        ("sink", printOption(F, o.sink, print_aadlirFeature _))
+        ("type", st""""Flow""""),
+        ("name", printName(o.name)),
+        ("kind", printFlowKindType(o.kind)),
+        ("source", printOption(F, o.source, printFeature _)),
+        ("sink", printOption(F, o.sink, printFeature _))
       ))
     }
 
-    @pure def print_aadlirAnnex(o: org.sireum.aadl.ir.Annex): ST = {
+    @pure def printAnnex(o: Annex): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.Annex""""),
+        ("type", st""""Annex""""),
         ("name", printString(o.name)),
-        ("clause", print_aadlirAnnexClause(o.clause))
+        ("clause", printAnnexClause(o.clause))
       ))
     }
 
-    @pure def print_aadlirAnnexClause(o: org.sireum.aadl.ir.AnnexClause): ST = {
+    @pure def printAnnexClause(o: AnnexClause): ST = {
       o match {
-        case o: org.sireum.aadl.ir.Emv2Library => return print_aadlirEmv2Library(o)
-        case o: org.sireum.aadl.ir.Emv2Propagation => return print_aadlirEmv2Propagation(o)
-        case o: org.sireum.aadl.ir.Emv2Flow => return print_aadlirEmv2Flow(o)
-        case o: org.sireum.aadl.ir.Emv2Clause => return print_aadlirEmv2Clause(o)
-        case o: org.sireum.aadl.ir.OtherAnnex => return print_aadlirOtherAnnex(o)
+        case o: Emv2Library => return printEmv2Library(o)
+        case o: Emv2Propagation => return printEmv2Propagation(o)
+        case o: Emv2Flow => return printEmv2Flow(o)
+        case o: Emv2Clause => return printEmv2Clause(o)
+        case o: OtherAnnex => return printOtherAnnex(o)
       }
     }
 
-    @pure def print_aadlirEmv2Annex(o: org.sireum.aadl.ir.Emv2Annex): ST = {
+    @pure def printEmv2Annex(o: Emv2Annex): ST = {
       o match {
-        case o: org.sireum.aadl.ir.Emv2Library => return print_aadlirEmv2Library(o)
-        case o: org.sireum.aadl.ir.Emv2Propagation => return print_aadlirEmv2Propagation(o)
-        case o: org.sireum.aadl.ir.Emv2Flow => return print_aadlirEmv2Flow(o)
-        case o: org.sireum.aadl.ir.Emv2Clause => return print_aadlirEmv2Clause(o)
+        case o: Emv2Library => return printEmv2Library(o)
+        case o: Emv2Propagation => return printEmv2Propagation(o)
+        case o: Emv2Flow => return printEmv2Flow(o)
+        case o: Emv2Clause => return printEmv2Clause(o)
       }
     }
 
-    @pure def print_aadlirPropagationDirectionType(o: org.sireum.aadl.ir.PropagationDirection.Type): ST = {
+    @pure def printPropagationDirectionType(o: PropagationDirection.Type): ST = {
       val value: String = o match {
-        case org.sireum.aadl.ir.PropagationDirection.In => "In"
-        case org.sireum.aadl.ir.PropagationDirection.Out => "Out"
+        case PropagationDirection.In => "In"
+        case PropagationDirection.Out => "Out"
       }
       return printObject(ISZ(
-        ("type", printString("org.sireum.aadl.ir.PropagationDirection")),
+        ("type", printString("PropagationDirection")),
         ("value", printString(value))
       ))
     }
 
-    @pure def print_aadlirEmv2Library(o: org.sireum.aadl.ir.Emv2Library): ST = {
+    @pure def printEmv2Library(o: Emv2Library): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.Emv2Library""""),
-        ("name", print_aadlirName(o.name)),
+        ("type", st""""Emv2Library""""),
+        ("name", printName(o.name)),
         ("useTypes", printISZ(T, o.useTypes, printString _)),
         ("tokens", printISZ(T, o.tokens, printString _)),
         ("alias", printHashMap(T, o.alias, printString _, printString _))
       ))
     }
 
-    @pure def print_aadlirEmv2Propagation(o: org.sireum.aadl.ir.Emv2Propagation): ST = {
+    @pure def printEmv2Propagation(o: Emv2Propagation): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.Emv2Propagation""""),
-        ("direction", print_aadlirPropagationDirectionType(o.direction)),
+        ("type", st""""Emv2Propagation""""),
+        ("direction", printPropagationDirectionType(o.direction)),
         ("propagationPoint", printISZ(T, o.propagationPoint, printString _)),
         ("errorTokens", printISZ(T, o.errorTokens, printString _))
       ))
     }
 
-    @pure def print_aadlirEmv2Flow(o: org.sireum.aadl.ir.Emv2Flow): ST = {
+    @pure def printEmv2Flow(o: Emv2Flow): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.Emv2Flow""""),
-        ("identifier", print_aadlirName(o.identifier)),
-        ("kind", print_aadlirFlowKindType(o.kind)),
-        ("sourcePropagation", printOption(F, o.sourcePropagation, print_aadlirEmv2Propagation _)),
-        ("sinkPropagation", printOption(F, o.sinkPropagation, print_aadlirEmv2Propagation _))
+        ("type", st""""Emv2Flow""""),
+        ("identifier", printName(o.identifier)),
+        ("kind", printFlowKindType(o.kind)),
+        ("sourcePropagation", printOption(F, o.sourcePropagation, printEmv2Propagation _)),
+        ("sinkPropagation", printOption(F, o.sinkPropagation, printEmv2Propagation _))
       ))
     }
 
-    @pure def print_aadlirEmv2Clause(o: org.sireum.aadl.ir.Emv2Clause): ST = {
+    @pure def printEmv2Clause(o: Emv2Clause): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.Emv2Clause""""),
+        ("type", st""""Emv2Clause""""),
         ("libraries", printISZ(T, o.libraries, printString _)),
-        ("propagations", printISZ(F, o.propagations, print_aadlirEmv2Propagation _)),
-        ("flows", printISZ(F, o.flows, print_aadlirEmv2Flow _))
+        ("propagations", printISZ(F, o.propagations, printEmv2Propagation _)),
+        ("flows", printISZ(F, o.flows, printEmv2Flow _))
       ))
     }
 
-    @pure def print_aadlirOtherAnnex(o: org.sireum.aadl.ir.OtherAnnex): ST = {
+    @pure def printOtherAnnex(o: OtherAnnex): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.aadl.ir.OtherAnnex""""),
+        ("type", st""""OtherAnnex""""),
         ("clause", printString(o.clause))
       ))
     }
@@ -402,453 +402,453 @@ object JSON {
       return parser.errorOpt
     }
 
-    def parse_aadlirAadl(): org.sireum.aadl.ir.Aadl = {
-      val r = parse_aadlirAadlT(F)
+    def parseAadl(): Aadl = {
+      val r = parseAadlT(F)
       return r
     }
 
-    def parse_aadlirAadlT(typeParsed: B): org.sireum.aadl.ir.Aadl = {
+    def parseAadlT(typeParsed: B): Aadl = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Aadl")
+        parser.parseObjectType("Aadl")
       }
       parser.parseObjectKey("components")
-      val components = parser.parseISZ(parse_aadlirComponent _)
+      val components = parser.parseISZ(parseComponent _)
       parser.parseObjectNext()
       parser.parseObjectKey("errorLib")
-      val errorLib = parser.parseISZ(parse_aadlirEmv2Library _)
+      val errorLib = parser.parseISZ(parseEmv2Library _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.Aadl(components, errorLib)
+      return Aadl(components, errorLib)
     }
 
-    def parse_aadlirName(): org.sireum.aadl.ir.Name = {
-      val r = parse_aadlirNameT(F)
+    def parseName(): Name = {
+      val r = parseNameT(F)
       return r
     }
 
-    def parse_aadlirNameT(typeParsed: B): org.sireum.aadl.ir.Name = {
+    def parseNameT(typeParsed: B): Name = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Name")
+        parser.parseObjectType("Name")
       }
       parser.parseObjectKey("name")
       val name = parser.parseISZ(parser.parseString _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.Name(name)
+      return Name(name)
     }
 
-    def parse_aadlirComponent(): org.sireum.aadl.ir.Component = {
-      val r = parse_aadlirComponentT(F)
+    def parseComponent(): Component = {
+      val r = parseComponentT(F)
       return r
     }
 
-    def parse_aadlirComponentT(typeParsed: B): org.sireum.aadl.ir.Component = {
+    def parseComponentT(typeParsed: B): Component = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Component")
+        parser.parseObjectType("Component")
       }
       parser.parseObjectKey("identifier")
-      val identifier = parse_aadlirName()
+      val identifier = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("category")
-      val category = parse_aadlirComponentCategoryType()
+      val category = parseComponentCategoryType()
       parser.parseObjectNext()
       parser.parseObjectKey("classifier")
-      val classifier = parser.parseOption(parse_aadlirClassifier _)
+      val classifier = parser.parseOption(parseClassifier _)
       parser.parseObjectNext()
       parser.parseObjectKey("features")
-      val features = parser.parseISZ(parse_aadlirFeature _)
+      val features = parser.parseISZ(parseFeature _)
       parser.parseObjectNext()
       parser.parseObjectKey("subComponents")
-      val subComponents = parser.parseISZ(parse_aadlirComponent _)
+      val subComponents = parser.parseISZ(parseComponent _)
       parser.parseObjectNext()
       parser.parseObjectKey("connections")
-      val connections = parser.parseISZ(parse_aadlirConnection _)
+      val connections = parser.parseISZ(parseConnection _)
       parser.parseObjectNext()
       parser.parseObjectKey("connectionInstances")
-      val connectionInstances = parser.parseISZ(parse_aadlirConnectionInstance _)
+      val connectionInstances = parser.parseISZ(parseConnectionInstance _)
       parser.parseObjectNext()
       parser.parseObjectKey("properties")
-      val properties = parser.parseISZ(parse_aadlirProperty _)
+      val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
       parser.parseObjectKey("flows")
-      val flows = parser.parseISZ(parse_aadlirFlow _)
+      val flows = parser.parseISZ(parseFlow _)
       parser.parseObjectNext()
       parser.parseObjectKey("modes")
-      val modes = parser.parseISZ(parse_aadlirMode _)
+      val modes = parser.parseISZ(parseMode _)
       parser.parseObjectNext()
       parser.parseObjectKey("annexes")
-      val annexes = parser.parseISZ(parse_aadlirAnnex _)
+      val annexes = parser.parseISZ(parseAnnex _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.Component(identifier, category, classifier, features, subComponents, connections, connectionInstances, properties, flows, modes, annexes)
+      return Component(identifier, category, classifier, features, subComponents, connections, connectionInstances, properties, flows, modes, annexes)
     }
 
-    def parse_aadlirClassifier(): org.sireum.aadl.ir.Classifier = {
-      val r = parse_aadlirClassifierT(F)
+    def parseClassifier(): Classifier = {
+      val r = parseClassifierT(F)
       return r
     }
 
-    def parse_aadlirClassifierT(typeParsed: B): org.sireum.aadl.ir.Classifier = {
+    def parseClassifierT(typeParsed: B): Classifier = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Classifier")
+        parser.parseObjectType("Classifier")
       }
       parser.parseObjectKey("name")
       val name = parser.parseString()
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.Classifier(name)
+      return Classifier(name)
     }
 
-    def parse_aadlirComponentCategoryType(): org.sireum.aadl.ir.ComponentCategory.Type = {
-      val r = parse_aadlirComponentCategoryT(F)
+    def parseComponentCategoryType(): ComponentCategory.Type = {
+      val r = parseComponentCategoryT(F)
       return r
     }
 
-    def parse_aadlirComponentCategoryT(typeParsed: B): org.sireum.aadl.ir.ComponentCategory.Type = {
+    def parseComponentCategoryT(typeParsed: B): ComponentCategory.Type = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.ComponentCategory")
+        parser.parseObjectType("ComponentCategory")
       }
       parser.parseObjectKey("value")
       var i = parser.offset
       val s = parser.parseString()
       parser.parseObjectNext()
-      org.sireum.aadl.ir.ComponentCategory.byName(s) match {
+      ComponentCategory.byName(s) match {
         case Some(r) => return r
         case _ =>
-          parser.parseException(i, s"Invalid element name '$s' for org.sireum.aadl.ir.ComponentCategory.")
-          return org.sireum.aadl.ir.ComponentCategory.byOrdinal(0).get
+          parser.parseException(i, s"Invalid element name '$s' for ComponentCategory.")
+          return ComponentCategory.byOrdinal(0).get
       }
     }
 
-    def parse_aadlirFeature(): org.sireum.aadl.ir.Feature = {
-      val t = parser.parseObjectTypes(ISZ("org.sireum.aadl.ir.FeatureEnd", "org.sireum.aadl.ir.FeatureGroup"))
+    def parseFeature(): Feature = {
+      val t = parser.parseObjectTypes(ISZ("FeatureEnd", "FeatureGroup"))
       t.native match {
-        case "org.sireum.aadl.ir.FeatureEnd" => val r = parse_aadlirFeatureEndT(T); return r
-        case "org.sireum.aadl.ir.FeatureGroup" => val r = parse_aadlirFeatureGroupT(T); return r
-        case _ => val r = parse_aadlirFeatureGroupT(T); return r
+        case "FeatureEnd" => val r = parseFeatureEndT(T); return r
+        case "FeatureGroup" => val r = parseFeatureGroupT(T); return r
+        case _ => val r = parseFeatureGroupT(T); return r
       }
     }
 
-    def parse_aadlirFeatureEnd(): org.sireum.aadl.ir.FeatureEnd = {
-      val r = parse_aadlirFeatureEndT(F)
+    def parseFeatureEnd(): FeatureEnd = {
+      val r = parseFeatureEndT(F)
       return r
     }
 
-    def parse_aadlirFeatureEndT(typeParsed: B): org.sireum.aadl.ir.FeatureEnd = {
+    def parseFeatureEndT(typeParsed: B): FeatureEnd = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.FeatureEnd")
+        parser.parseObjectType("FeatureEnd")
       }
       parser.parseObjectKey("identifier")
-      val identifier = parse_aadlirName()
+      val identifier = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("direction")
-      val direction = parse_aadlirDirectionType()
+      val direction = parseDirectionType()
       parser.parseObjectNext()
       parser.parseObjectKey("category")
-      val category = parse_aadlirFeatureCategoryType()
+      val category = parseFeatureCategoryType()
       parser.parseObjectNext()
       parser.parseObjectKey("classifier")
-      val classifier = parser.parseOption(parse_aadlirClassifier _)
+      val classifier = parser.parseOption(parseClassifier _)
       parser.parseObjectNext()
       parser.parseObjectKey("properties")
-      val properties = parser.parseISZ(parse_aadlirProperty _)
+      val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.FeatureEnd(identifier, direction, category, classifier, properties)
+      return FeatureEnd(identifier, direction, category, classifier, properties)
     }
 
-    def parse_aadlirFeatureGroup(): org.sireum.aadl.ir.FeatureGroup = {
-      val r = parse_aadlirFeatureGroupT(F)
+    def parseFeatureGroup(): FeatureGroup = {
+      val r = parseFeatureGroupT(F)
       return r
     }
 
-    def parse_aadlirFeatureGroupT(typeParsed: B): org.sireum.aadl.ir.FeatureGroup = {
+    def parseFeatureGroupT(typeParsed: B): FeatureGroup = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.FeatureGroup")
+        parser.parseObjectType("FeatureGroup")
       }
       parser.parseObjectKey("identifier")
-      val identifier = parse_aadlirName()
+      val identifier = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("features")
-      val features = parser.parseISZ(parse_aadlirFeature _)
+      val features = parser.parseISZ(parseFeature _)
       parser.parseObjectNext()
       parser.parseObjectKey("isInverse")
       val isInverse = parser.parseB()
       parser.parseObjectNext()
       parser.parseObjectKey("category")
-      val category = parse_aadlirFeatureCategoryType()
+      val category = parseFeatureCategoryType()
       parser.parseObjectNext()
       parser.parseObjectKey("properties")
-      val properties = parser.parseISZ(parse_aadlirProperty _)
+      val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.FeatureGroup(identifier, features, isInverse, category, properties)
+      return FeatureGroup(identifier, features, isInverse, category, properties)
     }
 
-    def parse_aadlirDirectionType(): org.sireum.aadl.ir.Direction.Type = {
-      val r = parse_aadlirDirectionT(F)
+    def parseDirectionType(): Direction.Type = {
+      val r = parseDirectionT(F)
       return r
     }
 
-    def parse_aadlirDirectionT(typeParsed: B): org.sireum.aadl.ir.Direction.Type = {
+    def parseDirectionT(typeParsed: B): Direction.Type = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Direction")
+        parser.parseObjectType("Direction")
       }
       parser.parseObjectKey("value")
       var i = parser.offset
       val s = parser.parseString()
       parser.parseObjectNext()
-      org.sireum.aadl.ir.Direction.byName(s) match {
+      Direction.byName(s) match {
         case Some(r) => return r
         case _ =>
-          parser.parseException(i, s"Invalid element name '$s' for org.sireum.aadl.ir.Direction.")
-          return org.sireum.aadl.ir.Direction.byOrdinal(0).get
+          parser.parseException(i, s"Invalid element name '$s' for Direction.")
+          return Direction.byOrdinal(0).get
       }
     }
 
-    def parse_aadlirFeatureCategoryType(): org.sireum.aadl.ir.FeatureCategory.Type = {
-      val r = parse_aadlirFeatureCategoryT(F)
+    def parseFeatureCategoryType(): FeatureCategory.Type = {
+      val r = parseFeatureCategoryT(F)
       return r
     }
 
-    def parse_aadlirFeatureCategoryT(typeParsed: B): org.sireum.aadl.ir.FeatureCategory.Type = {
+    def parseFeatureCategoryT(typeParsed: B): FeatureCategory.Type = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.FeatureCategory")
+        parser.parseObjectType("FeatureCategory")
       }
       parser.parseObjectKey("value")
       var i = parser.offset
       val s = parser.parseString()
       parser.parseObjectNext()
-      org.sireum.aadl.ir.FeatureCategory.byName(s) match {
+      FeatureCategory.byName(s) match {
         case Some(r) => return r
         case _ =>
-          parser.parseException(i, s"Invalid element name '$s' for org.sireum.aadl.ir.FeatureCategory.")
-          return org.sireum.aadl.ir.FeatureCategory.byOrdinal(0).get
+          parser.parseException(i, s"Invalid element name '$s' for FeatureCategory.")
+          return FeatureCategory.byOrdinal(0).get
       }
     }
 
-    def parse_aadlirConnection(): org.sireum.aadl.ir.Connection = {
-      val r = parse_aadlirConnectionT(F)
+    def parseConnection(): Connection = {
+      val r = parseConnectionT(F)
       return r
     }
 
-    def parse_aadlirConnectionT(typeParsed: B): org.sireum.aadl.ir.Connection = {
+    def parseConnectionT(typeParsed: B): Connection = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Connection")
+        parser.parseObjectType("Connection")
       }
       parser.parseObjectKey("name")
-      val name = parse_aadlirName()
+      val name = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("src")
-      val src = parser.parseISZ(parse_aadlirEndPoint _)
+      val src = parser.parseISZ(parseEndPoint _)
       parser.parseObjectNext()
       parser.parseObjectKey("dst")
-      val dst = parser.parseISZ(parse_aadlirEndPoint _)
+      val dst = parser.parseISZ(parseEndPoint _)
       parser.parseObjectNext()
       parser.parseObjectKey("kind")
-      val kind = parse_aadlirConnectionKindType()
+      val kind = parseConnectionKindType()
       parser.parseObjectNext()
       parser.parseObjectKey("isBiDirectional")
       val isBiDirectional = parser.parseB()
       parser.parseObjectNext()
       parser.parseObjectKey("connectionInstances")
-      val connectionInstances = parser.parseISZ(parse_aadlirName _)
+      val connectionInstances = parser.parseISZ(parseName _)
       parser.parseObjectNext()
       parser.parseObjectKey("properties")
-      val properties = parser.parseISZ(parse_aadlirProperty _)
+      val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.Connection(name, src, dst, kind, isBiDirectional, connectionInstances, properties)
+      return Connection(name, src, dst, kind, isBiDirectional, connectionInstances, properties)
     }
 
-    def parse_aadlirConnectionInstance(): org.sireum.aadl.ir.ConnectionInstance = {
-      val r = parse_aadlirConnectionInstanceT(F)
+    def parseConnectionInstance(): ConnectionInstance = {
+      val r = parseConnectionInstanceT(F)
       return r
     }
 
-    def parse_aadlirConnectionInstanceT(typeParsed: B): org.sireum.aadl.ir.ConnectionInstance = {
+    def parseConnectionInstanceT(typeParsed: B): ConnectionInstance = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.ConnectionInstance")
+        parser.parseObjectType("ConnectionInstance")
       }
       parser.parseObjectKey("name")
-      val name = parse_aadlirName()
+      val name = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("src")
-      val src = parse_aadlirEndPoint()
+      val src = parseEndPoint()
       parser.parseObjectNext()
       parser.parseObjectKey("dst")
-      val dst = parse_aadlirEndPoint()
+      val dst = parseEndPoint()
       parser.parseObjectNext()
       parser.parseObjectKey("kind")
-      val kind = parse_aadlirConnectionKindType()
+      val kind = parseConnectionKindType()
       parser.parseObjectNext()
       parser.parseObjectKey("connectionRefs")
-      val connectionRefs = parser.parseISZ(parse_aadlirConnectionReference _)
+      val connectionRefs = parser.parseISZ(parseConnectionReference _)
       parser.parseObjectNext()
       parser.parseObjectKey("properties")
-      val properties = parser.parseISZ(parse_aadlirProperty _)
+      val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.ConnectionInstance(name, src, dst, kind, connectionRefs, properties)
+      return ConnectionInstance(name, src, dst, kind, connectionRefs, properties)
     }
 
-    def parse_aadlirConnectionReference(): org.sireum.aadl.ir.ConnectionReference = {
-      val r = parse_aadlirConnectionReferenceT(F)
+    def parseConnectionReference(): ConnectionReference = {
+      val r = parseConnectionReferenceT(F)
       return r
     }
 
-    def parse_aadlirConnectionReferenceT(typeParsed: B): org.sireum.aadl.ir.ConnectionReference = {
+    def parseConnectionReferenceT(typeParsed: B): ConnectionReference = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.ConnectionReference")
+        parser.parseObjectType("ConnectionReference")
       }
       parser.parseObjectKey("name")
-      val name = parse_aadlirName()
+      val name = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("context")
-      val context = parse_aadlirName()
+      val context = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("isParent")
       val isParent = parser.parseB()
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.ConnectionReference(name, context, isParent)
+      return ConnectionReference(name, context, isParent)
     }
 
-    def parse_aadlirConnectionKindType(): org.sireum.aadl.ir.ConnectionKind.Type = {
-      val r = parse_aadlirConnectionKindT(F)
+    def parseConnectionKindType(): ConnectionKind.Type = {
+      val r = parseConnectionKindT(F)
       return r
     }
 
-    def parse_aadlirConnectionKindT(typeParsed: B): org.sireum.aadl.ir.ConnectionKind.Type = {
+    def parseConnectionKindT(typeParsed: B): ConnectionKind.Type = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.ConnectionKind")
+        parser.parseObjectType("ConnectionKind")
       }
       parser.parseObjectKey("value")
       var i = parser.offset
       val s = parser.parseString()
       parser.parseObjectNext()
-      org.sireum.aadl.ir.ConnectionKind.byName(s) match {
+      ConnectionKind.byName(s) match {
         case Some(r) => return r
         case _ =>
-          parser.parseException(i, s"Invalid element name '$s' for org.sireum.aadl.ir.ConnectionKind.")
-          return org.sireum.aadl.ir.ConnectionKind.byOrdinal(0).get
+          parser.parseException(i, s"Invalid element name '$s' for ConnectionKind.")
+          return ConnectionKind.byOrdinal(0).get
       }
     }
 
-    def parse_aadlirEndPoint(): org.sireum.aadl.ir.EndPoint = {
-      val r = parse_aadlirEndPointT(F)
+    def parseEndPoint(): EndPoint = {
+      val r = parseEndPointT(F)
       return r
     }
 
-    def parse_aadlirEndPointT(typeParsed: B): org.sireum.aadl.ir.EndPoint = {
+    def parseEndPointT(typeParsed: B): EndPoint = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.EndPoint")
+        parser.parseObjectType("EndPoint")
       }
       parser.parseObjectKey("component")
-      val component = parse_aadlirName()
+      val component = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("feature")
-      val feature = parser.parseOption(parse_aadlirName _)
+      val feature = parser.parseOption(parseName _)
       parser.parseObjectNext()
       parser.parseObjectKey("direction")
-      val direction = parser.parseOption(parse_aadlirDirectionType _)
+      val direction = parser.parseOption(parseDirectionType _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.EndPoint(component, feature, direction)
+      return EndPoint(component, feature, direction)
     }
 
-    def parse_aadlirProperty(): org.sireum.aadl.ir.Property = {
-      val r = parse_aadlirPropertyT(F)
+    def parseProperty(): Property = {
+      val r = parsePropertyT(F)
       return r
     }
 
-    def parse_aadlirPropertyT(typeParsed: B): org.sireum.aadl.ir.Property = {
+    def parsePropertyT(typeParsed: B): Property = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Property")
+        parser.parseObjectType("Property")
       }
       parser.parseObjectKey("name")
-      val name = parse_aadlirName()
+      val name = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("propertyValues")
-      val propertyValues = parser.parseISZ(parse_aadlirPropertyValue _)
+      val propertyValues = parser.parseISZ(parsePropertyValue _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.Property(name, propertyValues)
+      return Property(name, propertyValues)
     }
 
-    def parse_aadlirPropertyValue(): org.sireum.aadl.ir.PropertyValue = {
-      val t = parser.parseObjectTypes(ISZ("org.sireum.aadl.ir.ClassifierProp", "org.sireum.aadl.ir.RangeProp", "org.sireum.aadl.ir.RecordProp", "org.sireum.aadl.ir.ReferenceProp", "org.sireum.aadl.ir.UnitProp", "org.sireum.aadl.ir.ValueProp"))
+    def parsePropertyValue(): PropertyValue = {
+      val t = parser.parseObjectTypes(ISZ("ClassifierProp", "RangeProp", "RecordProp", "ReferenceProp", "UnitProp", "ValueProp"))
       t.native match {
-        case "org.sireum.aadl.ir.ClassifierProp" => val r = parse_aadlirClassifierPropT(T); return r
-        case "org.sireum.aadl.ir.RangeProp" => val r = parse_aadlirRangePropT(T); return r
-        case "org.sireum.aadl.ir.RecordProp" => val r = parse_aadlirRecordPropT(T); return r
-        case "org.sireum.aadl.ir.ReferenceProp" => val r = parse_aadlirReferencePropT(T); return r
-        case "org.sireum.aadl.ir.UnitProp" => val r = parse_aadlirUnitPropT(T); return r
-        case "org.sireum.aadl.ir.ValueProp" => val r = parse_aadlirValuePropT(T); return r
-        case _ => val r = parse_aadlirValuePropT(T); return r
+        case "ClassifierProp" => val r = parseClassifierPropT(T); return r
+        case "RangeProp" => val r = parseRangePropT(T); return r
+        case "RecordProp" => val r = parseRecordPropT(T); return r
+        case "ReferenceProp" => val r = parseReferencePropT(T); return r
+        case "UnitProp" => val r = parseUnitPropT(T); return r
+        case "ValueProp" => val r = parseValuePropT(T); return r
+        case _ => val r = parseValuePropT(T); return r
       }
     }
 
-    def parse_aadlirClassifierProp(): org.sireum.aadl.ir.ClassifierProp = {
-      val r = parse_aadlirClassifierPropT(F)
+    def parseClassifierProp(): ClassifierProp = {
+      val r = parseClassifierPropT(F)
       return r
     }
 
-    def parse_aadlirClassifierPropT(typeParsed: B): org.sireum.aadl.ir.ClassifierProp = {
+    def parseClassifierPropT(typeParsed: B): ClassifierProp = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.ClassifierProp")
+        parser.parseObjectType("ClassifierProp")
       }
       parser.parseObjectKey("name")
       val name = parser.parseString()
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.ClassifierProp(name)
+      return ClassifierProp(name)
     }
 
-    def parse_aadlirRangeProp(): org.sireum.aadl.ir.RangeProp = {
-      val r = parse_aadlirRangePropT(F)
+    def parseRangeProp(): RangeProp = {
+      val r = parseRangePropT(F)
       return r
     }
 
-    def parse_aadlirRangePropT(typeParsed: B): org.sireum.aadl.ir.RangeProp = {
+    def parseRangePropT(typeParsed: B): RangeProp = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.RangeProp")
+        parser.parseObjectType("RangeProp")
       }
       parser.parseObjectKey("low")
-      val low = parse_aadlirUnitProp()
+      val low = parseUnitProp()
       parser.parseObjectNext()
       parser.parseObjectKey("high")
-      val high = parse_aadlirUnitProp()
+      val high = parseUnitProp()
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.RangeProp(low, high)
+      return RangeProp(low, high)
     }
 
-    def parse_aadlirRecordProp(): org.sireum.aadl.ir.RecordProp = {
-      val r = parse_aadlirRecordPropT(F)
+    def parseRecordProp(): RecordProp = {
+      val r = parseRecordPropT(F)
       return r
     }
 
-    def parse_aadlirRecordPropT(typeParsed: B): org.sireum.aadl.ir.RecordProp = {
+    def parseRecordPropT(typeParsed: B): RecordProp = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.RecordProp")
+        parser.parseObjectType("RecordProp")
       }
       parser.parseObjectKey("properties")
-      val properties = parser.parseISZ(parse_aadlirProperty _)
+      val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.RecordProp(properties)
+      return RecordProp(properties)
     }
 
-    def parse_aadlirReferenceProp(): org.sireum.aadl.ir.ReferenceProp = {
-      val r = parse_aadlirReferencePropT(F)
+    def parseReferenceProp(): ReferenceProp = {
+      val r = parseReferencePropT(F)
       return r
     }
 
-    def parse_aadlirReferencePropT(typeParsed: B): org.sireum.aadl.ir.ReferenceProp = {
+    def parseReferencePropT(typeParsed: B): ReferenceProp = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.ReferenceProp")
+        parser.parseObjectType("ReferenceProp")
       }
       parser.parseObjectKey("value")
-      val value = parse_aadlirName()
+      val value = parseName()
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.ReferenceProp(value)
+      return ReferenceProp(value)
     }
 
-    def parse_aadlirUnitProp(): org.sireum.aadl.ir.UnitProp = {
-      val r = parse_aadlirUnitPropT(F)
+    def parseUnitProp(): UnitProp = {
+      val r = parseUnitPropT(F)
       return r
     }
 
-    def parse_aadlirUnitPropT(typeParsed: B): org.sireum.aadl.ir.UnitProp = {
+    def parseUnitPropT(typeParsed: B): UnitProp = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.UnitProp")
+        parser.parseObjectType("UnitProp")
       }
       parser.parseObjectKey("value")
       val value = parser.parseString()
@@ -856,157 +856,157 @@ object JSON {
       parser.parseObjectKey("unit")
       val unit = parser.parseOption(parser.parseString _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.UnitProp(value, unit)
+      return UnitProp(value, unit)
     }
 
-    def parse_aadlirValueProp(): org.sireum.aadl.ir.ValueProp = {
-      val r = parse_aadlirValuePropT(F)
+    def parseValueProp(): ValueProp = {
+      val r = parseValuePropT(F)
       return r
     }
 
-    def parse_aadlirValuePropT(typeParsed: B): org.sireum.aadl.ir.ValueProp = {
+    def parseValuePropT(typeParsed: B): ValueProp = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.ValueProp")
+        parser.parseObjectType("ValueProp")
       }
       parser.parseObjectKey("value")
       val value = parser.parseString()
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.ValueProp(value)
+      return ValueProp(value)
     }
 
-    def parse_aadlirMode(): org.sireum.aadl.ir.Mode = {
-      val r = parse_aadlirModeT(F)
+    def parseMode(): Mode = {
+      val r = parseModeT(F)
       return r
     }
 
-    def parse_aadlirModeT(typeParsed: B): org.sireum.aadl.ir.Mode = {
+    def parseModeT(typeParsed: B): Mode = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Mode")
+        parser.parseObjectType("Mode")
       }
       parser.parseObjectKey("name")
-      val name = parse_aadlirName()
+      val name = parseName()
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.Mode(name)
+      return Mode(name)
     }
 
-    def parse_aadlirFlowKindType(): org.sireum.aadl.ir.FlowKind.Type = {
-      val r = parse_aadlirFlowKindT(F)
+    def parseFlowKindType(): FlowKind.Type = {
+      val r = parseFlowKindT(F)
       return r
     }
 
-    def parse_aadlirFlowKindT(typeParsed: B): org.sireum.aadl.ir.FlowKind.Type = {
+    def parseFlowKindT(typeParsed: B): FlowKind.Type = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.FlowKind")
+        parser.parseObjectType("FlowKind")
       }
       parser.parseObjectKey("value")
       var i = parser.offset
       val s = parser.parseString()
       parser.parseObjectNext()
-      org.sireum.aadl.ir.FlowKind.byName(s) match {
+      FlowKind.byName(s) match {
         case Some(r) => return r
         case _ =>
-          parser.parseException(i, s"Invalid element name '$s' for org.sireum.aadl.ir.FlowKind.")
-          return org.sireum.aadl.ir.FlowKind.byOrdinal(0).get
+          parser.parseException(i, s"Invalid element name '$s' for FlowKind.")
+          return FlowKind.byOrdinal(0).get
       }
     }
 
-    def parse_aadlirFlow(): org.sireum.aadl.ir.Flow = {
-      val r = parse_aadlirFlowT(F)
+    def parseFlow(): Flow = {
+      val r = parseFlowT(F)
       return r
     }
 
-    def parse_aadlirFlowT(typeParsed: B): org.sireum.aadl.ir.Flow = {
+    def parseFlowT(typeParsed: B): Flow = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Flow")
+        parser.parseObjectType("Flow")
       }
       parser.parseObjectKey("name")
-      val name = parse_aadlirName()
+      val name = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("kind")
-      val kind = parse_aadlirFlowKindType()
+      val kind = parseFlowKindType()
       parser.parseObjectNext()
       parser.parseObjectKey("source")
-      val source = parser.parseOption(parse_aadlirFeature _)
+      val source = parser.parseOption(parseFeature _)
       parser.parseObjectNext()
       parser.parseObjectKey("sink")
-      val sink = parser.parseOption(parse_aadlirFeature _)
+      val sink = parser.parseOption(parseFeature _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.Flow(name, kind, source, sink)
+      return Flow(name, kind, source, sink)
     }
 
-    def parse_aadlirAnnex(): org.sireum.aadl.ir.Annex = {
-      val r = parse_aadlirAnnexT(F)
+    def parseAnnex(): Annex = {
+      val r = parseAnnexT(F)
       return r
     }
 
-    def parse_aadlirAnnexT(typeParsed: B): org.sireum.aadl.ir.Annex = {
+    def parseAnnexT(typeParsed: B): Annex = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Annex")
+        parser.parseObjectType("Annex")
       }
       parser.parseObjectKey("name")
       val name = parser.parseString()
       parser.parseObjectNext()
       parser.parseObjectKey("clause")
-      val clause = parse_aadlirAnnexClause()
+      val clause = parseAnnexClause()
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.Annex(name, clause)
+      return Annex(name, clause)
     }
 
-    def parse_aadlirAnnexClause(): org.sireum.aadl.ir.AnnexClause = {
-      val t = parser.parseObjectTypes(ISZ("org.sireum.aadl.ir.Emv2Library", "org.sireum.aadl.ir.Emv2Propagation", "org.sireum.aadl.ir.Emv2Flow", "org.sireum.aadl.ir.Emv2Clause", "org.sireum.aadl.ir.OtherAnnex"))
+    def parseAnnexClause(): AnnexClause = {
+      val t = parser.parseObjectTypes(ISZ("Emv2Library", "Emv2Propagation", "Emv2Flow", "Emv2Clause", "OtherAnnex"))
       t.native match {
-        case "org.sireum.aadl.ir.Emv2Library" => val r = parse_aadlirEmv2LibraryT(T); return r
-        case "org.sireum.aadl.ir.Emv2Propagation" => val r = parse_aadlirEmv2PropagationT(T); return r
-        case "org.sireum.aadl.ir.Emv2Flow" => val r = parse_aadlirEmv2FlowT(T); return r
-        case "org.sireum.aadl.ir.Emv2Clause" => val r = parse_aadlirEmv2ClauseT(T); return r
-        case "org.sireum.aadl.ir.OtherAnnex" => val r = parse_aadlirOtherAnnexT(T); return r
-        case _ => val r = parse_aadlirOtherAnnexT(T); return r
+        case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
+        case "Emv2Propagation" => val r = parseEmv2PropagationT(T); return r
+        case "Emv2Flow" => val r = parseEmv2FlowT(T); return r
+        case "Emv2Clause" => val r = parseEmv2ClauseT(T); return r
+        case "OtherAnnex" => val r = parseOtherAnnexT(T); return r
+        case _ => val r = parseOtherAnnexT(T); return r
       }
     }
 
-    def parse_aadlirEmv2Annex(): org.sireum.aadl.ir.Emv2Annex = {
-      val t = parser.parseObjectTypes(ISZ("org.sireum.aadl.ir.Emv2Library", "org.sireum.aadl.ir.Emv2Propagation", "org.sireum.aadl.ir.Emv2Flow", "org.sireum.aadl.ir.Emv2Clause"))
+    def parseEmv2Annex(): Emv2Annex = {
+      val t = parser.parseObjectTypes(ISZ("Emv2Library", "Emv2Propagation", "Emv2Flow", "Emv2Clause"))
       t.native match {
-        case "org.sireum.aadl.ir.Emv2Library" => val r = parse_aadlirEmv2LibraryT(T); return r
-        case "org.sireum.aadl.ir.Emv2Propagation" => val r = parse_aadlirEmv2PropagationT(T); return r
-        case "org.sireum.aadl.ir.Emv2Flow" => val r = parse_aadlirEmv2FlowT(T); return r
-        case "org.sireum.aadl.ir.Emv2Clause" => val r = parse_aadlirEmv2ClauseT(T); return r
-        case _ => val r = parse_aadlirEmv2ClauseT(T); return r
+        case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
+        case "Emv2Propagation" => val r = parseEmv2PropagationT(T); return r
+        case "Emv2Flow" => val r = parseEmv2FlowT(T); return r
+        case "Emv2Clause" => val r = parseEmv2ClauseT(T); return r
+        case _ => val r = parseEmv2ClauseT(T); return r
       }
     }
 
-    def parse_aadlirPropagationDirectionType(): org.sireum.aadl.ir.PropagationDirection.Type = {
-      val r = parse_aadlirPropagationDirectionT(F)
+    def parsePropagationDirectionType(): PropagationDirection.Type = {
+      val r = parsePropagationDirectionT(F)
       return r
     }
 
-    def parse_aadlirPropagationDirectionT(typeParsed: B): org.sireum.aadl.ir.PropagationDirection.Type = {
+    def parsePropagationDirectionT(typeParsed: B): PropagationDirection.Type = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.PropagationDirection")
+        parser.parseObjectType("PropagationDirection")
       }
       parser.parseObjectKey("value")
       var i = parser.offset
       val s = parser.parseString()
       parser.parseObjectNext()
-      org.sireum.aadl.ir.PropagationDirection.byName(s) match {
+      PropagationDirection.byName(s) match {
         case Some(r) => return r
         case _ =>
-          parser.parseException(i, s"Invalid element name '$s' for org.sireum.aadl.ir.PropagationDirection.")
-          return org.sireum.aadl.ir.PropagationDirection.byOrdinal(0).get
+          parser.parseException(i, s"Invalid element name '$s' for PropagationDirection.")
+          return PropagationDirection.byOrdinal(0).get
       }
     }
 
-    def parse_aadlirEmv2Library(): org.sireum.aadl.ir.Emv2Library = {
-      val r = parse_aadlirEmv2LibraryT(F)
+    def parseEmv2Library(): Emv2Library = {
+      val r = parseEmv2LibraryT(F)
       return r
     }
 
-    def parse_aadlirEmv2LibraryT(typeParsed: B): org.sireum.aadl.ir.Emv2Library = {
+    def parseEmv2LibraryT(typeParsed: B): Emv2Library = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Emv2Library")
+        parser.parseObjectType("Emv2Library")
       }
       parser.parseObjectKey("name")
-      val name = parse_aadlirName()
+      val name = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("useTypes")
       val useTypes = parser.parseISZ(parser.parseString _)
@@ -1017,20 +1017,20 @@ object JSON {
       parser.parseObjectKey("alias")
       val alias = parser.parseHashMap(parser.parseString _, parser.parseString _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.Emv2Library(name, useTypes, tokens, alias)
+      return Emv2Library(name, useTypes, tokens, alias)
     }
 
-    def parse_aadlirEmv2Propagation(): org.sireum.aadl.ir.Emv2Propagation = {
-      val r = parse_aadlirEmv2PropagationT(F)
+    def parseEmv2Propagation(): Emv2Propagation = {
+      val r = parseEmv2PropagationT(F)
       return r
     }
 
-    def parse_aadlirEmv2PropagationT(typeParsed: B): org.sireum.aadl.ir.Emv2Propagation = {
+    def parseEmv2PropagationT(typeParsed: B): Emv2Propagation = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Emv2Propagation")
+        parser.parseObjectType("Emv2Propagation")
       }
       parser.parseObjectKey("direction")
-      val direction = parse_aadlirPropagationDirectionType()
+      val direction = parsePropagationDirectionType()
       parser.parseObjectNext()
       parser.parseObjectKey("propagationPoint")
       val propagationPoint = parser.parseISZ(parser.parseString _)
@@ -1038,67 +1038,67 @@ object JSON {
       parser.parseObjectKey("errorTokens")
       val errorTokens = parser.parseISZ(parser.parseString _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.Emv2Propagation(direction, propagationPoint, errorTokens)
+      return Emv2Propagation(direction, propagationPoint, errorTokens)
     }
 
-    def parse_aadlirEmv2Flow(): org.sireum.aadl.ir.Emv2Flow = {
-      val r = parse_aadlirEmv2FlowT(F)
+    def parseEmv2Flow(): Emv2Flow = {
+      val r = parseEmv2FlowT(F)
       return r
     }
 
-    def parse_aadlirEmv2FlowT(typeParsed: B): org.sireum.aadl.ir.Emv2Flow = {
+    def parseEmv2FlowT(typeParsed: B): Emv2Flow = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Emv2Flow")
+        parser.parseObjectType("Emv2Flow")
       }
       parser.parseObjectKey("identifier")
-      val identifier = parse_aadlirName()
+      val identifier = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("kind")
-      val kind = parse_aadlirFlowKindType()
+      val kind = parseFlowKindType()
       parser.parseObjectNext()
       parser.parseObjectKey("sourcePropagation")
-      val sourcePropagation = parser.parseOption(parse_aadlirEmv2Propagation _)
+      val sourcePropagation = parser.parseOption(parseEmv2Propagation _)
       parser.parseObjectNext()
       parser.parseObjectKey("sinkPropagation")
-      val sinkPropagation = parser.parseOption(parse_aadlirEmv2Propagation _)
+      val sinkPropagation = parser.parseOption(parseEmv2Propagation _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.Emv2Flow(identifier, kind, sourcePropagation, sinkPropagation)
+      return Emv2Flow(identifier, kind, sourcePropagation, sinkPropagation)
     }
 
-    def parse_aadlirEmv2Clause(): org.sireum.aadl.ir.Emv2Clause = {
-      val r = parse_aadlirEmv2ClauseT(F)
+    def parseEmv2Clause(): Emv2Clause = {
+      val r = parseEmv2ClauseT(F)
       return r
     }
 
-    def parse_aadlirEmv2ClauseT(typeParsed: B): org.sireum.aadl.ir.Emv2Clause = {
+    def parseEmv2ClauseT(typeParsed: B): Emv2Clause = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.Emv2Clause")
+        parser.parseObjectType("Emv2Clause")
       }
       parser.parseObjectKey("libraries")
       val libraries = parser.parseISZ(parser.parseString _)
       parser.parseObjectNext()
       parser.parseObjectKey("propagations")
-      val propagations = parser.parseISZ(parse_aadlirEmv2Propagation _)
+      val propagations = parser.parseISZ(parseEmv2Propagation _)
       parser.parseObjectNext()
       parser.parseObjectKey("flows")
-      val flows = parser.parseISZ(parse_aadlirEmv2Flow _)
+      val flows = parser.parseISZ(parseEmv2Flow _)
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.Emv2Clause(libraries, propagations, flows)
+      return Emv2Clause(libraries, propagations, flows)
     }
 
-    def parse_aadlirOtherAnnex(): org.sireum.aadl.ir.OtherAnnex = {
-      val r = parse_aadlirOtherAnnexT(F)
+    def parseOtherAnnex(): OtherAnnex = {
+      val r = parseOtherAnnexT(F)
       return r
     }
 
-    def parse_aadlirOtherAnnexT(typeParsed: B): org.sireum.aadl.ir.OtherAnnex = {
+    def parseOtherAnnexT(typeParsed: B): OtherAnnex = {
       if (!typeParsed) {
-        parser.parseObjectType("org.sireum.aadl.ir.OtherAnnex")
+        parser.parseObjectType("OtherAnnex")
       }
       parser.parseObjectKey("clause")
       val clause = parser.parseString()
       parser.parseObjectNext()
-      return org.sireum.aadl.ir.OtherAnnex(clause)
+      return OtherAnnex(clause)
     }
 
     def eof(): B = {
@@ -1118,8 +1118,8 @@ object JSON {
     }
   }
 
-  def from_aadlirAadl(o: org.sireum.aadl.ir.Aadl, isCompact: B): String = {
-    val st = Printer.print_aadlirAadl(o)
+  def fromAadl(o: Aadl, isCompact: B): String = {
+    val st = Printer.printAadl(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1127,17 +1127,17 @@ object JSON {
     }
   }
 
-  def to_aadlirAadl(s: String): Either[org.sireum.aadl.ir.Aadl, Json.ErrorMsg] = {
-    def f_aadlirAadl(parser: Parser): org.sireum.aadl.ir.Aadl = {
-      val r = parser.parse_aadlirAadl()
+  def toAadl(s: String): Either[Aadl, Json.ErrorMsg] = {
+    def fAadl(parser: Parser): Aadl = {
+      val r = parser.parseAadl()
       return r
     }
-    val r = to(s, f_aadlirAadl _)
+    val r = to(s, fAadl _)
     return r
   }
 
-  def from_aadlirName(o: org.sireum.aadl.ir.Name, isCompact: B): String = {
-    val st = Printer.print_aadlirName(o)
+  def fromName(o: Name, isCompact: B): String = {
+    val st = Printer.printName(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1145,17 +1145,17 @@ object JSON {
     }
   }
 
-  def to_aadlirName(s: String): Either[org.sireum.aadl.ir.Name, Json.ErrorMsg] = {
-    def f_aadlirName(parser: Parser): org.sireum.aadl.ir.Name = {
-      val r = parser.parse_aadlirName()
+  def toName(s: String): Either[Name, Json.ErrorMsg] = {
+    def fName(parser: Parser): Name = {
+      val r = parser.parseName()
       return r
     }
-    val r = to(s, f_aadlirName _)
+    val r = to(s, fName _)
     return r
   }
 
-  def from_aadlirComponent(o: org.sireum.aadl.ir.Component, isCompact: B): String = {
-    val st = Printer.print_aadlirComponent(o)
+  def fromComponent(o: Component, isCompact: B): String = {
+    val st = Printer.printComponent(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1163,17 +1163,17 @@ object JSON {
     }
   }
 
-  def to_aadlirComponent(s: String): Either[org.sireum.aadl.ir.Component, Json.ErrorMsg] = {
-    def f_aadlirComponent(parser: Parser): org.sireum.aadl.ir.Component = {
-      val r = parser.parse_aadlirComponent()
+  def toComponent(s: String): Either[Component, Json.ErrorMsg] = {
+    def fComponent(parser: Parser): Component = {
+      val r = parser.parseComponent()
       return r
     }
-    val r = to(s, f_aadlirComponent _)
+    val r = to(s, fComponent _)
     return r
   }
 
-  def from_aadlirClassifier(o: org.sireum.aadl.ir.Classifier, isCompact: B): String = {
-    val st = Printer.print_aadlirClassifier(o)
+  def fromClassifier(o: Classifier, isCompact: B): String = {
+    val st = Printer.printClassifier(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1181,17 +1181,17 @@ object JSON {
     }
   }
 
-  def to_aadlirClassifier(s: String): Either[org.sireum.aadl.ir.Classifier, Json.ErrorMsg] = {
-    def f_aadlirClassifier(parser: Parser): org.sireum.aadl.ir.Classifier = {
-      val r = parser.parse_aadlirClassifier()
+  def toClassifier(s: String): Either[Classifier, Json.ErrorMsg] = {
+    def fClassifier(parser: Parser): Classifier = {
+      val r = parser.parseClassifier()
       return r
     }
-    val r = to(s, f_aadlirClassifier _)
+    val r = to(s, fClassifier _)
     return r
   }
 
-  def from_aadlirFeature(o: org.sireum.aadl.ir.Feature, isCompact: B): String = {
-    val st = Printer.print_aadlirFeature(o)
+  def fromFeature(o: Feature, isCompact: B): String = {
+    val st = Printer.printFeature(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1199,17 +1199,17 @@ object JSON {
     }
   }
 
-  def to_aadlirFeature(s: String): Either[org.sireum.aadl.ir.Feature, Json.ErrorMsg] = {
-    def f_aadlirFeature(parser: Parser): org.sireum.aadl.ir.Feature = {
-      val r = parser.parse_aadlirFeature()
+  def toFeature(s: String): Either[Feature, Json.ErrorMsg] = {
+    def fFeature(parser: Parser): Feature = {
+      val r = parser.parseFeature()
       return r
     }
-    val r = to(s, f_aadlirFeature _)
+    val r = to(s, fFeature _)
     return r
   }
 
-  def from_aadlirFeatureEnd(o: org.sireum.aadl.ir.FeatureEnd, isCompact: B): String = {
-    val st = Printer.print_aadlirFeatureEnd(o)
+  def fromFeatureEnd(o: FeatureEnd, isCompact: B): String = {
+    val st = Printer.printFeatureEnd(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1217,17 +1217,17 @@ object JSON {
     }
   }
 
-  def to_aadlirFeatureEnd(s: String): Either[org.sireum.aadl.ir.FeatureEnd, Json.ErrorMsg] = {
-    def f_aadlirFeatureEnd(parser: Parser): org.sireum.aadl.ir.FeatureEnd = {
-      val r = parser.parse_aadlirFeatureEnd()
+  def toFeatureEnd(s: String): Either[FeatureEnd, Json.ErrorMsg] = {
+    def fFeatureEnd(parser: Parser): FeatureEnd = {
+      val r = parser.parseFeatureEnd()
       return r
     }
-    val r = to(s, f_aadlirFeatureEnd _)
+    val r = to(s, fFeatureEnd _)
     return r
   }
 
-  def from_aadlirFeatureGroup(o: org.sireum.aadl.ir.FeatureGroup, isCompact: B): String = {
-    val st = Printer.print_aadlirFeatureGroup(o)
+  def fromFeatureGroup(o: FeatureGroup, isCompact: B): String = {
+    val st = Printer.printFeatureGroup(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1235,17 +1235,17 @@ object JSON {
     }
   }
 
-  def to_aadlirFeatureGroup(s: String): Either[org.sireum.aadl.ir.FeatureGroup, Json.ErrorMsg] = {
-    def f_aadlirFeatureGroup(parser: Parser): org.sireum.aadl.ir.FeatureGroup = {
-      val r = parser.parse_aadlirFeatureGroup()
+  def toFeatureGroup(s: String): Either[FeatureGroup, Json.ErrorMsg] = {
+    def fFeatureGroup(parser: Parser): FeatureGroup = {
+      val r = parser.parseFeatureGroup()
       return r
     }
-    val r = to(s, f_aadlirFeatureGroup _)
+    val r = to(s, fFeatureGroup _)
     return r
   }
 
-  def from_aadlirConnection(o: org.sireum.aadl.ir.Connection, isCompact: B): String = {
-    val st = Printer.print_aadlirConnection(o)
+  def fromConnection(o: Connection, isCompact: B): String = {
+    val st = Printer.printConnection(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1253,17 +1253,17 @@ object JSON {
     }
   }
 
-  def to_aadlirConnection(s: String): Either[org.sireum.aadl.ir.Connection, Json.ErrorMsg] = {
-    def f_aadlirConnection(parser: Parser): org.sireum.aadl.ir.Connection = {
-      val r = parser.parse_aadlirConnection()
+  def toConnection(s: String): Either[Connection, Json.ErrorMsg] = {
+    def fConnection(parser: Parser): Connection = {
+      val r = parser.parseConnection()
       return r
     }
-    val r = to(s, f_aadlirConnection _)
+    val r = to(s, fConnection _)
     return r
   }
 
-  def from_aadlirConnectionInstance(o: org.sireum.aadl.ir.ConnectionInstance, isCompact: B): String = {
-    val st = Printer.print_aadlirConnectionInstance(o)
+  def fromConnectionInstance(o: ConnectionInstance, isCompact: B): String = {
+    val st = Printer.printConnectionInstance(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1271,17 +1271,17 @@ object JSON {
     }
   }
 
-  def to_aadlirConnectionInstance(s: String): Either[org.sireum.aadl.ir.ConnectionInstance, Json.ErrorMsg] = {
-    def f_aadlirConnectionInstance(parser: Parser): org.sireum.aadl.ir.ConnectionInstance = {
-      val r = parser.parse_aadlirConnectionInstance()
+  def toConnectionInstance(s: String): Either[ConnectionInstance, Json.ErrorMsg] = {
+    def fConnectionInstance(parser: Parser): ConnectionInstance = {
+      val r = parser.parseConnectionInstance()
       return r
     }
-    val r = to(s, f_aadlirConnectionInstance _)
+    val r = to(s, fConnectionInstance _)
     return r
   }
 
-  def from_aadlirConnectionReference(o: org.sireum.aadl.ir.ConnectionReference, isCompact: B): String = {
-    val st = Printer.print_aadlirConnectionReference(o)
+  def fromConnectionReference(o: ConnectionReference, isCompact: B): String = {
+    val st = Printer.printConnectionReference(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1289,17 +1289,17 @@ object JSON {
     }
   }
 
-  def to_aadlirConnectionReference(s: String): Either[org.sireum.aadl.ir.ConnectionReference, Json.ErrorMsg] = {
-    def f_aadlirConnectionReference(parser: Parser): org.sireum.aadl.ir.ConnectionReference = {
-      val r = parser.parse_aadlirConnectionReference()
+  def toConnectionReference(s: String): Either[ConnectionReference, Json.ErrorMsg] = {
+    def fConnectionReference(parser: Parser): ConnectionReference = {
+      val r = parser.parseConnectionReference()
       return r
     }
-    val r = to(s, f_aadlirConnectionReference _)
+    val r = to(s, fConnectionReference _)
     return r
   }
 
-  def from_aadlirEndPoint(o: org.sireum.aadl.ir.EndPoint, isCompact: B): String = {
-    val st = Printer.print_aadlirEndPoint(o)
+  def fromEndPoint(o: EndPoint, isCompact: B): String = {
+    val st = Printer.printEndPoint(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1307,17 +1307,17 @@ object JSON {
     }
   }
 
-  def to_aadlirEndPoint(s: String): Either[org.sireum.aadl.ir.EndPoint, Json.ErrorMsg] = {
-    def f_aadlirEndPoint(parser: Parser): org.sireum.aadl.ir.EndPoint = {
-      val r = parser.parse_aadlirEndPoint()
+  def toEndPoint(s: String): Either[EndPoint, Json.ErrorMsg] = {
+    def fEndPoint(parser: Parser): EndPoint = {
+      val r = parser.parseEndPoint()
       return r
     }
-    val r = to(s, f_aadlirEndPoint _)
+    val r = to(s, fEndPoint _)
     return r
   }
 
-  def from_aadlirProperty(o: org.sireum.aadl.ir.Property, isCompact: B): String = {
-    val st = Printer.print_aadlirProperty(o)
+  def fromProperty(o: Property, isCompact: B): String = {
+    val st = Printer.printProperty(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1325,17 +1325,17 @@ object JSON {
     }
   }
 
-  def to_aadlirProperty(s: String): Either[org.sireum.aadl.ir.Property, Json.ErrorMsg] = {
-    def f_aadlirProperty(parser: Parser): org.sireum.aadl.ir.Property = {
-      val r = parser.parse_aadlirProperty()
+  def toProperty(s: String): Either[Property, Json.ErrorMsg] = {
+    def fProperty(parser: Parser): Property = {
+      val r = parser.parseProperty()
       return r
     }
-    val r = to(s, f_aadlirProperty _)
+    val r = to(s, fProperty _)
     return r
   }
 
-  def from_aadlirPropertyValue(o: org.sireum.aadl.ir.PropertyValue, isCompact: B): String = {
-    val st = Printer.print_aadlirPropertyValue(o)
+  def fromPropertyValue(o: PropertyValue, isCompact: B): String = {
+    val st = Printer.printPropertyValue(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1343,17 +1343,17 @@ object JSON {
     }
   }
 
-  def to_aadlirPropertyValue(s: String): Either[org.sireum.aadl.ir.PropertyValue, Json.ErrorMsg] = {
-    def f_aadlirPropertyValue(parser: Parser): org.sireum.aadl.ir.PropertyValue = {
-      val r = parser.parse_aadlirPropertyValue()
+  def toPropertyValue(s: String): Either[PropertyValue, Json.ErrorMsg] = {
+    def fPropertyValue(parser: Parser): PropertyValue = {
+      val r = parser.parsePropertyValue()
       return r
     }
-    val r = to(s, f_aadlirPropertyValue _)
+    val r = to(s, fPropertyValue _)
     return r
   }
 
-  def from_aadlirClassifierProp(o: org.sireum.aadl.ir.ClassifierProp, isCompact: B): String = {
-    val st = Printer.print_aadlirClassifierProp(o)
+  def fromClassifierProp(o: ClassifierProp, isCompact: B): String = {
+    val st = Printer.printClassifierProp(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1361,17 +1361,17 @@ object JSON {
     }
   }
 
-  def to_aadlirClassifierProp(s: String): Either[org.sireum.aadl.ir.ClassifierProp, Json.ErrorMsg] = {
-    def f_aadlirClassifierProp(parser: Parser): org.sireum.aadl.ir.ClassifierProp = {
-      val r = parser.parse_aadlirClassifierProp()
+  def toClassifierProp(s: String): Either[ClassifierProp, Json.ErrorMsg] = {
+    def fClassifierProp(parser: Parser): ClassifierProp = {
+      val r = parser.parseClassifierProp()
       return r
     }
-    val r = to(s, f_aadlirClassifierProp _)
+    val r = to(s, fClassifierProp _)
     return r
   }
 
-  def from_aadlirRangeProp(o: org.sireum.aadl.ir.RangeProp, isCompact: B): String = {
-    val st = Printer.print_aadlirRangeProp(o)
+  def fromRangeProp(o: RangeProp, isCompact: B): String = {
+    val st = Printer.printRangeProp(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1379,17 +1379,17 @@ object JSON {
     }
   }
 
-  def to_aadlirRangeProp(s: String): Either[org.sireum.aadl.ir.RangeProp, Json.ErrorMsg] = {
-    def f_aadlirRangeProp(parser: Parser): org.sireum.aadl.ir.RangeProp = {
-      val r = parser.parse_aadlirRangeProp()
+  def toRangeProp(s: String): Either[RangeProp, Json.ErrorMsg] = {
+    def fRangeProp(parser: Parser): RangeProp = {
+      val r = parser.parseRangeProp()
       return r
     }
-    val r = to(s, f_aadlirRangeProp _)
+    val r = to(s, fRangeProp _)
     return r
   }
 
-  def from_aadlirRecordProp(o: org.sireum.aadl.ir.RecordProp, isCompact: B): String = {
-    val st = Printer.print_aadlirRecordProp(o)
+  def fromRecordProp(o: RecordProp, isCompact: B): String = {
+    val st = Printer.printRecordProp(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1397,17 +1397,17 @@ object JSON {
     }
   }
 
-  def to_aadlirRecordProp(s: String): Either[org.sireum.aadl.ir.RecordProp, Json.ErrorMsg] = {
-    def f_aadlirRecordProp(parser: Parser): org.sireum.aadl.ir.RecordProp = {
-      val r = parser.parse_aadlirRecordProp()
+  def toRecordProp(s: String): Either[RecordProp, Json.ErrorMsg] = {
+    def fRecordProp(parser: Parser): RecordProp = {
+      val r = parser.parseRecordProp()
       return r
     }
-    val r = to(s, f_aadlirRecordProp _)
+    val r = to(s, fRecordProp _)
     return r
   }
 
-  def from_aadlirReferenceProp(o: org.sireum.aadl.ir.ReferenceProp, isCompact: B): String = {
-    val st = Printer.print_aadlirReferenceProp(o)
+  def fromReferenceProp(o: ReferenceProp, isCompact: B): String = {
+    val st = Printer.printReferenceProp(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1415,17 +1415,17 @@ object JSON {
     }
   }
 
-  def to_aadlirReferenceProp(s: String): Either[org.sireum.aadl.ir.ReferenceProp, Json.ErrorMsg] = {
-    def f_aadlirReferenceProp(parser: Parser): org.sireum.aadl.ir.ReferenceProp = {
-      val r = parser.parse_aadlirReferenceProp()
+  def toReferenceProp(s: String): Either[ReferenceProp, Json.ErrorMsg] = {
+    def fReferenceProp(parser: Parser): ReferenceProp = {
+      val r = parser.parseReferenceProp()
       return r
     }
-    val r = to(s, f_aadlirReferenceProp _)
+    val r = to(s, fReferenceProp _)
     return r
   }
 
-  def from_aadlirUnitProp(o: org.sireum.aadl.ir.UnitProp, isCompact: B): String = {
-    val st = Printer.print_aadlirUnitProp(o)
+  def fromUnitProp(o: UnitProp, isCompact: B): String = {
+    val st = Printer.printUnitProp(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1433,17 +1433,17 @@ object JSON {
     }
   }
 
-  def to_aadlirUnitProp(s: String): Either[org.sireum.aadl.ir.UnitProp, Json.ErrorMsg] = {
-    def f_aadlirUnitProp(parser: Parser): org.sireum.aadl.ir.UnitProp = {
-      val r = parser.parse_aadlirUnitProp()
+  def toUnitProp(s: String): Either[UnitProp, Json.ErrorMsg] = {
+    def fUnitProp(parser: Parser): UnitProp = {
+      val r = parser.parseUnitProp()
       return r
     }
-    val r = to(s, f_aadlirUnitProp _)
+    val r = to(s, fUnitProp _)
     return r
   }
 
-  def from_aadlirValueProp(o: org.sireum.aadl.ir.ValueProp, isCompact: B): String = {
-    val st = Printer.print_aadlirValueProp(o)
+  def fromValueProp(o: ValueProp, isCompact: B): String = {
+    val st = Printer.printValueProp(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1451,17 +1451,17 @@ object JSON {
     }
   }
 
-  def to_aadlirValueProp(s: String): Either[org.sireum.aadl.ir.ValueProp, Json.ErrorMsg] = {
-    def f_aadlirValueProp(parser: Parser): org.sireum.aadl.ir.ValueProp = {
-      val r = parser.parse_aadlirValueProp()
+  def toValueProp(s: String): Either[ValueProp, Json.ErrorMsg] = {
+    def fValueProp(parser: Parser): ValueProp = {
+      val r = parser.parseValueProp()
       return r
     }
-    val r = to(s, f_aadlirValueProp _)
+    val r = to(s, fValueProp _)
     return r
   }
 
-  def from_aadlirMode(o: org.sireum.aadl.ir.Mode, isCompact: B): String = {
-    val st = Printer.print_aadlirMode(o)
+  def fromMode(o: Mode, isCompact: B): String = {
+    val st = Printer.printMode(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1469,17 +1469,17 @@ object JSON {
     }
   }
 
-  def to_aadlirMode(s: String): Either[org.sireum.aadl.ir.Mode, Json.ErrorMsg] = {
-    def f_aadlirMode(parser: Parser): org.sireum.aadl.ir.Mode = {
-      val r = parser.parse_aadlirMode()
+  def toMode(s: String): Either[Mode, Json.ErrorMsg] = {
+    def fMode(parser: Parser): Mode = {
+      val r = parser.parseMode()
       return r
     }
-    val r = to(s, f_aadlirMode _)
+    val r = to(s, fMode _)
     return r
   }
 
-  def from_aadlirFlow(o: org.sireum.aadl.ir.Flow, isCompact: B): String = {
-    val st = Printer.print_aadlirFlow(o)
+  def fromFlow(o: Flow, isCompact: B): String = {
+    val st = Printer.printFlow(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1487,17 +1487,17 @@ object JSON {
     }
   }
 
-  def to_aadlirFlow(s: String): Either[org.sireum.aadl.ir.Flow, Json.ErrorMsg] = {
-    def f_aadlirFlow(parser: Parser): org.sireum.aadl.ir.Flow = {
-      val r = parser.parse_aadlirFlow()
+  def toFlow(s: String): Either[Flow, Json.ErrorMsg] = {
+    def fFlow(parser: Parser): Flow = {
+      val r = parser.parseFlow()
       return r
     }
-    val r = to(s, f_aadlirFlow _)
+    val r = to(s, fFlow _)
     return r
   }
 
-  def from_aadlirAnnex(o: org.sireum.aadl.ir.Annex, isCompact: B): String = {
-    val st = Printer.print_aadlirAnnex(o)
+  def fromAnnex(o: Annex, isCompact: B): String = {
+    val st = Printer.printAnnex(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1505,17 +1505,17 @@ object JSON {
     }
   }
 
-  def to_aadlirAnnex(s: String): Either[org.sireum.aadl.ir.Annex, Json.ErrorMsg] = {
-    def f_aadlirAnnex(parser: Parser): org.sireum.aadl.ir.Annex = {
-      val r = parser.parse_aadlirAnnex()
+  def toAnnex(s: String): Either[Annex, Json.ErrorMsg] = {
+    def fAnnex(parser: Parser): Annex = {
+      val r = parser.parseAnnex()
       return r
     }
-    val r = to(s, f_aadlirAnnex _)
+    val r = to(s, fAnnex _)
     return r
   }
 
-  def from_aadlirAnnexClause(o: org.sireum.aadl.ir.AnnexClause, isCompact: B): String = {
-    val st = Printer.print_aadlirAnnexClause(o)
+  def fromAnnexClause(o: AnnexClause, isCompact: B): String = {
+    val st = Printer.printAnnexClause(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1523,17 +1523,17 @@ object JSON {
     }
   }
 
-  def to_aadlirAnnexClause(s: String): Either[org.sireum.aadl.ir.AnnexClause, Json.ErrorMsg] = {
-    def f_aadlirAnnexClause(parser: Parser): org.sireum.aadl.ir.AnnexClause = {
-      val r = parser.parse_aadlirAnnexClause()
+  def toAnnexClause(s: String): Either[AnnexClause, Json.ErrorMsg] = {
+    def fAnnexClause(parser: Parser): AnnexClause = {
+      val r = parser.parseAnnexClause()
       return r
     }
-    val r = to(s, f_aadlirAnnexClause _)
+    val r = to(s, fAnnexClause _)
     return r
   }
 
-  def from_aadlirEmv2Annex(o: org.sireum.aadl.ir.Emv2Annex, isCompact: B): String = {
-    val st = Printer.print_aadlirEmv2Annex(o)
+  def fromEmv2Annex(o: Emv2Annex, isCompact: B): String = {
+    val st = Printer.printEmv2Annex(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1541,17 +1541,17 @@ object JSON {
     }
   }
 
-  def to_aadlirEmv2Annex(s: String): Either[org.sireum.aadl.ir.Emv2Annex, Json.ErrorMsg] = {
-    def f_aadlirEmv2Annex(parser: Parser): org.sireum.aadl.ir.Emv2Annex = {
-      val r = parser.parse_aadlirEmv2Annex()
+  def toEmv2Annex(s: String): Either[Emv2Annex, Json.ErrorMsg] = {
+    def fEmv2Annex(parser: Parser): Emv2Annex = {
+      val r = parser.parseEmv2Annex()
       return r
     }
-    val r = to(s, f_aadlirEmv2Annex _)
+    val r = to(s, fEmv2Annex _)
     return r
   }
 
-  def from_aadlirEmv2Library(o: org.sireum.aadl.ir.Emv2Library, isCompact: B): String = {
-    val st = Printer.print_aadlirEmv2Library(o)
+  def fromEmv2Library(o: Emv2Library, isCompact: B): String = {
+    val st = Printer.printEmv2Library(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1559,17 +1559,17 @@ object JSON {
     }
   }
 
-  def to_aadlirEmv2Library(s: String): Either[org.sireum.aadl.ir.Emv2Library, Json.ErrorMsg] = {
-    def f_aadlirEmv2Library(parser: Parser): org.sireum.aadl.ir.Emv2Library = {
-      val r = parser.parse_aadlirEmv2Library()
+  def toEmv2Library(s: String): Either[Emv2Library, Json.ErrorMsg] = {
+    def fEmv2Library(parser: Parser): Emv2Library = {
+      val r = parser.parseEmv2Library()
       return r
     }
-    val r = to(s, f_aadlirEmv2Library _)
+    val r = to(s, fEmv2Library _)
     return r
   }
 
-  def from_aadlirEmv2Propagation(o: org.sireum.aadl.ir.Emv2Propagation, isCompact: B): String = {
-    val st = Printer.print_aadlirEmv2Propagation(o)
+  def fromEmv2Propagation(o: Emv2Propagation, isCompact: B): String = {
+    val st = Printer.printEmv2Propagation(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1577,17 +1577,17 @@ object JSON {
     }
   }
 
-  def to_aadlirEmv2Propagation(s: String): Either[org.sireum.aadl.ir.Emv2Propagation, Json.ErrorMsg] = {
-    def f_aadlirEmv2Propagation(parser: Parser): org.sireum.aadl.ir.Emv2Propagation = {
-      val r = parser.parse_aadlirEmv2Propagation()
+  def toEmv2Propagation(s: String): Either[Emv2Propagation, Json.ErrorMsg] = {
+    def fEmv2Propagation(parser: Parser): Emv2Propagation = {
+      val r = parser.parseEmv2Propagation()
       return r
     }
-    val r = to(s, f_aadlirEmv2Propagation _)
+    val r = to(s, fEmv2Propagation _)
     return r
   }
 
-  def from_aadlirEmv2Flow(o: org.sireum.aadl.ir.Emv2Flow, isCompact: B): String = {
-    val st = Printer.print_aadlirEmv2Flow(o)
+  def fromEmv2Flow(o: Emv2Flow, isCompact: B): String = {
+    val st = Printer.printEmv2Flow(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1595,17 +1595,17 @@ object JSON {
     }
   }
 
-  def to_aadlirEmv2Flow(s: String): Either[org.sireum.aadl.ir.Emv2Flow, Json.ErrorMsg] = {
-    def f_aadlirEmv2Flow(parser: Parser): org.sireum.aadl.ir.Emv2Flow = {
-      val r = parser.parse_aadlirEmv2Flow()
+  def toEmv2Flow(s: String): Either[Emv2Flow, Json.ErrorMsg] = {
+    def fEmv2Flow(parser: Parser): Emv2Flow = {
+      val r = parser.parseEmv2Flow()
       return r
     }
-    val r = to(s, f_aadlirEmv2Flow _)
+    val r = to(s, fEmv2Flow _)
     return r
   }
 
-  def from_aadlirEmv2Clause(o: org.sireum.aadl.ir.Emv2Clause, isCompact: B): String = {
-    val st = Printer.print_aadlirEmv2Clause(o)
+  def fromEmv2Clause(o: Emv2Clause, isCompact: B): String = {
+    val st = Printer.printEmv2Clause(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1613,17 +1613,17 @@ object JSON {
     }
   }
 
-  def to_aadlirEmv2Clause(s: String): Either[org.sireum.aadl.ir.Emv2Clause, Json.ErrorMsg] = {
-    def f_aadlirEmv2Clause(parser: Parser): org.sireum.aadl.ir.Emv2Clause = {
-      val r = parser.parse_aadlirEmv2Clause()
+  def toEmv2Clause(s: String): Either[Emv2Clause, Json.ErrorMsg] = {
+    def fEmv2Clause(parser: Parser): Emv2Clause = {
+      val r = parser.parseEmv2Clause()
       return r
     }
-    val r = to(s, f_aadlirEmv2Clause _)
+    val r = to(s, fEmv2Clause _)
     return r
   }
 
-  def from_aadlirOtherAnnex(o: org.sireum.aadl.ir.OtherAnnex, isCompact: B): String = {
-    val st = Printer.print_aadlirOtherAnnex(o)
+  def fromOtherAnnex(o: OtherAnnex, isCompact: B): String = {
+    val st = Printer.printOtherAnnex(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1631,12 +1631,12 @@ object JSON {
     }
   }
 
-  def to_aadlirOtherAnnex(s: String): Either[org.sireum.aadl.ir.OtherAnnex, Json.ErrorMsg] = {
-    def f_aadlirOtherAnnex(parser: Parser): org.sireum.aadl.ir.OtherAnnex = {
-      val r = parser.parse_aadlirOtherAnnex()
+  def toOtherAnnex(s: String): Either[OtherAnnex, Json.ErrorMsg] = {
+    def fOtherAnnex(parser: Parser): OtherAnnex = {
+      val r = parser.parseOtherAnnex()
       return r
     }
-    val r = to(s, f_aadlirOtherAnnex _)
+    val r = to(s, fOtherAnnex _)
     return r
   }
 

@@ -4,5 +4,6 @@ jdk:
   - oraclejdk11
 
 script:
-  - ./test.sh
+  - ./prelude.sh
   - $TRAVIS_BUILD_DIR/mill-standalone jitPack --owner sireum --repo air || true
+  - ./test.sh

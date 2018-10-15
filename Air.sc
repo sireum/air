@@ -27,13 +27,11 @@ import mill._
 import mill.scalalib._
 import org.sireum.mill.SireumModule._
 
-trait Module extends CrossJvmJsPublish {
+trait Module extends CrossJvmJsJitPack {
 
   final override def description: String = "Sireum AADL Intermediate Representation (AIR)"
 
-  final override def artifactNameOpt: Option[String] = Some("air")
-
-  final override def sharedArtifactNameOpt: Option[String] = Some("air-shared")
+  final override def artifactName = "air"
 
   final override def subUrl: String = "air"
 

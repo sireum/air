@@ -1,6 +1,6 @@
 #!/bin/bash -e
 export SCRIPT_HOME=$( cd "$( dirname "$0" )" &> /dev/null && pwd )
-cd $SCRIPT_HOME
+cd ${SCRIPT_HOME}
 ./prelude.sh
 ./sireum slang tipe --verbose -r -s runtime/library:shared:jvm
 rm -fR out

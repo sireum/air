@@ -2,7 +2,7 @@
 // @formatter:off
 
 /*
- Copyright (c) 2018, Robby, Kansas State University
+ Copyright (c) 2018, Kansas State University
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -63,16 +63,16 @@ object Transformer {
       o match {
         case o: FeatureEnd =>
           val r: PreResult[Context, Feature] = preFeatureEnd(ctx, o) match {
-            case PreResult(preCtx, continu, Some(r: Feature)) => PreResult(preCtx, continu, Some[Feature](r))
-            case PreResult(_, _, Some(_)) => halt("Can only produce object of type Feature")
-            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Feature]())
+           case PreResult(preCtx, continu, Some(r: Feature)) => PreResult(preCtx, continu, Some[Feature](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type Feature")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Feature]())
           }
           return r
         case o: FeatureGroup =>
           val r: PreResult[Context, Feature] = preFeatureGroup(ctx, o) match {
-            case PreResult(preCtx, continu, Some(r: Feature)) => PreResult(preCtx, continu, Some[Feature](r))
-            case PreResult(_, _, Some(_)) => halt("Can only produce object of type Feature")
-            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Feature]())
+           case PreResult(preCtx, continu, Some(r: Feature)) => PreResult(preCtx, continu, Some[Feature](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type Feature")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Feature]())
           }
           return r
       }
@@ -157,37 +157,37 @@ object Transformer {
       o match {
         case o: Emv2Library =>
           val r: PreResult[Context, AnnexClause] = preEmv2Library(ctx, o) match {
-            case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
-            case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
-            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
+           case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
           }
           return r
         case o: Emv2Propagation =>
           val r: PreResult[Context, AnnexClause] = preEmv2Propagation(ctx, o) match {
-            case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
-            case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
-            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
+           case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
           }
           return r
         case o: Emv2Flow =>
           val r: PreResult[Context, AnnexClause] = preEmv2Flow(ctx, o) match {
-            case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
-            case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
-            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
+           case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
           }
           return r
         case o: Emv2Clause =>
           val r: PreResult[Context, AnnexClause] = preEmv2Clause(ctx, o) match {
-            case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
-            case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
-            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
+           case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
           }
           return r
         case o: OtherAnnex =>
           val r: PreResult[Context, AnnexClause] = preOtherAnnex(ctx, o) match {
-            case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
-            case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
-            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
+           case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
           }
           return r
       }
@@ -197,30 +197,30 @@ object Transformer {
       o match {
         case o: Emv2Library =>
           val r: PreResult[Context, Emv2Annex] = preEmv2Library(ctx, o) match {
-            case PreResult(preCtx, continu, Some(r: Emv2Annex)) => PreResult(preCtx, continu, Some[Emv2Annex](r))
-            case PreResult(_, _, Some(_)) => halt("Can only produce object of type Emv2Annex")
-            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Annex]())
+           case PreResult(preCtx, continu, Some(r: Emv2Annex)) => PreResult(preCtx, continu, Some[Emv2Annex](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type Emv2Annex")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Annex]())
           }
           return r
         case o: Emv2Propagation =>
           val r: PreResult[Context, Emv2Annex] = preEmv2Propagation(ctx, o) match {
-            case PreResult(preCtx, continu, Some(r: Emv2Annex)) => PreResult(preCtx, continu, Some[Emv2Annex](r))
-            case PreResult(_, _, Some(_)) => halt("Can only produce object of type Emv2Annex")
-            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Annex]())
+           case PreResult(preCtx, continu, Some(r: Emv2Annex)) => PreResult(preCtx, continu, Some[Emv2Annex](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type Emv2Annex")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Annex]())
           }
           return r
         case o: Emv2Flow =>
           val r: PreResult[Context, Emv2Annex] = preEmv2Flow(ctx, o) match {
-            case PreResult(preCtx, continu, Some(r: Emv2Annex)) => PreResult(preCtx, continu, Some[Emv2Annex](r))
-            case PreResult(_, _, Some(_)) => halt("Can only produce object of type Emv2Annex")
-            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Annex]())
+           case PreResult(preCtx, continu, Some(r: Emv2Annex)) => PreResult(preCtx, continu, Some[Emv2Annex](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type Emv2Annex")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Annex]())
           }
           return r
         case o: Emv2Clause =>
           val r: PreResult[Context, Emv2Annex] = preEmv2Clause(ctx, o) match {
-            case PreResult(preCtx, continu, Some(r: Emv2Annex)) => PreResult(preCtx, continu, Some[Emv2Annex](r))
-            case PreResult(_, _, Some(_)) => halt("Can only produce object of type Emv2Annex")
-            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Annex]())
+           case PreResult(preCtx, continu, Some(r: Emv2Annex)) => PreResult(preCtx, continu, Some[Emv2Annex](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type Emv2Annex")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Annex]())
           }
           return r
       }
@@ -266,16 +266,16 @@ object Transformer {
       o match {
         case o: FeatureEnd =>
           val r: Result[Context, Feature] = postFeatureEnd(ctx, o) match {
-            case Result(postCtx, Some(result: Feature)) => Result(postCtx, Some[Feature](result))
-            case Result(_, Some(_)) => halt("Can only produce object of type Feature")
-            case Result(postCtx, _) => Result(postCtx, None[Feature]())
+           case Result(postCtx, Some(result: Feature)) => Result(postCtx, Some[Feature](result))
+           case Result(_, Some(_)) => halt("Can only produce object of type Feature")
+           case Result(postCtx, _) => Result(postCtx, None[Feature]())
           }
           return r
         case o: FeatureGroup =>
           val r: Result[Context, Feature] = postFeatureGroup(ctx, o) match {
-            case Result(postCtx, Some(result: Feature)) => Result(postCtx, Some[Feature](result))
-            case Result(_, Some(_)) => halt("Can only produce object of type Feature")
-            case Result(postCtx, _) => Result(postCtx, None[Feature]())
+           case Result(postCtx, Some(result: Feature)) => Result(postCtx, Some[Feature](result))
+           case Result(_, Some(_)) => halt("Can only produce object of type Feature")
+           case Result(postCtx, _) => Result(postCtx, None[Feature]())
           }
           return r
       }
@@ -360,37 +360,37 @@ object Transformer {
       o match {
         case o: Emv2Library =>
           val r: Result[Context, AnnexClause] = postEmv2Library(ctx, o) match {
-            case Result(postCtx, Some(result: AnnexClause)) => Result(postCtx, Some[AnnexClause](result))
-            case Result(_, Some(_)) => halt("Can only produce object of type AnnexClause")
-            case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
+           case Result(postCtx, Some(result: AnnexClause)) => Result(postCtx, Some[AnnexClause](result))
+           case Result(_, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
           }
           return r
         case o: Emv2Propagation =>
           val r: Result[Context, AnnexClause] = postEmv2Propagation(ctx, o) match {
-            case Result(postCtx, Some(result: AnnexClause)) => Result(postCtx, Some[AnnexClause](result))
-            case Result(_, Some(_)) => halt("Can only produce object of type AnnexClause")
-            case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
+           case Result(postCtx, Some(result: AnnexClause)) => Result(postCtx, Some[AnnexClause](result))
+           case Result(_, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
           }
           return r
         case o: Emv2Flow =>
           val r: Result[Context, AnnexClause] = postEmv2Flow(ctx, o) match {
-            case Result(postCtx, Some(result: AnnexClause)) => Result(postCtx, Some[AnnexClause](result))
-            case Result(_, Some(_)) => halt("Can only produce object of type AnnexClause")
-            case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
+           case Result(postCtx, Some(result: AnnexClause)) => Result(postCtx, Some[AnnexClause](result))
+           case Result(_, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
           }
           return r
         case o: Emv2Clause =>
           val r: Result[Context, AnnexClause] = postEmv2Clause(ctx, o) match {
-            case Result(postCtx, Some(result: AnnexClause)) => Result(postCtx, Some[AnnexClause](result))
-            case Result(_, Some(_)) => halt("Can only produce object of type AnnexClause")
-            case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
+           case Result(postCtx, Some(result: AnnexClause)) => Result(postCtx, Some[AnnexClause](result))
+           case Result(_, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
           }
           return r
         case o: OtherAnnex =>
           val r: Result[Context, AnnexClause] = postOtherAnnex(ctx, o) match {
-            case Result(postCtx, Some(result: AnnexClause)) => Result(postCtx, Some[AnnexClause](result))
-            case Result(_, Some(_)) => halt("Can only produce object of type AnnexClause")
-            case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
+           case Result(postCtx, Some(result: AnnexClause)) => Result(postCtx, Some[AnnexClause](result))
+           case Result(_, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
           }
           return r
       }
@@ -400,30 +400,30 @@ object Transformer {
       o match {
         case o: Emv2Library =>
           val r: Result[Context, Emv2Annex] = postEmv2Library(ctx, o) match {
-            case Result(postCtx, Some(result: Emv2Annex)) => Result(postCtx, Some[Emv2Annex](result))
-            case Result(_, Some(_)) => halt("Can only produce object of type Emv2Annex")
-            case Result(postCtx, _) => Result(postCtx, None[Emv2Annex]())
+           case Result(postCtx, Some(result: Emv2Annex)) => Result(postCtx, Some[Emv2Annex](result))
+           case Result(_, Some(_)) => halt("Can only produce object of type Emv2Annex")
+           case Result(postCtx, _) => Result(postCtx, None[Emv2Annex]())
           }
           return r
         case o: Emv2Propagation =>
           val r: Result[Context, Emv2Annex] = postEmv2Propagation(ctx, o) match {
-            case Result(postCtx, Some(result: Emv2Annex)) => Result(postCtx, Some[Emv2Annex](result))
-            case Result(_, Some(_)) => halt("Can only produce object of type Emv2Annex")
-            case Result(postCtx, _) => Result(postCtx, None[Emv2Annex]())
+           case Result(postCtx, Some(result: Emv2Annex)) => Result(postCtx, Some[Emv2Annex](result))
+           case Result(_, Some(_)) => halt("Can only produce object of type Emv2Annex")
+           case Result(postCtx, _) => Result(postCtx, None[Emv2Annex]())
           }
           return r
         case o: Emv2Flow =>
           val r: Result[Context, Emv2Annex] = postEmv2Flow(ctx, o) match {
-            case Result(postCtx, Some(result: Emv2Annex)) => Result(postCtx, Some[Emv2Annex](result))
-            case Result(_, Some(_)) => halt("Can only produce object of type Emv2Annex")
-            case Result(postCtx, _) => Result(postCtx, None[Emv2Annex]())
+           case Result(postCtx, Some(result: Emv2Annex)) => Result(postCtx, Some[Emv2Annex](result))
+           case Result(_, Some(_)) => halt("Can only produce object of type Emv2Annex")
+           case Result(postCtx, _) => Result(postCtx, None[Emv2Annex]())
           }
           return r
         case o: Emv2Clause =>
           val r: Result[Context, Emv2Annex] = postEmv2Clause(ctx, o) match {
-            case Result(postCtx, Some(result: Emv2Annex)) => Result(postCtx, Some[Emv2Annex](result))
-            case Result(_, Some(_)) => halt("Can only produce object of type Emv2Annex")
-            case Result(postCtx, _) => Result(postCtx, None[Emv2Annex]())
+           case Result(postCtx, Some(result: Emv2Annex)) => Result(postCtx, Some[Emv2Annex](result))
+           case Result(_, Some(_)) => halt("Can only produce object of type Emv2Annex")
+           case Result(postCtx, _) => Result(postCtx, None[Emv2Annex]())
           }
           return r
       }
@@ -451,11 +451,7 @@ object Transformer {
 
   }
 
-  @pure def transformISZ[Context, T](
-    ctx: Context,
-    s: IS[Z, T],
-    f: (Context, T) => Result[Context, T] @pure
-  ): Result[Context, IS[Z, T]] = {
+  @pure def transformISZ[Context, T](ctx: Context, s: IS[Z, T], f: (Context, T) => Result[Context, T] @pure): Result[Context, IS[Z, T]] = {
     val s2: MS[Z, T] = s.toMS
     var changed: B = F
     var ctxi = ctx
@@ -473,11 +469,7 @@ object Transformer {
     }
   }
 
-  @pure def transformOption[Context, T](
-    ctx: Context,
-    option: Option[T],
-    f: (Context, T) => Result[Context, T] @pure
-  ): Result[Context, Option[T]] = {
+  @pure def transformOption[Context, T](ctx: Context, option: Option[T], f: (Context, T) => Result[Context, T] @pure): Result[Context, Option[T]] = {
     option match {
       case Some(v) =>
         val r = f(ctx, v)
@@ -491,7 +483,7 @@ object Transformer {
 
 }
 
-import org.sireum.aadl.ir.Transformer._
+import Transformer._
 
 @datatype class Transformer[Context](pp: PrePost[Context]) {
 
@@ -630,16 +622,7 @@ import org.sireum.aadl.ir.Transformer._
           val r1: Result[Context, IS[Z, Feature]] = transformISZ(r0.ctx, o2.features, transformFeature _)
           val r2: Result[Context, IS[Z, Property]] = transformISZ(r1.ctx, o2.properties, transformProperty _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            Result(
-              r2.ctx,
-              Some(
-                o2(
-                  identifier = r0.resultOpt.getOrElse(o2.identifier),
-                  features = r1.resultOpt.getOrElse(o2.features),
-                  properties = r2.resultOpt.getOrElse(o2.properties)
-                )
-              )
-            )
+            Result(r2.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), features = r1.resultOpt.getOrElse(o2.features), properties = r2.resultOpt.getOrElse(o2.properties))))
           else
             Result(r2.ctx, None())
       }
@@ -699,15 +682,7 @@ import org.sireum.aadl.ir.Transformer._
       val r1: Result[Context, IS[Z, Feature]] = transformISZ(r0.ctx, o2.features, transformFeature _)
       val r2: Result[Context, IS[Z, Property]] = transformISZ(r1.ctx, o2.properties, transformProperty _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-        Result(
-          r2.ctx,
-          Some(
-            o2(
-              identifier = r0.resultOpt.getOrElse(o2.identifier),
-              features = r1.resultOpt.getOrElse(o2.features), properties = r2.resultOpt.getOrElse(o2.properties)
-            )
-          )
-        )
+        Result(r2.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), features = r1.resultOpt.getOrElse(o2.features), properties = r2.resultOpt.getOrElse(o2.properties))))
       else
         Result(r2.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
@@ -968,12 +943,7 @@ import org.sireum.aadl.ir.Transformer._
       val r1: Result[Context, Option[Feature]] = transformOption(r0.ctx, o2.source, transformFeature _)
       val r2: Result[Context, Option[Feature]] = transformOption(r1.ctx, o2.sink, transformFeature _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-        Result(
-          r2.ctx,
-          Some(
-            o2(
-              name = r0.resultOpt.getOrElse(o2.name), source = r1.resultOpt.getOrElse(o2.source),
-              sink = r2.resultOpt.getOrElse(o2.sink))))
+        Result(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), source = r1.resultOpt.getOrElse(o2.source), sink = r2.resultOpt.getOrElse(o2.sink))))
       else
         Result(r2.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
@@ -1265,9 +1235,9 @@ import org.sireum.aadl.ir.Transformer._
 
   @pure def transformUnitProp(ctx: Context, o: UnitProp): Result[Context, UnitProp] = {
     val preR: PreResult[Context, UnitProp] = pp.preUnitProp(ctx, o) match {
-      case PreResult(preCtx, continu, Some(r: UnitProp)) => PreResult(preCtx, continu, Some[UnitProp](r))
-      case PreResult(_, _, Some(_)) => halt("Can only produce object of type UnitProp")
-      case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[UnitProp]())
+     case PreResult(preCtx, continu, Some(r: UnitProp)) => PreResult(preCtx, continu, Some[UnitProp](r))
+     case PreResult(_, _, Some(_)) => halt("Can only produce object of type UnitProp")
+     case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[UnitProp]())
     }
     val r: Result[Context, UnitProp] = if (preR.continu) {
       val o2: UnitProp = preR.resultOpt.getOrElse(o)
@@ -1283,10 +1253,9 @@ import org.sireum.aadl.ir.Transformer._
     }
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: UnitProp = r.resultOpt.getOrElse(o)
-
     val postR: Result[Context, UnitProp] = pp.postUnitProp(r.ctx, o2) match {
-      case Result(postCtx, Some(result: UnitProp)) => Result(postCtx, Some[UnitProp](result))
-      case Result(_, Some(_)) => halt("Can only produce object of type UnitProp")
+     case Result(postCtx, Some(result: UnitProp)) => Result(postCtx, Some[UnitProp](result))
+     case Result(_, Some(_)) => halt("Can only produce object of type UnitProp")
      case Result(postCtx, _) => Result(postCtx, None[UnitProp]())
     }
     if (postR.resultOpt.nonEmpty) {

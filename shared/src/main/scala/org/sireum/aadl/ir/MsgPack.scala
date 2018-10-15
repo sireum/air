@@ -2,7 +2,7 @@
 // @formatter:off
 
 /*
- Copyright (c) 2018, Robby, Kansas State University
+ Copyright (c) 2018, Kansas State University
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
 
 // This file is auto-generated from AadlAST.scala
 
-package org.sireum.aadl.ir
+package org.sireum.lang.tipe
 
 import org.sireum._
 
@@ -36,55 +36,55 @@ object MsgPack {
 
   object Constants {
 
-    val Aadl: Z = -32
+    val _aadlirAadl: Z = -32
 
-    val Name: Z = -31
+    val _aadlirName: Z = -31
 
-    val Component: Z = -30
+    val _aadlirComponent: Z = -30
 
-    val Classifier: Z = -29
+    val _aadlirClassifier: Z = -29
 
-    val FeatureEnd: Z = -28
+    val _aadlirFeatureEnd: Z = -28
 
-    val FeatureGroup: Z = -27
+    val _aadlirFeatureGroup: Z = -27
 
-    val Connection: Z = -26
+    val _aadlirConnection: Z = -26
 
-    val ConnectionInstance: Z = -25
+    val _aadlirConnectionInstance: Z = -25
 
-    val ConnectionReference: Z = -24
+    val _aadlirConnectionReference: Z = -24
 
-    val EndPoint: Z = -23
+    val _aadlirEndPoint: Z = -23
 
-    val Property: Z = -22
+    val _aadlirProperty: Z = -22
 
-    val ClassifierProp: Z = -21
+    val _aadlirClassifierProp: Z = -21
 
-    val RangeProp: Z = -20
+    val _aadlirRangeProp: Z = -20
 
-    val RecordProp: Z = -19
+    val _aadlirRecordProp: Z = -19
 
-    val ReferenceProp: Z = -18
+    val _aadlirReferenceProp: Z = -18
 
-    val UnitProp: Z = -17
+    val _aadlirUnitProp: Z = -17
 
-    val ValueProp: Z = -16
+    val _aadlirValueProp: Z = -16
 
-    val Mode: Z = -15
+    val _aadlirMode: Z = -15
 
-    val Flow: Z = -14
+    val _aadlirFlow: Z = -14
 
-    val Annex: Z = -13
+    val _aadlirAnnex: Z = -13
 
-    val Emv2Library: Z = -12
+    val _aadlirEmv2Library: Z = -12
 
-    val Emv2Propagation: Z = -11
+    val _aadlirEmv2Propagation: Z = -11
 
-    val Emv2Flow: Z = -10
+    val _aadlirEmv2Flow: Z = -10
 
-    val Emv2Clause: Z = -9
+    val _aadlirEmv2Clause: Z = -9
 
-    val OtherAnnex: Z = -8
+    val _aadlirOtherAnnex: Z = -8
 
   }
 
@@ -98,240 +98,240 @@ object MsgPack {
 
     def writer: MessagePack.Writer
 
-    def writeAadl(o: Aadl): Unit = {
-      writer.writeZ(Constants.Aadl)
-      writer.writeISZ(o.components, writeComponent _)
-      writer.writeISZ(o.errorLib, writeEmv2Library _)
+    def write_aadlirAadl(o: org.sireum.aadl.ir.Aadl): Unit = {
+      writer.writeZ(Constants._aadlirAadl)
+      writer.writeISZ(o.components, write_aadlirComponent _)
+      writer.writeISZ(o.errorLib, write_aadlirEmv2Library _)
     }
 
-    def writeName(o: Name): Unit = {
-      writer.writeZ(Constants.Name)
+    def write_aadlirName(o: org.sireum.aadl.ir.Name): Unit = {
+      writer.writeZ(Constants._aadlirName)
       writer.writeISZ(o.name, writer.writeString _)
     }
 
-    def writeComponent(o: Component): Unit = {
-      writer.writeZ(Constants.Component)
-      writeName(o.identifier)
-      writeComponentCategoryType(o.category)
-      writer.writeOption(o.classifier, writeClassifier _)
-      writer.writeISZ(o.features, writeFeature _)
-      writer.writeISZ(o.subComponents, writeComponent _)
-      writer.writeISZ(o.connections, writeConnection _)
-      writer.writeISZ(o.connectionInstances, writeConnectionInstance _)
-      writer.writeISZ(o.properties, writeProperty _)
-      writer.writeISZ(o.flows, writeFlow _)
-      writer.writeISZ(o.modes, writeMode _)
-      writer.writeISZ(o.annexes, writeAnnex _)
+    def write_aadlirComponent(o: org.sireum.aadl.ir.Component): Unit = {
+      writer.writeZ(Constants._aadlirComponent)
+      write_aadlirName(o.identifier)
+      write_aadlirComponentCategoryType(o.category)
+      writer.writeOption(o.classifier, write_aadlirClassifier _)
+      writer.writeISZ(o.features, write_aadlirFeature _)
+      writer.writeISZ(o.subComponents, write_aadlirComponent _)
+      writer.writeISZ(o.connections, write_aadlirConnection _)
+      writer.writeISZ(o.connectionInstances, write_aadlirConnectionInstance _)
+      writer.writeISZ(o.properties, write_aadlirProperty _)
+      writer.writeISZ(o.flows, write_aadlirFlow _)
+      writer.writeISZ(o.modes, write_aadlirMode _)
+      writer.writeISZ(o.annexes, write_aadlirAnnex _)
     }
 
-    def writeClassifier(o: Classifier): Unit = {
-      writer.writeZ(Constants.Classifier)
+    def write_aadlirClassifier(o: org.sireum.aadl.ir.Classifier): Unit = {
+      writer.writeZ(Constants._aadlirClassifier)
       writer.writeString(o.name)
     }
 
-    def writeComponentCategoryType(o: ComponentCategory.Type): Unit = {
+    def write_aadlirComponentCategoryType(o: org.sireum.aadl.ir.ComponentCategory.Type): Unit = {
       writer.writeZ(o.ordinal)
     }
 
-    def writeFeature(o: Feature): Unit = {
+    def write_aadlirFeature(o: org.sireum.aadl.ir.Feature): Unit = {
       o match {
-        case o: FeatureEnd => writeFeatureEnd(o)
-        case o: FeatureGroup => writeFeatureGroup(o)
+        case o: org.sireum.aadl.ir.FeatureEnd => write_aadlirFeatureEnd(o)
+        case o: org.sireum.aadl.ir.FeatureGroup => write_aadlirFeatureGroup(o)
       }
     }
 
-    def writeFeatureEnd(o: FeatureEnd): Unit = {
-      writer.writeZ(Constants.FeatureEnd)
-      writeName(o.identifier)
-      writeDirectionType(o.direction)
-      writeFeatureCategoryType(o.category)
-      writer.writeOption(o.classifier, writeClassifier _)
-      writer.writeISZ(o.properties, writeProperty _)
+    def write_aadlirFeatureEnd(o: org.sireum.aadl.ir.FeatureEnd): Unit = {
+      writer.writeZ(Constants._aadlirFeatureEnd)
+      write_aadlirName(o.identifier)
+      write_aadlirDirectionType(o.direction)
+      write_aadlirFeatureCategoryType(o.category)
+      writer.writeOption(o.classifier, write_aadlirClassifier _)
+      writer.writeISZ(o.properties, write_aadlirProperty _)
     }
 
-    def writeFeatureGroup(o: FeatureGroup): Unit = {
-      writer.writeZ(Constants.FeatureGroup)
-      writeName(o.identifier)
-      writer.writeISZ(o.features, writeFeature _)
+    def write_aadlirFeatureGroup(o: org.sireum.aadl.ir.FeatureGroup): Unit = {
+      writer.writeZ(Constants._aadlirFeatureGroup)
+      write_aadlirName(o.identifier)
+      writer.writeISZ(o.features, write_aadlirFeature _)
       writer.writeB(o.isInverse)
-      writeFeatureCategoryType(o.category)
-      writer.writeISZ(o.properties, writeProperty _)
+      write_aadlirFeatureCategoryType(o.category)
+      writer.writeISZ(o.properties, write_aadlirProperty _)
     }
 
-    def writeDirectionType(o: Direction.Type): Unit = {
+    def write_aadlirDirectionType(o: org.sireum.aadl.ir.Direction.Type): Unit = {
       writer.writeZ(o.ordinal)
     }
 
-    def writeFeatureCategoryType(o: FeatureCategory.Type): Unit = {
+    def write_aadlirFeatureCategoryType(o: org.sireum.aadl.ir.FeatureCategory.Type): Unit = {
       writer.writeZ(o.ordinal)
     }
 
-    def writeConnection(o: Connection): Unit = {
-      writer.writeZ(Constants.Connection)
-      writeName(o.name)
-      writer.writeISZ(o.src, writeEndPoint _)
-      writer.writeISZ(o.dst, writeEndPoint _)
-      writeConnectionKindType(o.kind)
+    def write_aadlirConnection(o: org.sireum.aadl.ir.Connection): Unit = {
+      writer.writeZ(Constants._aadlirConnection)
+      write_aadlirName(o.name)
+      writer.writeISZ(o.src, write_aadlirEndPoint _)
+      writer.writeISZ(o.dst, write_aadlirEndPoint _)
+      write_aadlirConnectionKindType(o.kind)
       writer.writeB(o.isBiDirectional)
-      writer.writeISZ(o.connectionInstances, writeName _)
-      writer.writeISZ(o.properties, writeProperty _)
+      writer.writeISZ(o.connectionInstances, write_aadlirName _)
+      writer.writeISZ(o.properties, write_aadlirProperty _)
     }
 
-    def writeConnectionInstance(o: ConnectionInstance): Unit = {
-      writer.writeZ(Constants.ConnectionInstance)
-      writeName(o.name)
-      writeEndPoint(o.src)
-      writeEndPoint(o.dst)
-      writeConnectionKindType(o.kind)
-      writer.writeISZ(o.connectionRefs, writeConnectionReference _)
-      writer.writeISZ(o.properties, writeProperty _)
+    def write_aadlirConnectionInstance(o: org.sireum.aadl.ir.ConnectionInstance): Unit = {
+      writer.writeZ(Constants._aadlirConnectionInstance)
+      write_aadlirName(o.name)
+      write_aadlirEndPoint(o.src)
+      write_aadlirEndPoint(o.dst)
+      write_aadlirConnectionKindType(o.kind)
+      writer.writeISZ(o.connectionRefs, write_aadlirConnectionReference _)
+      writer.writeISZ(o.properties, write_aadlirProperty _)
     }
 
-    def writeConnectionReference(o: ConnectionReference): Unit = {
-      writer.writeZ(Constants.ConnectionReference)
-      writeName(o.name)
-      writeName(o.context)
+    def write_aadlirConnectionReference(o: org.sireum.aadl.ir.ConnectionReference): Unit = {
+      writer.writeZ(Constants._aadlirConnectionReference)
+      write_aadlirName(o.name)
+      write_aadlirName(o.context)
       writer.writeB(o.isParent)
     }
 
-    def writeConnectionKindType(o: ConnectionKind.Type): Unit = {
+    def write_aadlirConnectionKindType(o: org.sireum.aadl.ir.ConnectionKind.Type): Unit = {
       writer.writeZ(o.ordinal)
     }
 
-    def writeEndPoint(o: EndPoint): Unit = {
-      writer.writeZ(Constants.EndPoint)
-      writeName(o.component)
-      writer.writeOption(o.feature, writeName _)
-      writer.writeOption(o.direction, writeDirectionType _)
+    def write_aadlirEndPoint(o: org.sireum.aadl.ir.EndPoint): Unit = {
+      writer.writeZ(Constants._aadlirEndPoint)
+      write_aadlirName(o.component)
+      writer.writeOption(o.feature, write_aadlirName _)
+      writer.writeOption(o.direction, write_aadlirDirectionType _)
     }
 
-    def writeProperty(o: Property): Unit = {
-      writer.writeZ(Constants.Property)
-      writeName(o.name)
-      writer.writeISZ(o.propertyValues, writePropertyValue _)
+    def write_aadlirProperty(o: org.sireum.aadl.ir.Property): Unit = {
+      writer.writeZ(Constants._aadlirProperty)
+      write_aadlirName(o.name)
+      writer.writeISZ(o.propertyValues, write_aadlirPropertyValue _)
     }
 
-    def writePropertyValue(o: PropertyValue): Unit = {
+    def write_aadlirPropertyValue(o: org.sireum.aadl.ir.PropertyValue): Unit = {
       o match {
-        case o: ClassifierProp => writeClassifierProp(o)
-        case o: RangeProp => writeRangeProp(o)
-        case o: RecordProp => writeRecordProp(o)
-        case o: ReferenceProp => writeReferenceProp(o)
-        case o: UnitProp => writeUnitProp(o)
-        case o: ValueProp => writeValueProp(o)
+        case o: org.sireum.aadl.ir.ClassifierProp => write_aadlirClassifierProp(o)
+        case o: org.sireum.aadl.ir.RangeProp => write_aadlirRangeProp(o)
+        case o: org.sireum.aadl.ir.RecordProp => write_aadlirRecordProp(o)
+        case o: org.sireum.aadl.ir.ReferenceProp => write_aadlirReferenceProp(o)
+        case o: org.sireum.aadl.ir.UnitProp => write_aadlirUnitProp(o)
+        case o: org.sireum.aadl.ir.ValueProp => write_aadlirValueProp(o)
       }
     }
 
-    def writeClassifierProp(o: ClassifierProp): Unit = {
-      writer.writeZ(Constants.ClassifierProp)
+    def write_aadlirClassifierProp(o: org.sireum.aadl.ir.ClassifierProp): Unit = {
+      writer.writeZ(Constants._aadlirClassifierProp)
       writer.writeString(o.name)
     }
 
-    def writeRangeProp(o: RangeProp): Unit = {
-      writer.writeZ(Constants.RangeProp)
-      writeUnitProp(o.low)
-      writeUnitProp(o.high)
+    def write_aadlirRangeProp(o: org.sireum.aadl.ir.RangeProp): Unit = {
+      writer.writeZ(Constants._aadlirRangeProp)
+      write_aadlirUnitProp(o.low)
+      write_aadlirUnitProp(o.high)
     }
 
-    def writeRecordProp(o: RecordProp): Unit = {
-      writer.writeZ(Constants.RecordProp)
-      writer.writeISZ(o.properties, writeProperty _)
+    def write_aadlirRecordProp(o: org.sireum.aadl.ir.RecordProp): Unit = {
+      writer.writeZ(Constants._aadlirRecordProp)
+      writer.writeISZ(o.properties, write_aadlirProperty _)
     }
 
-    def writeReferenceProp(o: ReferenceProp): Unit = {
-      writer.writeZ(Constants.ReferenceProp)
-      writeName(o.value)
+    def write_aadlirReferenceProp(o: org.sireum.aadl.ir.ReferenceProp): Unit = {
+      writer.writeZ(Constants._aadlirReferenceProp)
+      write_aadlirName(o.value)
     }
 
-    def writeUnitProp(o: UnitProp): Unit = {
-      writer.writeZ(Constants.UnitProp)
+    def write_aadlirUnitProp(o: org.sireum.aadl.ir.UnitProp): Unit = {
+      writer.writeZ(Constants._aadlirUnitProp)
       writer.writeString(o.value)
       writer.writeOption(o.unit, writer.writeString _)
     }
 
-    def writeValueProp(o: ValueProp): Unit = {
-      writer.writeZ(Constants.ValueProp)
+    def write_aadlirValueProp(o: org.sireum.aadl.ir.ValueProp): Unit = {
+      writer.writeZ(Constants._aadlirValueProp)
       writer.writeString(o.value)
     }
 
-    def writeMode(o: Mode): Unit = {
-      writer.writeZ(Constants.Mode)
-      writeName(o.name)
+    def write_aadlirMode(o: org.sireum.aadl.ir.Mode): Unit = {
+      writer.writeZ(Constants._aadlirMode)
+      write_aadlirName(o.name)
     }
 
-    def writeFlowKindType(o: FlowKind.Type): Unit = {
+    def write_aadlirFlowKindType(o: org.sireum.aadl.ir.FlowKind.Type): Unit = {
       writer.writeZ(o.ordinal)
     }
 
-    def writeFlow(o: Flow): Unit = {
-      writer.writeZ(Constants.Flow)
-      writeName(o.name)
-      writeFlowKindType(o.kind)
-      writer.writeOption(o.source, writeFeature _)
-      writer.writeOption(o.sink, writeFeature _)
+    def write_aadlirFlow(o: org.sireum.aadl.ir.Flow): Unit = {
+      writer.writeZ(Constants._aadlirFlow)
+      write_aadlirName(o.name)
+      write_aadlirFlowKindType(o.kind)
+      writer.writeOption(o.source, write_aadlirFeature _)
+      writer.writeOption(o.sink, write_aadlirFeature _)
     }
 
-    def writeAnnex(o: Annex): Unit = {
-      writer.writeZ(Constants.Annex)
+    def write_aadlirAnnex(o: org.sireum.aadl.ir.Annex): Unit = {
+      writer.writeZ(Constants._aadlirAnnex)
       writer.writeString(o.name)
-      writeAnnexClause(o.clause)
+      write_aadlirAnnexClause(o.clause)
     }
 
-    def writeAnnexClause(o: AnnexClause): Unit = {
+    def write_aadlirAnnexClause(o: org.sireum.aadl.ir.AnnexClause): Unit = {
       o match {
-        case o: Emv2Library => writeEmv2Library(o)
-        case o: Emv2Propagation => writeEmv2Propagation(o)
-        case o: Emv2Flow => writeEmv2Flow(o)
-        case o: Emv2Clause => writeEmv2Clause(o)
-        case o: OtherAnnex => writeOtherAnnex(o)
+        case o: org.sireum.aadl.ir.Emv2Library => write_aadlirEmv2Library(o)
+        case o: org.sireum.aadl.ir.Emv2Propagation => write_aadlirEmv2Propagation(o)
+        case o: org.sireum.aadl.ir.Emv2Flow => write_aadlirEmv2Flow(o)
+        case o: org.sireum.aadl.ir.Emv2Clause => write_aadlirEmv2Clause(o)
+        case o: org.sireum.aadl.ir.OtherAnnex => write_aadlirOtherAnnex(o)
       }
     }
 
-    def writeEmv2Annex(o: Emv2Annex): Unit = {
+    def write_aadlirEmv2Annex(o: org.sireum.aadl.ir.Emv2Annex): Unit = {
       o match {
-        case o: Emv2Library => writeEmv2Library(o)
-        case o: Emv2Propagation => writeEmv2Propagation(o)
-        case o: Emv2Flow => writeEmv2Flow(o)
-        case o: Emv2Clause => writeEmv2Clause(o)
+        case o: org.sireum.aadl.ir.Emv2Library => write_aadlirEmv2Library(o)
+        case o: org.sireum.aadl.ir.Emv2Propagation => write_aadlirEmv2Propagation(o)
+        case o: org.sireum.aadl.ir.Emv2Flow => write_aadlirEmv2Flow(o)
+        case o: org.sireum.aadl.ir.Emv2Clause => write_aadlirEmv2Clause(o)
       }
     }
 
-    def writePropagationDirectionType(o: PropagationDirection.Type): Unit = {
+    def write_aadlirPropagationDirectionType(o: org.sireum.aadl.ir.PropagationDirection.Type): Unit = {
       writer.writeZ(o.ordinal)
     }
 
-    def writeEmv2Library(o: Emv2Library): Unit = {
-      writer.writeZ(Constants.Emv2Library)
-      writeName(o.name)
+    def write_aadlirEmv2Library(o: org.sireum.aadl.ir.Emv2Library): Unit = {
+      writer.writeZ(Constants._aadlirEmv2Library)
+      write_aadlirName(o.name)
       writer.writeISZ(o.useTypes, writer.writeString _)
       writer.writeISZ(o.tokens, writer.writeString _)
       writer.writeHashMap(o.alias, writer.writeString _, writer.writeString _)
     }
 
-    def writeEmv2Propagation(o: Emv2Propagation): Unit = {
-      writer.writeZ(Constants.Emv2Propagation)
-      writePropagationDirectionType(o.direction)
+    def write_aadlirEmv2Propagation(o: org.sireum.aadl.ir.Emv2Propagation): Unit = {
+      writer.writeZ(Constants._aadlirEmv2Propagation)
+      write_aadlirPropagationDirectionType(o.direction)
       writer.writeISZ(o.propagationPoint, writer.writeString _)
       writer.writeISZ(o.errorTokens, writer.writeString _)
     }
 
-    def writeEmv2Flow(o: Emv2Flow): Unit = {
-      writer.writeZ(Constants.Emv2Flow)
-      writeName(o.identifier)
-      writeFlowKindType(o.kind)
-      writer.writeOption(o.sourcePropagation, writeEmv2Propagation _)
-      writer.writeOption(o.sinkPropagation, writeEmv2Propagation _)
+    def write_aadlirEmv2Flow(o: org.sireum.aadl.ir.Emv2Flow): Unit = {
+      writer.writeZ(Constants._aadlirEmv2Flow)
+      write_aadlirName(o.identifier)
+      write_aadlirFlowKindType(o.kind)
+      writer.writeOption(o.sourcePropagation, write_aadlirEmv2Propagation _)
+      writer.writeOption(o.sinkPropagation, write_aadlirEmv2Propagation _)
     }
 
-    def writeEmv2Clause(o: Emv2Clause): Unit = {
-      writer.writeZ(Constants.Emv2Clause)
+    def write_aadlirEmv2Clause(o: org.sireum.aadl.ir.Emv2Clause): Unit = {
+      writer.writeZ(Constants._aadlirEmv2Clause)
       writer.writeISZ(o.libraries, writer.writeString _)
-      writer.writeISZ(o.propagations, writeEmv2Propagation _)
-      writer.writeISZ(o.flows, writeEmv2Flow _)
+      writer.writeISZ(o.propagations, write_aadlirEmv2Propagation _)
+      writer.writeISZ(o.flows, write_aadlirEmv2Flow _)
     }
 
-    def writeOtherAnnex(o: OtherAnnex): Unit = {
-      writer.writeZ(Constants.OtherAnnex)
+    def write_aadlirOtherAnnex(o: org.sireum.aadl.ir.OtherAnnex): Unit = {
+      writer.writeZ(Constants._aadlirOtherAnnex)
       writer.writeString(o.clause)
     }
 
@@ -355,471 +355,471 @@ object MsgPack {
 
     def reader: MessagePack.Reader
 
-    def readAadl(): Aadl = {
-      val r = readAadlT(F)
+    def read_aadlirAadl(): org.sireum.aadl.ir.Aadl = {
+      val r = read_aadlirAadlT(F)
       return r
     }
 
-    def readAadlT(typeParsed: B): Aadl = {
+    def read_aadlirAadlT(typeParsed: B): org.sireum.aadl.ir.Aadl = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Aadl)
+        reader.expectZ(Constants._aadlirAadl)
       }
-      val components = reader.readISZ(readComponent _)
-      val errorLib = reader.readISZ(readEmv2Library _)
-      return Aadl(components, errorLib)
+      val components = reader.readISZ(read_aadlirComponent _)
+      val errorLib = reader.readISZ(read_aadlirEmv2Library _)
+      return org.sireum.aadl.ir.Aadl(components, errorLib)
     }
 
-    def readName(): Name = {
-      val r = readNameT(F)
+    def read_aadlirName(): org.sireum.aadl.ir.Name = {
+      val r = read_aadlirNameT(F)
       return r
     }
 
-    def readNameT(typeParsed: B): Name = {
+    def read_aadlirNameT(typeParsed: B): org.sireum.aadl.ir.Name = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Name)
+        reader.expectZ(Constants._aadlirName)
       }
       val name = reader.readISZ(reader.readString _)
-      return Name(name)
+      return org.sireum.aadl.ir.Name(name)
     }
 
-    def readComponent(): Component = {
-      val r = readComponentT(F)
+    def read_aadlirComponent(): org.sireum.aadl.ir.Component = {
+      val r = read_aadlirComponentT(F)
       return r
     }
 
-    def readComponentT(typeParsed: B): Component = {
+    def read_aadlirComponentT(typeParsed: B): org.sireum.aadl.ir.Component = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Component)
+        reader.expectZ(Constants._aadlirComponent)
       }
-      val identifier = readName()
-      val category = readComponentCategoryType()
-      val classifier = reader.readOption(readClassifier _)
-      val features = reader.readISZ(readFeature _)
-      val subComponents = reader.readISZ(readComponent _)
-      val connections = reader.readISZ(readConnection _)
-      val connectionInstances = reader.readISZ(readConnectionInstance _)
-      val properties = reader.readISZ(readProperty _)
-      val flows = reader.readISZ(readFlow _)
-      val modes = reader.readISZ(readMode _)
-      val annexes = reader.readISZ(readAnnex _)
-      return Component(identifier, category, classifier, features, subComponents, connections, connectionInstances, properties, flows, modes, annexes)
+      val identifier = read_aadlirName()
+      val category = read_aadlirComponentCategoryType()
+      val classifier = reader.readOption(read_aadlirClassifier _)
+      val features = reader.readISZ(read_aadlirFeature _)
+      val subComponents = reader.readISZ(read_aadlirComponent _)
+      val connections = reader.readISZ(read_aadlirConnection _)
+      val connectionInstances = reader.readISZ(read_aadlirConnectionInstance _)
+      val properties = reader.readISZ(read_aadlirProperty _)
+      val flows = reader.readISZ(read_aadlirFlow _)
+      val modes = reader.readISZ(read_aadlirMode _)
+      val annexes = reader.readISZ(read_aadlirAnnex _)
+      return org.sireum.aadl.ir.Component(identifier, category, classifier, features, subComponents, connections, connectionInstances, properties, flows, modes, annexes)
     }
 
-    def readClassifier(): Classifier = {
-      val r = readClassifierT(F)
+    def read_aadlirClassifier(): org.sireum.aadl.ir.Classifier = {
+      val r = read_aadlirClassifierT(F)
       return r
     }
 
-    def readClassifierT(typeParsed: B): Classifier = {
+    def read_aadlirClassifierT(typeParsed: B): org.sireum.aadl.ir.Classifier = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Classifier)
+        reader.expectZ(Constants._aadlirClassifier)
       }
       val name = reader.readString()
-      return Classifier(name)
+      return org.sireum.aadl.ir.Classifier(name)
     }
 
-    def readComponentCategoryType(): ComponentCategory.Type = {
+    def read_aadlirComponentCategoryType(): org.sireum.aadl.ir.ComponentCategory.Type = {
       val r = reader.readZ()
-      return ComponentCategory.byOrdinal(r).get
+      return org.sireum.aadl.ir.ComponentCategory.byOrdinal(r).get
     }
 
-    def readFeature(): Feature = {
+    def read_aadlirFeature(): org.sireum.aadl.ir.Feature = {
       val i = reader.curr
       val t = reader.readZ()
       t match {
-        case Constants.FeatureEnd => val r = readFeatureEndT(T); return r
-        case Constants.FeatureGroup => val r = readFeatureGroupT(T); return r
+        case Constants._aadlirFeatureEnd => val r = read_aadlirFeatureEndT(T); return r
+        case Constants._aadlirFeatureGroup => val r = read_aadlirFeatureGroupT(T); return r
         case _ =>
-          reader.error(i, s"$t is not a valid type of Feature.")
-          val r = readFeatureGroupT(T)
+          reader.error(i, s"$t is not a valid type of org.sireum.aadl.ir.Feature.")
+          val r = read_aadlirFeatureGroupT(T)
           return r
       }
     }
 
-    def readFeatureEnd(): FeatureEnd = {
-      val r = readFeatureEndT(F)
+    def read_aadlirFeatureEnd(): org.sireum.aadl.ir.FeatureEnd = {
+      val r = read_aadlirFeatureEndT(F)
       return r
     }
 
-    def readFeatureEndT(typeParsed: B): FeatureEnd = {
+    def read_aadlirFeatureEndT(typeParsed: B): org.sireum.aadl.ir.FeatureEnd = {
       if (!typeParsed) {
-        reader.expectZ(Constants.FeatureEnd)
+        reader.expectZ(Constants._aadlirFeatureEnd)
       }
-      val identifier = readName()
-      val direction = readDirectionType()
-      val category = readFeatureCategoryType()
-      val classifier = reader.readOption(readClassifier _)
-      val properties = reader.readISZ(readProperty _)
-      return FeatureEnd(identifier, direction, category, classifier, properties)
+      val identifier = read_aadlirName()
+      val direction = read_aadlirDirectionType()
+      val category = read_aadlirFeatureCategoryType()
+      val classifier = reader.readOption(read_aadlirClassifier _)
+      val properties = reader.readISZ(read_aadlirProperty _)
+      return org.sireum.aadl.ir.FeatureEnd(identifier, direction, category, classifier, properties)
     }
 
-    def readFeatureGroup(): FeatureGroup = {
-      val r = readFeatureGroupT(F)
+    def read_aadlirFeatureGroup(): org.sireum.aadl.ir.FeatureGroup = {
+      val r = read_aadlirFeatureGroupT(F)
       return r
     }
 
-    def readFeatureGroupT(typeParsed: B): FeatureGroup = {
+    def read_aadlirFeatureGroupT(typeParsed: B): org.sireum.aadl.ir.FeatureGroup = {
       if (!typeParsed) {
-        reader.expectZ(Constants.FeatureGroup)
+        reader.expectZ(Constants._aadlirFeatureGroup)
       }
-      val identifier = readName()
-      val features = reader.readISZ(readFeature _)
+      val identifier = read_aadlirName()
+      val features = reader.readISZ(read_aadlirFeature _)
       val isInverse = reader.readB()
-      val category = readFeatureCategoryType()
-      val properties = reader.readISZ(readProperty _)
-      return FeatureGroup(identifier, features, isInverse, category, properties)
+      val category = read_aadlirFeatureCategoryType()
+      val properties = reader.readISZ(read_aadlirProperty _)
+      return org.sireum.aadl.ir.FeatureGroup(identifier, features, isInverse, category, properties)
     }
 
-    def readDirectionType(): Direction.Type = {
+    def read_aadlirDirectionType(): org.sireum.aadl.ir.Direction.Type = {
       val r = reader.readZ()
-      return Direction.byOrdinal(r).get
+      return org.sireum.aadl.ir.Direction.byOrdinal(r).get
     }
 
-    def readFeatureCategoryType(): FeatureCategory.Type = {
+    def read_aadlirFeatureCategoryType(): org.sireum.aadl.ir.FeatureCategory.Type = {
       val r = reader.readZ()
-      return FeatureCategory.byOrdinal(r).get
+      return org.sireum.aadl.ir.FeatureCategory.byOrdinal(r).get
     }
 
-    def readConnection(): Connection = {
-      val r = readConnectionT(F)
+    def read_aadlirConnection(): org.sireum.aadl.ir.Connection = {
+      val r = read_aadlirConnectionT(F)
       return r
     }
 
-    def readConnectionT(typeParsed: B): Connection = {
+    def read_aadlirConnectionT(typeParsed: B): org.sireum.aadl.ir.Connection = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Connection)
+        reader.expectZ(Constants._aadlirConnection)
       }
-      val name = readName()
-      val src = reader.readISZ(readEndPoint _)
-      val dst = reader.readISZ(readEndPoint _)
-      val kind = readConnectionKindType()
+      val name = read_aadlirName()
+      val src = reader.readISZ(read_aadlirEndPoint _)
+      val dst = reader.readISZ(read_aadlirEndPoint _)
+      val kind = read_aadlirConnectionKindType()
       val isBiDirectional = reader.readB()
-      val connectionInstances = reader.readISZ(readName _)
-      val properties = reader.readISZ(readProperty _)
-      return Connection(name, src, dst, kind, isBiDirectional, connectionInstances, properties)
+      val connectionInstances = reader.readISZ(read_aadlirName _)
+      val properties = reader.readISZ(read_aadlirProperty _)
+      return org.sireum.aadl.ir.Connection(name, src, dst, kind, isBiDirectional, connectionInstances, properties)
     }
 
-    def readConnectionInstance(): ConnectionInstance = {
-      val r = readConnectionInstanceT(F)
+    def read_aadlirConnectionInstance(): org.sireum.aadl.ir.ConnectionInstance = {
+      val r = read_aadlirConnectionInstanceT(F)
       return r
     }
 
-    def readConnectionInstanceT(typeParsed: B): ConnectionInstance = {
+    def read_aadlirConnectionInstanceT(typeParsed: B): org.sireum.aadl.ir.ConnectionInstance = {
       if (!typeParsed) {
-        reader.expectZ(Constants.ConnectionInstance)
+        reader.expectZ(Constants._aadlirConnectionInstance)
       }
-      val name = readName()
-      val src = readEndPoint()
-      val dst = readEndPoint()
-      val kind = readConnectionKindType()
-      val connectionRefs = reader.readISZ(readConnectionReference _)
-      val properties = reader.readISZ(readProperty _)
-      return ConnectionInstance(name, src, dst, kind, connectionRefs, properties)
+      val name = read_aadlirName()
+      val src = read_aadlirEndPoint()
+      val dst = read_aadlirEndPoint()
+      val kind = read_aadlirConnectionKindType()
+      val connectionRefs = reader.readISZ(read_aadlirConnectionReference _)
+      val properties = reader.readISZ(read_aadlirProperty _)
+      return org.sireum.aadl.ir.ConnectionInstance(name, src, dst, kind, connectionRefs, properties)
     }
 
-    def readConnectionReference(): ConnectionReference = {
-      val r = readConnectionReferenceT(F)
+    def read_aadlirConnectionReference(): org.sireum.aadl.ir.ConnectionReference = {
+      val r = read_aadlirConnectionReferenceT(F)
       return r
     }
 
-    def readConnectionReferenceT(typeParsed: B): ConnectionReference = {
+    def read_aadlirConnectionReferenceT(typeParsed: B): org.sireum.aadl.ir.ConnectionReference = {
       if (!typeParsed) {
-        reader.expectZ(Constants.ConnectionReference)
+        reader.expectZ(Constants._aadlirConnectionReference)
       }
-      val name = readName()
-      val context = readName()
+      val name = read_aadlirName()
+      val context = read_aadlirName()
       val isParent = reader.readB()
-      return ConnectionReference(name, context, isParent)
+      return org.sireum.aadl.ir.ConnectionReference(name, context, isParent)
     }
 
-    def readConnectionKindType(): ConnectionKind.Type = {
+    def read_aadlirConnectionKindType(): org.sireum.aadl.ir.ConnectionKind.Type = {
       val r = reader.readZ()
-      return ConnectionKind.byOrdinal(r).get
+      return org.sireum.aadl.ir.ConnectionKind.byOrdinal(r).get
     }
 
-    def readEndPoint(): EndPoint = {
-      val r = readEndPointT(F)
+    def read_aadlirEndPoint(): org.sireum.aadl.ir.EndPoint = {
+      val r = read_aadlirEndPointT(F)
       return r
     }
 
-    def readEndPointT(typeParsed: B): EndPoint = {
+    def read_aadlirEndPointT(typeParsed: B): org.sireum.aadl.ir.EndPoint = {
       if (!typeParsed) {
-        reader.expectZ(Constants.EndPoint)
+        reader.expectZ(Constants._aadlirEndPoint)
       }
-      val component = readName()
-      val feature = reader.readOption(readName _)
-      val direction = reader.readOption(readDirectionType _)
-      return EndPoint(component, feature, direction)
+      val component = read_aadlirName()
+      val feature = reader.readOption(read_aadlirName _)
+      val direction = reader.readOption(read_aadlirDirectionType _)
+      return org.sireum.aadl.ir.EndPoint(component, feature, direction)
     }
 
-    def readProperty(): Property = {
-      val r = readPropertyT(F)
+    def read_aadlirProperty(): org.sireum.aadl.ir.Property = {
+      val r = read_aadlirPropertyT(F)
       return r
     }
 
-    def readPropertyT(typeParsed: B): Property = {
+    def read_aadlirPropertyT(typeParsed: B): org.sireum.aadl.ir.Property = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Property)
+        reader.expectZ(Constants._aadlirProperty)
       }
-      val name = readName()
-      val propertyValues = reader.readISZ(readPropertyValue _)
-      return Property(name, propertyValues)
+      val name = read_aadlirName()
+      val propertyValues = reader.readISZ(read_aadlirPropertyValue _)
+      return org.sireum.aadl.ir.Property(name, propertyValues)
     }
 
-    def readPropertyValue(): PropertyValue = {
+    def read_aadlirPropertyValue(): org.sireum.aadl.ir.PropertyValue = {
       val i = reader.curr
       val t = reader.readZ()
       t match {
-        case Constants.ClassifierProp => val r = readClassifierPropT(T); return r
-        case Constants.RangeProp => val r = readRangePropT(T); return r
-        case Constants.RecordProp => val r = readRecordPropT(T); return r
-        case Constants.ReferenceProp => val r = readReferencePropT(T); return r
-        case Constants.UnitProp => val r = readUnitPropT(T); return r
-        case Constants.ValueProp => val r = readValuePropT(T); return r
+        case Constants._aadlirClassifierProp => val r = read_aadlirClassifierPropT(T); return r
+        case Constants._aadlirRangeProp => val r = read_aadlirRangePropT(T); return r
+        case Constants._aadlirRecordProp => val r = read_aadlirRecordPropT(T); return r
+        case Constants._aadlirReferenceProp => val r = read_aadlirReferencePropT(T); return r
+        case Constants._aadlirUnitProp => val r = read_aadlirUnitPropT(T); return r
+        case Constants._aadlirValueProp => val r = read_aadlirValuePropT(T); return r
         case _ =>
-          reader.error(i, s"$t is not a valid type of PropertyValue.")
-          val r = readValuePropT(T)
+          reader.error(i, s"$t is not a valid type of org.sireum.aadl.ir.PropertyValue.")
+          val r = read_aadlirValuePropT(T)
           return r
       }
     }
 
-    def readClassifierProp(): ClassifierProp = {
-      val r = readClassifierPropT(F)
+    def read_aadlirClassifierProp(): org.sireum.aadl.ir.ClassifierProp = {
+      val r = read_aadlirClassifierPropT(F)
       return r
     }
 
-    def readClassifierPropT(typeParsed: B): ClassifierProp = {
+    def read_aadlirClassifierPropT(typeParsed: B): org.sireum.aadl.ir.ClassifierProp = {
       if (!typeParsed) {
-        reader.expectZ(Constants.ClassifierProp)
+        reader.expectZ(Constants._aadlirClassifierProp)
       }
       val name = reader.readString()
-      return ClassifierProp(name)
+      return org.sireum.aadl.ir.ClassifierProp(name)
     }
 
-    def readRangeProp(): RangeProp = {
-      val r = readRangePropT(F)
+    def read_aadlirRangeProp(): org.sireum.aadl.ir.RangeProp = {
+      val r = read_aadlirRangePropT(F)
       return r
     }
 
-    def readRangePropT(typeParsed: B): RangeProp = {
+    def read_aadlirRangePropT(typeParsed: B): org.sireum.aadl.ir.RangeProp = {
       if (!typeParsed) {
-        reader.expectZ(Constants.RangeProp)
+        reader.expectZ(Constants._aadlirRangeProp)
       }
-      val low = readUnitProp()
-      val high = readUnitProp()
-      return RangeProp(low, high)
+      val low = read_aadlirUnitProp()
+      val high = read_aadlirUnitProp()
+      return org.sireum.aadl.ir.RangeProp(low, high)
     }
 
-    def readRecordProp(): RecordProp = {
-      val r = readRecordPropT(F)
+    def read_aadlirRecordProp(): org.sireum.aadl.ir.RecordProp = {
+      val r = read_aadlirRecordPropT(F)
       return r
     }
 
-    def readRecordPropT(typeParsed: B): RecordProp = {
+    def read_aadlirRecordPropT(typeParsed: B): org.sireum.aadl.ir.RecordProp = {
       if (!typeParsed) {
-        reader.expectZ(Constants.RecordProp)
+        reader.expectZ(Constants._aadlirRecordProp)
       }
-      val properties = reader.readISZ(readProperty _)
-      return RecordProp(properties)
+      val properties = reader.readISZ(read_aadlirProperty _)
+      return org.sireum.aadl.ir.RecordProp(properties)
     }
 
-    def readReferenceProp(): ReferenceProp = {
-      val r = readReferencePropT(F)
+    def read_aadlirReferenceProp(): org.sireum.aadl.ir.ReferenceProp = {
+      val r = read_aadlirReferencePropT(F)
       return r
     }
 
-    def readReferencePropT(typeParsed: B): ReferenceProp = {
+    def read_aadlirReferencePropT(typeParsed: B): org.sireum.aadl.ir.ReferenceProp = {
       if (!typeParsed) {
-        reader.expectZ(Constants.ReferenceProp)
+        reader.expectZ(Constants._aadlirReferenceProp)
       }
-      val value = readName()
-      return ReferenceProp(value)
+      val value = read_aadlirName()
+      return org.sireum.aadl.ir.ReferenceProp(value)
     }
 
-    def readUnitProp(): UnitProp = {
-      val r = readUnitPropT(F)
+    def read_aadlirUnitProp(): org.sireum.aadl.ir.UnitProp = {
+      val r = read_aadlirUnitPropT(F)
       return r
     }
 
-    def readUnitPropT(typeParsed: B): UnitProp = {
+    def read_aadlirUnitPropT(typeParsed: B): org.sireum.aadl.ir.UnitProp = {
       if (!typeParsed) {
-        reader.expectZ(Constants.UnitProp)
+        reader.expectZ(Constants._aadlirUnitProp)
       }
       val value = reader.readString()
       val unit = reader.readOption(reader.readString _)
-      return UnitProp(value, unit)
+      return org.sireum.aadl.ir.UnitProp(value, unit)
     }
 
-    def readValueProp(): ValueProp = {
-      val r = readValuePropT(F)
+    def read_aadlirValueProp(): org.sireum.aadl.ir.ValueProp = {
+      val r = read_aadlirValuePropT(F)
       return r
     }
 
-    def readValuePropT(typeParsed: B): ValueProp = {
+    def read_aadlirValuePropT(typeParsed: B): org.sireum.aadl.ir.ValueProp = {
       if (!typeParsed) {
-        reader.expectZ(Constants.ValueProp)
+        reader.expectZ(Constants._aadlirValueProp)
       }
       val value = reader.readString()
-      return ValueProp(value)
+      return org.sireum.aadl.ir.ValueProp(value)
     }
 
-    def readMode(): Mode = {
-      val r = readModeT(F)
+    def read_aadlirMode(): org.sireum.aadl.ir.Mode = {
+      val r = read_aadlirModeT(F)
       return r
     }
 
-    def readModeT(typeParsed: B): Mode = {
+    def read_aadlirModeT(typeParsed: B): org.sireum.aadl.ir.Mode = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Mode)
+        reader.expectZ(Constants._aadlirMode)
       }
-      val name = readName()
-      return Mode(name)
+      val name = read_aadlirName()
+      return org.sireum.aadl.ir.Mode(name)
     }
 
-    def readFlowKindType(): FlowKind.Type = {
+    def read_aadlirFlowKindType(): org.sireum.aadl.ir.FlowKind.Type = {
       val r = reader.readZ()
-      return FlowKind.byOrdinal(r).get
+      return org.sireum.aadl.ir.FlowKind.byOrdinal(r).get
     }
 
-    def readFlow(): Flow = {
-      val r = readFlowT(F)
+    def read_aadlirFlow(): org.sireum.aadl.ir.Flow = {
+      val r = read_aadlirFlowT(F)
       return r
     }
 
-    def readFlowT(typeParsed: B): Flow = {
+    def read_aadlirFlowT(typeParsed: B): org.sireum.aadl.ir.Flow = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Flow)
+        reader.expectZ(Constants._aadlirFlow)
       }
-      val name = readName()
-      val kind = readFlowKindType()
-      val source = reader.readOption(readFeature _)
-      val sink = reader.readOption(readFeature _)
-      return Flow(name, kind, source, sink)
+      val name = read_aadlirName()
+      val kind = read_aadlirFlowKindType()
+      val source = reader.readOption(read_aadlirFeature _)
+      val sink = reader.readOption(read_aadlirFeature _)
+      return org.sireum.aadl.ir.Flow(name, kind, source, sink)
     }
 
-    def readAnnex(): Annex = {
-      val r = readAnnexT(F)
+    def read_aadlirAnnex(): org.sireum.aadl.ir.Annex = {
+      val r = read_aadlirAnnexT(F)
       return r
     }
 
-    def readAnnexT(typeParsed: B): Annex = {
+    def read_aadlirAnnexT(typeParsed: B): org.sireum.aadl.ir.Annex = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Annex)
+        reader.expectZ(Constants._aadlirAnnex)
       }
       val name = reader.readString()
-      val clause = readAnnexClause()
-      return Annex(name, clause)
+      val clause = read_aadlirAnnexClause()
+      return org.sireum.aadl.ir.Annex(name, clause)
     }
 
-    def readAnnexClause(): AnnexClause = {
+    def read_aadlirAnnexClause(): org.sireum.aadl.ir.AnnexClause = {
       val i = reader.curr
       val t = reader.readZ()
       t match {
-        case Constants.Emv2Library => val r = readEmv2LibraryT(T); return r
-        case Constants.Emv2Propagation => val r = readEmv2PropagationT(T); return r
-        case Constants.Emv2Flow => val r = readEmv2FlowT(T); return r
-        case Constants.Emv2Clause => val r = readEmv2ClauseT(T); return r
-        case Constants.OtherAnnex => val r = readOtherAnnexT(T); return r
+        case Constants._aadlirEmv2Library => val r = read_aadlirEmv2LibraryT(T); return r
+        case Constants._aadlirEmv2Propagation => val r = read_aadlirEmv2PropagationT(T); return r
+        case Constants._aadlirEmv2Flow => val r = read_aadlirEmv2FlowT(T); return r
+        case Constants._aadlirEmv2Clause => val r = read_aadlirEmv2ClauseT(T); return r
+        case Constants._aadlirOtherAnnex => val r = read_aadlirOtherAnnexT(T); return r
         case _ =>
-          reader.error(i, s"$t is not a valid type of AnnexClause.")
-          val r = readOtherAnnexT(T)
+          reader.error(i, s"$t is not a valid type of org.sireum.aadl.ir.AnnexClause.")
+          val r = read_aadlirOtherAnnexT(T)
           return r
       }
     }
 
-    def readEmv2Annex(): Emv2Annex = {
+    def read_aadlirEmv2Annex(): org.sireum.aadl.ir.Emv2Annex = {
       val i = reader.curr
       val t = reader.readZ()
       t match {
-        case Constants.Emv2Library => val r = readEmv2LibraryT(T); return r
-        case Constants.Emv2Propagation => val r = readEmv2PropagationT(T); return r
-        case Constants.Emv2Flow => val r = readEmv2FlowT(T); return r
-        case Constants.Emv2Clause => val r = readEmv2ClauseT(T); return r
+        case Constants._aadlirEmv2Library => val r = read_aadlirEmv2LibraryT(T); return r
+        case Constants._aadlirEmv2Propagation => val r = read_aadlirEmv2PropagationT(T); return r
+        case Constants._aadlirEmv2Flow => val r = read_aadlirEmv2FlowT(T); return r
+        case Constants._aadlirEmv2Clause => val r = read_aadlirEmv2ClauseT(T); return r
         case _ =>
-          reader.error(i, s"$t is not a valid type of Emv2Annex.")
-          val r = readEmv2ClauseT(T)
+          reader.error(i, s"$t is not a valid type of org.sireum.aadl.ir.Emv2Annex.")
+          val r = read_aadlirEmv2ClauseT(T)
           return r
       }
     }
 
-    def readPropagationDirectionType(): PropagationDirection.Type = {
+    def read_aadlirPropagationDirectionType(): org.sireum.aadl.ir.PropagationDirection.Type = {
       val r = reader.readZ()
-      return PropagationDirection.byOrdinal(r).get
+      return org.sireum.aadl.ir.PropagationDirection.byOrdinal(r).get
     }
 
-    def readEmv2Library(): Emv2Library = {
-      val r = readEmv2LibraryT(F)
+    def read_aadlirEmv2Library(): org.sireum.aadl.ir.Emv2Library = {
+      val r = read_aadlirEmv2LibraryT(F)
       return r
     }
 
-    def readEmv2LibraryT(typeParsed: B): Emv2Library = {
+    def read_aadlirEmv2LibraryT(typeParsed: B): org.sireum.aadl.ir.Emv2Library = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Emv2Library)
+        reader.expectZ(Constants._aadlirEmv2Library)
       }
-      val name = readName()
+      val name = read_aadlirName()
       val useTypes = reader.readISZ(reader.readString _)
       val tokens = reader.readISZ(reader.readString _)
       val alias = reader.readHashMap(reader.readString _, reader.readString _)
-      return Emv2Library(name, useTypes, tokens, alias)
+      return org.sireum.aadl.ir.Emv2Library(name, useTypes, tokens, alias)
     }
 
-    def readEmv2Propagation(): Emv2Propagation = {
-      val r = readEmv2PropagationT(F)
+    def read_aadlirEmv2Propagation(): org.sireum.aadl.ir.Emv2Propagation = {
+      val r = read_aadlirEmv2PropagationT(F)
       return r
     }
 
-    def readEmv2PropagationT(typeParsed: B): Emv2Propagation = {
+    def read_aadlirEmv2PropagationT(typeParsed: B): org.sireum.aadl.ir.Emv2Propagation = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Emv2Propagation)
+        reader.expectZ(Constants._aadlirEmv2Propagation)
       }
-      val direction = readPropagationDirectionType()
+      val direction = read_aadlirPropagationDirectionType()
       val propagationPoint = reader.readISZ(reader.readString _)
       val errorTokens = reader.readISZ(reader.readString _)
-      return Emv2Propagation(direction, propagationPoint, errorTokens)
+      return org.sireum.aadl.ir.Emv2Propagation(direction, propagationPoint, errorTokens)
     }
 
-    def readEmv2Flow(): Emv2Flow = {
-      val r = readEmv2FlowT(F)
+    def read_aadlirEmv2Flow(): org.sireum.aadl.ir.Emv2Flow = {
+      val r = read_aadlirEmv2FlowT(F)
       return r
     }
 
-    def readEmv2FlowT(typeParsed: B): Emv2Flow = {
+    def read_aadlirEmv2FlowT(typeParsed: B): org.sireum.aadl.ir.Emv2Flow = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Emv2Flow)
+        reader.expectZ(Constants._aadlirEmv2Flow)
       }
-      val identifier = readName()
-      val kind = readFlowKindType()
-      val sourcePropagation = reader.readOption(readEmv2Propagation _)
-      val sinkPropagation = reader.readOption(readEmv2Propagation _)
-      return Emv2Flow(identifier, kind, sourcePropagation, sinkPropagation)
+      val identifier = read_aadlirName()
+      val kind = read_aadlirFlowKindType()
+      val sourcePropagation = reader.readOption(read_aadlirEmv2Propagation _)
+      val sinkPropagation = reader.readOption(read_aadlirEmv2Propagation _)
+      return org.sireum.aadl.ir.Emv2Flow(identifier, kind, sourcePropagation, sinkPropagation)
     }
 
-    def readEmv2Clause(): Emv2Clause = {
-      val r = readEmv2ClauseT(F)
+    def read_aadlirEmv2Clause(): org.sireum.aadl.ir.Emv2Clause = {
+      val r = read_aadlirEmv2ClauseT(F)
       return r
     }
 
-    def readEmv2ClauseT(typeParsed: B): Emv2Clause = {
+    def read_aadlirEmv2ClauseT(typeParsed: B): org.sireum.aadl.ir.Emv2Clause = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Emv2Clause)
+        reader.expectZ(Constants._aadlirEmv2Clause)
       }
       val libraries = reader.readISZ(reader.readString _)
-      val propagations = reader.readISZ(readEmv2Propagation _)
-      val flows = reader.readISZ(readEmv2Flow _)
-      return Emv2Clause(libraries, propagations, flows)
+      val propagations = reader.readISZ(read_aadlirEmv2Propagation _)
+      val flows = reader.readISZ(read_aadlirEmv2Flow _)
+      return org.sireum.aadl.ir.Emv2Clause(libraries, propagations, flows)
     }
 
-    def readOtherAnnex(): OtherAnnex = {
-      val r = readOtherAnnexT(F)
+    def read_aadlirOtherAnnex(): org.sireum.aadl.ir.OtherAnnex = {
+      val r = read_aadlirOtherAnnexT(F)
       return r
     }
 
-    def readOtherAnnexT(typeParsed: B): OtherAnnex = {
+    def read_aadlirOtherAnnexT(typeParsed: B): org.sireum.aadl.ir.OtherAnnex = {
       if (!typeParsed) {
-        reader.expectZ(Constants.OtherAnnex)
+        reader.expectZ(Constants._aadlirOtherAnnex)
       }
       val clause = reader.readString()
-      return OtherAnnex(clause)
+      return org.sireum.aadl.ir.OtherAnnex(clause)
     }
 
   }
@@ -834,438 +834,438 @@ object MsgPack {
     }
   }
 
-  def fromAadl(o: Aadl, pooling: B): ISZ[U8] = {
+  def from_aadlirAadl(o: org.sireum.aadl.ir.Aadl, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeAadl(o)
+    w.write_aadlirAadl(o)
     return w.result
   }
 
-  def toAadl(data: ISZ[U8]): Either[Aadl, MessagePack.ErrorMsg] = {
-    def fAadl(reader: Reader): Aadl = {
-      val r = reader.readAadl()
+  def to_aadlirAadl(data: ISZ[U8]): Either[org.sireum.aadl.ir.Aadl, MessagePack.ErrorMsg] = {
+    def f_aadlirAadl(reader: Reader): org.sireum.aadl.ir.Aadl = {
+      val r = reader.read_aadlirAadl()
       return r
     }
-    val r = to(data, fAadl _)
+    val r = to(data, f_aadlirAadl _)
     return r
   }
 
-  def fromName(o: Name, pooling: B): ISZ[U8] = {
+  def from_aadlirName(o: org.sireum.aadl.ir.Name, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeName(o)
+    w.write_aadlirName(o)
     return w.result
   }
 
-  def toName(data: ISZ[U8]): Either[Name, MessagePack.ErrorMsg] = {
-    def fName(reader: Reader): Name = {
-      val r = reader.readName()
+  def to_aadlirName(data: ISZ[U8]): Either[org.sireum.aadl.ir.Name, MessagePack.ErrorMsg] = {
+    def f_aadlirName(reader: Reader): org.sireum.aadl.ir.Name = {
+      val r = reader.read_aadlirName()
       return r
     }
-    val r = to(data, fName _)
+    val r = to(data, f_aadlirName _)
     return r
   }
 
-  def fromComponent(o: Component, pooling: B): ISZ[U8] = {
+  def from_aadlirComponent(o: org.sireum.aadl.ir.Component, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeComponent(o)
+    w.write_aadlirComponent(o)
     return w.result
   }
 
-  def toComponent(data: ISZ[U8]): Either[Component, MessagePack.ErrorMsg] = {
-    def fComponent(reader: Reader): Component = {
-      val r = reader.readComponent()
+  def to_aadlirComponent(data: ISZ[U8]): Either[org.sireum.aadl.ir.Component, MessagePack.ErrorMsg] = {
+    def f_aadlirComponent(reader: Reader): org.sireum.aadl.ir.Component = {
+      val r = reader.read_aadlirComponent()
       return r
     }
-    val r = to(data, fComponent _)
+    val r = to(data, f_aadlirComponent _)
     return r
   }
 
-  def fromClassifier(o: Classifier, pooling: B): ISZ[U8] = {
+  def from_aadlirClassifier(o: org.sireum.aadl.ir.Classifier, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeClassifier(o)
+    w.write_aadlirClassifier(o)
     return w.result
   }
 
-  def toClassifier(data: ISZ[U8]): Either[Classifier, MessagePack.ErrorMsg] = {
-    def fClassifier(reader: Reader): Classifier = {
-      val r = reader.readClassifier()
+  def to_aadlirClassifier(data: ISZ[U8]): Either[org.sireum.aadl.ir.Classifier, MessagePack.ErrorMsg] = {
+    def f_aadlirClassifier(reader: Reader): org.sireum.aadl.ir.Classifier = {
+      val r = reader.read_aadlirClassifier()
       return r
     }
-    val r = to(data, fClassifier _)
+    val r = to(data, f_aadlirClassifier _)
     return r
   }
 
-  def fromFeature(o: Feature, pooling: B): ISZ[U8] = {
+  def from_aadlirFeature(o: org.sireum.aadl.ir.Feature, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeFeature(o)
+    w.write_aadlirFeature(o)
     return w.result
   }
 
-  def toFeature(data: ISZ[U8]): Either[Feature, MessagePack.ErrorMsg] = {
-    def fFeature(reader: Reader): Feature = {
-      val r = reader.readFeature()
+  def to_aadlirFeature(data: ISZ[U8]): Either[org.sireum.aadl.ir.Feature, MessagePack.ErrorMsg] = {
+    def f_aadlirFeature(reader: Reader): org.sireum.aadl.ir.Feature = {
+      val r = reader.read_aadlirFeature()
       return r
     }
-    val r = to(data, fFeature _)
+    val r = to(data, f_aadlirFeature _)
     return r
   }
 
-  def fromFeatureEnd(o: FeatureEnd, pooling: B): ISZ[U8] = {
+  def from_aadlirFeatureEnd(o: org.sireum.aadl.ir.FeatureEnd, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeFeatureEnd(o)
+    w.write_aadlirFeatureEnd(o)
     return w.result
   }
 
-  def toFeatureEnd(data: ISZ[U8]): Either[FeatureEnd, MessagePack.ErrorMsg] = {
-    def fFeatureEnd(reader: Reader): FeatureEnd = {
-      val r = reader.readFeatureEnd()
+  def to_aadlirFeatureEnd(data: ISZ[U8]): Either[org.sireum.aadl.ir.FeatureEnd, MessagePack.ErrorMsg] = {
+    def f_aadlirFeatureEnd(reader: Reader): org.sireum.aadl.ir.FeatureEnd = {
+      val r = reader.read_aadlirFeatureEnd()
       return r
     }
-    val r = to(data, fFeatureEnd _)
+    val r = to(data, f_aadlirFeatureEnd _)
     return r
   }
 
-  def fromFeatureGroup(o: FeatureGroup, pooling: B): ISZ[U8] = {
+  def from_aadlirFeatureGroup(o: org.sireum.aadl.ir.FeatureGroup, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeFeatureGroup(o)
+    w.write_aadlirFeatureGroup(o)
     return w.result
   }
 
-  def toFeatureGroup(data: ISZ[U8]): Either[FeatureGroup, MessagePack.ErrorMsg] = {
-    def fFeatureGroup(reader: Reader): FeatureGroup = {
-      val r = reader.readFeatureGroup()
+  def to_aadlirFeatureGroup(data: ISZ[U8]): Either[org.sireum.aadl.ir.FeatureGroup, MessagePack.ErrorMsg] = {
+    def f_aadlirFeatureGroup(reader: Reader): org.sireum.aadl.ir.FeatureGroup = {
+      val r = reader.read_aadlirFeatureGroup()
       return r
     }
-    val r = to(data, fFeatureGroup _)
+    val r = to(data, f_aadlirFeatureGroup _)
     return r
   }
 
-  def fromConnection(o: Connection, pooling: B): ISZ[U8] = {
+  def from_aadlirConnection(o: org.sireum.aadl.ir.Connection, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeConnection(o)
+    w.write_aadlirConnection(o)
     return w.result
   }
 
-  def toConnection(data: ISZ[U8]): Either[Connection, MessagePack.ErrorMsg] = {
-    def fConnection(reader: Reader): Connection = {
-      val r = reader.readConnection()
+  def to_aadlirConnection(data: ISZ[U8]): Either[org.sireum.aadl.ir.Connection, MessagePack.ErrorMsg] = {
+    def f_aadlirConnection(reader: Reader): org.sireum.aadl.ir.Connection = {
+      val r = reader.read_aadlirConnection()
       return r
     }
-    val r = to(data, fConnection _)
+    val r = to(data, f_aadlirConnection _)
     return r
   }
 
-  def fromConnectionInstance(o: ConnectionInstance, pooling: B): ISZ[U8] = {
+  def from_aadlirConnectionInstance(o: org.sireum.aadl.ir.ConnectionInstance, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeConnectionInstance(o)
+    w.write_aadlirConnectionInstance(o)
     return w.result
   }
 
-  def toConnectionInstance(data: ISZ[U8]): Either[ConnectionInstance, MessagePack.ErrorMsg] = {
-    def fConnectionInstance(reader: Reader): ConnectionInstance = {
-      val r = reader.readConnectionInstance()
+  def to_aadlirConnectionInstance(data: ISZ[U8]): Either[org.sireum.aadl.ir.ConnectionInstance, MessagePack.ErrorMsg] = {
+    def f_aadlirConnectionInstance(reader: Reader): org.sireum.aadl.ir.ConnectionInstance = {
+      val r = reader.read_aadlirConnectionInstance()
       return r
     }
-    val r = to(data, fConnectionInstance _)
+    val r = to(data, f_aadlirConnectionInstance _)
     return r
   }
 
-  def fromConnectionReference(o: ConnectionReference, pooling: B): ISZ[U8] = {
+  def from_aadlirConnectionReference(o: org.sireum.aadl.ir.ConnectionReference, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeConnectionReference(o)
+    w.write_aadlirConnectionReference(o)
     return w.result
   }
 
-  def toConnectionReference(data: ISZ[U8]): Either[ConnectionReference, MessagePack.ErrorMsg] = {
-    def fConnectionReference(reader: Reader): ConnectionReference = {
-      val r = reader.readConnectionReference()
+  def to_aadlirConnectionReference(data: ISZ[U8]): Either[org.sireum.aadl.ir.ConnectionReference, MessagePack.ErrorMsg] = {
+    def f_aadlirConnectionReference(reader: Reader): org.sireum.aadl.ir.ConnectionReference = {
+      val r = reader.read_aadlirConnectionReference()
       return r
     }
-    val r = to(data, fConnectionReference _)
+    val r = to(data, f_aadlirConnectionReference _)
     return r
   }
 
-  def fromEndPoint(o: EndPoint, pooling: B): ISZ[U8] = {
+  def from_aadlirEndPoint(o: org.sireum.aadl.ir.EndPoint, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeEndPoint(o)
+    w.write_aadlirEndPoint(o)
     return w.result
   }
 
-  def toEndPoint(data: ISZ[U8]): Either[EndPoint, MessagePack.ErrorMsg] = {
-    def fEndPoint(reader: Reader): EndPoint = {
-      val r = reader.readEndPoint()
+  def to_aadlirEndPoint(data: ISZ[U8]): Either[org.sireum.aadl.ir.EndPoint, MessagePack.ErrorMsg] = {
+    def f_aadlirEndPoint(reader: Reader): org.sireum.aadl.ir.EndPoint = {
+      val r = reader.read_aadlirEndPoint()
       return r
     }
-    val r = to(data, fEndPoint _)
+    val r = to(data, f_aadlirEndPoint _)
     return r
   }
 
-  def fromProperty(o: Property, pooling: B): ISZ[U8] = {
+  def from_aadlirProperty(o: org.sireum.aadl.ir.Property, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeProperty(o)
+    w.write_aadlirProperty(o)
     return w.result
   }
 
-  def toProperty(data: ISZ[U8]): Either[Property, MessagePack.ErrorMsg] = {
-    def fProperty(reader: Reader): Property = {
-      val r = reader.readProperty()
+  def to_aadlirProperty(data: ISZ[U8]): Either[org.sireum.aadl.ir.Property, MessagePack.ErrorMsg] = {
+    def f_aadlirProperty(reader: Reader): org.sireum.aadl.ir.Property = {
+      val r = reader.read_aadlirProperty()
       return r
     }
-    val r = to(data, fProperty _)
+    val r = to(data, f_aadlirProperty _)
     return r
   }
 
-  def fromPropertyValue(o: PropertyValue, pooling: B): ISZ[U8] = {
+  def from_aadlirPropertyValue(o: org.sireum.aadl.ir.PropertyValue, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writePropertyValue(o)
+    w.write_aadlirPropertyValue(o)
     return w.result
   }
 
-  def toPropertyValue(data: ISZ[U8]): Either[PropertyValue, MessagePack.ErrorMsg] = {
-    def fPropertyValue(reader: Reader): PropertyValue = {
-      val r = reader.readPropertyValue()
+  def to_aadlirPropertyValue(data: ISZ[U8]): Either[org.sireum.aadl.ir.PropertyValue, MessagePack.ErrorMsg] = {
+    def f_aadlirPropertyValue(reader: Reader): org.sireum.aadl.ir.PropertyValue = {
+      val r = reader.read_aadlirPropertyValue()
       return r
     }
-    val r = to(data, fPropertyValue _)
+    val r = to(data, f_aadlirPropertyValue _)
     return r
   }
 
-  def fromClassifierProp(o: ClassifierProp, pooling: B): ISZ[U8] = {
+  def from_aadlirClassifierProp(o: org.sireum.aadl.ir.ClassifierProp, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeClassifierProp(o)
+    w.write_aadlirClassifierProp(o)
     return w.result
   }
 
-  def toClassifierProp(data: ISZ[U8]): Either[ClassifierProp, MessagePack.ErrorMsg] = {
-    def fClassifierProp(reader: Reader): ClassifierProp = {
-      val r = reader.readClassifierProp()
+  def to_aadlirClassifierProp(data: ISZ[U8]): Either[org.sireum.aadl.ir.ClassifierProp, MessagePack.ErrorMsg] = {
+    def f_aadlirClassifierProp(reader: Reader): org.sireum.aadl.ir.ClassifierProp = {
+      val r = reader.read_aadlirClassifierProp()
       return r
     }
-    val r = to(data, fClassifierProp _)
+    val r = to(data, f_aadlirClassifierProp _)
     return r
   }
 
-  def fromRangeProp(o: RangeProp, pooling: B): ISZ[U8] = {
+  def from_aadlirRangeProp(o: org.sireum.aadl.ir.RangeProp, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeRangeProp(o)
+    w.write_aadlirRangeProp(o)
     return w.result
   }
 
-  def toRangeProp(data: ISZ[U8]): Either[RangeProp, MessagePack.ErrorMsg] = {
-    def fRangeProp(reader: Reader): RangeProp = {
-      val r = reader.readRangeProp()
+  def to_aadlirRangeProp(data: ISZ[U8]): Either[org.sireum.aadl.ir.RangeProp, MessagePack.ErrorMsg] = {
+    def f_aadlirRangeProp(reader: Reader): org.sireum.aadl.ir.RangeProp = {
+      val r = reader.read_aadlirRangeProp()
       return r
     }
-    val r = to(data, fRangeProp _)
+    val r = to(data, f_aadlirRangeProp _)
     return r
   }
 
-  def fromRecordProp(o: RecordProp, pooling: B): ISZ[U8] = {
+  def from_aadlirRecordProp(o: org.sireum.aadl.ir.RecordProp, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeRecordProp(o)
+    w.write_aadlirRecordProp(o)
     return w.result
   }
 
-  def toRecordProp(data: ISZ[U8]): Either[RecordProp, MessagePack.ErrorMsg] = {
-    def fRecordProp(reader: Reader): RecordProp = {
-      val r = reader.readRecordProp()
+  def to_aadlirRecordProp(data: ISZ[U8]): Either[org.sireum.aadl.ir.RecordProp, MessagePack.ErrorMsg] = {
+    def f_aadlirRecordProp(reader: Reader): org.sireum.aadl.ir.RecordProp = {
+      val r = reader.read_aadlirRecordProp()
       return r
     }
-    val r = to(data, fRecordProp _)
+    val r = to(data, f_aadlirRecordProp _)
     return r
   }
 
-  def fromReferenceProp(o: ReferenceProp, pooling: B): ISZ[U8] = {
+  def from_aadlirReferenceProp(o: org.sireum.aadl.ir.ReferenceProp, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeReferenceProp(o)
+    w.write_aadlirReferenceProp(o)
     return w.result
   }
 
-  def toReferenceProp(data: ISZ[U8]): Either[ReferenceProp, MessagePack.ErrorMsg] = {
-    def fReferenceProp(reader: Reader): ReferenceProp = {
-      val r = reader.readReferenceProp()
+  def to_aadlirReferenceProp(data: ISZ[U8]): Either[org.sireum.aadl.ir.ReferenceProp, MessagePack.ErrorMsg] = {
+    def f_aadlirReferenceProp(reader: Reader): org.sireum.aadl.ir.ReferenceProp = {
+      val r = reader.read_aadlirReferenceProp()
       return r
     }
-    val r = to(data, fReferenceProp _)
+    val r = to(data, f_aadlirReferenceProp _)
     return r
   }
 
-  def fromUnitProp(o: UnitProp, pooling: B): ISZ[U8] = {
+  def from_aadlirUnitProp(o: org.sireum.aadl.ir.UnitProp, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeUnitProp(o)
+    w.write_aadlirUnitProp(o)
     return w.result
   }
 
-  def toUnitProp(data: ISZ[U8]): Either[UnitProp, MessagePack.ErrorMsg] = {
-    def fUnitProp(reader: Reader): UnitProp = {
-      val r = reader.readUnitProp()
+  def to_aadlirUnitProp(data: ISZ[U8]): Either[org.sireum.aadl.ir.UnitProp, MessagePack.ErrorMsg] = {
+    def f_aadlirUnitProp(reader: Reader): org.sireum.aadl.ir.UnitProp = {
+      val r = reader.read_aadlirUnitProp()
       return r
     }
-    val r = to(data, fUnitProp _)
+    val r = to(data, f_aadlirUnitProp _)
     return r
   }
 
-  def fromValueProp(o: ValueProp, pooling: B): ISZ[U8] = {
+  def from_aadlirValueProp(o: org.sireum.aadl.ir.ValueProp, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeValueProp(o)
+    w.write_aadlirValueProp(o)
     return w.result
   }
 
-  def toValueProp(data: ISZ[U8]): Either[ValueProp, MessagePack.ErrorMsg] = {
-    def fValueProp(reader: Reader): ValueProp = {
-      val r = reader.readValueProp()
+  def to_aadlirValueProp(data: ISZ[U8]): Either[org.sireum.aadl.ir.ValueProp, MessagePack.ErrorMsg] = {
+    def f_aadlirValueProp(reader: Reader): org.sireum.aadl.ir.ValueProp = {
+      val r = reader.read_aadlirValueProp()
       return r
     }
-    val r = to(data, fValueProp _)
+    val r = to(data, f_aadlirValueProp _)
     return r
   }
 
-  def fromMode(o: Mode, pooling: B): ISZ[U8] = {
+  def from_aadlirMode(o: org.sireum.aadl.ir.Mode, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeMode(o)
+    w.write_aadlirMode(o)
     return w.result
   }
 
-  def toMode(data: ISZ[U8]): Either[Mode, MessagePack.ErrorMsg] = {
-    def fMode(reader: Reader): Mode = {
-      val r = reader.readMode()
+  def to_aadlirMode(data: ISZ[U8]): Either[org.sireum.aadl.ir.Mode, MessagePack.ErrorMsg] = {
+    def f_aadlirMode(reader: Reader): org.sireum.aadl.ir.Mode = {
+      val r = reader.read_aadlirMode()
       return r
     }
-    val r = to(data, fMode _)
+    val r = to(data, f_aadlirMode _)
     return r
   }
 
-  def fromFlow(o: Flow, pooling: B): ISZ[U8] = {
+  def from_aadlirFlow(o: org.sireum.aadl.ir.Flow, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeFlow(o)
+    w.write_aadlirFlow(o)
     return w.result
   }
 
-  def toFlow(data: ISZ[U8]): Either[Flow, MessagePack.ErrorMsg] = {
-    def fFlow(reader: Reader): Flow = {
-      val r = reader.readFlow()
+  def to_aadlirFlow(data: ISZ[U8]): Either[org.sireum.aadl.ir.Flow, MessagePack.ErrorMsg] = {
+    def f_aadlirFlow(reader: Reader): org.sireum.aadl.ir.Flow = {
+      val r = reader.read_aadlirFlow()
       return r
     }
-    val r = to(data, fFlow _)
+    val r = to(data, f_aadlirFlow _)
     return r
   }
 
-  def fromAnnex(o: Annex, pooling: B): ISZ[U8] = {
+  def from_aadlirAnnex(o: org.sireum.aadl.ir.Annex, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeAnnex(o)
+    w.write_aadlirAnnex(o)
     return w.result
   }
 
-  def toAnnex(data: ISZ[U8]): Either[Annex, MessagePack.ErrorMsg] = {
-    def fAnnex(reader: Reader): Annex = {
-      val r = reader.readAnnex()
+  def to_aadlirAnnex(data: ISZ[U8]): Either[org.sireum.aadl.ir.Annex, MessagePack.ErrorMsg] = {
+    def f_aadlirAnnex(reader: Reader): org.sireum.aadl.ir.Annex = {
+      val r = reader.read_aadlirAnnex()
       return r
     }
-    val r = to(data, fAnnex _)
+    val r = to(data, f_aadlirAnnex _)
     return r
   }
 
-  def fromAnnexClause(o: AnnexClause, pooling: B): ISZ[U8] = {
+  def from_aadlirAnnexClause(o: org.sireum.aadl.ir.AnnexClause, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeAnnexClause(o)
+    w.write_aadlirAnnexClause(o)
     return w.result
   }
 
-  def toAnnexClause(data: ISZ[U8]): Either[AnnexClause, MessagePack.ErrorMsg] = {
-    def fAnnexClause(reader: Reader): AnnexClause = {
-      val r = reader.readAnnexClause()
+  def to_aadlirAnnexClause(data: ISZ[U8]): Either[org.sireum.aadl.ir.AnnexClause, MessagePack.ErrorMsg] = {
+    def f_aadlirAnnexClause(reader: Reader): org.sireum.aadl.ir.AnnexClause = {
+      val r = reader.read_aadlirAnnexClause()
       return r
     }
-    val r = to(data, fAnnexClause _)
+    val r = to(data, f_aadlirAnnexClause _)
     return r
   }
 
-  def fromEmv2Annex(o: Emv2Annex, pooling: B): ISZ[U8] = {
+  def from_aadlirEmv2Annex(o: org.sireum.aadl.ir.Emv2Annex, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeEmv2Annex(o)
+    w.write_aadlirEmv2Annex(o)
     return w.result
   }
 
-  def toEmv2Annex(data: ISZ[U8]): Either[Emv2Annex, MessagePack.ErrorMsg] = {
-    def fEmv2Annex(reader: Reader): Emv2Annex = {
-      val r = reader.readEmv2Annex()
+  def to_aadlirEmv2Annex(data: ISZ[U8]): Either[org.sireum.aadl.ir.Emv2Annex, MessagePack.ErrorMsg] = {
+    def f_aadlirEmv2Annex(reader: Reader): org.sireum.aadl.ir.Emv2Annex = {
+      val r = reader.read_aadlirEmv2Annex()
       return r
     }
-    val r = to(data, fEmv2Annex _)
+    val r = to(data, f_aadlirEmv2Annex _)
     return r
   }
 
-  def fromEmv2Library(o: Emv2Library, pooling: B): ISZ[U8] = {
+  def from_aadlirEmv2Library(o: org.sireum.aadl.ir.Emv2Library, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeEmv2Library(o)
+    w.write_aadlirEmv2Library(o)
     return w.result
   }
 
-  def toEmv2Library(data: ISZ[U8]): Either[Emv2Library, MessagePack.ErrorMsg] = {
-    def fEmv2Library(reader: Reader): Emv2Library = {
-      val r = reader.readEmv2Library()
+  def to_aadlirEmv2Library(data: ISZ[U8]): Either[org.sireum.aadl.ir.Emv2Library, MessagePack.ErrorMsg] = {
+    def f_aadlirEmv2Library(reader: Reader): org.sireum.aadl.ir.Emv2Library = {
+      val r = reader.read_aadlirEmv2Library()
       return r
     }
-    val r = to(data, fEmv2Library _)
+    val r = to(data, f_aadlirEmv2Library _)
     return r
   }
 
-  def fromEmv2Propagation(o: Emv2Propagation, pooling: B): ISZ[U8] = {
+  def from_aadlirEmv2Propagation(o: org.sireum.aadl.ir.Emv2Propagation, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeEmv2Propagation(o)
+    w.write_aadlirEmv2Propagation(o)
     return w.result
   }
 
-  def toEmv2Propagation(data: ISZ[U8]): Either[Emv2Propagation, MessagePack.ErrorMsg] = {
-    def fEmv2Propagation(reader: Reader): Emv2Propagation = {
-      val r = reader.readEmv2Propagation()
+  def to_aadlirEmv2Propagation(data: ISZ[U8]): Either[org.sireum.aadl.ir.Emv2Propagation, MessagePack.ErrorMsg] = {
+    def f_aadlirEmv2Propagation(reader: Reader): org.sireum.aadl.ir.Emv2Propagation = {
+      val r = reader.read_aadlirEmv2Propagation()
       return r
     }
-    val r = to(data, fEmv2Propagation _)
+    val r = to(data, f_aadlirEmv2Propagation _)
     return r
   }
 
-  def fromEmv2Flow(o: Emv2Flow, pooling: B): ISZ[U8] = {
+  def from_aadlirEmv2Flow(o: org.sireum.aadl.ir.Emv2Flow, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeEmv2Flow(o)
+    w.write_aadlirEmv2Flow(o)
     return w.result
   }
 
-  def toEmv2Flow(data: ISZ[U8]): Either[Emv2Flow, MessagePack.ErrorMsg] = {
-    def fEmv2Flow(reader: Reader): Emv2Flow = {
-      val r = reader.readEmv2Flow()
+  def to_aadlirEmv2Flow(data: ISZ[U8]): Either[org.sireum.aadl.ir.Emv2Flow, MessagePack.ErrorMsg] = {
+    def f_aadlirEmv2Flow(reader: Reader): org.sireum.aadl.ir.Emv2Flow = {
+      val r = reader.read_aadlirEmv2Flow()
       return r
     }
-    val r = to(data, fEmv2Flow _)
+    val r = to(data, f_aadlirEmv2Flow _)
     return r
   }
 
-  def fromEmv2Clause(o: Emv2Clause, pooling: B): ISZ[U8] = {
+  def from_aadlirEmv2Clause(o: org.sireum.aadl.ir.Emv2Clause, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeEmv2Clause(o)
+    w.write_aadlirEmv2Clause(o)
     return w.result
   }
 
-  def toEmv2Clause(data: ISZ[U8]): Either[Emv2Clause, MessagePack.ErrorMsg] = {
-    def fEmv2Clause(reader: Reader): Emv2Clause = {
-      val r = reader.readEmv2Clause()
+  def to_aadlirEmv2Clause(data: ISZ[U8]): Either[org.sireum.aadl.ir.Emv2Clause, MessagePack.ErrorMsg] = {
+    def f_aadlirEmv2Clause(reader: Reader): org.sireum.aadl.ir.Emv2Clause = {
+      val r = reader.read_aadlirEmv2Clause()
       return r
     }
-    val r = to(data, fEmv2Clause _)
+    val r = to(data, f_aadlirEmv2Clause _)
     return r
   }
 
-  def fromOtherAnnex(o: OtherAnnex, pooling: B): ISZ[U8] = {
+  def from_aadlirOtherAnnex(o: org.sireum.aadl.ir.OtherAnnex, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeOtherAnnex(o)
+    w.write_aadlirOtherAnnex(o)
     return w.result
   }
 
-  def toOtherAnnex(data: ISZ[U8]): Either[OtherAnnex, MessagePack.ErrorMsg] = {
-    def fOtherAnnex(reader: Reader): OtherAnnex = {
-      val r = reader.readOtherAnnex()
+  def to_aadlirOtherAnnex(data: ISZ[U8]): Either[org.sireum.aadl.ir.OtherAnnex, MessagePack.ErrorMsg] = {
+    def f_aadlirOtherAnnex(reader: Reader): org.sireum.aadl.ir.OtherAnnex = {
+      val r = reader.read_aadlirOtherAnnex()
       return r
     }
-    val r = to(data, fOtherAnnex _)
+    val r = to(data, f_aadlirOtherAnnex _)
     return r
   }
 

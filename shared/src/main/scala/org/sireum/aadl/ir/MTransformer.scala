@@ -2,7 +2,7 @@
 // @formatter:off
 
 /*
- Copyright (c) 2018, Robby, Kansas State University
+ Copyright (c) 2018, Kansas State University
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -167,7 +167,7 @@ object MTransformer {
 
 }
 
-import org.sireum.aadl.ir.MTransformer._
+import MTransformer._
 
 @msig trait MTransformer {
 
@@ -191,16 +191,16 @@ import org.sireum.aadl.ir.MTransformer._
     o match {
       case o: FeatureEnd =>
         val r: PreResult[Feature] = preFeatureEnd(o) match {
-          case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
-          case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
-          case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
+         case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
+         case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
         }
         return r
       case o: FeatureGroup =>
         val r: PreResult[Feature] = preFeatureGroup(o) match {
-          case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
-          case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
-          case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
+         case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
+         case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
         }
         return r
     }
@@ -394,16 +394,16 @@ import org.sireum.aadl.ir.MTransformer._
     o match {
       case o: FeatureEnd =>
         val r: MOption[Feature] = postFeatureEnd(o) match {
-          case MSome(result: Feature) => MSome[Feature](result)
-          case MSome(_) => halt("Can only produce object of type Feature")
-          case _ => MNone[Feature]()
+         case MSome(result: Feature) => MSome[Feature](result)
+         case MSome(_) => halt("Can only produce object of type Feature")
+         case _ => MNone[Feature]()
         }
         return r
       case o: FeatureGroup =>
         val r: MOption[Feature] = postFeatureGroup(o) match {
-          case MSome(result: Feature) => MSome[Feature](result)
-          case MSome(_) => halt("Can only produce object of type Feature")
-          case _ => MNone[Feature]()
+         case MSome(result: Feature) => MSome[Feature](result)
+         case MSome(_) => halt("Can only produce object of type Feature")
+         case _ => MNone[Feature]()
         }
         return r
     }
@@ -712,13 +712,7 @@ import org.sireum.aadl.ir.MTransformer._
           val r1: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
           val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(
-              o2(
-                identifier = r0.getOrElse(o2.identifier),
-                features = r1.getOrElse(o2.features),
-                properties = r2.getOrElse(o2.properties)
-              )
-            )
+            MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features), properties = r2.getOrElse(o2.properties)))
           else
             MNone()
       }
@@ -778,10 +772,7 @@ import org.sireum.aadl.ir.MTransformer._
       val r1: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
       val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(
-          o2(
-            identifier = r0.getOrElse(o2.identifier),
-            features = r1.getOrElse(o2.features), properties = r2.getOrElse(o2.properties)))
+        MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features), properties = r2.getOrElse(o2.properties)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {

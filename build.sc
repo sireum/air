@@ -23,10 +23,22 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 import $file.Air
-import ammonite.ops.up
+import ammonite.ops._
 
 object air extends Air.Module {
 
   final override def millSourcePath = super.millSourcePath / up
 
+}
+
+def regen() = T.command {
+  val path = pwd / 'shared / 'src / 'main / 'scala / 'org / 'sireum / 'aadl / 'ir
+  %(pwd / 'sireum, 'tools, 'transgen, "-l", pwd / "license.txt", "-m", "immutable,mutable",
+    path / "AadlAST.scala")(path)
+  %(pwd / 'sireum, 'tools, 'sergen, "-p", "org.sireum.lang.tipe", "-l", pwd / "license.txt",
+    "-m", "json,msgpack", path / "AAdlAST.scala")(path)
+}
+
+def jitPack(owner: String, repo: String, lib: String = "") = T.command {
+  org.sireum.mill.SireumModule.jitPack(owner, repo, if ("" == lib) repo else lib)
 }

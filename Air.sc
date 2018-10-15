@@ -55,7 +55,7 @@ trait Module extends CrossJvmJsPublish {
   )
 
   final override def ivyDeps = Agg(
-    ivy"com.github.sireum.runtime::library::master-SNAPSHOT"
+    jpLatest(isCross = true, "sireum", "runtime", "library")
   )
 
   final override lazy val scalacPluginIvyDeps = Agg(

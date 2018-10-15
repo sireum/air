@@ -5,3 +5,4 @@ jdk:
 
 script:
   - ./test.sh
+  - $TRAVIS_BUILD_DIR/mill-standalone jitPack --owner sireum --repo air || true

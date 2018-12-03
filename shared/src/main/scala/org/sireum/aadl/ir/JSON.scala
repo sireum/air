@@ -41,7 +41,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Aadl""""),
         ("components", printISZ(F, o.components, printComponent _)),
-        ("errorLib", printISZ(F, o.errorLib, printEmv2Library _))
+        ("errorLib", printISZ(F, o.errorLib, printEmv2Library _)),
+        ("dataComponents", printISZ(F, o.dataComponents, printComponent _))
       ))
     }
 
@@ -417,7 +418,10 @@ object JSON {
       parser.parseObjectKey("errorLib")
       val errorLib = parser.parseISZ(parseEmv2Library _)
       parser.parseObjectNext()
-      return Aadl(components, errorLib)
+      parser.parseObjectKey("dataComponents")
+      val dataComponents = parser.parseISZ(parseComponent _)
+      parser.parseObjectNext()
+      return Aadl(components, errorLib, dataComponents)
     }
 
     def parseName(): Name = {

@@ -31,8 +31,8 @@ import org.sireum._
 
 class AadlASTFactory {
 
-  def aadl(components: JList[Component], errorLib: JList[Emv2Library]): Aadl =
-    Aadl(isz(components), isz(errorLib))
+  def aadl(components: JList[Component], errorLib: JList[Emv2Library], dataComponents: JList[Component]): Aadl =
+    Aadl(isz(components), isz(errorLib), isz(dataComponents))
 
   def name(name: JList[Predef.String]): Name =
     Name(isz(name).map(s => String(s)))

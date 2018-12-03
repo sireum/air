@@ -584,8 +584,9 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[IS[Z, Component]] = transformISZ(o2.components, transformComponent _)
       val r1: MOption[IS[Z, Emv2Library]] = transformISZ(o2.errorLib, transformEmv2Library _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(components = r0.getOrElse(o2.components), errorLib = r1.getOrElse(o2.errorLib)))
+      val r2: MOption[IS[Z, Component]] = transformISZ(o2.dataComponents, transformComponent _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(components = r0.getOrElse(o2.components), errorLib = r1.getOrElse(o2.errorLib), dataComponents = r2.getOrElse(o2.dataComponents)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {

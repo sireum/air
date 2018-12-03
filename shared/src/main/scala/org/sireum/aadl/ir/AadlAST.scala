@@ -28,7 +28,7 @@ package org.sireum.aadl.ir
 
 import org.sireum._
 
-@datatype class Aadl(components: ISZ[Component], errorLib: ISZ[Emv2Library])
+@datatype class Aadl(components: ISZ[Component], errorLib: ISZ[Emv2Library], dataComponents: ISZ[Component])
 
 @datatype class Name(name: ISZ[String])
 

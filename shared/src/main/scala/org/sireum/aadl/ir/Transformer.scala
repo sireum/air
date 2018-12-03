@@ -494,10 +494,11 @@ import Transformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: Result[Context, IS[Z, Component]] = transformISZ(ctx, o2.components, transformComponent _)
       val r1: Result[Context, IS[Z, Emv2Library]] = transformISZ(r0.ctx, o2.errorLib, transformEmv2Library _)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        Result(r1.ctx, Some(o2(components = r0.resultOpt.getOrElse(o2.components), errorLib = r1.resultOpt.getOrElse(o2.errorLib))))
+      val r2: Result[Context, IS[Z, Component]] = transformISZ(r1.ctx, o2.dataComponents, transformComponent _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        Result(r2.ctx, Some(o2(components = r0.resultOpt.getOrElse(o2.components), errorLib = r1.resultOpt.getOrElse(o2.errorLib), dataComponents = r2.resultOpt.getOrElse(o2.dataComponents))))
       else
-        Result(r1.ctx, None())
+        Result(r2.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       Result(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {

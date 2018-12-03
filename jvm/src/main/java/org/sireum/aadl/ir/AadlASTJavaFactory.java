@@ -54,8 +54,9 @@ public class AadlASTJavaFactory {
     private static AadlASTFactory f = new AadlASTFactory();
 
     public static Aadl aadl(List<Component> components,
-                            List<Emv2Library> errorLib) {
-        return f.aadl(components, errorLib);
+                            List<Emv2Library> errorLib,
+                            List<Component> dataComponents) {
+        return f.aadl(components, errorLib, dataComponents);
     }
 
     public static Name name(List<String> name) {

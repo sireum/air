@@ -102,6 +102,7 @@ object MsgPack {
       writer.writeZ(Constants.Aadl)
       writer.writeISZ(o.components, writeComponent _)
       writer.writeISZ(o.errorLib, writeEmv2Library _)
+      writer.writeISZ(o.dataComponents, writeComponent _)
     }
 
     def writeName(o: Name): Unit = {
@@ -366,7 +367,8 @@ object MsgPack {
       }
       val components = reader.readISZ(readComponent _)
       val errorLib = reader.readISZ(readEmv2Library _)
-      return Aadl(components, errorLib)
+      val dataComponents = reader.readISZ(readComponent _)
+      return Aadl(components, errorLib, dataComponents)
     }
 
     def readName(): Name = {

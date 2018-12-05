@@ -89,6 +89,10 @@ object MTransformer {
 
   val PostResultFeatureGroup: MOption[FeatureGroup] = MNone()
 
+  val PreResultFeatureAccess: PreResult[FeatureAccess] = PreResult(T, MNone())
+
+  val PostResultFeatureAccess: MOption[FeatureAccess] = MNone()
+
   val PreResultConnection: PreResult[Connection] = PreResult(T, MNone())
 
   val PostResultConnection: MOption[Connection] = MNone()
@@ -203,6 +207,13 @@ import MTransformer._
          case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
         }
         return r
+      case o: FeatureAccess =>
+        val r: PreResult[Feature] = preFeatureAccess(o) match {
+         case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
+         case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
+        }
+        return r
     }
   }
 
@@ -212,6 +223,10 @@ import MTransformer._
 
   def preFeatureGroup(o: FeatureGroup): PreResult[FeatureGroup] = {
     return PreResultFeatureGroup
+  }
+
+  def preFeatureAccess(o: FeatureAccess): PreResult[FeatureAccess] = {
+    return PreResultFeatureAccess
   }
 
   def preConnection(o: Connection): PreResult[Connection] = {
@@ -406,6 +421,13 @@ import MTransformer._
          case _ => MNone[Feature]()
         }
         return r
+      case o: FeatureAccess =>
+        val r: MOption[Feature] = postFeatureAccess(o) match {
+         case MSome(result: Feature) => MSome[Feature](result)
+         case MSome(_) => halt("Can only produce object of type Feature")
+         case _ => MNone[Feature]()
+        }
+        return r
     }
   }
 
@@ -415,6 +437,10 @@ import MTransformer._
 
   def postFeatureGroup(o: FeatureGroup): MOption[FeatureGroup] = {
     return PostResultFeatureGroup
+  }
+
+  def postFeatureAccess(o: FeatureAccess): MOption[FeatureAccess] = {
+    return PostResultFeatureAccess
   }
 
   def postConnection(o: Connection): MOption[Connection] = {
@@ -716,6 +742,14 @@ import MTransformer._
             MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features), properties = r2.getOrElse(o2.properties)))
           else
             MNone()
+        case o2: FeatureAccess =>
+          val r0: MOption[Name] = transformName(o2.identifier)
+          val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
+          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
+          else
+            MNone()
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -784,6 +818,35 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: FeatureGroup = r.getOrElse(o)
     val postR: MOption[FeatureGroup] = postFeatureGroup(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformFeatureAccess(o: FeatureAccess): MOption[FeatureAccess] = {
+    val preR: PreResult[FeatureAccess] = preFeatureAccess(o)
+    val r: MOption[FeatureAccess] = if (preR.continu) {
+      val o2: FeatureAccess = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.identifier)
+      val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
+      val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: FeatureAccess = r.getOrElse(o)
+    val postR: MOption[FeatureAccess] = postFeatureAccess(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

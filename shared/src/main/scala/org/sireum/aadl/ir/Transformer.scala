@@ -75,6 +75,13 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Feature]())
           }
           return r
+        case o: FeatureAccess =>
+          val r: PreResult[Context, Feature] = preFeatureAccess(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: Feature)) => PreResult(preCtx, continu, Some[Feature](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type Feature")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Feature]())
+          }
+          return r
       }
     }
 
@@ -83,6 +90,10 @@ object Transformer {
     }
 
     @pure def preFeatureGroup(ctx: Context, o: FeatureGroup): PreResult[Context, FeatureGroup] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preFeatureAccess(ctx: Context, o: FeatureAccess): PreResult[Context, FeatureAccess] = {
       return PreResult(ctx, T, None())
     }
 
@@ -278,6 +289,13 @@ object Transformer {
            case Result(postCtx, _) => Result(postCtx, None[Feature]())
           }
           return r
+        case o: FeatureAccess =>
+          val r: Result[Context, Feature] = postFeatureAccess(ctx, o) match {
+           case Result(postCtx, Some(result: Feature)) => Result(postCtx, Some[Feature](result))
+           case Result(_, Some(_)) => halt("Can only produce object of type Feature")
+           case Result(postCtx, _) => Result(postCtx, None[Feature]())
+          }
+          return r
       }
     }
 
@@ -286,6 +304,10 @@ object Transformer {
     }
 
     @pure def postFeatureGroup(ctx: Context, o: FeatureGroup): Result[Context, FeatureGroup] = {
+      return Result(ctx, None())
+    }
+
+    @pure def postFeatureAccess(ctx: Context, o: FeatureAccess): Result[Context, FeatureAccess] = {
       return Result(ctx, None())
     }
 
@@ -626,6 +648,14 @@ import Transformer._
             Result(r2.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), features = r1.resultOpt.getOrElse(o2.features), properties = r2.resultOpt.getOrElse(o2.properties))))
           else
             Result(r2.ctx, None())
+        case o2: FeatureAccess =>
+          val r0: Result[Context, Name] = transformName(ctx, o2.identifier)
+          val r1: Result[Context, Option[Classifier]] = transformOption(r0.ctx, o2.classifier, transformClassifier _)
+          val r2: Result[Context, IS[Z, Property]] = transformISZ(r1.ctx, o2.properties, transformProperty _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            Result(r2.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), classifier = r1.resultOpt.getOrElse(o2.classifier), properties = r2.resultOpt.getOrElse(o2.properties))))
+          else
+            Result(r2.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -694,6 +724,35 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: FeatureGroup = r.resultOpt.getOrElse(o)
     val postR: Result[Context, FeatureGroup] = pp.postFeatureGroup(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return Result(postR.ctx, Some(o2))
+    } else {
+      return Result(postR.ctx, None())
+    }
+  }
+
+  @pure def transformFeatureAccess(ctx: Context, o: FeatureAccess): Result[Context, FeatureAccess] = {
+    val preR: PreResult[Context, FeatureAccess] = pp.preFeatureAccess(ctx, o)
+    val r: Result[Context, FeatureAccess] = if (preR.continu) {
+      val o2: FeatureAccess = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: Result[Context, Name] = transformName(ctx, o2.identifier)
+      val r1: Result[Context, Option[Classifier]] = transformOption(r0.ctx, o2.classifier, transformClassifier _)
+      val r2: Result[Context, IS[Z, Property]] = transformISZ(r1.ctx, o2.properties, transformProperty _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        Result(r2.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), classifier = r1.resultOpt.getOrElse(o2.classifier), properties = r2.resultOpt.getOrElse(o2.properties))))
+      else
+        Result(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      Result(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      Result(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: FeatureAccess = r.resultOpt.getOrElse(o)
+    val postR: Result[Context, FeatureAccess] = pp.postFeatureAccess(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {

@@ -48,43 +48,45 @@ object MsgPack {
 
     val FeatureGroup: Z = -27
 
-    val Connection: Z = -26
+    val FeatureAccess: Z = -26
 
-    val ConnectionInstance: Z = -25
+    val Connection: Z = -25
 
-    val ConnectionReference: Z = -24
+    val ConnectionInstance: Z = -24
 
-    val EndPoint: Z = -23
+    val ConnectionReference: Z = -23
 
-    val Property: Z = -22
+    val EndPoint: Z = -22
 
-    val ClassifierProp: Z = -21
+    val Property: Z = -21
 
-    val RangeProp: Z = -20
+    val ClassifierProp: Z = -20
 
-    val RecordProp: Z = -19
+    val RangeProp: Z = -19
 
-    val ReferenceProp: Z = -18
+    val RecordProp: Z = -18
 
-    val UnitProp: Z = -17
+    val ReferenceProp: Z = -17
 
-    val ValueProp: Z = -16
+    val UnitProp: Z = -16
 
-    val Mode: Z = -15
+    val ValueProp: Z = -15
 
-    val Flow: Z = -14
+    val Mode: Z = -14
 
-    val Annex: Z = -13
+    val Flow: Z = -13
 
-    val Emv2Library: Z = -12
+    val Annex: Z = -12
 
-    val Emv2Propagation: Z = -11
+    val Emv2Library: Z = -11
 
-    val Emv2Flow: Z = -10
+    val Emv2Propagation: Z = -10
 
-    val Emv2Clause: Z = -9
+    val Emv2Flow: Z = -9
 
-    val OtherAnnex: Z = -8
+    val Emv2Clause: Z = -8
+
+    val OtherAnnex: Z = -7
 
   }
 
@@ -138,6 +140,7 @@ object MsgPack {
       o match {
         case o: FeatureEnd => writeFeatureEnd(o)
         case o: FeatureGroup => writeFeatureGroup(o)
+        case o: FeatureAccess => writeFeatureAccess(o)
       }
     }
 
@@ -157,6 +160,24 @@ object MsgPack {
       writer.writeB(o.isInverse)
       writeFeatureCategoryType(o.category)
       writer.writeISZ(o.properties, writeProperty _)
+    }
+
+    def writeFeatureAccess(o: FeatureAccess): Unit = {
+      writer.writeZ(Constants.FeatureAccess)
+      writeName(o.identifier)
+      writeFeatureCategoryType(o.category)
+      writer.writeOption(o.classifier, writeClassifier _)
+      writeAccessTypeType(o.accessType)
+      writeAccessCategoryType(o.accessCategory)
+      writer.writeISZ(o.properties, writeProperty _)
+    }
+
+    def writeAccessTypeType(o: AccessType.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def writeAccessCategoryType(o: AccessCategory.Type): Unit = {
+      writer.writeZ(o.ordinal)
     }
 
     def writeDirectionType(o: Direction.Type): Unit = {
@@ -431,9 +452,10 @@ object MsgPack {
       t match {
         case Constants.FeatureEnd => val r = readFeatureEndT(T); return r
         case Constants.FeatureGroup => val r = readFeatureGroupT(T); return r
+        case Constants.FeatureAccess => val r = readFeatureAccessT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of Feature.")
-          val r = readFeatureGroupT(T)
+          val r = readFeatureAccessT(T)
           return r
       }
     }
@@ -470,6 +492,34 @@ object MsgPack {
       val category = readFeatureCategoryType()
       val properties = reader.readISZ(readProperty _)
       return FeatureGroup(identifier, features, isInverse, category, properties)
+    }
+
+    def readFeatureAccess(): FeatureAccess = {
+      val r = readFeatureAccessT(F)
+      return r
+    }
+
+    def readFeatureAccessT(typeParsed: B): FeatureAccess = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.FeatureAccess)
+      }
+      val identifier = readName()
+      val category = readFeatureCategoryType()
+      val classifier = reader.readOption(readClassifier _)
+      val accessType = readAccessTypeType()
+      val accessCategory = readAccessCategoryType()
+      val properties = reader.readISZ(readProperty _)
+      return FeatureAccess(identifier, category, classifier, accessType, accessCategory, properties)
+    }
+
+    def readAccessTypeType(): AccessType.Type = {
+      val r = reader.readZ()
+      return AccessType.byOrdinal(r).get
+    }
+
+    def readAccessCategoryType(): AccessCategory.Type = {
+      val r = reader.readZ()
+      return AccessCategory.byOrdinal(r).get
     }
 
     def readDirectionType(): Direction.Type = {
@@ -938,6 +988,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fFeatureGroup _)
+    return r
+  }
+
+  def fromFeatureAccess(o: FeatureAccess, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeFeatureAccess(o)
+    return w.result
+  }
+
+  def toFeatureAccess(data: ISZ[U8]): Either[FeatureAccess, MessagePack.ErrorMsg] = {
+    def fFeatureAccess(reader: Reader): FeatureAccess = {
+      val r = reader.readFeatureAccess()
+      return r
+    }
+    val r = to(data, fFeatureAccess _)
     return r
   }
 

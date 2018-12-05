@@ -92,6 +92,29 @@ import org.sireum._
                               val properties: ISZ[Property]
                             ) extends Feature
 
+
+@datatype class FeatureAccess(
+                               val identifier: Name,
+                               val category: FeatureCategory.Type,
+                               val classifier: Option[Classifier],
+                               val accessType: AccessType.Type,
+                               val accessCategory: AccessCategory.Type,
+                               val properties: ISZ[Property]
+                             ) extends Feature
+
+@enum object AccessType {
+  'Provides
+  'Requires
+}
+
+@enum object AccessCategory {
+  'Bus
+  'Data
+  'Subprogram
+  'SubprogramGroup
+  'VirtualBus
+}
+
 @enum object Direction {
   'In
   'Out

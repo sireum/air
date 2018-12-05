@@ -104,6 +104,7 @@ object JSON {
       o match {
         case o: FeatureEnd => return printFeatureEnd(o)
         case o: FeatureGroup => return printFeatureGroup(o)
+        case o: FeatureAccess => return printFeatureAccess(o)
       }
     }
 
@@ -126,6 +127,43 @@ object JSON {
         ("isInverse", printB(o.isInverse)),
         ("category", printFeatureCategoryType(o.category)),
         ("properties", printISZ(F, o.properties, printProperty _))
+      ))
+    }
+
+    @pure def printFeatureAccess(o: FeatureAccess): ST = {
+      return printObject(ISZ(
+        ("type", st""""FeatureAccess""""),
+        ("identifier", printName(o.identifier)),
+        ("category", printFeatureCategoryType(o.category)),
+        ("classifier", printOption(F, o.classifier, printClassifier _)),
+        ("accessType", printAccessTypeType(o.accessType)),
+        ("accessCategory", printAccessCategoryType(o.accessCategory)),
+        ("properties", printISZ(F, o.properties, printProperty _))
+      ))
+    }
+
+    @pure def printAccessTypeType(o: AccessType.Type): ST = {
+      val value: String = o match {
+        case AccessType.Provides => "Provides"
+        case AccessType.Requires => "Requires"
+      }
+      return printObject(ISZ(
+        ("type", printString("AccessType")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def printAccessCategoryType(o: AccessCategory.Type): ST = {
+      val value: String = o match {
+        case AccessCategory.Bus => "Bus"
+        case AccessCategory.Data => "Data"
+        case AccessCategory.Subprogram => "Subprogram"
+        case AccessCategory.SubprogramGroup => "SubprogramGroup"
+        case AccessCategory.VirtualBus => "VirtualBus"
+      }
+      return printObject(ISZ(
+        ("type", printString("AccessCategory")),
+        ("value", printString(value))
       ))
     }
 
@@ -521,11 +559,12 @@ object JSON {
     }
 
     def parseFeature(): Feature = {
-      val t = parser.parseObjectTypes(ISZ("FeatureEnd", "FeatureGroup"))
+      val t = parser.parseObjectTypes(ISZ("FeatureEnd", "FeatureGroup", "FeatureAccess"))
       t.native match {
         case "FeatureEnd" => val r = parseFeatureEndT(T); return r
         case "FeatureGroup" => val r = parseFeatureGroupT(T); return r
-        case _ => val r = parseFeatureGroupT(T); return r
+        case "FeatureAccess" => val r = parseFeatureAccessT(T); return r
+        case _ => val r = parseFeatureAccessT(T); return r
       }
     }
 
@@ -581,6 +620,78 @@ object JSON {
       val properties = parser.parseISZ(parseProperty _)
       parser.parseObjectNext()
       return FeatureGroup(identifier, features, isInverse, category, properties)
+    }
+
+    def parseFeatureAccess(): FeatureAccess = {
+      val r = parseFeatureAccessT(F)
+      return r
+    }
+
+    def parseFeatureAccessT(typeParsed: B): FeatureAccess = {
+      if (!typeParsed) {
+        parser.parseObjectType("FeatureAccess")
+      }
+      parser.parseObjectKey("identifier")
+      val identifier = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("category")
+      val category = parseFeatureCategoryType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("classifier")
+      val classifier = parser.parseOption(parseClassifier _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("accessType")
+      val accessType = parseAccessTypeType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("accessCategory")
+      val accessCategory = parseAccessCategoryType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("properties")
+      val properties = parser.parseISZ(parseProperty _)
+      parser.parseObjectNext()
+      return FeatureAccess(identifier, category, classifier, accessType, accessCategory, properties)
+    }
+
+    def parseAccessTypeType(): AccessType.Type = {
+      val r = parseAccessTypeT(F)
+      return r
+    }
+
+    def parseAccessTypeT(typeParsed: B): AccessType.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("AccessType")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      AccessType.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for AccessType.")
+          return AccessType.byOrdinal(0).get
+      }
+    }
+
+    def parseAccessCategoryType(): AccessCategory.Type = {
+      val r = parseAccessCategoryT(F)
+      return r
+    }
+
+    def parseAccessCategoryT(typeParsed: B): AccessCategory.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("AccessCategory")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      AccessCategory.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for AccessCategory.")
+          return AccessCategory.byOrdinal(0).get
+      }
     }
 
     def parseDirectionType(): Direction.Type = {
@@ -1245,6 +1356,24 @@ object JSON {
       return r
     }
     val r = to(s, fFeatureGroup _)
+    return r
+  }
+
+  def fromFeatureAccess(o: FeatureAccess, isCompact: B): String = {
+    val st = Printer.printFeatureAccess(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toFeatureAccess(s: String): Either[FeatureAccess, Json.ErrorMsg] = {
+    def fFeatureAccess(parser: Parser): FeatureAccess = {
+      val r = parser.parseFeatureAccess()
+      return r
+    }
+    val r = to(s, fFeatureAccess _)
     return r
   }
 

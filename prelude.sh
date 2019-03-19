@@ -1,7 +1,7 @@
 #!/bin/bash -e
 export SCRIPT_HOME=$( cd "$( dirname "$0" )" &> /dev/null && pwd )
 cd ${SCRIPT_HOME}
-CURL='curl -c /dev/null -JLso'
+CURL='curl -c /dev/null -JLo'
 if [ ! -e sireum ]; then
   ${CURL} sireum http://files.sireum.org/sireum
   chmod +x sireum

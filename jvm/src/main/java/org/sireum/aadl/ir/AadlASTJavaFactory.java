@@ -29,6 +29,14 @@ import java.util.List;
 
 public class AadlASTJavaFactory {
 
+    public enum AccessType {
+        Provides, Requires
+    }
+
+    public enum AccessCategory {
+        Bus, Data, Subprogram, SubprogramGroup, VirtualBus
+    }
+
     public enum ComponentCategory {
         Abstract, Bus, Data, Device, Memory, Process, Processor, Subprogram,
         SubprogramGroup, System, Thread, ThreadGroup, VirtualBus, VirtualProcessor
@@ -98,6 +106,15 @@ public class AadlASTJavaFactory {
                                             //Classifier classifier,
                                             List<Property> properties) {
         return f.featureGroup(identifier, features, isInverse, category, properties);
+    }
+
+    public static FeatureAccess featureAccess(Name identifier,
+                                              FeatureCategory category,
+                                              Classifier classifier,
+                                              AccessType accessType,
+                                              AccessCategory accessCategory,
+                                              List<Property> properties) {
+        return f.featureAccess(identifier, category, classifier, accessType, accessCategory, properties);
     }
 
     public static Connection connection(Name name,

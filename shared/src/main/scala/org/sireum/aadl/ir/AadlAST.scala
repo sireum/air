@@ -26,6 +26,7 @@
 
 package org.sireum.aadl.ir
 
+import org.graalvm.compiler.hotspot.HotSpotForeignCallLinkage.Transition
 import org.sireum._
 
 @datatype class Aadl(components: ISZ[Component], errorLib: ISZ[Emv2Library], dataComponents: ISZ[Component])
@@ -204,23 +205,90 @@ import org.sireum._
   'Out
 }
 
-@datatype class Emv2Library(name: Name, useTypes: ISZ[String], tokens: ISZ[String], alias: HashMap[String, String])
+@datatype class Emv2Library(name: Name,
+                            useTypes: ISZ[String],
+                            errorTypeDef: ISZ[ErrorTypeDef],
+                            errorTypeSetDef: ISZ[ErrorTypeSetDef],
+                            alias: ISZ[ErrorAliseDef],
+                            behaveStateMachine: ISZ[BehaveStateMachine])
   extends Emv2Annex
 
-@datatype class Emv2Propagation(
-                                 direction: PropagationDirection.Type,
-                                 propagationPoint: ISZ[String],
-                                 errorTokens: ISZ[String]
+@enum object ErrorKind {
+  'all
+  'noerror
+}
+
+@datatype class ErrorTypeDef(id : Name,
+                             extendType: Name) extends Emv2Annex
+
+@datatype class ErrorAliseDef(errorType: Name,
+                              aliseType: Name) extends Emv2Annex
+
+@datatype class ErrorTypeSetDef(id : Name,
+                                errorTypes : ISZ[Name]) extends Emv2Annex
+
+@datatype class BehaveStateMachine(id : Name,
+                                   events: ISZ[ErrorEvent],
+                                   states: ISZ[ErrorState],
+                                   transitions: ISZ[ErrorTransition],
+                                   properties: ISZ[Property]) extends Emv2Annex
+
+@datatype class ErrorEvent(id: Name) extends Emv2Annex
+
+@datatype class ErrorState(id: Name,
+                           isInitial: B) extends Emv2Annex
+
+@datatype class ErrorTransition(id : Name,
+                                sourceState : Name,
+                                condition : ErrorCondition,
+                                targetState : Name
                                ) extends Emv2Annex
 
-@datatype class Emv2Flow(
-                          identifier: Name,
+@sig trait ErrorCondition extends Emv2Annex
+
+@datatype class ConditionTrigger(events : ISZ[Name],
+                                 propagationPoints: ISZ[Emv2Propagation]
+                                ) extends ErrorCondition
+
+@datatype class AndCondition(lhs : ErrorCondition,
+                             rhs : ErrorCondition) extends ErrorCondition
+
+@datatype class OrCondition(lhs : ErrorCondition,
+                            rhs : ErrorCondition) extends ErrorCondition
+
+@datatype class OrMoreCondition(number : Z,
+                                lhs : ErrorCondition,
+                                rhs : ErrorCondition) extends ErrorCondition
+
+@datatype class OrLessCondition(number : Z,
+                                lhs : ErrorCondition,
+                                rhs : ErrorCondition) extends ErrorCondition
+
+@datatype class Emv2Clause(libraries: ISZ[String],
+                           propagations: ISZ[Emv2Propagation],
+                           flows: ISZ[Emv2Flow],
+                           componentBehavior: Emv2BehaviorSection) extends Emv2Annex
+
+@datatype class Emv2Propagation( direction: PropagationDirection.Type,
+                                 propagationPoint: ISZ[Name],
+                                 errorTokens: ISZ[Name]
+                               ) extends Emv2Annex
+
+@datatype class Emv2Flow(identifier: Name,
                           kind: FlowKind.Type,
                           sourcePropagation: Option[Emv2Propagation],
                           sinkPropagation: Option[Emv2Propagation]
                         ) extends Emv2Annex
 
-@datatype class Emv2Clause(libraries: ISZ[String], propagations: ISZ[Emv2Propagation], flows: ISZ[Emv2Flow])
-  extends Emv2Annex
+@datatype class Emv2BehaviorSection(events : ISZ[ErrorEvent],
+                                    transitions: ISZ[ErrorTransition],
+                                    propagations: ISZ[ErrorPropagation]
+                                   ) extends Emv2Annex
+
+@datatype class ErrorPropagation(id : Name,
+                                 source : ISZ[Name],
+                                 condition: Option[ErrorCondition],
+                                 target : ISZ[Emv2Propagation]
+                                ) extends Emv2Annex
 
 @datatype class OtherAnnex(clause: String) extends AnnexClause

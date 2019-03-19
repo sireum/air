@@ -360,9 +360,23 @@ object JSON {
     @pure def printAnnexClause(o: AnnexClause): ST = {
       o match {
         case o: Emv2Library => return printEmv2Library(o)
+        case o: ErrorTypeDef => return printErrorTypeDef(o)
+        case o: ErrorAliseDef => return printErrorAliseDef(o)
+        case o: ErrorTypeSetDef => return printErrorTypeSetDef(o)
+        case o: BehaveStateMachine => return printBehaveStateMachine(o)
+        case o: ErrorEvent => return printErrorEvent(o)
+        case o: ErrorState => return printErrorState(o)
+        case o: ErrorTransition => return printErrorTransition(o)
+        case o: ConditionTrigger => return printConditionTrigger(o)
+        case o: AndCondition => return printAndCondition(o)
+        case o: OrCondition => return printOrCondition(o)
+        case o: OrMoreCondition => return printOrMoreCondition(o)
+        case o: OrLessCondition => return printOrLessCondition(o)
+        case o: Emv2Clause => return printEmv2Clause(o)
         case o: Emv2Propagation => return printEmv2Propagation(o)
         case o: Emv2Flow => return printEmv2Flow(o)
-        case o: Emv2Clause => return printEmv2Clause(o)
+        case o: Emv2BehaviorSection => return printEmv2BehaviorSection(o)
+        case o: ErrorPropagation => return printErrorPropagation(o)
         case o: OtherAnnex => return printOtherAnnex(o)
       }
     }
@@ -370,9 +384,23 @@ object JSON {
     @pure def printEmv2Annex(o: Emv2Annex): ST = {
       o match {
         case o: Emv2Library => return printEmv2Library(o)
+        case o: ErrorTypeDef => return printErrorTypeDef(o)
+        case o: ErrorAliseDef => return printErrorAliseDef(o)
+        case o: ErrorTypeSetDef => return printErrorTypeSetDef(o)
+        case o: BehaveStateMachine => return printBehaveStateMachine(o)
+        case o: ErrorEvent => return printErrorEvent(o)
+        case o: ErrorState => return printErrorState(o)
+        case o: ErrorTransition => return printErrorTransition(o)
+        case o: ConditionTrigger => return printConditionTrigger(o)
+        case o: AndCondition => return printAndCondition(o)
+        case o: OrCondition => return printOrCondition(o)
+        case o: OrMoreCondition => return printOrMoreCondition(o)
+        case o: OrLessCondition => return printOrLessCondition(o)
+        case o: Emv2Clause => return printEmv2Clause(o)
         case o: Emv2Propagation => return printEmv2Propagation(o)
         case o: Emv2Flow => return printEmv2Flow(o)
-        case o: Emv2Clause => return printEmv2Clause(o)
+        case o: Emv2BehaviorSection => return printEmv2BehaviorSection(o)
+        case o: ErrorPropagation => return printErrorPropagation(o)
       }
     }
 
@@ -392,8 +420,143 @@ object JSON {
         ("type", st""""Emv2Library""""),
         ("name", printName(o.name)),
         ("useTypes", printISZ(T, o.useTypes, printString _)),
-        ("tokens", printISZ(T, o.tokens, printString _)),
-        ("alias", printHashMap(T, o.alias, printString _, printString _))
+        ("errorTypeDef", printISZ(F, o.errorTypeDef, printErrorTypeDef _)),
+        ("errorTypeSetDef", printISZ(F, o.errorTypeSetDef, printErrorTypeSetDef _)),
+        ("alias", printISZ(F, o.alias, printErrorAliseDef _)),
+        ("behaveStateMachine", printISZ(F, o.behaveStateMachine, printBehaveStateMachine _))
+      ))
+    }
+
+    @pure def printErrorKindType(o: ErrorKind.Type): ST = {
+      val value: String = o match {
+        case ErrorKind.all => "all"
+        case ErrorKind.noerror => "noerror"
+      }
+      return printObject(ISZ(
+        ("type", printString("ErrorKind")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def printErrorTypeDef(o: ErrorTypeDef): ST = {
+      return printObject(ISZ(
+        ("type", st""""ErrorTypeDef""""),
+        ("id", printName(o.id)),
+        ("extendType", printName(o.extendType))
+      ))
+    }
+
+    @pure def printErrorAliseDef(o: ErrorAliseDef): ST = {
+      return printObject(ISZ(
+        ("type", st""""ErrorAliseDef""""),
+        ("errorType", printName(o.errorType)),
+        ("aliseType", printName(o.aliseType))
+      ))
+    }
+
+    @pure def printErrorTypeSetDef(o: ErrorTypeSetDef): ST = {
+      return printObject(ISZ(
+        ("type", st""""ErrorTypeSetDef""""),
+        ("id", printName(o.id)),
+        ("errorTypes", printISZ(F, o.errorTypes, printName _))
+      ))
+    }
+
+    @pure def printBehaveStateMachine(o: BehaveStateMachine): ST = {
+      return printObject(ISZ(
+        ("type", st""""BehaveStateMachine""""),
+        ("id", printName(o.id)),
+        ("events", printISZ(F, o.events, printErrorEvent _)),
+        ("states", printISZ(F, o.states, printErrorState _)),
+        ("transitions", printISZ(F, o.transitions, printErrorTransition _)),
+        ("properties", printISZ(F, o.properties, printProperty _))
+      ))
+    }
+
+    @pure def printErrorEvent(o: ErrorEvent): ST = {
+      return printObject(ISZ(
+        ("type", st""""ErrorEvent""""),
+        ("id", printName(o.id))
+      ))
+    }
+
+    @pure def printErrorState(o: ErrorState): ST = {
+      return printObject(ISZ(
+        ("type", st""""ErrorState""""),
+        ("id", printName(o.id)),
+        ("isInitial", printB(o.isInitial))
+      ))
+    }
+
+    @pure def printErrorTransition(o: ErrorTransition): ST = {
+      return printObject(ISZ(
+        ("type", st""""ErrorTransition""""),
+        ("id", printName(o.id)),
+        ("sourceState", printName(o.sourceState)),
+        ("condition", printErrorCondition(o.condition)),
+        ("targetState", printName(o.targetState))
+      ))
+    }
+
+    @pure def printErrorCondition(o: ErrorCondition): ST = {
+      o match {
+        case o: ConditionTrigger => return printConditionTrigger(o)
+        case o: AndCondition => return printAndCondition(o)
+        case o: OrCondition => return printOrCondition(o)
+        case o: OrMoreCondition => return printOrMoreCondition(o)
+        case o: OrLessCondition => return printOrLessCondition(o)
+      }
+    }
+
+    @pure def printConditionTrigger(o: ConditionTrigger): ST = {
+      return printObject(ISZ(
+        ("type", st""""ConditionTrigger""""),
+        ("events", printISZ(F, o.events, printName _)),
+        ("propagationPoints", printISZ(F, o.propagationPoints, printEmv2Propagation _))
+      ))
+    }
+
+    @pure def printAndCondition(o: AndCondition): ST = {
+      return printObject(ISZ(
+        ("type", st""""AndCondition""""),
+        ("lhs", printErrorCondition(o.lhs)),
+        ("rhs", printErrorCondition(o.rhs))
+      ))
+    }
+
+    @pure def printOrCondition(o: OrCondition): ST = {
+      return printObject(ISZ(
+        ("type", st""""OrCondition""""),
+        ("lhs", printErrorCondition(o.lhs)),
+        ("rhs", printErrorCondition(o.rhs))
+      ))
+    }
+
+    @pure def printOrMoreCondition(o: OrMoreCondition): ST = {
+      return printObject(ISZ(
+        ("type", st""""OrMoreCondition""""),
+        ("number", printZ(o.number)),
+        ("lhs", printErrorCondition(o.lhs)),
+        ("rhs", printErrorCondition(o.rhs))
+      ))
+    }
+
+    @pure def printOrLessCondition(o: OrLessCondition): ST = {
+      return printObject(ISZ(
+        ("type", st""""OrLessCondition""""),
+        ("number", printZ(o.number)),
+        ("lhs", printErrorCondition(o.lhs)),
+        ("rhs", printErrorCondition(o.rhs))
+      ))
+    }
+
+    @pure def printEmv2Clause(o: Emv2Clause): ST = {
+      return printObject(ISZ(
+        ("type", st""""Emv2Clause""""),
+        ("libraries", printISZ(T, o.libraries, printString _)),
+        ("propagations", printISZ(F, o.propagations, printEmv2Propagation _)),
+        ("flows", printISZ(F, o.flows, printEmv2Flow _)),
+        ("componentBehavior", printEmv2BehaviorSection(o.componentBehavior))
       ))
     }
 
@@ -401,8 +564,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Emv2Propagation""""),
         ("direction", printPropagationDirectionType(o.direction)),
-        ("propagationPoint", printISZ(T, o.propagationPoint, printString _)),
-        ("errorTokens", printISZ(T, o.errorTokens, printString _))
+        ("propagationPoint", printISZ(F, o.propagationPoint, printName _)),
+        ("errorTokens", printISZ(F, o.errorTokens, printName _))
       ))
     }
 
@@ -416,12 +579,22 @@ object JSON {
       ))
     }
 
-    @pure def printEmv2Clause(o: Emv2Clause): ST = {
+    @pure def printEmv2BehaviorSection(o: Emv2BehaviorSection): ST = {
       return printObject(ISZ(
-        ("type", st""""Emv2Clause""""),
-        ("libraries", printISZ(T, o.libraries, printString _)),
-        ("propagations", printISZ(F, o.propagations, printEmv2Propagation _)),
-        ("flows", printISZ(F, o.flows, printEmv2Flow _))
+        ("type", st""""Emv2BehaviorSection""""),
+        ("events", printISZ(F, o.events, printErrorEvent _)),
+        ("transitions", printISZ(F, o.transitions, printErrorTransition _)),
+        ("propagations", printISZ(F, o.propagations, printErrorPropagation _))
+      ))
+    }
+
+    @pure def printErrorPropagation(o: ErrorPropagation): ST = {
+      return printObject(ISZ(
+        ("type", st""""ErrorPropagation""""),
+        ("id", printName(o.id)),
+        ("source", printISZ(F, o.source, printName _)),
+        ("condition", printOption(F, o.condition, printErrorCondition _)),
+        ("target", printISZ(F, o.target, printEmv2Propagation _))
       ))
     }
 
@@ -1068,25 +1241,53 @@ object JSON {
     }
 
     def parseAnnexClause(): AnnexClause = {
-      val t = parser.parseObjectTypes(ISZ("Emv2Library", "Emv2Propagation", "Emv2Flow", "Emv2Clause", "OtherAnnex"))
+      val t = parser.parseObjectTypes(ISZ("Emv2Library", "ErrorTypeDef", "ErrorAliseDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation", "OtherAnnex"))
       t.native match {
         case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
+        case "ErrorTypeDef" => val r = parseErrorTypeDefT(T); return r
+        case "ErrorAliseDef" => val r = parseErrorAliseDefT(T); return r
+        case "ErrorTypeSetDef" => val r = parseErrorTypeSetDefT(T); return r
+        case "BehaveStateMachine" => val r = parseBehaveStateMachineT(T); return r
+        case "ErrorEvent" => val r = parseErrorEventT(T); return r
+        case "ErrorState" => val r = parseErrorStateT(T); return r
+        case "ErrorTransition" => val r = parseErrorTransitionT(T); return r
+        case "ConditionTrigger" => val r = parseConditionTriggerT(T); return r
+        case "AndCondition" => val r = parseAndConditionT(T); return r
+        case "OrCondition" => val r = parseOrConditionT(T); return r
+        case "OrMoreCondition" => val r = parseOrMoreConditionT(T); return r
+        case "OrLessCondition" => val r = parseOrLessConditionT(T); return r
+        case "Emv2Clause" => val r = parseEmv2ClauseT(T); return r
         case "Emv2Propagation" => val r = parseEmv2PropagationT(T); return r
         case "Emv2Flow" => val r = parseEmv2FlowT(T); return r
-        case "Emv2Clause" => val r = parseEmv2ClauseT(T); return r
+        case "Emv2BehaviorSection" => val r = parseEmv2BehaviorSectionT(T); return r
+        case "ErrorPropagation" => val r = parseErrorPropagationT(T); return r
         case "OtherAnnex" => val r = parseOtherAnnexT(T); return r
         case _ => val r = parseOtherAnnexT(T); return r
       }
     }
 
     def parseEmv2Annex(): Emv2Annex = {
-      val t = parser.parseObjectTypes(ISZ("Emv2Library", "Emv2Propagation", "Emv2Flow", "Emv2Clause"))
+      val t = parser.parseObjectTypes(ISZ("Emv2Library", "ErrorTypeDef", "ErrorAliseDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation"))
       t.native match {
         case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
+        case "ErrorTypeDef" => val r = parseErrorTypeDefT(T); return r
+        case "ErrorAliseDef" => val r = parseErrorAliseDefT(T); return r
+        case "ErrorTypeSetDef" => val r = parseErrorTypeSetDefT(T); return r
+        case "BehaveStateMachine" => val r = parseBehaveStateMachineT(T); return r
+        case "ErrorEvent" => val r = parseErrorEventT(T); return r
+        case "ErrorState" => val r = parseErrorStateT(T); return r
+        case "ErrorTransition" => val r = parseErrorTransitionT(T); return r
+        case "ConditionTrigger" => val r = parseConditionTriggerT(T); return r
+        case "AndCondition" => val r = parseAndConditionT(T); return r
+        case "OrCondition" => val r = parseOrConditionT(T); return r
+        case "OrMoreCondition" => val r = parseOrMoreConditionT(T); return r
+        case "OrLessCondition" => val r = parseOrLessConditionT(T); return r
+        case "Emv2Clause" => val r = parseEmv2ClauseT(T); return r
         case "Emv2Propagation" => val r = parseEmv2PropagationT(T); return r
         case "Emv2Flow" => val r = parseEmv2FlowT(T); return r
-        case "Emv2Clause" => val r = parseEmv2ClauseT(T); return r
-        case _ => val r = parseEmv2ClauseT(T); return r
+        case "Emv2BehaviorSection" => val r = parseEmv2BehaviorSectionT(T); return r
+        case "ErrorPropagation" => val r = parseErrorPropagationT(T); return r
+        case _ => val r = parseErrorPropagationT(T); return r
       }
     }
 
@@ -1126,13 +1327,310 @@ object JSON {
       parser.parseObjectKey("useTypes")
       val useTypes = parser.parseISZ(parser.parseString _)
       parser.parseObjectNext()
-      parser.parseObjectKey("tokens")
-      val tokens = parser.parseISZ(parser.parseString _)
+      parser.parseObjectKey("errorTypeDef")
+      val errorTypeDef = parser.parseISZ(parseErrorTypeDef _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("errorTypeSetDef")
+      val errorTypeSetDef = parser.parseISZ(parseErrorTypeSetDef _)
       parser.parseObjectNext()
       parser.parseObjectKey("alias")
-      val alias = parser.parseHashMap(parser.parseString _, parser.parseString _)
+      val alias = parser.parseISZ(parseErrorAliseDef _)
       parser.parseObjectNext()
-      return Emv2Library(name, useTypes, tokens, alias)
+      parser.parseObjectKey("behaveStateMachine")
+      val behaveStateMachine = parser.parseISZ(parseBehaveStateMachine _)
+      parser.parseObjectNext()
+      return Emv2Library(name, useTypes, errorTypeDef, errorTypeSetDef, alias, behaveStateMachine)
+    }
+
+    def parseErrorKindType(): ErrorKind.Type = {
+      val r = parseErrorKindT(F)
+      return r
+    }
+
+    def parseErrorKindT(typeParsed: B): ErrorKind.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("ErrorKind")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      ErrorKind.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for ErrorKind.")
+          return ErrorKind.byOrdinal(0).get
+      }
+    }
+
+    def parseErrorTypeDef(): ErrorTypeDef = {
+      val r = parseErrorTypeDefT(F)
+      return r
+    }
+
+    def parseErrorTypeDefT(typeParsed: B): ErrorTypeDef = {
+      if (!typeParsed) {
+        parser.parseObjectType("ErrorTypeDef")
+      }
+      parser.parseObjectKey("id")
+      val id = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("extendType")
+      val extendType = parseName()
+      parser.parseObjectNext()
+      return ErrorTypeDef(id, extendType)
+    }
+
+    def parseErrorAliseDef(): ErrorAliseDef = {
+      val r = parseErrorAliseDefT(F)
+      return r
+    }
+
+    def parseErrorAliseDefT(typeParsed: B): ErrorAliseDef = {
+      if (!typeParsed) {
+        parser.parseObjectType("ErrorAliseDef")
+      }
+      parser.parseObjectKey("errorType")
+      val errorType = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("aliseType")
+      val aliseType = parseName()
+      parser.parseObjectNext()
+      return ErrorAliseDef(errorType, aliseType)
+    }
+
+    def parseErrorTypeSetDef(): ErrorTypeSetDef = {
+      val r = parseErrorTypeSetDefT(F)
+      return r
+    }
+
+    def parseErrorTypeSetDefT(typeParsed: B): ErrorTypeSetDef = {
+      if (!typeParsed) {
+        parser.parseObjectType("ErrorTypeSetDef")
+      }
+      parser.parseObjectKey("id")
+      val id = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("errorTypes")
+      val errorTypes = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      return ErrorTypeSetDef(id, errorTypes)
+    }
+
+    def parseBehaveStateMachine(): BehaveStateMachine = {
+      val r = parseBehaveStateMachineT(F)
+      return r
+    }
+
+    def parseBehaveStateMachineT(typeParsed: B): BehaveStateMachine = {
+      if (!typeParsed) {
+        parser.parseObjectType("BehaveStateMachine")
+      }
+      parser.parseObjectKey("id")
+      val id = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("events")
+      val events = parser.parseISZ(parseErrorEvent _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("states")
+      val states = parser.parseISZ(parseErrorState _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("transitions")
+      val transitions = parser.parseISZ(parseErrorTransition _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("properties")
+      val properties = parser.parseISZ(parseProperty _)
+      parser.parseObjectNext()
+      return BehaveStateMachine(id, events, states, transitions, properties)
+    }
+
+    def parseErrorEvent(): ErrorEvent = {
+      val r = parseErrorEventT(F)
+      return r
+    }
+
+    def parseErrorEventT(typeParsed: B): ErrorEvent = {
+      if (!typeParsed) {
+        parser.parseObjectType("ErrorEvent")
+      }
+      parser.parseObjectKey("id")
+      val id = parseName()
+      parser.parseObjectNext()
+      return ErrorEvent(id)
+    }
+
+    def parseErrorState(): ErrorState = {
+      val r = parseErrorStateT(F)
+      return r
+    }
+
+    def parseErrorStateT(typeParsed: B): ErrorState = {
+      if (!typeParsed) {
+        parser.parseObjectType("ErrorState")
+      }
+      parser.parseObjectKey("id")
+      val id = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isInitial")
+      val isInitial = parser.parseB()
+      parser.parseObjectNext()
+      return ErrorState(id, isInitial)
+    }
+
+    def parseErrorTransition(): ErrorTransition = {
+      val r = parseErrorTransitionT(F)
+      return r
+    }
+
+    def parseErrorTransitionT(typeParsed: B): ErrorTransition = {
+      if (!typeParsed) {
+        parser.parseObjectType("ErrorTransition")
+      }
+      parser.parseObjectKey("id")
+      val id = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("sourceState")
+      val sourceState = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("condition")
+      val condition = parseErrorCondition()
+      parser.parseObjectNext()
+      parser.parseObjectKey("targetState")
+      val targetState = parseName()
+      parser.parseObjectNext()
+      return ErrorTransition(id, sourceState, condition, targetState)
+    }
+
+    def parseErrorCondition(): ErrorCondition = {
+      val t = parser.parseObjectTypes(ISZ("ConditionTrigger", "AndCondition", "OrCondition", "OrMoreCondition", "OrLessCondition"))
+      t.native match {
+        case "ConditionTrigger" => val r = parseConditionTriggerT(T); return r
+        case "AndCondition" => val r = parseAndConditionT(T); return r
+        case "OrCondition" => val r = parseOrConditionT(T); return r
+        case "OrMoreCondition" => val r = parseOrMoreConditionT(T); return r
+        case "OrLessCondition" => val r = parseOrLessConditionT(T); return r
+        case _ => val r = parseOrLessConditionT(T); return r
+      }
+    }
+
+    def parseConditionTrigger(): ConditionTrigger = {
+      val r = parseConditionTriggerT(F)
+      return r
+    }
+
+    def parseConditionTriggerT(typeParsed: B): ConditionTrigger = {
+      if (!typeParsed) {
+        parser.parseObjectType("ConditionTrigger")
+      }
+      parser.parseObjectKey("events")
+      val events = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("propagationPoints")
+      val propagationPoints = parser.parseISZ(parseEmv2Propagation _)
+      parser.parseObjectNext()
+      return ConditionTrigger(events, propagationPoints)
+    }
+
+    def parseAndCondition(): AndCondition = {
+      val r = parseAndConditionT(F)
+      return r
+    }
+
+    def parseAndConditionT(typeParsed: B): AndCondition = {
+      if (!typeParsed) {
+        parser.parseObjectType("AndCondition")
+      }
+      parser.parseObjectKey("lhs")
+      val lhs = parseErrorCondition()
+      parser.parseObjectNext()
+      parser.parseObjectKey("rhs")
+      val rhs = parseErrorCondition()
+      parser.parseObjectNext()
+      return AndCondition(lhs, rhs)
+    }
+
+    def parseOrCondition(): OrCondition = {
+      val r = parseOrConditionT(F)
+      return r
+    }
+
+    def parseOrConditionT(typeParsed: B): OrCondition = {
+      if (!typeParsed) {
+        parser.parseObjectType("OrCondition")
+      }
+      parser.parseObjectKey("lhs")
+      val lhs = parseErrorCondition()
+      parser.parseObjectNext()
+      parser.parseObjectKey("rhs")
+      val rhs = parseErrorCondition()
+      parser.parseObjectNext()
+      return OrCondition(lhs, rhs)
+    }
+
+    def parseOrMoreCondition(): OrMoreCondition = {
+      val r = parseOrMoreConditionT(F)
+      return r
+    }
+
+    def parseOrMoreConditionT(typeParsed: B): OrMoreCondition = {
+      if (!typeParsed) {
+        parser.parseObjectType("OrMoreCondition")
+      }
+      parser.parseObjectKey("number")
+      val number = parser.parseZ()
+      parser.parseObjectNext()
+      parser.parseObjectKey("lhs")
+      val lhs = parseErrorCondition()
+      parser.parseObjectNext()
+      parser.parseObjectKey("rhs")
+      val rhs = parseErrorCondition()
+      parser.parseObjectNext()
+      return OrMoreCondition(number, lhs, rhs)
+    }
+
+    def parseOrLessCondition(): OrLessCondition = {
+      val r = parseOrLessConditionT(F)
+      return r
+    }
+
+    def parseOrLessConditionT(typeParsed: B): OrLessCondition = {
+      if (!typeParsed) {
+        parser.parseObjectType("OrLessCondition")
+      }
+      parser.parseObjectKey("number")
+      val number = parser.parseZ()
+      parser.parseObjectNext()
+      parser.parseObjectKey("lhs")
+      val lhs = parseErrorCondition()
+      parser.parseObjectNext()
+      parser.parseObjectKey("rhs")
+      val rhs = parseErrorCondition()
+      parser.parseObjectNext()
+      return OrLessCondition(number, lhs, rhs)
+    }
+
+    def parseEmv2Clause(): Emv2Clause = {
+      val r = parseEmv2ClauseT(F)
+      return r
+    }
+
+    def parseEmv2ClauseT(typeParsed: B): Emv2Clause = {
+      if (!typeParsed) {
+        parser.parseObjectType("Emv2Clause")
+      }
+      parser.parseObjectKey("libraries")
+      val libraries = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("propagations")
+      val propagations = parser.parseISZ(parseEmv2Propagation _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("flows")
+      val flows = parser.parseISZ(parseEmv2Flow _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("componentBehavior")
+      val componentBehavior = parseEmv2BehaviorSection()
+      parser.parseObjectNext()
+      return Emv2Clause(libraries, propagations, flows, componentBehavior)
     }
 
     def parseEmv2Propagation(): Emv2Propagation = {
@@ -1148,10 +1646,10 @@ object JSON {
       val direction = parsePropagationDirectionType()
       parser.parseObjectNext()
       parser.parseObjectKey("propagationPoint")
-      val propagationPoint = parser.parseISZ(parser.parseString _)
+      val propagationPoint = parser.parseISZ(parseName _)
       parser.parseObjectNext()
       parser.parseObjectKey("errorTokens")
-      val errorTokens = parser.parseISZ(parser.parseString _)
+      val errorTokens = parser.parseISZ(parseName _)
       parser.parseObjectNext()
       return Emv2Propagation(direction, propagationPoint, errorTokens)
     }
@@ -1180,25 +1678,49 @@ object JSON {
       return Emv2Flow(identifier, kind, sourcePropagation, sinkPropagation)
     }
 
-    def parseEmv2Clause(): Emv2Clause = {
-      val r = parseEmv2ClauseT(F)
+    def parseEmv2BehaviorSection(): Emv2BehaviorSection = {
+      val r = parseEmv2BehaviorSectionT(F)
       return r
     }
 
-    def parseEmv2ClauseT(typeParsed: B): Emv2Clause = {
+    def parseEmv2BehaviorSectionT(typeParsed: B): Emv2BehaviorSection = {
       if (!typeParsed) {
-        parser.parseObjectType("Emv2Clause")
+        parser.parseObjectType("Emv2BehaviorSection")
       }
-      parser.parseObjectKey("libraries")
-      val libraries = parser.parseISZ(parser.parseString _)
+      parser.parseObjectKey("events")
+      val events = parser.parseISZ(parseErrorEvent _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("transitions")
+      val transitions = parser.parseISZ(parseErrorTransition _)
       parser.parseObjectNext()
       parser.parseObjectKey("propagations")
-      val propagations = parser.parseISZ(parseEmv2Propagation _)
+      val propagations = parser.parseISZ(parseErrorPropagation _)
       parser.parseObjectNext()
-      parser.parseObjectKey("flows")
-      val flows = parser.parseISZ(parseEmv2Flow _)
+      return Emv2BehaviorSection(events, transitions, propagations)
+    }
+
+    def parseErrorPropagation(): ErrorPropagation = {
+      val r = parseErrorPropagationT(F)
+      return r
+    }
+
+    def parseErrorPropagationT(typeParsed: B): ErrorPropagation = {
+      if (!typeParsed) {
+        parser.parseObjectType("ErrorPropagation")
+      }
+      parser.parseObjectKey("id")
+      val id = parseName()
       parser.parseObjectNext()
-      return Emv2Clause(libraries, propagations, flows)
+      parser.parseObjectKey("source")
+      val source = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("condition")
+      val condition = parser.parseOption(parseErrorCondition _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("target")
+      val target = parser.parseISZ(parseEmv2Propagation _)
+      parser.parseObjectNext()
+      return ErrorPropagation(id, source, condition, target)
     }
 
     def parseOtherAnnex(): OtherAnnex = {
@@ -1701,6 +2223,258 @@ object JSON {
     return r
   }
 
+  def fromErrorTypeDef(o: ErrorTypeDef, isCompact: B): String = {
+    val st = Printer.printErrorTypeDef(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toErrorTypeDef(s: String): Either[ErrorTypeDef, Json.ErrorMsg] = {
+    def fErrorTypeDef(parser: Parser): ErrorTypeDef = {
+      val r = parser.parseErrorTypeDef()
+      return r
+    }
+    val r = to(s, fErrorTypeDef _)
+    return r
+  }
+
+  def fromErrorAliseDef(o: ErrorAliseDef, isCompact: B): String = {
+    val st = Printer.printErrorAliseDef(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toErrorAliseDef(s: String): Either[ErrorAliseDef, Json.ErrorMsg] = {
+    def fErrorAliseDef(parser: Parser): ErrorAliseDef = {
+      val r = parser.parseErrorAliseDef()
+      return r
+    }
+    val r = to(s, fErrorAliseDef _)
+    return r
+  }
+
+  def fromErrorTypeSetDef(o: ErrorTypeSetDef, isCompact: B): String = {
+    val st = Printer.printErrorTypeSetDef(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toErrorTypeSetDef(s: String): Either[ErrorTypeSetDef, Json.ErrorMsg] = {
+    def fErrorTypeSetDef(parser: Parser): ErrorTypeSetDef = {
+      val r = parser.parseErrorTypeSetDef()
+      return r
+    }
+    val r = to(s, fErrorTypeSetDef _)
+    return r
+  }
+
+  def fromBehaveStateMachine(o: BehaveStateMachine, isCompact: B): String = {
+    val st = Printer.printBehaveStateMachine(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBehaveStateMachine(s: String): Either[BehaveStateMachine, Json.ErrorMsg] = {
+    def fBehaveStateMachine(parser: Parser): BehaveStateMachine = {
+      val r = parser.parseBehaveStateMachine()
+      return r
+    }
+    val r = to(s, fBehaveStateMachine _)
+    return r
+  }
+
+  def fromErrorEvent(o: ErrorEvent, isCompact: B): String = {
+    val st = Printer.printErrorEvent(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toErrorEvent(s: String): Either[ErrorEvent, Json.ErrorMsg] = {
+    def fErrorEvent(parser: Parser): ErrorEvent = {
+      val r = parser.parseErrorEvent()
+      return r
+    }
+    val r = to(s, fErrorEvent _)
+    return r
+  }
+
+  def fromErrorState(o: ErrorState, isCompact: B): String = {
+    val st = Printer.printErrorState(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toErrorState(s: String): Either[ErrorState, Json.ErrorMsg] = {
+    def fErrorState(parser: Parser): ErrorState = {
+      val r = parser.parseErrorState()
+      return r
+    }
+    val r = to(s, fErrorState _)
+    return r
+  }
+
+  def fromErrorTransition(o: ErrorTransition, isCompact: B): String = {
+    val st = Printer.printErrorTransition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toErrorTransition(s: String): Either[ErrorTransition, Json.ErrorMsg] = {
+    def fErrorTransition(parser: Parser): ErrorTransition = {
+      val r = parser.parseErrorTransition()
+      return r
+    }
+    val r = to(s, fErrorTransition _)
+    return r
+  }
+
+  def fromErrorCondition(o: ErrorCondition, isCompact: B): String = {
+    val st = Printer.printErrorCondition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toErrorCondition(s: String): Either[ErrorCondition, Json.ErrorMsg] = {
+    def fErrorCondition(parser: Parser): ErrorCondition = {
+      val r = parser.parseErrorCondition()
+      return r
+    }
+    val r = to(s, fErrorCondition _)
+    return r
+  }
+
+  def fromConditionTrigger(o: ConditionTrigger, isCompact: B): String = {
+    val st = Printer.printConditionTrigger(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toConditionTrigger(s: String): Either[ConditionTrigger, Json.ErrorMsg] = {
+    def fConditionTrigger(parser: Parser): ConditionTrigger = {
+      val r = parser.parseConditionTrigger()
+      return r
+    }
+    val r = to(s, fConditionTrigger _)
+    return r
+  }
+
+  def fromAndCondition(o: AndCondition, isCompact: B): String = {
+    val st = Printer.printAndCondition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toAndCondition(s: String): Either[AndCondition, Json.ErrorMsg] = {
+    def fAndCondition(parser: Parser): AndCondition = {
+      val r = parser.parseAndCondition()
+      return r
+    }
+    val r = to(s, fAndCondition _)
+    return r
+  }
+
+  def fromOrCondition(o: OrCondition, isCompact: B): String = {
+    val st = Printer.printOrCondition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toOrCondition(s: String): Either[OrCondition, Json.ErrorMsg] = {
+    def fOrCondition(parser: Parser): OrCondition = {
+      val r = parser.parseOrCondition()
+      return r
+    }
+    val r = to(s, fOrCondition _)
+    return r
+  }
+
+  def fromOrMoreCondition(o: OrMoreCondition, isCompact: B): String = {
+    val st = Printer.printOrMoreCondition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toOrMoreCondition(s: String): Either[OrMoreCondition, Json.ErrorMsg] = {
+    def fOrMoreCondition(parser: Parser): OrMoreCondition = {
+      val r = parser.parseOrMoreCondition()
+      return r
+    }
+    val r = to(s, fOrMoreCondition _)
+    return r
+  }
+
+  def fromOrLessCondition(o: OrLessCondition, isCompact: B): String = {
+    val st = Printer.printOrLessCondition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toOrLessCondition(s: String): Either[OrLessCondition, Json.ErrorMsg] = {
+    def fOrLessCondition(parser: Parser): OrLessCondition = {
+      val r = parser.parseOrLessCondition()
+      return r
+    }
+    val r = to(s, fOrLessCondition _)
+    return r
+  }
+
+  def fromEmv2Clause(o: Emv2Clause, isCompact: B): String = {
+    val st = Printer.printEmv2Clause(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toEmv2Clause(s: String): Either[Emv2Clause, Json.ErrorMsg] = {
+    def fEmv2Clause(parser: Parser): Emv2Clause = {
+      val r = parser.parseEmv2Clause()
+      return r
+    }
+    val r = to(s, fEmv2Clause _)
+    return r
+  }
+
   def fromEmv2Propagation(o: Emv2Propagation, isCompact: B): String = {
     val st = Printer.printEmv2Propagation(o)
     if (isCompact) {
@@ -1737,8 +2511,8 @@ object JSON {
     return r
   }
 
-  def fromEmv2Clause(o: Emv2Clause, isCompact: B): String = {
-    val st = Printer.printEmv2Clause(o)
+  def fromEmv2BehaviorSection(o: Emv2BehaviorSection, isCompact: B): String = {
+    val st = Printer.printEmv2BehaviorSection(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -1746,12 +2520,30 @@ object JSON {
     }
   }
 
-  def toEmv2Clause(s: String): Either[Emv2Clause, Json.ErrorMsg] = {
-    def fEmv2Clause(parser: Parser): Emv2Clause = {
-      val r = parser.parseEmv2Clause()
+  def toEmv2BehaviorSection(s: String): Either[Emv2BehaviorSection, Json.ErrorMsg] = {
+    def fEmv2BehaviorSection(parser: Parser): Emv2BehaviorSection = {
+      val r = parser.parseEmv2BehaviorSection()
       return r
     }
-    val r = to(s, fEmv2Clause _)
+    val r = to(s, fEmv2BehaviorSection _)
+    return r
+  }
+
+  def fromErrorPropagation(o: ErrorPropagation, isCompact: B): String = {
+    val st = Printer.printErrorPropagation(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toErrorPropagation(s: String): Either[ErrorPropagation, Json.ErrorMsg] = {
+    def fErrorPropagation(parser: Parser): ErrorPropagation = {
+      val r = parser.parseErrorPropagation()
+      return r
+    }
+    val r = to(s, fErrorPropagation _)
     return r
   }
 

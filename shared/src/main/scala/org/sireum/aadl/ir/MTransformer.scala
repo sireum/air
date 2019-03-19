@@ -153,6 +153,58 @@ object MTransformer {
 
   val PostResultEmv2Library: MOption[Emv2Library] = MNone()
 
+  val PreResultErrorTypeDef: PreResult[ErrorTypeDef] = PreResult(T, MNone())
+
+  val PostResultErrorTypeDef: MOption[ErrorTypeDef] = MNone()
+
+  val PreResultErrorAliseDef: PreResult[ErrorAliseDef] = PreResult(T, MNone())
+
+  val PostResultErrorAliseDef: MOption[ErrorAliseDef] = MNone()
+
+  val PreResultErrorTypeSetDef: PreResult[ErrorTypeSetDef] = PreResult(T, MNone())
+
+  val PostResultErrorTypeSetDef: MOption[ErrorTypeSetDef] = MNone()
+
+  val PreResultBehaveStateMachine: PreResult[BehaveStateMachine] = PreResult(T, MNone())
+
+  val PostResultBehaveStateMachine: MOption[BehaveStateMachine] = MNone()
+
+  val PreResultErrorEvent: PreResult[ErrorEvent] = PreResult(T, MNone())
+
+  val PostResultErrorEvent: MOption[ErrorEvent] = MNone()
+
+  val PreResultErrorState: PreResult[ErrorState] = PreResult(T, MNone())
+
+  val PostResultErrorState: MOption[ErrorState] = MNone()
+
+  val PreResultErrorTransition: PreResult[ErrorTransition] = PreResult(T, MNone())
+
+  val PostResultErrorTransition: MOption[ErrorTransition] = MNone()
+
+  val PreResultConditionTrigger: PreResult[ConditionTrigger] = PreResult(T, MNone())
+
+  val PostResultConditionTrigger: MOption[ConditionTrigger] = MNone()
+
+  val PreResultAndCondition: PreResult[AndCondition] = PreResult(T, MNone())
+
+  val PostResultAndCondition: MOption[AndCondition] = MNone()
+
+  val PreResultOrCondition: PreResult[OrCondition] = PreResult(T, MNone())
+
+  val PostResultOrCondition: MOption[OrCondition] = MNone()
+
+  val PreResultOrMoreCondition: PreResult[OrMoreCondition] = PreResult(T, MNone())
+
+  val PostResultOrMoreCondition: MOption[OrMoreCondition] = MNone()
+
+  val PreResultOrLessCondition: PreResult[OrLessCondition] = PreResult(T, MNone())
+
+  val PostResultOrLessCondition: MOption[OrLessCondition] = MNone()
+
+  val PreResultEmv2Clause: PreResult[Emv2Clause] = PreResult(T, MNone())
+
+  val PostResultEmv2Clause: MOption[Emv2Clause] = MNone()
+
   val PreResultEmv2Propagation: PreResult[Emv2Propagation] = PreResult(T, MNone())
 
   val PostResultEmv2Propagation: MOption[Emv2Propagation] = MNone()
@@ -161,9 +213,13 @@ object MTransformer {
 
   val PostResultEmv2Flow: MOption[Emv2Flow] = MNone()
 
-  val PreResultEmv2Clause: PreResult[Emv2Clause] = PreResult(T, MNone())
+  val PreResultEmv2BehaviorSection: PreResult[Emv2BehaviorSection] = PreResult(T, MNone())
 
-  val PostResultEmv2Clause: MOption[Emv2Clause] = MNone()
+  val PostResultEmv2BehaviorSection: MOption[Emv2BehaviorSection] = MNone()
+
+  val PreResultErrorPropagation: PreResult[ErrorPropagation] = PreResult(T, MNone())
+
+  val PostResultErrorPropagation: MOption[ErrorPropagation] = MNone()
 
   val PreResultOtherAnnex: PreResult[OtherAnnex] = PreResult(T, MNone())
 
@@ -305,6 +361,97 @@ import MTransformer._
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
+      case o: ErrorTypeDef =>
+        val r: PreResult[AnnexClause] = preErrorTypeDef(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: ErrorAliseDef =>
+        val r: PreResult[AnnexClause] = preErrorAliseDef(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: ErrorTypeSetDef =>
+        val r: PreResult[AnnexClause] = preErrorTypeSetDef(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: BehaveStateMachine =>
+        val r: PreResult[AnnexClause] = preBehaveStateMachine(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: ErrorEvent =>
+        val r: PreResult[AnnexClause] = preErrorEvent(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: ErrorState =>
+        val r: PreResult[AnnexClause] = preErrorState(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: ErrorTransition =>
+        val r: PreResult[AnnexClause] = preErrorTransition(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: ConditionTrigger =>
+        val r: PreResult[AnnexClause] = preConditionTrigger(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: AndCondition =>
+        val r: PreResult[AnnexClause] = preAndCondition(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: OrCondition =>
+        val r: PreResult[AnnexClause] = preOrCondition(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: OrMoreCondition =>
+        val r: PreResult[AnnexClause] = preOrMoreCondition(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: OrLessCondition =>
+        val r: PreResult[AnnexClause] = preOrLessCondition(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: Emv2Clause =>
+        val r: PreResult[AnnexClause] = preEmv2Clause(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
       case o: Emv2Propagation =>
         val r: PreResult[AnnexClause] = preEmv2Propagation(o) match {
          case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
@@ -319,8 +466,15 @@ import MTransformer._
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
-      case o: Emv2Clause =>
-        val r: PreResult[AnnexClause] = preEmv2Clause(o) match {
+      case o: Emv2BehaviorSection =>
+        val r: PreResult[AnnexClause] = preEmv2BehaviorSection(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: ErrorPropagation =>
+        val r: PreResult[AnnexClause] = preErrorPropagation(o) match {
          case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
          case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
@@ -345,6 +499,97 @@ import MTransformer._
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
+      case o: ErrorTypeDef =>
+        val r: PreResult[Emv2Annex] = preErrorTypeDef(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+      case o: ErrorAliseDef =>
+        val r: PreResult[Emv2Annex] = preErrorAliseDef(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+      case o: ErrorTypeSetDef =>
+        val r: PreResult[Emv2Annex] = preErrorTypeSetDef(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+      case o: BehaveStateMachine =>
+        val r: PreResult[Emv2Annex] = preBehaveStateMachine(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+      case o: ErrorEvent =>
+        val r: PreResult[Emv2Annex] = preErrorEvent(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+      case o: ErrorState =>
+        val r: PreResult[Emv2Annex] = preErrorState(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+      case o: ErrorTransition =>
+        val r: PreResult[Emv2Annex] = preErrorTransition(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+      case o: ConditionTrigger =>
+        val r: PreResult[Emv2Annex] = preConditionTrigger(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+      case o: AndCondition =>
+        val r: PreResult[Emv2Annex] = preAndCondition(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+      case o: OrCondition =>
+        val r: PreResult[Emv2Annex] = preOrCondition(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+      case o: OrMoreCondition =>
+        val r: PreResult[Emv2Annex] = preOrMoreCondition(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+      case o: OrLessCondition =>
+        val r: PreResult[Emv2Annex] = preOrLessCondition(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+      case o: Emv2Clause =>
+        val r: PreResult[Emv2Annex] = preEmv2Clause(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
       case o: Emv2Propagation =>
         val r: PreResult[Emv2Annex] = preEmv2Propagation(o) match {
          case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
@@ -359,8 +604,15 @@ import MTransformer._
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
-      case o: Emv2Clause =>
-        val r: PreResult[Emv2Annex] = preEmv2Clause(o) match {
+      case o: Emv2BehaviorSection =>
+        val r: PreResult[Emv2Annex] = preEmv2BehaviorSection(o) match {
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+      case o: ErrorPropagation =>
+        val r: PreResult[Emv2Annex] = preErrorPropagation(o) match {
          case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
          case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
@@ -373,6 +625,98 @@ import MTransformer._
     return PreResultEmv2Library
   }
 
+  def preErrorTypeDef(o: ErrorTypeDef): PreResult[ErrorTypeDef] = {
+    return PreResultErrorTypeDef
+  }
+
+  def preErrorAliseDef(o: ErrorAliseDef): PreResult[ErrorAliseDef] = {
+    return PreResultErrorAliseDef
+  }
+
+  def preErrorTypeSetDef(o: ErrorTypeSetDef): PreResult[ErrorTypeSetDef] = {
+    return PreResultErrorTypeSetDef
+  }
+
+  def preBehaveStateMachine(o: BehaveStateMachine): PreResult[BehaveStateMachine] = {
+    return PreResultBehaveStateMachine
+  }
+
+  def preErrorEvent(o: ErrorEvent): PreResult[ErrorEvent] = {
+    return PreResultErrorEvent
+  }
+
+  def preErrorState(o: ErrorState): PreResult[ErrorState] = {
+    return PreResultErrorState
+  }
+
+  def preErrorTransition(o: ErrorTransition): PreResult[ErrorTransition] = {
+    return PreResultErrorTransition
+  }
+
+  def preErrorCondition(o: ErrorCondition): PreResult[ErrorCondition] = {
+    o match {
+      case o: ConditionTrigger =>
+        val r: PreResult[ErrorCondition] = preConditionTrigger(o) match {
+         case PreResult(continu, MSome(r: ErrorCondition)) => PreResult(continu, MSome[ErrorCondition](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type ErrorCondition")
+         case PreResult(continu, _) => PreResult(continu, MNone[ErrorCondition]())
+        }
+        return r
+      case o: AndCondition =>
+        val r: PreResult[ErrorCondition] = preAndCondition(o) match {
+         case PreResult(continu, MSome(r: ErrorCondition)) => PreResult(continu, MSome[ErrorCondition](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type ErrorCondition")
+         case PreResult(continu, _) => PreResult(continu, MNone[ErrorCondition]())
+        }
+        return r
+      case o: OrCondition =>
+        val r: PreResult[ErrorCondition] = preOrCondition(o) match {
+         case PreResult(continu, MSome(r: ErrorCondition)) => PreResult(continu, MSome[ErrorCondition](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type ErrorCondition")
+         case PreResult(continu, _) => PreResult(continu, MNone[ErrorCondition]())
+        }
+        return r
+      case o: OrMoreCondition =>
+        val r: PreResult[ErrorCondition] = preOrMoreCondition(o) match {
+         case PreResult(continu, MSome(r: ErrorCondition)) => PreResult(continu, MSome[ErrorCondition](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type ErrorCondition")
+         case PreResult(continu, _) => PreResult(continu, MNone[ErrorCondition]())
+        }
+        return r
+      case o: OrLessCondition =>
+        val r: PreResult[ErrorCondition] = preOrLessCondition(o) match {
+         case PreResult(continu, MSome(r: ErrorCondition)) => PreResult(continu, MSome[ErrorCondition](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type ErrorCondition")
+         case PreResult(continu, _) => PreResult(continu, MNone[ErrorCondition]())
+        }
+        return r
+    }
+  }
+
+  def preConditionTrigger(o: ConditionTrigger): PreResult[ConditionTrigger] = {
+    return PreResultConditionTrigger
+  }
+
+  def preAndCondition(o: AndCondition): PreResult[AndCondition] = {
+    return PreResultAndCondition
+  }
+
+  def preOrCondition(o: OrCondition): PreResult[OrCondition] = {
+    return PreResultOrCondition
+  }
+
+  def preOrMoreCondition(o: OrMoreCondition): PreResult[OrMoreCondition] = {
+    return PreResultOrMoreCondition
+  }
+
+  def preOrLessCondition(o: OrLessCondition): PreResult[OrLessCondition] = {
+    return PreResultOrLessCondition
+  }
+
+  def preEmv2Clause(o: Emv2Clause): PreResult[Emv2Clause] = {
+    return PreResultEmv2Clause
+  }
+
   def preEmv2Propagation(o: Emv2Propagation): PreResult[Emv2Propagation] = {
     return PreResultEmv2Propagation
   }
@@ -381,8 +725,12 @@ import MTransformer._
     return PreResultEmv2Flow
   }
 
-  def preEmv2Clause(o: Emv2Clause): PreResult[Emv2Clause] = {
-    return PreResultEmv2Clause
+  def preEmv2BehaviorSection(o: Emv2BehaviorSection): PreResult[Emv2BehaviorSection] = {
+    return PreResultEmv2BehaviorSection
+  }
+
+  def preErrorPropagation(o: ErrorPropagation): PreResult[ErrorPropagation] = {
+    return PreResultErrorPropagation
   }
 
   def preOtherAnnex(o: OtherAnnex): PreResult[OtherAnnex] = {
@@ -519,6 +867,97 @@ import MTransformer._
          case _ => MNone[AnnexClause]()
         }
         return r
+      case o: ErrorTypeDef =>
+        val r: MOption[AnnexClause] = postErrorTypeDef(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: ErrorAliseDef =>
+        val r: MOption[AnnexClause] = postErrorAliseDef(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: ErrorTypeSetDef =>
+        val r: MOption[AnnexClause] = postErrorTypeSetDef(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: BehaveStateMachine =>
+        val r: MOption[AnnexClause] = postBehaveStateMachine(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: ErrorEvent =>
+        val r: MOption[AnnexClause] = postErrorEvent(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: ErrorState =>
+        val r: MOption[AnnexClause] = postErrorState(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: ErrorTransition =>
+        val r: MOption[AnnexClause] = postErrorTransition(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: ConditionTrigger =>
+        val r: MOption[AnnexClause] = postConditionTrigger(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: AndCondition =>
+        val r: MOption[AnnexClause] = postAndCondition(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: OrCondition =>
+        val r: MOption[AnnexClause] = postOrCondition(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: OrMoreCondition =>
+        val r: MOption[AnnexClause] = postOrMoreCondition(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: OrLessCondition =>
+        val r: MOption[AnnexClause] = postOrLessCondition(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: Emv2Clause =>
+        val r: MOption[AnnexClause] = postEmv2Clause(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
       case o: Emv2Propagation =>
         val r: MOption[AnnexClause] = postEmv2Propagation(o) match {
          case MSome(result: AnnexClause) => MSome[AnnexClause](result)
@@ -533,8 +972,15 @@ import MTransformer._
          case _ => MNone[AnnexClause]()
         }
         return r
-      case o: Emv2Clause =>
-        val r: MOption[AnnexClause] = postEmv2Clause(o) match {
+      case o: Emv2BehaviorSection =>
+        val r: MOption[AnnexClause] = postEmv2BehaviorSection(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: ErrorPropagation =>
+        val r: MOption[AnnexClause] = postErrorPropagation(o) match {
          case MSome(result: AnnexClause) => MSome[AnnexClause](result)
          case MSome(_) => halt("Can only produce object of type AnnexClause")
          case _ => MNone[AnnexClause]()
@@ -559,6 +1005,97 @@ import MTransformer._
          case _ => MNone[Emv2Annex]()
         }
         return r
+      case o: ErrorTypeDef =>
+        val r: MOption[Emv2Annex] = postErrorTypeDef(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
+      case o: ErrorAliseDef =>
+        val r: MOption[Emv2Annex] = postErrorAliseDef(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
+      case o: ErrorTypeSetDef =>
+        val r: MOption[Emv2Annex] = postErrorTypeSetDef(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
+      case o: BehaveStateMachine =>
+        val r: MOption[Emv2Annex] = postBehaveStateMachine(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
+      case o: ErrorEvent =>
+        val r: MOption[Emv2Annex] = postErrorEvent(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
+      case o: ErrorState =>
+        val r: MOption[Emv2Annex] = postErrorState(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
+      case o: ErrorTransition =>
+        val r: MOption[Emv2Annex] = postErrorTransition(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
+      case o: ConditionTrigger =>
+        val r: MOption[Emv2Annex] = postConditionTrigger(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
+      case o: AndCondition =>
+        val r: MOption[Emv2Annex] = postAndCondition(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
+      case o: OrCondition =>
+        val r: MOption[Emv2Annex] = postOrCondition(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
+      case o: OrMoreCondition =>
+        val r: MOption[Emv2Annex] = postOrMoreCondition(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
+      case o: OrLessCondition =>
+        val r: MOption[Emv2Annex] = postOrLessCondition(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
+      case o: Emv2Clause =>
+        val r: MOption[Emv2Annex] = postEmv2Clause(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
       case o: Emv2Propagation =>
         val r: MOption[Emv2Annex] = postEmv2Propagation(o) match {
          case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
@@ -573,8 +1110,15 @@ import MTransformer._
          case _ => MNone[Emv2Annex]()
         }
         return r
-      case o: Emv2Clause =>
-        val r: MOption[Emv2Annex] = postEmv2Clause(o) match {
+      case o: Emv2BehaviorSection =>
+        val r: MOption[Emv2Annex] = postEmv2BehaviorSection(o) match {
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
+        }
+        return r
+      case o: ErrorPropagation =>
+        val r: MOption[Emv2Annex] = postErrorPropagation(o) match {
          case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
          case MSome(_) => halt("Can only produce object of type Emv2Annex")
          case _ => MNone[Emv2Annex]()
@@ -587,6 +1131,98 @@ import MTransformer._
     return PostResultEmv2Library
   }
 
+  def postErrorTypeDef(o: ErrorTypeDef): MOption[ErrorTypeDef] = {
+    return PostResultErrorTypeDef
+  }
+
+  def postErrorAliseDef(o: ErrorAliseDef): MOption[ErrorAliseDef] = {
+    return PostResultErrorAliseDef
+  }
+
+  def postErrorTypeSetDef(o: ErrorTypeSetDef): MOption[ErrorTypeSetDef] = {
+    return PostResultErrorTypeSetDef
+  }
+
+  def postBehaveStateMachine(o: BehaveStateMachine): MOption[BehaveStateMachine] = {
+    return PostResultBehaveStateMachine
+  }
+
+  def postErrorEvent(o: ErrorEvent): MOption[ErrorEvent] = {
+    return PostResultErrorEvent
+  }
+
+  def postErrorState(o: ErrorState): MOption[ErrorState] = {
+    return PostResultErrorState
+  }
+
+  def postErrorTransition(o: ErrorTransition): MOption[ErrorTransition] = {
+    return PostResultErrorTransition
+  }
+
+  def postErrorCondition(o: ErrorCondition): MOption[ErrorCondition] = {
+    o match {
+      case o: ConditionTrigger =>
+        val r: MOption[ErrorCondition] = postConditionTrigger(o) match {
+         case MSome(result: ErrorCondition) => MSome[ErrorCondition](result)
+         case MSome(_) => halt("Can only produce object of type ErrorCondition")
+         case _ => MNone[ErrorCondition]()
+        }
+        return r
+      case o: AndCondition =>
+        val r: MOption[ErrorCondition] = postAndCondition(o) match {
+         case MSome(result: ErrorCondition) => MSome[ErrorCondition](result)
+         case MSome(_) => halt("Can only produce object of type ErrorCondition")
+         case _ => MNone[ErrorCondition]()
+        }
+        return r
+      case o: OrCondition =>
+        val r: MOption[ErrorCondition] = postOrCondition(o) match {
+         case MSome(result: ErrorCondition) => MSome[ErrorCondition](result)
+         case MSome(_) => halt("Can only produce object of type ErrorCondition")
+         case _ => MNone[ErrorCondition]()
+        }
+        return r
+      case o: OrMoreCondition =>
+        val r: MOption[ErrorCondition] = postOrMoreCondition(o) match {
+         case MSome(result: ErrorCondition) => MSome[ErrorCondition](result)
+         case MSome(_) => halt("Can only produce object of type ErrorCondition")
+         case _ => MNone[ErrorCondition]()
+        }
+        return r
+      case o: OrLessCondition =>
+        val r: MOption[ErrorCondition] = postOrLessCondition(o) match {
+         case MSome(result: ErrorCondition) => MSome[ErrorCondition](result)
+         case MSome(_) => halt("Can only produce object of type ErrorCondition")
+         case _ => MNone[ErrorCondition]()
+        }
+        return r
+    }
+  }
+
+  def postConditionTrigger(o: ConditionTrigger): MOption[ConditionTrigger] = {
+    return PostResultConditionTrigger
+  }
+
+  def postAndCondition(o: AndCondition): MOption[AndCondition] = {
+    return PostResultAndCondition
+  }
+
+  def postOrCondition(o: OrCondition): MOption[OrCondition] = {
+    return PostResultOrCondition
+  }
+
+  def postOrMoreCondition(o: OrMoreCondition): MOption[OrMoreCondition] = {
+    return PostResultOrMoreCondition
+  }
+
+  def postOrLessCondition(o: OrLessCondition): MOption[OrLessCondition] = {
+    return PostResultOrLessCondition
+  }
+
+  def postEmv2Clause(o: Emv2Clause): MOption[Emv2Clause] = {
+    return PostResultEmv2Clause
+  }
+
   def postEmv2Propagation(o: Emv2Propagation): MOption[Emv2Propagation] = {
     return PostResultEmv2Propagation
   }
@@ -595,8 +1231,12 @@ import MTransformer._
     return PostResultEmv2Flow
   }
 
-  def postEmv2Clause(o: Emv2Clause): MOption[Emv2Clause] = {
-    return PostResultEmv2Clause
+  def postEmv2BehaviorSection(o: Emv2BehaviorSection): MOption[Emv2BehaviorSection] = {
+    return PostResultEmv2BehaviorSection
+  }
+
+  def postErrorPropagation(o: ErrorPropagation): MOption[ErrorPropagation] = {
+    return PostResultErrorPropagation
   }
 
   def postOtherAnnex(o: OtherAnnex): MOption[OtherAnnex] = {
@@ -1152,13 +1792,114 @@ import MTransformer._
       val rOpt: MOption[AnnexClause] = o2 match {
         case o2: Emv2Library =>
           val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[IS[Z, ErrorTypeDef]] = transformISZ(o2.errorTypeDef, transformErrorTypeDef _)
+          val r2: MOption[IS[Z, ErrorTypeSetDef]] = transformISZ(o2.errorTypeSetDef, transformErrorTypeSetDef _)
+          val r3: MOption[IS[Z, ErrorAliseDef]] = transformISZ(o2.alias, transformErrorAliseDef _)
+          val r4: MOption[IS[Z, BehaveStateMachine]] = transformISZ(o2.behaveStateMachine, transformBehaveStateMachine _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), errorTypeDef = r1.getOrElse(o2.errorTypeDef), errorTypeSetDef = r2.getOrElse(o2.errorTypeSetDef), alias = r3.getOrElse(o2.alias), behaveStateMachine = r4.getOrElse(o2.behaveStateMachine)))
+          else
+            MNone()
+        case o2: ErrorTypeDef =>
+          val r0: MOption[Name] = transformName(o2.id)
+          val r1: MOption[Name] = transformName(o2.extendType)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), extendType = r1.getOrElse(o2.extendType)))
+          else
+            MNone()
+        case o2: ErrorAliseDef =>
+          val r0: MOption[Name] = transformName(o2.errorType)
+          val r1: MOption[Name] = transformName(o2.aliseType)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(errorType = r0.getOrElse(o2.errorType), aliseType = r1.getOrElse(o2.aliseType)))
+          else
+            MNone()
+        case o2: ErrorTypeSetDef =>
+          val r0: MOption[Name] = transformName(o2.id)
+          val r1: MOption[IS[Z, Name]] = transformISZ(o2.errorTypes, transformName _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), errorTypes = r1.getOrElse(o2.errorTypes)))
+          else
+            MNone()
+        case o2: BehaveStateMachine =>
+          val r0: MOption[Name] = transformName(o2.id)
+          val r1: MOption[IS[Z, ErrorEvent]] = transformISZ(o2.events, transformErrorEvent _)
+          val r2: MOption[IS[Z, ErrorState]] = transformISZ(o2.states, transformErrorState _)
+          val r3: MOption[IS[Z, ErrorTransition]] = transformISZ(o2.transitions, transformErrorTransition _)
+          val r4: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), events = r1.getOrElse(o2.events), states = r2.getOrElse(o2.states), transitions = r3.getOrElse(o2.transitions), properties = r4.getOrElse(o2.properties)))
+          else
+            MNone()
+        case o2: ErrorEvent =>
+          val r0: MOption[Name] = transformName(o2.id)
           if (hasChanged || r0.nonEmpty)
-            MSome(o2(name = r0.getOrElse(o2.name)))
+            MSome(o2(id = r0.getOrElse(o2.id)))
+          else
+            MNone()
+        case o2: ErrorState =>
+          val r0: MOption[Name] = transformName(o2.id)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id)))
+          else
+            MNone()
+        case o2: ErrorTransition =>
+          val r0: MOption[Name] = transformName(o2.id)
+          val r1: MOption[Name] = transformName(o2.sourceState)
+          val r2: MOption[ErrorCondition] = transformErrorCondition(o2.condition)
+          val r3: MOption[Name] = transformName(o2.targetState)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), sourceState = r1.getOrElse(o2.sourceState), condition = r2.getOrElse(o2.condition), targetState = r3.getOrElse(o2.targetState)))
+          else
+            MNone()
+        case o2: ConditionTrigger =>
+          val r0: MOption[IS[Z, Name]] = transformISZ(o2.events, transformName _)
+          val r1: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.propagationPoints, transformEmv2Propagation _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(events = r0.getOrElse(o2.events), propagationPoints = r1.getOrElse(o2.propagationPoints)))
+          else
+            MNone()
+        case o2: AndCondition =>
+          val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+          val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: OrCondition =>
+          val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+          val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: OrMoreCondition =>
+          val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+          val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: OrLessCondition =>
+          val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+          val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: Emv2Clause =>
+          val r0: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.propagations, transformEmv2Propagation _)
+          val r1: MOption[IS[Z, Emv2Flow]] = transformISZ(o2.flows, transformEmv2Flow _)
+          val r2: MOption[Emv2BehaviorSection] = transformEmv2BehaviorSection(o2.componentBehavior)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(propagations = r0.getOrElse(o2.propagations), flows = r1.getOrElse(o2.flows), componentBehavior = r2.getOrElse(o2.componentBehavior)))
           else
             MNone()
         case o2: Emv2Propagation =>
-          if (hasChanged)
-            MSome(o2)
+          val r0: MOption[IS[Z, Name]] = transformISZ(o2.propagationPoint, transformName _)
+          val r1: MOption[IS[Z, Name]] = transformISZ(o2.errorTokens, transformName _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(propagationPoint = r0.getOrElse(o2.propagationPoint), errorTokens = r1.getOrElse(o2.errorTokens)))
           else
             MNone()
         case o2: Emv2Flow =>
@@ -1169,11 +1910,21 @@ import MTransformer._
             MSome(o2(identifier = r0.getOrElse(o2.identifier), sourcePropagation = r1.getOrElse(o2.sourcePropagation), sinkPropagation = r2.getOrElse(o2.sinkPropagation)))
           else
             MNone()
-        case o2: Emv2Clause =>
-          val r0: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.propagations, transformEmv2Propagation _)
-          val r1: MOption[IS[Z, Emv2Flow]] = transformISZ(o2.flows, transformEmv2Flow _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(propagations = r0.getOrElse(o2.propagations), flows = r1.getOrElse(o2.flows)))
+        case o2: Emv2BehaviorSection =>
+          val r0: MOption[IS[Z, ErrorEvent]] = transformISZ(o2.events, transformErrorEvent _)
+          val r1: MOption[IS[Z, ErrorTransition]] = transformISZ(o2.transitions, transformErrorTransition _)
+          val r2: MOption[IS[Z, ErrorPropagation]] = transformISZ(o2.propagations, transformErrorPropagation _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(events = r0.getOrElse(o2.events), transitions = r1.getOrElse(o2.transitions), propagations = r2.getOrElse(o2.propagations)))
+          else
+            MNone()
+        case o2: ErrorPropagation =>
+          val r0: MOption[Name] = transformName(o2.id)
+          val r1: MOption[IS[Z, Name]] = transformISZ(o2.source, transformName _)
+          val r2: MOption[Option[ErrorCondition]] = transformOption(o2.condition, transformErrorCondition _)
+          val r3: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.target, transformEmv2Propagation _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), source = r1.getOrElse(o2.source), condition = r2.getOrElse(o2.condition), target = r3.getOrElse(o2.target)))
           else
             MNone()
         case o2: OtherAnnex =>
@@ -1208,13 +1959,114 @@ import MTransformer._
       val rOpt: MOption[Emv2Annex] = o2 match {
         case o2: Emv2Library =>
           val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[IS[Z, ErrorTypeDef]] = transformISZ(o2.errorTypeDef, transformErrorTypeDef _)
+          val r2: MOption[IS[Z, ErrorTypeSetDef]] = transformISZ(o2.errorTypeSetDef, transformErrorTypeSetDef _)
+          val r3: MOption[IS[Z, ErrorAliseDef]] = transformISZ(o2.alias, transformErrorAliseDef _)
+          val r4: MOption[IS[Z, BehaveStateMachine]] = transformISZ(o2.behaveStateMachine, transformBehaveStateMachine _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), errorTypeDef = r1.getOrElse(o2.errorTypeDef), errorTypeSetDef = r2.getOrElse(o2.errorTypeSetDef), alias = r3.getOrElse(o2.alias), behaveStateMachine = r4.getOrElse(o2.behaveStateMachine)))
+          else
+            MNone()
+        case o2: ErrorTypeDef =>
+          val r0: MOption[Name] = transformName(o2.id)
+          val r1: MOption[Name] = transformName(o2.extendType)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), extendType = r1.getOrElse(o2.extendType)))
+          else
+            MNone()
+        case o2: ErrorAliseDef =>
+          val r0: MOption[Name] = transformName(o2.errorType)
+          val r1: MOption[Name] = transformName(o2.aliseType)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(errorType = r0.getOrElse(o2.errorType), aliseType = r1.getOrElse(o2.aliseType)))
+          else
+            MNone()
+        case o2: ErrorTypeSetDef =>
+          val r0: MOption[Name] = transformName(o2.id)
+          val r1: MOption[IS[Z, Name]] = transformISZ(o2.errorTypes, transformName _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), errorTypes = r1.getOrElse(o2.errorTypes)))
+          else
+            MNone()
+        case o2: BehaveStateMachine =>
+          val r0: MOption[Name] = transformName(o2.id)
+          val r1: MOption[IS[Z, ErrorEvent]] = transformISZ(o2.events, transformErrorEvent _)
+          val r2: MOption[IS[Z, ErrorState]] = transformISZ(o2.states, transformErrorState _)
+          val r3: MOption[IS[Z, ErrorTransition]] = transformISZ(o2.transitions, transformErrorTransition _)
+          val r4: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), events = r1.getOrElse(o2.events), states = r2.getOrElse(o2.states), transitions = r3.getOrElse(o2.transitions), properties = r4.getOrElse(o2.properties)))
+          else
+            MNone()
+        case o2: ErrorEvent =>
+          val r0: MOption[Name] = transformName(o2.id)
           if (hasChanged || r0.nonEmpty)
-            MSome(o2(name = r0.getOrElse(o2.name)))
+            MSome(o2(id = r0.getOrElse(o2.id)))
+          else
+            MNone()
+        case o2: ErrorState =>
+          val r0: MOption[Name] = transformName(o2.id)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id)))
+          else
+            MNone()
+        case o2: ErrorTransition =>
+          val r0: MOption[Name] = transformName(o2.id)
+          val r1: MOption[Name] = transformName(o2.sourceState)
+          val r2: MOption[ErrorCondition] = transformErrorCondition(o2.condition)
+          val r3: MOption[Name] = transformName(o2.targetState)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), sourceState = r1.getOrElse(o2.sourceState), condition = r2.getOrElse(o2.condition), targetState = r3.getOrElse(o2.targetState)))
+          else
+            MNone()
+        case o2: ConditionTrigger =>
+          val r0: MOption[IS[Z, Name]] = transformISZ(o2.events, transformName _)
+          val r1: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.propagationPoints, transformEmv2Propagation _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(events = r0.getOrElse(o2.events), propagationPoints = r1.getOrElse(o2.propagationPoints)))
+          else
+            MNone()
+        case o2: AndCondition =>
+          val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+          val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: OrCondition =>
+          val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+          val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: OrMoreCondition =>
+          val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+          val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: OrLessCondition =>
+          val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+          val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: Emv2Clause =>
+          val r0: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.propagations, transformEmv2Propagation _)
+          val r1: MOption[IS[Z, Emv2Flow]] = transformISZ(o2.flows, transformEmv2Flow _)
+          val r2: MOption[Emv2BehaviorSection] = transformEmv2BehaviorSection(o2.componentBehavior)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(propagations = r0.getOrElse(o2.propagations), flows = r1.getOrElse(o2.flows), componentBehavior = r2.getOrElse(o2.componentBehavior)))
           else
             MNone()
         case o2: Emv2Propagation =>
-          if (hasChanged)
-            MSome(o2)
+          val r0: MOption[IS[Z, Name]] = transformISZ(o2.propagationPoint, transformName _)
+          val r1: MOption[IS[Z, Name]] = transformISZ(o2.errorTokens, transformName _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(propagationPoint = r0.getOrElse(o2.propagationPoint), errorTokens = r1.getOrElse(o2.errorTokens)))
           else
             MNone()
         case o2: Emv2Flow =>
@@ -1225,11 +2077,21 @@ import MTransformer._
             MSome(o2(identifier = r0.getOrElse(o2.identifier), sourcePropagation = r1.getOrElse(o2.sourcePropagation), sinkPropagation = r2.getOrElse(o2.sinkPropagation)))
           else
             MNone()
-        case o2: Emv2Clause =>
-          val r0: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.propagations, transformEmv2Propagation _)
-          val r1: MOption[IS[Z, Emv2Flow]] = transformISZ(o2.flows, transformEmv2Flow _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(propagations = r0.getOrElse(o2.propagations), flows = r1.getOrElse(o2.flows)))
+        case o2: Emv2BehaviorSection =>
+          val r0: MOption[IS[Z, ErrorEvent]] = transformISZ(o2.events, transformErrorEvent _)
+          val r1: MOption[IS[Z, ErrorTransition]] = transformISZ(o2.transitions, transformErrorTransition _)
+          val r2: MOption[IS[Z, ErrorPropagation]] = transformISZ(o2.propagations, transformErrorPropagation _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(events = r0.getOrElse(o2.events), transitions = r1.getOrElse(o2.transitions), propagations = r2.getOrElse(o2.propagations)))
+          else
+            MNone()
+        case o2: ErrorPropagation =>
+          val r0: MOption[Name] = transformName(o2.id)
+          val r1: MOption[IS[Z, Name]] = transformISZ(o2.source, transformName _)
+          val r2: MOption[Option[ErrorCondition]] = transformOption(o2.condition, transformErrorCondition _)
+          val r3: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.target, transformEmv2Propagation _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), source = r1.getOrElse(o2.source), condition = r2.getOrElse(o2.condition), target = r3.getOrElse(o2.target)))
           else
             MNone()
       }
@@ -1257,8 +2119,12 @@ import MTransformer._
       val o2: Emv2Library = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[Name] = transformName(o2.name)
-      if (hasChanged || r0.nonEmpty)
-        MSome(o2(name = r0.getOrElse(o2.name)))
+      val r1: MOption[IS[Z, ErrorTypeDef]] = transformISZ(o2.errorTypeDef, transformErrorTypeDef _)
+      val r2: MOption[IS[Z, ErrorTypeSetDef]] = transformISZ(o2.errorTypeSetDef, transformErrorTypeSetDef _)
+      val r3: MOption[IS[Z, ErrorAliseDef]] = transformISZ(o2.alias, transformErrorAliseDef _)
+      val r4: MOption[IS[Z, BehaveStateMachine]] = transformISZ(o2.behaveStateMachine, transformBehaveStateMachine _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), errorTypeDef = r1.getOrElse(o2.errorTypeDef), errorTypeSetDef = r2.getOrElse(o2.errorTypeSetDef), alias = r3.getOrElse(o2.alias), behaveStateMachine = r4.getOrElse(o2.behaveStateMachine)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -1278,13 +2144,443 @@ import MTransformer._
     }
   }
 
+  def transformErrorTypeDef(o: ErrorTypeDef): MOption[ErrorTypeDef] = {
+    val preR: PreResult[ErrorTypeDef] = preErrorTypeDef(o)
+    val r: MOption[ErrorTypeDef] = if (preR.continu) {
+      val o2: ErrorTypeDef = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.id)
+      val r1: MOption[Name] = transformName(o2.extendType)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), extendType = r1.getOrElse(o2.extendType)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: ErrorTypeDef = r.getOrElse(o)
+    val postR: MOption[ErrorTypeDef] = postErrorTypeDef(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformErrorAliseDef(o: ErrorAliseDef): MOption[ErrorAliseDef] = {
+    val preR: PreResult[ErrorAliseDef] = preErrorAliseDef(o)
+    val r: MOption[ErrorAliseDef] = if (preR.continu) {
+      val o2: ErrorAliseDef = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.errorType)
+      val r1: MOption[Name] = transformName(o2.aliseType)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(errorType = r0.getOrElse(o2.errorType), aliseType = r1.getOrElse(o2.aliseType)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: ErrorAliseDef = r.getOrElse(o)
+    val postR: MOption[ErrorAliseDef] = postErrorAliseDef(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformErrorTypeSetDef(o: ErrorTypeSetDef): MOption[ErrorTypeSetDef] = {
+    val preR: PreResult[ErrorTypeSetDef] = preErrorTypeSetDef(o)
+    val r: MOption[ErrorTypeSetDef] = if (preR.continu) {
+      val o2: ErrorTypeSetDef = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.id)
+      val r1: MOption[IS[Z, Name]] = transformISZ(o2.errorTypes, transformName _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), errorTypes = r1.getOrElse(o2.errorTypes)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: ErrorTypeSetDef = r.getOrElse(o)
+    val postR: MOption[ErrorTypeSetDef] = postErrorTypeSetDef(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBehaveStateMachine(o: BehaveStateMachine): MOption[BehaveStateMachine] = {
+    val preR: PreResult[BehaveStateMachine] = preBehaveStateMachine(o)
+    val r: MOption[BehaveStateMachine] = if (preR.continu) {
+      val o2: BehaveStateMachine = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.id)
+      val r1: MOption[IS[Z, ErrorEvent]] = transformISZ(o2.events, transformErrorEvent _)
+      val r2: MOption[IS[Z, ErrorState]] = transformISZ(o2.states, transformErrorState _)
+      val r3: MOption[IS[Z, ErrorTransition]] = transformISZ(o2.transitions, transformErrorTransition _)
+      val r4: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), events = r1.getOrElse(o2.events), states = r2.getOrElse(o2.states), transitions = r3.getOrElse(o2.transitions), properties = r4.getOrElse(o2.properties)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BehaveStateMachine = r.getOrElse(o)
+    val postR: MOption[BehaveStateMachine] = postBehaveStateMachine(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformErrorEvent(o: ErrorEvent): MOption[ErrorEvent] = {
+    val preR: PreResult[ErrorEvent] = preErrorEvent(o)
+    val r: MOption[ErrorEvent] = if (preR.continu) {
+      val o2: ErrorEvent = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.id)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: ErrorEvent = r.getOrElse(o)
+    val postR: MOption[ErrorEvent] = postErrorEvent(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformErrorState(o: ErrorState): MOption[ErrorState] = {
+    val preR: PreResult[ErrorState] = preErrorState(o)
+    val r: MOption[ErrorState] = if (preR.continu) {
+      val o2: ErrorState = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.id)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: ErrorState = r.getOrElse(o)
+    val postR: MOption[ErrorState] = postErrorState(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformErrorTransition(o: ErrorTransition): MOption[ErrorTransition] = {
+    val preR: PreResult[ErrorTransition] = preErrorTransition(o)
+    val r: MOption[ErrorTransition] = if (preR.continu) {
+      val o2: ErrorTransition = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.id)
+      val r1: MOption[Name] = transformName(o2.sourceState)
+      val r2: MOption[ErrorCondition] = transformErrorCondition(o2.condition)
+      val r3: MOption[Name] = transformName(o2.targetState)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), sourceState = r1.getOrElse(o2.sourceState), condition = r2.getOrElse(o2.condition), targetState = r3.getOrElse(o2.targetState)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: ErrorTransition = r.getOrElse(o)
+    val postR: MOption[ErrorTransition] = postErrorTransition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformErrorCondition(o: ErrorCondition): MOption[ErrorCondition] = {
+    val preR: PreResult[ErrorCondition] = preErrorCondition(o)
+    val r: MOption[ErrorCondition] = if (preR.continu) {
+      val o2: ErrorCondition = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[ErrorCondition] = o2 match {
+        case o2: ConditionTrigger =>
+          val r0: MOption[IS[Z, Name]] = transformISZ(o2.events, transformName _)
+          val r1: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.propagationPoints, transformEmv2Propagation _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(events = r0.getOrElse(o2.events), propagationPoints = r1.getOrElse(o2.propagationPoints)))
+          else
+            MNone()
+        case o2: AndCondition =>
+          val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+          val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: OrCondition =>
+          val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+          val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: OrMoreCondition =>
+          val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+          val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: OrLessCondition =>
+          val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+          val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: ErrorCondition = r.getOrElse(o)
+    val postR: MOption[ErrorCondition] = postErrorCondition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformConditionTrigger(o: ConditionTrigger): MOption[ConditionTrigger] = {
+    val preR: PreResult[ConditionTrigger] = preConditionTrigger(o)
+    val r: MOption[ConditionTrigger] = if (preR.continu) {
+      val o2: ConditionTrigger = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, Name]] = transformISZ(o2.events, transformName _)
+      val r1: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.propagationPoints, transformEmv2Propagation _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(events = r0.getOrElse(o2.events), propagationPoints = r1.getOrElse(o2.propagationPoints)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: ConditionTrigger = r.getOrElse(o)
+    val postR: MOption[ConditionTrigger] = postConditionTrigger(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformAndCondition(o: AndCondition): MOption[AndCondition] = {
+    val preR: PreResult[AndCondition] = preAndCondition(o)
+    val r: MOption[AndCondition] = if (preR.continu) {
+      val o2: AndCondition = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+      val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: AndCondition = r.getOrElse(o)
+    val postR: MOption[AndCondition] = postAndCondition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformOrCondition(o: OrCondition): MOption[OrCondition] = {
+    val preR: PreResult[OrCondition] = preOrCondition(o)
+    val r: MOption[OrCondition] = if (preR.continu) {
+      val o2: OrCondition = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+      val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: OrCondition = r.getOrElse(o)
+    val postR: MOption[OrCondition] = postOrCondition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformOrMoreCondition(o: OrMoreCondition): MOption[OrMoreCondition] = {
+    val preR: PreResult[OrMoreCondition] = preOrMoreCondition(o)
+    val r: MOption[OrMoreCondition] = if (preR.continu) {
+      val o2: OrMoreCondition = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+      val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: OrMoreCondition = r.getOrElse(o)
+    val postR: MOption[OrMoreCondition] = postOrMoreCondition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformOrLessCondition(o: OrLessCondition): MOption[OrLessCondition] = {
+    val preR: PreResult[OrLessCondition] = preOrLessCondition(o)
+    val r: MOption[OrLessCondition] = if (preR.continu) {
+      val o2: OrLessCondition = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[ErrorCondition] = transformErrorCondition(o2.lhs)
+      val r1: MOption[ErrorCondition] = transformErrorCondition(o2.rhs)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: OrLessCondition = r.getOrElse(o)
+    val postR: MOption[OrLessCondition] = postOrLessCondition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformEmv2Clause(o: Emv2Clause): MOption[Emv2Clause] = {
+    val preR: PreResult[Emv2Clause] = preEmv2Clause(o)
+    val r: MOption[Emv2Clause] = if (preR.continu) {
+      val o2: Emv2Clause = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.propagations, transformEmv2Propagation _)
+      val r1: MOption[IS[Z, Emv2Flow]] = transformISZ(o2.flows, transformEmv2Flow _)
+      val r2: MOption[Emv2BehaviorSection] = transformEmv2BehaviorSection(o2.componentBehavior)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(propagations = r0.getOrElse(o2.propagations), flows = r1.getOrElse(o2.flows), componentBehavior = r2.getOrElse(o2.componentBehavior)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: Emv2Clause = r.getOrElse(o)
+    val postR: MOption[Emv2Clause] = postEmv2Clause(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformEmv2Propagation(o: Emv2Propagation): MOption[Emv2Propagation] = {
     val preR: PreResult[Emv2Propagation] = preEmv2Propagation(o)
     val r: MOption[Emv2Propagation] = if (preR.continu) {
       val o2: Emv2Propagation = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
+      val r0: MOption[IS[Z, Name]] = transformISZ(o2.propagationPoint, transformName _)
+      val r1: MOption[IS[Z, Name]] = transformISZ(o2.errorTokens, transformName _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(propagationPoint = r0.getOrElse(o2.propagationPoint), errorTokens = r1.getOrElse(o2.errorTokens)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -1333,15 +2629,16 @@ import MTransformer._
     }
   }
 
-  def transformEmv2Clause(o: Emv2Clause): MOption[Emv2Clause] = {
-    val preR: PreResult[Emv2Clause] = preEmv2Clause(o)
-    val r: MOption[Emv2Clause] = if (preR.continu) {
-      val o2: Emv2Clause = preR.resultOpt.getOrElse(o)
+  def transformEmv2BehaviorSection(o: Emv2BehaviorSection): MOption[Emv2BehaviorSection] = {
+    val preR: PreResult[Emv2BehaviorSection] = preEmv2BehaviorSection(o)
+    val r: MOption[Emv2BehaviorSection] = if (preR.continu) {
+      val o2: Emv2BehaviorSection = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.propagations, transformEmv2Propagation _)
-      val r1: MOption[IS[Z, Emv2Flow]] = transformISZ(o2.flows, transformEmv2Flow _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(propagations = r0.getOrElse(o2.propagations), flows = r1.getOrElse(o2.flows)))
+      val r0: MOption[IS[Z, ErrorEvent]] = transformISZ(o2.events, transformErrorEvent _)
+      val r1: MOption[IS[Z, ErrorTransition]] = transformISZ(o2.transitions, transformErrorTransition _)
+      val r2: MOption[IS[Z, ErrorPropagation]] = transformISZ(o2.propagations, transformErrorPropagation _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(events = r0.getOrElse(o2.events), transitions = r1.getOrElse(o2.transitions), propagations = r2.getOrElse(o2.propagations)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -1350,8 +2647,38 @@ import MTransformer._
       MNone()
     }
     val hasChanged: B = r.nonEmpty
-    val o2: Emv2Clause = r.getOrElse(o)
-    val postR: MOption[Emv2Clause] = postEmv2Clause(o2)
+    val o2: Emv2BehaviorSection = r.getOrElse(o)
+    val postR: MOption[Emv2BehaviorSection] = postEmv2BehaviorSection(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformErrorPropagation(o: ErrorPropagation): MOption[ErrorPropagation] = {
+    val preR: PreResult[ErrorPropagation] = preErrorPropagation(o)
+    val r: MOption[ErrorPropagation] = if (preR.continu) {
+      val o2: ErrorPropagation = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.id)
+      val r1: MOption[IS[Z, Name]] = transformISZ(o2.source, transformName _)
+      val r2: MOption[Option[ErrorCondition]] = transformOption(o2.condition, transformErrorCondition _)
+      val r3: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.target, transformEmv2Propagation _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), source = r1.getOrElse(o2.source), condition = r2.getOrElse(o2.condition), target = r3.getOrElse(o2.target)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: ErrorPropagation = r.getOrElse(o)
+    val postR: MOption[ErrorPropagation] = postErrorPropagation(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

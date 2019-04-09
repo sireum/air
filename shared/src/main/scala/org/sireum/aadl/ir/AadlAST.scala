@@ -26,7 +26,6 @@
 
 package org.sireum.aadl.ir
 
-import org.graalvm.compiler.hotspot.HotSpotForeignCallLinkage.Transition
 import org.sireum._
 
 @datatype class Aadl(components: ISZ[Component], errorLib: ISZ[Emv2Library], dataComponents: ISZ[Component])

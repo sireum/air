@@ -94,6 +94,21 @@ class AadlASTFactory {
       isz(properties)
     )
 
+  def featureAccess(identifier: Name,
+                    category: AadlASTJavaFactory.FeatureCategory,
+                    classifier: Classifier,
+                    accessType: AadlASTJavaFactory.AccessType,
+                    accessCategory: AadlASTJavaFactory.AccessCategory,
+                    properties: JList[Property]): FeatureAccess =
+    FeatureAccess(
+      identifier,
+      FeatureCategory.byName(category.name()).get,
+      if(classifier != null) Some(classifier) else None(),
+      AccessType.byName(accessType.name()).get,
+      AccessCategory.byName(accessCategory.name()).get,
+      isz(properties)
+    )
+
   def connection(name : Name,
                  src: JList[EndPoint],
                  dst: JList[EndPoint],

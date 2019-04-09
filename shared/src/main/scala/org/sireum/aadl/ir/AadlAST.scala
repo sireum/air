@@ -256,15 +256,12 @@ import org.sireum._
 @datatype class OrCondition(lhs : ErrorCondition,
                             rhs : ErrorCondition) extends ErrorCondition
 
-@datatype class OrMoreCondition(number : Z,
-                                lhs : ErrorCondition,
-                                rhs : ErrorCondition) extends ErrorCondition
+@datatype class OrMoreCondition(number: Z, conditions: ISZ[ConditionTrigger]) extends ErrorCondition
 
-@datatype class OrLessCondition(number : Z,
-                                lhs : ErrorCondition,
-                                rhs : ErrorCondition) extends ErrorCondition
+@datatype class OrLessCondition(number: Z, conditions: ISZ[ConditionTrigger]) extends ErrorCondition
 
-@datatype class Emv2Clause(libraries: ISZ[String],
+@datatype class Emv2Clause(
+  libraries: ISZ[Name],
                            propagations: ISZ[Emv2Propagation],
                            flows: ISZ[Emv2Flow],
                            componentBehavior: Emv2BehaviorSection) extends Emv2Annex

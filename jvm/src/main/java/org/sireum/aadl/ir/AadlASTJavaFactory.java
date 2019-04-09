@@ -172,4 +172,114 @@ public class AadlASTJavaFactory {
                             Feature sink) {
         return f.flow(name, kind, source, sink);
     }
+
+    //-------------EMv2 Clause------------------
+
+    public static Emv2Clause emv2Clause(List<Name> libraries,
+                                        List<Emv2Propagation> propagations,
+                                        List<Emv2Flow> flows,
+                                        Emv2BehaviorSection componentBehavior) {
+        return f.emv2Clause(libraries, propagations, flows, componentBehavior);
+    }
+
+    public static Emv2Propagation emv2Propagation(PropagationDirection direction,
+                                                  List<Name> propagationPoint,
+                                                  List<Name> errorTokens) {
+        return f.emv2Propagation(direction, propagationPoint, errorTokens);
+    }
+
+    public static Emv2Flow emv2Flow(Name identifier,
+                                    FlowKind kind,
+                                    Emv2Propagation sourcePropagation,
+                                    Emv2Propagation sinkPropagation) {
+        return f.emv2Flow(identifier, kind, sourcePropagation, sinkPropagation);
+    }
+
+    public static Emv2BehaviorSection emv2BehaviorSection(List<ErrorEvent> events,
+                                                          List<ErrorTransition> transitions,
+                                                          List<ErrorPropagation> propagations) {
+        return f.emv2BehaviorSection(events, transitions, propagations);
+    }
+
+    public static ErrorPropagation errorPropagation(Name id,
+                                                    List<Name> source,
+                                                    ErrorCondition errorCondition,
+                                                    List<Emv2Propagation> target) {
+        return f.errorPropagation(id, source, errorCondition, target);
+    }
+
+    public enum PropagationDirection {
+        In, Out
+    }
+
+    public static ConditionTrigger conditionTrigger(List<Name> events,
+                                                    List<Emv2Propagation> propagationPoints) {
+        return f.conditionTrigger(events, propagationPoints);
+    }
+
+    public static AndCondition andCondition(ErrorCondition lhs, ErrorCondition rhs) {
+        return f.andCondition(lhs, rhs);
+    }
+
+    public static OrCondition orCondition(ErrorCondition lhs, ErrorCondition rhs) {
+        return f.orCondition(lhs, rhs);
+    }
+
+    public static OrLessCondition orLessCondition(int number,
+                                                  List<ConditionTrigger> conds) {
+        return f.orLessCondition(number, conds);
+    }
+
+    public static OrMoreCondition orMoreCondition(int number,
+                                                  List<ConditionTrigger> conds) {
+        return f.orMoreCondition(number, conds);
+    }
+
+    //--------------EMv2 Library-------------------
+
+    public static Emv2Library emv2Library(Name name,
+                                          List<String> useTypes,
+                                          List<ErrorTypeDef> errorTypeDefs,
+                                          List<ErrorTypeSetDef> errorTypeSetDefList,
+                                          List<ErrorAliseDef> alias,
+                                          List<BehaveStateMachine> behaveStateMachines) {
+        return f.emv2Library(name,
+                useTypes, errorTypeDefs, errorTypeSetDefList, alias, behaveStateMachines);
+    }
+
+    public static ErrorTypeDef errorTypeDef(Name id, Name extendType) {
+        return f.errorTypeDef(id, extendType);
+    }
+
+    public static ErrorAliseDef errorAliseDef(Name errorType, Name aliasType) {
+        return f.errorAliseDef(errorType, aliasType);
+    }
+
+    public static ErrorTypeSetDef errorTypeSetDef(Name id, List<Name> errorTypes) {
+        return f.errorTypeSetDef(id, errorTypes);
+    }
+
+    public static BehaveStateMachine behaveStateMachine(Name id,
+                                                        List<ErrorEvent> events,
+                                                        List<ErrorState> states,
+                                                        List<ErrorTransition> transitions,
+                                                        List<Property> properties) {
+        return f.behaveStateMachine(id, events, states, transitions, properties);
+    }
+
+    public static ErrorEvent errorEvent(Name id) {
+        return f.errorEvent(id);
+    }
+
+    public static ErrorState errorState(Name id, Boolean isInitial) {
+        return f.errorState(id, isInitial);
+    }
+
+    public static ErrorTransition errorTransition(Name id,
+                                                  Name sourceState,
+                                                  ErrorCondition condition,
+                                                  Name targetState) {
+        return f.errorTransition(id, sourceState, condition, targetState);
+    }
+
 }

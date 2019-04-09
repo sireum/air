@@ -64,7 +64,7 @@ class AadlASTFactory {
     )
 
   def classifier(name: Predef.String): Classifier =
-    Classifier(name);
+    Classifier(name)
 
   def featureEnd(identifier: Name,
                  direction: AadlASTJavaFactory.Direction,
@@ -196,6 +196,123 @@ class AadlASTFactory {
       if(source != null) Some(source) else None(),
       if(sink != null) Some(sink) else None()
     )
+
+  //-------------EMv2 Clause------------------
+
+  def emv2Clause(
+    libraries: JList[Name],
+    propagations: JList[Emv2Propagation],
+    flows: JList[Emv2Flow],
+    componentBehavior: Emv2BehaviorSection
+  ): Emv2Clause = {
+    Emv2Clause(isz(libraries), isz(propagations), isz(flows), componentBehavior)
+  }
+
+  def emv2Propagation(
+    direction: AadlASTJavaFactory.PropagationDirection,
+    propagationPoint: JList[Name],
+    errorTokens: JList[Name]
+  ): Emv2Propagation = {
+    Emv2Propagation(PropagationDirection.byName(direction.name()).get, isz(propagationPoint), isz(errorTokens))
+  }
+
+  def emv2Flow(
+    identifier: Name,
+    kind: AadlASTJavaFactory.FlowKind,
+    sourcePropagation: Emv2Propagation,
+    sinkPropagation: Emv2Propagation
+  ): Emv2Flow = {
+    Emv2Flow(
+      identifier,
+      FlowKind.byName(kind.name).get,
+      if (sourcePropagation != null) Some(sourcePropagation) else None(),
+      if (sinkPropagation != null) Some(sinkPropagation) else None()
+    )
+  }
+
+  def emv2BehaviorSection(
+    events: JList[ErrorEvent],
+    transitions: JList[ErrorTransition],
+    propagations: JList[ErrorPropagation]
+  ): Emv2BehaviorSection = {
+    Emv2BehaviorSection(isz(events), isz(transitions), isz(propagations))
+  }
+
+  def errorPropagation(
+    id: Name,
+    source: JList[Name],
+    condition: ErrorCondition,
+    target: JList[Emv2Propagation]
+  ): ErrorPropagation = {
+    ErrorPropagation(id, isz(source), if (condition != null) Some(condition) else None(), isz(target))
+  }
+
+  def conditionTrigger(events: JList[Name], propagationPoints: JList[Emv2Propagation]): ConditionTrigger = {
+    ConditionTrigger(isz(events), isz(propagationPoints))
+  }
+
+  def andCondition(lhs: ErrorCondition, rhs: ErrorCondition): AndCondition = {
+    AndCondition(lhs, rhs)
+  }
+
+  def orCondition(lhs: ErrorCondition, rhs: ErrorCondition): OrCondition = {
+    OrCondition(lhs, rhs)
+  }
+
+  def orLessCondition(number: Int, conds: JList[ConditionTrigger]): OrLessCondition = {
+    OrLessCondition(org.sireum.Z(number), isz(conds))
+  }
+
+  def orMoreCondition(number: Int, conds: JList[ConditionTrigger]): OrMoreCondition = {
+    OrMoreCondition(org.sireum.Z(number), isz(conds))
+  }
+
+  //--------------EMv2 Library-------------------
+
+  def emv2Library(
+    name: Name,
+    useTypes: JList[String],
+    errorTypeDef: JList[ErrorTypeDef],
+    errorTypeSetDef: JList[ErrorTypeSetDef],
+    alias: JList[ErrorAliseDef],
+    behaveStateMachine: JList[BehaveStateMachine]
+  ): Emv2Library = {
+    Emv2Library(name, isz(useTypes), isz(errorTypeDef), isz(errorTypeSetDef), isz(alias), isz(behaveStateMachine))
+  }
+
+  def errorTypeDef(id: Name, extendType: Name): ErrorTypeDef = {
+    ErrorTypeDef(id, extendType)
+  }
+
+  def errorAliseDef(errorType: Name, aliasType: Name): ErrorAliseDef = {
+    ErrorAliseDef(errorType, aliasType)
+  }
+
+  def errorTypeSetDef(id: Name, errorTypes: JList[Name]): ErrorTypeSetDef = {
+    ErrorTypeSetDef(id, isz(errorTypes))
+  }
+
+  def behaveStateMachine(
+    id: Name,
+    events: JList[ErrorEvent],
+    states: JList[ErrorState],
+    transitions: JList[ErrorTransition],
+    properties: JList[Property]
+  ): BehaveStateMachine = {
+    BehaveStateMachine(id, isz(events), isz(states), isz(transitions), isz(properties))
+  }
+
+  def errorEvent(id: Name): ErrorEvent = {
+    ErrorEvent(id)
+  }
+
+  def errorState(id: Name, isInitial: Boolean): ErrorState = {
+    ErrorState(id, org.sireum.B(isInitial))
+  }
+
+  def errorTransition(id: Name, sourceState: Name, condition: ErrorCondition, targetState: Name): ErrorTransition = {
+    ErrorTransition(id, sourceState, condition, targetState)
+  }
 
   def isz[T](l: JList[T]): ISZ[T] = {
     import scala.collection.JavaConverters._

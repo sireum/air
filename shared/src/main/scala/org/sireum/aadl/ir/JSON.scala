@@ -30,8 +30,8 @@
 
 package org.sireum.aadl.ir
 
-import org.sireum._
 import org.sireum.Json.Printer._
+import org.sireum._
 
 object JSON {
 
@@ -49,7 +49,8 @@ object JSON {
     @pure def printName(o: Name): ST = {
       return printObject(ISZ(
         ("type", st""""Name""""),
-        ("name", printISZ(T, o.name, printString _))
+        ("name", printISZ(T, o.name, printString _)),
+        ("pos", printOption(F, o.pos, printPosition _))
       ))
     }
 
@@ -361,7 +362,7 @@ object JSON {
       o match {
         case o: Emv2Library => return printEmv2Library(o)
         case o: ErrorTypeDef => return printErrorTypeDef(o)
-        case o: ErrorAliseDef => return printErrorAliseDef(o)
+        case o: ErrorAliasDef => return printErrorAliasDef(o)
         case o: ErrorTypeSetDef => return printErrorTypeSetDef(o)
         case o: BehaveStateMachine => return printBehaveStateMachine(o)
         case o: ErrorEvent => return printErrorEvent(o)
@@ -370,6 +371,7 @@ object JSON {
         case o: ConditionTrigger => return printConditionTrigger(o)
         case o: AndCondition => return printAndCondition(o)
         case o: OrCondition => return printOrCondition(o)
+        case o: AllCondition => return printAllCondition(o)
         case o: OrMoreCondition => return printOrMoreCondition(o)
         case o: OrLessCondition => return printOrLessCondition(o)
         case o: Emv2Clause => return printEmv2Clause(o)
@@ -385,7 +387,7 @@ object JSON {
       o match {
         case o: Emv2Library => return printEmv2Library(o)
         case o: ErrorTypeDef => return printErrorTypeDef(o)
-        case o: ErrorAliseDef => return printErrorAliseDef(o)
+        case o: ErrorAliasDef => return printErrorAliasDef(o)
         case o: ErrorTypeSetDef => return printErrorTypeSetDef(o)
         case o: BehaveStateMachine => return printBehaveStateMachine(o)
         case o: ErrorEvent => return printErrorEvent(o)
@@ -394,6 +396,7 @@ object JSON {
         case o: ConditionTrigger => return printConditionTrigger(o)
         case o: AndCondition => return printAndCondition(o)
         case o: OrCondition => return printOrCondition(o)
+        case o: AllCondition => return printAllCondition(o)
         case o: OrMoreCondition => return printOrMoreCondition(o)
         case o: OrLessCondition => return printOrLessCondition(o)
         case o: Emv2Clause => return printEmv2Clause(o)
@@ -422,7 +425,7 @@ object JSON {
         ("useTypes", printISZ(T, o.useTypes, printString _)),
         ("errorTypeDef", printISZ(F, o.errorTypeDef, printErrorTypeDef _)),
         ("errorTypeSetDef", printISZ(F, o.errorTypeSetDef, printErrorTypeSetDef _)),
-        ("alias", printISZ(F, o.alias, printErrorAliseDef _)),
+        ("alias", printISZ(F, o.alias, printErrorAliasDef _)),
         ("behaveStateMachine", printISZ(F, o.behaveStateMachine, printBehaveStateMachine _))
       ))
     }
@@ -442,13 +445,12 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""ErrorTypeDef""""),
         ("id", printName(o.id)),
-        ("extendType", printName(o.extendType))
+        ("extendType", printOption(F, o.extendType, printName _))
       ))
     }
 
-    @pure def printErrorAliseDef(o: ErrorAliseDef): ST = {
-      return printObject(ISZ(
-        ("type", st""""ErrorAliseDef""""),
+    @pure def printErrorAliasDef(o: ErrorAliasDef): ST = {
+      return printObject(ISZ(("type", st""""ErrorAliasDef""""),
         ("errorType", printName(o.errorType)),
         ("aliseType", printName(o.aliseType))
       ))
@@ -491,7 +493,7 @@ object JSON {
     @pure def printErrorTransition(o: ErrorTransition): ST = {
       return printObject(ISZ(
         ("type", st""""ErrorTransition""""),
-        ("id", printName(o.id)),
+        ("id", printOption(F, o.id, printName _)),
         ("sourceState", printName(o.sourceState)),
         ("condition", printErrorCondition(o.condition)),
         ("targetState", printName(o.targetState))
@@ -503,6 +505,7 @@ object JSON {
         case o: ConditionTrigger => return printConditionTrigger(o)
         case o: AndCondition => return printAndCondition(o)
         case o: OrCondition => return printOrCondition(o)
+        case o: AllCondition => return printAllCondition(o)
         case o: OrMoreCondition => return printOrMoreCondition(o)
         case o: OrLessCondition => return printOrLessCondition(o)
       }
@@ -519,16 +522,17 @@ object JSON {
     @pure def printAndCondition(o: AndCondition): ST = {
       return printObject(ISZ(
         ("type", st""""AndCondition""""),
-        ("lhs", printErrorCondition(o.lhs)),
-        ("rhs", printErrorCondition(o.rhs))
+        ("op", printISZ(F, o.op, printErrorCondition _))
       ))
     }
 
     @pure def printOrCondition(o: OrCondition): ST = {
       return printObject(ISZ(
-        ("type", st""""OrCondition""""),
-        ("lhs", printErrorCondition(o.lhs)),
-        ("rhs", printErrorCondition(o.rhs))
+        ("type", st""""OrCondition""""), ("op", printISZ(F, o.op, printErrorCondition _))))
+    }
+
+    @pure def printAllCondition(o: AllCondition): ST = {
+      return printObject(ISZ(("type", st""""AllCondition""""), ("op", printISZ(F, o.op, printErrorCondition _))
       ))
     }
 
@@ -536,8 +540,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""OrMoreCondition""""),
         ("number", printZ(o.number)),
-        ("lhs", printErrorCondition(o.lhs)),
-        ("rhs", printErrorCondition(o.rhs))
+        ("conditions", printISZ(F, o.conditions, printErrorCondition _))
       ))
     }
 
@@ -545,18 +548,17 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""OrLessCondition""""),
         ("number", printZ(o.number)),
-        ("lhs", printErrorCondition(o.lhs)),
-        ("rhs", printErrorCondition(o.rhs))
+        ("conditions", printISZ(F, o.conditions, printErrorCondition _))
       ))
     }
 
     @pure def printEmv2Clause(o: Emv2Clause): ST = {
       return printObject(ISZ(
         ("type", st""""Emv2Clause""""),
-        ("libraries", printISZ(T, o.libraries, printString _)),
+        ("libraries", printISZ(F, o.libraries, printName _)),
         ("propagations", printISZ(F, o.propagations, printEmv2Propagation _)),
         ("flows", printISZ(F, o.flows, printEmv2Flow _)),
-        ("componentBehavior", printEmv2BehaviorSection(o.componentBehavior))
+        ("componentBehavior", printOption(F, o.componentBehavior, printEmv2BehaviorSection _))
       ))
     }
 
@@ -564,7 +566,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Emv2Propagation""""),
         ("direction", printPropagationDirectionType(o.direction)),
-        ("propagationPoint", printISZ(F, o.propagationPoint, printName _)),
+        ("propagationPoint", printName(o.propagationPoint)),
         ("errorTokens", printISZ(F, o.errorTokens, printName _))
       ))
     }
@@ -591,7 +593,7 @@ object JSON {
     @pure def printErrorPropagation(o: ErrorPropagation): ST = {
       return printObject(ISZ(
         ("type", st""""ErrorPropagation""""),
-        ("id", printName(o.id)),
+        ("id", printOption(F, o.id, printName _)),
         ("source", printISZ(F, o.source, printName _)),
         ("condition", printOption(F, o.condition, printErrorCondition _)),
         ("target", printISZ(F, o.target, printEmv2Propagation _))
@@ -647,7 +649,10 @@ object JSON {
       parser.parseObjectKey("name")
       val name = parser.parseISZ(parser.parseString _)
       parser.parseObjectNext()
-      return Name(name)
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return Name(name, pos)
     }
 
     def parseComponent(): Component = {
@@ -1241,11 +1246,34 @@ object JSON {
     }
 
     def parseAnnexClause(): AnnexClause = {
-      val t = parser.parseObjectTypes(ISZ("Emv2Library", "ErrorTypeDef", "ErrorAliseDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation", "OtherAnnex"))
+      val t = parser.parseObjectTypes(
+        ISZ(
+          "Emv2Library",
+          "ErrorTypeDef",
+          "ErrorAliasDef",
+          "ErrorTypeSetDef",
+          "BehaveStateMachine",
+          "ErrorEvent",
+          "ErrorState",
+          "ErrorTransition",
+          "ConditionTrigger",
+          "AndCondition",
+          "OrCondition",
+          "AllCondition",
+          "OrMoreCondition",
+          "OrLessCondition",
+          "Emv2Clause",
+          "Emv2Propagation",
+          "Emv2Flow",
+          "Emv2BehaviorSection",
+          "ErrorPropagation",
+          "OtherAnnex"
+        )
+      )
       t.native match {
         case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
         case "ErrorTypeDef" => val r = parseErrorTypeDefT(T); return r
-        case "ErrorAliseDef" => val r = parseErrorAliseDefT(T); return r
+        case "ErrorAliasDef" => val r = parseErrorAliasDefT(T); return r
         case "ErrorTypeSetDef" => val r = parseErrorTypeSetDefT(T); return r
         case "BehaveStateMachine" => val r = parseBehaveStateMachineT(T); return r
         case "ErrorEvent" => val r = parseErrorEventT(T); return r
@@ -1254,6 +1282,7 @@ object JSON {
         case "ConditionTrigger" => val r = parseConditionTriggerT(T); return r
         case "AndCondition" => val r = parseAndConditionT(T); return r
         case "OrCondition" => val r = parseOrConditionT(T); return r
+        case "AllCondition" => val r = parseAllConditionT(T); return r
         case "OrMoreCondition" => val r = parseOrMoreConditionT(T); return r
         case "OrLessCondition" => val r = parseOrLessConditionT(T); return r
         case "Emv2Clause" => val r = parseEmv2ClauseT(T); return r
@@ -1267,11 +1296,33 @@ object JSON {
     }
 
     def parseEmv2Annex(): Emv2Annex = {
-      val t = parser.parseObjectTypes(ISZ("Emv2Library", "ErrorTypeDef", "ErrorAliseDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation"))
+      val t = parser.parseObjectTypes(
+        ISZ(
+          "Emv2Library",
+          "ErrorTypeDef",
+          "ErrorAliasDef",
+          "ErrorTypeSetDef",
+          "BehaveStateMachine",
+          "ErrorEvent",
+          "ErrorState",
+          "ErrorTransition",
+          "ConditionTrigger",
+          "AndCondition",
+          "OrCondition",
+          "AllCondition",
+          "OrMoreCondition",
+          "OrLessCondition",
+          "Emv2Clause",
+          "Emv2Propagation",
+          "Emv2Flow",
+          "Emv2BehaviorSection",
+          "ErrorPropagation"
+        )
+      )
       t.native match {
         case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
         case "ErrorTypeDef" => val r = parseErrorTypeDefT(T); return r
-        case "ErrorAliseDef" => val r = parseErrorAliseDefT(T); return r
+        case "ErrorAliasDef" => val r = parseErrorAliasDefT(T); return r
         case "ErrorTypeSetDef" => val r = parseErrorTypeSetDefT(T); return r
         case "BehaveStateMachine" => val r = parseBehaveStateMachineT(T); return r
         case "ErrorEvent" => val r = parseErrorEventT(T); return r
@@ -1280,6 +1331,7 @@ object JSON {
         case "ConditionTrigger" => val r = parseConditionTriggerT(T); return r
         case "AndCondition" => val r = parseAndConditionT(T); return r
         case "OrCondition" => val r = parseOrConditionT(T); return r
+        case "AllCondition" => val r = parseAllConditionT(T); return r
         case "OrMoreCondition" => val r = parseOrMoreConditionT(T); return r
         case "OrLessCondition" => val r = parseOrLessConditionT(T); return r
         case "Emv2Clause" => val r = parseEmv2ClauseT(T); return r
@@ -1334,7 +1386,7 @@ object JSON {
       val errorTypeSetDef = parser.parseISZ(parseErrorTypeSetDef _)
       parser.parseObjectNext()
       parser.parseObjectKey("alias")
-      val alias = parser.parseISZ(parseErrorAliseDef _)
+      val alias = parser.parseISZ(parseErrorAliasDef _)
       parser.parseObjectNext()
       parser.parseObjectKey("behaveStateMachine")
       val behaveStateMachine = parser.parseISZ(parseBehaveStateMachine _)
@@ -1376,19 +1428,19 @@ object JSON {
       val id = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("extendType")
-      val extendType = parseName()
+      val extendType = parser.parseOption(parseName _)
       parser.parseObjectNext()
       return ErrorTypeDef(id, extendType)
     }
 
-    def parseErrorAliseDef(): ErrorAliseDef = {
-      val r = parseErrorAliseDefT(F)
+    def parseErrorAliasDef(): ErrorAliasDef = {
+      val r = parseErrorAliasDefT(F)
       return r
     }
 
-    def parseErrorAliseDefT(typeParsed: B): ErrorAliseDef = {
+    def parseErrorAliasDefT(typeParsed: B): ErrorAliasDef = {
       if (!typeParsed) {
-        parser.parseObjectType("ErrorAliseDef")
+        parser.parseObjectType("ErrorAliasDef")
       }
       parser.parseObjectKey("errorType")
       val errorType = parseName()
@@ -1396,7 +1448,7 @@ object JSON {
       parser.parseObjectKey("aliseType")
       val aliseType = parseName()
       parser.parseObjectNext()
-      return ErrorAliseDef(errorType, aliseType)
+      return ErrorAliasDef(errorType, aliseType)
     }
 
     def parseErrorTypeSetDef(): ErrorTypeSetDef = {
@@ -1487,7 +1539,7 @@ object JSON {
         parser.parseObjectType("ErrorTransition")
       }
       parser.parseObjectKey("id")
-      val id = parseName()
+      val id = parser.parseOption(parseName _)
       parser.parseObjectNext()
       parser.parseObjectKey("sourceState")
       val sourceState = parseName()
@@ -1502,11 +1554,13 @@ object JSON {
     }
 
     def parseErrorCondition(): ErrorCondition = {
-      val t = parser.parseObjectTypes(ISZ("ConditionTrigger", "AndCondition", "OrCondition", "OrMoreCondition", "OrLessCondition"))
+      val t = parser.parseObjectTypes(
+        ISZ("ConditionTrigger", "AndCondition", "OrCondition", "AllCondition", "OrMoreCondition", "OrLessCondition"))
       t.native match {
         case "ConditionTrigger" => val r = parseConditionTriggerT(T); return r
         case "AndCondition" => val r = parseAndConditionT(T); return r
         case "OrCondition" => val r = parseOrConditionT(T); return r
+        case "AllCondition" => val r = parseAllConditionT(T); return r
         case "OrMoreCondition" => val r = parseOrMoreConditionT(T); return r
         case "OrLessCondition" => val r = parseOrLessConditionT(T); return r
         case _ => val r = parseOrLessConditionT(T); return r
@@ -1540,13 +1594,10 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("AndCondition")
       }
-      parser.parseObjectKey("lhs")
-      val lhs = parseErrorCondition()
+      parser.parseObjectKey("op")
+      val op = parser.parseISZ(parseErrorCondition _)
       parser.parseObjectNext()
-      parser.parseObjectKey("rhs")
-      val rhs = parseErrorCondition()
-      parser.parseObjectNext()
-      return AndCondition(lhs, rhs)
+      return AndCondition(op)
     }
 
     def parseOrCondition(): OrCondition = {
@@ -1558,13 +1609,25 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("OrCondition")
       }
-      parser.parseObjectKey("lhs")
-      val lhs = parseErrorCondition()
+      parser.parseObjectKey("op")
+      val op = parser.parseISZ(parseErrorCondition _)
       parser.parseObjectNext()
-      parser.parseObjectKey("rhs")
-      val rhs = parseErrorCondition()
+      return OrCondition(op)
+    }
+
+    def parseAllCondition(): AllCondition = {
+      val r = parseAllConditionT(F)
+      return r
+    }
+
+    def parseAllConditionT(typeParsed: B): AllCondition = {
+      if (!typeParsed) {
+        parser.parseObjectType("AllCondition")
+      }
+      parser.parseObjectKey("op")
+      val op = parser.parseISZ(parseErrorCondition _)
       parser.parseObjectNext()
-      return OrCondition(lhs, rhs)
+      return AllCondition(op)
     }
 
     def parseOrMoreCondition(): OrMoreCondition = {
@@ -1579,13 +1642,10 @@ object JSON {
       parser.parseObjectKey("number")
       val number = parser.parseZ()
       parser.parseObjectNext()
-      parser.parseObjectKey("lhs")
-      val lhs = parseErrorCondition()
+      parser.parseObjectKey("conditions")
+      val conditions = parser.parseISZ(parseErrorCondition _)
       parser.parseObjectNext()
-      parser.parseObjectKey("rhs")
-      val rhs = parseErrorCondition()
-      parser.parseObjectNext()
-      return OrMoreCondition(number, lhs, rhs)
+      return OrMoreCondition(number, conditions)
     }
 
     def parseOrLessCondition(): OrLessCondition = {
@@ -1600,13 +1660,10 @@ object JSON {
       parser.parseObjectKey("number")
       val number = parser.parseZ()
       parser.parseObjectNext()
-      parser.parseObjectKey("lhs")
-      val lhs = parseErrorCondition()
+      parser.parseObjectKey("conditions")
+      val conditions = parser.parseISZ(parseErrorCondition _)
       parser.parseObjectNext()
-      parser.parseObjectKey("rhs")
-      val rhs = parseErrorCondition()
-      parser.parseObjectNext()
-      return OrLessCondition(number, lhs, rhs)
+      return OrLessCondition(number, conditions)
     }
 
     def parseEmv2Clause(): Emv2Clause = {
@@ -1619,7 +1676,7 @@ object JSON {
         parser.parseObjectType("Emv2Clause")
       }
       parser.parseObjectKey("libraries")
-      val libraries = parser.parseISZ(parser.parseString _)
+      val libraries = parser.parseISZ(parseName _)
       parser.parseObjectNext()
       parser.parseObjectKey("propagations")
       val propagations = parser.parseISZ(parseEmv2Propagation _)
@@ -1628,7 +1685,7 @@ object JSON {
       val flows = parser.parseISZ(parseEmv2Flow _)
       parser.parseObjectNext()
       parser.parseObjectKey("componentBehavior")
-      val componentBehavior = parseEmv2BehaviorSection()
+      val componentBehavior = parser.parseOption(parseEmv2BehaviorSection _)
       parser.parseObjectNext()
       return Emv2Clause(libraries, propagations, flows, componentBehavior)
     }
@@ -1646,7 +1703,7 @@ object JSON {
       val direction = parsePropagationDirectionType()
       parser.parseObjectNext()
       parser.parseObjectKey("propagationPoint")
-      val propagationPoint = parser.parseISZ(parseName _)
+      val propagationPoint = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("errorTokens")
       val errorTokens = parser.parseISZ(parseName _)
@@ -1709,7 +1766,7 @@ object JSON {
         parser.parseObjectType("ErrorPropagation")
       }
       parser.parseObjectKey("id")
-      val id = parseName()
+      val id = parser.parseOption(parseName _)
       parser.parseObjectNext()
       parser.parseObjectKey("source")
       val source = parser.parseISZ(parseName _)
@@ -2241,8 +2298,8 @@ object JSON {
     return r
   }
 
-  def fromErrorAliseDef(o: ErrorAliseDef, isCompact: B): String = {
-    val st = Printer.printErrorAliseDef(o)
+  def fromErrorAliasDef(o: ErrorAliasDef, isCompact: B): String = {
+    val st = Printer.printErrorAliasDef(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -2250,12 +2307,12 @@ object JSON {
     }
   }
 
-  def toErrorAliseDef(s: String): Either[ErrorAliseDef, Json.ErrorMsg] = {
-    def fErrorAliseDef(parser: Parser): ErrorAliseDef = {
-      val r = parser.parseErrorAliseDef()
+  def toErrorAliasDef(s: String): Either[ErrorAliasDef, Json.ErrorMsg] = {
+    def fErrorAliasDef(parser: Parser): ErrorAliasDef = {
+      val r = parser.parseErrorAliasDef()
       return r
     }
-    val r = to(s, fErrorAliseDef _)
+    val r = to(s, fErrorAliasDef _)
     return r
   }
 
@@ -2418,6 +2475,24 @@ object JSON {
       return r
     }
     val r = to(s, fOrCondition _)
+    return r
+  }
+
+  def fromAllCondition(o: AllCondition, isCompact: B): String = {
+    val st = Printer.printAllCondition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toAllCondition(s: String): Either[AllCondition, Json.ErrorMsg] = {
+    def fAllCondition(parser: Parser): AllCondition = {
+      val r = parser.parseAllCondition()
+      return r
+    }
+    val r = to(s, fAllCondition _)
     return r
   }
 

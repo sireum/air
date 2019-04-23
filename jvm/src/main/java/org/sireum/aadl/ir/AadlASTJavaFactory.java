@@ -25,6 +25,8 @@
 
 package org.sireum.aadl.ir;
 
+import org.sireum.message.Position;
+
 import java.util.List;
 
 public class AadlASTJavaFactory {
@@ -67,8 +69,13 @@ public class AadlASTJavaFactory {
         return f.aadl(components, errorLib, dataComponents);
     }
 
-    public static Name name(List<String> name) {
-        return f.name(name);
+    public static Name name(List<String> name, Position pos) {
+        return f.name(name, pos);
+    }
+
+    public static Position pos(String url, int beginLine, int beginColoumn, int endLine,
+                               int endColoumn, int offset, int length) {
+        return f.flatPos(url, beginLine, beginColoumn, endLine, endColoumn, offset, length);
     }
 
     public static Component component(Name identifier,
@@ -200,7 +207,7 @@ public class AadlASTJavaFactory {
     }
 
     public static Emv2Propagation emv2Propagation(PropagationDirection direction,
-                                                  List<Name> propagationPoint,
+                                                  Name propagationPoint,
                                                   List<Name> errorTokens) {
         return f.emv2Propagation(direction, propagationPoint, errorTokens);
     }
@@ -234,21 +241,25 @@ public class AadlASTJavaFactory {
         return f.conditionTrigger(events, propagationPoints);
     }
 
-    public static AndCondition andCondition(ErrorCondition lhs, ErrorCondition rhs) {
-        return f.andCondition(lhs, rhs);
+    public static AndCondition andCondition(List<ErrorCondition> op) {
+        return f.andCondition(op);
     }
 
-    public static OrCondition orCondition(ErrorCondition lhs, ErrorCondition rhs) {
-        return f.orCondition(lhs, rhs);
+    public static OrCondition orCondition(List<ErrorCondition> op) {
+        return f.orCondition(op);
+    }
+
+    public static AllCondition allCondition(List<ErrorCondition> op) {
+        return f.allCondition(op);
     }
 
     public static OrLessCondition orLessCondition(int number,
-                                                  List<ConditionTrigger> conds) {
+                                                  List<ErrorCondition> conds) {
         return f.orLessCondition(number, conds);
     }
 
     public static OrMoreCondition orMoreCondition(int number,
-                                                  List<ConditionTrigger> conds) {
+                                                  List<ErrorCondition> conds) {
         return f.orMoreCondition(number, conds);
     }
 
@@ -258,7 +269,7 @@ public class AadlASTJavaFactory {
                                           List<String> useTypes,
                                           List<ErrorTypeDef> errorTypeDefs,
                                           List<ErrorTypeSetDef> errorTypeSetDefList,
-                                          List<ErrorAliseDef> alias,
+                                          List<ErrorAliasDef> alias,
                                           List<BehaveStateMachine> behaveStateMachines) {
         return f.emv2Library(name,
                 useTypes, errorTypeDefs, errorTypeSetDefList, alias, behaveStateMachines);
@@ -268,7 +279,7 @@ public class AadlASTJavaFactory {
         return f.errorTypeDef(id, extendType);
     }
 
-    public static ErrorAliseDef errorAliseDef(Name errorType, Name aliasType) {
+    public static ErrorAliasDef errorAliseDef(Name errorType, Name aliasType) {
         return f.errorAliseDef(errorType, aliasType);
     }
 

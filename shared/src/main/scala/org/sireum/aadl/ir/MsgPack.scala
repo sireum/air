@@ -82,7 +82,7 @@ object MsgPack {
 
     val ErrorTypeDef: Z = -10
 
-    val ErrorAliseDef: Z = -9
+    val ErrorAliasDef: Z = -9
 
     val ErrorTypeSetDef: Z = -8
 
@@ -100,21 +100,23 @@ object MsgPack {
 
     val OrCondition: Z = -1
 
-    val OrMoreCondition: Z = 0
+    val AllCondition: Z = 0
 
-    val OrLessCondition: Z = 1
+    val OrMoreCondition: Z = 1
 
-    val Emv2Clause: Z = 2
+    val OrLessCondition: Z = 2
 
-    val Emv2Propagation: Z = 3
+    val Emv2Clause: Z = 3
 
-    val Emv2Flow: Z = 4
+    val Emv2Propagation: Z = 4
 
-    val Emv2BehaviorSection: Z = 5
+    val Emv2Flow: Z = 5
 
-    val ErrorPropagation: Z = 6
+    val Emv2BehaviorSection: Z = 6
 
-    val OtherAnnex: Z = 7
+    val ErrorPropagation: Z = 7
+
+    val OtherAnnex: Z = 8
 
   }
 
@@ -138,6 +140,7 @@ object MsgPack {
     def writeName(o: Name): Unit = {
       writer.writeZ(Constants.Name)
       writer.writeISZ(o.name, writer.writeString _)
+      writer.writeOption(o.pos, writer.writePosition _)
     }
 
     def writeComponent(o: Component): Unit = {
@@ -331,7 +334,7 @@ object MsgPack {
       o match {
         case o: Emv2Library => writeEmv2Library(o)
         case o: ErrorTypeDef => writeErrorTypeDef(o)
-        case o: ErrorAliseDef => writeErrorAliseDef(o)
+        case o: ErrorAliasDef => writeErrorAliasDef(o)
         case o: ErrorTypeSetDef => writeErrorTypeSetDef(o)
         case o: BehaveStateMachine => writeBehaveStateMachine(o)
         case o: ErrorEvent => writeErrorEvent(o)
@@ -340,6 +343,7 @@ object MsgPack {
         case o: ConditionTrigger => writeConditionTrigger(o)
         case o: AndCondition => writeAndCondition(o)
         case o: OrCondition => writeOrCondition(o)
+        case o: AllCondition => writeAllCondition(o)
         case o: OrMoreCondition => writeOrMoreCondition(o)
         case o: OrLessCondition => writeOrLessCondition(o)
         case o: Emv2Clause => writeEmv2Clause(o)
@@ -355,7 +359,7 @@ object MsgPack {
       o match {
         case o: Emv2Library => writeEmv2Library(o)
         case o: ErrorTypeDef => writeErrorTypeDef(o)
-        case o: ErrorAliseDef => writeErrorAliseDef(o)
+        case o: ErrorAliasDef => writeErrorAliasDef(o)
         case o: ErrorTypeSetDef => writeErrorTypeSetDef(o)
         case o: BehaveStateMachine => writeBehaveStateMachine(o)
         case o: ErrorEvent => writeErrorEvent(o)
@@ -364,6 +368,7 @@ object MsgPack {
         case o: ConditionTrigger => writeConditionTrigger(o)
         case o: AndCondition => writeAndCondition(o)
         case o: OrCondition => writeOrCondition(o)
+        case o: AllCondition => writeAllCondition(o)
         case o: OrMoreCondition => writeOrMoreCondition(o)
         case o: OrLessCondition => writeOrLessCondition(o)
         case o: Emv2Clause => writeEmv2Clause(o)
@@ -384,7 +389,7 @@ object MsgPack {
       writer.writeISZ(o.useTypes, writer.writeString _)
       writer.writeISZ(o.errorTypeDef, writeErrorTypeDef _)
       writer.writeISZ(o.errorTypeSetDef, writeErrorTypeSetDef _)
-      writer.writeISZ(o.alias, writeErrorAliseDef _)
+      writer.writeISZ(o.alias, writeErrorAliasDef _)
       writer.writeISZ(o.behaveStateMachine, writeBehaveStateMachine _)
     }
 
@@ -395,11 +400,11 @@ object MsgPack {
     def writeErrorTypeDef(o: ErrorTypeDef): Unit = {
       writer.writeZ(Constants.ErrorTypeDef)
       writeName(o.id)
-      writeName(o.extendType)
+      writer.writeOption(o.extendType, writeName _)
     }
 
-    def writeErrorAliseDef(o: ErrorAliseDef): Unit = {
-      writer.writeZ(Constants.ErrorAliseDef)
+    def writeErrorAliasDef(o: ErrorAliasDef): Unit = {
+      writer.writeZ(Constants.ErrorAliasDef)
       writeName(o.errorType)
       writeName(o.aliseType)
     }
@@ -432,7 +437,7 @@ object MsgPack {
 
     def writeErrorTransition(o: ErrorTransition): Unit = {
       writer.writeZ(Constants.ErrorTransition)
-      writeName(o.id)
+      writer.writeOption(o.id, writeName _)
       writeName(o.sourceState)
       writeErrorCondition(o.condition)
       writeName(o.targetState)
@@ -443,6 +448,7 @@ object MsgPack {
         case o: ConditionTrigger => writeConditionTrigger(o)
         case o: AndCondition => writeAndCondition(o)
         case o: OrCondition => writeOrCondition(o)
+        case o: AllCondition => writeAllCondition(o)
         case o: OrMoreCondition => writeOrMoreCondition(o)
         case o: OrLessCondition => writeOrLessCondition(o)
       }
@@ -456,42 +462,43 @@ object MsgPack {
 
     def writeAndCondition(o: AndCondition): Unit = {
       writer.writeZ(Constants.AndCondition)
-      writeErrorCondition(o.lhs)
-      writeErrorCondition(o.rhs)
+      writer.writeISZ(o.op, writeErrorCondition _)
     }
 
     def writeOrCondition(o: OrCondition): Unit = {
       writer.writeZ(Constants.OrCondition)
-      writeErrorCondition(o.lhs)
-      writeErrorCondition(o.rhs)
+      writer.writeISZ(o.op, writeErrorCondition _)
+    }
+
+    def writeAllCondition(o: AllCondition): Unit = {
+      writer.writeZ(Constants.AllCondition)
+      writer.writeISZ(o.op, writeErrorCondition _)
     }
 
     def writeOrMoreCondition(o: OrMoreCondition): Unit = {
       writer.writeZ(Constants.OrMoreCondition)
       writer.writeZ(o.number)
-      writeErrorCondition(o.lhs)
-      writeErrorCondition(o.rhs)
+      writer.writeISZ(o.conditions, writeErrorCondition _)
     }
 
     def writeOrLessCondition(o: OrLessCondition): Unit = {
       writer.writeZ(Constants.OrLessCondition)
       writer.writeZ(o.number)
-      writeErrorCondition(o.lhs)
-      writeErrorCondition(o.rhs)
+      writer.writeISZ(o.conditions, writeErrorCondition _)
     }
 
     def writeEmv2Clause(o: Emv2Clause): Unit = {
       writer.writeZ(Constants.Emv2Clause)
-      writer.writeISZ(o.libraries, writer.writeString _)
+      writer.writeISZ(o.libraries, writeName _)
       writer.writeISZ(o.propagations, writeEmv2Propagation _)
       writer.writeISZ(o.flows, writeEmv2Flow _)
-      writeEmv2BehaviorSection(o.componentBehavior)
+      writer.writeOption(o.componentBehavior, writeEmv2BehaviorSection _)
     }
 
     def writeEmv2Propagation(o: Emv2Propagation): Unit = {
       writer.writeZ(Constants.Emv2Propagation)
       writePropagationDirectionType(o.direction)
-      writer.writeISZ(o.propagationPoint, writeName _)
+      writeName(o.propagationPoint)
       writer.writeISZ(o.errorTokens, writeName _)
     }
 
@@ -512,7 +519,7 @@ object MsgPack {
 
     def writeErrorPropagation(o: ErrorPropagation): Unit = {
       writer.writeZ(Constants.ErrorPropagation)
-      writeName(o.id)
+      writer.writeOption(o.id, writeName _)
       writer.writeISZ(o.source, writeName _)
       writer.writeOption(o.condition, writeErrorCondition _)
       writer.writeISZ(o.target, writeEmv2Propagation _)
@@ -568,7 +575,8 @@ object MsgPack {
         reader.expectZ(Constants.Name)
       }
       val name = reader.readISZ(reader.readString _)
-      return Name(name)
+      val pos = reader.readOption(reader.readPosition _)
+      return Name(name, pos)
     }
 
     def readComponent(): Component = {
@@ -935,7 +943,7 @@ object MsgPack {
       t match {
         case Constants.Emv2Library => val r = readEmv2LibraryT(T); return r
         case Constants.ErrorTypeDef => val r = readErrorTypeDefT(T); return r
-        case Constants.ErrorAliseDef => val r = readErrorAliseDefT(T); return r
+        case Constants.ErrorAliasDef => val r = readErrorAliasDefT(T); return r
         case Constants.ErrorTypeSetDef => val r = readErrorTypeSetDefT(T); return r
         case Constants.BehaveStateMachine => val r = readBehaveStateMachineT(T); return r
         case Constants.ErrorEvent => val r = readErrorEventT(T); return r
@@ -944,6 +952,7 @@ object MsgPack {
         case Constants.ConditionTrigger => val r = readConditionTriggerT(T); return r
         case Constants.AndCondition => val r = readAndConditionT(T); return r
         case Constants.OrCondition => val r = readOrConditionT(T); return r
+        case Constants.AllCondition => val r = readAllConditionT(T); return r
         case Constants.OrMoreCondition => val r = readOrMoreConditionT(T); return r
         case Constants.OrLessCondition => val r = readOrLessConditionT(T); return r
         case Constants.Emv2Clause => val r = readEmv2ClauseT(T); return r
@@ -965,7 +974,7 @@ object MsgPack {
       t match {
         case Constants.Emv2Library => val r = readEmv2LibraryT(T); return r
         case Constants.ErrorTypeDef => val r = readErrorTypeDefT(T); return r
-        case Constants.ErrorAliseDef => val r = readErrorAliseDefT(T); return r
+        case Constants.ErrorAliasDef => val r = readErrorAliasDefT(T); return r
         case Constants.ErrorTypeSetDef => val r = readErrorTypeSetDefT(T); return r
         case Constants.BehaveStateMachine => val r = readBehaveStateMachineT(T); return r
         case Constants.ErrorEvent => val r = readErrorEventT(T); return r
@@ -974,6 +983,7 @@ object MsgPack {
         case Constants.ConditionTrigger => val r = readConditionTriggerT(T); return r
         case Constants.AndCondition => val r = readAndConditionT(T); return r
         case Constants.OrCondition => val r = readOrConditionT(T); return r
+        case Constants.AllCondition => val r = readAllConditionT(T); return r
         case Constants.OrMoreCondition => val r = readOrMoreConditionT(T); return r
         case Constants.OrLessCondition => val r = readOrLessConditionT(T); return r
         case Constants.Emv2Clause => val r = readEmv2ClauseT(T); return r
@@ -1006,7 +1016,7 @@ object MsgPack {
       val useTypes = reader.readISZ(reader.readString _)
       val errorTypeDef = reader.readISZ(readErrorTypeDef _)
       val errorTypeSetDef = reader.readISZ(readErrorTypeSetDef _)
-      val alias = reader.readISZ(readErrorAliseDef _)
+      val alias = reader.readISZ(readErrorAliasDef _)
       val behaveStateMachine = reader.readISZ(readBehaveStateMachine _)
       return Emv2Library(name, useTypes, errorTypeDef, errorTypeSetDef, alias, behaveStateMachine)
     }
@@ -1026,22 +1036,22 @@ object MsgPack {
         reader.expectZ(Constants.ErrorTypeDef)
       }
       val id = readName()
-      val extendType = readName()
+      val extendType = reader.readOption(readName _)
       return ErrorTypeDef(id, extendType)
     }
 
-    def readErrorAliseDef(): ErrorAliseDef = {
-      val r = readErrorAliseDefT(F)
+    def readErrorAliasDef(): ErrorAliasDef = {
+      val r = readErrorAliasDefT(F)
       return r
     }
 
-    def readErrorAliseDefT(typeParsed: B): ErrorAliseDef = {
+    def readErrorAliasDefT(typeParsed: B): ErrorAliasDef = {
       if (!typeParsed) {
-        reader.expectZ(Constants.ErrorAliseDef)
+        reader.expectZ(Constants.ErrorAliasDef)
       }
       val errorType = readName()
       val aliseType = readName()
-      return ErrorAliseDef(errorType, aliseType)
+      return ErrorAliasDef(errorType, aliseType)
     }
 
     def readErrorTypeSetDef(): ErrorTypeSetDef = {
@@ -1111,7 +1121,7 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.ErrorTransition)
       }
-      val id = readName()
+      val id = reader.readOption(readName _)
       val sourceState = readName()
       val condition = readErrorCondition()
       val targetState = readName()
@@ -1125,6 +1135,7 @@ object MsgPack {
         case Constants.ConditionTrigger => val r = readConditionTriggerT(T); return r
         case Constants.AndCondition => val r = readAndConditionT(T); return r
         case Constants.OrCondition => val r = readOrConditionT(T); return r
+        case Constants.AllCondition => val r = readAllConditionT(T); return r
         case Constants.OrMoreCondition => val r = readOrMoreConditionT(T); return r
         case Constants.OrLessCondition => val r = readOrLessConditionT(T); return r
         case _ =>
@@ -1157,9 +1168,8 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.AndCondition)
       }
-      val lhs = readErrorCondition()
-      val rhs = readErrorCondition()
-      return AndCondition(lhs, rhs)
+      val op = reader.readISZ(readErrorCondition _)
+      return AndCondition(op)
     }
 
     def readOrCondition(): OrCondition = {
@@ -1171,9 +1181,21 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.OrCondition)
       }
-      val lhs = readErrorCondition()
-      val rhs = readErrorCondition()
-      return OrCondition(lhs, rhs)
+      val op = reader.readISZ(readErrorCondition _)
+      return OrCondition(op)
+    }
+
+    def readAllCondition(): AllCondition = {
+      val r = readAllConditionT(F)
+      return r
+    }
+
+    def readAllConditionT(typeParsed: B): AllCondition = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.AllCondition)
+      }
+      val op = reader.readISZ(readErrorCondition _)
+      return AllCondition(op)
     }
 
     def readOrMoreCondition(): OrMoreCondition = {
@@ -1186,9 +1208,8 @@ object MsgPack {
         reader.expectZ(Constants.OrMoreCondition)
       }
       val number = reader.readZ()
-      val lhs = readErrorCondition()
-      val rhs = readErrorCondition()
-      return OrMoreCondition(number, lhs, rhs)
+      val conditions = reader.readISZ(readErrorCondition _)
+      return OrMoreCondition(number, conditions)
     }
 
     def readOrLessCondition(): OrLessCondition = {
@@ -1201,9 +1222,8 @@ object MsgPack {
         reader.expectZ(Constants.OrLessCondition)
       }
       val number = reader.readZ()
-      val lhs = readErrorCondition()
-      val rhs = readErrorCondition()
-      return OrLessCondition(number, lhs, rhs)
+      val conditions = reader.readISZ(readErrorCondition _)
+      return OrLessCondition(number, conditions)
     }
 
     def readEmv2Clause(): Emv2Clause = {
@@ -1215,10 +1235,10 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.Emv2Clause)
       }
-      val libraries = reader.readISZ(reader.readString _)
+      val libraries = reader.readISZ(readName _)
       val propagations = reader.readISZ(readEmv2Propagation _)
       val flows = reader.readISZ(readEmv2Flow _)
-      val componentBehavior = readEmv2BehaviorSection()
+      val componentBehavior = reader.readOption(readEmv2BehaviorSection _)
       return Emv2Clause(libraries, propagations, flows, componentBehavior)
     }
 
@@ -1232,7 +1252,7 @@ object MsgPack {
         reader.expectZ(Constants.Emv2Propagation)
       }
       val direction = readPropagationDirectionType()
-      val propagationPoint = reader.readISZ(readName _)
+      val propagationPoint = readName()
       val errorTokens = reader.readISZ(readName _)
       return Emv2Propagation(direction, propagationPoint, errorTokens)
     }
@@ -1277,7 +1297,7 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.ErrorPropagation)
       }
-      val id = readName()
+      val id = reader.readOption(readName _)
       val source = reader.readISZ(readName _)
       val condition = reader.readOption(readErrorCondition _)
       val target = reader.readISZ(readEmv2Propagation _)
@@ -1714,18 +1734,18 @@ object MsgPack {
     return r
   }
 
-  def fromErrorAliseDef(o: ErrorAliseDef, pooling: B): ISZ[U8] = {
+  def fromErrorAliasDef(o: ErrorAliasDef, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeErrorAliseDef(o)
+    w.writeErrorAliasDef(o)
     return w.result
   }
 
-  def toErrorAliseDef(data: ISZ[U8]): Either[ErrorAliseDef, MessagePack.ErrorMsg] = {
-    def fErrorAliseDef(reader: Reader): ErrorAliseDef = {
-      val r = reader.readErrorAliseDef()
+  def toErrorAliasDef(data: ISZ[U8]): Either[ErrorAliasDef, MessagePack.ErrorMsg] = {
+    def fErrorAliasDef(reader: Reader): ErrorAliasDef = {
+      val r = reader.readErrorAliasDef()
       return r
     }
-    val r = to(data, fErrorAliseDef _)
+    val r = to(data, fErrorAliasDef _)
     return r
   }
 
@@ -1861,6 +1881,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fOrCondition _)
+    return r
+  }
+
+  def fromAllCondition(o: AllCondition, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeAllCondition(o)
+    return w.result
+  }
+
+  def toAllCondition(data: ISZ[U8]): Either[AllCondition, MessagePack.ErrorMsg] = {
+    def fAllCondition(reader: Reader): AllCondition = {
+      val r = reader.readAllCondition()
+      return r
+    }
+    val r = to(data, fAllCondition _)
     return r
   }
 

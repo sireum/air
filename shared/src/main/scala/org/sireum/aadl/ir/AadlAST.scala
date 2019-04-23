@@ -27,10 +27,11 @@
 package org.sireum.aadl.ir
 
 import org.sireum._
+import org.sireum.message.Position
 
 @datatype class Aadl(components: ISZ[Component], errorLib: ISZ[Emv2Library], dataComponents: ISZ[Component])
 
-@datatype class Name(name: ISZ[String])
+@datatype class Name(name: ISZ[String], pos: Option[Position])
 
 @datatype class Component(
                            identifier: Name,
@@ -208,7 +209,7 @@ import org.sireum._
                             useTypes: ISZ[String],
                             errorTypeDef: ISZ[ErrorTypeDef],
                             errorTypeSetDef: ISZ[ErrorTypeSetDef],
-                            alias: ISZ[ErrorAliseDef],
+                            alias: ISZ[ErrorAliasDef],
                             behaveStateMachine: ISZ[BehaveStateMachine])
   extends Emv2Annex
 
@@ -217,10 +218,9 @@ import org.sireum._
   'noerror
 }
 
-@datatype class ErrorTypeDef(id : Name,
-                             extendType: Name) extends Emv2Annex
+@datatype class ErrorTypeDef(id : Name, extendType: Option[Name]) extends Emv2Annex
 
-@datatype class ErrorAliseDef(errorType: Name,
+@datatype class ErrorAliasDef(errorType: Name,
                               aliseType: Name) extends Emv2Annex
 
 @datatype class ErrorTypeSetDef(id : Name,
@@ -237,7 +237,7 @@ import org.sireum._
 @datatype class ErrorState(id: Name,
                            isInitial: B) extends Emv2Annex
 
-@datatype class ErrorTransition(id : Name,
+@datatype class ErrorTransition(id: Option[Name],
                                 sourceState : Name,
                                 condition : ErrorCondition,
                                 targetState : Name
@@ -249,24 +249,25 @@ import org.sireum._
                                  propagationPoints: ISZ[Emv2Propagation]
                                 ) extends ErrorCondition
 
-@datatype class AndCondition(lhs : ErrorCondition,
-                             rhs : ErrorCondition) extends ErrorCondition
+@datatype class AndCondition(op: ISZ[ErrorCondition]) extends ErrorCondition
 
-@datatype class OrCondition(lhs : ErrorCondition,
-                            rhs : ErrorCondition) extends ErrorCondition
+@datatype class OrCondition(op: ISZ[ErrorCondition]) extends ErrorCondition
 
-@datatype class OrMoreCondition(number: Z, conditions: ISZ[ConditionTrigger]) extends ErrorCondition
+@datatype class AllCondition(op: ISZ[ErrorCondition]) extends ErrorCondition
 
-@datatype class OrLessCondition(number: Z, conditions: ISZ[ConditionTrigger]) extends ErrorCondition
+@datatype class OrMoreCondition(number: Z, conditions: ISZ[ErrorCondition]) extends ErrorCondition
+
+@datatype class OrLessCondition(number: Z, conditions: ISZ[ErrorCondition]) extends ErrorCondition
 
 @datatype class Emv2Clause(
   libraries: ISZ[Name],
                            propagations: ISZ[Emv2Propagation],
                            flows: ISZ[Emv2Flow],
-                           componentBehavior: Emv2BehaviorSection) extends Emv2Annex
+  componentBehavior: Option[Emv2BehaviorSection]
+) extends Emv2Annex
 
 @datatype class Emv2Propagation( direction: PropagationDirection.Type,
-                                 propagationPoint: ISZ[Name],
+                                 propagationPoint: Name,
                                  errorTokens: ISZ[Name]
                                ) extends Emv2Annex
 
@@ -281,7 +282,8 @@ import org.sireum._
                                     propagations: ISZ[ErrorPropagation]
                                    ) extends Emv2Annex
 
-@datatype class ErrorPropagation(id : Name,
+@datatype class ErrorPropagation(
+  id: Option[Name],
                                  source : ISZ[Name],
                                  condition: Option[ErrorCondition],
                                  target : ISZ[Emv2Propagation]

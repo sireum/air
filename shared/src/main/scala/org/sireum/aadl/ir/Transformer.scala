@@ -180,8 +180,8 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
           }
           return r
-        case o: ErrorAliseDef =>
-          val r: PreResult[Context, AnnexClause] = preErrorAliseDef(ctx, o) match {
+        case o: ErrorAliasDef =>
+          val r: PreResult[Context, AnnexClause] = preErrorAliasDef(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
@@ -241,6 +241,13 @@ object Transformer {
            case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
+          }
+          return r
+        case o: AllCondition =>
+          val r: PreResult[Context, AnnexClause] = preAllCondition(ctx, o) match {
+            case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
+            case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
+            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
           }
           return r
         case o: OrMoreCondition =>
@@ -318,8 +325,8 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Annex]())
           }
           return r
-        case o: ErrorAliseDef =>
-          val r: PreResult[Context, Emv2Annex] = preErrorAliseDef(ctx, o) match {
+        case o: ErrorAliasDef =>
+          val r: PreResult[Context, Emv2Annex] = preErrorAliasDef(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: Emv2Annex)) => PreResult(preCtx, continu, Some[Emv2Annex](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type Emv2Annex")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Annex]())
@@ -379,6 +386,13 @@ object Transformer {
            case PreResult(preCtx, continu, Some(r: Emv2Annex)) => PreResult(preCtx, continu, Some[Emv2Annex](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type Emv2Annex")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Annex]())
+          }
+          return r
+        case o: AllCondition =>
+          val r: PreResult[Context, Emv2Annex] = preAllCondition(ctx, o) match {
+            case PreResult(preCtx, continu, Some(r: Emv2Annex)) => PreResult(preCtx, continu, Some[Emv2Annex](r))
+            case PreResult(_, _, Some(_)) => halt("Can only produce object of type Emv2Annex")
+            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Annex]())
           }
           return r
         case o: OrMoreCondition =>
@@ -441,7 +455,7 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def preErrorAliseDef(ctx: Context, o: ErrorAliseDef): PreResult[Context, ErrorAliseDef] = {
+    @pure def preErrorAliasDef(ctx: Context, o: ErrorAliasDef): PreResult[Context, ErrorAliasDef] = {
       return PreResult(ctx, T, None())
     }
 
@@ -488,6 +502,13 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[ErrorCondition]())
           }
           return r
+        case o: AllCondition =>
+          val r: PreResult[Context, ErrorCondition] = preAllCondition(ctx, o) match {
+            case PreResult(preCtx, continu, Some(r: ErrorCondition)) => PreResult(preCtx, continu, Some[ErrorCondition](r))
+            case PreResult(_, _, Some(_)) => halt("Can only produce object of type ErrorCondition")
+            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[ErrorCondition]())
+          }
+          return r
         case o: OrMoreCondition =>
           val r: PreResult[Context, ErrorCondition] = preOrMoreCondition(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: ErrorCondition)) => PreResult(preCtx, continu, Some[ErrorCondition](r))
@@ -514,6 +535,10 @@ object Transformer {
     }
 
     @pure def preOrCondition(ctx: Context, o: OrCondition): PreResult[Context, OrCondition] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preAllCondition(ctx: Context, o: AllCondition): PreResult[Context, AllCondition] = {
       return PreResult(ctx, T, None())
     }
 
@@ -686,8 +711,8 @@ object Transformer {
            case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
           }
           return r
-        case o: ErrorAliseDef =>
-          val r: Result[Context, AnnexClause] = postErrorAliseDef(ctx, o) match {
+        case o: ErrorAliasDef =>
+          val r: Result[Context, AnnexClause] = postErrorAliasDef(ctx, o) match {
            case Result(postCtx, Some(result: AnnexClause)) => Result(postCtx, Some[AnnexClause](result))
            case Result(_, Some(_)) => halt("Can only produce object of type AnnexClause")
            case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
@@ -747,6 +772,13 @@ object Transformer {
            case Result(postCtx, Some(result: AnnexClause)) => Result(postCtx, Some[AnnexClause](result))
            case Result(_, Some(_)) => halt("Can only produce object of type AnnexClause")
            case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
+          }
+          return r
+        case o: AllCondition =>
+          val r: Result[Context, AnnexClause] = postAllCondition(ctx, o) match {
+            case Result(postCtx, Some(result: AnnexClause)) => Result(postCtx, Some[AnnexClause](result))
+            case Result(_, Some(_)) => halt("Can only produce object of type AnnexClause")
+            case Result(postCtx, _) => Result(postCtx, None[AnnexClause]())
           }
           return r
         case o: OrMoreCondition =>
@@ -824,8 +856,8 @@ object Transformer {
            case Result(postCtx, _) => Result(postCtx, None[Emv2Annex]())
           }
           return r
-        case o: ErrorAliseDef =>
-          val r: Result[Context, Emv2Annex] = postErrorAliseDef(ctx, o) match {
+        case o: ErrorAliasDef =>
+          val r: Result[Context, Emv2Annex] = postErrorAliasDef(ctx, o) match {
            case Result(postCtx, Some(result: Emv2Annex)) => Result(postCtx, Some[Emv2Annex](result))
            case Result(_, Some(_)) => halt("Can only produce object of type Emv2Annex")
            case Result(postCtx, _) => Result(postCtx, None[Emv2Annex]())
@@ -885,6 +917,13 @@ object Transformer {
            case Result(postCtx, Some(result: Emv2Annex)) => Result(postCtx, Some[Emv2Annex](result))
            case Result(_, Some(_)) => halt("Can only produce object of type Emv2Annex")
            case Result(postCtx, _) => Result(postCtx, None[Emv2Annex]())
+          }
+          return r
+        case o: AllCondition =>
+          val r: Result[Context, Emv2Annex] = postAllCondition(ctx, o) match {
+            case Result(postCtx, Some(result: Emv2Annex)) => Result(postCtx, Some[Emv2Annex](result))
+            case Result(_, Some(_)) => halt("Can only produce object of type Emv2Annex")
+            case Result(postCtx, _) => Result(postCtx, None[Emv2Annex]())
           }
           return r
         case o: OrMoreCondition =>
@@ -947,7 +986,7 @@ object Transformer {
       return Result(ctx, None())
     }
 
-    @pure def postErrorAliseDef(ctx: Context, o: ErrorAliseDef): Result[Context, ErrorAliseDef] = {
+    @pure def postErrorAliasDef(ctx: Context, o: ErrorAliasDef): Result[Context, ErrorAliasDef] = {
       return Result(ctx, None())
     }
 
@@ -994,6 +1033,13 @@ object Transformer {
            case Result(postCtx, _) => Result(postCtx, None[ErrorCondition]())
           }
           return r
+        case o: AllCondition =>
+          val r: Result[Context, ErrorCondition] = postAllCondition(ctx, o) match {
+            case Result(postCtx, Some(result: ErrorCondition)) => Result(postCtx, Some[ErrorCondition](result))
+            case Result(_, Some(_)) => halt("Can only produce object of type ErrorCondition")
+            case Result(postCtx, _) => Result(postCtx, None[ErrorCondition]())
+          }
+          return r
         case o: OrMoreCondition =>
           val r: Result[Context, ErrorCondition] = postOrMoreCondition(ctx, o) match {
            case Result(postCtx, Some(result: ErrorCondition)) => Result(postCtx, Some[ErrorCondition](result))
@@ -1020,6 +1066,10 @@ object Transformer {
     }
 
     @pure def postOrCondition(ctx: Context, o: OrCondition): Result[Context, OrCondition] = {
+      return Result(ctx, None())
+    }
+
+    @pure def postAllCondition(ctx: Context, o: AllCondition): Result[Context, AllCondition] = {
       return Result(ctx, None())
     }
 
@@ -1089,7 +1139,7 @@ object Transformer {
 
 }
 
-import Transformer._
+import org.sireum.aadl.ir.Transformer._
 
 @datatype class Transformer[Context](pp: PrePost[Context]) {
 
@@ -1644,7 +1694,7 @@ import Transformer._
           val r0: Result[Context, Name] = transformName(ctx, o2.name)
           val r1: Result[Context, IS[Z, ErrorTypeDef]] = transformISZ(r0.ctx, o2.errorTypeDef, transformErrorTypeDef _)
           val r2: Result[Context, IS[Z, ErrorTypeSetDef]] = transformISZ(r1.ctx, o2.errorTypeSetDef, transformErrorTypeSetDef _)
-          val r3: Result[Context, IS[Z, ErrorAliseDef]] = transformISZ(r2.ctx, o2.alias, transformErrorAliseDef _)
+          val r3: Result[Context, IS[Z, ErrorAliasDef]] = transformISZ(r2.ctx, o2.alias, transformErrorAliasDef _)
           val r4: Result[Context, IS[Z, BehaveStateMachine]] = transformISZ(r3.ctx, o2.behaveStateMachine, transformBehaveStateMachine _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
             Result(r4.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), errorTypeDef = r1.resultOpt.getOrElse(o2.errorTypeDef), errorTypeSetDef = r2.resultOpt.getOrElse(o2.errorTypeSetDef), alias = r3.resultOpt.getOrElse(o2.alias), behaveStateMachine = r4.resultOpt.getOrElse(o2.behaveStateMachine))))
@@ -1652,12 +1702,12 @@ import Transformer._
             Result(r4.ctx, None())
         case o2: ErrorTypeDef =>
           val r0: Result[Context, Name] = transformName(ctx, o2.id)
-          val r1: Result[Context, Name] = transformName(r0.ctx, o2.extendType)
+          val r1: Result[Context, Option[Name]] = transformOption(r0.ctx, o2.extendType, transformName _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             Result(r1.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), extendType = r1.resultOpt.getOrElse(o2.extendType))))
           else
             Result(r1.ctx, None())
-        case o2: ErrorAliseDef =>
+        case o2: ErrorAliasDef =>
           val r0: Result[Context, Name] = transformName(ctx, o2.errorType)
           val r1: Result[Context, Name] = transformName(r0.ctx, o2.aliseType)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
@@ -1694,7 +1744,7 @@ import Transformer._
           else
             Result(r0.ctx, None())
         case o2: ErrorTransition =>
-          val r0: Result[Context, Name] = transformName(ctx, o2.id)
+          val r0: Result[Context, Option[Name]] = transformOption(ctx, o2.id, transformName _)
           val r1: Result[Context, Name] = transformName(r0.ctx, o2.sourceState)
           val r2: Result[Context, ErrorCondition] = transformErrorCondition(r1.ctx, o2.condition)
           val r3: Result[Context, Name] = transformName(r2.ctx, o2.targetState)
@@ -1710,43 +1760,58 @@ import Transformer._
           else
             Result(r1.ctx, None())
         case o2: AndCondition =>
-          val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-          val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.op, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(op = r0.resultOpt.getOrElse(o2.op))))
           else
-            Result(r1.ctx, None())
+            Result(r0.ctx, None())
         case o2: OrCondition =>
-          val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-          val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.op, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(op = r0.resultOpt.getOrElse(o2.op))))
           else
-            Result(r1.ctx, None())
+            Result(r0.ctx, None())
+        case o2: AllCondition =>
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.op, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(op = r0.resultOpt.getOrElse(o2.op))))
+          else
+            Result(r0.ctx, None())
         case o2: OrMoreCondition =>
-          val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-          val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.conditions, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(conditions = r0.resultOpt.getOrElse(o2.conditions))))
           else
-            Result(r1.ctx, None())
+            Result(r0.ctx, None())
         case o2: OrLessCondition =>
-          val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-          val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.conditions, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(conditions = r0.resultOpt.getOrElse(o2.conditions))))
           else
-            Result(r1.ctx, None())
+            Result(r0.ctx, None())
         case o2: Emv2Clause =>
-          val r0: Result[Context, IS[Z, Emv2Propagation]] = transformISZ(ctx, o2.propagations, transformEmv2Propagation _)
-          val r1: Result[Context, IS[Z, Emv2Flow]] = transformISZ(r0.ctx, o2.flows, transformEmv2Flow _)
-          val r2: Result[Context, Emv2BehaviorSection] = transformEmv2BehaviorSection(r1.ctx, o2.componentBehavior)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            Result(r2.ctx, Some(o2(propagations = r0.resultOpt.getOrElse(o2.propagations), flows = r1.resultOpt.getOrElse(o2.flows), componentBehavior = r2.resultOpt.getOrElse(o2.componentBehavior))))
+          val r0: Result[Context, IS[Z, Name]] = transformISZ(ctx, o2.libraries, transformName _)
+          val r1: Result[Context, IS[Z, Emv2Propagation]] =
+            transformISZ(r0.ctx, o2.propagations, transformEmv2Propagation _)
+          val r2: Result[Context, IS[Z, Emv2Flow]] = transformISZ(r1.ctx, o2.flows, transformEmv2Flow _)
+          val r3: Result[Context, Option[Emv2BehaviorSection]] =
+            transformOption(r2.ctx, o2.componentBehavior, transformEmv2BehaviorSection _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            Result(
+              r3.ctx,
+              Some(
+                o2(
+                  libraries = r0.resultOpt.getOrElse(o2.libraries),
+                  propagations = r1.resultOpt.getOrElse(o2.propagations),
+                  flows = r2.resultOpt.getOrElse(o2.flows),
+                  componentBehavior = r3.resultOpt.getOrElse(o2.componentBehavior)
+                )
+              )
+            )
           else
-            Result(r2.ctx, None())
+            Result(r3.ctx, None())
         case o2: Emv2Propagation =>
-          val r0: Result[Context, IS[Z, Name]] = transformISZ(ctx, o2.propagationPoint, transformName _)
+          val r0: Result[Context, Name] = transformName(ctx, o2.propagationPoint)
           val r1: Result[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.errorTokens, transformName _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             Result(r1.ctx, Some(o2(propagationPoint = r0.resultOpt.getOrElse(o2.propagationPoint), errorTokens = r1.resultOpt.getOrElse(o2.errorTokens))))
@@ -1765,11 +1830,14 @@ import Transformer._
           val r1: Result[Context, IS[Z, ErrorTransition]] = transformISZ(r0.ctx, o2.transitions, transformErrorTransition _)
           val r2: Result[Context, IS[Z, ErrorPropagation]] = transformISZ(r1.ctx, o2.propagations, transformErrorPropagation _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            Result(r2.ctx, Some(o2(events = r0.resultOpt.getOrElse(o2.events), transitions = r1.resultOpt.getOrElse(o2.transitions), propagations = r2.resultOpt.getOrElse(o2.propagations))))
+            Result(r2.ctx, Some(o2(events = r0.resultOpt.getOrElse(o2.events), transitions = r1.resultOpt.getOrElse(o2.transitions), propagations = r2.resultOpt.getOrElse(o2.propagations)
+                )
+              )
+            )
           else
             Result(r2.ctx, None())
         case o2: ErrorPropagation =>
-          val r0: Result[Context, Name] = transformName(ctx, o2.id)
+          val r0: Result[Context, Option[Name]] = transformOption(ctx, o2.id, transformName _)
           val r1: Result[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.source, transformName _)
           val r2: Result[Context, Option[ErrorCondition]] = transformOption(r1.ctx, o2.condition, transformErrorCondition _)
           val r3: Result[Context, IS[Z, Emv2Propagation]] = transformISZ(r2.ctx, o2.target, transformEmv2Propagation _)
@@ -1811,7 +1879,7 @@ import Transformer._
           val r0: Result[Context, Name] = transformName(ctx, o2.name)
           val r1: Result[Context, IS[Z, ErrorTypeDef]] = transformISZ(r0.ctx, o2.errorTypeDef, transformErrorTypeDef _)
           val r2: Result[Context, IS[Z, ErrorTypeSetDef]] = transformISZ(r1.ctx, o2.errorTypeSetDef, transformErrorTypeSetDef _)
-          val r3: Result[Context, IS[Z, ErrorAliseDef]] = transformISZ(r2.ctx, o2.alias, transformErrorAliseDef _)
+          val r3: Result[Context, IS[Z, ErrorAliasDef]] = transformISZ(r2.ctx, o2.alias, transformErrorAliasDef _)
           val r4: Result[Context, IS[Z, BehaveStateMachine]] = transformISZ(r3.ctx, o2.behaveStateMachine, transformBehaveStateMachine _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
             Result(r4.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), errorTypeDef = r1.resultOpt.getOrElse(o2.errorTypeDef), errorTypeSetDef = r2.resultOpt.getOrElse(o2.errorTypeSetDef), alias = r3.resultOpt.getOrElse(o2.alias), behaveStateMachine = r4.resultOpt.getOrElse(o2.behaveStateMachine))))
@@ -1819,12 +1887,12 @@ import Transformer._
             Result(r4.ctx, None())
         case o2: ErrorTypeDef =>
           val r0: Result[Context, Name] = transformName(ctx, o2.id)
-          val r1: Result[Context, Name] = transformName(r0.ctx, o2.extendType)
+          val r1: Result[Context, Option[Name]] = transformOption(r0.ctx, o2.extendType, transformName _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             Result(r1.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), extendType = r1.resultOpt.getOrElse(o2.extendType))))
           else
             Result(r1.ctx, None())
-        case o2: ErrorAliseDef =>
+        case o2: ErrorAliasDef =>
           val r0: Result[Context, Name] = transformName(ctx, o2.errorType)
           val r1: Result[Context, Name] = transformName(r0.ctx, o2.aliseType)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
@@ -1861,7 +1929,7 @@ import Transformer._
           else
             Result(r0.ctx, None())
         case o2: ErrorTransition =>
-          val r0: Result[Context, Name] = transformName(ctx, o2.id)
+          val r0: Result[Context, Option[Name]] = transformOption(ctx, o2.id, transformName _)
           val r1: Result[Context, Name] = transformName(r0.ctx, o2.sourceState)
           val r2: Result[Context, ErrorCondition] = transformErrorCondition(r1.ctx, o2.condition)
           val r3: Result[Context, Name] = transformName(r2.ctx, o2.targetState)
@@ -1873,47 +1941,62 @@ import Transformer._
           val r0: Result[Context, IS[Z, Name]] = transformISZ(ctx, o2.events, transformName _)
           val r1: Result[Context, IS[Z, Emv2Propagation]] = transformISZ(r0.ctx, o2.propagationPoints, transformEmv2Propagation _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(events = r0.resultOpt.getOrElse(o2.events), propagationPoints = r1.resultOpt.getOrElse(o2.propagationPoints))))
+            Result(r1.ctx, Some(o2(events = r0.resultOpt.getOrElse(o2.events), propagationPoints = r1.resultOpt.getOrElse(o2.propagationPoints)
+                )
+              )
+            )
           else
             Result(r1.ctx, None())
         case o2: AndCondition =>
-          val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-          val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.op, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(op = r0.resultOpt.getOrElse(o2.op))))
           else
-            Result(r1.ctx, None())
+            Result(r0.ctx, None())
         case o2: OrCondition =>
-          val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-          val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.op, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(op = r0.resultOpt.getOrElse(o2.op))))
           else
-            Result(r1.ctx, None())
+            Result(r0.ctx, None())
+        case o2: AllCondition =>
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.op, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(op = r0.resultOpt.getOrElse(o2.op))))
+          else
+            Result(r0.ctx, None())
         case o2: OrMoreCondition =>
-          val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-          val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.conditions, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(conditions = r0.resultOpt.getOrElse(o2.conditions))))
           else
-            Result(r1.ctx, None())
+            Result(r0.ctx, None())
         case o2: OrLessCondition =>
-          val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-          val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.conditions, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(conditions = r0.resultOpt.getOrElse(o2.conditions))))
           else
-            Result(r1.ctx, None())
+            Result(r0.ctx, None())
         case o2: Emv2Clause =>
-          val r0: Result[Context, IS[Z, Emv2Propagation]] = transformISZ(ctx, o2.propagations, transformEmv2Propagation _)
-          val r1: Result[Context, IS[Z, Emv2Flow]] = transformISZ(r0.ctx, o2.flows, transformEmv2Flow _)
-          val r2: Result[Context, Emv2BehaviorSection] = transformEmv2BehaviorSection(r1.ctx, o2.componentBehavior)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            Result(r2.ctx, Some(o2(propagations = r0.resultOpt.getOrElse(o2.propagations), flows = r1.resultOpt.getOrElse(o2.flows), componentBehavior = r2.resultOpt.getOrElse(o2.componentBehavior))))
+          val r0: Result[Context, IS[Z, Name]] = transformISZ(ctx, o2.libraries, transformName _)
+          val r1: Result[Context, IS[Z, Emv2Propagation]] =
+            transformISZ(r0.ctx, o2.propagations, transformEmv2Propagation _)
+          val r2: Result[Context, IS[Z, Emv2Flow]] = transformISZ(r1.ctx, o2.flows, transformEmv2Flow _)
+          val r3: Result[Context, Option[Emv2BehaviorSection]] =
+            transformOption(r2.ctx, o2.componentBehavior, transformEmv2BehaviorSection _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            Result(
+              r3.ctx,
+              Some(
+                o2(
+                  libraries = r0.resultOpt.getOrElse(o2.libraries),
+                  propagations = r1.resultOpt.getOrElse(o2.propagations),
+                  flows = r2.resultOpt.getOrElse(o2.flows),
+                  componentBehavior = r3.resultOpt.getOrElse(o2.componentBehavior))))
           else
-            Result(r2.ctx, None())
+            Result(r3.ctx, None())
         case o2: Emv2Propagation =>
-          val r0: Result[Context, IS[Z, Name]] = transformISZ(ctx, o2.propagationPoint, transformName _)
+          val r0: Result[Context, Name] = transformName(ctx, o2.propagationPoint)
           val r1: Result[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.errorTokens, transformName _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             Result(r1.ctx, Some(o2(propagationPoint = r0.resultOpt.getOrElse(o2.propagationPoint), errorTokens = r1.resultOpt.getOrElse(o2.errorTokens))))
@@ -1932,11 +2015,13 @@ import Transformer._
           val r1: Result[Context, IS[Z, ErrorTransition]] = transformISZ(r0.ctx, o2.transitions, transformErrorTransition _)
           val r2: Result[Context, IS[Z, ErrorPropagation]] = transformISZ(r1.ctx, o2.propagations, transformErrorPropagation _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            Result(r2.ctx, Some(o2(events = r0.resultOpt.getOrElse(o2.events), transitions = r1.resultOpt.getOrElse(o2.transitions), propagations = r2.resultOpt.getOrElse(o2.propagations))))
+            Result(r2.ctx, Some(o2(events = r0.resultOpt.getOrElse(o2.events),
+              transitions = r1.resultOpt.getOrElse(o2.transitions),
+              propagations = r2.resultOpt.getOrElse(o2.propagations))))
           else
             Result(r2.ctx, None())
         case o2: ErrorPropagation =>
-          val r0: Result[Context, Name] = transformName(ctx, o2.id)
+          val r0: Result[Context, Option[Name]] = transformOption(ctx, o2.id, transformName _)
           val r1: Result[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.source, transformName _)
           val r2: Result[Context, Option[ErrorCondition]] = transformOption(r1.ctx, o2.condition, transformErrorCondition _)
           val r3: Result[Context, IS[Z, Emv2Propagation]] = transformISZ(r2.ctx, o2.target, transformEmv2Propagation _)
@@ -1971,7 +2056,7 @@ import Transformer._
       val r0: Result[Context, Name] = transformName(ctx, o2.name)
       val r1: Result[Context, IS[Z, ErrorTypeDef]] = transformISZ(r0.ctx, o2.errorTypeDef, transformErrorTypeDef _)
       val r2: Result[Context, IS[Z, ErrorTypeSetDef]] = transformISZ(r1.ctx, o2.errorTypeSetDef, transformErrorTypeSetDef _)
-      val r3: Result[Context, IS[Z, ErrorAliseDef]] = transformISZ(r2.ctx, o2.alias, transformErrorAliseDef _)
+      val r3: Result[Context, IS[Z, ErrorAliasDef]] = transformISZ(r2.ctx, o2.alias, transformErrorAliasDef _)
       val r4: Result[Context, IS[Z, BehaveStateMachine]] = transformISZ(r3.ctx, o2.behaveStateMachine, transformBehaveStateMachine _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
         Result(r4.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), errorTypeDef = r1.resultOpt.getOrElse(o2.errorTypeDef), errorTypeSetDef = r2.resultOpt.getOrElse(o2.errorTypeSetDef), alias = r3.resultOpt.getOrElse(o2.alias), behaveStateMachine = r4.resultOpt.getOrElse(o2.behaveStateMachine))))
@@ -1996,11 +2081,12 @@ import Transformer._
 
   @pure def transformErrorTypeDef(ctx: Context, o: ErrorTypeDef): Result[Context, ErrorTypeDef] = {
     val preR: PreResult[Context, ErrorTypeDef] = pp.preErrorTypeDef(ctx, o)
+
     val r: Result[Context, ErrorTypeDef] = if (preR.continu) {
       val o2: ErrorTypeDef = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: Result[Context, Name] = transformName(ctx, o2.id)
-      val r1: Result[Context, Name] = transformName(r0.ctx, o2.extendType)
+      val r1: Result[Context, Option[Name]] = transformOption(r0.ctx, o2.extendType, transformName _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
         Result(r1.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), extendType = r1.resultOpt.getOrElse(o2.extendType))))
       else
@@ -2022,10 +2108,10 @@ import Transformer._
     }
   }
 
-  @pure def transformErrorAliseDef(ctx: Context, o: ErrorAliseDef): Result[Context, ErrorAliseDef] = {
-    val preR: PreResult[Context, ErrorAliseDef] = pp.preErrorAliseDef(ctx, o)
-    val r: Result[Context, ErrorAliseDef] = if (preR.continu) {
-      val o2: ErrorAliseDef = preR.resultOpt.getOrElse(o)
+  @pure def transformErrorAliasDef(ctx: Context, o: ErrorAliasDef): Result[Context, ErrorAliasDef] = {
+    val preR: PreResult[Context, ErrorAliasDef] = pp.preErrorAliasDef(ctx, o)
+    val r: Result[Context, ErrorAliasDef] = if (preR.continu) {
+      val o2: ErrorAliasDef = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: Result[Context, Name] = transformName(ctx, o2.errorType)
       val r1: Result[Context, Name] = transformName(r0.ctx, o2.aliseType)
@@ -2039,8 +2125,8 @@ import Transformer._
       Result(preR.ctx, None())
     }
     val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: ErrorAliseDef = r.resultOpt.getOrElse(o)
-    val postR: Result[Context, ErrorAliseDef] = pp.postErrorAliseDef(r.ctx, o2)
+    val o2: ErrorAliasDef = r.resultOpt.getOrElse(o)
+    val postR: Result[Context, ErrorAliasDef] = pp.postErrorAliasDef(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -2165,10 +2251,11 @@ import Transformer._
 
   @pure def transformErrorTransition(ctx: Context, o: ErrorTransition): Result[Context, ErrorTransition] = {
     val preR: PreResult[Context, ErrorTransition] = pp.preErrorTransition(ctx, o)
+
     val r: Result[Context, ErrorTransition] = if (preR.continu) {
       val o2: ErrorTransition = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: Result[Context, Name] = transformName(ctx, o2.id)
+      val r0: Result[Context, Option[Name]] = transformOption(ctx, o2.id, transformName _)
       val r1: Result[Context, Name] = transformName(r0.ctx, o2.sourceState)
       val r2: Result[Context, ErrorCondition] = transformErrorCondition(r1.ctx, o2.condition)
       val r3: Result[Context, Name] = transformName(r2.ctx, o2.targetState)
@@ -2203,37 +2290,45 @@ import Transformer._
           val r0: Result[Context, IS[Z, Name]] = transformISZ(ctx, o2.events, transformName _)
           val r1: Result[Context, IS[Z, Emv2Propagation]] = transformISZ(r0.ctx, o2.propagationPoints, transformEmv2Propagation _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(events = r0.resultOpt.getOrElse(o2.events), propagationPoints = r1.resultOpt.getOrElse(o2.propagationPoints))))
+            Result(
+              r1.ctx,
+              Some(
+                o2(
+                  events = r0.resultOpt.getOrElse(o2.events),
+                  propagationPoints = r1.resultOpt.getOrElse(o2.propagationPoints)))
+            )
           else
             Result(r1.ctx, None())
         case o2: AndCondition =>
-          val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-          val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.op, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(op = r0.resultOpt.getOrElse(o2.op))))
           else
-            Result(r1.ctx, None())
+            Result(r0.ctx, None())
         case o2: OrCondition =>
-          val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-          val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.op, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(op = r0.resultOpt.getOrElse(o2.op))))
           else
-            Result(r1.ctx, None())
+            Result(r0.ctx, None())
+        case o2: AllCondition =>
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.op, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(op = r0.resultOpt.getOrElse(o2.op))))
+          else
+            Result(r0.ctx, None())
         case o2: OrMoreCondition =>
-          val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-          val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.conditions, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(conditions = r0.resultOpt.getOrElse(o2.conditions))))
           else
-            Result(r1.ctx, None())
+            Result(r0.ctx, None())
         case o2: OrLessCondition =>
-          val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-          val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+          val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.conditions, transformErrorCondition _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            Result(r0.ctx, Some(o2(conditions = r0.resultOpt.getOrElse(o2.conditions))))
           else
-            Result(r1.ctx, None())
+            Result(r0.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -2286,12 +2381,11 @@ import Transformer._
     val r: Result[Context, AndCondition] = if (preR.continu) {
       val o2: AndCondition = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-      val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+      val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.op, transformErrorCondition _)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        Result(r0.ctx, Some(o2(op = r0.resultOpt.getOrElse(o2.op))))
       else
-        Result(r1.ctx, None())
+        Result(r0.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       Result(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -2314,12 +2408,11 @@ import Transformer._
     val r: Result[Context, OrCondition] = if (preR.continu) {
       val o2: OrCondition = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-      val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+      val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.op, transformErrorCondition _)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        Result(r0.ctx, Some(o2(op = r0.resultOpt.getOrElse(o2.op))))
       else
-        Result(r1.ctx, None())
+        Result(r0.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       Result(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -2337,17 +2430,43 @@ import Transformer._
     }
   }
 
+  @pure def transformAllCondition(ctx: Context, o: AllCondition): Result[Context, AllCondition] = {
+    val preR: PreResult[Context, AllCondition] = pp.preAllCondition(ctx, o)
+    val r: Result[Context, AllCondition] = if (preR.continu) {
+      val o2: AllCondition = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.op, transformErrorCondition _)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        Result(r0.ctx, Some(o2(op = r0.resultOpt.getOrElse(o2.op))))
+      else
+        Result(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      Result(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      Result(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: AllCondition = r.resultOpt.getOrElse(o)
+    val postR: Result[Context, AllCondition] = pp.postAllCondition(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return Result(postR.ctx, Some(o2))
+    } else {
+      return Result(postR.ctx, None())
+    }
+  }
+
   @pure def transformOrMoreCondition(ctx: Context, o: OrMoreCondition): Result[Context, OrMoreCondition] = {
     val preR: PreResult[Context, OrMoreCondition] = pp.preOrMoreCondition(ctx, o)
     val r: Result[Context, OrMoreCondition] = if (preR.continu) {
       val o2: OrMoreCondition = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-      val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+      val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.conditions, transformErrorCondition _)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        Result(r0.ctx, Some(o2(conditions = r0.resultOpt.getOrElse(o2.conditions))))
       else
-        Result(r1.ctx, None())
+        Result(r0.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       Result(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -2370,12 +2489,11 @@ import Transformer._
     val r: Result[Context, OrLessCondition] = if (preR.continu) {
       val o2: OrLessCondition = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: Result[Context, ErrorCondition] = transformErrorCondition(ctx, o2.lhs)
-      val r1: Result[Context, ErrorCondition] = transformErrorCondition(r0.ctx, o2.rhs)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        Result(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
+      val r0: Result[Context, IS[Z, ErrorCondition]] = transformISZ(ctx, o2.conditions, transformErrorCondition _)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        Result(r0.ctx, Some(o2(conditions = r0.resultOpt.getOrElse(o2.conditions))))
       else
-        Result(r1.ctx, None())
+        Result(r0.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       Result(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -2398,13 +2516,16 @@ import Transformer._
     val r: Result[Context, Emv2Clause] = if (preR.continu) {
       val o2: Emv2Clause = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: Result[Context, IS[Z, Emv2Propagation]] = transformISZ(ctx, o2.propagations, transformEmv2Propagation _)
-      val r1: Result[Context, IS[Z, Emv2Flow]] = transformISZ(r0.ctx, o2.flows, transformEmv2Flow _)
-      val r2: Result[Context, Emv2BehaviorSection] = transformEmv2BehaviorSection(r1.ctx, o2.componentBehavior)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-        Result(r2.ctx, Some(o2(propagations = r0.resultOpt.getOrElse(o2.propagations), flows = r1.resultOpt.getOrElse(o2.flows), componentBehavior = r2.resultOpt.getOrElse(o2.componentBehavior))))
+      val r0: Result[Context, IS[Z, Name]] = transformISZ(ctx, o2.libraries, transformName _)
+      val r1: Result[Context, IS[Z, Emv2Propagation]] =
+        transformISZ(r0.ctx, o2.propagations, transformEmv2Propagation _)
+      val r2: Result[Context, IS[Z, Emv2Flow]] = transformISZ(r1.ctx, o2.flows, transformEmv2Flow _)
+      val r3: Result[Context, Option[Emv2BehaviorSection]] =
+        transformOption(r2.ctx, o2.componentBehavior, transformEmv2BehaviorSection _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+        Result(r3.ctx, Some(o2(libraries = r0.resultOpt.getOrElse(o2.libraries), propagations = r1.resultOpt.getOrElse(o2.propagations), flows = r2.resultOpt.getOrElse(o2.flows), componentBehavior = r3.resultOpt.getOrElse(o2.componentBehavior))))
       else
-        Result(r2.ctx, None())
+        Result(r3.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       Result(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -2427,7 +2548,7 @@ import Transformer._
     val r: Result[Context, Emv2Propagation] = if (preR.continu) {
       val o2: Emv2Propagation = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: Result[Context, IS[Z, Name]] = transformISZ(ctx, o2.propagationPoint, transformName _)
+      val r0: Result[Context, Name] = transformName(ctx, o2.propagationPoint)
       val r1: Result[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.errorTokens, transformName _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
         Result(r1.ctx, Some(o2(propagationPoint = r0.resultOpt.getOrElse(o2.propagationPoint), errorTokens = r1.resultOpt.getOrElse(o2.errorTokens))))
@@ -2513,7 +2634,7 @@ import Transformer._
     val r: Result[Context, ErrorPropagation] = if (preR.continu) {
       val o2: ErrorPropagation = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: Result[Context, Name] = transformName(ctx, o2.id)
+      val r0: Result[Context, Option[Name]] = transformOption(ctx, o2.id, transformName _)
       val r1: Result[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.source, transformName _)
       val r2: Result[Context, Option[ErrorCondition]] = transformOption(r1.ctx, o2.condition, transformErrorCondition _)
       val r3: Result[Context, IS[Z, Emv2Propagation]] = transformISZ(r2.ctx, o2.target, transformEmv2Propagation _)

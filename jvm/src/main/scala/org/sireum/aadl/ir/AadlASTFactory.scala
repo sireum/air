@@ -28,14 +28,35 @@ package org.sireum.aadl.ir
 import java.util.{List => JList}
 
 import org.sireum._
+import org.sireum.message.{FlatPos, Position}
 
 class AadlASTFactory {
 
   def aadl(components: JList[Component], errorLib: JList[Emv2Library], dataComponents: JList[Component]): Aadl =
     Aadl(isz(components), isz(errorLib), isz(dataComponents))
 
-  def name(name: JList[Predef.String]): Name =
-    Name(isz(name).map(s => String(s)))
+  def name(name: JList[Predef.String], pos: Position): Name =
+    Name(isz(name).map(s => String(s)), if (pos != null) Some(pos) else None())
+
+  def flatPos(
+    url: Predef.String,
+    beginLine: Int,
+    beginColoumn: Int,
+    endLine: Int,
+    endColoumn: Int,
+    offset: Int,
+    length: Int
+  ): Position = {
+    FlatPos(
+      if (url != null) Some(url) else None(),
+      U32(beginLine),
+      U32(beginColoumn),
+      U32(endLine),
+      U32(endColoumn),
+      U32(offset),
+      U32(length)
+    )
+  }
 
   def component(
     identifier: Name,
@@ -220,15 +241,19 @@ class AadlASTFactory {
     flows: JList[Emv2Flow],
     componentBehavior: Emv2BehaviorSection
   ): Emv2Clause = {
-    Emv2Clause(isz(libraries), isz(propagations), isz(flows), componentBehavior)
+    Emv2Clause(
+      isz(libraries),
+      isz(propagations),
+      isz(flows),
+      if (componentBehavior != null) Some(componentBehavior) else None())
   }
 
   def emv2Propagation(
     direction: AadlASTJavaFactory.PropagationDirection,
-    propagationPoint: JList[Name],
+    propagationPoint: Name,
     errorTokens: JList[Name]
   ): Emv2Propagation = {
-    Emv2Propagation(PropagationDirection.byName(direction.name()).get, isz(propagationPoint), isz(errorTokens))
+    Emv2Propagation(PropagationDirection.byName(direction.name()).get, propagationPoint, isz(errorTokens))
   }
 
   def emv2Flow(
@@ -259,26 +284,34 @@ class AadlASTFactory {
     condition: ErrorCondition,
     target: JList[Emv2Propagation]
   ): ErrorPropagation = {
-    ErrorPropagation(id, isz(source), if (condition != null) Some(condition) else None(), isz(target))
+    ErrorPropagation(
+      if (id != null) Some(id) else None(),
+      isz(source),
+      if (condition != null) Some(condition) else None(),
+      isz(target))
   }
 
   def conditionTrigger(events: JList[Name], propagationPoints: JList[Emv2Propagation]): ConditionTrigger = {
     ConditionTrigger(isz(events), isz(propagationPoints))
   }
 
-  def andCondition(lhs: ErrorCondition, rhs: ErrorCondition): AndCondition = {
-    AndCondition(lhs, rhs)
+  def andCondition(op: JList[ErrorCondition]): AndCondition = {
+    AndCondition(isz(op))
   }
 
-  def orCondition(lhs: ErrorCondition, rhs: ErrorCondition): OrCondition = {
-    OrCondition(lhs, rhs)
+  def orCondition(op: JList[ErrorCondition]): OrCondition = {
+    OrCondition(isz(op))
   }
 
-  def orLessCondition(number: Int, conds: JList[ConditionTrigger]): OrLessCondition = {
+  def allCondition(op: JList[ErrorCondition]): AllCondition = {
+    AllCondition(isz(op))
+  }
+
+  def orLessCondition(number: Int, conds: JList[ErrorCondition]): OrLessCondition = {
     OrLessCondition(org.sireum.Z(number), isz(conds))
   }
 
-  def orMoreCondition(number: Int, conds: JList[ConditionTrigger]): OrMoreCondition = {
+  def orMoreCondition(number: Int, conds: JList[ErrorCondition]): OrMoreCondition = {
     OrMoreCondition(org.sireum.Z(number), isz(conds))
   }
 
@@ -286,21 +319,26 @@ class AadlASTFactory {
 
   def emv2Library(
     name: Name,
-    useTypes: JList[String],
+    useTypes: JList[Predef.String],
     errorTypeDef: JList[ErrorTypeDef],
     errorTypeSetDef: JList[ErrorTypeSetDef],
-    alias: JList[ErrorAliseDef],
+    alias: JList[ErrorAliasDef],
     behaveStateMachine: JList[BehaveStateMachine]
   ): Emv2Library = {
-    Emv2Library(name, isz(useTypes), isz(errorTypeDef), isz(errorTypeSetDef), isz(alias), isz(behaveStateMachine))
+    Emv2Library(
+      name,
+      isz(useTypes).map(it => String(it)),
+      isz(errorTypeDef),
+      isz(errorTypeSetDef),
+      isz(alias), isz(behaveStateMachine))
   }
 
   def errorTypeDef(id: Name, extendType: Name): ErrorTypeDef = {
-    ErrorTypeDef(id, extendType)
+    ErrorTypeDef(id, if (extendType != null) Some(extendType) else None())
   }
 
-  def errorAliseDef(errorType: Name, aliasType: Name): ErrorAliseDef = {
-    ErrorAliseDef(errorType, aliasType)
+  def errorAliseDef(errorType: Name, aliasType: Name): ErrorAliasDef = {
+    ErrorAliasDef(errorType, aliasType)
   }
 
   def errorTypeSetDef(id: Name, errorTypes: JList[Name]): ErrorTypeSetDef = {
@@ -326,7 +364,7 @@ class AadlASTFactory {
   }
 
   def errorTransition(id: Name, sourceState: Name, condition: ErrorCondition, targetState: Name): ErrorTransition = {
-    ErrorTransition(id, sourceState, condition, targetState)
+    ErrorTransition(if (id != null) Some(id) else None(), sourceState, condition, targetState)
   }
 
   def isz[T](l: JList[T]): ISZ[T] = {

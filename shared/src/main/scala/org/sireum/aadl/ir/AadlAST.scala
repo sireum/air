@@ -290,3 +290,276 @@ import org.sireum.message.Position
                                 ) extends Emv2Annex
 
 @datatype class OtherAnnex(clause: String) extends AnnexClause
+
+/* ===============================================================================
+ *
+ *   B L E S S     T r a n s i t i o n      S y s t e m s  (BTS)
+ *
+ *  ============================================================================== */
+
+@sig trait BLESSAnnex extends AnnexClause
+
+/* XText
+BLESSAnnexSubclause:
+	{BLESSAnnexSubclause}
+	no_proof ?= 'DO_NOT_PROVE'?
+assert_clause=AssertClause?
+invariant=InvariantClause?
+// Local variables to be used within the transition system
+variables=VariablesSection?
+// States in the transition system
+( 'states' states+=BehaviorState+ )?
+// Transitions in the transition system
+transitions=Transitions?
+;
+*/
+
+// Top-level structure of a BLESS transition system
+@datatype class BTSBLESSAnnexClause (
+  // boolean setting indicating if proof is intended or not
+  doNotProve: B,  // TRUE means no proof is expected
+  // assert definitions in scope of the AADL thread
+  assertions: ISZ[BTSAssertion],
+  // invariants that apply to the AADL thread
+  // note: invariants are "assertion" grammar clauses
+  invariants: ISZ[BTSAssertion],
+  // declaration of local variables to be used in the transition system
+  variables: ISZ[BTSVariableDeclaration],
+  // declaration of states of the transition system
+  states: ISZ[BTSStateDeclaration],
+  // transitions of the transition system
+  transitions: ISZ[BTSTransition]
+) extends BLESSAnnex
+
+/* XText
+ (Assertion clause in separate file -- add definition later)
+ */
+
+// TODO: Add grammar for assertion
+@datatype class BTSAssertion ( /* need to add definition */ ) extends BLESSAnnexClause
+
+/*
+InvariantClause returns InvariantClause:
+//  {InvariantClause}
+'invariant' inv=Assertion
+;
+*/
+
+// TODO: double check that invariants are assertions
+// no new AIR structures to add since invariants are just assertion clauses
+
+// TODO: need to understand variable_names / Declarator grammar structure
+/* xText
+VariablesSection returns Variables:
+'variables'
+( bv+=BehaviorVariable
+)+
+;
+
+BehaviorVariable:
+  // TODO: I don't understand this structure
+  variable_names+=Declarator ( comma?=',' variable_names+=Declarator
+  	  ( ',' variable_names+=Declarator)* )?
+  ':'
+  (
+  	nonvolitile?='nonvolatile'
+  	| shared?='shared'
+  	| constant?='constant'
+    | spread?='spread'
+    | final='final')?
+  type=Type
+  ( assign?=':=' expression=Expression )?
+  assertion=Assertion?
+  ';'
+  ;
+
+Declarator:
+	variable=ID ( '[' array_size+=ValueConstant ']' )*
+;
+*/
+
+// Note to Brian: Generating the structure below
+// would require processing the original Xtext parse tree above to
+// generate on BTSVariableDeclaration per variable.
+
+@datatype class BTSVariableDeclaration (
+  name: Name,
+  category: Option[BTSVariableCategory],
+  // not sure I got the above right.
+  // If more than one option is allowed, we need to use a list (ISZ) of category entries.
+  varType: BLESSType,
+  assignExpression: BLESSExpression,
+  arraySize: Option[BLESSIntConst],
+  variableAssertion: Option[BTSAssertion]
+                                           ) extends BLESSAnnexClause
+
+
+// TODO: Complete type grammar
+@datatype class BLESSType () extends BLESSAnnexClause
+
+// TODO: Complete expression grammar
+@datatype class BLESSExpression () extends BLESSAnnexClause
+
+// TODO: Complete constant grammar --  used for array size above
+@datatype class BLESSIntConst () extends BLESSExpression
+
+
+// Categories of behavior variables in BA/BLESS
+@enum object BTSVariableCategory {
+  'Nonvolatile
+  'Shared
+  'Constant
+  'Spread
+  'Final
+}
+
+/* XText
+BehaviorState returns BehaviorState:
+name=ID
+':'
+initial?='initial'?
+complete?='complete'?
+final?='final'?
+'state' state_assertion=Assertion? ';'
+;
+*/
+
+// BTS states are declared
+@datatype class BTSStateDeclaration (
+  id : Name,
+  category: BTSStateCategory,
+  assertion: Option[BTSAssertion],
+) extends BLESSAnnexClause
+
+
+// Three categories of states in BA/BLESS
+@enum object BTSStateCategory {
+  'Initial
+  'Complete
+  'Execute
+}
+
+/* XText
+BehaviorTransition returns BehaviorTransition:
+transition_label=TransitionLabel ':'
+( sources+=[BehaviorState] ( ',' sources+=[BehaviorState] )* )
+'-['
+( dispatch=DispatchCondition | execute=ExecuteCondition | mode=ModeCondition
+internal=InternalCondition )?
+']->'
+destination=[BehaviorState]
+( '{' actions=BehaviorActions? '}' )? ass=Assertion? ';'
+;
+
+TransitionLabel returns TransitionLabel:
+id=ID ( '[' priority=INTEGER_LIT ']' )?
+;
+
+ */
+
+@datatype class BTSTransition (
+  label: BTSTransitionLabel, // declare label for current transition
+  sourceStates: ISZ[Name],   // 1+ names referencing source states
+  destState: Name, // reference name of destination state
+  transitionCondition: BTSTransitionCondition, // transition condition (guard)
+  actions: ISZ[BTSAction], // 0+ actions to take when a transition is executed
+  assertion: Option[BTSAssertion] // 0-1 assertions for transition
+                              ) extends BLESSAnnexClause
+
+@datatype class BTSTransitionLabel (
+ id: Name,     // name of transition
+ priority: Option[Z]   // priority of transition
+                                   ) extends BLESSAnnexClause
+
+// enable polymorphism for different types of transition conditions
+@datatype class BTSTransitionCondition ( ) extends BLESSAnnexClause
+
+// **** stopped here *****
+
+// TODO: Complete transition action grammar
+@datatype class BTSAction ( ) extends BLESSAnnexClause
+
+// Dispatch conditions are needed to leave execution.
+/* Xtext
+DispatchCondition returns DispatchCondition:
+{DispatchCondition}
+'on' 'dispatch'  de=DispatchExpression?
+( 'frozen' frozen+=[aadl2::Port] ( ','  frozen+=[aadl2::Port] )* )?
+;
+
+DispatchExpression returns DispatchExpression:
+  dc+=DispatchConjunction ( or?='or' dc+=DispatchConjunction
+  	( 'or' dc+=DispatchConjunction )* )?
+  | provides=[aadl2::SubprogramAccess]
+;
+
+DispatchConjunction returns DispatchConjunction:
+//  {DispatchConjunction}
+  trigger+=DispatchTrigger
+    ( and?='and' trigger+=DispatchTrigger
+    	( 'and' trigger+=DispatchTrigger)* )?
+;
+
+DispatchTrigger returns DispatchTrigger:
+//  {DispatchTrigger}
+  stop?='stop'
+  | port=[aadl2::Port]
+  | timeout?='timeout'
+   ( ( lp?='(' ports+=[aadl2::Port] ('or'? ports+=[aadl2::Port])* ')' )? time=BehaviorTime )?
+;
+*/
+// TODO: Complete grammar for dispatch conditions
+@datatype class BTSDispatchCondition ( ) extends BTSTransitionCondition
+
+// Execute conditions are needed to leave execution states
+/* Xtext
+ExecuteCondition:
+  eor=ExpressionOrRelation
+  | timeout='timeout'      //added for BA2015 reconciliation  // Brian doesn't like; he wants to be explicit
+                           // Brian  says that this would implicitly be period property.
+  | otherwise='otherwise'  //added for BA2015 reconciliation  // Brian doesn't like; he wants to be explicit
+;
+*/
+
+// TODO: Complete grammar for execute conditions
+@datatype class BTSExecuteCondition ( ) extends BTSTransitionCondition
+
+// Brian says this is present to be compatible with BA.  Currently not supported in BLESS.
+// See annex document for BA.   Could be relevant to GUMBO goals to for aligning mode
+// state machines.
+/* Xtext
+ModeCondition:
+	'on' tle=TriggerLogicalExpression
+;
+
+EventTrigger:
+//	subcomponent=SubcomponentName
+	sub+=ID ( '.' sub+=ID )* '.' port=ID
+	| '(' tle=TriggerLogicalExpression ')'
+;
+
+LogicalOperator:
+	op='and'
+	| op='or'
+	| op='xor'
+	| 'and' op='then'
+	| 'or' op='else'
+;
+
+ */
+
+// TODO: Complete grammar for mode conditions
+@datatype class BTSModeCondition ( ) extends BTSTransitionCondition
+
+// Brian says that this was added to support communication between Error Models and BLESS.
+// Could be relevant to GUMBO goals to for aligning mode EMv2 and BA state machines
+// state machines.
+//
+/* Xtext
+InternalCondition:
+	'on' 'internal' first=[aadl2::Port] ( or?='or' ports+=[aadl2::Port] )*
+;
+ */
+
+// TODO: Complete grammar for internal conditions
+@datatype class BTSInternalCondition ( ) extends BTSTransitionCondition

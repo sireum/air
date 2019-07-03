@@ -336,7 +336,7 @@ transitions=Transitions?
  */
 
 // TODO: Add grammar for assertion
-@datatype class BTSAssertion ( /* need to add definition */ ) extends BLESSAnnexClause
+@datatype class BTSAssertion ( /* need to add definition */ ) //extends BLESSAnnex
 
 /*
 InvariantClause returns InvariantClause:
@@ -378,31 +378,20 @@ Declarator:
 ;
 */
 
+
 // Note to Brian: Generating the structure below
 // would require processing the original Xtext parse tree above to
 // generate on BTSVariableDeclaration per variable.
 
 @datatype class BTSVariableDeclaration (
   name: Name,
-  category: Option[BTSVariableCategory],
+  category: Option[BTSVariableCategory.Type],
   // not sure I got the above right.
   // If more than one option is allowed, we need to use a list (ISZ) of category entries.
   varType: BLESSType,
   assignExpression: BLESSExpression,
   arraySize: Option[BLESSIntConst],
-  variableAssertion: Option[BTSAssertion]
-                                           ) extends BLESSAnnexClause
-
-
-// TODO: Complete type grammar
-@datatype class BLESSType () extends BLESSAnnexClause
-
-// TODO: Complete expression grammar
-@datatype class BLESSExpression () extends BLESSAnnexClause
-
-// TODO: Complete constant grammar --  used for array size above
-@datatype class BLESSIntConst () extends BLESSExpression
-
+  variableAssertion: Option[BTSAssertion]) //extends BTSBLESSAnnexClause
 
 // Categories of behavior variables in BA/BLESS
 @enum object BTSVariableCategory {
@@ -412,6 +401,17 @@ Declarator:
   'Spread
   'Final
 }
+
+// TODO: Complete type grammar
+@datatype class BLESSType () //extends BTSBLESSAnnexClause
+
+// TODO: Complete expression grammar
+@datatype class BLESSExpression () //extends BTSBLESSAnnexClause
+
+// TODO: Complete constant grammar --  used for array size above
+@datatype class BLESSIntConst () //extends BLESSExpression
+
+
 
 /* XText
 BehaviorState returns BehaviorState:
@@ -427,9 +427,9 @@ final?='final'?
 // BTS states are declared
 @datatype class BTSStateDeclaration (
   id : Name,
-  category: BTSStateCategory,
+  category: BTSStateCategory.Type,
   assertion: Option[BTSAssertion],
-) extends BLESSAnnexClause
+) //extends BTSBLESSAnnexClause
 
 
 // Three categories of states in BA/BLESS
@@ -464,20 +464,20 @@ id=ID ( '[' priority=INTEGER_LIT ']' )?
   transitionCondition: BTSTransitionCondition, // transition condition (guard)
   actions: ISZ[BTSAction], // 0+ actions to take when a transition is executed
   assertion: Option[BTSAssertion] // 0-1 assertions for transition
-                              ) extends BLESSAnnexClause
+                              )// extends BTSBLESSAnnexClause
 
 @datatype class BTSTransitionLabel (
  id: Name,     // name of transition
  priority: Option[Z]   // priority of transition
-                                   ) extends BLESSAnnexClause
+                                   )// extends BTSBLESSAnnexClause
 
 // enable polymorphism for different types of transition conditions
-@datatype class BTSTransitionCondition ( ) extends BLESSAnnexClause
+@sig trait BTSTransitionCondition  //extends BTSBLESSAnnexClause
 
 // **** stopped here *****
 
 // TODO: Complete transition action grammar
-@datatype class BTSAction ( ) extends BLESSAnnexClause
+@datatype class BTSAction ( )// extends BTSBLESSAnnexClause
 
 // Dispatch conditions are needed to leave execution.
 /* Xtext

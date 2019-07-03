@@ -2,7 +2,7 @@
 // @formatter:off
 
 /*
- Copyright (c) 2019, Robby, Kansas State University
+ Copyright (c) 2018, Kansas State University
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -228,6 +228,62 @@ object MTransformer {
   val PreResultOtherAnnex: PreResult[OtherAnnex] = PreResult(T, MNone())
 
   val PostResultOtherAnnex: MOption[OtherAnnex] = MNone()
+
+  val PreResultBTSBLESSAnnexClause: PreResult[BTSBLESSAnnexClause] = PreResult(T, MNone())
+
+  val PostResultBTSBLESSAnnexClause: MOption[BTSBLESSAnnexClause] = MNone()
+
+  val PreResultBTSAssertion: PreResult[BTSAssertion] = PreResult(T, MNone())
+
+  val PostResultBTSAssertion: MOption[BTSAssertion] = MNone()
+
+  val PreResultBTSVariableDeclaration: PreResult[BTSVariableDeclaration] = PreResult(T, MNone())
+
+  val PostResultBTSVariableDeclaration: MOption[BTSVariableDeclaration] = MNone()
+
+  val PreResultBLESSType: PreResult[BLESSType] = PreResult(T, MNone())
+
+  val PostResultBLESSType: MOption[BLESSType] = MNone()
+
+  val PreResultBLESSExpression: PreResult[BLESSExpression] = PreResult(T, MNone())
+
+  val PostResultBLESSExpression: MOption[BLESSExpression] = MNone()
+
+  val PreResultBLESSIntConst: PreResult[BLESSIntConst] = PreResult(T, MNone())
+
+  val PostResultBLESSIntConst: MOption[BLESSIntConst] = MNone()
+
+  val PreResultBTSStateDeclaration: PreResult[BTSStateDeclaration] = PreResult(T, MNone())
+
+  val PostResultBTSStateDeclaration: MOption[BTSStateDeclaration] = MNone()
+
+  val PreResultBTSTransition: PreResult[BTSTransition] = PreResult(T, MNone())
+
+  val PostResultBTSTransition: MOption[BTSTransition] = MNone()
+
+  val PreResultBTSTransitionLabel: PreResult[BTSTransitionLabel] = PreResult(T, MNone())
+
+  val PostResultBTSTransitionLabel: MOption[BTSTransitionLabel] = MNone()
+
+  val PreResultBTSAction: PreResult[BTSAction] = PreResult(T, MNone())
+
+  val PostResultBTSAction: MOption[BTSAction] = MNone()
+
+  val PreResultBTSDispatchCondition: PreResult[BTSDispatchCondition] = PreResult(T, MNone())
+
+  val PostResultBTSDispatchCondition: MOption[BTSDispatchCondition] = MNone()
+
+  val PreResultBTSExecuteCondition: PreResult[BTSExecuteCondition] = PreResult(T, MNone())
+
+  val PostResultBTSExecuteCondition: MOption[BTSExecuteCondition] = MNone()
+
+  val PreResultBTSModeCondition: PreResult[BTSModeCondition] = PreResult(T, MNone())
+
+  val PostResultBTSModeCondition: MOption[BTSModeCondition] = MNone()
+
+  val PreResultBTSInternalCondition: PreResult[BTSInternalCondition] = PreResult(T, MNone())
+
+  val PostResultBTSInternalCondition: MOption[BTSInternalCondition] = MNone()
 
 }
 
@@ -493,6 +549,13 @@ import MTransformer._
         return r
       case o: OtherAnnex =>
         val r: PreResult[AnnexClause] = preOtherAnnex(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: BTSBLESSAnnexClause =>
+        val r: PreResult[AnnexClause] = preBTSBLESSAnnexClause(o) match {
          case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
          case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
@@ -766,6 +829,107 @@ import MTransformer._
     return PreResultOtherAnnex
   }
 
+  def preBLESSAnnex(o: BLESSAnnex): PreResult[BLESSAnnex] = {
+    o match {
+      case o: BTSBLESSAnnexClause =>
+        val r: PreResult[BLESSAnnex] = preBTSBLESSAnnexClause(o) match {
+         case PreResult(continu, MSome(r: BLESSAnnex)) => PreResult(continu, MSome[BLESSAnnex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BLESSAnnex")
+         case PreResult(continu, _) => PreResult(continu, MNone[BLESSAnnex]())
+        }
+        return r
+    }
+  }
+
+  def preBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): PreResult[BTSBLESSAnnexClause] = {
+    return PreResultBTSBLESSAnnexClause
+  }
+
+  def preBTSAssertion(o: BTSAssertion): PreResult[BTSAssertion] = {
+    return PreResultBTSAssertion
+  }
+
+  def preBTSVariableDeclaration(o: BTSVariableDeclaration): PreResult[BTSVariableDeclaration] = {
+    return PreResultBTSVariableDeclaration
+  }
+
+  def preBLESSType(o: BLESSType): PreResult[BLESSType] = {
+    return PreResultBLESSType
+  }
+
+  def preBLESSExpression(o: BLESSExpression): PreResult[BLESSExpression] = {
+    return PreResultBLESSExpression
+  }
+
+  def preBLESSIntConst(o: BLESSIntConst): PreResult[BLESSIntConst] = {
+    return PreResultBLESSIntConst
+  }
+
+  def preBTSStateDeclaration(o: BTSStateDeclaration): PreResult[BTSStateDeclaration] = {
+    return PreResultBTSStateDeclaration
+  }
+
+  def preBTSTransition(o: BTSTransition): PreResult[BTSTransition] = {
+    return PreResultBTSTransition
+  }
+
+  def preBTSTransitionLabel(o: BTSTransitionLabel): PreResult[BTSTransitionLabel] = {
+    return PreResultBTSTransitionLabel
+  }
+
+  def preBTSTransitionCondition(o: BTSTransitionCondition): PreResult[BTSTransitionCondition] = {
+    o match {
+      case o: BTSDispatchCondition =>
+        val r: PreResult[BTSTransitionCondition] = preBTSDispatchCondition(o) match {
+         case PreResult(continu, MSome(r: BTSTransitionCondition)) => PreResult(continu, MSome[BTSTransitionCondition](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSTransitionCondition")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSTransitionCondition]())
+        }
+        return r
+      case o: BTSExecuteCondition =>
+        val r: PreResult[BTSTransitionCondition] = preBTSExecuteCondition(o) match {
+         case PreResult(continu, MSome(r: BTSTransitionCondition)) => PreResult(continu, MSome[BTSTransitionCondition](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSTransitionCondition")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSTransitionCondition]())
+        }
+        return r
+      case o: BTSModeCondition =>
+        val r: PreResult[BTSTransitionCondition] = preBTSModeCondition(o) match {
+         case PreResult(continu, MSome(r: BTSTransitionCondition)) => PreResult(continu, MSome[BTSTransitionCondition](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSTransitionCondition")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSTransitionCondition]())
+        }
+        return r
+      case o: BTSInternalCondition =>
+        val r: PreResult[BTSTransitionCondition] = preBTSInternalCondition(o) match {
+         case PreResult(continu, MSome(r: BTSTransitionCondition)) => PreResult(continu, MSome[BTSTransitionCondition](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSTransitionCondition")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSTransitionCondition]())
+        }
+        return r
+    }
+  }
+
+  def preBTSAction(o: BTSAction): PreResult[BTSAction] = {
+    return PreResultBTSAction
+  }
+
+  def preBTSDispatchCondition(o: BTSDispatchCondition): PreResult[BTSDispatchCondition] = {
+    return PreResultBTSDispatchCondition
+  }
+
+  def preBTSExecuteCondition(o: BTSExecuteCondition): PreResult[BTSExecuteCondition] = {
+    return PreResultBTSExecuteCondition
+  }
+
+  def preBTSModeCondition(o: BTSModeCondition): PreResult[BTSModeCondition] = {
+    return PreResultBTSModeCondition
+  }
+
+  def preBTSInternalCondition(o: BTSInternalCondition): PreResult[BTSInternalCondition] = {
+    return PreResultBTSInternalCondition
+  }
+
   def postAadl(o: Aadl): MOption[Aadl] = {
     return PostResultAadl
   }
@@ -1024,6 +1188,13 @@ import MTransformer._
         return r
       case o: OtherAnnex =>
         val r: MOption[AnnexClause] = postOtherAnnex(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: BTSBLESSAnnexClause =>
+        val r: MOption[AnnexClause] = postBTSBLESSAnnexClause(o) match {
          case MSome(result: AnnexClause) => MSome[AnnexClause](result)
          case MSome(_) => halt("Can only produce object of type AnnexClause")
          case _ => MNone[AnnexClause]()
@@ -1295,6 +1466,107 @@ import MTransformer._
 
   def postOtherAnnex(o: OtherAnnex): MOption[OtherAnnex] = {
     return PostResultOtherAnnex
+  }
+
+  def postBLESSAnnex(o: BLESSAnnex): MOption[BLESSAnnex] = {
+    o match {
+      case o: BTSBLESSAnnexClause =>
+        val r: MOption[BLESSAnnex] = postBTSBLESSAnnexClause(o) match {
+         case MSome(result: BLESSAnnex) => MSome[BLESSAnnex](result)
+         case MSome(_) => halt("Can only produce object of type BLESSAnnex")
+         case _ => MNone[BLESSAnnex]()
+        }
+        return r
+    }
+  }
+
+  def postBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): MOption[BTSBLESSAnnexClause] = {
+    return PostResultBTSBLESSAnnexClause
+  }
+
+  def postBTSAssertion(o: BTSAssertion): MOption[BTSAssertion] = {
+    return PostResultBTSAssertion
+  }
+
+  def postBTSVariableDeclaration(o: BTSVariableDeclaration): MOption[BTSVariableDeclaration] = {
+    return PostResultBTSVariableDeclaration
+  }
+
+  def postBLESSType(o: BLESSType): MOption[BLESSType] = {
+    return PostResultBLESSType
+  }
+
+  def postBLESSExpression(o: BLESSExpression): MOption[BLESSExpression] = {
+    return PostResultBLESSExpression
+  }
+
+  def postBLESSIntConst(o: BLESSIntConst): MOption[BLESSIntConst] = {
+    return PostResultBLESSIntConst
+  }
+
+  def postBTSStateDeclaration(o: BTSStateDeclaration): MOption[BTSStateDeclaration] = {
+    return PostResultBTSStateDeclaration
+  }
+
+  def postBTSTransition(o: BTSTransition): MOption[BTSTransition] = {
+    return PostResultBTSTransition
+  }
+
+  def postBTSTransitionLabel(o: BTSTransitionLabel): MOption[BTSTransitionLabel] = {
+    return PostResultBTSTransitionLabel
+  }
+
+  def postBTSTransitionCondition(o: BTSTransitionCondition): MOption[BTSTransitionCondition] = {
+    o match {
+      case o: BTSDispatchCondition =>
+        val r: MOption[BTSTransitionCondition] = postBTSDispatchCondition(o) match {
+         case MSome(result: BTSTransitionCondition) => MSome[BTSTransitionCondition](result)
+         case MSome(_) => halt("Can only produce object of type BTSTransitionCondition")
+         case _ => MNone[BTSTransitionCondition]()
+        }
+        return r
+      case o: BTSExecuteCondition =>
+        val r: MOption[BTSTransitionCondition] = postBTSExecuteCondition(o) match {
+         case MSome(result: BTSTransitionCondition) => MSome[BTSTransitionCondition](result)
+         case MSome(_) => halt("Can only produce object of type BTSTransitionCondition")
+         case _ => MNone[BTSTransitionCondition]()
+        }
+        return r
+      case o: BTSModeCondition =>
+        val r: MOption[BTSTransitionCondition] = postBTSModeCondition(o) match {
+         case MSome(result: BTSTransitionCondition) => MSome[BTSTransitionCondition](result)
+         case MSome(_) => halt("Can only produce object of type BTSTransitionCondition")
+         case _ => MNone[BTSTransitionCondition]()
+        }
+        return r
+      case o: BTSInternalCondition =>
+        val r: MOption[BTSTransitionCondition] = postBTSInternalCondition(o) match {
+         case MSome(result: BTSTransitionCondition) => MSome[BTSTransitionCondition](result)
+         case MSome(_) => halt("Can only produce object of type BTSTransitionCondition")
+         case _ => MNone[BTSTransitionCondition]()
+        }
+        return r
+    }
+  }
+
+  def postBTSAction(o: BTSAction): MOption[BTSAction] = {
+    return PostResultBTSAction
+  }
+
+  def postBTSDispatchCondition(o: BTSDispatchCondition): MOption[BTSDispatchCondition] = {
+    return PostResultBTSDispatchCondition
+  }
+
+  def postBTSExecuteCondition(o: BTSExecuteCondition): MOption[BTSExecuteCondition] = {
+    return PostResultBTSExecuteCondition
+  }
+
+  def postBTSModeCondition(o: BTSModeCondition): MOption[BTSModeCondition] = {
+    return PostResultBTSModeCondition
+  }
+
+  def postBTSInternalCondition(o: BTSInternalCondition): MOption[BTSInternalCondition] = {
+    return PostResultBTSInternalCondition
   }
 
   def transformAadl(o: Aadl): MOption[Aadl] = {
@@ -1987,6 +2259,16 @@ import MTransformer._
         case o2: OtherAnnex =>
           if (hasChanged)
             MSome(o2)
+          else
+            MNone()
+        case o2: BTSBLESSAnnexClause =>
+          val r0: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.assertions, transformBTSAssertion _)
+          val r1: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.invariants, transformBTSAssertion _)
+          val r2: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.variables, transformBTSVariableDeclaration _)
+          val r3: MOption[IS[Z, BTSStateDeclaration]] = transformISZ(o2.states, transformBTSStateDeclaration _)
+          val r4: MOption[IS[Z, BTSTransition]] = transformISZ(o2.transitions, transformBTSTransition _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(assertions = r0.getOrElse(o2.assertions), invariants = r1.getOrElse(o2.invariants), variables = r2.getOrElse(o2.variables), states = r3.getOrElse(o2.states), transitions = r4.getOrElse(o2.transitions)))
           else
             MNone()
       }
@@ -2791,6 +3073,469 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: OtherAnnex = r.getOrElse(o)
     val postR: MOption[OtherAnnex] = postOtherAnnex(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBLESSAnnex(o: BLESSAnnex): MOption[BLESSAnnex] = {
+    val preR: PreResult[BLESSAnnex] = preBLESSAnnex(o)
+    val r: MOption[BLESSAnnex] = if (preR.continu) {
+      val o2: BLESSAnnex = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[BLESSAnnex] = o2 match {
+        case o2: BTSBLESSAnnexClause =>
+          val r0: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.assertions, transformBTSAssertion _)
+          val r1: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.invariants, transformBTSAssertion _)
+          val r2: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.variables, transformBTSVariableDeclaration _)
+          val r3: MOption[IS[Z, BTSStateDeclaration]] = transformISZ(o2.states, transformBTSStateDeclaration _)
+          val r4: MOption[IS[Z, BTSTransition]] = transformISZ(o2.transitions, transformBTSTransition _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(assertions = r0.getOrElse(o2.assertions), invariants = r1.getOrElse(o2.invariants), variables = r2.getOrElse(o2.variables), states = r3.getOrElse(o2.states), transitions = r4.getOrElse(o2.transitions)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BLESSAnnex = r.getOrElse(o)
+    val postR: MOption[BLESSAnnex] = postBLESSAnnex(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): MOption[BTSBLESSAnnexClause] = {
+    val preR: PreResult[BTSBLESSAnnexClause] = preBTSBLESSAnnexClause(o)
+    val r: MOption[BTSBLESSAnnexClause] = if (preR.continu) {
+      val o2: BTSBLESSAnnexClause = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.assertions, transformBTSAssertion _)
+      val r1: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.invariants, transformBTSAssertion _)
+      val r2: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.variables, transformBTSVariableDeclaration _)
+      val r3: MOption[IS[Z, BTSStateDeclaration]] = transformISZ(o2.states, transformBTSStateDeclaration _)
+      val r4: MOption[IS[Z, BTSTransition]] = transformISZ(o2.transitions, transformBTSTransition _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(assertions = r0.getOrElse(o2.assertions), invariants = r1.getOrElse(o2.invariants), variables = r2.getOrElse(o2.variables), states = r3.getOrElse(o2.states), transitions = r4.getOrElse(o2.transitions)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSBLESSAnnexClause = r.getOrElse(o)
+    val postR: MOption[BTSBLESSAnnexClause] = postBTSBLESSAnnexClause(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSAssertion(o: BTSAssertion): MOption[BTSAssertion] = {
+    val preR: PreResult[BTSAssertion] = preBTSAssertion(o)
+    val r: MOption[BTSAssertion] = if (preR.continu) {
+      val o2: BTSAssertion = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSAssertion = r.getOrElse(o)
+    val postR: MOption[BTSAssertion] = postBTSAssertion(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSVariableDeclaration(o: BTSVariableDeclaration): MOption[BTSVariableDeclaration] = {
+    val preR: PreResult[BTSVariableDeclaration] = preBTSVariableDeclaration(o)
+    val r: MOption[BTSVariableDeclaration] = if (preR.continu) {
+      val o2: BTSVariableDeclaration = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.name)
+      val r1: MOption[BLESSType] = transformBLESSType(o2.varType)
+      val r2: MOption[BLESSExpression] = transformBLESSExpression(o2.assignExpression)
+      val r3: MOption[Option[BLESSIntConst]] = transformOption(o2.arraySize, transformBLESSIntConst _)
+      val r4: MOption[Option[BTSAssertion]] = transformOption(o2.variableAssertion, transformBTSAssertion _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), varType = r1.getOrElse(o2.varType), assignExpression = r2.getOrElse(o2.assignExpression), arraySize = r3.getOrElse(o2.arraySize), variableAssertion = r4.getOrElse(o2.variableAssertion)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSVariableDeclaration = r.getOrElse(o)
+    val postR: MOption[BTSVariableDeclaration] = postBTSVariableDeclaration(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBLESSType(o: BLESSType): MOption[BLESSType] = {
+    val preR: PreResult[BLESSType] = preBLESSType(o)
+    val r: MOption[BLESSType] = if (preR.continu) {
+      val o2: BLESSType = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BLESSType = r.getOrElse(o)
+    val postR: MOption[BLESSType] = postBLESSType(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBLESSExpression(o: BLESSExpression): MOption[BLESSExpression] = {
+    val preR: PreResult[BLESSExpression] = preBLESSExpression(o)
+    val r: MOption[BLESSExpression] = if (preR.continu) {
+      val o2: BLESSExpression = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BLESSExpression = r.getOrElse(o)
+    val postR: MOption[BLESSExpression] = postBLESSExpression(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBLESSIntConst(o: BLESSIntConst): MOption[BLESSIntConst] = {
+    val preR: PreResult[BLESSIntConst] = preBLESSIntConst(o)
+    val r: MOption[BLESSIntConst] = if (preR.continu) {
+      val o2: BLESSIntConst = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BLESSIntConst = r.getOrElse(o)
+    val postR: MOption[BLESSIntConst] = postBLESSIntConst(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSStateDeclaration(o: BTSStateDeclaration): MOption[BTSStateDeclaration] = {
+    val preR: PreResult[BTSStateDeclaration] = preBTSStateDeclaration(o)
+    val r: MOption[BTSStateDeclaration] = if (preR.continu) {
+      val o2: BTSStateDeclaration = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.id)
+      val r1: MOption[Option[BTSAssertion]] = transformOption(o2.assertion, transformBTSAssertion _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), assertion = r1.getOrElse(o2.assertion)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSStateDeclaration = r.getOrElse(o)
+    val postR: MOption[BTSStateDeclaration] = postBTSStateDeclaration(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSTransition(o: BTSTransition): MOption[BTSTransition] = {
+    val preR: PreResult[BTSTransition] = preBTSTransition(o)
+    val r: MOption[BTSTransition] = if (preR.continu) {
+      val o2: BTSTransition = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[BTSTransitionLabel] = transformBTSTransitionLabel(o2.label)
+      val r1: MOption[IS[Z, Name]] = transformISZ(o2.sourceStates, transformName _)
+      val r2: MOption[Name] = transformName(o2.destState)
+      val r3: MOption[BTSTransitionCondition] = transformBTSTransitionCondition(o2.transitionCondition)
+      val r4: MOption[IS[Z, BTSAction]] = transformISZ(o2.actions, transformBTSAction _)
+      val r5: MOption[Option[BTSAssertion]] = transformOption(o2.assertion, transformBTSAssertion _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
+        MSome(o2(label = r0.getOrElse(o2.label), sourceStates = r1.getOrElse(o2.sourceStates), destState = r2.getOrElse(o2.destState), transitionCondition = r3.getOrElse(o2.transitionCondition), actions = r4.getOrElse(o2.actions), assertion = r5.getOrElse(o2.assertion)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSTransition = r.getOrElse(o)
+    val postR: MOption[BTSTransition] = postBTSTransition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSTransitionLabel(o: BTSTransitionLabel): MOption[BTSTransitionLabel] = {
+    val preR: PreResult[BTSTransitionLabel] = preBTSTransitionLabel(o)
+    val r: MOption[BTSTransitionLabel] = if (preR.continu) {
+      val o2: BTSTransitionLabel = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.id)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSTransitionLabel = r.getOrElse(o)
+    val postR: MOption[BTSTransitionLabel] = postBTSTransitionLabel(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSTransitionCondition(o: BTSTransitionCondition): MOption[BTSTransitionCondition] = {
+    val preR: PreResult[BTSTransitionCondition] = preBTSTransitionCondition(o)
+    val r: MOption[BTSTransitionCondition] = if (preR.continu) {
+      val o2: BTSTransitionCondition = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[BTSTransitionCondition] = o2 match {
+        case o2: BTSDispatchCondition =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: BTSExecuteCondition =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: BTSModeCondition =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: BTSInternalCondition =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSTransitionCondition = r.getOrElse(o)
+    val postR: MOption[BTSTransitionCondition] = postBTSTransitionCondition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSAction(o: BTSAction): MOption[BTSAction] = {
+    val preR: PreResult[BTSAction] = preBTSAction(o)
+    val r: MOption[BTSAction] = if (preR.continu) {
+      val o2: BTSAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSAction = r.getOrElse(o)
+    val postR: MOption[BTSAction] = postBTSAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSDispatchCondition(o: BTSDispatchCondition): MOption[BTSDispatchCondition] = {
+    val preR: PreResult[BTSDispatchCondition] = preBTSDispatchCondition(o)
+    val r: MOption[BTSDispatchCondition] = if (preR.continu) {
+      val o2: BTSDispatchCondition = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSDispatchCondition = r.getOrElse(o)
+    val postR: MOption[BTSDispatchCondition] = postBTSDispatchCondition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSExecuteCondition(o: BTSExecuteCondition): MOption[BTSExecuteCondition] = {
+    val preR: PreResult[BTSExecuteCondition] = preBTSExecuteCondition(o)
+    val r: MOption[BTSExecuteCondition] = if (preR.continu) {
+      val o2: BTSExecuteCondition = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSExecuteCondition = r.getOrElse(o)
+    val postR: MOption[BTSExecuteCondition] = postBTSExecuteCondition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSModeCondition(o: BTSModeCondition): MOption[BTSModeCondition] = {
+    val preR: PreResult[BTSModeCondition] = preBTSModeCondition(o)
+    val r: MOption[BTSModeCondition] = if (preR.continu) {
+      val o2: BTSModeCondition = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSModeCondition = r.getOrElse(o)
+    val postR: MOption[BTSModeCondition] = postBTSModeCondition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSInternalCondition(o: BTSInternalCondition): MOption[BTSInternalCondition] = {
+    val preR: PreResult[BTSInternalCondition] = preBTSInternalCondition(o)
+    val r: MOption[BTSInternalCondition] = if (preR.continu) {
+      val o2: BTSInternalCondition = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSInternalCondition = r.getOrElse(o)
+    val postR: MOption[BTSInternalCondition] = postBTSInternalCondition(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

@@ -233,21 +233,13 @@ object MTransformer {
 
   val PostResultBTSBLESSAnnexClause: MOption[BTSBLESSAnnexClause] = MNone()
 
-  val PreResultBTSAssertion: PreResult[BTSAssertion] = PreResult(T, MNone())
-
-  val PostResultBTSAssertion: MOption[BTSAssertion] = MNone()
-
   val PreResultBTSVariableDeclaration: PreResult[BTSVariableDeclaration] = PreResult(T, MNone())
 
   val PostResultBTSVariableDeclaration: MOption[BTSVariableDeclaration] = MNone()
 
-  val PreResultBLESSType: PreResult[BLESSType] = PreResult(T, MNone())
+  val PreResultBTSClassifier: PreResult[BTSClassifier] = PreResult(T, MNone())
 
-  val PostResultBLESSType: MOption[BLESSType] = MNone()
-
-  val PreResultBLESSExpression: PreResult[BLESSExpression] = PreResult(T, MNone())
-
-  val PostResultBLESSExpression: MOption[BLESSExpression] = MNone()
+  val PostResultBTSClassifier: MOption[BTSClassifier] = MNone()
 
   val PreResultBLESSIntConst: PreResult[BLESSIntConst] = PreResult(T, MNone())
 
@@ -265,13 +257,25 @@ object MTransformer {
 
   val PostResultBTSTransitionLabel: MOption[BTSTransitionLabel] = MNone()
 
-  val PreResultBTSAction: PreResult[BTSAction] = PreResult(T, MNone())
-
-  val PostResultBTSAction: MOption[BTSAction] = MNone()
-
   val PreResultBTSDispatchCondition: PreResult[BTSDispatchCondition] = PreResult(T, MNone())
 
   val PostResultBTSDispatchCondition: MOption[BTSDispatchCondition] = MNone()
+
+  val PreResultBTSDispatchConjunction: PreResult[BTSDispatchConjunction] = PreResult(T, MNone())
+
+  val PostResultBTSDispatchConjunction: MOption[BTSDispatchConjunction] = MNone()
+
+  val PreResultBTSDispatchTriggerStop: PreResult[BTSDispatchTriggerStop] = PreResult(T, MNone())
+
+  val PostResultBTSDispatchTriggerStop: MOption[BTSDispatchTriggerStop] = MNone()
+
+  val PreResultBTSDispatchTriggerPort: PreResult[BTSDispatchTriggerPort] = PreResult(T, MNone())
+
+  val PostResultBTSDispatchTriggerPort: MOption[BTSDispatchTriggerPort] = MNone()
+
+  val PreResultBTSDispatchTriggerTimeout: PreResult[BTSDispatchTriggerTimeout] = PreResult(T, MNone())
+
+  val PostResultBTSDispatchTriggerTimeout: MOption[BTSDispatchTriggerTimeout] = MNone()
 
   val PreResultBTSExecuteCondition: PreResult[BTSExecuteCondition] = PreResult(T, MNone())
 
@@ -284,6 +288,102 @@ object MTransformer {
   val PreResultBTSInternalCondition: PreResult[BTSInternalCondition] = PreResult(T, MNone())
 
   val PostResultBTSInternalCondition: MOption[BTSInternalCondition] = MNone()
+
+  val PreResultBTSAssertion: PreResult[BTSAssertion] = PreResult(T, MNone())
+
+  val PostResultBTSAssertion: MOption[BTSAssertion] = MNone()
+
+  val PreResultBTSBehaviorActions: PreResult[BTSBehaviorActions] = PreResult(T, MNone())
+
+  val PostResultBTSBehaviorActions: MOption[BTSBehaviorActions] = MNone()
+
+  val PreResultBTSAssertedAction: PreResult[BTSAssertedAction] = PreResult(T, MNone())
+
+  val PostResultBTSAssertedAction: MOption[BTSAssertedAction] = MNone()
+
+  val PreResultBTSSkipAction: PreResult[BTSSkipAction] = PreResult(T, MNone())
+
+  val PostResultBTSSkipAction: MOption[BTSSkipAction] = MNone()
+
+  val PreResultBTSAssignmentAction: PreResult[BTSAssignmentAction] = PreResult(T, MNone())
+
+  val PostResultBTSAssignmentAction: MOption[BTSAssignmentAction] = MNone()
+
+  val PreResultBTSSubprogramCallAction: PreResult[BTSSubprogramCallAction] = PreResult(T, MNone())
+
+  val PostResultBTSSubprogramCallAction: MOption[BTSSubprogramCallAction] = MNone()
+
+  val PreResultBTSPortOutAction: PreResult[BTSPortOutAction] = PreResult(T, MNone())
+
+  val PostResultBTSPortOutAction: MOption[BTSPortOutAction] = MNone()
+
+  val PreResultBTSPortInAction: PreResult[BTSPortInAction] = PreResult(T, MNone())
+
+  val PostResultBTSPortInAction: MOption[BTSPortInAction] = MNone()
+
+  val PreResultBTSFrozenPortAction: PreResult[BTSFrozenPortAction] = PreResult(T, MNone())
+
+  val PostResultBTSFrozenPortAction: MOption[BTSFrozenPortAction] = MNone()
+
+  val PreResultBTSIfBLESSAction: PreResult[BTSIfBLESSAction] = PreResult(T, MNone())
+
+  val PostResultBTSIfBLESSAction: MOption[BTSIfBLESSAction] = MNone()
+
+  val PreResultBTSGuardedAction: PreResult[BTSGuardedAction] = PreResult(T, MNone())
+
+  val PostResultBTSGuardedAction: MOption[BTSGuardedAction] = MNone()
+
+  val PreResultBTSIfBAAction: PreResult[BTSIfBAAction] = PreResult(T, MNone())
+
+  val PostResultBTSIfBAAction: MOption[BTSIfBAAction] = MNone()
+
+  val PreResultBTSConditionalActions: PreResult[BTSConditionalActions] = PreResult(T, MNone())
+
+  val PostResultBTSConditionalActions: MOption[BTSConditionalActions] = MNone()
+
+  val PreResultBTSExistentialLatticeQuantification: PreResult[BTSExistentialLatticeQuantification] = PreResult(T, MNone())
+
+  val PostResultBTSExistentialLatticeQuantification: MOption[BTSExistentialLatticeQuantification] = MNone()
+
+  val PreResultBTSUniversalLatticeQuantification: PreResult[BTSUniversalLatticeQuantification] = PreResult(T, MNone())
+
+  val PostResultBTSUniversalLatticeQuantification: MOption[BTSUniversalLatticeQuantification] = MNone()
+
+  val PreResultBTSUnaryExp: PreResult[BTSUnaryExp] = PreResult(T, MNone())
+
+  val PostResultBTSUnaryExp: MOption[BTSUnaryExp] = MNone()
+
+  val PreResultBTSBinaryExp: PreResult[BTSBinaryExp] = PreResult(T, MNone())
+
+  val PostResultBTSBinaryExp: MOption[BTSBinaryExp] = MNone()
+
+  val PreResultBTSLiteralExp: PreResult[BTSLiteralExp] = PreResult(T, MNone())
+
+  val PostResultBTSLiteralExp: MOption[BTSLiteralExp] = MNone()
+
+  val PreResultBTSNameExp: PreResult[BTSNameExp] = PreResult(T, MNone())
+
+  val PostResultBTSNameExp: MOption[BTSNameExp] = MNone()
+
+  val PreResultBTSIndexingExp: PreResult[BTSIndexingExp] = PreResult(T, MNone())
+
+  val PostResultBTSIndexingExp: MOption[BTSIndexingExp] = MNone()
+
+  val PreResultBTSAccessExp: PreResult[BTSAccessExp] = PreResult(T, MNone())
+
+  val PostResultBTSAccessExp: MOption[BTSAccessExp] = MNone()
+
+  val PreResultBTSFunctionCall: PreResult[BTSFunctionCall] = PreResult(T, MNone())
+
+  val PostResultBTSFunctionCall: MOption[BTSFunctionCall] = MNone()
+
+  val PreResultBTSFormalExpPair: PreResult[BTSFormalExpPair] = PreResult(T, MNone())
+
+  val PostResultBTSFormalExpPair: MOption[BTSFormalExpPair] = MNone()
+
+  val PreResultBTSBehaviorTime: PreResult[BTSBehaviorTime] = PreResult(T, MNone())
+
+  val PostResultBTSBehaviorTime: MOption[BTSBehaviorTime] = MNone()
 
 }
 
@@ -845,20 +945,24 @@ import MTransformer._
     return PreResultBTSBLESSAnnexClause
   }
 
-  def preBTSAssertion(o: BTSAssertion): PreResult[BTSAssertion] = {
-    return PreResultBTSAssertion
-  }
-
   def preBTSVariableDeclaration(o: BTSVariableDeclaration): PreResult[BTSVariableDeclaration] = {
     return PreResultBTSVariableDeclaration
   }
 
-  def preBLESSType(o: BLESSType): PreResult[BLESSType] = {
-    return PreResultBLESSType
+  def preBTSType(o: BTSType): PreResult[BTSType] = {
+    o match {
+      case o: BTSClassifier =>
+        val r: PreResult[BTSType] = preBTSClassifier(o) match {
+         case PreResult(continu, MSome(r: BTSType)) => PreResult(continu, MSome[BTSType](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSType")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSType]())
+        }
+        return r
+    }
   }
 
-  def preBLESSExpression(o: BLESSExpression): PreResult[BLESSExpression] = {
-    return PreResultBLESSExpression
+  def preBTSClassifier(o: BTSClassifier): PreResult[BTSClassifier] = {
+    return PreResultBTSClassifier
   }
 
   def preBLESSIntConst(o: BLESSIntConst): PreResult[BLESSIntConst] = {
@@ -910,12 +1014,50 @@ import MTransformer._
     }
   }
 
-  def preBTSAction(o: BTSAction): PreResult[BTSAction] = {
-    return PreResultBTSAction
-  }
-
   def preBTSDispatchCondition(o: BTSDispatchCondition): PreResult[BTSDispatchCondition] = {
     return PreResultBTSDispatchCondition
+  }
+
+  def preBTSDispatchConjunction(o: BTSDispatchConjunction): PreResult[BTSDispatchConjunction] = {
+    return PreResultBTSDispatchConjunction
+  }
+
+  def preBTSDispatchTrigger(o: BTSDispatchTrigger): PreResult[BTSDispatchTrigger] = {
+    o match {
+      case o: BTSDispatchTriggerStop =>
+        val r: PreResult[BTSDispatchTrigger] = preBTSDispatchTriggerStop(o) match {
+         case PreResult(continu, MSome(r: BTSDispatchTrigger)) => PreResult(continu, MSome[BTSDispatchTrigger](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSDispatchTrigger")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSDispatchTrigger]())
+        }
+        return r
+      case o: BTSDispatchTriggerPort =>
+        val r: PreResult[BTSDispatchTrigger] = preBTSDispatchTriggerPort(o) match {
+         case PreResult(continu, MSome(r: BTSDispatchTrigger)) => PreResult(continu, MSome[BTSDispatchTrigger](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSDispatchTrigger")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSDispatchTrigger]())
+        }
+        return r
+      case o: BTSDispatchTriggerTimeout =>
+        val r: PreResult[BTSDispatchTrigger] = preBTSDispatchTriggerTimeout(o) match {
+         case PreResult(continu, MSome(r: BTSDispatchTrigger)) => PreResult(continu, MSome[BTSDispatchTrigger](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSDispatchTrigger")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSDispatchTrigger]())
+        }
+        return r
+    }
+  }
+
+  def preBTSDispatchTriggerStop(o: BTSDispatchTriggerStop): PreResult[BTSDispatchTriggerStop] = {
+    return PreResultBTSDispatchTriggerStop
+  }
+
+  def preBTSDispatchTriggerPort(o: BTSDispatchTriggerPort): PreResult[BTSDispatchTriggerPort] = {
+    return PreResultBTSDispatchTriggerPort
+  }
+
+  def preBTSDispatchTriggerTimeout(o: BTSDispatchTriggerTimeout): PreResult[BTSDispatchTriggerTimeout] = {
+    return PreResultBTSDispatchTriggerTimeout
   }
 
   def preBTSExecuteCondition(o: BTSExecuteCondition): PreResult[BTSExecuteCondition] = {
@@ -928,6 +1070,349 @@ import MTransformer._
 
   def preBTSInternalCondition(o: BTSInternalCondition): PreResult[BTSInternalCondition] = {
     return PreResultBTSInternalCondition
+  }
+
+  def preBTSAssertion(o: BTSAssertion): PreResult[BTSAssertion] = {
+    return PreResultBTSAssertion
+  }
+
+  def preBTSBehaviorActions(o: BTSBehaviorActions): PreResult[BTSBehaviorActions] = {
+    return PreResultBTSBehaviorActions
+  }
+
+  def preBTSAssertedAction(o: BTSAssertedAction): PreResult[BTSAssertedAction] = {
+    return PreResultBTSAssertedAction
+  }
+
+  def preBTSAction(o: BTSAction): PreResult[BTSAction] = {
+    o match {
+      case o: BTSSkipAction =>
+        val r: PreResult[BTSAction] = preBTSSkipAction(o) match {
+         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
+        }
+        return r
+      case o: BTSAssignmentAction =>
+        val r: PreResult[BTSAction] = preBTSAssignmentAction(o) match {
+         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
+        }
+        return r
+      case o: BTSSubprogramCallAction =>
+        val r: PreResult[BTSAction] = preBTSSubprogramCallAction(o) match {
+         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
+        }
+        return r
+      case o: BTSPortOutAction =>
+        val r: PreResult[BTSAction] = preBTSPortOutAction(o) match {
+         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
+        }
+        return r
+      case o: BTSPortInAction =>
+        val r: PreResult[BTSAction] = preBTSPortInAction(o) match {
+         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
+        }
+        return r
+      case o: BTSFrozenPortAction =>
+        val r: PreResult[BTSAction] = preBTSFrozenPortAction(o) match {
+         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
+        }
+        return r
+      case o: BTSIfBLESSAction =>
+        val r: PreResult[BTSAction] = preBTSIfBLESSAction(o) match {
+         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
+        }
+        return r
+      case o: BTSIfBAAction =>
+        val r: PreResult[BTSAction] = preBTSIfBAAction(o) match {
+         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
+        }
+        return r
+      case o: BTSExistentialLatticeQuantification =>
+        val r: PreResult[BTSAction] = preBTSExistentialLatticeQuantification(o) match {
+         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
+        }
+        return r
+      case o: BTSUniversalLatticeQuantification =>
+        val r: PreResult[BTSAction] = preBTSUniversalLatticeQuantification(o) match {
+         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
+        }
+        return r
+    }
+  }
+
+  def preBTSBasicAction(o: BTSBasicAction): PreResult[BTSBasicAction] = {
+    o match {
+      case o: BTSSkipAction =>
+        val r: PreResult[BTSBasicAction] = preBTSSkipAction(o) match {
+         case PreResult(continu, MSome(r: BTSBasicAction)) => PreResult(continu, MSome[BTSBasicAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSBasicAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSBasicAction]())
+        }
+        return r
+      case o: BTSAssignmentAction =>
+        val r: PreResult[BTSBasicAction] = preBTSAssignmentAction(o) match {
+         case PreResult(continu, MSome(r: BTSBasicAction)) => PreResult(continu, MSome[BTSBasicAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSBasicAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSBasicAction]())
+        }
+        return r
+      case o: BTSSubprogramCallAction =>
+        val r: PreResult[BTSBasicAction] = preBTSSubprogramCallAction(o) match {
+         case PreResult(continu, MSome(r: BTSBasicAction)) => PreResult(continu, MSome[BTSBasicAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSBasicAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSBasicAction]())
+        }
+        return r
+      case o: BTSPortOutAction =>
+        val r: PreResult[BTSBasicAction] = preBTSPortOutAction(o) match {
+         case PreResult(continu, MSome(r: BTSBasicAction)) => PreResult(continu, MSome[BTSBasicAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSBasicAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSBasicAction]())
+        }
+        return r
+      case o: BTSPortInAction =>
+        val r: PreResult[BTSBasicAction] = preBTSPortInAction(o) match {
+         case PreResult(continu, MSome(r: BTSBasicAction)) => PreResult(continu, MSome[BTSBasicAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSBasicAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSBasicAction]())
+        }
+        return r
+      case o: BTSFrozenPortAction =>
+        val r: PreResult[BTSBasicAction] = preBTSFrozenPortAction(o) match {
+         case PreResult(continu, MSome(r: BTSBasicAction)) => PreResult(continu, MSome[BTSBasicAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSBasicAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSBasicAction]())
+        }
+        return r
+    }
+  }
+
+  def preBTSSkipAction(o: BTSSkipAction): PreResult[BTSSkipAction] = {
+    return PreResultBTSSkipAction
+  }
+
+  def preBTSAssignmentAction(o: BTSAssignmentAction): PreResult[BTSAssignmentAction] = {
+    return PreResultBTSAssignmentAction
+  }
+
+  def preBTSCommunicationAction(o: BTSCommunicationAction): PreResult[BTSCommunicationAction] = {
+    o match {
+      case o: BTSSubprogramCallAction =>
+        val r: PreResult[BTSCommunicationAction] = preBTSSubprogramCallAction(o) match {
+         case PreResult(continu, MSome(r: BTSCommunicationAction)) => PreResult(continu, MSome[BTSCommunicationAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSCommunicationAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSCommunicationAction]())
+        }
+        return r
+      case o: BTSPortOutAction =>
+        val r: PreResult[BTSCommunicationAction] = preBTSPortOutAction(o) match {
+         case PreResult(continu, MSome(r: BTSCommunicationAction)) => PreResult(continu, MSome[BTSCommunicationAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSCommunicationAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSCommunicationAction]())
+        }
+        return r
+      case o: BTSPortInAction =>
+        val r: PreResult[BTSCommunicationAction] = preBTSPortInAction(o) match {
+         case PreResult(continu, MSome(r: BTSCommunicationAction)) => PreResult(continu, MSome[BTSCommunicationAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSCommunicationAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSCommunicationAction]())
+        }
+        return r
+      case o: BTSFrozenPortAction =>
+        val r: PreResult[BTSCommunicationAction] = preBTSFrozenPortAction(o) match {
+         case PreResult(continu, MSome(r: BTSCommunicationAction)) => PreResult(continu, MSome[BTSCommunicationAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSCommunicationAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSCommunicationAction]())
+        }
+        return r
+    }
+  }
+
+  def preBTSSubprogramCallAction(o: BTSSubprogramCallAction): PreResult[BTSSubprogramCallAction] = {
+    return PreResultBTSSubprogramCallAction
+  }
+
+  def preBTSPortOutAction(o: BTSPortOutAction): PreResult[BTSPortOutAction] = {
+    return PreResultBTSPortOutAction
+  }
+
+  def preBTSPortInAction(o: BTSPortInAction): PreResult[BTSPortInAction] = {
+    return PreResultBTSPortInAction
+  }
+
+  def preBTSFrozenPortAction(o: BTSFrozenPortAction): PreResult[BTSFrozenPortAction] = {
+    return PreResultBTSFrozenPortAction
+  }
+
+  def preBTSControlAction(o: BTSControlAction): PreResult[BTSControlAction] = {
+    o match {
+      case o: BTSIfBLESSAction =>
+        val r: PreResult[BTSControlAction] = preBTSIfBLESSAction(o) match {
+         case PreResult(continu, MSome(r: BTSControlAction)) => PreResult(continu, MSome[BTSControlAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSControlAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSControlAction]())
+        }
+        return r
+      case o: BTSIfBAAction =>
+        val r: PreResult[BTSControlAction] = preBTSIfBAAction(o) match {
+         case PreResult(continu, MSome(r: BTSControlAction)) => PreResult(continu, MSome[BTSControlAction](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSControlAction")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSControlAction]())
+        }
+        return r
+    }
+  }
+
+  def preBTSIfBLESSAction(o: BTSIfBLESSAction): PreResult[BTSIfBLESSAction] = {
+    return PreResultBTSIfBLESSAction
+  }
+
+  def preBTSGuardedAction(o: BTSGuardedAction): PreResult[BTSGuardedAction] = {
+    return PreResultBTSGuardedAction
+  }
+
+  def preBTSIfBAAction(o: BTSIfBAAction): PreResult[BTSIfBAAction] = {
+    return PreResultBTSIfBAAction
+  }
+
+  def preBTSConditionalActions(o: BTSConditionalActions): PreResult[BTSConditionalActions] = {
+    return PreResultBTSConditionalActions
+  }
+
+  def preBTSQuantificationActions(o: BTSQuantificationActions): PreResult[BTSQuantificationActions] = {
+    o match {
+      case o: BTSExistentialLatticeQuantification =>
+        val r: PreResult[BTSQuantificationActions] = preBTSExistentialLatticeQuantification(o) match {
+         case PreResult(continu, MSome(r: BTSQuantificationActions)) => PreResult(continu, MSome[BTSQuantificationActions](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSQuantificationActions")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSQuantificationActions]())
+        }
+        return r
+      case o: BTSUniversalLatticeQuantification =>
+        val r: PreResult[BTSQuantificationActions] = preBTSUniversalLatticeQuantification(o) match {
+         case PreResult(continu, MSome(r: BTSQuantificationActions)) => PreResult(continu, MSome[BTSQuantificationActions](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSQuantificationActions")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSQuantificationActions]())
+        }
+        return r
+    }
+  }
+
+  def preBTSExistentialLatticeQuantification(o: BTSExistentialLatticeQuantification): PreResult[BTSExistentialLatticeQuantification] = {
+    return PreResultBTSExistentialLatticeQuantification
+  }
+
+  def preBTSUniversalLatticeQuantification(o: BTSUniversalLatticeQuantification): PreResult[BTSUniversalLatticeQuantification] = {
+    return PreResultBTSUniversalLatticeQuantification
+  }
+
+  def preBTSExp(o: BTSExp): PreResult[BTSExp] = {
+    o match {
+      case o: BTSUnaryExp =>
+        val r: PreResult[BTSExp] = preBTSUnaryExp(o) match {
+         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
+        }
+        return r
+      case o: BTSBinaryExp =>
+        val r: PreResult[BTSExp] = preBTSBinaryExp(o) match {
+         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
+        }
+        return r
+      case o: BTSLiteralExp =>
+        val r: PreResult[BTSExp] = preBTSLiteralExp(o) match {
+         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
+        }
+        return r
+      case o: BTSNameExp =>
+        val r: PreResult[BTSExp] = preBTSNameExp(o) match {
+         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
+        }
+        return r
+      case o: BTSIndexingExp =>
+        val r: PreResult[BTSExp] = preBTSIndexingExp(o) match {
+         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
+        }
+        return r
+      case o: BTSAccessExp =>
+        val r: PreResult[BTSExp] = preBTSAccessExp(o) match {
+         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
+        }
+        return r
+      case o: BTSFunctionCall =>
+        val r: PreResult[BTSExp] = preBTSFunctionCall(o) match {
+         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
+        }
+        return r
+    }
+  }
+
+  def preBTSUnaryExp(o: BTSUnaryExp): PreResult[BTSUnaryExp] = {
+    return PreResultBTSUnaryExp
+  }
+
+  def preBTSBinaryExp(o: BTSBinaryExp): PreResult[BTSBinaryExp] = {
+    return PreResultBTSBinaryExp
+  }
+
+  def preBTSLiteralExp(o: BTSLiteralExp): PreResult[BTSLiteralExp] = {
+    return PreResultBTSLiteralExp
+  }
+
+  def preBTSNameExp(o: BTSNameExp): PreResult[BTSNameExp] = {
+    return PreResultBTSNameExp
+  }
+
+  def preBTSIndexingExp(o: BTSIndexingExp): PreResult[BTSIndexingExp] = {
+    return PreResultBTSIndexingExp
+  }
+
+  def preBTSAccessExp(o: BTSAccessExp): PreResult[BTSAccessExp] = {
+    return PreResultBTSAccessExp
+  }
+
+  def preBTSFunctionCall(o: BTSFunctionCall): PreResult[BTSFunctionCall] = {
+    return PreResultBTSFunctionCall
+  }
+
+  def preBTSFormalExpPair(o: BTSFormalExpPair): PreResult[BTSFormalExpPair] = {
+    return PreResultBTSFormalExpPair
+  }
+
+  def preBTSBehaviorTime(o: BTSBehaviorTime): PreResult[BTSBehaviorTime] = {
+    return PreResultBTSBehaviorTime
   }
 
   def postAadl(o: Aadl): MOption[Aadl] = {
@@ -1484,20 +1969,24 @@ import MTransformer._
     return PostResultBTSBLESSAnnexClause
   }
 
-  def postBTSAssertion(o: BTSAssertion): MOption[BTSAssertion] = {
-    return PostResultBTSAssertion
-  }
-
   def postBTSVariableDeclaration(o: BTSVariableDeclaration): MOption[BTSVariableDeclaration] = {
     return PostResultBTSVariableDeclaration
   }
 
-  def postBLESSType(o: BLESSType): MOption[BLESSType] = {
-    return PostResultBLESSType
+  def postBTSType(o: BTSType): MOption[BTSType] = {
+    o match {
+      case o: BTSClassifier =>
+        val r: MOption[BTSType] = postBTSClassifier(o) match {
+         case MSome(result: BTSType) => MSome[BTSType](result)
+         case MSome(_) => halt("Can only produce object of type BTSType")
+         case _ => MNone[BTSType]()
+        }
+        return r
+    }
   }
 
-  def postBLESSExpression(o: BLESSExpression): MOption[BLESSExpression] = {
-    return PostResultBLESSExpression
+  def postBTSClassifier(o: BTSClassifier): MOption[BTSClassifier] = {
+    return PostResultBTSClassifier
   }
 
   def postBLESSIntConst(o: BLESSIntConst): MOption[BLESSIntConst] = {
@@ -1549,12 +2038,50 @@ import MTransformer._
     }
   }
 
-  def postBTSAction(o: BTSAction): MOption[BTSAction] = {
-    return PostResultBTSAction
-  }
-
   def postBTSDispatchCondition(o: BTSDispatchCondition): MOption[BTSDispatchCondition] = {
     return PostResultBTSDispatchCondition
+  }
+
+  def postBTSDispatchConjunction(o: BTSDispatchConjunction): MOption[BTSDispatchConjunction] = {
+    return PostResultBTSDispatchConjunction
+  }
+
+  def postBTSDispatchTrigger(o: BTSDispatchTrigger): MOption[BTSDispatchTrigger] = {
+    o match {
+      case o: BTSDispatchTriggerStop =>
+        val r: MOption[BTSDispatchTrigger] = postBTSDispatchTriggerStop(o) match {
+         case MSome(result: BTSDispatchTrigger) => MSome[BTSDispatchTrigger](result)
+         case MSome(_) => halt("Can only produce object of type BTSDispatchTrigger")
+         case _ => MNone[BTSDispatchTrigger]()
+        }
+        return r
+      case o: BTSDispatchTriggerPort =>
+        val r: MOption[BTSDispatchTrigger] = postBTSDispatchTriggerPort(o) match {
+         case MSome(result: BTSDispatchTrigger) => MSome[BTSDispatchTrigger](result)
+         case MSome(_) => halt("Can only produce object of type BTSDispatchTrigger")
+         case _ => MNone[BTSDispatchTrigger]()
+        }
+        return r
+      case o: BTSDispatchTriggerTimeout =>
+        val r: MOption[BTSDispatchTrigger] = postBTSDispatchTriggerTimeout(o) match {
+         case MSome(result: BTSDispatchTrigger) => MSome[BTSDispatchTrigger](result)
+         case MSome(_) => halt("Can only produce object of type BTSDispatchTrigger")
+         case _ => MNone[BTSDispatchTrigger]()
+        }
+        return r
+    }
+  }
+
+  def postBTSDispatchTriggerStop(o: BTSDispatchTriggerStop): MOption[BTSDispatchTriggerStop] = {
+    return PostResultBTSDispatchTriggerStop
+  }
+
+  def postBTSDispatchTriggerPort(o: BTSDispatchTriggerPort): MOption[BTSDispatchTriggerPort] = {
+    return PostResultBTSDispatchTriggerPort
+  }
+
+  def postBTSDispatchTriggerTimeout(o: BTSDispatchTriggerTimeout): MOption[BTSDispatchTriggerTimeout] = {
+    return PostResultBTSDispatchTriggerTimeout
   }
 
   def postBTSExecuteCondition(o: BTSExecuteCondition): MOption[BTSExecuteCondition] = {
@@ -1567,6 +2094,349 @@ import MTransformer._
 
   def postBTSInternalCondition(o: BTSInternalCondition): MOption[BTSInternalCondition] = {
     return PostResultBTSInternalCondition
+  }
+
+  def postBTSAssertion(o: BTSAssertion): MOption[BTSAssertion] = {
+    return PostResultBTSAssertion
+  }
+
+  def postBTSBehaviorActions(o: BTSBehaviorActions): MOption[BTSBehaviorActions] = {
+    return PostResultBTSBehaviorActions
+  }
+
+  def postBTSAssertedAction(o: BTSAssertedAction): MOption[BTSAssertedAction] = {
+    return PostResultBTSAssertedAction
+  }
+
+  def postBTSAction(o: BTSAction): MOption[BTSAction] = {
+    o match {
+      case o: BTSSkipAction =>
+        val r: MOption[BTSAction] = postBTSSkipAction(o) match {
+         case MSome(result: BTSAction) => MSome[BTSAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case _ => MNone[BTSAction]()
+        }
+        return r
+      case o: BTSAssignmentAction =>
+        val r: MOption[BTSAction] = postBTSAssignmentAction(o) match {
+         case MSome(result: BTSAction) => MSome[BTSAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case _ => MNone[BTSAction]()
+        }
+        return r
+      case o: BTSSubprogramCallAction =>
+        val r: MOption[BTSAction] = postBTSSubprogramCallAction(o) match {
+         case MSome(result: BTSAction) => MSome[BTSAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case _ => MNone[BTSAction]()
+        }
+        return r
+      case o: BTSPortOutAction =>
+        val r: MOption[BTSAction] = postBTSPortOutAction(o) match {
+         case MSome(result: BTSAction) => MSome[BTSAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case _ => MNone[BTSAction]()
+        }
+        return r
+      case o: BTSPortInAction =>
+        val r: MOption[BTSAction] = postBTSPortInAction(o) match {
+         case MSome(result: BTSAction) => MSome[BTSAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case _ => MNone[BTSAction]()
+        }
+        return r
+      case o: BTSFrozenPortAction =>
+        val r: MOption[BTSAction] = postBTSFrozenPortAction(o) match {
+         case MSome(result: BTSAction) => MSome[BTSAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case _ => MNone[BTSAction]()
+        }
+        return r
+      case o: BTSIfBLESSAction =>
+        val r: MOption[BTSAction] = postBTSIfBLESSAction(o) match {
+         case MSome(result: BTSAction) => MSome[BTSAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case _ => MNone[BTSAction]()
+        }
+        return r
+      case o: BTSIfBAAction =>
+        val r: MOption[BTSAction] = postBTSIfBAAction(o) match {
+         case MSome(result: BTSAction) => MSome[BTSAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case _ => MNone[BTSAction]()
+        }
+        return r
+      case o: BTSExistentialLatticeQuantification =>
+        val r: MOption[BTSAction] = postBTSExistentialLatticeQuantification(o) match {
+         case MSome(result: BTSAction) => MSome[BTSAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case _ => MNone[BTSAction]()
+        }
+        return r
+      case o: BTSUniversalLatticeQuantification =>
+        val r: MOption[BTSAction] = postBTSUniversalLatticeQuantification(o) match {
+         case MSome(result: BTSAction) => MSome[BTSAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case _ => MNone[BTSAction]()
+        }
+        return r
+    }
+  }
+
+  def postBTSBasicAction(o: BTSBasicAction): MOption[BTSBasicAction] = {
+    o match {
+      case o: BTSSkipAction =>
+        val r: MOption[BTSBasicAction] = postBTSSkipAction(o) match {
+         case MSome(result: BTSBasicAction) => MSome[BTSBasicAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSBasicAction")
+         case _ => MNone[BTSBasicAction]()
+        }
+        return r
+      case o: BTSAssignmentAction =>
+        val r: MOption[BTSBasicAction] = postBTSAssignmentAction(o) match {
+         case MSome(result: BTSBasicAction) => MSome[BTSBasicAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSBasicAction")
+         case _ => MNone[BTSBasicAction]()
+        }
+        return r
+      case o: BTSSubprogramCallAction =>
+        val r: MOption[BTSBasicAction] = postBTSSubprogramCallAction(o) match {
+         case MSome(result: BTSBasicAction) => MSome[BTSBasicAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSBasicAction")
+         case _ => MNone[BTSBasicAction]()
+        }
+        return r
+      case o: BTSPortOutAction =>
+        val r: MOption[BTSBasicAction] = postBTSPortOutAction(o) match {
+         case MSome(result: BTSBasicAction) => MSome[BTSBasicAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSBasicAction")
+         case _ => MNone[BTSBasicAction]()
+        }
+        return r
+      case o: BTSPortInAction =>
+        val r: MOption[BTSBasicAction] = postBTSPortInAction(o) match {
+         case MSome(result: BTSBasicAction) => MSome[BTSBasicAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSBasicAction")
+         case _ => MNone[BTSBasicAction]()
+        }
+        return r
+      case o: BTSFrozenPortAction =>
+        val r: MOption[BTSBasicAction] = postBTSFrozenPortAction(o) match {
+         case MSome(result: BTSBasicAction) => MSome[BTSBasicAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSBasicAction")
+         case _ => MNone[BTSBasicAction]()
+        }
+        return r
+    }
+  }
+
+  def postBTSSkipAction(o: BTSSkipAction): MOption[BTSSkipAction] = {
+    return PostResultBTSSkipAction
+  }
+
+  def postBTSAssignmentAction(o: BTSAssignmentAction): MOption[BTSAssignmentAction] = {
+    return PostResultBTSAssignmentAction
+  }
+
+  def postBTSCommunicationAction(o: BTSCommunicationAction): MOption[BTSCommunicationAction] = {
+    o match {
+      case o: BTSSubprogramCallAction =>
+        val r: MOption[BTSCommunicationAction] = postBTSSubprogramCallAction(o) match {
+         case MSome(result: BTSCommunicationAction) => MSome[BTSCommunicationAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSCommunicationAction")
+         case _ => MNone[BTSCommunicationAction]()
+        }
+        return r
+      case o: BTSPortOutAction =>
+        val r: MOption[BTSCommunicationAction] = postBTSPortOutAction(o) match {
+         case MSome(result: BTSCommunicationAction) => MSome[BTSCommunicationAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSCommunicationAction")
+         case _ => MNone[BTSCommunicationAction]()
+        }
+        return r
+      case o: BTSPortInAction =>
+        val r: MOption[BTSCommunicationAction] = postBTSPortInAction(o) match {
+         case MSome(result: BTSCommunicationAction) => MSome[BTSCommunicationAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSCommunicationAction")
+         case _ => MNone[BTSCommunicationAction]()
+        }
+        return r
+      case o: BTSFrozenPortAction =>
+        val r: MOption[BTSCommunicationAction] = postBTSFrozenPortAction(o) match {
+         case MSome(result: BTSCommunicationAction) => MSome[BTSCommunicationAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSCommunicationAction")
+         case _ => MNone[BTSCommunicationAction]()
+        }
+        return r
+    }
+  }
+
+  def postBTSSubprogramCallAction(o: BTSSubprogramCallAction): MOption[BTSSubprogramCallAction] = {
+    return PostResultBTSSubprogramCallAction
+  }
+
+  def postBTSPortOutAction(o: BTSPortOutAction): MOption[BTSPortOutAction] = {
+    return PostResultBTSPortOutAction
+  }
+
+  def postBTSPortInAction(o: BTSPortInAction): MOption[BTSPortInAction] = {
+    return PostResultBTSPortInAction
+  }
+
+  def postBTSFrozenPortAction(o: BTSFrozenPortAction): MOption[BTSFrozenPortAction] = {
+    return PostResultBTSFrozenPortAction
+  }
+
+  def postBTSControlAction(o: BTSControlAction): MOption[BTSControlAction] = {
+    o match {
+      case o: BTSIfBLESSAction =>
+        val r: MOption[BTSControlAction] = postBTSIfBLESSAction(o) match {
+         case MSome(result: BTSControlAction) => MSome[BTSControlAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSControlAction")
+         case _ => MNone[BTSControlAction]()
+        }
+        return r
+      case o: BTSIfBAAction =>
+        val r: MOption[BTSControlAction] = postBTSIfBAAction(o) match {
+         case MSome(result: BTSControlAction) => MSome[BTSControlAction](result)
+         case MSome(_) => halt("Can only produce object of type BTSControlAction")
+         case _ => MNone[BTSControlAction]()
+        }
+        return r
+    }
+  }
+
+  def postBTSIfBLESSAction(o: BTSIfBLESSAction): MOption[BTSIfBLESSAction] = {
+    return PostResultBTSIfBLESSAction
+  }
+
+  def postBTSGuardedAction(o: BTSGuardedAction): MOption[BTSGuardedAction] = {
+    return PostResultBTSGuardedAction
+  }
+
+  def postBTSIfBAAction(o: BTSIfBAAction): MOption[BTSIfBAAction] = {
+    return PostResultBTSIfBAAction
+  }
+
+  def postBTSConditionalActions(o: BTSConditionalActions): MOption[BTSConditionalActions] = {
+    return PostResultBTSConditionalActions
+  }
+
+  def postBTSQuantificationActions(o: BTSQuantificationActions): MOption[BTSQuantificationActions] = {
+    o match {
+      case o: BTSExistentialLatticeQuantification =>
+        val r: MOption[BTSQuantificationActions] = postBTSExistentialLatticeQuantification(o) match {
+         case MSome(result: BTSQuantificationActions) => MSome[BTSQuantificationActions](result)
+         case MSome(_) => halt("Can only produce object of type BTSQuantificationActions")
+         case _ => MNone[BTSQuantificationActions]()
+        }
+        return r
+      case o: BTSUniversalLatticeQuantification =>
+        val r: MOption[BTSQuantificationActions] = postBTSUniversalLatticeQuantification(o) match {
+         case MSome(result: BTSQuantificationActions) => MSome[BTSQuantificationActions](result)
+         case MSome(_) => halt("Can only produce object of type BTSQuantificationActions")
+         case _ => MNone[BTSQuantificationActions]()
+        }
+        return r
+    }
+  }
+
+  def postBTSExistentialLatticeQuantification(o: BTSExistentialLatticeQuantification): MOption[BTSExistentialLatticeQuantification] = {
+    return PostResultBTSExistentialLatticeQuantification
+  }
+
+  def postBTSUniversalLatticeQuantification(o: BTSUniversalLatticeQuantification): MOption[BTSUniversalLatticeQuantification] = {
+    return PostResultBTSUniversalLatticeQuantification
+  }
+
+  def postBTSExp(o: BTSExp): MOption[BTSExp] = {
+    o match {
+      case o: BTSUnaryExp =>
+        val r: MOption[BTSExp] = postBTSUnaryExp(o) match {
+         case MSome(result: BTSExp) => MSome[BTSExp](result)
+         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case _ => MNone[BTSExp]()
+        }
+        return r
+      case o: BTSBinaryExp =>
+        val r: MOption[BTSExp] = postBTSBinaryExp(o) match {
+         case MSome(result: BTSExp) => MSome[BTSExp](result)
+         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case _ => MNone[BTSExp]()
+        }
+        return r
+      case o: BTSLiteralExp =>
+        val r: MOption[BTSExp] = postBTSLiteralExp(o) match {
+         case MSome(result: BTSExp) => MSome[BTSExp](result)
+         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case _ => MNone[BTSExp]()
+        }
+        return r
+      case o: BTSNameExp =>
+        val r: MOption[BTSExp] = postBTSNameExp(o) match {
+         case MSome(result: BTSExp) => MSome[BTSExp](result)
+         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case _ => MNone[BTSExp]()
+        }
+        return r
+      case o: BTSIndexingExp =>
+        val r: MOption[BTSExp] = postBTSIndexingExp(o) match {
+         case MSome(result: BTSExp) => MSome[BTSExp](result)
+         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case _ => MNone[BTSExp]()
+        }
+        return r
+      case o: BTSAccessExp =>
+        val r: MOption[BTSExp] = postBTSAccessExp(o) match {
+         case MSome(result: BTSExp) => MSome[BTSExp](result)
+         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case _ => MNone[BTSExp]()
+        }
+        return r
+      case o: BTSFunctionCall =>
+        val r: MOption[BTSExp] = postBTSFunctionCall(o) match {
+         case MSome(result: BTSExp) => MSome[BTSExp](result)
+         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case _ => MNone[BTSExp]()
+        }
+        return r
+    }
+  }
+
+  def postBTSUnaryExp(o: BTSUnaryExp): MOption[BTSUnaryExp] = {
+    return PostResultBTSUnaryExp
+  }
+
+  def postBTSBinaryExp(o: BTSBinaryExp): MOption[BTSBinaryExp] = {
+    return PostResultBTSBinaryExp
+  }
+
+  def postBTSLiteralExp(o: BTSLiteralExp): MOption[BTSLiteralExp] = {
+    return PostResultBTSLiteralExp
+  }
+
+  def postBTSNameExp(o: BTSNameExp): MOption[BTSNameExp] = {
+    return PostResultBTSNameExp
+  }
+
+  def postBTSIndexingExp(o: BTSIndexingExp): MOption[BTSIndexingExp] = {
+    return PostResultBTSIndexingExp
+  }
+
+  def postBTSAccessExp(o: BTSAccessExp): MOption[BTSAccessExp] = {
+    return PostResultBTSAccessExp
+  }
+
+  def postBTSFunctionCall(o: BTSFunctionCall): MOption[BTSFunctionCall] = {
+    return PostResultBTSFunctionCall
+  }
+
+  def postBTSFormalExpPair(o: BTSFormalExpPair): MOption[BTSFormalExpPair] = {
+    return PostResultBTSFormalExpPair
+  }
+
+  def postBTSBehaviorTime(o: BTSBehaviorTime): MOption[BTSBehaviorTime] = {
+    return PostResultBTSBehaviorTime
   }
 
   def transformAadl(o: Aadl): MOption[Aadl] = {
@@ -2263,12 +3133,12 @@ import MTransformer._
             MNone()
         case o2: BTSBLESSAnnexClause =>
           val r0: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.assertions, transformBTSAssertion _)
-          val r1: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.invariants, transformBTSAssertion _)
+          val r1: MOption[Option[BTSAssertion]] = transformOption(o2.invariant, transformBTSAssertion _)
           val r2: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.variables, transformBTSVariableDeclaration _)
           val r3: MOption[IS[Z, BTSStateDeclaration]] = transformISZ(o2.states, transformBTSStateDeclaration _)
           val r4: MOption[IS[Z, BTSTransition]] = transformISZ(o2.transitions, transformBTSTransition _)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
-            MSome(o2(assertions = r0.getOrElse(o2.assertions), invariants = r1.getOrElse(o2.invariants), variables = r2.getOrElse(o2.variables), states = r3.getOrElse(o2.states), transitions = r4.getOrElse(o2.transitions)))
+            MSome(o2(assertions = r0.getOrElse(o2.assertions), invariant = r1.getOrElse(o2.invariant), variables = r2.getOrElse(o2.variables), states = r3.getOrElse(o2.states), transitions = r4.getOrElse(o2.transitions)))
           else
             MNone()
       }
@@ -3090,12 +3960,12 @@ import MTransformer._
       val rOpt: MOption[BLESSAnnex] = o2 match {
         case o2: BTSBLESSAnnexClause =>
           val r0: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.assertions, transformBTSAssertion _)
-          val r1: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.invariants, transformBTSAssertion _)
+          val r1: MOption[Option[BTSAssertion]] = transformOption(o2.invariant, transformBTSAssertion _)
           val r2: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.variables, transformBTSVariableDeclaration _)
           val r3: MOption[IS[Z, BTSStateDeclaration]] = transformISZ(o2.states, transformBTSStateDeclaration _)
           val r4: MOption[IS[Z, BTSTransition]] = transformISZ(o2.transitions, transformBTSTransition _)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
-            MSome(o2(assertions = r0.getOrElse(o2.assertions), invariants = r1.getOrElse(o2.invariants), variables = r2.getOrElse(o2.variables), states = r3.getOrElse(o2.states), transitions = r4.getOrElse(o2.transitions)))
+            MSome(o2(assertions = r0.getOrElse(o2.assertions), invariant = r1.getOrElse(o2.invariant), variables = r2.getOrElse(o2.variables), states = r3.getOrElse(o2.states), transitions = r4.getOrElse(o2.transitions)))
           else
             MNone()
       }
@@ -3123,12 +3993,12 @@ import MTransformer._
       val o2: BTSBLESSAnnexClause = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.assertions, transformBTSAssertion _)
-      val r1: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.invariants, transformBTSAssertion _)
+      val r1: MOption[Option[BTSAssertion]] = transformOption(o2.invariant, transformBTSAssertion _)
       val r2: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.variables, transformBTSVariableDeclaration _)
       val r3: MOption[IS[Z, BTSStateDeclaration]] = transformISZ(o2.states, transformBTSStateDeclaration _)
       val r4: MOption[IS[Z, BTSTransition]] = transformISZ(o2.transitions, transformBTSTransition _)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
-        MSome(o2(assertions = r0.getOrElse(o2.assertions), invariants = r1.getOrElse(o2.invariants), variables = r2.getOrElse(o2.variables), states = r3.getOrElse(o2.states), transitions = r4.getOrElse(o2.transitions)))
+        MSome(o2(assertions = r0.getOrElse(o2.assertions), invariant = r1.getOrElse(o2.invariant), variables = r2.getOrElse(o2.variables), states = r3.getOrElse(o2.states), transitions = r4.getOrElse(o2.transitions)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -3148,40 +4018,14 @@ import MTransformer._
     }
   }
 
-  def transformBTSAssertion(o: BTSAssertion): MOption[BTSAssertion] = {
-    val preR: PreResult[BTSAssertion] = preBTSAssertion(o)
-    val r: MOption[BTSAssertion] = if (preR.continu) {
-      val o2: BTSAssertion = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: BTSAssertion = r.getOrElse(o)
-    val postR: MOption[BTSAssertion] = postBTSAssertion(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
   def transformBTSVariableDeclaration(o: BTSVariableDeclaration): MOption[BTSVariableDeclaration] = {
     val preR: PreResult[BTSVariableDeclaration] = preBTSVariableDeclaration(o)
     val r: MOption[BTSVariableDeclaration] = if (preR.continu) {
       val o2: BTSVariableDeclaration = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[Name] = transformName(o2.name)
-      val r1: MOption[BLESSType] = transformBLESSType(o2.varType)
-      val r2: MOption[BLESSExpression] = transformBLESSExpression(o2.assignExpression)
+      val r1: MOption[BTSType] = transformBTSType(o2.varType)
+      val r2: MOption[Option[BTSExp]] = transformOption(o2.assignExpression, transformBTSExp _)
       val r3: MOption[Option[BLESSIntConst]] = transformOption(o2.arraySize, transformBLESSIntConst _)
       val r4: MOption[Option[BTSAssertion]] = transformOption(o2.variableAssertion, transformBTSAssertion _)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
@@ -3205,23 +4049,28 @@ import MTransformer._
     }
   }
 
-  def transformBLESSType(o: BLESSType): MOption[BLESSType] = {
-    val preR: PreResult[BLESSType] = preBLESSType(o)
-    val r: MOption[BLESSType] = if (preR.continu) {
-      val o2: BLESSType = preR.resultOpt.getOrElse(o)
+  def transformBTSType(o: BTSType): MOption[BTSType] = {
+    val preR: PreResult[BTSType] = preBTSType(o)
+    val r: MOption[BTSType] = if (preR.continu) {
+      val o2: BTSType = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
-      else
-        MNone()
+      val rOpt: MOption[BTSType] = o2 match {
+        case o2: BTSClassifier =>
+          val r0: MOption[Name] = transformName(o2.name)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name)))
+          else
+            MNone()
+      }
+      rOpt
     } else if (preR.resultOpt.nonEmpty) {
       MSome(preR.resultOpt.getOrElse(o))
     } else {
       MNone()
     }
     val hasChanged: B = r.nonEmpty
-    val o2: BLESSType = r.getOrElse(o)
-    val postR: MOption[BLESSType] = postBLESSType(o2)
+    val o2: BTSType = r.getOrElse(o)
+    val postR: MOption[BTSType] = postBTSType(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -3231,13 +4080,14 @@ import MTransformer._
     }
   }
 
-  def transformBLESSExpression(o: BLESSExpression): MOption[BLESSExpression] = {
-    val preR: PreResult[BLESSExpression] = preBLESSExpression(o)
-    val r: MOption[BLESSExpression] = if (preR.continu) {
-      val o2: BLESSExpression = preR.resultOpt.getOrElse(o)
+  def transformBTSClassifier(o: BTSClassifier): MOption[BTSClassifier] = {
+    val preR: PreResult[BTSClassifier] = preBTSClassifier(o)
+    val r: MOption[BTSClassifier] = if (preR.continu) {
+      val o2: BTSClassifier = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
+      val r0: MOption[Name] = transformName(o2.name)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -3246,8 +4096,8 @@ import MTransformer._
       MNone()
     }
     val hasChanged: B = r.nonEmpty
-    val o2: BLESSExpression = r.getOrElse(o)
-    val postR: MOption[BLESSExpression] = postBLESSExpression(o2)
+    val o2: BTSClassifier = r.getOrElse(o)
+    val postR: MOption[BTSClassifier] = postBTSClassifier(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -3319,8 +4169,8 @@ import MTransformer._
       val r0: MOption[BTSTransitionLabel] = transformBTSTransitionLabel(o2.label)
       val r1: MOption[IS[Z, Name]] = transformISZ(o2.sourceStates, transformName _)
       val r2: MOption[Name] = transformName(o2.destState)
-      val r3: MOption[BTSTransitionCondition] = transformBTSTransitionCondition(o2.transitionCondition)
-      val r4: MOption[IS[Z, BTSAction]] = transformISZ(o2.actions, transformBTSAction _)
+      val r3: MOption[Option[BTSTransitionCondition]] = transformOption(o2.transitionCondition, transformBTSTransitionCondition _)
+      val r4: MOption[Option[BTSBehaviorActions]] = transformOption(o2.actions, transformBTSBehaviorActions _)
       val r5: MOption[Option[BTSAssertion]] = transformOption(o2.assertion, transformBTSAssertion _)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
         MSome(o2(label = r0.getOrElse(o2.label), sourceStates = r1.getOrElse(o2.sourceStates), destState = r2.getOrElse(o2.destState), transitionCondition = r3.getOrElse(o2.transitionCondition), actions = r4.getOrElse(o2.actions), assertion = r5.getOrElse(o2.assertion)))
@@ -3377,8 +4227,10 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: MOption[BTSTransitionCondition] = o2 match {
         case o2: BTSDispatchCondition =>
-          if (hasChanged)
-            MSome(o2)
+          val r0: MOption[IS[Z, BTSDispatchConjunction]] = transformISZ(o2.dispatchTriggers, transformBTSDispatchConjunction _)
+          val r1: MOption[IS[Z, Name]] = transformISZ(o2.frozenPorts, transformName _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(dispatchTriggers = r0.getOrElse(o2.dispatchTriggers), frozenPorts = r1.getOrElse(o2.frozenPorts)))
           else
             MNone()
         case o2: BTSExecuteCondition =>
@@ -3415,39 +4267,15 @@ import MTransformer._
     }
   }
 
-  def transformBTSAction(o: BTSAction): MOption[BTSAction] = {
-    val preR: PreResult[BTSAction] = preBTSAction(o)
-    val r: MOption[BTSAction] = if (preR.continu) {
-      val o2: BTSAction = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: BTSAction = r.getOrElse(o)
-    val postR: MOption[BTSAction] = postBTSAction(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
   def transformBTSDispatchCondition(o: BTSDispatchCondition): MOption[BTSDispatchCondition] = {
     val preR: PreResult[BTSDispatchCondition] = preBTSDispatchCondition(o)
     val r: MOption[BTSDispatchCondition] = if (preR.continu) {
       val o2: BTSDispatchCondition = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
+      val r0: MOption[IS[Z, BTSDispatchConjunction]] = transformISZ(o2.dispatchTriggers, transformBTSDispatchConjunction _)
+      val r1: MOption[IS[Z, Name]] = transformISZ(o2.frozenPorts, transformName _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(dispatchTriggers = r0.getOrElse(o2.dispatchTriggers), frozenPorts = r1.getOrElse(o2.frozenPorts)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -3458,6 +4286,157 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: BTSDispatchCondition = r.getOrElse(o)
     val postR: MOption[BTSDispatchCondition] = postBTSDispatchCondition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSDispatchConjunction(o: BTSDispatchConjunction): MOption[BTSDispatchConjunction] = {
+    val preR: PreResult[BTSDispatchConjunction] = preBTSDispatchConjunction(o)
+    val r: MOption[BTSDispatchConjunction] = if (preR.continu) {
+      val o2: BTSDispatchConjunction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, BTSDispatchTrigger]] = transformISZ(o2.conjunction, transformBTSDispatchTrigger _)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(conjunction = r0.getOrElse(o2.conjunction)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSDispatchConjunction = r.getOrElse(o)
+    val postR: MOption[BTSDispatchConjunction] = postBTSDispatchConjunction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSDispatchTrigger(o: BTSDispatchTrigger): MOption[BTSDispatchTrigger] = {
+    val preR: PreResult[BTSDispatchTrigger] = preBTSDispatchTrigger(o)
+    val r: MOption[BTSDispatchTrigger] = if (preR.continu) {
+      val o2: BTSDispatchTrigger = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[BTSDispatchTrigger] = o2 match {
+        case o2: BTSDispatchTriggerStop =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: BTSDispatchTriggerPort =>
+          val r0: MOption[Name] = transformName(o2.port)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(port = r0.getOrElse(o2.port)))
+          else
+            MNone()
+        case o2: BTSDispatchTriggerTimeout =>
+          val r0: MOption[IS[Z, Name]] = transformISZ(o2.ports, transformName _)
+          val r1: MOption[Option[BTSBehaviorTime]] = transformOption(o2.time, transformBTSBehaviorTime _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(ports = r0.getOrElse(o2.ports), time = r1.getOrElse(o2.time)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSDispatchTrigger = r.getOrElse(o)
+    val postR: MOption[BTSDispatchTrigger] = postBTSDispatchTrigger(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSDispatchTriggerStop(o: BTSDispatchTriggerStop): MOption[BTSDispatchTriggerStop] = {
+    val preR: PreResult[BTSDispatchTriggerStop] = preBTSDispatchTriggerStop(o)
+    val r: MOption[BTSDispatchTriggerStop] = if (preR.continu) {
+      val o2: BTSDispatchTriggerStop = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSDispatchTriggerStop = r.getOrElse(o)
+    val postR: MOption[BTSDispatchTriggerStop] = postBTSDispatchTriggerStop(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSDispatchTriggerPort(o: BTSDispatchTriggerPort): MOption[BTSDispatchTriggerPort] = {
+    val preR: PreResult[BTSDispatchTriggerPort] = preBTSDispatchTriggerPort(o)
+    val r: MOption[BTSDispatchTriggerPort] = if (preR.continu) {
+      val o2: BTSDispatchTriggerPort = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.port)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(port = r0.getOrElse(o2.port)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSDispatchTriggerPort = r.getOrElse(o)
+    val postR: MOption[BTSDispatchTriggerPort] = postBTSDispatchTriggerPort(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSDispatchTriggerTimeout(o: BTSDispatchTriggerTimeout): MOption[BTSDispatchTriggerTimeout] = {
+    val preR: PreResult[BTSDispatchTriggerTimeout] = preBTSDispatchTriggerTimeout(o)
+    val r: MOption[BTSDispatchTriggerTimeout] = if (preR.continu) {
+      val o2: BTSDispatchTriggerTimeout = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, Name]] = transformISZ(o2.ports, transformName _)
+      val r1: MOption[Option[BTSBehaviorTime]] = transformOption(o2.time, transformBTSBehaviorTime _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(ports = r0.getOrElse(o2.ports), time = r1.getOrElse(o2.time)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSDispatchTriggerTimeout = r.getOrElse(o)
+    val postR: MOption[BTSDispatchTriggerTimeout] = postBTSDispatchTriggerTimeout(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -3536,6 +4515,1024 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: BTSInternalCondition = r.getOrElse(o)
     val postR: MOption[BTSInternalCondition] = postBTSInternalCondition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSAssertion(o: BTSAssertion): MOption[BTSAssertion] = {
+    val preR: PreResult[BTSAssertion] = preBTSAssertion(o)
+    val r: MOption[BTSAssertion] = if (preR.continu) {
+      val o2: BTSAssertion = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSAssertion = r.getOrElse(o)
+    val postR: MOption[BTSAssertion] = postBTSAssertion(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSBehaviorActions(o: BTSBehaviorActions): MOption[BTSBehaviorActions] = {
+    val preR: PreResult[BTSBehaviorActions] = preBTSBehaviorActions(o)
+    val r: MOption[BTSBehaviorActions] = if (preR.continu) {
+      val o2: BTSBehaviorActions = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, BTSAssertedAction]] = transformISZ(o2.actions, transformBTSAssertedAction _)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(actions = r0.getOrElse(o2.actions)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSBehaviorActions = r.getOrElse(o)
+    val postR: MOption[BTSBehaviorActions] = postBTSBehaviorActions(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSAssertedAction(o: BTSAssertedAction): MOption[BTSAssertedAction] = {
+    val preR: PreResult[BTSAssertedAction] = preBTSAssertedAction(o)
+    val r: MOption[BTSAssertedAction] = if (preR.continu) {
+      val o2: BTSAssertedAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Option[BTSAssertion]] = transformOption(o2.precondition, transformBTSAssertion _)
+      val r1: MOption[BTSAction] = transformBTSAction(o2.action)
+      val r2: MOption[Option[BTSAssertion]] = transformOption(o2.postcondition, transformBTSAssertion _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(precondition = r0.getOrElse(o2.precondition), action = r1.getOrElse(o2.action), postcondition = r2.getOrElse(o2.postcondition)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSAssertedAction = r.getOrElse(o)
+    val postR: MOption[BTSAssertedAction] = postBTSAssertedAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSAction(o: BTSAction): MOption[BTSAction] = {
+    val preR: PreResult[BTSAction] = preBTSAction(o)
+    val r: MOption[BTSAction] = if (preR.continu) {
+      val o2: BTSAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[BTSAction] = o2 match {
+        case o2: BTSSkipAction =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: BTSAssignmentAction =>
+          val r0: MOption[BTSExp] = transformBTSExp(o2.lhs)
+          val r1: MOption[BTSExp] = transformBTSExp(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: BTSSubprogramCallAction =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[IS[Z, BTSFormalExpPair]] = transformISZ(o2.params, transformBTSFormalExpPair _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), params = r1.getOrElse(o2.params)))
+          else
+            MNone()
+        case o2: BTSPortOutAction =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[Option[BTSExp]] = transformOption(o2.exp, transformBTSExp _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), exp = r1.getOrElse(o2.exp)))
+          else
+            MNone()
+        case o2: BTSPortInAction =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[BTSExp] = transformBTSExp(o2.variable)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), variable = r1.getOrElse(o2.variable)))
+          else
+            MNone()
+        case o2: BTSFrozenPortAction =>
+          val r0: MOption[Name] = transformName(o2.portName)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(portName = r0.getOrElse(o2.portName)))
+          else
+            MNone()
+        case o2: BTSIfBLESSAction =>
+          val r0: MOption[IS[Z, BTSGuardedAction]] = transformISZ(o2.alternatives, transformBTSGuardedAction _)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(alternatives = r0.getOrElse(o2.alternatives)))
+          else
+            MNone()
+        case o2: BTSIfBAAction =>
+          val r0: MOption[BTSConditionalActions] = transformBTSConditionalActions(o2.ifBranch)
+          val r1: MOption[IS[Z, BTSConditionalActions]] = transformISZ(o2.elseIfBranches, transformBTSConditionalActions _)
+          val r2: MOption[Option[BTSBehaviorActions]] = transformOption(o2.elseBranch, transformBTSBehaviorActions _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(ifBranch = r0.getOrElse(o2.ifBranch), elseIfBranches = r1.getOrElse(o2.elseIfBranches), elseBranch = r2.getOrElse(o2.elseBranch)))
+          else
+            MNone()
+        case o2: BTSExistentialLatticeQuantification =>
+          val r0: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.quantifiedVariables, transformBTSVariableDeclaration _)
+          val r1: MOption[BTSBehaviorActions] = transformBTSBehaviorActions(o2.actions)
+          val r2: MOption[Option[BTSBehaviorTime]] = transformOption(o2.timeout, transformBTSBehaviorTime _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(quantifiedVariables = r0.getOrElse(o2.quantifiedVariables), actions = r1.getOrElse(o2.actions), timeout = r2.getOrElse(o2.timeout)))
+          else
+            MNone()
+        case o2: BTSUniversalLatticeQuantification =>
+          val r0: MOption[IS[Z, Name]] = transformISZ(o2.latticeVariables, transformName _)
+          val r1: MOption[BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(o2.elq)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(latticeVariables = r0.getOrElse(o2.latticeVariables), elq = r1.getOrElse(o2.elq)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSAction = r.getOrElse(o)
+    val postR: MOption[BTSAction] = postBTSAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSBasicAction(o: BTSBasicAction): MOption[BTSBasicAction] = {
+    val preR: PreResult[BTSBasicAction] = preBTSBasicAction(o)
+    val r: MOption[BTSBasicAction] = if (preR.continu) {
+      val o2: BTSBasicAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[BTSBasicAction] = o2 match {
+        case o2: BTSSkipAction =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: BTSAssignmentAction =>
+          val r0: MOption[BTSExp] = transformBTSExp(o2.lhs)
+          val r1: MOption[BTSExp] = transformBTSExp(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: BTSSubprogramCallAction =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[IS[Z, BTSFormalExpPair]] = transformISZ(o2.params, transformBTSFormalExpPair _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), params = r1.getOrElse(o2.params)))
+          else
+            MNone()
+        case o2: BTSPortOutAction =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[Option[BTSExp]] = transformOption(o2.exp, transformBTSExp _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), exp = r1.getOrElse(o2.exp)))
+          else
+            MNone()
+        case o2: BTSPortInAction =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[BTSExp] = transformBTSExp(o2.variable)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), variable = r1.getOrElse(o2.variable)))
+          else
+            MNone()
+        case o2: BTSFrozenPortAction =>
+          val r0: MOption[Name] = transformName(o2.portName)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(portName = r0.getOrElse(o2.portName)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSBasicAction = r.getOrElse(o)
+    val postR: MOption[BTSBasicAction] = postBTSBasicAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSSkipAction(o: BTSSkipAction): MOption[BTSSkipAction] = {
+    val preR: PreResult[BTSSkipAction] = preBTSSkipAction(o)
+    val r: MOption[BTSSkipAction] = if (preR.continu) {
+      val o2: BTSSkipAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSSkipAction = r.getOrElse(o)
+    val postR: MOption[BTSSkipAction] = postBTSSkipAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSAssignmentAction(o: BTSAssignmentAction): MOption[BTSAssignmentAction] = {
+    val preR: PreResult[BTSAssignmentAction] = preBTSAssignmentAction(o)
+    val r: MOption[BTSAssignmentAction] = if (preR.continu) {
+      val o2: BTSAssignmentAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[BTSExp] = transformBTSExp(o2.lhs)
+      val r1: MOption[BTSExp] = transformBTSExp(o2.rhs)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSAssignmentAction = r.getOrElse(o)
+    val postR: MOption[BTSAssignmentAction] = postBTSAssignmentAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSCommunicationAction(o: BTSCommunicationAction): MOption[BTSCommunicationAction] = {
+    val preR: PreResult[BTSCommunicationAction] = preBTSCommunicationAction(o)
+    val r: MOption[BTSCommunicationAction] = if (preR.continu) {
+      val o2: BTSCommunicationAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[BTSCommunicationAction] = o2 match {
+        case o2: BTSSubprogramCallAction =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[IS[Z, BTSFormalExpPair]] = transformISZ(o2.params, transformBTSFormalExpPair _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), params = r1.getOrElse(o2.params)))
+          else
+            MNone()
+        case o2: BTSPortOutAction =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[Option[BTSExp]] = transformOption(o2.exp, transformBTSExp _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), exp = r1.getOrElse(o2.exp)))
+          else
+            MNone()
+        case o2: BTSPortInAction =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[BTSExp] = transformBTSExp(o2.variable)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), variable = r1.getOrElse(o2.variable)))
+          else
+            MNone()
+        case o2: BTSFrozenPortAction =>
+          val r0: MOption[Name] = transformName(o2.portName)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(portName = r0.getOrElse(o2.portName)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSCommunicationAction = r.getOrElse(o)
+    val postR: MOption[BTSCommunicationAction] = postBTSCommunicationAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSSubprogramCallAction(o: BTSSubprogramCallAction): MOption[BTSSubprogramCallAction] = {
+    val preR: PreResult[BTSSubprogramCallAction] = preBTSSubprogramCallAction(o)
+    val r: MOption[BTSSubprogramCallAction] = if (preR.continu) {
+      val o2: BTSSubprogramCallAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.name)
+      val r1: MOption[IS[Z, BTSFormalExpPair]] = transformISZ(o2.params, transformBTSFormalExpPair _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), params = r1.getOrElse(o2.params)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSSubprogramCallAction = r.getOrElse(o)
+    val postR: MOption[BTSSubprogramCallAction] = postBTSSubprogramCallAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSPortOutAction(o: BTSPortOutAction): MOption[BTSPortOutAction] = {
+    val preR: PreResult[BTSPortOutAction] = preBTSPortOutAction(o)
+    val r: MOption[BTSPortOutAction] = if (preR.continu) {
+      val o2: BTSPortOutAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.name)
+      val r1: MOption[Option[BTSExp]] = transformOption(o2.exp, transformBTSExp _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), exp = r1.getOrElse(o2.exp)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSPortOutAction = r.getOrElse(o)
+    val postR: MOption[BTSPortOutAction] = postBTSPortOutAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSPortInAction(o: BTSPortInAction): MOption[BTSPortInAction] = {
+    val preR: PreResult[BTSPortInAction] = preBTSPortInAction(o)
+    val r: MOption[BTSPortInAction] = if (preR.continu) {
+      val o2: BTSPortInAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.name)
+      val r1: MOption[BTSExp] = transformBTSExp(o2.variable)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), variable = r1.getOrElse(o2.variable)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSPortInAction = r.getOrElse(o)
+    val postR: MOption[BTSPortInAction] = postBTSPortInAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSFrozenPortAction(o: BTSFrozenPortAction): MOption[BTSFrozenPortAction] = {
+    val preR: PreResult[BTSFrozenPortAction] = preBTSFrozenPortAction(o)
+    val r: MOption[BTSFrozenPortAction] = if (preR.continu) {
+      val o2: BTSFrozenPortAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.portName)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(portName = r0.getOrElse(o2.portName)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSFrozenPortAction = r.getOrElse(o)
+    val postR: MOption[BTSFrozenPortAction] = postBTSFrozenPortAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSControlAction(o: BTSControlAction): MOption[BTSControlAction] = {
+    val preR: PreResult[BTSControlAction] = preBTSControlAction(o)
+    val r: MOption[BTSControlAction] = if (preR.continu) {
+      val o2: BTSControlAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[BTSControlAction] = o2 match {
+        case o2: BTSIfBLESSAction =>
+          val r0: MOption[IS[Z, BTSGuardedAction]] = transformISZ(o2.alternatives, transformBTSGuardedAction _)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(alternatives = r0.getOrElse(o2.alternatives)))
+          else
+            MNone()
+        case o2: BTSIfBAAction =>
+          val r0: MOption[BTSConditionalActions] = transformBTSConditionalActions(o2.ifBranch)
+          val r1: MOption[IS[Z, BTSConditionalActions]] = transformISZ(o2.elseIfBranches, transformBTSConditionalActions _)
+          val r2: MOption[Option[BTSBehaviorActions]] = transformOption(o2.elseBranch, transformBTSBehaviorActions _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(ifBranch = r0.getOrElse(o2.ifBranch), elseIfBranches = r1.getOrElse(o2.elseIfBranches), elseBranch = r2.getOrElse(o2.elseBranch)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSControlAction = r.getOrElse(o)
+    val postR: MOption[BTSControlAction] = postBTSControlAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSIfBLESSAction(o: BTSIfBLESSAction): MOption[BTSIfBLESSAction] = {
+    val preR: PreResult[BTSIfBLESSAction] = preBTSIfBLESSAction(o)
+    val r: MOption[BTSIfBLESSAction] = if (preR.continu) {
+      val o2: BTSIfBLESSAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, BTSGuardedAction]] = transformISZ(o2.alternatives, transformBTSGuardedAction _)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(alternatives = r0.getOrElse(o2.alternatives)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSIfBLESSAction = r.getOrElse(o)
+    val postR: MOption[BTSIfBLESSAction] = postBTSIfBLESSAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSGuardedAction(o: BTSGuardedAction): MOption[BTSGuardedAction] = {
+    val preR: PreResult[BTSGuardedAction] = preBTSGuardedAction(o)
+    val r: MOption[BTSGuardedAction] = if (preR.continu) {
+      val o2: BTSGuardedAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[BTSExp] = transformBTSExp(o2.guard)
+      val r1: MOption[BTSAssertedAction] = transformBTSAssertedAction(o2.action)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(guard = r0.getOrElse(o2.guard), action = r1.getOrElse(o2.action)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSGuardedAction = r.getOrElse(o)
+    val postR: MOption[BTSGuardedAction] = postBTSGuardedAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSIfBAAction(o: BTSIfBAAction): MOption[BTSIfBAAction] = {
+    val preR: PreResult[BTSIfBAAction] = preBTSIfBAAction(o)
+    val r: MOption[BTSIfBAAction] = if (preR.continu) {
+      val o2: BTSIfBAAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[BTSConditionalActions] = transformBTSConditionalActions(o2.ifBranch)
+      val r1: MOption[IS[Z, BTSConditionalActions]] = transformISZ(o2.elseIfBranches, transformBTSConditionalActions _)
+      val r2: MOption[Option[BTSBehaviorActions]] = transformOption(o2.elseBranch, transformBTSBehaviorActions _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(ifBranch = r0.getOrElse(o2.ifBranch), elseIfBranches = r1.getOrElse(o2.elseIfBranches), elseBranch = r2.getOrElse(o2.elseBranch)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSIfBAAction = r.getOrElse(o)
+    val postR: MOption[BTSIfBAAction] = postBTSIfBAAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSConditionalActions(o: BTSConditionalActions): MOption[BTSConditionalActions] = {
+    val preR: PreResult[BTSConditionalActions] = preBTSConditionalActions(o)
+    val r: MOption[BTSConditionalActions] = if (preR.continu) {
+      val o2: BTSConditionalActions = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[BTSExp] = transformBTSExp(o2.cond)
+      val r1: MOption[BTSBehaviorActions] = transformBTSBehaviorActions(o2.actions)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(cond = r0.getOrElse(o2.cond), actions = r1.getOrElse(o2.actions)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSConditionalActions = r.getOrElse(o)
+    val postR: MOption[BTSConditionalActions] = postBTSConditionalActions(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSQuantificationActions(o: BTSQuantificationActions): MOption[BTSQuantificationActions] = {
+    val preR: PreResult[BTSQuantificationActions] = preBTSQuantificationActions(o)
+    val r: MOption[BTSQuantificationActions] = if (preR.continu) {
+      val o2: BTSQuantificationActions = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[BTSQuantificationActions] = o2 match {
+        case o2: BTSExistentialLatticeQuantification =>
+          val r0: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.quantifiedVariables, transformBTSVariableDeclaration _)
+          val r1: MOption[BTSBehaviorActions] = transformBTSBehaviorActions(o2.actions)
+          val r2: MOption[Option[BTSBehaviorTime]] = transformOption(o2.timeout, transformBTSBehaviorTime _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(quantifiedVariables = r0.getOrElse(o2.quantifiedVariables), actions = r1.getOrElse(o2.actions), timeout = r2.getOrElse(o2.timeout)))
+          else
+            MNone()
+        case o2: BTSUniversalLatticeQuantification =>
+          val r0: MOption[IS[Z, Name]] = transformISZ(o2.latticeVariables, transformName _)
+          val r1: MOption[BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(o2.elq)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(latticeVariables = r0.getOrElse(o2.latticeVariables), elq = r1.getOrElse(o2.elq)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSQuantificationActions = r.getOrElse(o)
+    val postR: MOption[BTSQuantificationActions] = postBTSQuantificationActions(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSExistentialLatticeQuantification(o: BTSExistentialLatticeQuantification): MOption[BTSExistentialLatticeQuantification] = {
+    val preR: PreResult[BTSExistentialLatticeQuantification] = preBTSExistentialLatticeQuantification(o)
+    val r: MOption[BTSExistentialLatticeQuantification] = if (preR.continu) {
+      val o2: BTSExistentialLatticeQuantification = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.quantifiedVariables, transformBTSVariableDeclaration _)
+      val r1: MOption[BTSBehaviorActions] = transformBTSBehaviorActions(o2.actions)
+      val r2: MOption[Option[BTSBehaviorTime]] = transformOption(o2.timeout, transformBTSBehaviorTime _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(quantifiedVariables = r0.getOrElse(o2.quantifiedVariables), actions = r1.getOrElse(o2.actions), timeout = r2.getOrElse(o2.timeout)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSExistentialLatticeQuantification = r.getOrElse(o)
+    val postR: MOption[BTSExistentialLatticeQuantification] = postBTSExistentialLatticeQuantification(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSUniversalLatticeQuantification(o: BTSUniversalLatticeQuantification): MOption[BTSUniversalLatticeQuantification] = {
+    val preR: PreResult[BTSUniversalLatticeQuantification] = preBTSUniversalLatticeQuantification(o)
+    val r: MOption[BTSUniversalLatticeQuantification] = if (preR.continu) {
+      val o2: BTSUniversalLatticeQuantification = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, Name]] = transformISZ(o2.latticeVariables, transformName _)
+      val r1: MOption[BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(o2.elq)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(latticeVariables = r0.getOrElse(o2.latticeVariables), elq = r1.getOrElse(o2.elq)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSUniversalLatticeQuantification = r.getOrElse(o)
+    val postR: MOption[BTSUniversalLatticeQuantification] = postBTSUniversalLatticeQuantification(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSExp(o: BTSExp): MOption[BTSExp] = {
+    val preR: PreResult[BTSExp] = preBTSExp(o)
+    val r: MOption[BTSExp] = if (preR.continu) {
+      val o2: BTSExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[BTSExp] = o2 match {
+        case o2: BTSUnaryExp =>
+          val r0: MOption[BTSExp] = transformBTSExp(o2.exp)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp)))
+          else
+            MNone()
+        case o2: BTSBinaryExp =>
+          val r0: MOption[BTSExp] = transformBTSExp(o2.lhs)
+          val r1: MOption[BTSExp] = transformBTSExp(o2.rhs)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          else
+            MNone()
+        case o2: BTSLiteralExp =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: BTSNameExp =>
+          val r0: MOption[Name] = transformName(o2.name)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name)))
+          else
+            MNone()
+        case o2: BTSIndexingExp =>
+          val r0: MOption[BTSExp] = transformBTSExp(o2.exp)
+          val r1: MOption[IS[Z, BTSExp]] = transformISZ(o2.indices, transformBTSExp _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), indices = r1.getOrElse(o2.indices)))
+          else
+            MNone()
+        case o2: BTSAccessExp =>
+          val r0: MOption[BTSExp] = transformBTSExp(o2.exp)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp)))
+          else
+            MNone()
+        case o2: BTSFunctionCall =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[IS[Z, BTSFormalExpPair]] = transformISZ(o2.args, transformBTSFormalExpPair _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), args = r1.getOrElse(o2.args)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSExp = r.getOrElse(o)
+    val postR: MOption[BTSExp] = postBTSExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSUnaryExp(o: BTSUnaryExp): MOption[BTSUnaryExp] = {
+    val preR: PreResult[BTSUnaryExp] = preBTSUnaryExp(o)
+    val r: MOption[BTSUnaryExp] = if (preR.continu) {
+      val o2: BTSUnaryExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[BTSExp] = transformBTSExp(o2.exp)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(exp = r0.getOrElse(o2.exp)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSUnaryExp = r.getOrElse(o)
+    val postR: MOption[BTSUnaryExp] = postBTSUnaryExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSBinaryExp(o: BTSBinaryExp): MOption[BTSBinaryExp] = {
+    val preR: PreResult[BTSBinaryExp] = preBTSBinaryExp(o)
+    val r: MOption[BTSBinaryExp] = if (preR.continu) {
+      val o2: BTSBinaryExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[BTSExp] = transformBTSExp(o2.lhs)
+      val r1: MOption[BTSExp] = transformBTSExp(o2.rhs)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSBinaryExp = r.getOrElse(o)
+    val postR: MOption[BTSBinaryExp] = postBTSBinaryExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSLiteralExp(o: BTSLiteralExp): MOption[BTSLiteralExp] = {
+    val preR: PreResult[BTSLiteralExp] = preBTSLiteralExp(o)
+    val r: MOption[BTSLiteralExp] = if (preR.continu) {
+      val o2: BTSLiteralExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSLiteralExp = r.getOrElse(o)
+    val postR: MOption[BTSLiteralExp] = postBTSLiteralExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSNameExp(o: BTSNameExp): MOption[BTSNameExp] = {
+    val preR: PreResult[BTSNameExp] = preBTSNameExp(o)
+    val r: MOption[BTSNameExp] = if (preR.continu) {
+      val o2: BTSNameExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.name)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSNameExp = r.getOrElse(o)
+    val postR: MOption[BTSNameExp] = postBTSNameExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSIndexingExp(o: BTSIndexingExp): MOption[BTSIndexingExp] = {
+    val preR: PreResult[BTSIndexingExp] = preBTSIndexingExp(o)
+    val r: MOption[BTSIndexingExp] = if (preR.continu) {
+      val o2: BTSIndexingExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[BTSExp] = transformBTSExp(o2.exp)
+      val r1: MOption[IS[Z, BTSExp]] = transformISZ(o2.indices, transformBTSExp _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(exp = r0.getOrElse(o2.exp), indices = r1.getOrElse(o2.indices)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSIndexingExp = r.getOrElse(o)
+    val postR: MOption[BTSIndexingExp] = postBTSIndexingExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSAccessExp(o: BTSAccessExp): MOption[BTSAccessExp] = {
+    val preR: PreResult[BTSAccessExp] = preBTSAccessExp(o)
+    val r: MOption[BTSAccessExp] = if (preR.continu) {
+      val o2: BTSAccessExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[BTSExp] = transformBTSExp(o2.exp)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(exp = r0.getOrElse(o2.exp)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSAccessExp = r.getOrElse(o)
+    val postR: MOption[BTSAccessExp] = postBTSAccessExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSFunctionCall(o: BTSFunctionCall): MOption[BTSFunctionCall] = {
+    val preR: PreResult[BTSFunctionCall] = preBTSFunctionCall(o)
+    val r: MOption[BTSFunctionCall] = if (preR.continu) {
+      val o2: BTSFunctionCall = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.name)
+      val r1: MOption[IS[Z, BTSFormalExpPair]] = transformISZ(o2.args, transformBTSFormalExpPair _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), args = r1.getOrElse(o2.args)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSFunctionCall = r.getOrElse(o)
+    val postR: MOption[BTSFunctionCall] = postBTSFunctionCall(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSFormalExpPair(o: BTSFormalExpPair): MOption[BTSFormalExpPair] = {
+    val preR: PreResult[BTSFormalExpPair] = preBTSFormalExpPair(o)
+    val r: MOption[BTSFormalExpPair] = if (preR.continu) {
+      val o2: BTSFormalExpPair = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Option[Name]] = transformOption(o2.paramName, transformName _)
+      val r1: MOption[Option[BTSExp]] = transformOption(o2.exp, transformBTSExp _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(paramName = r0.getOrElse(o2.paramName), exp = r1.getOrElse(o2.exp)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSFormalExpPair = r.getOrElse(o)
+    val postR: MOption[BTSFormalExpPair] = postBTSFormalExpPair(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSBehaviorTime(o: BTSBehaviorTime): MOption[BTSBehaviorTime] = {
+    val preR: PreResult[BTSBehaviorTime] = preBTSBehaviorTime(o)
+    val r: MOption[BTSBehaviorTime] = if (preR.continu) {
+      val o2: BTSBehaviorTime = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSBehaviorTime = r.getOrElse(o)
+    val postR: MOption[BTSBehaviorTime] = postBTSBehaviorTime(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

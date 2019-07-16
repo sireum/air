@@ -196,6 +196,8 @@ object MsgPack {
 
     val BTSBehaviorTime: Z = 47
 
+    val TODO: Z = 48
+
   }
 
   object Writer {
@@ -647,7 +649,7 @@ object MsgPack {
 
     def writeBTSClassifier(o: BTSClassifier): Unit = {
       writer.writeZ(Constants.BTSClassifier)
-      writeName(o.name)
+      writeClassifier(o.classifier)
     }
 
     def writeBLESSIntConst(o: BLESSIntConst): Unit = {
@@ -834,7 +836,7 @@ object MsgPack {
 
     def writeBTSIfBLESSAction(o: BTSIfBLESSAction): Unit = {
       writer.writeZ(Constants.BTSIfBLESSAction)
-      writer.writeOption(o.availability, writer.writeString _)
+      writer.writeOption(o.availability, writeTODO _)
       writer.writeISZ(o.alternatives, writeBTSGuardedAction _)
     }
 
@@ -869,13 +871,13 @@ object MsgPack {
       writer.writeISZ(o.quantifiedVariables, writeBTSVariableDeclaration _)
       writeBTSBehaviorActions(o.actions)
       writer.writeOption(o.timeout, writeBTSBehaviorTime _)
-      writer.writeOption(o.catchClause, writer.writeString _)
+      writer.writeOption(o.catchClause, writeTODO _)
     }
 
     def writeBTSUniversalLatticeQuantification(o: BTSUniversalLatticeQuantification): Unit = {
       writer.writeZ(Constants.BTSUniversalLatticeQuantification)
       writer.writeISZ(o.latticeVariables, writeName _)
-      writer.writeOption(o.range, writer.writeString _)
+      writer.writeOption(o.range, writeTODO _)
       writeBTSExistentialLatticeQuantification(o.elq)
     }
 
@@ -953,6 +955,10 @@ object MsgPack {
 
     def writeBTSBehaviorTime(o: BTSBehaviorTime): Unit = {
       writer.writeZ(Constants.BTSBehaviorTime)
+    }
+
+    def writeTODO(o: TODO): Unit = {
+      writer.writeZ(Constants.TODO)
     }
 
     def result: ISZ[U8] = {
@@ -1817,8 +1823,8 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.BTSClassifier)
       }
-      val name = readName()
-      return BTSClassifier(name)
+      val classifier = readClassifier()
+      return BTSClassifier(classifier)
     }
 
     def readBLESSIntConst(): BLESSIntConst = {
@@ -2218,7 +2224,7 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.BTSIfBLESSAction)
       }
-      val availability = reader.readOption(reader.readString _)
+      val availability = reader.readOption(readTODO _)
       val alternatives = reader.readISZ(readBTSGuardedAction _)
       return BTSIfBLESSAction(availability, alternatives)
     }
@@ -2291,7 +2297,7 @@ object MsgPack {
       val quantifiedVariables = reader.readISZ(readBTSVariableDeclaration _)
       val actions = readBTSBehaviorActions()
       val timeout = reader.readOption(readBTSBehaviorTime _)
-      val catchClause = reader.readOption(reader.readString _)
+      val catchClause = reader.readOption(readTODO _)
       return BTSExistentialLatticeQuantification(quantifiedVariables, actions, timeout, catchClause)
     }
 
@@ -2305,7 +2311,7 @@ object MsgPack {
         reader.expectZ(Constants.BTSUniversalLatticeQuantification)
       }
       val latticeVariables = reader.readISZ(readName _)
-      val range = reader.readOption(reader.readString _)
+      val range = reader.readOption(readTODO _)
       val elq = readBTSExistentialLatticeQuantification()
       return BTSUniversalLatticeQuantification(latticeVariables, range, elq)
     }
@@ -2465,6 +2471,18 @@ object MsgPack {
         reader.expectZ(Constants.BTSBehaviorTime)
       }
       return BTSBehaviorTime()
+    }
+
+    def readTODO(): TODO = {
+      val r = readTODOT(F)
+      return r
+    }
+
+    def readTODOT(typeParsed: B): TODO = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.TODO)
+      }
+      return TODO()
     }
 
   }
@@ -3901,6 +3919,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fBTSBehaviorTime _)
+    return r
+  }
+
+  def fromTODO(o: TODO, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeTODO(o)
+    return w.result
+  }
+
+  def toTODO(data: ISZ[U8]): Either[TODO, MessagePack.ErrorMsg] = {
+    def fTODO(reader: Reader): TODO = {
+      val r = reader.readTODO()
+      return r
+    }
+    val r = to(data, fTODO _)
     return r
   }
 

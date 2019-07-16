@@ -385,6 +385,10 @@ object MTransformer {
 
   val PostResultBTSBehaviorTime: MOption[BTSBehaviorTime] = MNone()
 
+  val PreResultTODO: PreResult[TODO] = PreResult(T, MNone())
+
+  val PostResultTODO: MOption[TODO] = MNone()
+
 }
 
 import MTransformer._
@@ -1415,6 +1419,10 @@ import MTransformer._
     return PreResultBTSBehaviorTime
   }
 
+  def preTODO(o: TODO): PreResult[TODO] = {
+    return PreResultTODO
+  }
+
   def postAadl(o: Aadl): MOption[Aadl] = {
     return PostResultAadl
   }
@@ -2437,6 +2445,10 @@ import MTransformer._
 
   def postBTSBehaviorTime(o: BTSBehaviorTime): MOption[BTSBehaviorTime] = {
     return PostResultBTSBehaviorTime
+  }
+
+  def postTODO(o: TODO): MOption[TODO] = {
+    return PostResultTODO
   }
 
   def transformAadl(o: Aadl): MOption[Aadl] = {
@@ -4056,9 +4068,9 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: MOption[BTSType] = o2 match {
         case o2: BTSClassifier =>
-          val r0: MOption[Name] = transformName(o2.name)
+          val r0: MOption[Classifier] = transformClassifier(o2.classifier)
           if (hasChanged || r0.nonEmpty)
-            MSome(o2(name = r0.getOrElse(o2.name)))
+            MSome(o2(classifier = r0.getOrElse(o2.classifier)))
           else
             MNone()
       }
@@ -4085,9 +4097,9 @@ import MTransformer._
     val r: MOption[BTSClassifier] = if (preR.continu) {
       val o2: BTSClassifier = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[Name] = transformName(o2.name)
+      val r0: MOption[Classifier] = transformClassifier(o2.classifier)
       if (hasChanged || r0.nonEmpty)
-        MSome(o2(name = r0.getOrElse(o2.name)))
+        MSome(o2(classifier = r0.getOrElse(o2.classifier)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -4652,9 +4664,10 @@ import MTransformer._
           else
             MNone()
         case o2: BTSIfBLESSAction =>
-          val r0: MOption[IS[Z, BTSGuardedAction]] = transformISZ(o2.alternatives, transformBTSGuardedAction _)
-          if (hasChanged || r0.nonEmpty)
-            MSome(o2(alternatives = r0.getOrElse(o2.alternatives)))
+          val r0: MOption[Option[TODO]] = transformOption(o2.availability, transformTODO _)
+          val r1: MOption[IS[Z, BTSGuardedAction]] = transformISZ(o2.alternatives, transformBTSGuardedAction _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(availability = r0.getOrElse(o2.availability), alternatives = r1.getOrElse(o2.alternatives)))
           else
             MNone()
         case o2: BTSIfBAAction =>
@@ -4669,15 +4682,17 @@ import MTransformer._
           val r0: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.quantifiedVariables, transformBTSVariableDeclaration _)
           val r1: MOption[BTSBehaviorActions] = transformBTSBehaviorActions(o2.actions)
           val r2: MOption[Option[BTSBehaviorTime]] = transformOption(o2.timeout, transformBTSBehaviorTime _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(quantifiedVariables = r0.getOrElse(o2.quantifiedVariables), actions = r1.getOrElse(o2.actions), timeout = r2.getOrElse(o2.timeout)))
+          val r3: MOption[Option[TODO]] = transformOption(o2.catchClause, transformTODO _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(quantifiedVariables = r0.getOrElse(o2.quantifiedVariables), actions = r1.getOrElse(o2.actions), timeout = r2.getOrElse(o2.timeout), catchClause = r3.getOrElse(o2.catchClause)))
           else
             MNone()
         case o2: BTSUniversalLatticeQuantification =>
           val r0: MOption[IS[Z, Name]] = transformISZ(o2.latticeVariables, transformName _)
-          val r1: MOption[BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(o2.elq)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(latticeVariables = r0.getOrElse(o2.latticeVariables), elq = r1.getOrElse(o2.elq)))
+          val r1: MOption[Option[TODO]] = transformOption(o2.range, transformTODO _)
+          val r2: MOption[BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(o2.elq)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(latticeVariables = r0.getOrElse(o2.latticeVariables), range = r1.getOrElse(o2.range), elq = r2.getOrElse(o2.elq)))
           else
             MNone()
       }
@@ -4987,9 +5002,10 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: MOption[BTSControlAction] = o2 match {
         case o2: BTSIfBLESSAction =>
-          val r0: MOption[IS[Z, BTSGuardedAction]] = transformISZ(o2.alternatives, transformBTSGuardedAction _)
-          if (hasChanged || r0.nonEmpty)
-            MSome(o2(alternatives = r0.getOrElse(o2.alternatives)))
+          val r0: MOption[Option[TODO]] = transformOption(o2.availability, transformTODO _)
+          val r1: MOption[IS[Z, BTSGuardedAction]] = transformISZ(o2.alternatives, transformBTSGuardedAction _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(availability = r0.getOrElse(o2.availability), alternatives = r1.getOrElse(o2.alternatives)))
           else
             MNone()
         case o2: BTSIfBAAction =>
@@ -5024,9 +5040,10 @@ import MTransformer._
     val r: MOption[BTSIfBLESSAction] = if (preR.continu) {
       val o2: BTSIfBLESSAction = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, BTSGuardedAction]] = transformISZ(o2.alternatives, transformBTSGuardedAction _)
-      if (hasChanged || r0.nonEmpty)
-        MSome(o2(alternatives = r0.getOrElse(o2.alternatives)))
+      val r0: MOption[Option[TODO]] = transformOption(o2.availability, transformTODO _)
+      val r1: MOption[IS[Z, BTSGuardedAction]] = transformISZ(o2.alternatives, transformBTSGuardedAction _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(availability = r0.getOrElse(o2.availability), alternatives = r1.getOrElse(o2.alternatives)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -5141,15 +5158,17 @@ import MTransformer._
           val r0: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.quantifiedVariables, transformBTSVariableDeclaration _)
           val r1: MOption[BTSBehaviorActions] = transformBTSBehaviorActions(o2.actions)
           val r2: MOption[Option[BTSBehaviorTime]] = transformOption(o2.timeout, transformBTSBehaviorTime _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(quantifiedVariables = r0.getOrElse(o2.quantifiedVariables), actions = r1.getOrElse(o2.actions), timeout = r2.getOrElse(o2.timeout)))
+          val r3: MOption[Option[TODO]] = transformOption(o2.catchClause, transformTODO _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(quantifiedVariables = r0.getOrElse(o2.quantifiedVariables), actions = r1.getOrElse(o2.actions), timeout = r2.getOrElse(o2.timeout), catchClause = r3.getOrElse(o2.catchClause)))
           else
             MNone()
         case o2: BTSUniversalLatticeQuantification =>
           val r0: MOption[IS[Z, Name]] = transformISZ(o2.latticeVariables, transformName _)
-          val r1: MOption[BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(o2.elq)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(latticeVariables = r0.getOrElse(o2.latticeVariables), elq = r1.getOrElse(o2.elq)))
+          val r1: MOption[Option[TODO]] = transformOption(o2.range, transformTODO _)
+          val r2: MOption[BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(o2.elq)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(latticeVariables = r0.getOrElse(o2.latticeVariables), range = r1.getOrElse(o2.range), elq = r2.getOrElse(o2.elq)))
           else
             MNone()
       }
@@ -5179,8 +5198,9 @@ import MTransformer._
       val r0: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.quantifiedVariables, transformBTSVariableDeclaration _)
       val r1: MOption[BTSBehaviorActions] = transformBTSBehaviorActions(o2.actions)
       val r2: MOption[Option[BTSBehaviorTime]] = transformOption(o2.timeout, transformBTSBehaviorTime _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(quantifiedVariables = r0.getOrElse(o2.quantifiedVariables), actions = r1.getOrElse(o2.actions), timeout = r2.getOrElse(o2.timeout)))
+      val r3: MOption[Option[TODO]] = transformOption(o2.catchClause, transformTODO _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(quantifiedVariables = r0.getOrElse(o2.quantifiedVariables), actions = r1.getOrElse(o2.actions), timeout = r2.getOrElse(o2.timeout), catchClause = r3.getOrElse(o2.catchClause)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -5206,9 +5226,10 @@ import MTransformer._
       val o2: BTSUniversalLatticeQuantification = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[IS[Z, Name]] = transformISZ(o2.latticeVariables, transformName _)
-      val r1: MOption[BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(o2.elq)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(latticeVariables = r0.getOrElse(o2.latticeVariables), elq = r1.getOrElse(o2.elq)))
+      val r1: MOption[Option[TODO]] = transformOption(o2.range, transformTODO _)
+      val r2: MOption[BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(o2.elq)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(latticeVariables = r0.getOrElse(o2.latticeVariables), range = r1.getOrElse(o2.range), elq = r2.getOrElse(o2.elq)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -5533,6 +5554,32 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: BTSBehaviorTime = r.getOrElse(o)
     val postR: MOption[BTSBehaviorTime] = postBTSBehaviorTime(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformTODO(o: TODO): MOption[TODO] = {
+    val preR: PreResult[TODO] = preTODO(o)
+    val r: MOption[TODO] = if (preR.continu) {
+      val o2: TODO = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: TODO = r.getOrElse(o)
+    val postR: MOption[TODO] = postTODO(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

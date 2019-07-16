@@ -1067,6 +1067,10 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def preTODO(ctx: Context, o: TODO): PreResult[Context, TODO] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def postAadl(ctx: Context, o: Aadl): TPostResult[Context, Aadl] = {
       return TPostResult(ctx, None())
     }
@@ -2088,6 +2092,10 @@ object Transformer {
     }
 
     @pure def postBTSBehaviorTime(ctx: Context, o: BTSBehaviorTime): TPostResult[Context, BTSBehaviorTime] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postTODO(ctx: Context, o: TODO): TPostResult[Context, TODO] = {
       return TPostResult(ctx, None())
     }
 
@@ -3746,9 +3754,9 @@ import Transformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: TPostResult[Context, BTSType] = o2 match {
         case o2: BTSClassifier =>
-          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+          val r0: TPostResult[Context, Classifier] = transformClassifier(preR.ctx, o2.classifier)
           if (hasChanged || r0.resultOpt.nonEmpty)
-            TPostResult(r0.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name))))
+            TPostResult(r0.ctx, Some(o2(classifier = r0.resultOpt.getOrElse(o2.classifier))))
           else
             TPostResult(r0.ctx, None())
       }
@@ -3775,9 +3783,9 @@ import Transformer._
     val r: TPostResult[Context, BTSClassifier] = if (preR.continu) {
       val o2: BTSClassifier = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+      val r0: TPostResult[Context, Classifier] = transformClassifier(preR.ctx, o2.classifier)
       if (hasChanged || r0.resultOpt.nonEmpty)
-        TPostResult(r0.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name))))
+        TPostResult(r0.ctx, Some(o2(classifier = r0.resultOpt.getOrElse(o2.classifier))))
       else
         TPostResult(r0.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
@@ -4342,11 +4350,12 @@ import Transformer._
           else
             TPostResult(r0.ctx, None())
         case o2: BTSIfBLESSAction =>
-          val r0: TPostResult[Context, IS[Z, BTSGuardedAction]] = transformISZ(preR.ctx, o2.alternatives, transformBTSGuardedAction _)
-          if (hasChanged || r0.resultOpt.nonEmpty)
-            TPostResult(r0.ctx, Some(o2(alternatives = r0.resultOpt.getOrElse(o2.alternatives))))
+          val r0: TPostResult[Context, Option[TODO]] = transformOption(preR.ctx, o2.availability, transformTODO _)
+          val r1: TPostResult[Context, IS[Z, BTSGuardedAction]] = transformISZ(r0.ctx, o2.alternatives, transformBTSGuardedAction _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(availability = r0.resultOpt.getOrElse(o2.availability), alternatives = r1.resultOpt.getOrElse(o2.alternatives))))
           else
-            TPostResult(r0.ctx, None())
+            TPostResult(r1.ctx, None())
         case o2: BTSIfBAAction =>
           val r0: TPostResult[Context, BTSConditionalActions] = transformBTSConditionalActions(preR.ctx, o2.ifBranch)
           val r1: TPostResult[Context, IS[Z, BTSConditionalActions]] = transformISZ(r0.ctx, o2.elseIfBranches, transformBTSConditionalActions _)
@@ -4359,17 +4368,19 @@ import Transformer._
           val r0: TPostResult[Context, IS[Z, BTSVariableDeclaration]] = transformISZ(preR.ctx, o2.quantifiedVariables, transformBTSVariableDeclaration _)
           val r1: TPostResult[Context, BTSBehaviorActions] = transformBTSBehaviorActions(r0.ctx, o2.actions)
           val r2: TPostResult[Context, Option[BTSBehaviorTime]] = transformOption(r1.ctx, o2.timeout, transformBTSBehaviorTime _)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            TPostResult(r2.ctx, Some(o2(quantifiedVariables = r0.resultOpt.getOrElse(o2.quantifiedVariables), actions = r1.resultOpt.getOrElse(o2.actions), timeout = r2.resultOpt.getOrElse(o2.timeout))))
+          val r3: TPostResult[Context, Option[TODO]] = transformOption(r2.ctx, o2.catchClause, transformTODO _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(quantifiedVariables = r0.resultOpt.getOrElse(o2.quantifiedVariables), actions = r1.resultOpt.getOrElse(o2.actions), timeout = r2.resultOpt.getOrElse(o2.timeout), catchClause = r3.resultOpt.getOrElse(o2.catchClause))))
           else
-            TPostResult(r2.ctx, None())
+            TPostResult(r3.ctx, None())
         case o2: BTSUniversalLatticeQuantification =>
           val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.latticeVariables, transformName _)
-          val r1: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r0.ctx, o2.elq)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(latticeVariables = r0.resultOpt.getOrElse(o2.latticeVariables), elq = r1.resultOpt.getOrElse(o2.elq))))
+          val r1: TPostResult[Context, Option[TODO]] = transformOption(r0.ctx, o2.range, transformTODO _)
+          val r2: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r1.ctx, o2.elq)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(latticeVariables = r0.resultOpt.getOrElse(o2.latticeVariables), range = r1.resultOpt.getOrElse(o2.range), elq = r2.resultOpt.getOrElse(o2.elq))))
           else
-            TPostResult(r1.ctx, None())
+            TPostResult(r2.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -4677,11 +4688,12 @@ import Transformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: TPostResult[Context, BTSControlAction] = o2 match {
         case o2: BTSIfBLESSAction =>
-          val r0: TPostResult[Context, IS[Z, BTSGuardedAction]] = transformISZ(preR.ctx, o2.alternatives, transformBTSGuardedAction _)
-          if (hasChanged || r0.resultOpt.nonEmpty)
-            TPostResult(r0.ctx, Some(o2(alternatives = r0.resultOpt.getOrElse(o2.alternatives))))
+          val r0: TPostResult[Context, Option[TODO]] = transformOption(preR.ctx, o2.availability, transformTODO _)
+          val r1: TPostResult[Context, IS[Z, BTSGuardedAction]] = transformISZ(r0.ctx, o2.alternatives, transformBTSGuardedAction _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(availability = r0.resultOpt.getOrElse(o2.availability), alternatives = r1.resultOpt.getOrElse(o2.alternatives))))
           else
-            TPostResult(r0.ctx, None())
+            TPostResult(r1.ctx, None())
         case o2: BTSIfBAAction =>
           val r0: TPostResult[Context, BTSConditionalActions] = transformBTSConditionalActions(preR.ctx, o2.ifBranch)
           val r1: TPostResult[Context, IS[Z, BTSConditionalActions]] = transformISZ(r0.ctx, o2.elseIfBranches, transformBTSConditionalActions _)
@@ -4714,11 +4726,12 @@ import Transformer._
     val r: TPostResult[Context, BTSIfBLESSAction] = if (preR.continu) {
       val o2: BTSIfBLESSAction = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, IS[Z, BTSGuardedAction]] = transformISZ(preR.ctx, o2.alternatives, transformBTSGuardedAction _)
-      if (hasChanged || r0.resultOpt.nonEmpty)
-        TPostResult(r0.ctx, Some(o2(alternatives = r0.resultOpt.getOrElse(o2.alternatives))))
+      val r0: TPostResult[Context, Option[TODO]] = transformOption(preR.ctx, o2.availability, transformTODO _)
+      val r1: TPostResult[Context, IS[Z, BTSGuardedAction]] = transformISZ(r0.ctx, o2.alternatives, transformBTSGuardedAction _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(availability = r0.resultOpt.getOrElse(o2.availability), alternatives = r1.resultOpt.getOrElse(o2.alternatives))))
       else
-        TPostResult(r0.ctx, None())
+        TPostResult(r1.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -4831,17 +4844,19 @@ import Transformer._
           val r0: TPostResult[Context, IS[Z, BTSVariableDeclaration]] = transformISZ(preR.ctx, o2.quantifiedVariables, transformBTSVariableDeclaration _)
           val r1: TPostResult[Context, BTSBehaviorActions] = transformBTSBehaviorActions(r0.ctx, o2.actions)
           val r2: TPostResult[Context, Option[BTSBehaviorTime]] = transformOption(r1.ctx, o2.timeout, transformBTSBehaviorTime _)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            TPostResult(r2.ctx, Some(o2(quantifiedVariables = r0.resultOpt.getOrElse(o2.quantifiedVariables), actions = r1.resultOpt.getOrElse(o2.actions), timeout = r2.resultOpt.getOrElse(o2.timeout))))
+          val r3: TPostResult[Context, Option[TODO]] = transformOption(r2.ctx, o2.catchClause, transformTODO _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(quantifiedVariables = r0.resultOpt.getOrElse(o2.quantifiedVariables), actions = r1.resultOpt.getOrElse(o2.actions), timeout = r2.resultOpt.getOrElse(o2.timeout), catchClause = r3.resultOpt.getOrElse(o2.catchClause))))
           else
-            TPostResult(r2.ctx, None())
+            TPostResult(r3.ctx, None())
         case o2: BTSUniversalLatticeQuantification =>
           val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.latticeVariables, transformName _)
-          val r1: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r0.ctx, o2.elq)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(latticeVariables = r0.resultOpt.getOrElse(o2.latticeVariables), elq = r1.resultOpt.getOrElse(o2.elq))))
+          val r1: TPostResult[Context, Option[TODO]] = transformOption(r0.ctx, o2.range, transformTODO _)
+          val r2: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r1.ctx, o2.elq)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(latticeVariables = r0.resultOpt.getOrElse(o2.latticeVariables), range = r1.resultOpt.getOrElse(o2.range), elq = r2.resultOpt.getOrElse(o2.elq))))
           else
-            TPostResult(r1.ctx, None())
+            TPostResult(r2.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -4869,10 +4884,11 @@ import Transformer._
       val r0: TPostResult[Context, IS[Z, BTSVariableDeclaration]] = transformISZ(preR.ctx, o2.quantifiedVariables, transformBTSVariableDeclaration _)
       val r1: TPostResult[Context, BTSBehaviorActions] = transformBTSBehaviorActions(r0.ctx, o2.actions)
       val r2: TPostResult[Context, Option[BTSBehaviorTime]] = transformOption(r1.ctx, o2.timeout, transformBTSBehaviorTime _)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-        TPostResult(r2.ctx, Some(o2(quantifiedVariables = r0.resultOpt.getOrElse(o2.quantifiedVariables), actions = r1.resultOpt.getOrElse(o2.actions), timeout = r2.resultOpt.getOrElse(o2.timeout))))
+      val r3: TPostResult[Context, Option[TODO]] = transformOption(r2.ctx, o2.catchClause, transformTODO _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+        TPostResult(r3.ctx, Some(o2(quantifiedVariables = r0.resultOpt.getOrElse(o2.quantifiedVariables), actions = r1.resultOpt.getOrElse(o2.actions), timeout = r2.resultOpt.getOrElse(o2.timeout), catchClause = r3.resultOpt.getOrElse(o2.catchClause))))
       else
-        TPostResult(r2.ctx, None())
+        TPostResult(r3.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -4896,11 +4912,12 @@ import Transformer._
       val o2: BTSUniversalLatticeQuantification = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.latticeVariables, transformName _)
-      val r1: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r0.ctx, o2.elq)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        TPostResult(r1.ctx, Some(o2(latticeVariables = r0.resultOpt.getOrElse(o2.latticeVariables), elq = r1.resultOpt.getOrElse(o2.elq))))
+      val r1: TPostResult[Context, Option[TODO]] = transformOption(r0.ctx, o2.range, transformTODO _)
+      val r2: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r1.ctx, o2.elq)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(latticeVariables = r0.resultOpt.getOrElse(o2.latticeVariables), range = r1.resultOpt.getOrElse(o2.range), elq = r2.resultOpt.getOrElse(o2.elq))))
       else
-        TPostResult(r1.ctx, None())
+        TPostResult(r2.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -5223,6 +5240,32 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: BTSBehaviorTime = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, BTSBehaviorTime] = pp.postBTSBehaviorTime(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformTODO(ctx: Context, o: TODO): TPostResult[Context, TODO] = {
+    val preR: PreResult[Context, TODO] = pp.preTODO(ctx, o)
+    val r: TPostResult[Context, TODO] = if (preR.continu) {
+      val o2: TODO = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        TPostResult(preR.ctx, Some(o2))
+      else
+        TPostResult(preR.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: TODO = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, TODO] = pp.postTODO(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {

@@ -397,7 +397,7 @@ Declarator:
 // TODO: Complete type grammar
 @sig trait BTSType
 
-@datatype class BTSClassifier (name: Name) extends BTSType
+@datatype class BTSClassifier (classifier: Classifier) extends BTSType
 
 // TODO: Complete constant grammar --  used for array size above
 @datatype class BLESSIntConst () //extends BLESSExpression
@@ -632,7 +632,7 @@ InternalCondition:
 
 @sig trait BTSControlAction extends BTSAction
 
-@datatype class BTSIfBLESSAction (availability: Option[String], // TODO
+@datatype class BTSIfBLESSAction (availability: Option[TODO], // TODO
                                   alternatives: ISZ[BTSGuardedAction]) extends BTSControlAction
 
 @datatype class BTSGuardedAction (guard: BTSExp,
@@ -652,11 +652,11 @@ InternalCondition:
 @datatype class BTSExistentialLatticeQuantification (quantifiedVariables: ISZ[BTSVariableDeclaration],
                                                      actions: BTSBehaviorActions,
                                                      timeout: Option[BTSBehaviorTime],
-                                                     catchClause: Option[String] // TODO
+                                                     catchClause: Option[TODO] // TODO
                                                     ) extends BTSQuantificationActions
 
 @datatype class BTSUniversalLatticeQuantification (latticeVariables: ISZ[Name],
-                                                   range: Option[String], // TODO
+                                                   range: Option[TODO], // TODO
                                                    elq: BTSExistentialLatticeQuantification
                                                   ) extends BTSQuantificationActions
 
@@ -731,3 +731,6 @@ InternalCondition:
 
 
 @datatype class BTSBehaviorTime // TODO
+
+
+@datatype class TODO

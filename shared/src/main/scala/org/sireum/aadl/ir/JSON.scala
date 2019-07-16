@@ -666,7 +666,7 @@ object JSON {
     @pure def printBTSClassifier(o: BTSClassifier): ST = {
       return printObject(ISZ(
         ("type", st""""BTSClassifier""""),
-        ("name", printName(o.name))
+        ("classifier", printClassifier(o.classifier))
       ))
     }
 
@@ -913,7 +913,7 @@ object JSON {
     @pure def printBTSIfBLESSAction(o: BTSIfBLESSAction): ST = {
       return printObject(ISZ(
         ("type", st""""BTSIfBLESSAction""""),
-        ("availability", printOption(T, o.availability, printString _)),
+        ("availability", printOption(F, o.availability, printTODO _)),
         ("alternatives", printISZ(F, o.alternatives, printBTSGuardedAction _))
       ))
     }
@@ -956,7 +956,7 @@ object JSON {
         ("quantifiedVariables", printISZ(F, o.quantifiedVariables, printBTSVariableDeclaration _)),
         ("actions", printBTSBehaviorActions(o.actions)),
         ("timeout", printOption(F, o.timeout, printBTSBehaviorTime _)),
-        ("catchClause", printOption(T, o.catchClause, printString _))
+        ("catchClause", printOption(F, o.catchClause, printTODO _))
       ))
     }
 
@@ -964,7 +964,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""BTSUniversalLatticeQuantification""""),
         ("latticeVariables", printISZ(F, o.latticeVariables, printName _)),
-        ("range", printOption(T, o.range, printString _)),
+        ("range", printOption(F, o.range, printTODO _)),
         ("elq", printBTSExistentialLatticeQuantification(o.elq))
       ))
     }
@@ -1098,6 +1098,12 @@ object JSON {
     @pure def printBTSBehaviorTime(o: BTSBehaviorTime): ST = {
       return printObject(ISZ(
         ("type", st""""BTSBehaviorTime"""")
+      ))
+    }
+
+    @pure def printTODO(o: TODO): ST = {
+      return printObject(ISZ(
+        ("type", st""""TODO"""")
       ))
     }
 
@@ -2350,10 +2356,10 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("BTSClassifier")
       }
-      parser.parseObjectKey("name")
-      val name = parseName()
+      parser.parseObjectKey("classifier")
+      val classifier = parseClassifier()
       parser.parseObjectNext()
-      return BTSClassifier(name)
+      return BTSClassifier(classifier)
     }
 
     def parseBLESSIntConst(): BLESSIntConst = {
@@ -2824,7 +2830,7 @@ object JSON {
         parser.parseObjectType("BTSIfBLESSAction")
       }
       parser.parseObjectKey("availability")
-      val availability = parser.parseOption(parser.parseString _)
+      val availability = parser.parseOption(parseTODO _)
       parser.parseObjectNext()
       parser.parseObjectKey("alternatives")
       val alternatives = parser.parseISZ(parseBTSGuardedAction _)
@@ -2917,7 +2923,7 @@ object JSON {
       val timeout = parser.parseOption(parseBTSBehaviorTime _)
       parser.parseObjectNext()
       parser.parseObjectKey("catchClause")
-      val catchClause = parser.parseOption(parser.parseString _)
+      val catchClause = parser.parseOption(parseTODO _)
       parser.parseObjectNext()
       return BTSExistentialLatticeQuantification(quantifiedVariables, actions, timeout, catchClause)
     }
@@ -2935,7 +2941,7 @@ object JSON {
       val latticeVariables = parser.parseISZ(parseName _)
       parser.parseObjectNext()
       parser.parseObjectKey("range")
-      val range = parser.parseOption(parser.parseString _)
+      val range = parser.parseOption(parseTODO _)
       parser.parseObjectNext()
       parser.parseObjectKey("elq")
       val elq = parseBTSExistentialLatticeQuantification()
@@ -3174,6 +3180,18 @@ object JSON {
         parser.parseObjectType("BTSBehaviorTime")
       }
       return BTSBehaviorTime()
+    }
+
+    def parseTODO(): TODO = {
+      val r = parseTODOT(F)
+      return r
+    }
+
+    def parseTODOT(typeParsed: B): TODO = {
+      if (!typeParsed) {
+        parser.parseObjectType("TODO")
+      }
+      return TODO()
     }
 
     def eof(): B = {
@@ -4900,6 +4918,24 @@ object JSON {
       return r
     }
     val r = to(s, fBTSBehaviorTime _)
+    return r
+  }
+
+  def fromTODO(o: TODO, isCompact: B): String = {
+    val st = Printer.printTODO(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toTODO(s: String): Either[TODO, Json.ErrorMsg] = {
+    def fTODO(parser: Parser): TODO = {
+      val r = parser.parseTODO()
+      return r
+    }
+    val r = to(s, fTODO _)
     return r
   }
 

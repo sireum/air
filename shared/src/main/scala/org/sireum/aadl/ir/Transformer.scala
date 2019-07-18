@@ -642,8 +642,22 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSTransitionCondition]())
           }
           return r
-        case o: BTSExecuteCondition =>
-          val r: PreResult[Context, BTSTransitionCondition] = preBTSExecuteCondition(ctx, o) match {
+        case o: BTSExecuteConditionExp =>
+          val r: PreResult[Context, BTSTransitionCondition] = preBTSExecuteConditionExp(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSTransitionCondition)) => PreResult(preCtx, continu, Some[BTSTransitionCondition](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSTransitionCondition")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSTransitionCondition]())
+          }
+          return r
+        case o: BTSExecuteConditionTimeout =>
+          val r: PreResult[Context, BTSTransitionCondition] = preBTSExecuteConditionTimeout(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSTransitionCondition)) => PreResult(preCtx, continu, Some[BTSTransitionCondition](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSTransitionCondition")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSTransitionCondition]())
+          }
+          return r
+        case o: BTSExecuteConditionOtherwise =>
+          val r: PreResult[Context, BTSTransitionCondition] = preBTSExecuteConditionOtherwise(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSTransitionCondition)) => PreResult(preCtx, continu, Some[BTSTransitionCondition](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSTransitionCondition")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSTransitionCondition]())
@@ -713,6 +727,40 @@ object Transformer {
     }
 
     @pure def preBTSExecuteCondition(ctx: Context, o: BTSExecuteCondition): PreResult[Context, BTSExecuteCondition] = {
+      o match {
+        case o: BTSExecuteConditionExp =>
+          val r: PreResult[Context, BTSExecuteCondition] = preBTSExecuteConditionExp(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSExecuteCondition)) => PreResult(preCtx, continu, Some[BTSExecuteCondition](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSExecuteCondition")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSExecuteCondition]())
+          }
+          return r
+        case o: BTSExecuteConditionTimeout =>
+          val r: PreResult[Context, BTSExecuteCondition] = preBTSExecuteConditionTimeout(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSExecuteCondition)) => PreResult(preCtx, continu, Some[BTSExecuteCondition](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSExecuteCondition")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSExecuteCondition]())
+          }
+          return r
+        case o: BTSExecuteConditionOtherwise =>
+          val r: PreResult[Context, BTSExecuteCondition] = preBTSExecuteConditionOtherwise(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSExecuteCondition)) => PreResult(preCtx, continu, Some[BTSExecuteCondition](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSExecuteCondition")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSExecuteCondition]())
+          }
+          return r
+      }
+    }
+
+    @pure def preBTSExecuteConditionExp(ctx: Context, o: BTSExecuteConditionExp): PreResult[Context, BTSExecuteConditionExp] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSExecuteConditionTimeout(ctx: Context, o: BTSExecuteConditionTimeout): PreResult[Context, BTSExecuteConditionTimeout] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSExecuteConditionOtherwise(ctx: Context, o: BTSExecuteConditionOtherwise): PreResult[Context, BTSExecuteConditionOtherwise] = {
       return PreResult(ctx, T, None())
     }
 
@@ -1670,8 +1718,22 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSTransitionCondition]())
           }
           return r
-        case o: BTSExecuteCondition =>
-          val r: TPostResult[Context, BTSTransitionCondition] = postBTSExecuteCondition(ctx, o) match {
+        case o: BTSExecuteConditionExp =>
+          val r: TPostResult[Context, BTSTransitionCondition] = postBTSExecuteConditionExp(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSTransitionCondition)) => TPostResult(postCtx, Some[BTSTransitionCondition](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSTransitionCondition")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSTransitionCondition]())
+          }
+          return r
+        case o: BTSExecuteConditionTimeout =>
+          val r: TPostResult[Context, BTSTransitionCondition] = postBTSExecuteConditionTimeout(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSTransitionCondition)) => TPostResult(postCtx, Some[BTSTransitionCondition](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSTransitionCondition")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSTransitionCondition]())
+          }
+          return r
+        case o: BTSExecuteConditionOtherwise =>
+          val r: TPostResult[Context, BTSTransitionCondition] = postBTSExecuteConditionOtherwise(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSTransitionCondition)) => TPostResult(postCtx, Some[BTSTransitionCondition](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSTransitionCondition")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSTransitionCondition]())
@@ -1741,6 +1803,40 @@ object Transformer {
     }
 
     @pure def postBTSExecuteCondition(ctx: Context, o: BTSExecuteCondition): TPostResult[Context, BTSExecuteCondition] = {
+      o match {
+        case o: BTSExecuteConditionExp =>
+          val r: TPostResult[Context, BTSExecuteCondition] = postBTSExecuteConditionExp(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSExecuteCondition)) => TPostResult(postCtx, Some[BTSExecuteCondition](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSExecuteCondition")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSExecuteCondition]())
+          }
+          return r
+        case o: BTSExecuteConditionTimeout =>
+          val r: TPostResult[Context, BTSExecuteCondition] = postBTSExecuteConditionTimeout(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSExecuteCondition)) => TPostResult(postCtx, Some[BTSExecuteCondition](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSExecuteCondition")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSExecuteCondition]())
+          }
+          return r
+        case o: BTSExecuteConditionOtherwise =>
+          val r: TPostResult[Context, BTSExecuteCondition] = postBTSExecuteConditionOtherwise(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSExecuteCondition)) => TPostResult(postCtx, Some[BTSExecuteCondition](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSExecuteCondition")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSExecuteCondition]())
+          }
+          return r
+      }
+    }
+
+    @pure def postBTSExecuteConditionExp(ctx: Context, o: BTSExecuteConditionExp): TPostResult[Context, BTSExecuteConditionExp] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSExecuteConditionTimeout(ctx: Context, o: BTSExecuteConditionTimeout): TPostResult[Context, BTSExecuteConditionTimeout] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSExecuteConditionOtherwise(ctx: Context, o: BTSExecuteConditionOtherwise): TPostResult[Context, BTSExecuteConditionOtherwise] = {
       return TPostResult(ctx, None())
     }
 
@@ -3931,7 +4027,18 @@ import Transformer._
             TPostResult(r1.ctx, Some(o2(dispatchTriggers = r0.resultOpt.getOrElse(o2.dispatchTriggers), frozenPorts = r1.resultOpt.getOrElse(o2.frozenPorts))))
           else
             TPostResult(r1.ctx, None())
-        case o2: BTSExecuteCondition =>
+        case o2: BTSExecuteConditionExp =>
+          val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.exp)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp))))
+          else
+            TPostResult(r0.ctx, None())
+        case o2: BTSExecuteConditionTimeout =>
+          if (hasChanged)
+            TPostResult(preR.ctx, Some(o2))
+          else
+            TPostResult(preR.ctx, None())
+        case o2: BTSExecuteConditionOtherwise =>
           if (hasChanged)
             TPostResult(preR.ctx, Some(o2))
           else
@@ -4149,6 +4256,74 @@ import Transformer._
     val r: TPostResult[Context, BTSExecuteCondition] = if (preR.continu) {
       val o2: BTSExecuteCondition = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, BTSExecuteCondition] = o2 match {
+        case o2: BTSExecuteConditionExp =>
+          val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.exp)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp))))
+          else
+            TPostResult(r0.ctx, None())
+        case o2: BTSExecuteConditionTimeout =>
+          if (hasChanged)
+            TPostResult(preR.ctx, Some(o2))
+          else
+            TPostResult(preR.ctx, None())
+        case o2: BTSExecuteConditionOtherwise =>
+          if (hasChanged)
+            TPostResult(preR.ctx, Some(o2))
+          else
+            TPostResult(preR.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSExecuteCondition = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSExecuteCondition] = pp.postBTSExecuteCondition(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSExecuteConditionExp(ctx: Context, o: BTSExecuteConditionExp): TPostResult[Context, BTSExecuteConditionExp] = {
+    val preR: PreResult[Context, BTSExecuteConditionExp] = pp.preBTSExecuteConditionExp(ctx, o)
+    val r: TPostResult[Context, BTSExecuteConditionExp] = if (preR.continu) {
+      val o2: BTSExecuteConditionExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.exp)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSExecuteConditionExp = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSExecuteConditionExp] = pp.postBTSExecuteConditionExp(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSExecuteConditionTimeout(ctx: Context, o: BTSExecuteConditionTimeout): TPostResult[Context, BTSExecuteConditionTimeout] = {
+    val preR: PreResult[Context, BTSExecuteConditionTimeout] = pp.preBTSExecuteConditionTimeout(ctx, o)
+    val r: TPostResult[Context, BTSExecuteConditionTimeout] = if (preR.continu) {
+      val o2: BTSExecuteConditionTimeout = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
       if (hasChanged)
         TPostResult(preR.ctx, Some(o2))
       else
@@ -4159,8 +4334,34 @@ import Transformer._
       TPostResult(preR.ctx, None())
     }
     val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: BTSExecuteCondition = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, BTSExecuteCondition] = pp.postBTSExecuteCondition(r.ctx, o2)
+    val o2: BTSExecuteConditionTimeout = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSExecuteConditionTimeout] = pp.postBTSExecuteConditionTimeout(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSExecuteConditionOtherwise(ctx: Context, o: BTSExecuteConditionOtherwise): TPostResult[Context, BTSExecuteConditionOtherwise] = {
+    val preR: PreResult[Context, BTSExecuteConditionOtherwise] = pp.preBTSExecuteConditionOtherwise(ctx, o)
+    val r: TPostResult[Context, BTSExecuteConditionOtherwise] = if (preR.continu) {
+      val o2: BTSExecuteConditionOtherwise = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        TPostResult(preR.ctx, Some(o2))
+      else
+        TPostResult(preR.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSExecuteConditionOtherwise = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSExecuteConditionOtherwise] = pp.postBTSExecuteConditionOtherwise(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {

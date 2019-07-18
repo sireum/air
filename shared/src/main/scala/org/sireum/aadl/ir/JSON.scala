@@ -721,7 +721,9 @@ object JSON {
     @pure def printBTSTransitionCondition(o: BTSTransitionCondition): ST = {
       o match {
         case o: BTSDispatchCondition => return printBTSDispatchCondition(o)
-        case o: BTSExecuteCondition => return printBTSExecuteCondition(o)
+        case o: BTSExecuteConditionExp => return printBTSExecuteConditionExp(o)
+        case o: BTSExecuteConditionTimeout => return printBTSExecuteConditionTimeout(o)
+        case o: BTSExecuteConditionOtherwise => return printBTSExecuteConditionOtherwise(o)
         case o: BTSModeCondition => return printBTSModeCondition(o)
         case o: BTSInternalCondition => return printBTSInternalCondition(o)
       }
@@ -772,8 +774,29 @@ object JSON {
     }
 
     @pure def printBTSExecuteCondition(o: BTSExecuteCondition): ST = {
+      o match {
+        case o: BTSExecuteConditionExp => return printBTSExecuteConditionExp(o)
+        case o: BTSExecuteConditionTimeout => return printBTSExecuteConditionTimeout(o)
+        case o: BTSExecuteConditionOtherwise => return printBTSExecuteConditionOtherwise(o)
+      }
+    }
+
+    @pure def printBTSExecuteConditionExp(o: BTSExecuteConditionExp): ST = {
       return printObject(ISZ(
-        ("type", st""""BTSExecuteCondition"""")
+        ("type", st""""BTSExecuteConditionExp""""),
+        ("exp", printBTSExp(o.exp))
+      ))
+    }
+
+    @pure def printBTSExecuteConditionTimeout(o: BTSExecuteConditionTimeout): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSExecuteConditionTimeout"""")
+      ))
+    }
+
+    @pure def printBTSExecuteConditionOtherwise(o: BTSExecuteConditionOtherwise): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSExecuteConditionOtherwise"""")
       ))
     }
 
@@ -2465,10 +2488,12 @@ object JSON {
     }
 
     def parseBTSTransitionCondition(): BTSTransitionCondition = {
-      val t = parser.parseObjectTypes(ISZ("BTSDispatchCondition", "BTSExecuteCondition", "BTSModeCondition", "BTSInternalCondition"))
+      val t = parser.parseObjectTypes(ISZ("BTSDispatchCondition", "BTSExecuteConditionExp", "BTSExecuteConditionTimeout", "BTSExecuteConditionOtherwise", "BTSModeCondition", "BTSInternalCondition"))
       t.native match {
         case "BTSDispatchCondition" => val r = parseBTSDispatchConditionT(T); return r
-        case "BTSExecuteCondition" => val r = parseBTSExecuteConditionT(T); return r
+        case "BTSExecuteConditionExp" => val r = parseBTSExecuteConditionExpT(T); return r
+        case "BTSExecuteConditionTimeout" => val r = parseBTSExecuteConditionTimeoutT(T); return r
+        case "BTSExecuteConditionOtherwise" => val r = parseBTSExecuteConditionOtherwiseT(T); return r
         case "BTSModeCondition" => val r = parseBTSModeConditionT(T); return r
         case "BTSInternalCondition" => val r = parseBTSInternalConditionT(T); return r
         case _ => val r = parseBTSInternalConditionT(T); return r
@@ -2564,15 +2589,52 @@ object JSON {
     }
 
     def parseBTSExecuteCondition(): BTSExecuteCondition = {
-      val r = parseBTSExecuteConditionT(F)
+      val t = parser.parseObjectTypes(ISZ("BTSExecuteConditionExp", "BTSExecuteConditionTimeout", "BTSExecuteConditionOtherwise"))
+      t.native match {
+        case "BTSExecuteConditionExp" => val r = parseBTSExecuteConditionExpT(T); return r
+        case "BTSExecuteConditionTimeout" => val r = parseBTSExecuteConditionTimeoutT(T); return r
+        case "BTSExecuteConditionOtherwise" => val r = parseBTSExecuteConditionOtherwiseT(T); return r
+        case _ => val r = parseBTSExecuteConditionOtherwiseT(T); return r
+      }
+    }
+
+    def parseBTSExecuteConditionExp(): BTSExecuteConditionExp = {
+      val r = parseBTSExecuteConditionExpT(F)
       return r
     }
 
-    def parseBTSExecuteConditionT(typeParsed: B): BTSExecuteCondition = {
+    def parseBTSExecuteConditionExpT(typeParsed: B): BTSExecuteConditionExp = {
       if (!typeParsed) {
-        parser.parseObjectType("BTSExecuteCondition")
+        parser.parseObjectType("BTSExecuteConditionExp")
       }
-      return BTSExecuteCondition()
+      parser.parseObjectKey("exp")
+      val exp = parseBTSExp()
+      parser.parseObjectNext()
+      return BTSExecuteConditionExp(exp)
+    }
+
+    def parseBTSExecuteConditionTimeout(): BTSExecuteConditionTimeout = {
+      val r = parseBTSExecuteConditionTimeoutT(F)
+      return r
+    }
+
+    def parseBTSExecuteConditionTimeoutT(typeParsed: B): BTSExecuteConditionTimeout = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSExecuteConditionTimeout")
+      }
+      return BTSExecuteConditionTimeout()
+    }
+
+    def parseBTSExecuteConditionOtherwise(): BTSExecuteConditionOtherwise = {
+      val r = parseBTSExecuteConditionOtherwiseT(F)
+      return r
+    }
+
+    def parseBTSExecuteConditionOtherwiseT(typeParsed: B): BTSExecuteConditionOtherwise = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSExecuteConditionOtherwise")
+      }
+      return BTSExecuteConditionOtherwise()
     }
 
     def parseBTSModeCondition(): BTSModeCondition = {
@@ -4342,6 +4404,60 @@ object JSON {
       return r
     }
     val r = to(s, fBTSExecuteCondition _)
+    return r
+  }
+
+  def fromBTSExecuteConditionExp(o: BTSExecuteConditionExp, isCompact: B): String = {
+    val st = Printer.printBTSExecuteConditionExp(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSExecuteConditionExp(s: String): Either[BTSExecuteConditionExp, Json.ErrorMsg] = {
+    def fBTSExecuteConditionExp(parser: Parser): BTSExecuteConditionExp = {
+      val r = parser.parseBTSExecuteConditionExp()
+      return r
+    }
+    val r = to(s, fBTSExecuteConditionExp _)
+    return r
+  }
+
+  def fromBTSExecuteConditionTimeout(o: BTSExecuteConditionTimeout, isCompact: B): String = {
+    val st = Printer.printBTSExecuteConditionTimeout(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSExecuteConditionTimeout(s: String): Either[BTSExecuteConditionTimeout, Json.ErrorMsg] = {
+    def fBTSExecuteConditionTimeout(parser: Parser): BTSExecuteConditionTimeout = {
+      val r = parser.parseBTSExecuteConditionTimeout()
+      return r
+    }
+    val r = to(s, fBTSExecuteConditionTimeout _)
+    return r
+  }
+
+  def fromBTSExecuteConditionOtherwise(o: BTSExecuteConditionOtherwise, isCompact: B): String = {
+    val st = Printer.printBTSExecuteConditionOtherwise(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSExecuteConditionOtherwise(s: String): Either[BTSExecuteConditionOtherwise, Json.ErrorMsg] = {
+    def fBTSExecuteConditionOtherwise(parser: Parser): BTSExecuteConditionOtherwise = {
+      val r = parser.parseBTSExecuteConditionOtherwise()
+      return r
+    }
+    val r = to(s, fBTSExecuteConditionOtherwise _)
     return r
   }
 

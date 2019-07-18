@@ -525,7 +525,13 @@ ExecuteCondition:
 */
 
 // TODO: Complete grammar for execute conditions
-@datatype class BTSExecuteCondition extends BTSTransitionCondition
+@sig trait BTSExecuteCondition extends BTSTransitionCondition
+
+@datatype class BTSExecuteConditionExp (exp: BTSExp) extends BTSExecuteCondition // TODO can be a relation
+
+@datatype class BTSExecuteConditionTimeout () extends BTSExecuteCondition
+
+@datatype class BTSExecuteConditionOtherwise () extends BTSExecuteCondition
 
 // Brian says this is present to be compatible with BA.  Currently not supported in BLESS.
 // See annex document for BA.   Could be relevant to GUMBO goals to for aligning mode

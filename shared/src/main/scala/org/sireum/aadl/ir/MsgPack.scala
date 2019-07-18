@@ -142,61 +142,65 @@ object MsgPack {
 
     val BTSDispatchTriggerTimeout: Z = 20
 
-    val BTSExecuteCondition: Z = 21
+    val BTSExecuteConditionExp: Z = 21
 
-    val BTSModeCondition: Z = 22
+    val BTSExecuteConditionTimeout: Z = 22
 
-    val BTSInternalCondition: Z = 23
+    val BTSExecuteConditionOtherwise: Z = 23
 
-    val BTSAssertion: Z = 24
+    val BTSModeCondition: Z = 24
 
-    val BTSBehaviorActions: Z = 25
+    val BTSInternalCondition: Z = 25
 
-    val BTSAssertedAction: Z = 26
+    val BTSAssertion: Z = 26
 
-    val BTSSkipAction: Z = 27
+    val BTSBehaviorActions: Z = 27
 
-    val BTSAssignmentAction: Z = 28
+    val BTSAssertedAction: Z = 28
 
-    val BTSSubprogramCallAction: Z = 29
+    val BTSSkipAction: Z = 29
 
-    val BTSPortOutAction: Z = 30
+    val BTSAssignmentAction: Z = 30
 
-    val BTSPortInAction: Z = 31
+    val BTSSubprogramCallAction: Z = 31
 
-    val BTSFrozenPortAction: Z = 32
+    val BTSPortOutAction: Z = 32
 
-    val BTSIfBLESSAction: Z = 33
+    val BTSPortInAction: Z = 33
 
-    val BTSGuardedAction: Z = 34
+    val BTSFrozenPortAction: Z = 34
 
-    val BTSIfBAAction: Z = 35
+    val BTSIfBLESSAction: Z = 35
 
-    val BTSConditionalActions: Z = 36
+    val BTSGuardedAction: Z = 36
 
-    val BTSExistentialLatticeQuantification: Z = 37
+    val BTSIfBAAction: Z = 37
 
-    val BTSUniversalLatticeQuantification: Z = 38
+    val BTSConditionalActions: Z = 38
 
-    val BTSUnaryExp: Z = 39
+    val BTSExistentialLatticeQuantification: Z = 39
 
-    val BTSBinaryExp: Z = 40
+    val BTSUniversalLatticeQuantification: Z = 40
 
-    val BTSLiteralExp: Z = 41
+    val BTSUnaryExp: Z = 41
 
-    val BTSNameExp: Z = 42
+    val BTSBinaryExp: Z = 42
 
-    val BTSIndexingExp: Z = 43
+    val BTSLiteralExp: Z = 43
 
-    val BTSAccessExp: Z = 44
+    val BTSNameExp: Z = 44
 
-    val BTSFunctionCall: Z = 45
+    val BTSIndexingExp: Z = 45
 
-    val BTSFormalExpPair: Z = 46
+    val BTSAccessExp: Z = 46
 
-    val BTSBehaviorTime: Z = 47
+    val BTSFunctionCall: Z = 47
 
-    val TODO: Z = 48
+    val BTSFormalExpPair: Z = 48
+
+    val BTSBehaviorTime: Z = 49
+
+    val TODO: Z = 50
 
   }
 
@@ -686,7 +690,9 @@ object MsgPack {
     def writeBTSTransitionCondition(o: BTSTransitionCondition): Unit = {
       o match {
         case o: BTSDispatchCondition => writeBTSDispatchCondition(o)
-        case o: BTSExecuteCondition => writeBTSExecuteCondition(o)
+        case o: BTSExecuteConditionExp => writeBTSExecuteConditionExp(o)
+        case o: BTSExecuteConditionTimeout => writeBTSExecuteConditionTimeout(o)
+        case o: BTSExecuteConditionOtherwise => writeBTSExecuteConditionOtherwise(o)
         case o: BTSModeCondition => writeBTSModeCondition(o)
         case o: BTSInternalCondition => writeBTSInternalCondition(o)
       }
@@ -727,7 +733,24 @@ object MsgPack {
     }
 
     def writeBTSExecuteCondition(o: BTSExecuteCondition): Unit = {
-      writer.writeZ(Constants.BTSExecuteCondition)
+      o match {
+        case o: BTSExecuteConditionExp => writeBTSExecuteConditionExp(o)
+        case o: BTSExecuteConditionTimeout => writeBTSExecuteConditionTimeout(o)
+        case o: BTSExecuteConditionOtherwise => writeBTSExecuteConditionOtherwise(o)
+      }
+    }
+
+    def writeBTSExecuteConditionExp(o: BTSExecuteConditionExp): Unit = {
+      writer.writeZ(Constants.BTSExecuteConditionExp)
+      writeBTSExp(o.exp)
+    }
+
+    def writeBTSExecuteConditionTimeout(o: BTSExecuteConditionTimeout): Unit = {
+      writer.writeZ(Constants.BTSExecuteConditionTimeout)
+    }
+
+    def writeBTSExecuteConditionOtherwise(o: BTSExecuteConditionOtherwise): Unit = {
+      writer.writeZ(Constants.BTSExecuteConditionOtherwise)
     }
 
     def writeBTSModeCondition(o: BTSModeCondition): Unit = {
@@ -1896,7 +1919,9 @@ object MsgPack {
       val t = reader.readZ()
       t match {
         case Constants.BTSDispatchCondition => val r = readBTSDispatchConditionT(T); return r
-        case Constants.BTSExecuteCondition => val r = readBTSExecuteConditionT(T); return r
+        case Constants.BTSExecuteConditionExp => val r = readBTSExecuteConditionExpT(T); return r
+        case Constants.BTSExecuteConditionTimeout => val r = readBTSExecuteConditionTimeoutT(T); return r
+        case Constants.BTSExecuteConditionOtherwise => val r = readBTSExecuteConditionOtherwiseT(T); return r
         case Constants.BTSModeCondition => val r = readBTSModeConditionT(T); return r
         case Constants.BTSInternalCondition => val r = readBTSInternalConditionT(T); return r
         case _ =>
@@ -1987,15 +2012,54 @@ object MsgPack {
     }
 
     def readBTSExecuteCondition(): BTSExecuteCondition = {
-      val r = readBTSExecuteConditionT(F)
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.BTSExecuteConditionExp => val r = readBTSExecuteConditionExpT(T); return r
+        case Constants.BTSExecuteConditionTimeout => val r = readBTSExecuteConditionTimeoutT(T); return r
+        case Constants.BTSExecuteConditionOtherwise => val r = readBTSExecuteConditionOtherwiseT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of BTSExecuteCondition.")
+          val r = readBTSExecuteConditionOtherwiseT(T)
+          return r
+      }
+    }
+
+    def readBTSExecuteConditionExp(): BTSExecuteConditionExp = {
+      val r = readBTSExecuteConditionExpT(F)
       return r
     }
 
-    def readBTSExecuteConditionT(typeParsed: B): BTSExecuteCondition = {
+    def readBTSExecuteConditionExpT(typeParsed: B): BTSExecuteConditionExp = {
       if (!typeParsed) {
-        reader.expectZ(Constants.BTSExecuteCondition)
+        reader.expectZ(Constants.BTSExecuteConditionExp)
       }
-      return BTSExecuteCondition()
+      val exp = readBTSExp()
+      return BTSExecuteConditionExp(exp)
+    }
+
+    def readBTSExecuteConditionTimeout(): BTSExecuteConditionTimeout = {
+      val r = readBTSExecuteConditionTimeoutT(F)
+      return r
+    }
+
+    def readBTSExecuteConditionTimeoutT(typeParsed: B): BTSExecuteConditionTimeout = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSExecuteConditionTimeout)
+      }
+      return BTSExecuteConditionTimeout()
+    }
+
+    def readBTSExecuteConditionOtherwise(): BTSExecuteConditionOtherwise = {
+      val r = readBTSExecuteConditionOtherwiseT(F)
+      return r
+    }
+
+    def readBTSExecuteConditionOtherwiseT(typeParsed: B): BTSExecuteConditionOtherwise = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSExecuteConditionOtherwise)
+      }
+      return BTSExecuteConditionOtherwise()
     }
 
     def readBTSModeCondition(): BTSModeCondition = {
@@ -3439,6 +3503,51 @@ object MsgPack {
       return r
     }
     val r = to(data, fBTSExecuteCondition _)
+    return r
+  }
+
+  def fromBTSExecuteConditionExp(o: BTSExecuteConditionExp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSExecuteConditionExp(o)
+    return w.result
+  }
+
+  def toBTSExecuteConditionExp(data: ISZ[U8]): Either[BTSExecuteConditionExp, MessagePack.ErrorMsg] = {
+    def fBTSExecuteConditionExp(reader: Reader): BTSExecuteConditionExp = {
+      val r = reader.readBTSExecuteConditionExp()
+      return r
+    }
+    val r = to(data, fBTSExecuteConditionExp _)
+    return r
+  }
+
+  def fromBTSExecuteConditionTimeout(o: BTSExecuteConditionTimeout, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSExecuteConditionTimeout(o)
+    return w.result
+  }
+
+  def toBTSExecuteConditionTimeout(data: ISZ[U8]): Either[BTSExecuteConditionTimeout, MessagePack.ErrorMsg] = {
+    def fBTSExecuteConditionTimeout(reader: Reader): BTSExecuteConditionTimeout = {
+      val r = reader.readBTSExecuteConditionTimeout()
+      return r
+    }
+    val r = to(data, fBTSExecuteConditionTimeout _)
+    return r
+  }
+
+  def fromBTSExecuteConditionOtherwise(o: BTSExecuteConditionOtherwise, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSExecuteConditionOtherwise(o)
+    return w.result
+  }
+
+  def toBTSExecuteConditionOtherwise(data: ISZ[U8]): Either[BTSExecuteConditionOtherwise, MessagePack.ErrorMsg] = {
+    def fBTSExecuteConditionOtherwise(reader: Reader): BTSExecuteConditionOtherwise = {
+      val r = reader.readBTSExecuteConditionOtherwise()
+      return r
+    }
+    val r = to(data, fBTSExecuteConditionOtherwise _)
     return r
   }
 

@@ -714,7 +714,9 @@ InternalCondition:
 @enum object BTSLiteralType {
   'BOOLEAN
   'STRING
-  // NULL, INTEGER, INT, LONG, CHAR, FLOAT, DOUBLE, RATIONAL
+  'INTEGER
+  'FLOAT
+  // NULL, INT, LONG, CHAR, DOUBLE, RATIONAL
 }
 
 @datatype class BTSLiteralExp(typ: BTSLiteralType.Type,

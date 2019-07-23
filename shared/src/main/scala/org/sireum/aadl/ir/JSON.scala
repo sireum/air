@@ -1064,6 +1064,8 @@ object JSON {
       val value: String = o match {
         case BTSLiteralType.BOOLEAN => "BOOLEAN"
         case BTSLiteralType.STRING => "STRING"
+        case BTSLiteralType.INTEGER => "INTEGER"
+        case BTSLiteralType.FLOAT => "FLOAT"
       }
       return printObject(ISZ(
         ("type", printString("BTSLiteralType")),

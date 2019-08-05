@@ -1,6 +1,7 @@
 jdk:
   - oraclejdk8
 before_install:
+  - export SIREUM_SOURCE_BUILD=false
   - ./test.sh
 install:
   - ./mill-standalone all air.shared.m2 air.jvm.m2 air.js.m2

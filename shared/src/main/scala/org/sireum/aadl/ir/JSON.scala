@@ -30,8 +30,8 @@
 
 package org.sireum.aadl.ir
 
-import org.sireum.Json.Printer._
 import org.sireum._
+import org.sireum.Json.Printer._
 
 object JSON {
 
@@ -262,7 +262,36 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Property""""),
         ("name", printName(o.name)),
-        ("propertyValues", printISZ(F, o.propertyValues, printPropertyValue _))
+        ("propertyValues", printISZ(F, o.propertyValues, printPropertyValue _)),
+        ("appliesTo", printISZ(F, o.appliesTo, printElementRef _))
+      ))
+    }
+
+    @pure def printElementRef(o: ElementRef): ST = {
+      o match {
+        case o: AadlElementRef => return printAadlElementRef(o)
+        case o: Emv2ElementRef => return printEmv2ElementRef(o)
+      }
+    }
+
+    @pure def printElementKindType(o: ElementKind.Type): ST = {
+      val value: String = o match {
+        case ElementKind.Component => "Component"
+        case ElementKind.Connection => "Connection"
+        case ElementKind.Port => "Port"
+        case ElementKind.Flow => "Flow"
+      }
+      return printObject(ISZ(
+        ("type", printString("ElementKind")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def printAadlElementRef(o: AadlElementRef): ST = {
+      return printObject(ISZ(
+        ("type", st""""AadlElementRef""""),
+        ("elementKind", printElementKindType(o.elementKind)),
+        ("name", printName(o.name))
       ))
     }
 
@@ -418,6 +447,31 @@ object JSON {
       ))
     }
 
+    @pure def printEmv2ElementRef(o: Emv2ElementRef): ST = {
+      return printObject(ISZ(
+        ("type", st""""Emv2ElementRef""""),
+        ("kind", printEmv2ElementKindType(o.kind)),
+        ("name", printName(o.name)),
+        ("errorTypes", printISZ(F, o.errorTypes, printName _))
+      ))
+    }
+
+    @pure def printEmv2ElementKindType(o: Emv2ElementKind.Type): ST = {
+      val value: String = o match {
+        case Emv2ElementKind.Source => "Source"
+        case Emv2ElementKind.Sink => "Sink"
+        case Emv2ElementKind.Path => "Path"
+        case Emv2ElementKind.Propagation => "Propagation"
+        case Emv2ElementKind.State => "State"
+        case Emv2ElementKind.Event => "Event"
+        case Emv2ElementKind.BehaviorTransition => "BehaviorTransition"
+      }
+      return printObject(ISZ(
+        ("type", printString("Emv2ElementKind")),
+        ("value", printString(value))
+      ))
+    }
+
     @pure def printEmv2Library(o: Emv2Library): ST = {
       return printObject(ISZ(
         ("type", st""""Emv2Library""""),
@@ -450,7 +504,8 @@ object JSON {
     }
 
     @pure def printErrorAliasDef(o: ErrorAliasDef): ST = {
-      return printObject(ISZ(("type", st""""ErrorAliasDef""""),
+      return printObject(ISZ(
+        ("type", st""""ErrorAliasDef""""),
         ("errorType", printName(o.errorType)),
         ("aliseType", printName(o.aliseType))
       ))
@@ -528,11 +583,15 @@ object JSON {
 
     @pure def printOrCondition(o: OrCondition): ST = {
       return printObject(ISZ(
-        ("type", st""""OrCondition""""), ("op", printISZ(F, o.op, printErrorCondition _))))
+        ("type", st""""OrCondition""""),
+        ("op", printISZ(F, o.op, printErrorCondition _))
+      ))
     }
 
     @pure def printAllCondition(o: AllCondition): ST = {
-      return printObject(ISZ(("type", st""""AllCondition""""), ("op", printISZ(F, o.op, printErrorCondition _))
+      return printObject(ISZ(
+        ("type", st""""AllCondition""""),
+        ("op", printISZ(F, o.op, printErrorCondition _))
       ))
     }
 
@@ -558,7 +617,8 @@ object JSON {
         ("libraries", printISZ(F, o.libraries, printName _)),
         ("propagations", printISZ(F, o.propagations, printEmv2Propagation _)),
         ("flows", printISZ(F, o.flows, printEmv2Flow _)),
-        ("componentBehavior", printOption(F, o.componentBehavior, printEmv2BehaviorSection _))
+        ("componentBehavior", printOption(F, o.componentBehavior, printEmv2BehaviorSection _)),
+        ("properties", printISZ(F, o.properties, printProperty _))
       ))
     }
 
@@ -1055,7 +1115,58 @@ object JSON {
       parser.parseObjectKey("propertyValues")
       val propertyValues = parser.parseISZ(parsePropertyValue _)
       parser.parseObjectNext()
-      return Property(name, propertyValues)
+      parser.parseObjectKey("appliesTo")
+      val appliesTo = parser.parseISZ(parseElementRef _)
+      parser.parseObjectNext()
+      return Property(name, propertyValues, appliesTo)
+    }
+
+    def parseElementRef(): ElementRef = {
+      val t = parser.parseObjectTypes(ISZ("AadlElementRef", "Emv2ElementRef"))
+      t.native match {
+        case "AadlElementRef" => val r = parseAadlElementRefT(T); return r
+        case "Emv2ElementRef" => val r = parseEmv2ElementRefT(T); return r
+        case _ => val r = parseEmv2ElementRefT(T); return r
+      }
+    }
+
+    def parseElementKindType(): ElementKind.Type = {
+      val r = parseElementKindT(F)
+      return r
+    }
+
+    def parseElementKindT(typeParsed: B): ElementKind.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("ElementKind")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      ElementKind.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for ElementKind.")
+          return ElementKind.byOrdinal(0).get
+      }
+    }
+
+    def parseAadlElementRef(): AadlElementRef = {
+      val r = parseAadlElementRefT(F)
+      return r
+    }
+
+    def parseAadlElementRefT(typeParsed: B): AadlElementRef = {
+      if (!typeParsed) {
+        parser.parseObjectType("AadlElementRef")
+      }
+      parser.parseObjectKey("elementKind")
+      val elementKind = parseElementKindType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("name")
+      val name = parseName()
+      parser.parseObjectNext()
+      return AadlElementRef(elementKind, name)
     }
 
     def parsePropertyValue(): PropertyValue = {
@@ -1246,30 +1357,7 @@ object JSON {
     }
 
     def parseAnnexClause(): AnnexClause = {
-      val t = parser.parseObjectTypes(
-        ISZ(
-          "Emv2Library",
-          "ErrorTypeDef",
-          "ErrorAliasDef",
-          "ErrorTypeSetDef",
-          "BehaveStateMachine",
-          "ErrorEvent",
-          "ErrorState",
-          "ErrorTransition",
-          "ConditionTrigger",
-          "AndCondition",
-          "OrCondition",
-          "AllCondition",
-          "OrMoreCondition",
-          "OrLessCondition",
-          "Emv2Clause",
-          "Emv2Propagation",
-          "Emv2Flow",
-          "Emv2BehaviorSection",
-          "ErrorPropagation",
-          "OtherAnnex"
-        )
-      )
+      val t = parser.parseObjectTypes(ISZ("Emv2Library", "ErrorTypeDef", "ErrorAliasDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "AllCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation", "OtherAnnex"))
       t.native match {
         case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
         case "ErrorTypeDef" => val r = parseErrorTypeDefT(T); return r
@@ -1296,29 +1384,7 @@ object JSON {
     }
 
     def parseEmv2Annex(): Emv2Annex = {
-      val t = parser.parseObjectTypes(
-        ISZ(
-          "Emv2Library",
-          "ErrorTypeDef",
-          "ErrorAliasDef",
-          "ErrorTypeSetDef",
-          "BehaveStateMachine",
-          "ErrorEvent",
-          "ErrorState",
-          "ErrorTransition",
-          "ConditionTrigger",
-          "AndCondition",
-          "OrCondition",
-          "AllCondition",
-          "OrMoreCondition",
-          "OrLessCondition",
-          "Emv2Clause",
-          "Emv2Propagation",
-          "Emv2Flow",
-          "Emv2BehaviorSection",
-          "ErrorPropagation"
-        )
-      )
+      val t = parser.parseObjectTypes(ISZ("Emv2Library", "ErrorTypeDef", "ErrorAliasDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "AllCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation"))
       t.native match {
         case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
         case "ErrorTypeDef" => val r = parseErrorTypeDefT(T); return r
@@ -1361,6 +1427,48 @@ object JSON {
         case _ =>
           parser.parseException(i, s"Invalid element name '$s' for PropagationDirection.")
           return PropagationDirection.byOrdinal(0).get
+      }
+    }
+
+    def parseEmv2ElementRef(): Emv2ElementRef = {
+      val r = parseEmv2ElementRefT(F)
+      return r
+    }
+
+    def parseEmv2ElementRefT(typeParsed: B): Emv2ElementRef = {
+      if (!typeParsed) {
+        parser.parseObjectType("Emv2ElementRef")
+      }
+      parser.parseObjectKey("kind")
+      val kind = parseEmv2ElementKindType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("name")
+      val name = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("errorTypes")
+      val errorTypes = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      return Emv2ElementRef(kind, name, errorTypes)
+    }
+
+    def parseEmv2ElementKindType(): Emv2ElementKind.Type = {
+      val r = parseEmv2ElementKindT(F)
+      return r
+    }
+
+    def parseEmv2ElementKindT(typeParsed: B): Emv2ElementKind.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("Emv2ElementKind")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      Emv2ElementKind.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for Emv2ElementKind.")
+          return Emv2ElementKind.byOrdinal(0).get
       }
     }
 
@@ -1554,8 +1662,7 @@ object JSON {
     }
 
     def parseErrorCondition(): ErrorCondition = {
-      val t = parser.parseObjectTypes(
-        ISZ("ConditionTrigger", "AndCondition", "OrCondition", "AllCondition", "OrMoreCondition", "OrLessCondition"))
+      val t = parser.parseObjectTypes(ISZ("ConditionTrigger", "AndCondition", "OrCondition", "AllCondition", "OrMoreCondition", "OrLessCondition"))
       t.native match {
         case "ConditionTrigger" => val r = parseConditionTriggerT(T); return r
         case "AndCondition" => val r = parseAndConditionT(T); return r
@@ -1687,7 +1794,10 @@ object JSON {
       parser.parseObjectKey("componentBehavior")
       val componentBehavior = parser.parseOption(parseEmv2BehaviorSection _)
       parser.parseObjectNext()
-      return Emv2Clause(libraries, propagations, flows, componentBehavior)
+      parser.parseObjectKey("properties")
+      val properties = parser.parseISZ(parseProperty _)
+      parser.parseObjectNext()
+      return Emv2Clause(libraries, propagations, flows, componentBehavior, properties)
     }
 
     def parseEmv2Propagation(): Emv2Propagation = {
@@ -2046,6 +2156,42 @@ object JSON {
     return r
   }
 
+  def fromElementRef(o: ElementRef, isCompact: B): String = {
+    val st = Printer.printElementRef(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toElementRef(s: String): Either[ElementRef, Json.ErrorMsg] = {
+    def fElementRef(parser: Parser): ElementRef = {
+      val r = parser.parseElementRef()
+      return r
+    }
+    val r = to(s, fElementRef _)
+    return r
+  }
+
+  def fromAadlElementRef(o: AadlElementRef, isCompact: B): String = {
+    val st = Printer.printAadlElementRef(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toAadlElementRef(s: String): Either[AadlElementRef, Json.ErrorMsg] = {
+    def fAadlElementRef(parser: Parser): AadlElementRef = {
+      val r = parser.parseAadlElementRef()
+      return r
+    }
+    val r = to(s, fAadlElementRef _)
+    return r
+  }
+
   def fromPropertyValue(o: PropertyValue, isCompact: B): String = {
     val st = Printer.printPropertyValue(o)
     if (isCompact) {
@@ -2259,6 +2405,24 @@ object JSON {
       return r
     }
     val r = to(s, fEmv2Annex _)
+    return r
+  }
+
+  def fromEmv2ElementRef(o: Emv2ElementRef, isCompact: B): String = {
+    val st = Printer.printEmv2ElementRef(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toEmv2ElementRef(s: String): Either[Emv2ElementRef, Json.ErrorMsg] = {
+    def fEmv2ElementRef(parser: Parser): Emv2ElementRef = {
+      val r = parser.parseEmv2ElementRef()
+      return r
+    }
+    val r = to(s, fEmv2ElementRef _)
     return r
   }
 

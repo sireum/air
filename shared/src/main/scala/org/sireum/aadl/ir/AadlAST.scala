@@ -168,7 +168,18 @@ import org.sireum.message.Position
 
 @datatype class EndPoint(component: Name, feature: Option[Name], direction: Option[Direction.Type])
 
-@datatype class Property(name: Name, propertyValues: ISZ[PropertyValue])
+@datatype class Property(name: Name, propertyValues: ISZ[PropertyValue], appliesTo: ISZ[ElementRef])
+
+@sig trait ElementRef
+
+@enum object ElementKind {
+  'Component
+  'Connection
+  'Port
+  'Flow
+}
+
+@datatype class AadlElementRef(elementKind : ElementKind.Type , name: Name) extends ElementRef
 
 @datatype trait PropertyValue
 
@@ -203,6 +214,20 @@ import org.sireum.message.Position
 @enum object PropagationDirection {
   'In
   'Out
+}
+
+@datatype class Emv2ElementRef(kind : Emv2ElementKind.Type,
+                               name : Name,
+                               errorTypes : ISZ[Name]) extends ElementRef
+
+@enum object Emv2ElementKind {
+  'Source
+  'Sink
+  'Path
+  'Propagation
+  'State
+  'Event
+  'BehaviorTransition
 }
 
 @datatype class Emv2Library(name: Name,
@@ -259,11 +284,11 @@ import org.sireum.message.Position
 
 @datatype class OrLessCondition(number: Z, conditions: ISZ[ErrorCondition]) extends ErrorCondition
 
-@datatype class Emv2Clause(
-  libraries: ISZ[Name],
+@datatype class Emv2Clause(libraries: ISZ[Name],
                            propagations: ISZ[Emv2Propagation],
                            flows: ISZ[Emv2Flow],
-  componentBehavior: Option[Emv2BehaviorSection]
+                           componentBehavior: Option[Emv2BehaviorSection],
+                           properties: ISZ[Property]
 ) extends Emv2Annex
 
 @datatype class Emv2Propagation( direction: PropagationDirection.Type,
@@ -284,9 +309,9 @@ import org.sireum.message.Position
 
 @datatype class ErrorPropagation(
   id: Option[Name],
-                                 source : ISZ[Name],
-                                 condition: Option[ErrorCondition],
-                                 target : ISZ[Emv2Propagation]
+  source : ISZ[Name],
+  condition: Option[ErrorCondition],
+  target : ISZ[Emv2Propagation]
                                 ) extends Emv2Annex
 
 @datatype class OtherAnnex(clause: String) extends AnnexClause

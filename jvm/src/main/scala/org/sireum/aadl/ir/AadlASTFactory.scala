@@ -181,10 +181,12 @@ class AadlASTFactory {
   )
 
   def property(name: Name,
-               propertyValues: JList[PropertyValue]) =
+               propertyValues: JList[PropertyValue],
+               appliesTo: JList[ElementRef]) =
     Property(
       name,
-      isz(propertyValues)
+      isz(propertyValues),
+      isz(appliesTo)
     )
 
   def classifierProp(name: Predef.String) =
@@ -235,17 +237,25 @@ class AadlASTFactory {
 
   //-------------EMv2 Clause------------------
 
+  def emv2ElementRef(kind : AadlASTJavaFactory.Emv2ElementKind,
+                     name : Name,
+                     errorTypes: JList[Name]) : Emv2ElementRef = {
+    Emv2ElementRef(Emv2ElementKind.byName(kind.name()).get, name, isz(errorTypes))
+  }
+
   def emv2Clause(
     libraries: JList[Name],
     propagations: JList[Emv2Propagation],
     flows: JList[Emv2Flow],
-    componentBehavior: Emv2BehaviorSection
+    componentBehavior: Emv2BehaviorSection,
+    properties : JList[Property]
   ): Emv2Clause = {
     Emv2Clause(
       isz(libraries),
       isz(propagations),
       isz(flows),
-      if (componentBehavior != null) Some(componentBehavior) else None())
+      if (componentBehavior != null) Some(componentBehavior) else None(),
+      isz(properties))
   }
 
   def emv2Propagation(

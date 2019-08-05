@@ -156,8 +156,9 @@ public class AadlASTJavaFactory {
     }
 
     public static Property property(Name name,
-                                    List<PropertyValue> propertyValues) {
-        return f.property(name, propertyValues);
+                                    List<PropertyValue> propertyValues,
+                                    List<ElementRef> appliesTo) {
+        return f.property(name, propertyValues, appliesTo);
     }
 
     public static ClassifierProp classifierProp(String name) {
@@ -199,11 +200,28 @@ public class AadlASTJavaFactory {
 
     //-------------EMv2 Clause------------------
 
+    public enum Emv2ElementKind {
+        Source,
+        Sink,
+        Path,
+        Propagation,
+        State,
+        Event,
+        BehaviorTransition
+    }
+
+    public static Emv2ElementRef emv2ElementRef(Emv2ElementKind kind,
+                                                Name name,
+                                                List<Name> errorTypes) {
+        return f.emv2ElementRef(kind, name, errorTypes);
+    }
+
     public static Emv2Clause emv2Clause(List<Name> libraries,
                                         List<Emv2Propagation> propagations,
                                         List<Emv2Flow> flows,
-                                        Emv2BehaviorSection componentBehavior) {
-        return f.emv2Clause(libraries, propagations, flows, componentBehavior);
+                                        Emv2BehaviorSection componentBehavior,
+                                        List<Property> properties) {
+        return f.emv2Clause(libraries, propagations, flows, componentBehavior, properties);
     }
 
     public static Emv2Propagation emv2Propagation(PropagationDirection direction,

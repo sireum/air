@@ -113,6 +113,10 @@ object MTransformer {
 
   val PostResultProperty: MOption[Property] = MNone()
 
+  val PreResultAadlElementRef: PreResult[AadlElementRef] = PreResult(T, MNone())
+
+  val PostResultAadlElementRef: MOption[AadlElementRef] = MNone()
+
   val PreResultClassifierProp: PreResult[PropertyValue] = PreResult(T, MNone())
 
   val PostResultClassifierProp: MOption[PropertyValue] = MNone()
@@ -148,6 +152,10 @@ object MTransformer {
   val PreResultAnnex: PreResult[Annex] = PreResult(T, MNone())
 
   val PostResultAnnex: MOption[Annex] = MNone()
+
+  val PreResultEmv2ElementRef: PreResult[Emv2ElementRef] = PreResult(T, MNone())
+
+  val PostResultEmv2ElementRef: MOption[Emv2ElementRef] = MNone()
 
   val PreResultEmv2Library: PreResult[Emv2Library] = PreResult(T, MNone())
 
@@ -231,7 +239,7 @@ object MTransformer {
 
 }
 
-import org.sireum.aadl.ir.MTransformer._
+import MTransformer._
 
 @msig trait MTransformer {
 
@@ -307,6 +315,29 @@ import org.sireum.aadl.ir.MTransformer._
 
   def preProperty(o: Property): PreResult[Property] = {
     return PreResultProperty
+  }
+
+  def preElementRef(o: ElementRef): PreResult[ElementRef] = {
+    o match {
+      case o: AadlElementRef =>
+        val r: PreResult[ElementRef] = preAadlElementRef(o) match {
+         case PreResult(continu, MSome(r: ElementRef)) => PreResult(continu, MSome[ElementRef](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type ElementRef")
+         case PreResult(continu, _) => PreResult(continu, MNone[ElementRef]())
+        }
+        return r
+      case o: Emv2ElementRef =>
+        val r: PreResult[ElementRef] = preEmv2ElementRef(o) match {
+         case PreResult(continu, MSome(r: ElementRef)) => PreResult(continu, MSome[ElementRef](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type ElementRef")
+         case PreResult(continu, _) => PreResult(continu, MNone[ElementRef]())
+        }
+        return r
+    }
+  }
+
+  def preAadlElementRef(o: AadlElementRef): PreResult[AadlElementRef] = {
+    return PreResultAadlElementRef
   }
 
   def prePropertyValue(o: PropertyValue): PreResult[PropertyValue] = {
@@ -437,9 +468,9 @@ import org.sireum.aadl.ir.MTransformer._
         return r
       case o: AllCondition =>
         val r: PreResult[AnnexClause] = preAllCondition(o) match {
-          case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-          case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
-          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: OrMoreCondition =>
@@ -582,9 +613,9 @@ import org.sireum.aadl.ir.MTransformer._
         return r
       case o: AllCondition =>
         val r: PreResult[Emv2Annex] = preAllCondition(o) match {
-          case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-          case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
-          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: OrMoreCondition =>
@@ -637,6 +668,10 @@ import org.sireum.aadl.ir.MTransformer._
         }
         return r
     }
+  }
+
+  def preEmv2ElementRef(o: Emv2ElementRef): PreResult[Emv2ElementRef] = {
+    return PreResultEmv2ElementRef
   }
 
   def preEmv2Library(o: Emv2Library): PreResult[Emv2Library] = {
@@ -696,9 +731,9 @@ import org.sireum.aadl.ir.MTransformer._
         return r
       case o: AllCondition =>
         val r: PreResult[ErrorCondition] = preAllCondition(o) match {
-          case PreResult(continu, MSome(r: ErrorCondition)) => PreResult(continu, MSome[ErrorCondition](r))
-          case PreResult(_, MSome(_)) => halt("Can only produce object of type ErrorCondition")
-          case PreResult(continu, _) => PreResult(continu, MNone[ErrorCondition]())
+         case PreResult(continu, MSome(r: ErrorCondition)) => PreResult(continu, MSome[ErrorCondition](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type ErrorCondition")
+         case PreResult(continu, _) => PreResult(continu, MNone[ErrorCondition]())
         }
         return r
       case o: OrMoreCondition =>
@@ -840,6 +875,29 @@ import org.sireum.aadl.ir.MTransformer._
     return PostResultProperty
   }
 
+  def postElementRef(o: ElementRef): MOption[ElementRef] = {
+    o match {
+      case o: AadlElementRef =>
+        val r: MOption[ElementRef] = postAadlElementRef(o) match {
+         case MSome(result: ElementRef) => MSome[ElementRef](result)
+         case MSome(_) => halt("Can only produce object of type ElementRef")
+         case _ => MNone[ElementRef]()
+        }
+        return r
+      case o: Emv2ElementRef =>
+        val r: MOption[ElementRef] = postEmv2ElementRef(o) match {
+         case MSome(result: ElementRef) => MSome[ElementRef](result)
+         case MSome(_) => halt("Can only produce object of type ElementRef")
+         case _ => MNone[ElementRef]()
+        }
+        return r
+    }
+  }
+
+  def postAadlElementRef(o: AadlElementRef): MOption[AadlElementRef] = {
+    return PostResultAadlElementRef
+  }
+
   def postPropertyValue(o: PropertyValue): MOption[PropertyValue] = {
     o match {
       case o: ClassifierProp => return postClassifierProp(o)
@@ -968,9 +1026,9 @@ import org.sireum.aadl.ir.MTransformer._
         return r
       case o: AllCondition =>
         val r: MOption[AnnexClause] = postAllCondition(o) match {
-          case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-          case MSome(_) => halt("Can only produce object of type AnnexClause")
-          case _ => MNone[AnnexClause]()
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
         }
         return r
       case o: OrMoreCondition =>
@@ -1113,9 +1171,9 @@ import org.sireum.aadl.ir.MTransformer._
         return r
       case o: AllCondition =>
         val r: MOption[Emv2Annex] = postAllCondition(o) match {
-          case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-          case MSome(_) => halt("Can only produce object of type Emv2Annex")
-          case _ => MNone[Emv2Annex]()
+         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case _ => MNone[Emv2Annex]()
         }
         return r
       case o: OrMoreCondition =>
@@ -1168,6 +1226,10 @@ import org.sireum.aadl.ir.MTransformer._
         }
         return r
     }
+  }
+
+  def postEmv2ElementRef(o: Emv2ElementRef): MOption[Emv2ElementRef] = {
+    return PostResultEmv2ElementRef
   }
 
   def postEmv2Library(o: Emv2Library): MOption[Emv2Library] = {
@@ -1227,9 +1289,9 @@ import org.sireum.aadl.ir.MTransformer._
         return r
       case o: AllCondition =>
         val r: MOption[ErrorCondition] = postAllCondition(o) match {
-          case MSome(result: ErrorCondition) => MSome[ErrorCondition](result)
-          case MSome(_) => halt("Can only produce object of type ErrorCondition")
-          case _ => MNone[ErrorCondition]()
+         case MSome(result: ErrorCondition) => MSome[ErrorCondition](result)
+         case MSome(_) => halt("Can only produce object of type ErrorCondition")
+         case _ => MNone[ErrorCondition]()
         }
         return r
       case o: OrMoreCondition =>
@@ -1675,8 +1737,9 @@ import org.sireum.aadl.ir.MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[Name] = transformName(o2.name)
       val r1: MOption[IS[Z, PropertyValue]] = transformISZ(o2.propertyValues, transformPropertyValue _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(name = r0.getOrElse(o2.name), propertyValues = r1.getOrElse(o2.propertyValues)))
+      val r2: MOption[IS[Z, ElementRef]] = transformISZ(o2.appliesTo, transformElementRef _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), propertyValues = r1.getOrElse(o2.propertyValues), appliesTo = r2.getOrElse(o2.appliesTo)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -1687,6 +1750,71 @@ import org.sireum.aadl.ir.MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: Property = r.getOrElse(o)
     val postR: MOption[Property] = postProperty(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformElementRef(o: ElementRef): MOption[ElementRef] = {
+    val preR: PreResult[ElementRef] = preElementRef(o)
+    val r: MOption[ElementRef] = if (preR.continu) {
+      val o2: ElementRef = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[ElementRef] = o2 match {
+        case o2: AadlElementRef =>
+          val r0: MOption[Name] = transformName(o2.name)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name)))
+          else
+            MNone()
+        case o2: Emv2ElementRef =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[IS[Z, Name]] = transformISZ(o2.errorTypes, transformName _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), errorTypes = r1.getOrElse(o2.errorTypes)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: ElementRef = r.getOrElse(o)
+    val postR: MOption[ElementRef] = postElementRef(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformAadlElementRef(o: AadlElementRef): MOption[AadlElementRef] = {
+    val preR: PreResult[AadlElementRef] = preAadlElementRef(o)
+    val r: MOption[AadlElementRef] = if (preR.continu) {
+      val o2: AadlElementRef = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.name)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: AadlElementRef = r.getOrElse(o)
+    val postR: MOption[AadlElementRef] = postAadlElementRef(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -1947,17 +2075,10 @@ import org.sireum.aadl.ir.MTransformer._
           val r0: MOption[IS[Z, Name]] = transformISZ(o2.libraries, transformName _)
           val r1: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.propagations, transformEmv2Propagation _)
           val r2: MOption[IS[Z, Emv2Flow]] = transformISZ(o2.flows, transformEmv2Flow _)
-          val r3: MOption[Option[Emv2BehaviorSection]] =
-            transformOption(o2.componentBehavior, transformEmv2BehaviorSection _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(
-              o2(
-                libraries = r0.getOrElse(o2.libraries),
-                propagations = r1.getOrElse(o2.propagations),
-                flows = r2.getOrElse(o2.flows),
-                componentBehavior = r3.getOrElse(o2.componentBehavior)
-              )
-            )
+          val r3: MOption[Option[Emv2BehaviorSection]] = transformOption(o2.componentBehavior, transformEmv2BehaviorSection _)
+          val r4: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(libraries = r0.getOrElse(o2.libraries), propagations = r1.getOrElse(o2.propagations), flows = r2.getOrElse(o2.flows), componentBehavior = r3.getOrElse(o2.componentBehavior), properties = r4.getOrElse(o2.properties)))
           else
             MNone()
         case o2: Emv2Propagation =>
@@ -2125,16 +2246,10 @@ import org.sireum.aadl.ir.MTransformer._
           val r0: MOption[IS[Z, Name]] = transformISZ(o2.libraries, transformName _)
           val r1: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.propagations, transformEmv2Propagation _)
           val r2: MOption[IS[Z, Emv2Flow]] = transformISZ(o2.flows, transformEmv2Flow _)
-          val r3: MOption[Option[Emv2BehaviorSection]] =
-            transformOption(o2.componentBehavior, transformEmv2BehaviorSection _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(
-              o2(
-                libraries = r0.getOrElse(o2.libraries),
-                propagations = r1.getOrElse(o2.propagations),
-                flows = r2.getOrElse(o2.flows), componentBehavior = r3.getOrElse(o2.componentBehavior)
-              )
-            )
+          val r3: MOption[Option[Emv2BehaviorSection]] = transformOption(o2.componentBehavior, transformEmv2BehaviorSection _)
+          val r4: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(libraries = r0.getOrElse(o2.libraries), propagations = r1.getOrElse(o2.propagations), flows = r2.getOrElse(o2.flows), componentBehavior = r3.getOrElse(o2.componentBehavior), properties = r4.getOrElse(o2.properties)))
           else
             MNone()
         case o2: Emv2Propagation =>
@@ -2157,10 +2272,7 @@ import org.sireum.aadl.ir.MTransformer._
           val r1: MOption[IS[Z, ErrorTransition]] = transformISZ(o2.transitions, transformErrorTransition _)
           val r2: MOption[IS[Z, ErrorPropagation]] = transformISZ(o2.propagations, transformErrorPropagation _)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(events = r0.getOrElse(o2.events), transitions = r1.getOrElse(o2.transitions),
-                propagations = r2.getOrElse(o2.propagations)
-              )
-            )
+            MSome(o2(events = r0.getOrElse(o2.events), transitions = r1.getOrElse(o2.transitions), propagations = r2.getOrElse(o2.propagations)))
           else
             MNone()
         case o2: ErrorPropagation =>
@@ -2182,6 +2294,34 @@ import org.sireum.aadl.ir.MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: Emv2Annex = r.getOrElse(o)
     val postR: MOption[Emv2Annex] = postEmv2Annex(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformEmv2ElementRef(o: Emv2ElementRef): MOption[Emv2ElementRef] = {
+    val preR: PreResult[Emv2ElementRef] = preEmv2ElementRef(o)
+    val r: MOption[Emv2ElementRef] = if (preR.continu) {
+      val o2: Emv2ElementRef = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.name)
+      val r1: MOption[IS[Z, Name]] = transformISZ(o2.errorTypes, transformName _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), errorTypes = r1.getOrElse(o2.errorTypes)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: Emv2ElementRef = r.getOrElse(o)
+    val postR: MOption[Emv2ElementRef] = postEmv2ElementRef(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -2655,11 +2795,9 @@ import org.sireum.aadl.ir.MTransformer._
       val r1: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.propagations, transformEmv2Propagation _)
       val r2: MOption[IS[Z, Emv2Flow]] = transformISZ(o2.flows, transformEmv2Flow _)
       val r3: MOption[Option[Emv2BehaviorSection]] = transformOption(o2.componentBehavior, transformEmv2BehaviorSection _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-        MSome(
-          o2(
-            libraries = r0.getOrElse(o2.libraries), propagations = r1.getOrElse(o2.propagations), flows = r2.getOrElse(o2.flows),
-            componentBehavior = r3.getOrElse(o2.componentBehavior)))
+      val r4: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(libraries = r0.getOrElse(o2.libraries), propagations = r1.getOrElse(o2.propagations), flows = r2.getOrElse(o2.flows), componentBehavior = r3.getOrElse(o2.componentBehavior), properties = r4.getOrElse(o2.properties)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -2681,7 +2819,6 @@ import org.sireum.aadl.ir.MTransformer._
 
   def transformEmv2Propagation(o: Emv2Propagation): MOption[Emv2Propagation] = {
     val preR: PreResult[Emv2Propagation] = preEmv2Propagation(o)
-
     val r: MOption[Emv2Propagation] = if (preR.continu) {
       val o2: Emv2Propagation = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
@@ -2768,7 +2905,6 @@ import org.sireum.aadl.ir.MTransformer._
 
   def transformErrorPropagation(o: ErrorPropagation): MOption[ErrorPropagation] = {
     val preR: PreResult[ErrorPropagation] = preErrorPropagation(o)
-
     val r: MOption[ErrorPropagation] = if (preR.continu) {
       val o2: ErrorPropagation = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty

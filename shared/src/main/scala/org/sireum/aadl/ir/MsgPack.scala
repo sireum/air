@@ -60,63 +60,67 @@ object MsgPack {
 
     val Property: Z = -21
 
-    val ClassifierProp: Z = -20
+    val AadlElementRef: Z = -20
 
-    val RangeProp: Z = -19
+    val ClassifierProp: Z = -19
 
-    val RecordProp: Z = -18
+    val RangeProp: Z = -18
 
-    val ReferenceProp: Z = -17
+    val RecordProp: Z = -17
 
-    val UnitProp: Z = -16
+    val ReferenceProp: Z = -16
 
-    val ValueProp: Z = -15
+    val UnitProp: Z = -15
 
-    val Mode: Z = -14
+    val ValueProp: Z = -14
 
-    val Flow: Z = -13
+    val Mode: Z = -13
 
-    val Annex: Z = -12
+    val Flow: Z = -12
 
-    val Emv2Library: Z = -11
+    val Annex: Z = -11
 
-    val ErrorTypeDef: Z = -10
+    val Emv2ElementRef: Z = -10
 
-    val ErrorAliasDef: Z = -9
+    val Emv2Library: Z = -9
 
-    val ErrorTypeSetDef: Z = -8
+    val ErrorTypeDef: Z = -8
 
-    val BehaveStateMachine: Z = -7
+    val ErrorAliasDef: Z = -7
 
-    val ErrorEvent: Z = -6
+    val ErrorTypeSetDef: Z = -6
 
-    val ErrorState: Z = -5
+    val BehaveStateMachine: Z = -5
 
-    val ErrorTransition: Z = -4
+    val ErrorEvent: Z = -4
 
-    val ConditionTrigger: Z = -3
+    val ErrorState: Z = -3
 
-    val AndCondition: Z = -2
+    val ErrorTransition: Z = -2
 
-    val OrCondition: Z = -1
+    val ConditionTrigger: Z = -1
 
-    val AllCondition: Z = 0
+    val AndCondition: Z = 0
 
-    val OrMoreCondition: Z = 1
+    val OrCondition: Z = 1
 
-    val OrLessCondition: Z = 2
+    val AllCondition: Z = 2
 
-    val Emv2Clause: Z = 3
+    val OrMoreCondition: Z = 3
 
-    val Emv2Propagation: Z = 4
+    val OrLessCondition: Z = 4
 
-    val Emv2Flow: Z = 5
+    val Emv2Clause: Z = 5
 
-    val Emv2BehaviorSection: Z = 6
+    val Emv2Propagation: Z = 6
 
-    val ErrorPropagation: Z = 7
+    val Emv2Flow: Z = 7
 
-    val OtherAnnex: Z = 8
+    val Emv2BehaviorSection: Z = 8
+
+    val ErrorPropagation: Z = 9
+
+    val OtherAnnex: Z = 10
 
   }
 
@@ -262,6 +266,24 @@ object MsgPack {
       writer.writeZ(Constants.Property)
       writeName(o.name)
       writer.writeISZ(o.propertyValues, writePropertyValue _)
+      writer.writeISZ(o.appliesTo, writeElementRef _)
+    }
+
+    def writeElementRef(o: ElementRef): Unit = {
+      o match {
+        case o: AadlElementRef => writeAadlElementRef(o)
+        case o: Emv2ElementRef => writeEmv2ElementRef(o)
+      }
+    }
+
+    def writeElementKindType(o: ElementKind.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def writeAadlElementRef(o: AadlElementRef): Unit = {
+      writer.writeZ(Constants.AadlElementRef)
+      writeElementKindType(o.elementKind)
+      writeName(o.name)
     }
 
     def writePropertyValue(o: PropertyValue): Unit = {
@@ -383,6 +405,17 @@ object MsgPack {
       writer.writeZ(o.ordinal)
     }
 
+    def writeEmv2ElementRef(o: Emv2ElementRef): Unit = {
+      writer.writeZ(Constants.Emv2ElementRef)
+      writeEmv2ElementKindType(o.kind)
+      writeName(o.name)
+      writer.writeISZ(o.errorTypes, writeName _)
+    }
+
+    def writeEmv2ElementKindType(o: Emv2ElementKind.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
     def writeEmv2Library(o: Emv2Library): Unit = {
       writer.writeZ(Constants.Emv2Library)
       writeName(o.name)
@@ -493,6 +526,7 @@ object MsgPack {
       writer.writeISZ(o.propagations, writeEmv2Propagation _)
       writer.writeISZ(o.flows, writeEmv2Flow _)
       writer.writeOption(o.componentBehavior, writeEmv2BehaviorSection _)
+      writer.writeISZ(o.properties, writeProperty _)
     }
 
     def writeEmv2Propagation(o: Emv2Propagation): Unit = {
@@ -789,7 +823,40 @@ object MsgPack {
       }
       val name = readName()
       val propertyValues = reader.readISZ(readPropertyValue _)
-      return Property(name, propertyValues)
+      val appliesTo = reader.readISZ(readElementRef _)
+      return Property(name, propertyValues, appliesTo)
+    }
+
+    def readElementRef(): ElementRef = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.AadlElementRef => val r = readAadlElementRefT(T); return r
+        case Constants.Emv2ElementRef => val r = readEmv2ElementRefT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of ElementRef.")
+          val r = readEmv2ElementRefT(T)
+          return r
+      }
+    }
+
+    def readElementKindType(): ElementKind.Type = {
+      val r = reader.readZ()
+      return ElementKind.byOrdinal(r).get
+    }
+
+    def readAadlElementRef(): AadlElementRef = {
+      val r = readAadlElementRefT(F)
+      return r
+    }
+
+    def readAadlElementRefT(typeParsed: B): AadlElementRef = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.AadlElementRef)
+      }
+      val elementKind = readElementKindType()
+      val name = readName()
+      return AadlElementRef(elementKind, name)
     }
 
     def readPropertyValue(): PropertyValue = {
@@ -1001,6 +1068,26 @@ object MsgPack {
     def readPropagationDirectionType(): PropagationDirection.Type = {
       val r = reader.readZ()
       return PropagationDirection.byOrdinal(r).get
+    }
+
+    def readEmv2ElementRef(): Emv2ElementRef = {
+      val r = readEmv2ElementRefT(F)
+      return r
+    }
+
+    def readEmv2ElementRefT(typeParsed: B): Emv2ElementRef = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.Emv2ElementRef)
+      }
+      val kind = readEmv2ElementKindType()
+      val name = readName()
+      val errorTypes = reader.readISZ(readName _)
+      return Emv2ElementRef(kind, name, errorTypes)
+    }
+
+    def readEmv2ElementKindType(): Emv2ElementKind.Type = {
+      val r = reader.readZ()
+      return Emv2ElementKind.byOrdinal(r).get
     }
 
     def readEmv2Library(): Emv2Library = {
@@ -1239,7 +1326,8 @@ object MsgPack {
       val propagations = reader.readISZ(readEmv2Propagation _)
       val flows = reader.readISZ(readEmv2Flow _)
       val componentBehavior = reader.readOption(readEmv2BehaviorSection _)
-      return Emv2Clause(libraries, propagations, flows, componentBehavior)
+      val properties = reader.readISZ(readProperty _)
+      return Emv2Clause(libraries, propagations, flows, componentBehavior, properties)
     }
 
     def readEmv2Propagation(): Emv2Propagation = {
@@ -1524,6 +1612,36 @@ object MsgPack {
     return r
   }
 
+  def fromElementRef(o: ElementRef, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeElementRef(o)
+    return w.result
+  }
+
+  def toElementRef(data: ISZ[U8]): Either[ElementRef, MessagePack.ErrorMsg] = {
+    def fElementRef(reader: Reader): ElementRef = {
+      val r = reader.readElementRef()
+      return r
+    }
+    val r = to(data, fElementRef _)
+    return r
+  }
+
+  def fromAadlElementRef(o: AadlElementRef, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeAadlElementRef(o)
+    return w.result
+  }
+
+  def toAadlElementRef(data: ISZ[U8]): Either[AadlElementRef, MessagePack.ErrorMsg] = {
+    def fAadlElementRef(reader: Reader): AadlElementRef = {
+      val r = reader.readAadlElementRef()
+      return r
+    }
+    val r = to(data, fAadlElementRef _)
+    return r
+  }
+
   def fromPropertyValue(o: PropertyValue, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
     w.writePropertyValue(o)
@@ -1701,6 +1819,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fEmv2Annex _)
+    return r
+  }
+
+  def fromEmv2ElementRef(o: Emv2ElementRef, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeEmv2ElementRef(o)
+    return w.result
+  }
+
+  def toEmv2ElementRef(data: ISZ[U8]): Either[Emv2ElementRef, MessagePack.ErrorMsg] = {
+    def fEmv2ElementRef(reader: Reader): Emv2ElementRef = {
+      val r = reader.readEmv2ElementRef()
+      return r
+    }
+    val r = to(data, fEmv2ElementRef _)
     return r
   }
 

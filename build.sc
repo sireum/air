@@ -53,10 +53,10 @@ object air extends Air.Module {
 }
 
 def regen() = T.command {
-  val path = pwd / 'shared / 'src / 'main / 'scala / 'org / 'sireum / 'aadl / 'ir
+  val path = pwd / 'shared / 'src / 'main / 'scala / 'org / 'sireum / 'hamr / 'ir
   %(pwd / 'sireum, 'tools, 'transgen, "-l", pwd / "license.txt", "-m", "immutable,mutable",
     path / "AadlAST.scala")(path)
-  %(pwd / 'sireum, 'tools, 'sergen, "-p", "org.sireum.aadl.ir", "-l", pwd / "license.txt",
+  %(pwd / 'sireum, 'tools, 'sergen, "-p", "org.sireum.hamr.ir", "-l", pwd / "license.txt",
     "-m", "json,msgpack", path / "AAdlAST.scala")(path)
 }
 

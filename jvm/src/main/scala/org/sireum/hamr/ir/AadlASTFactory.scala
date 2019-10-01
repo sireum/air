@@ -23,7 +23,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.sireum.aadl.ir
+package org.sireum.hamr.ir
 
 import java.util.{List => JList}
 

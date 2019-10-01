@@ -24,7 +24,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.sireum.aadl.ir
+package org.sireum.hamr.ir
 
 import org.sireum._
 import org.sireum.message.Position

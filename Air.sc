@@ -29,9 +29,9 @@ import org.sireum.mill.SireumModule._
 
 trait Module extends CrossJvmJsJitPack {
 
-  final override def description: String = "Sireum AADL Intermediate Representation (AIR)"
+  final override def description: String = "Sireum HAMR AADL Intermediate Representation (AIR)"
 
-  final override def artifactName = "air"
+  final override def artifactName = "hamr-air"
 
   final override def subUrl: String = "air"
 

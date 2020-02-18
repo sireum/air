@@ -29,7 +29,7 @@ package org.sireum.hamr.ir
 import org.sireum._
 import org.sireum.message.Position
 
-@datatype class Aadl(components: ISZ[Component], errorLib: ISZ[Emv2Library], dataComponents: ISZ[Component])
+@datatype class Aadl(components: ISZ[Component], annexLib: ISZ[AnnexLib], dataComponents: ISZ[Component])
 
 @datatype class Name(name: ISZ[String], pos: Option[Position])
 
@@ -209,7 +209,14 @@ import org.sireum.message.Position
 
 @sig trait AnnexClause
 
+@sig trait AnnexLib
+
+/**
+* Start of EMV2 AST Section
+*/
 @sig trait Emv2Annex extends AnnexClause
+
+@sig trait Emv2Lib extends AnnexLib
 
 @enum object PropagationDirection {
   'In
@@ -236,7 +243,7 @@ import org.sireum.message.Position
                             errorTypeSetDef: ISZ[ErrorTypeSetDef],
                             alias: ISZ[ErrorAliasDef],
                             behaveStateMachine: ISZ[BehaveStateMachine])
-  extends Emv2Annex
+  extends Emv2Lib
 
 @enum object ErrorKind {
   'all
@@ -313,5 +320,30 @@ import org.sireum.message.Position
   condition: Option[ErrorCondition],
   target : ISZ[Emv2Propagation]
                                 ) extends Emv2Annex
+
+/**
+* End of EMV2 AST Section
+*/
+
+/**
+* Start of SMF AST Section
+*/
+@sig trait SmfAnnex extends AnnexClause
+
+@sig trait SmfLib extends AnnexLib
+
+@datatype class SmfClause(classification: ISZ[SmfClassification],
+                          declass: ISZ[SmfDeclass]) extends SmfAnnex
+
+@datatype class SmfClassification(portName: ISZ[Name], typeName: ISZ[Name]) extends SmfAnnex
+
+@datatype class SmfDeclass(flowName: ISZ[Name], srcType : ISZ[Name], snkType : ISZ[Name]) extends SmfAnnex
+
+@datatype class SmfLibrary(types: ISZ[SmfType]) extends SmfLib
+
+@datatype class SmfType(typeName : ISZ[Name], parentType: ISZ[Name]) extends SmfAnnex
+/**
+* End of SMF AST Section
+*/
 
 @datatype class OtherAnnex(clause: String) extends AnnexClause

@@ -41,7 +41,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Aadl""""),
         ("components", printISZ(F, o.components, printComponent _)),
-        ("errorLib", printISZ(F, o.errorLib, printEmv2Library _)),
+        ("annexLib", printISZ(F, o.annexLib, printAnnexLib _)),
         ("dataComponents", printISZ(F, o.dataComponents, printComponent _))
       ))
     }
@@ -389,7 +389,6 @@ object JSON {
 
     @pure def printAnnexClause(o: AnnexClause): ST = {
       o match {
-        case o: Emv2Library => return printEmv2Library(o)
         case o: ErrorTypeDef => return printErrorTypeDef(o)
         case o: ErrorAliasDef => return printErrorAliasDef(o)
         case o: ErrorTypeSetDef => return printErrorTypeSetDef(o)
@@ -408,13 +407,23 @@ object JSON {
         case o: Emv2Flow => return printEmv2Flow(o)
         case o: Emv2BehaviorSection => return printEmv2BehaviorSection(o)
         case o: ErrorPropagation => return printErrorPropagation(o)
+        case o: SmfClause => return printSmfClause(o)
+        case o: SmfClassification => return printSmfClassification(o)
+        case o: SmfDeclass => return printSmfDeclass(o)
+        case o: SmfType => return printSmfType(o)
         case o: OtherAnnex => return printOtherAnnex(o)
+      }
+    }
+
+    @pure def printAnnexLib(o: AnnexLib): ST = {
+      o match {
+        case o: Emv2Library => return printEmv2Library(o)
+        case o: SmfLibrary => return printSmfLibrary(o)
       }
     }
 
     @pure def printEmv2Annex(o: Emv2Annex): ST = {
       o match {
-        case o: Emv2Library => return printEmv2Library(o)
         case o: ErrorTypeDef => return printErrorTypeDef(o)
         case o: ErrorAliasDef => return printErrorAliasDef(o)
         case o: ErrorTypeSetDef => return printErrorTypeSetDef(o)
@@ -433,6 +442,12 @@ object JSON {
         case o: Emv2Flow => return printEmv2Flow(o)
         case o: Emv2BehaviorSection => return printEmv2BehaviorSection(o)
         case o: ErrorPropagation => return printErrorPropagation(o)
+      }
+    }
+
+    @pure def printEmv2Lib(o: Emv2Lib): ST = {
+      o match {
+        case o: Emv2Library => return printEmv2Library(o)
       }
     }
 
@@ -660,6 +675,61 @@ object JSON {
       ))
     }
 
+    @pure def printSmfAnnex(o: SmfAnnex): ST = {
+      o match {
+        case o: SmfClause => return printSmfClause(o)
+        case o: SmfClassification => return printSmfClassification(o)
+        case o: SmfDeclass => return printSmfDeclass(o)
+        case o: SmfType => return printSmfType(o)
+      }
+    }
+
+    @pure def printSmfLib(o: SmfLib): ST = {
+      o match {
+        case o: SmfLibrary => return printSmfLibrary(o)
+      }
+    }
+
+    @pure def printSmfClause(o: SmfClause): ST = {
+      return printObject(ISZ(
+        ("type", st""""SmfClause""""),
+        ("classification", printISZ(F, o.classification, printSmfClassification _)),
+        ("declass", printISZ(F, o.declass, printSmfDeclass _))
+      ))
+    }
+
+    @pure def printSmfClassification(o: SmfClassification): ST = {
+      return printObject(ISZ(
+        ("type", st""""SmfClassification""""),
+        ("portName", printISZ(F, o.portName, printName _)),
+        ("typeName", printISZ(F, o.typeName, printName _))
+      ))
+    }
+
+    @pure def printSmfDeclass(o: SmfDeclass): ST = {
+      return printObject(ISZ(
+        ("type", st""""SmfDeclass""""),
+        ("flowName", printISZ(F, o.flowName, printName _)),
+        ("srcType", printISZ(F, o.srcType, printName _)),
+        ("snkType", printISZ(F, o.snkType, printName _))
+      ))
+    }
+
+    @pure def printSmfLibrary(o: SmfLibrary): ST = {
+      return printObject(ISZ(
+        ("type", st""""SmfLibrary""""),
+        ("types", printISZ(F, o.types, printSmfType _))
+      ))
+    }
+
+    @pure def printSmfType(o: SmfType): ST = {
+      return printObject(ISZ(
+        ("type", st""""SmfType""""),
+        ("typeName", printISZ(F, o.typeName, printName _)),
+        ("parentType", printISZ(F, o.parentType, printName _))
+      ))
+    }
+
     @pure def printOtherAnnex(o: OtherAnnex): ST = {
       return printObject(ISZ(
         ("type", st""""OtherAnnex""""),
@@ -688,13 +758,13 @@ object JSON {
       parser.parseObjectKey("components")
       val components = parser.parseISZ(parseComponent _)
       parser.parseObjectNext()
-      parser.parseObjectKey("errorLib")
-      val errorLib = parser.parseISZ(parseEmv2Library _)
+      parser.parseObjectKey("annexLib")
+      val annexLib = parser.parseISZ(parseAnnexLib _)
       parser.parseObjectNext()
       parser.parseObjectKey("dataComponents")
       val dataComponents = parser.parseISZ(parseComponent _)
       parser.parseObjectNext()
-      return Aadl(components, errorLib, dataComponents)
+      return Aadl(components, annexLib, dataComponents)
     }
 
     def parseName(): Name = {
@@ -1357,9 +1427,8 @@ object JSON {
     }
 
     def parseAnnexClause(): AnnexClause = {
-      val t = parser.parseObjectTypes(ISZ("Emv2Library", "ErrorTypeDef", "ErrorAliasDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "AllCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation", "OtherAnnex"))
+      val t = parser.parseObjectTypes(ISZ("ErrorTypeDef", "ErrorAliasDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "AllCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation", "SmfClause", "SmfClassification", "SmfDeclass", "SmfType", "OtherAnnex"))
       t.native match {
-        case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
         case "ErrorTypeDef" => val r = parseErrorTypeDefT(T); return r
         case "ErrorAliasDef" => val r = parseErrorAliasDefT(T); return r
         case "ErrorTypeSetDef" => val r = parseErrorTypeSetDefT(T); return r
@@ -1378,15 +1447,27 @@ object JSON {
         case "Emv2Flow" => val r = parseEmv2FlowT(T); return r
         case "Emv2BehaviorSection" => val r = parseEmv2BehaviorSectionT(T); return r
         case "ErrorPropagation" => val r = parseErrorPropagationT(T); return r
+        case "SmfClause" => val r = parseSmfClauseT(T); return r
+        case "SmfClassification" => val r = parseSmfClassificationT(T); return r
+        case "SmfDeclass" => val r = parseSmfDeclassT(T); return r
+        case "SmfType" => val r = parseSmfTypeT(T); return r
         case "OtherAnnex" => val r = parseOtherAnnexT(T); return r
         case _ => val r = parseOtherAnnexT(T); return r
       }
     }
 
-    def parseEmv2Annex(): Emv2Annex = {
-      val t = parser.parseObjectTypes(ISZ("Emv2Library", "ErrorTypeDef", "ErrorAliasDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "AllCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation"))
+    def parseAnnexLib(): AnnexLib = {
+      val t = parser.parseObjectTypes(ISZ("Emv2Library", "SmfLibrary"))
       t.native match {
         case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
+        case "SmfLibrary" => val r = parseSmfLibraryT(T); return r
+        case _ => val r = parseSmfLibraryT(T); return r
+      }
+    }
+
+    def parseEmv2Annex(): Emv2Annex = {
+      val t = parser.parseObjectTypes(ISZ("ErrorTypeDef", "ErrorAliasDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "AllCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation"))
+      t.native match {
         case "ErrorTypeDef" => val r = parseErrorTypeDefT(T); return r
         case "ErrorAliasDef" => val r = parseErrorAliasDefT(T); return r
         case "ErrorTypeSetDef" => val r = parseErrorTypeSetDefT(T); return r
@@ -1406,6 +1487,14 @@ object JSON {
         case "Emv2BehaviorSection" => val r = parseEmv2BehaviorSectionT(T); return r
         case "ErrorPropagation" => val r = parseErrorPropagationT(T); return r
         case _ => val r = parseErrorPropagationT(T); return r
+      }
+    }
+
+    def parseEmv2Lib(): Emv2Lib = {
+      val t = parser.parseObjectTypes(ISZ("Emv2Library"))
+      t.native match {
+        case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
+        case _ => val r = parseEmv2LibraryT(T); return r
       }
     }
 
@@ -1888,6 +1977,115 @@ object JSON {
       val target = parser.parseISZ(parseEmv2Propagation _)
       parser.parseObjectNext()
       return ErrorPropagation(id, source, condition, target)
+    }
+
+    def parseSmfAnnex(): SmfAnnex = {
+      val t = parser.parseObjectTypes(ISZ("SmfClause", "SmfClassification", "SmfDeclass", "SmfType"))
+      t.native match {
+        case "SmfClause" => val r = parseSmfClauseT(T); return r
+        case "SmfClassification" => val r = parseSmfClassificationT(T); return r
+        case "SmfDeclass" => val r = parseSmfDeclassT(T); return r
+        case "SmfType" => val r = parseSmfTypeT(T); return r
+        case _ => val r = parseSmfTypeT(T); return r
+      }
+    }
+
+    def parseSmfLib(): SmfLib = {
+      val t = parser.parseObjectTypes(ISZ("SmfLibrary"))
+      t.native match {
+        case "SmfLibrary" => val r = parseSmfLibraryT(T); return r
+        case _ => val r = parseSmfLibraryT(T); return r
+      }
+    }
+
+    def parseSmfClause(): SmfClause = {
+      val r = parseSmfClauseT(F)
+      return r
+    }
+
+    def parseSmfClauseT(typeParsed: B): SmfClause = {
+      if (!typeParsed) {
+        parser.parseObjectType("SmfClause")
+      }
+      parser.parseObjectKey("classification")
+      val classification = parser.parseISZ(parseSmfClassification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("declass")
+      val declass = parser.parseISZ(parseSmfDeclass _)
+      parser.parseObjectNext()
+      return SmfClause(classification, declass)
+    }
+
+    def parseSmfClassification(): SmfClassification = {
+      val r = parseSmfClassificationT(F)
+      return r
+    }
+
+    def parseSmfClassificationT(typeParsed: B): SmfClassification = {
+      if (!typeParsed) {
+        parser.parseObjectType("SmfClassification")
+      }
+      parser.parseObjectKey("portName")
+      val portName = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("typeName")
+      val typeName = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      return SmfClassification(portName, typeName)
+    }
+
+    def parseSmfDeclass(): SmfDeclass = {
+      val r = parseSmfDeclassT(F)
+      return r
+    }
+
+    def parseSmfDeclassT(typeParsed: B): SmfDeclass = {
+      if (!typeParsed) {
+        parser.parseObjectType("SmfDeclass")
+      }
+      parser.parseObjectKey("flowName")
+      val flowName = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("srcType")
+      val srcType = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("snkType")
+      val snkType = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      return SmfDeclass(flowName, srcType, snkType)
+    }
+
+    def parseSmfLibrary(): SmfLibrary = {
+      val r = parseSmfLibraryT(F)
+      return r
+    }
+
+    def parseSmfLibraryT(typeParsed: B): SmfLibrary = {
+      if (!typeParsed) {
+        parser.parseObjectType("SmfLibrary")
+      }
+      parser.parseObjectKey("types")
+      val types = parser.parseISZ(parseSmfType _)
+      parser.parseObjectNext()
+      return SmfLibrary(types)
+    }
+
+    def parseSmfType(): SmfType = {
+      val r = parseSmfTypeT(F)
+      return r
+    }
+
+    def parseSmfTypeT(typeParsed: B): SmfType = {
+      if (!typeParsed) {
+        parser.parseObjectType("SmfType")
+      }
+      parser.parseObjectKey("typeName")
+      val typeName = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("parentType")
+      val parentType = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      return SmfType(typeName, parentType)
     }
 
     def parseOtherAnnex(): OtherAnnex = {
@@ -2390,6 +2588,24 @@ object JSON {
     return r
   }
 
+  def fromAnnexLib(o: AnnexLib, isCompact: B): String = {
+    val st = Printer.printAnnexLib(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toAnnexLib(s: String): Either[AnnexLib, Json.ErrorMsg] = {
+    def fAnnexLib(parser: Parser): AnnexLib = {
+      val r = parser.parseAnnexLib()
+      return r
+    }
+    val r = to(s, fAnnexLib _)
+    return r
+  }
+
   def fromEmv2Annex(o: Emv2Annex, isCompact: B): String = {
     val st = Printer.printEmv2Annex(o)
     if (isCompact) {
@@ -2405,6 +2621,24 @@ object JSON {
       return r
     }
     val r = to(s, fEmv2Annex _)
+    return r
+  }
+
+  def fromEmv2Lib(o: Emv2Lib, isCompact: B): String = {
+    val st = Printer.printEmv2Lib(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toEmv2Lib(s: String): Either[Emv2Lib, Json.ErrorMsg] = {
+    def fEmv2Lib(parser: Parser): Emv2Lib = {
+      val r = parser.parseEmv2Lib()
+      return r
+    }
+    val r = to(s, fEmv2Lib _)
     return r
   }
 
@@ -2783,6 +3017,132 @@ object JSON {
       return r
     }
     val r = to(s, fErrorPropagation _)
+    return r
+  }
+
+  def fromSmfAnnex(o: SmfAnnex, isCompact: B): String = {
+    val st = Printer.printSmfAnnex(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSmfAnnex(s: String): Either[SmfAnnex, Json.ErrorMsg] = {
+    def fSmfAnnex(parser: Parser): SmfAnnex = {
+      val r = parser.parseSmfAnnex()
+      return r
+    }
+    val r = to(s, fSmfAnnex _)
+    return r
+  }
+
+  def fromSmfLib(o: SmfLib, isCompact: B): String = {
+    val st = Printer.printSmfLib(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSmfLib(s: String): Either[SmfLib, Json.ErrorMsg] = {
+    def fSmfLib(parser: Parser): SmfLib = {
+      val r = parser.parseSmfLib()
+      return r
+    }
+    val r = to(s, fSmfLib _)
+    return r
+  }
+
+  def fromSmfClause(o: SmfClause, isCompact: B): String = {
+    val st = Printer.printSmfClause(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSmfClause(s: String): Either[SmfClause, Json.ErrorMsg] = {
+    def fSmfClause(parser: Parser): SmfClause = {
+      val r = parser.parseSmfClause()
+      return r
+    }
+    val r = to(s, fSmfClause _)
+    return r
+  }
+
+  def fromSmfClassification(o: SmfClassification, isCompact: B): String = {
+    val st = Printer.printSmfClassification(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSmfClassification(s: String): Either[SmfClassification, Json.ErrorMsg] = {
+    def fSmfClassification(parser: Parser): SmfClassification = {
+      val r = parser.parseSmfClassification()
+      return r
+    }
+    val r = to(s, fSmfClassification _)
+    return r
+  }
+
+  def fromSmfDeclass(o: SmfDeclass, isCompact: B): String = {
+    val st = Printer.printSmfDeclass(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSmfDeclass(s: String): Either[SmfDeclass, Json.ErrorMsg] = {
+    def fSmfDeclass(parser: Parser): SmfDeclass = {
+      val r = parser.parseSmfDeclass()
+      return r
+    }
+    val r = to(s, fSmfDeclass _)
+    return r
+  }
+
+  def fromSmfLibrary(o: SmfLibrary, isCompact: B): String = {
+    val st = Printer.printSmfLibrary(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSmfLibrary(s: String): Either[SmfLibrary, Json.ErrorMsg] = {
+    def fSmfLibrary(parser: Parser): SmfLibrary = {
+      val r = parser.parseSmfLibrary()
+      return r
+    }
+    val r = to(s, fSmfLibrary _)
+    return r
+  }
+
+  def fromSmfType(o: SmfType, isCompact: B): String = {
+    val st = Printer.printSmfType(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSmfType(s: String): Either[SmfType, Json.ErrorMsg] = {
+    def fSmfType(parser: Parser): SmfType = {
+      val r = parser.parseSmfType()
+      return r
+    }
+    val r = to(s, fSmfType _)
     return r
   }
 

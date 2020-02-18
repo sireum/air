@@ -120,7 +120,17 @@ object MsgPack {
 
     val ErrorPropagation: Z = 9
 
-    val OtherAnnex: Z = 10
+    val SmfClause: Z = 10
+
+    val SmfClassification: Z = 11
+
+    val SmfDeclass: Z = 12
+
+    val SmfLibrary: Z = 13
+
+    val SmfType: Z = 14
+
+    val OtherAnnex: Z = 15
 
   }
 
@@ -137,7 +147,7 @@ object MsgPack {
     def writeAadl(o: Aadl): Unit = {
       writer.writeZ(Constants.Aadl)
       writer.writeISZ(o.components, writeComponent _)
-      writer.writeISZ(o.errorLib, writeEmv2Library _)
+      writer.writeISZ(o.annexLib, writeAnnexLib _)
       writer.writeISZ(o.dataComponents, writeComponent _)
     }
 
@@ -354,7 +364,6 @@ object MsgPack {
 
     def writeAnnexClause(o: AnnexClause): Unit = {
       o match {
-        case o: Emv2Library => writeEmv2Library(o)
         case o: ErrorTypeDef => writeErrorTypeDef(o)
         case o: ErrorAliasDef => writeErrorAliasDef(o)
         case o: ErrorTypeSetDef => writeErrorTypeSetDef(o)
@@ -373,13 +382,23 @@ object MsgPack {
         case o: Emv2Flow => writeEmv2Flow(o)
         case o: Emv2BehaviorSection => writeEmv2BehaviorSection(o)
         case o: ErrorPropagation => writeErrorPropagation(o)
+        case o: SmfClause => writeSmfClause(o)
+        case o: SmfClassification => writeSmfClassification(o)
+        case o: SmfDeclass => writeSmfDeclass(o)
+        case o: SmfType => writeSmfType(o)
         case o: OtherAnnex => writeOtherAnnex(o)
+      }
+    }
+
+    def writeAnnexLib(o: AnnexLib): Unit = {
+      o match {
+        case o: Emv2Library => writeEmv2Library(o)
+        case o: SmfLibrary => writeSmfLibrary(o)
       }
     }
 
     def writeEmv2Annex(o: Emv2Annex): Unit = {
       o match {
-        case o: Emv2Library => writeEmv2Library(o)
         case o: ErrorTypeDef => writeErrorTypeDef(o)
         case o: ErrorAliasDef => writeErrorAliasDef(o)
         case o: ErrorTypeSetDef => writeErrorTypeSetDef(o)
@@ -398,6 +417,12 @@ object MsgPack {
         case o: Emv2Flow => writeEmv2Flow(o)
         case o: Emv2BehaviorSection => writeEmv2BehaviorSection(o)
         case o: ErrorPropagation => writeErrorPropagation(o)
+      }
+    }
+
+    def writeEmv2Lib(o: Emv2Lib): Unit = {
+      o match {
+        case o: Emv2Library => writeEmv2Library(o)
       }
     }
 
@@ -559,6 +584,51 @@ object MsgPack {
       writer.writeISZ(o.target, writeEmv2Propagation _)
     }
 
+    def writeSmfAnnex(o: SmfAnnex): Unit = {
+      o match {
+        case o: SmfClause => writeSmfClause(o)
+        case o: SmfClassification => writeSmfClassification(o)
+        case o: SmfDeclass => writeSmfDeclass(o)
+        case o: SmfType => writeSmfType(o)
+      }
+    }
+
+    def writeSmfLib(o: SmfLib): Unit = {
+      o match {
+        case o: SmfLibrary => writeSmfLibrary(o)
+      }
+    }
+
+    def writeSmfClause(o: SmfClause): Unit = {
+      writer.writeZ(Constants.SmfClause)
+      writer.writeISZ(o.classification, writeSmfClassification _)
+      writer.writeISZ(o.declass, writeSmfDeclass _)
+    }
+
+    def writeSmfClassification(o: SmfClassification): Unit = {
+      writer.writeZ(Constants.SmfClassification)
+      writer.writeISZ(o.portName, writeName _)
+      writer.writeISZ(o.typeName, writeName _)
+    }
+
+    def writeSmfDeclass(o: SmfDeclass): Unit = {
+      writer.writeZ(Constants.SmfDeclass)
+      writer.writeISZ(o.flowName, writeName _)
+      writer.writeISZ(o.srcType, writeName _)
+      writer.writeISZ(o.snkType, writeName _)
+    }
+
+    def writeSmfLibrary(o: SmfLibrary): Unit = {
+      writer.writeZ(Constants.SmfLibrary)
+      writer.writeISZ(o.types, writeSmfType _)
+    }
+
+    def writeSmfType(o: SmfType): Unit = {
+      writer.writeZ(Constants.SmfType)
+      writer.writeISZ(o.typeName, writeName _)
+      writer.writeISZ(o.parentType, writeName _)
+    }
+
     def writeOtherAnnex(o: OtherAnnex): Unit = {
       writer.writeZ(Constants.OtherAnnex)
       writer.writeString(o.clause)
@@ -594,9 +664,9 @@ object MsgPack {
         reader.expectZ(Constants.Aadl)
       }
       val components = reader.readISZ(readComponent _)
-      val errorLib = reader.readISZ(readEmv2Library _)
+      val annexLib = reader.readISZ(readAnnexLib _)
       val dataComponents = reader.readISZ(readComponent _)
-      return Aadl(components, errorLib, dataComponents)
+      return Aadl(components, annexLib, dataComponents)
     }
 
     def readName(): Name = {
@@ -1008,7 +1078,6 @@ object MsgPack {
       val i = reader.curr
       val t = reader.readZ()
       t match {
-        case Constants.Emv2Library => val r = readEmv2LibraryT(T); return r
         case Constants.ErrorTypeDef => val r = readErrorTypeDefT(T); return r
         case Constants.ErrorAliasDef => val r = readErrorAliasDefT(T); return r
         case Constants.ErrorTypeSetDef => val r = readErrorTypeSetDefT(T); return r
@@ -1027,6 +1096,10 @@ object MsgPack {
         case Constants.Emv2Flow => val r = readEmv2FlowT(T); return r
         case Constants.Emv2BehaviorSection => val r = readEmv2BehaviorSectionT(T); return r
         case Constants.ErrorPropagation => val r = readErrorPropagationT(T); return r
+        case Constants.SmfClause => val r = readSmfClauseT(T); return r
+        case Constants.SmfClassification => val r = readSmfClassificationT(T); return r
+        case Constants.SmfDeclass => val r = readSmfDeclassT(T); return r
+        case Constants.SmfType => val r = readSmfTypeT(T); return r
         case Constants.OtherAnnex => val r = readOtherAnnexT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of AnnexClause.")
@@ -1035,11 +1108,23 @@ object MsgPack {
       }
     }
 
-    def readEmv2Annex(): Emv2Annex = {
+    def readAnnexLib(): AnnexLib = {
       val i = reader.curr
       val t = reader.readZ()
       t match {
         case Constants.Emv2Library => val r = readEmv2LibraryT(T); return r
+        case Constants.SmfLibrary => val r = readSmfLibraryT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of AnnexLib.")
+          val r = readSmfLibraryT(T)
+          return r
+      }
+    }
+
+    def readEmv2Annex(): Emv2Annex = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
         case Constants.ErrorTypeDef => val r = readErrorTypeDefT(T); return r
         case Constants.ErrorAliasDef => val r = readErrorAliasDefT(T); return r
         case Constants.ErrorTypeSetDef => val r = readErrorTypeSetDefT(T); return r
@@ -1061,6 +1146,18 @@ object MsgPack {
         case _ =>
           reader.error(i, s"$t is not a valid type of Emv2Annex.")
           val r = readErrorPropagationT(T)
+          return r
+      }
+    }
+
+    def readEmv2Lib(): Emv2Lib = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.Emv2Library => val r = readEmv2LibraryT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of Emv2Lib.")
+          val r = readEmv2LibraryT(T)
           return r
       }
     }
@@ -1390,6 +1487,103 @@ object MsgPack {
       val condition = reader.readOption(readErrorCondition _)
       val target = reader.readISZ(readEmv2Propagation _)
       return ErrorPropagation(id, source, condition, target)
+    }
+
+    def readSmfAnnex(): SmfAnnex = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SmfClause => val r = readSmfClauseT(T); return r
+        case Constants.SmfClassification => val r = readSmfClassificationT(T); return r
+        case Constants.SmfDeclass => val r = readSmfDeclassT(T); return r
+        case Constants.SmfType => val r = readSmfTypeT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SmfAnnex.")
+          val r = readSmfTypeT(T)
+          return r
+      }
+    }
+
+    def readSmfLib(): SmfLib = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SmfLibrary => val r = readSmfLibraryT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SmfLib.")
+          val r = readSmfLibraryT(T)
+          return r
+      }
+    }
+
+    def readSmfClause(): SmfClause = {
+      val r = readSmfClauseT(F)
+      return r
+    }
+
+    def readSmfClauseT(typeParsed: B): SmfClause = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SmfClause)
+      }
+      val classification = reader.readISZ(readSmfClassification _)
+      val declass = reader.readISZ(readSmfDeclass _)
+      return SmfClause(classification, declass)
+    }
+
+    def readSmfClassification(): SmfClassification = {
+      val r = readSmfClassificationT(F)
+      return r
+    }
+
+    def readSmfClassificationT(typeParsed: B): SmfClassification = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SmfClassification)
+      }
+      val portName = reader.readISZ(readName _)
+      val typeName = reader.readISZ(readName _)
+      return SmfClassification(portName, typeName)
+    }
+
+    def readSmfDeclass(): SmfDeclass = {
+      val r = readSmfDeclassT(F)
+      return r
+    }
+
+    def readSmfDeclassT(typeParsed: B): SmfDeclass = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SmfDeclass)
+      }
+      val flowName = reader.readISZ(readName _)
+      val srcType = reader.readISZ(readName _)
+      val snkType = reader.readISZ(readName _)
+      return SmfDeclass(flowName, srcType, snkType)
+    }
+
+    def readSmfLibrary(): SmfLibrary = {
+      val r = readSmfLibraryT(F)
+      return r
+    }
+
+    def readSmfLibraryT(typeParsed: B): SmfLibrary = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SmfLibrary)
+      }
+      val types = reader.readISZ(readSmfType _)
+      return SmfLibrary(types)
+    }
+
+    def readSmfType(): SmfType = {
+      val r = readSmfTypeT(F)
+      return r
+    }
+
+    def readSmfTypeT(typeParsed: B): SmfType = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SmfType)
+      }
+      val typeName = reader.readISZ(readName _)
+      val parentType = reader.readISZ(readName _)
+      return SmfType(typeName, parentType)
     }
 
     def readOtherAnnex(): OtherAnnex = {
@@ -1807,6 +2001,21 @@ object MsgPack {
     return r
   }
 
+  def fromAnnexLib(o: AnnexLib, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeAnnexLib(o)
+    return w.result
+  }
+
+  def toAnnexLib(data: ISZ[U8]): Either[AnnexLib, MessagePack.ErrorMsg] = {
+    def fAnnexLib(reader: Reader): AnnexLib = {
+      val r = reader.readAnnexLib()
+      return r
+    }
+    val r = to(data, fAnnexLib _)
+    return r
+  }
+
   def fromEmv2Annex(o: Emv2Annex, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
     w.writeEmv2Annex(o)
@@ -1819,6 +2028,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fEmv2Annex _)
+    return r
+  }
+
+  def fromEmv2Lib(o: Emv2Lib, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeEmv2Lib(o)
+    return w.result
+  }
+
+  def toEmv2Lib(data: ISZ[U8]): Either[Emv2Lib, MessagePack.ErrorMsg] = {
+    def fEmv2Lib(reader: Reader): Emv2Lib = {
+      val r = reader.readEmv2Lib()
+      return r
+    }
+    val r = to(data, fEmv2Lib _)
     return r
   }
 
@@ -2134,6 +2358,111 @@ object MsgPack {
       return r
     }
     val r = to(data, fErrorPropagation _)
+    return r
+  }
+
+  def fromSmfAnnex(o: SmfAnnex, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSmfAnnex(o)
+    return w.result
+  }
+
+  def toSmfAnnex(data: ISZ[U8]): Either[SmfAnnex, MessagePack.ErrorMsg] = {
+    def fSmfAnnex(reader: Reader): SmfAnnex = {
+      val r = reader.readSmfAnnex()
+      return r
+    }
+    val r = to(data, fSmfAnnex _)
+    return r
+  }
+
+  def fromSmfLib(o: SmfLib, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSmfLib(o)
+    return w.result
+  }
+
+  def toSmfLib(data: ISZ[U8]): Either[SmfLib, MessagePack.ErrorMsg] = {
+    def fSmfLib(reader: Reader): SmfLib = {
+      val r = reader.readSmfLib()
+      return r
+    }
+    val r = to(data, fSmfLib _)
+    return r
+  }
+
+  def fromSmfClause(o: SmfClause, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSmfClause(o)
+    return w.result
+  }
+
+  def toSmfClause(data: ISZ[U8]): Either[SmfClause, MessagePack.ErrorMsg] = {
+    def fSmfClause(reader: Reader): SmfClause = {
+      val r = reader.readSmfClause()
+      return r
+    }
+    val r = to(data, fSmfClause _)
+    return r
+  }
+
+  def fromSmfClassification(o: SmfClassification, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSmfClassification(o)
+    return w.result
+  }
+
+  def toSmfClassification(data: ISZ[U8]): Either[SmfClassification, MessagePack.ErrorMsg] = {
+    def fSmfClassification(reader: Reader): SmfClassification = {
+      val r = reader.readSmfClassification()
+      return r
+    }
+    val r = to(data, fSmfClassification _)
+    return r
+  }
+
+  def fromSmfDeclass(o: SmfDeclass, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSmfDeclass(o)
+    return w.result
+  }
+
+  def toSmfDeclass(data: ISZ[U8]): Either[SmfDeclass, MessagePack.ErrorMsg] = {
+    def fSmfDeclass(reader: Reader): SmfDeclass = {
+      val r = reader.readSmfDeclass()
+      return r
+    }
+    val r = to(data, fSmfDeclass _)
+    return r
+  }
+
+  def fromSmfLibrary(o: SmfLibrary, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSmfLibrary(o)
+    return w.result
+  }
+
+  def toSmfLibrary(data: ISZ[U8]): Either[SmfLibrary, MessagePack.ErrorMsg] = {
+    def fSmfLibrary(reader: Reader): SmfLibrary = {
+      val r = reader.readSmfLibrary()
+      return r
+    }
+    val r = to(data, fSmfLibrary _)
+    return r
+  }
+
+  def fromSmfType(o: SmfType, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSmfType(o)
+    return w.result
+  }
+
+  def toSmfType(data: ISZ[U8]): Either[SmfType, MessagePack.ErrorMsg] = {
+    def fSmfType(reader: Reader): SmfType = {
+      val r = reader.readSmfType()
+      return r
+    }
+    val r = to(data, fSmfType _)
     return r
   }
 

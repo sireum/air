@@ -335,13 +335,13 @@ import org.sireum.message.Position
 @datatype class SmfClause(classification: ISZ[SmfClassification],
                           declass: ISZ[SmfDeclass]) extends SmfAnnex
 
-@datatype class SmfClassification(portName: ISZ[Name], typeName: ISZ[Name]) extends SmfAnnex
+@datatype class SmfClassification(portName: Name, typeName: Name) extends SmfAnnex
 
-@datatype class SmfDeclass(flowName: ISZ[Name], srcType : ISZ[Name], snkType : ISZ[Name]) extends SmfAnnex
+@datatype class SmfDeclass(flowName: Name, srcType: Option[Name], snkType : Name) extends SmfAnnex
 
 @datatype class SmfLibrary(types: ISZ[SmfType]) extends SmfLib
 
-@datatype class SmfType(typeName : ISZ[Name], parentType: ISZ[Name]) extends SmfAnnex
+@datatype class SmfType(typeName : Name, parentType: Option[Name]) extends SmfAnnex
 /**
 * End of SMF AST Section
 */

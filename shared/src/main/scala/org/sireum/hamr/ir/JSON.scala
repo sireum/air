@@ -701,17 +701,17 @@ object JSON {
     @pure def printSmfClassification(o: SmfClassification): ST = {
       return printObject(ISZ(
         ("type", st""""SmfClassification""""),
-        ("portName", printISZ(F, o.portName, printName _)),
-        ("typeName", printISZ(F, o.typeName, printName _))
+        ("portName", printName(o.portName)),
+        ("typeName", printName(o.typeName))
       ))
     }
 
     @pure def printSmfDeclass(o: SmfDeclass): ST = {
       return printObject(ISZ(
         ("type", st""""SmfDeclass""""),
-        ("flowName", printISZ(F, o.flowName, printName _)),
-        ("srcType", printISZ(F, o.srcType, printName _)),
-        ("snkType", printISZ(F, o.snkType, printName _))
+        ("flowName", printName(o.flowName)),
+        ("srcType", printOption(F, o.srcType, printName _)),
+        ("snkType", printName(o.snkType))
       ))
     }
 
@@ -725,8 +725,8 @@ object JSON {
     @pure def printSmfType(o: SmfType): ST = {
       return printObject(ISZ(
         ("type", st""""SmfType""""),
-        ("typeName", printISZ(F, o.typeName, printName _)),
-        ("parentType", printISZ(F, o.parentType, printName _))
+        ("typeName", printName(o.typeName)),
+        ("parentType", printOption(F, o.parentType, printName _))
       ))
     }
 
@@ -2026,10 +2026,10 @@ object JSON {
         parser.parseObjectType("SmfClassification")
       }
       parser.parseObjectKey("portName")
-      val portName = parser.parseISZ(parseName _)
+      val portName = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("typeName")
-      val typeName = parser.parseISZ(parseName _)
+      val typeName = parseName()
       parser.parseObjectNext()
       return SmfClassification(portName, typeName)
     }
@@ -2044,13 +2044,13 @@ object JSON {
         parser.parseObjectType("SmfDeclass")
       }
       parser.parseObjectKey("flowName")
-      val flowName = parser.parseISZ(parseName _)
+      val flowName = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("srcType")
-      val srcType = parser.parseISZ(parseName _)
+      val srcType = parser.parseOption(parseName _)
       parser.parseObjectNext()
       parser.parseObjectKey("snkType")
-      val snkType = parser.parseISZ(parseName _)
+      val snkType = parseName()
       parser.parseObjectNext()
       return SmfDeclass(flowName, srcType, snkType)
     }
@@ -2080,10 +2080,10 @@ object JSON {
         parser.parseObjectType("SmfType")
       }
       parser.parseObjectKey("typeName")
-      val typeName = parser.parseISZ(parseName _)
+      val typeName = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("parentType")
-      val parentType = parser.parseISZ(parseName _)
+      val parentType = parser.parseOption(parseName _)
       parser.parseObjectNext()
       return SmfType(typeName, parentType)
     }

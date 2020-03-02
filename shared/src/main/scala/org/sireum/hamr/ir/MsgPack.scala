@@ -607,15 +607,15 @@ object MsgPack {
 
     def writeSmfClassification(o: SmfClassification): Unit = {
       writer.writeZ(Constants.SmfClassification)
-      writer.writeISZ(o.portName, writeName _)
-      writer.writeISZ(o.typeName, writeName _)
+      writeName(o.portName)
+      writeName(o.typeName)
     }
 
     def writeSmfDeclass(o: SmfDeclass): Unit = {
       writer.writeZ(Constants.SmfDeclass)
-      writer.writeISZ(o.flowName, writeName _)
-      writer.writeISZ(o.srcType, writeName _)
-      writer.writeISZ(o.snkType, writeName _)
+      writeName(o.flowName)
+      writer.writeOption(o.srcType, writeName _)
+      writeName(o.snkType)
     }
 
     def writeSmfLibrary(o: SmfLibrary): Unit = {
@@ -625,8 +625,8 @@ object MsgPack {
 
     def writeSmfType(o: SmfType): Unit = {
       writer.writeZ(Constants.SmfType)
-      writer.writeISZ(o.typeName, writeName _)
-      writer.writeISZ(o.parentType, writeName _)
+      writeName(o.typeName)
+      writer.writeOption(o.parentType, writeName _)
     }
 
     def writeOtherAnnex(o: OtherAnnex): Unit = {
@@ -1539,8 +1539,8 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.SmfClassification)
       }
-      val portName = reader.readISZ(readName _)
-      val typeName = reader.readISZ(readName _)
+      val portName = readName()
+      val typeName = readName()
       return SmfClassification(portName, typeName)
     }
 
@@ -1553,9 +1553,9 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.SmfDeclass)
       }
-      val flowName = reader.readISZ(readName _)
-      val srcType = reader.readISZ(readName _)
-      val snkType = reader.readISZ(readName _)
+      val flowName = readName()
+      val srcType = reader.readOption(readName _)
+      val snkType = readName()
       return SmfDeclass(flowName, srcType, snkType)
     }
 
@@ -1581,8 +1581,8 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.SmfType)
       }
-      val typeName = reader.readISZ(readName _)
-      val parentType = reader.readISZ(readName _)
+      val typeName = readName()
+      val parentType = reader.readOption(readName _)
       return SmfType(typeName, parentType)
     }
 

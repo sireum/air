@@ -2351,23 +2351,23 @@ import MTransformer._
           else
             MNone()
         case o2: SmfClassification =>
-          val r0: MOption[IS[Z, Name]] = transformISZ(o2.portName, transformName _)
-          val r1: MOption[IS[Z, Name]] = transformISZ(o2.typeName, transformName _)
+          val r0: MOption[Name] = transformName(o2.portName)
+          val r1: MOption[Name] = transformName(o2.typeName)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
             MSome(o2(portName = r0.getOrElse(o2.portName), typeName = r1.getOrElse(o2.typeName)))
           else
             MNone()
         case o2: SmfDeclass =>
-          val r0: MOption[IS[Z, Name]] = transformISZ(o2.flowName, transformName _)
-          val r1: MOption[IS[Z, Name]] = transformISZ(o2.srcType, transformName _)
-          val r2: MOption[IS[Z, Name]] = transformISZ(o2.snkType, transformName _)
+          val r0: MOption[Name] = transformName(o2.flowName)
+          val r1: MOption[Option[Name]] = transformOption(o2.srcType, transformName _)
+          val r2: MOption[Name] = transformName(o2.snkType)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
             MSome(o2(flowName = r0.getOrElse(o2.flowName), srcType = r1.getOrElse(o2.srcType), snkType = r2.getOrElse(o2.snkType)))
           else
             MNone()
         case o2: SmfType =>
-          val r0: MOption[IS[Z, Name]] = transformISZ(o2.typeName, transformName _)
-          val r1: MOption[IS[Z, Name]] = transformISZ(o2.parentType, transformName _)
+          val r0: MOption[Name] = transformName(o2.typeName)
+          val r1: MOption[Option[Name]] = transformOption(o2.parentType, transformName _)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
             MSome(o2(typeName = r0.getOrElse(o2.typeName), parentType = r1.getOrElse(o2.parentType)))
           else
@@ -3272,23 +3272,23 @@ import MTransformer._
           else
             MNone()
         case o2: SmfClassification =>
-          val r0: MOption[IS[Z, Name]] = transformISZ(o2.portName, transformName _)
-          val r1: MOption[IS[Z, Name]] = transformISZ(o2.typeName, transformName _)
+          val r0: MOption[Name] = transformName(o2.portName)
+          val r1: MOption[Name] = transformName(o2.typeName)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
             MSome(o2(portName = r0.getOrElse(o2.portName), typeName = r1.getOrElse(o2.typeName)))
           else
             MNone()
         case o2: SmfDeclass =>
-          val r0: MOption[IS[Z, Name]] = transformISZ(o2.flowName, transformName _)
-          val r1: MOption[IS[Z, Name]] = transformISZ(o2.srcType, transformName _)
-          val r2: MOption[IS[Z, Name]] = transformISZ(o2.snkType, transformName _)
+          val r0: MOption[Name] = transformName(o2.flowName)
+          val r1: MOption[Option[Name]] = transformOption(o2.srcType, transformName _)
+          val r2: MOption[Name] = transformName(o2.snkType)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
             MSome(o2(flowName = r0.getOrElse(o2.flowName), srcType = r1.getOrElse(o2.srcType), snkType = r2.getOrElse(o2.snkType)))
           else
             MNone()
         case o2: SmfType =>
-          val r0: MOption[IS[Z, Name]] = transformISZ(o2.typeName, transformName _)
-          val r1: MOption[IS[Z, Name]] = transformISZ(o2.parentType, transformName _)
+          val r0: MOption[Name] = transformName(o2.typeName)
+          val r1: MOption[Option[Name]] = transformOption(o2.parentType, transformName _)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
             MSome(o2(typeName = r0.getOrElse(o2.typeName), parentType = r1.getOrElse(o2.parentType)))
           else
@@ -3376,8 +3376,8 @@ import MTransformer._
     val r: MOption[SmfClassification] = if (preR.continu) {
       val o2: SmfClassification = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, Name]] = transformISZ(o2.portName, transformName _)
-      val r1: MOption[IS[Z, Name]] = transformISZ(o2.typeName, transformName _)
+      val r0: MOption[Name] = transformName(o2.portName)
+      val r1: MOption[Name] = transformName(o2.typeName)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty)
         MSome(o2(portName = r0.getOrElse(o2.portName), typeName = r1.getOrElse(o2.typeName)))
       else
@@ -3404,9 +3404,9 @@ import MTransformer._
     val r: MOption[SmfDeclass] = if (preR.continu) {
       val o2: SmfDeclass = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, Name]] = transformISZ(o2.flowName, transformName _)
-      val r1: MOption[IS[Z, Name]] = transformISZ(o2.srcType, transformName _)
-      val r2: MOption[IS[Z, Name]] = transformISZ(o2.snkType, transformName _)
+      val r0: MOption[Name] = transformName(o2.flowName)
+      val r1: MOption[Option[Name]] = transformOption(o2.srcType, transformName _)
+      val r2: MOption[Name] = transformName(o2.snkType)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
         MSome(o2(flowName = r0.getOrElse(o2.flowName), srcType = r1.getOrElse(o2.srcType), snkType = r2.getOrElse(o2.snkType)))
       else
@@ -3460,8 +3460,8 @@ import MTransformer._
     val r: MOption[SmfType] = if (preR.continu) {
       val o2: SmfType = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, Name]] = transformISZ(o2.typeName, transformName _)
-      val r1: MOption[IS[Z, Name]] = transformISZ(o2.parentType, transformName _)
+      val r0: MOption[Name] = transformName(o2.typeName)
+      val r1: MOption[Option[Name]] = transformOption(o2.parentType, transformName _)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty)
         MSome(o2(typeName = r0.getOrElse(o2.typeName), parentType = r1.getOrElse(o2.parentType)))
       else

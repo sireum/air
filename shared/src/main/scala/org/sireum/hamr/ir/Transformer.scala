@@ -2169,23 +2169,23 @@ import Transformer._
           else
             TPostResult(r1.ctx, None())
         case o2: SmfClassification =>
-          val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.portName, transformName _)
-          val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.typeName, transformName _)
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.portName)
+          val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.typeName)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(portName = r0.resultOpt.getOrElse(o2.portName), typeName = r1.resultOpt.getOrElse(o2.typeName))))
           else
             TPostResult(r1.ctx, None())
         case o2: SmfDeclass =>
-          val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.flowName, transformName _)
-          val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.srcType, transformName _)
-          val r2: TPostResult[Context, IS[Z, Name]] = transformISZ(r1.ctx, o2.snkType, transformName _)
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.flowName)
+          val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.srcType, transformName _)
+          val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.snkType)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
             TPostResult(r2.ctx, Some(o2(flowName = r0.resultOpt.getOrElse(o2.flowName), srcType = r1.resultOpt.getOrElse(o2.srcType), snkType = r2.resultOpt.getOrElse(o2.snkType))))
           else
             TPostResult(r2.ctx, None())
         case o2: SmfType =>
-          val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.typeName, transformName _)
-          val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.parentType, transformName _)
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.typeName)
+          val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.parentType, transformName _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(typeName = r0.resultOpt.getOrElse(o2.typeName), parentType = r1.resultOpt.getOrElse(o2.parentType))))
           else
@@ -3090,23 +3090,23 @@ import Transformer._
           else
             TPostResult(r1.ctx, None())
         case o2: SmfClassification =>
-          val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.portName, transformName _)
-          val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.typeName, transformName _)
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.portName)
+          val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.typeName)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(portName = r0.resultOpt.getOrElse(o2.portName), typeName = r1.resultOpt.getOrElse(o2.typeName))))
           else
             TPostResult(r1.ctx, None())
         case o2: SmfDeclass =>
-          val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.flowName, transformName _)
-          val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.srcType, transformName _)
-          val r2: TPostResult[Context, IS[Z, Name]] = transformISZ(r1.ctx, o2.snkType, transformName _)
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.flowName)
+          val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.srcType, transformName _)
+          val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.snkType)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
             TPostResult(r2.ctx, Some(o2(flowName = r0.resultOpt.getOrElse(o2.flowName), srcType = r1.resultOpt.getOrElse(o2.srcType), snkType = r2.resultOpt.getOrElse(o2.snkType))))
           else
             TPostResult(r2.ctx, None())
         case o2: SmfType =>
-          val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.typeName, transformName _)
-          val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.parentType, transformName _)
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.typeName)
+          val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.parentType, transformName _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(typeName = r0.resultOpt.getOrElse(o2.typeName), parentType = r1.resultOpt.getOrElse(o2.parentType))))
           else
@@ -3194,8 +3194,8 @@ import Transformer._
     val r: TPostResult[Context, SmfClassification] = if (preR.continu) {
       val o2: SmfClassification = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.portName, transformName _)
-      val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.typeName, transformName _)
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.portName)
+      val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.typeName)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
         TPostResult(r1.ctx, Some(o2(portName = r0.resultOpt.getOrElse(o2.portName), typeName = r1.resultOpt.getOrElse(o2.typeName))))
       else
@@ -3222,9 +3222,9 @@ import Transformer._
     val r: TPostResult[Context, SmfDeclass] = if (preR.continu) {
       val o2: SmfDeclass = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.flowName, transformName _)
-      val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.srcType, transformName _)
-      val r2: TPostResult[Context, IS[Z, Name]] = transformISZ(r1.ctx, o2.snkType, transformName _)
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.flowName)
+      val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.srcType, transformName _)
+      val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.snkType)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
         TPostResult(r2.ctx, Some(o2(flowName = r0.resultOpt.getOrElse(o2.flowName), srcType = r1.resultOpt.getOrElse(o2.srcType), snkType = r2.resultOpt.getOrElse(o2.snkType))))
       else
@@ -3278,8 +3278,8 @@ import Transformer._
     val r: TPostResult[Context, SmfType] = if (preR.continu) {
       val o2: SmfType = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.typeName, transformName _)
-      val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.parentType, transformName _)
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.typeName)
+      val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.parentType, transformName _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
         TPostResult(r1.ctx, Some(o2(typeName = r0.resultOpt.getOrElse(o2.typeName), parentType = r1.resultOpt.getOrElse(o2.parentType))))
       else

@@ -32,8 +32,8 @@ import org.sireum.message.{FlatPos, Position}
 
 class AadlASTFactory {
 
-  def aadl(components: JList[Component], errorLib: JList[Emv2Library], dataComponents: JList[Component]): Aadl =
-    Aadl(isz(components), isz(errorLib), isz(dataComponents))
+  def aadl(components: JList[Component], annexLib: JList[AnnexLib], dataComponents: JList[Component]): Aadl =
+    Aadl(isz(components), isz(annexLib), isz(dataComponents))
 
   def name(name: JList[Predef.String], pos: Position): Name =
     Name(isz(name).map(s => String(s)), if (pos != null) Some(pos) else None())
@@ -375,6 +375,29 @@ class AadlASTFactory {
 
   def errorTransition(id: Name, sourceState: Name, condition: ErrorCondition, targetState: Name): ErrorTransition = {
     ErrorTransition(if (id != null) Some(id) else None(), sourceState, condition, targetState)
+  }
+
+  //--------------SMF-------------------
+
+  def smfClause(classes : JList[SmfClassification],
+                declasses: JList[SmfDeclass]): SmfClause = {
+    SmfClause(isz(classes), isz(declasses))
+  }
+
+  def smfClassification(portName: Name, typeName: Name): SmfClassification = {
+    SmfClassification(portName, typeName)
+  }
+
+  def smfDeclass(flowName: Name, srcType: Name, snkType: Name): SmfDeclass = {
+    SmfDeclass(flowName, if(srcType != null) Some(srcType) else None(), snkType)
+  }
+
+  def smfLibrary(types : JList[SmfType]) : SmfLibrary = {
+    SmfLibrary(isz(types))
+  }
+
+  def smfType(typeName: Name, parentName : Name) : SmfType = {
+    SmfType(typeName, if(parentName != null) Some(parentName) else None())
   }
 
   def isz[T](l: JList[T]): ISZ[T] = {

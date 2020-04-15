@@ -374,8 +374,8 @@ object JSON {
         ("type", st""""Flow""""),
         ("name", printName(o.name)),
         ("kind", printFlowKindType(o.kind)),
-        ("source", printOption(F, o.source, printFeature _)),
-        ("sink", printOption(F, o.sink, printFeature _))
+        ("source", printOption(F, o.source, printName _)),
+        ("sink", printOption(F, o.sink, printName _))
       ))
     }
 
@@ -1400,10 +1400,10 @@ object JSON {
       val kind = parseFlowKindType()
       parser.parseObjectNext()
       parser.parseObjectKey("source")
-      val source = parser.parseOption(parseFeature _)
+      val source = parser.parseOption(parseName _)
       parser.parseObjectNext()
       parser.parseObjectKey("sink")
-      val sink = parser.parseOption(parseFeature _)
+      val sink = parser.parseOption(parseName _)
       parser.parseObjectNext()
       return Flow(name, kind, source, sink)
     }

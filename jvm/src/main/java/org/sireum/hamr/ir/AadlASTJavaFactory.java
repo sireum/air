@@ -193,8 +193,8 @@ public class AadlASTJavaFactory {
 
     public static Flow flow(Name name,
                             FlowKind kind,
-                            Feature source,
-                            Feature sink) {
+                            Name source,
+                            Name sink) {
         return f.flow(name, kind, source, sink);
     }
 

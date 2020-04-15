@@ -227,7 +227,7 @@ class AadlASTFactory {
     )
 
   def flow(name: Name,
-           kind: AadlASTJavaFactory.FlowKind, source: Feature, sink: Feature) =
+           kind: AadlASTJavaFactory.FlowKind, source: Name, sink: Name) =
     Flow(
       name,
       FlowKind.byName(kind.name()).get,

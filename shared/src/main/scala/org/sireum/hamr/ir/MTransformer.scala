@@ -2,7 +2,7 @@
 // @formatter:off
 
 /*
- Copyright (c) 2020, Robby, Kansas State University
+ Copyright (c) 2018, Kansas State University
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -2156,8 +2156,8 @@ import MTransformer._
       val o2: Flow = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[Name] = transformName(o2.name)
-      val r1: MOption[Option[Feature]] = transformOption(o2.source, transformFeature _)
-      val r2: MOption[Option[Feature]] = transformOption(o2.sink, transformFeature _)
+      val r1: MOption[Option[Name]] = transformOption(o2.source, transformName _)
+      val r2: MOption[Option[Name]] = transformOption(o2.sink, transformName _)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
         MSome(o2(name = r0.getOrElse(o2.name), source = r1.getOrElse(o2.source), sink = r2.getOrElse(o2.sink)))
       else

@@ -352,8 +352,8 @@ object MsgPack {
       writer.writeZ(Constants.Flow)
       writeName(o.name)
       writeFlowKindType(o.kind)
-      writer.writeOption(o.source, writeFeature _)
-      writer.writeOption(o.sink, writeFeature _)
+      writer.writeOption(o.source, writeName _)
+      writer.writeOption(o.sink, writeName _)
     }
 
     def writeAnnex(o: Annex): Unit = {
@@ -1055,8 +1055,8 @@ object MsgPack {
       }
       val name = readName()
       val kind = readFlowKindType()
-      val source = reader.readOption(readFeature _)
-      val sink = reader.readOption(readFeature _)
+      val source = reader.readOption(readName _)
+      val sink = reader.readOption(readName _)
       return Flow(name, kind, source, sink)
     }
 

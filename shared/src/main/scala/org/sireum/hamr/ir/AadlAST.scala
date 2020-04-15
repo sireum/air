@@ -203,7 +203,7 @@ import org.sireum.message.Position
   'Path
 }
 
-@datatype class Flow(name: Name, kind: FlowKind.Type, source: Option[Feature], sink: Option[Feature])
+@datatype class Flow(name: Name, kind: FlowKind.Type, source: Option[Name], sink: Option[Name])
 
 @datatype class Annex(name: String, clause: AnnexClause)
 

@@ -2,7 +2,7 @@
 // @formatter:off
 
 /*
- Copyright (c) 2020, Robby, Kansas State University
+ Copyright (c) 2018, Kansas State University
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -1974,8 +1974,8 @@ import Transformer._
       val o2: Flow = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-      val r1: TPostResult[Context, Option[Feature]] = transformOption(r0.ctx, o2.source, transformFeature _)
-      val r2: TPostResult[Context, Option[Feature]] = transformOption(r1.ctx, o2.sink, transformFeature _)
+      val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.source, transformName _)
+      val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.sink, transformName _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
         TPostResult(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), source = r1.resultOpt.getOrElse(o2.source), sink = r2.resultOpt.getOrElse(o2.sink))))
       else

@@ -29,7 +29,12 @@ package org.sireum.hamr.ir
 import org.sireum._
 import org.sireum.message.Position
 
-@datatype class Aadl(components: ISZ[Component], errorLib: ISZ[Emv2Library], dataComponents: ISZ[Component])
+@sig
+trait AadlInstInfo{
+  def uriFrag : String
+}
+
+@datatype class Aadl(components: ISZ[Component], annexLib: ISZ[AnnexLib], dataComponents: ISZ[Component])
 
 @datatype class Name(name: ISZ[String], pos: Option[Position])
 
@@ -44,8 +49,9 @@ import org.sireum.message.Position
                            properties: ISZ[Property],
                            flows: ISZ[Flow],
                            modes: ISZ[Mode],
-                           annexes: ISZ[Annex]
-                         )
+                           annexes: ISZ[Annex],
+                           val uriFrag : String
+                         ) extends AadlInstInfo
 
 @datatype class Classifier(name: String)
 
@@ -81,8 +87,9 @@ import org.sireum.message.Position
                             direction: Direction.Type,
                             val category: FeatureCategory.Type,
                             val classifier: Option[Classifier],
-                            val properties: ISZ[Property]
-                          ) extends Feature
+                            val properties: ISZ[Property],
+                            val uriFrag : String
+                          ) extends Feature with AadlInstInfo
 
 @datatype class FeatureGroup(
                               val identifier: Name,
@@ -90,8 +97,9 @@ import org.sireum.message.Position
                               isInverse: B,
                               val category: FeatureCategory.Type,
                              // val classifier: Option[Classifier],
-                              val properties: ISZ[Property]
-                            ) extends Feature
+                              val properties: ISZ[Property],
+                              val uriFrag : String
+                            ) extends Feature with AadlInstInfo
 
 
 @datatype class FeatureAccess(
@@ -100,8 +108,9 @@ import org.sireum.message.Position
                                val classifier: Option[Classifier],
                                val accessType: AccessType.Type,
                                val accessCategory: AccessCategory.Type,
-                               val properties: ISZ[Property]
-                             ) extends Feature
+                               val properties: ISZ[Property],
+                               val uriFrag : String
+                             ) extends Feature with AadlInstInfo
 
 @enum object AccessType {
   'Provides
@@ -143,8 +152,9 @@ import org.sireum.message.Position
                             kind: ConnectionKind.Type,
                             isBiDirectional: B,
                             connectionInstances: ISZ[Name],
-                            properties: ISZ[Property]
-                          )
+                            properties: ISZ[Property],
+                            val uriFrag : String
+                          ) extends AadlInstInfo
 
 @datatype class ConnectionInstance(
                                     name: Name,
@@ -203,13 +213,25 @@ import org.sireum.message.Position
   'Path
 }
 
-@datatype class Flow(name: Name, kind: FlowKind.Type, source: Option[Feature], sink: Option[Feature])
+@datatype class Flow(name: Name,
+                     kind: FlowKind.Type,
+                     source: Option[Name],
+                     sink: Option[Name],
+                     val uriFrag : String
+                    ) extends AadlInstInfo
 
 @datatype class Annex(name: String, clause: AnnexClause)
 
 @sig trait AnnexClause
 
+@sig trait AnnexLib
+
+/**
+* Start of EMV2 AST Section
+*/
 @sig trait Emv2Annex extends AnnexClause
+
+@sig trait Emv2Lib extends AnnexLib
 
 @enum object PropagationDirection {
   'In
@@ -236,7 +258,7 @@ import org.sireum.message.Position
                             errorTypeSetDef: ISZ[ErrorTypeSetDef],
                             alias: ISZ[ErrorAliasDef],
                             behaveStateMachine: ISZ[BehaveStateMachine])
-  extends Emv2Annex
+  extends Emv2Lib
 
 @enum object ErrorKind {
   'all
@@ -297,10 +319,11 @@ import org.sireum.message.Position
                                ) extends Emv2Annex
 
 @datatype class Emv2Flow(identifier: Name,
-                          kind: FlowKind.Type,
-                          sourcePropagation: Option[Emv2Propagation],
-                          sinkPropagation: Option[Emv2Propagation]
-                        ) extends Emv2Annex
+                         kind: FlowKind.Type,
+                         sourcePropagation: Option[Emv2Propagation],
+                         sinkPropagation: Option[Emv2Propagation],
+                         val uriFrag : String
+                        ) extends Emv2Annex with AadlInstInfo
 
 @datatype class Emv2BehaviorSection(events : ISZ[ErrorEvent],
                                     transitions: ISZ[ErrorTransition],
@@ -313,5 +336,30 @@ import org.sireum.message.Position
   condition: Option[ErrorCondition],
   target : ISZ[Emv2Propagation]
                                 ) extends Emv2Annex
+
+/**
+* End of EMV2 AST Section
+*/
+
+/**
+* Start of SMF AST Section
+*/
+@sig trait SmfAnnex extends AnnexClause
+
+@sig trait SmfLib extends AnnexLib
+
+@datatype class SmfClause(classification: ISZ[SmfClassification],
+                          declass: ISZ[SmfDeclass]) extends SmfAnnex
+
+@datatype class SmfClassification(portName: Name, typeName: Name) extends SmfAnnex
+
+@datatype class SmfDeclass(flowName: Name, srcType: Option[Name], snkType : Name) extends SmfAnnex
+
+@datatype class SmfLibrary(types: ISZ[SmfType]) extends SmfLib
+
+@datatype class SmfType(typeName : Name, parentType: Option[Name]) extends SmfAnnex
+/**
+* End of SMF AST Section
+*/
 
 @datatype class OtherAnnex(clause: String) extends AnnexClause

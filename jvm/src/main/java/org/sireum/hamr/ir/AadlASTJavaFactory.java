@@ -64,7 +64,7 @@ public class AadlASTJavaFactory {
     private static AadlASTFactory f = new AadlASTFactory();
 
     public static Aadl aadl(List<Component> components,
-                            List<Emv2Library> errorLib,
+                            List<AnnexLib> errorLib,
                             List<Component> dataComponents) {
         return f.aadl(components, errorLib, dataComponents);
     }
@@ -193,8 +193,8 @@ public class AadlASTJavaFactory {
 
     public static Flow flow(Name name,
                             FlowKind kind,
-                            Feature source,
-                            Feature sink) {
+                            Name source,
+                            Name sink) {
         return f.flow(name, kind, source, sink);
     }
 
@@ -326,6 +326,28 @@ public class AadlASTJavaFactory {
                                                   ErrorCondition condition,
                                                   Name targetState) {
         return f.errorTransition(id, sourceState, condition, targetState);
+    }
+    //--------------SMF-------------------
+
+    public static SmfClause smfClause(List<SmfClassification> classifications,
+                                      List<SmfDeclass> declasses) {
+        return f.smfClause(classifications, declasses);
+    }
+
+    public static SmfClassification smfClassification(Name portName, Name typeName) {
+        return f.smfClassification(portName, typeName);
+    }
+
+    public static SmfDeclass smfDeclass(Name flowName, Name srcName, Name snkName) {
+        return f.smfDeclass(flowName, srcName, snkName);
+    }
+
+    public static SmfLibrary smfLibrary(List<SmfType> types) {
+        return f.smfLibrary(types);
+    }
+
+    public static SmfType smfType(Name typeName, Name parentName) {
+        return f.smfType(typeName, parentName);
     }
 
 }

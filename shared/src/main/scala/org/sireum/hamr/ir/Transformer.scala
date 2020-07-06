@@ -2,7 +2,7 @@
 // @formatter:off
 
 /*
- Copyright (c) 2019, Robby, Kansas State University
+ Copyright (c) 2018, Kansas State University
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -189,13 +189,6 @@ object Transformer {
 
     @pure def preAnnexClause(ctx: Context, o: AnnexClause): PreResult[Context, AnnexClause] = {
       o match {
-        case o: Emv2Library =>
-          val r: PreResult[Context, AnnexClause] = preEmv2Library(ctx, o) match {
-           case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
-           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
-           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
-          }
-          return r
         case o: ErrorTypeDef =>
           val r: PreResult[Context, AnnexClause] = preErrorTypeDef(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
@@ -322,6 +315,34 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
           }
           return r
+        case o: SmfClause =>
+          val r: PreResult[Context, AnnexClause] = preSmfClause(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
+          }
+          return r
+        case o: SmfClassification =>
+          val r: PreResult[Context, AnnexClause] = preSmfClassification(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
+          }
+          return r
+        case o: SmfDeclass =>
+          val r: PreResult[Context, AnnexClause] = preSmfDeclass(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
+          }
+          return r
+        case o: SmfType =>
+          val r: PreResult[Context, AnnexClause] = preSmfType(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexClause]())
+          }
+          return r
         case o: OtherAnnex =>
           val r: PreResult[Context, AnnexClause] = preOtherAnnex(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: AnnexClause)) => PreResult(preCtx, continu, Some[AnnexClause](r))
@@ -332,15 +353,27 @@ object Transformer {
       }
     }
 
-    @pure def preEmv2Annex(ctx: Context, o: Emv2Annex): PreResult[Context, Emv2Annex] = {
+    @pure def preAnnexLib(ctx: Context, o: AnnexLib): PreResult[Context, AnnexLib] = {
       o match {
         case o: Emv2Library =>
-          val r: PreResult[Context, Emv2Annex] = preEmv2Library(ctx, o) match {
-           case PreResult(preCtx, continu, Some(r: Emv2Annex)) => PreResult(preCtx, continu, Some[Emv2Annex](r))
-           case PreResult(_, _, Some(_)) => halt("Can only produce object of type Emv2Annex")
-           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Annex]())
+          val r: PreResult[Context, AnnexLib] = preEmv2Library(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AnnexLib)) => PreResult(preCtx, continu, Some[AnnexLib](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexLib")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexLib]())
           }
           return r
+        case o: SmfLibrary =>
+          val r: PreResult[Context, AnnexLib] = preSmfLibrary(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AnnexLib)) => PreResult(preCtx, continu, Some[AnnexLib](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexLib")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexLib]())
+          }
+          return r
+      }
+    }
+
+    @pure def preEmv2Annex(ctx: Context, o: Emv2Annex): PreResult[Context, Emv2Annex] = {
+      o match {
         case o: ErrorTypeDef =>
           val r: PreResult[Context, Emv2Annex] = preErrorTypeDef(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: Emv2Annex)) => PreResult(preCtx, continu, Some[Emv2Annex](r))
@@ -470,6 +503,18 @@ object Transformer {
       }
     }
 
+    @pure def preEmv2Lib(ctx: Context, o: Emv2Lib): PreResult[Context, Emv2Lib] = {
+      o match {
+        case o: Emv2Library =>
+          val r: PreResult[Context, Emv2Lib] = preEmv2Library(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: Emv2Lib)) => PreResult(preCtx, continu, Some[Emv2Lib](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type Emv2Lib")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[Emv2Lib]())
+          }
+          return r
+      }
+    }
+
     @pure def preEmv2ElementRef(ctx: Context, o: Emv2ElementRef): PreResult[Context, Emv2ElementRef] = {
       return PreResult(ctx, T, None())
     }
@@ -594,6 +639,71 @@ object Transformer {
     }
 
     @pure def preErrorPropagation(ctx: Context, o: ErrorPropagation): PreResult[Context, ErrorPropagation] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preSmfAnnex(ctx: Context, o: SmfAnnex): PreResult[Context, SmfAnnex] = {
+      o match {
+        case o: SmfClause =>
+          val r: PreResult[Context, SmfAnnex] = preSmfClause(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: SmfAnnex)) => PreResult(preCtx, continu, Some[SmfAnnex](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type SmfAnnex")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[SmfAnnex]())
+          }
+          return r
+        case o: SmfClassification =>
+          val r: PreResult[Context, SmfAnnex] = preSmfClassification(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: SmfAnnex)) => PreResult(preCtx, continu, Some[SmfAnnex](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type SmfAnnex")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[SmfAnnex]())
+          }
+          return r
+        case o: SmfDeclass =>
+          val r: PreResult[Context, SmfAnnex] = preSmfDeclass(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: SmfAnnex)) => PreResult(preCtx, continu, Some[SmfAnnex](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type SmfAnnex")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[SmfAnnex]())
+          }
+          return r
+        case o: SmfType =>
+          val r: PreResult[Context, SmfAnnex] = preSmfType(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: SmfAnnex)) => PreResult(preCtx, continu, Some[SmfAnnex](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type SmfAnnex")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[SmfAnnex]())
+          }
+          return r
+      }
+    }
+
+    @pure def preSmfLib(ctx: Context, o: SmfLib): PreResult[Context, SmfLib] = {
+      o match {
+        case o: SmfLibrary =>
+          val r: PreResult[Context, SmfLib] = preSmfLibrary(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: SmfLib)) => PreResult(preCtx, continu, Some[SmfLib](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type SmfLib")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[SmfLib]())
+          }
+          return r
+      }
+    }
+
+    @pure def preSmfClause(ctx: Context, o: SmfClause): PreResult[Context, SmfClause] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preSmfClassification(ctx: Context, o: SmfClassification): PreResult[Context, SmfClassification] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preSmfDeclass(ctx: Context, o: SmfDeclass): PreResult[Context, SmfDeclass] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preSmfLibrary(ctx: Context, o: SmfLibrary): PreResult[Context, SmfLibrary] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preSmfType(ctx: Context, o: SmfType): PreResult[Context, SmfType] = {
       return PreResult(ctx, T, None())
     }
 
@@ -747,13 +857,6 @@ object Transformer {
 
     @pure def postAnnexClause(ctx: Context, o: AnnexClause): TPostResult[Context, AnnexClause] = {
       o match {
-        case o: Emv2Library =>
-          val r: TPostResult[Context, AnnexClause] = postEmv2Library(ctx, o) match {
-           case TPostResult(postCtx, Some(result: AnnexClause)) => TPostResult(postCtx, Some[AnnexClause](result))
-           case TPostResult(_, Some(_)) => halt("Can only produce object of type AnnexClause")
-           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AnnexClause]())
-          }
-          return r
         case o: ErrorTypeDef =>
           val r: TPostResult[Context, AnnexClause] = postErrorTypeDef(ctx, o) match {
            case TPostResult(postCtx, Some(result: AnnexClause)) => TPostResult(postCtx, Some[AnnexClause](result))
@@ -880,6 +983,34 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[AnnexClause]())
           }
           return r
+        case o: SmfClause =>
+          val r: TPostResult[Context, AnnexClause] = postSmfClause(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AnnexClause)) => TPostResult(postCtx, Some[AnnexClause](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AnnexClause]())
+          }
+          return r
+        case o: SmfClassification =>
+          val r: TPostResult[Context, AnnexClause] = postSmfClassification(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AnnexClause)) => TPostResult(postCtx, Some[AnnexClause](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AnnexClause]())
+          }
+          return r
+        case o: SmfDeclass =>
+          val r: TPostResult[Context, AnnexClause] = postSmfDeclass(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AnnexClause)) => TPostResult(postCtx, Some[AnnexClause](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AnnexClause]())
+          }
+          return r
+        case o: SmfType =>
+          val r: TPostResult[Context, AnnexClause] = postSmfType(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AnnexClause)) => TPostResult(postCtx, Some[AnnexClause](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AnnexClause")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AnnexClause]())
+          }
+          return r
         case o: OtherAnnex =>
           val r: TPostResult[Context, AnnexClause] = postOtherAnnex(ctx, o) match {
            case TPostResult(postCtx, Some(result: AnnexClause)) => TPostResult(postCtx, Some[AnnexClause](result))
@@ -890,15 +1021,27 @@ object Transformer {
       }
     }
 
-    @pure def postEmv2Annex(ctx: Context, o: Emv2Annex): TPostResult[Context, Emv2Annex] = {
+    @pure def postAnnexLib(ctx: Context, o: AnnexLib): TPostResult[Context, AnnexLib] = {
       o match {
         case o: Emv2Library =>
-          val r: TPostResult[Context, Emv2Annex] = postEmv2Library(ctx, o) match {
-           case TPostResult(postCtx, Some(result: Emv2Annex)) => TPostResult(postCtx, Some[Emv2Annex](result))
-           case TPostResult(_, Some(_)) => halt("Can only produce object of type Emv2Annex")
-           case TPostResult(postCtx, _) => TPostResult(postCtx, None[Emv2Annex]())
+          val r: TPostResult[Context, AnnexLib] = postEmv2Library(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AnnexLib)) => TPostResult(postCtx, Some[AnnexLib](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AnnexLib")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AnnexLib]())
           }
           return r
+        case o: SmfLibrary =>
+          val r: TPostResult[Context, AnnexLib] = postSmfLibrary(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AnnexLib)) => TPostResult(postCtx, Some[AnnexLib](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AnnexLib")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AnnexLib]())
+          }
+          return r
+      }
+    }
+
+    @pure def postEmv2Annex(ctx: Context, o: Emv2Annex): TPostResult[Context, Emv2Annex] = {
+      o match {
         case o: ErrorTypeDef =>
           val r: TPostResult[Context, Emv2Annex] = postErrorTypeDef(ctx, o) match {
            case TPostResult(postCtx, Some(result: Emv2Annex)) => TPostResult(postCtx, Some[Emv2Annex](result))
@@ -1023,6 +1166,18 @@ object Transformer {
            case TPostResult(postCtx, Some(result: Emv2Annex)) => TPostResult(postCtx, Some[Emv2Annex](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type Emv2Annex")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[Emv2Annex]())
+          }
+          return r
+      }
+    }
+
+    @pure def postEmv2Lib(ctx: Context, o: Emv2Lib): TPostResult[Context, Emv2Lib] = {
+      o match {
+        case o: Emv2Library =>
+          val r: TPostResult[Context, Emv2Lib] = postEmv2Library(ctx, o) match {
+           case TPostResult(postCtx, Some(result: Emv2Lib)) => TPostResult(postCtx, Some[Emv2Lib](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type Emv2Lib")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[Emv2Lib]())
           }
           return r
       }
@@ -1155,6 +1310,71 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
+    @pure def postSmfAnnex(ctx: Context, o: SmfAnnex): TPostResult[Context, SmfAnnex] = {
+      o match {
+        case o: SmfClause =>
+          val r: TPostResult[Context, SmfAnnex] = postSmfClause(ctx, o) match {
+           case TPostResult(postCtx, Some(result: SmfAnnex)) => TPostResult(postCtx, Some[SmfAnnex](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type SmfAnnex")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[SmfAnnex]())
+          }
+          return r
+        case o: SmfClassification =>
+          val r: TPostResult[Context, SmfAnnex] = postSmfClassification(ctx, o) match {
+           case TPostResult(postCtx, Some(result: SmfAnnex)) => TPostResult(postCtx, Some[SmfAnnex](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type SmfAnnex")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[SmfAnnex]())
+          }
+          return r
+        case o: SmfDeclass =>
+          val r: TPostResult[Context, SmfAnnex] = postSmfDeclass(ctx, o) match {
+           case TPostResult(postCtx, Some(result: SmfAnnex)) => TPostResult(postCtx, Some[SmfAnnex](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type SmfAnnex")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[SmfAnnex]())
+          }
+          return r
+        case o: SmfType =>
+          val r: TPostResult[Context, SmfAnnex] = postSmfType(ctx, o) match {
+           case TPostResult(postCtx, Some(result: SmfAnnex)) => TPostResult(postCtx, Some[SmfAnnex](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type SmfAnnex")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[SmfAnnex]())
+          }
+          return r
+      }
+    }
+
+    @pure def postSmfLib(ctx: Context, o: SmfLib): TPostResult[Context, SmfLib] = {
+      o match {
+        case o: SmfLibrary =>
+          val r: TPostResult[Context, SmfLib] = postSmfLibrary(ctx, o) match {
+           case TPostResult(postCtx, Some(result: SmfLib)) => TPostResult(postCtx, Some[SmfLib](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type SmfLib")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[SmfLib]())
+          }
+          return r
+      }
+    }
+
+    @pure def postSmfClause(ctx: Context, o: SmfClause): TPostResult[Context, SmfClause] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postSmfClassification(ctx: Context, o: SmfClassification): TPostResult[Context, SmfClassification] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postSmfDeclass(ctx: Context, o: SmfDeclass): TPostResult[Context, SmfDeclass] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postSmfLibrary(ctx: Context, o: SmfLibrary): TPostResult[Context, SmfLibrary] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postSmfType(ctx: Context, o: SmfType): TPostResult[Context, SmfType] = {
+      return TPostResult(ctx, None())
+    }
+
     @pure def postOtherAnnex(ctx: Context, o: OtherAnnex): TPostResult[Context, OtherAnnex] = {
       return TPostResult(ctx, None())
     }
@@ -1203,10 +1423,10 @@ import Transformer._
       val o2: Aadl = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: TPostResult[Context, IS[Z, Component]] = transformISZ(preR.ctx, o2.components, transformComponent _)
-      val r1: TPostResult[Context, IS[Z, Emv2Library]] = transformISZ(r0.ctx, o2.errorLib, transformEmv2Library _)
+      val r1: TPostResult[Context, IS[Z, AnnexLib]] = transformISZ(r0.ctx, o2.annexLib, transformAnnexLib _)
       val r2: TPostResult[Context, IS[Z, Component]] = transformISZ(r1.ctx, o2.dataComponents, transformComponent _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-        TPostResult(r2.ctx, Some(o2(components = r0.resultOpt.getOrElse(o2.components), errorLib = r1.resultOpt.getOrElse(o2.errorLib), dataComponents = r2.resultOpt.getOrElse(o2.dataComponents))))
+        TPostResult(r2.ctx, Some(o2(components = r0.resultOpt.getOrElse(o2.components), annexLib = r1.resultOpt.getOrElse(o2.annexLib), dataComponents = r2.resultOpt.getOrElse(o2.dataComponents))))
       else
         TPostResult(r2.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
@@ -1754,8 +1974,8 @@ import Transformer._
       val o2: Flow = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-      val r1: TPostResult[Context, Option[Feature]] = transformOption(r0.ctx, o2.source, transformFeature _)
-      val r2: TPostResult[Context, Option[Feature]] = transformOption(r1.ctx, o2.sink, transformFeature _)
+      val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.source, transformName _)
+      val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.sink, transformName _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
         TPostResult(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), source = r1.resultOpt.getOrElse(o2.source), sink = r2.resultOpt.getOrElse(o2.sink))))
       else
@@ -1810,16 +2030,6 @@ import Transformer._
       val o2: AnnexClause = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: TPostResult[Context, AnnexClause] = o2 match {
-        case o2: Emv2Library =>
-          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-          val r1: TPostResult[Context, IS[Z, ErrorTypeDef]] = transformISZ(r0.ctx, o2.errorTypeDef, transformErrorTypeDef _)
-          val r2: TPostResult[Context, IS[Z, ErrorTypeSetDef]] = transformISZ(r1.ctx, o2.errorTypeSetDef, transformErrorTypeSetDef _)
-          val r3: TPostResult[Context, IS[Z, ErrorAliasDef]] = transformISZ(r2.ctx, o2.alias, transformErrorAliasDef _)
-          val r4: TPostResult[Context, IS[Z, BehaveStateMachine]] = transformISZ(r3.ctx, o2.behaveStateMachine, transformBehaveStateMachine _)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
-            TPostResult(r4.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), errorTypeDef = r1.resultOpt.getOrElse(o2.errorTypeDef), errorTypeSetDef = r2.resultOpt.getOrElse(o2.errorTypeSetDef), alias = r3.resultOpt.getOrElse(o2.alias), behaveStateMachine = r4.resultOpt.getOrElse(o2.behaveStateMachine))))
-          else
-            TPostResult(r4.ctx, None())
         case o2: ErrorTypeDef =>
           val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.id)
           val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.extendType, transformName _)
@@ -1951,6 +2161,35 @@ import Transformer._
             TPostResult(r3.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), source = r1.resultOpt.getOrElse(o2.source), condition = r2.resultOpt.getOrElse(o2.condition), target = r3.resultOpt.getOrElse(o2.target))))
           else
             TPostResult(r3.ctx, None())
+        case o2: SmfClause =>
+          val r0: TPostResult[Context, IS[Z, SmfClassification]] = transformISZ(preR.ctx, o2.classification, transformSmfClassification _)
+          val r1: TPostResult[Context, IS[Z, SmfDeclass]] = transformISZ(r0.ctx, o2.declass, transformSmfDeclass _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(classification = r0.resultOpt.getOrElse(o2.classification), declass = r1.resultOpt.getOrElse(o2.declass))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: SmfClassification =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.portName)
+          val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.typeName)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(portName = r0.resultOpt.getOrElse(o2.portName), typeName = r1.resultOpt.getOrElse(o2.typeName))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: SmfDeclass =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.flowName)
+          val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.srcType, transformName _)
+          val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.snkType)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(flowName = r0.resultOpt.getOrElse(o2.flowName), srcType = r1.resultOpt.getOrElse(o2.srcType), snkType = r2.resultOpt.getOrElse(o2.snkType))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: SmfType =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.typeName)
+          val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.parentType, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(typeName = r0.resultOpt.getOrElse(o2.typeName), parentType = r1.resultOpt.getOrElse(o2.parentType))))
+          else
+            TPostResult(r1.ctx, None())
         case o2: OtherAnnex =>
           if (hasChanged)
             TPostResult(preR.ctx, Some(o2))
@@ -1975,12 +2214,12 @@ import Transformer._
     }
   }
 
-  @pure def transformEmv2Annex(ctx: Context, o: Emv2Annex): TPostResult[Context, Emv2Annex] = {
-    val preR: PreResult[Context, Emv2Annex] = pp.preEmv2Annex(ctx, o)
-    val r: TPostResult[Context, Emv2Annex] = if (preR.continu) {
-      val o2: Emv2Annex = preR.resultOpt.getOrElse(o)
+  @pure def transformAnnexLib(ctx: Context, o: AnnexLib): TPostResult[Context, AnnexLib] = {
+    val preR: PreResult[Context, AnnexLib] = pp.preAnnexLib(ctx, o)
+    val r: TPostResult[Context, AnnexLib] = if (preR.continu) {
+      val o2: AnnexLib = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val rOpt: TPostResult[Context, Emv2Annex] = o2 match {
+      val rOpt: TPostResult[Context, AnnexLib] = o2 match {
         case o2: Emv2Library =>
           val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
           val r1: TPostResult[Context, IS[Z, ErrorTypeDef]] = transformISZ(r0.ctx, o2.errorTypeDef, transformErrorTypeDef _)
@@ -1991,6 +2230,37 @@ import Transformer._
             TPostResult(r4.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), errorTypeDef = r1.resultOpt.getOrElse(o2.errorTypeDef), errorTypeSetDef = r2.resultOpt.getOrElse(o2.errorTypeSetDef), alias = r3.resultOpt.getOrElse(o2.alias), behaveStateMachine = r4.resultOpt.getOrElse(o2.behaveStateMachine))))
           else
             TPostResult(r4.ctx, None())
+        case o2: SmfLibrary =>
+          val r0: TPostResult[Context, IS[Z, SmfType]] = transformISZ(preR.ctx, o2.types, transformSmfType _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(types = r0.resultOpt.getOrElse(o2.types))))
+          else
+            TPostResult(r0.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: AnnexLib = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, AnnexLib] = pp.postAnnexLib(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformEmv2Annex(ctx: Context, o: Emv2Annex): TPostResult[Context, Emv2Annex] = {
+    val preR: PreResult[Context, Emv2Annex] = pp.preEmv2Annex(ctx, o)
+    val r: TPostResult[Context, Emv2Annex] = if (preR.continu) {
+      val o2: Emv2Annex = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, Emv2Annex] = o2 match {
         case o2: ErrorTypeDef =>
           val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.id)
           val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.extendType, transformName _)
@@ -2132,6 +2402,41 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: Emv2Annex = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, Emv2Annex] = pp.postEmv2Annex(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformEmv2Lib(ctx: Context, o: Emv2Lib): TPostResult[Context, Emv2Lib] = {
+    val preR: PreResult[Context, Emv2Lib] = pp.preEmv2Lib(ctx, o)
+    val r: TPostResult[Context, Emv2Lib] = if (preR.continu) {
+      val o2: Emv2Lib = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, Emv2Lib] = o2 match {
+        case o2: Emv2Library =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+          val r1: TPostResult[Context, IS[Z, ErrorTypeDef]] = transformISZ(r0.ctx, o2.errorTypeDef, transformErrorTypeDef _)
+          val r2: TPostResult[Context, IS[Z, ErrorTypeSetDef]] = transformISZ(r1.ctx, o2.errorTypeSetDef, transformErrorTypeSetDef _)
+          val r3: TPostResult[Context, IS[Z, ErrorAliasDef]] = transformISZ(r2.ctx, o2.alias, transformErrorAliasDef _)
+          val r4: TPostResult[Context, IS[Z, BehaveStateMachine]] = transformISZ(r3.ctx, o2.behaveStateMachine, transformBehaveStateMachine _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
+            TPostResult(r4.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), errorTypeDef = r1.resultOpt.getOrElse(o2.errorTypeDef), errorTypeSetDef = r2.resultOpt.getOrElse(o2.errorTypeSetDef), alias = r3.resultOpt.getOrElse(o2.alias), behaveStateMachine = r4.resultOpt.getOrElse(o2.behaveStateMachine))))
+          else
+            TPostResult(r4.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: Emv2Lib = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, Emv2Lib] = pp.postEmv2Lib(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -2762,6 +3067,231 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: ErrorPropagation = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, ErrorPropagation] = pp.postErrorPropagation(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformSmfAnnex(ctx: Context, o: SmfAnnex): TPostResult[Context, SmfAnnex] = {
+    val preR: PreResult[Context, SmfAnnex] = pp.preSmfAnnex(ctx, o)
+    val r: TPostResult[Context, SmfAnnex] = if (preR.continu) {
+      val o2: SmfAnnex = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, SmfAnnex] = o2 match {
+        case o2: SmfClause =>
+          val r0: TPostResult[Context, IS[Z, SmfClassification]] = transformISZ(preR.ctx, o2.classification, transformSmfClassification _)
+          val r1: TPostResult[Context, IS[Z, SmfDeclass]] = transformISZ(r0.ctx, o2.declass, transformSmfDeclass _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(classification = r0.resultOpt.getOrElse(o2.classification), declass = r1.resultOpt.getOrElse(o2.declass))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: SmfClassification =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.portName)
+          val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.typeName)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(portName = r0.resultOpt.getOrElse(o2.portName), typeName = r1.resultOpt.getOrElse(o2.typeName))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: SmfDeclass =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.flowName)
+          val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.srcType, transformName _)
+          val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.snkType)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(flowName = r0.resultOpt.getOrElse(o2.flowName), srcType = r1.resultOpt.getOrElse(o2.srcType), snkType = r2.resultOpt.getOrElse(o2.snkType))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: SmfType =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.typeName)
+          val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.parentType, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(typeName = r0.resultOpt.getOrElse(o2.typeName), parentType = r1.resultOpt.getOrElse(o2.parentType))))
+          else
+            TPostResult(r1.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: SmfAnnex = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, SmfAnnex] = pp.postSmfAnnex(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformSmfLib(ctx: Context, o: SmfLib): TPostResult[Context, SmfLib] = {
+    val preR: PreResult[Context, SmfLib] = pp.preSmfLib(ctx, o)
+    val r: TPostResult[Context, SmfLib] = if (preR.continu) {
+      val o2: SmfLib = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, SmfLib] = o2 match {
+        case o2: SmfLibrary =>
+          val r0: TPostResult[Context, IS[Z, SmfType]] = transformISZ(preR.ctx, o2.types, transformSmfType _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(types = r0.resultOpt.getOrElse(o2.types))))
+          else
+            TPostResult(r0.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: SmfLib = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, SmfLib] = pp.postSmfLib(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformSmfClause(ctx: Context, o: SmfClause): TPostResult[Context, SmfClause] = {
+    val preR: PreResult[Context, SmfClause] = pp.preSmfClause(ctx, o)
+    val r: TPostResult[Context, SmfClause] = if (preR.continu) {
+      val o2: SmfClause = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, IS[Z, SmfClassification]] = transformISZ(preR.ctx, o2.classification, transformSmfClassification _)
+      val r1: TPostResult[Context, IS[Z, SmfDeclass]] = transformISZ(r0.ctx, o2.declass, transformSmfDeclass _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(classification = r0.resultOpt.getOrElse(o2.classification), declass = r1.resultOpt.getOrElse(o2.declass))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: SmfClause = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, SmfClause] = pp.postSmfClause(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformSmfClassification(ctx: Context, o: SmfClassification): TPostResult[Context, SmfClassification] = {
+    val preR: PreResult[Context, SmfClassification] = pp.preSmfClassification(ctx, o)
+    val r: TPostResult[Context, SmfClassification] = if (preR.continu) {
+      val o2: SmfClassification = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.portName)
+      val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.typeName)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(portName = r0.resultOpt.getOrElse(o2.portName), typeName = r1.resultOpt.getOrElse(o2.typeName))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: SmfClassification = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, SmfClassification] = pp.postSmfClassification(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformSmfDeclass(ctx: Context, o: SmfDeclass): TPostResult[Context, SmfDeclass] = {
+    val preR: PreResult[Context, SmfDeclass] = pp.preSmfDeclass(ctx, o)
+    val r: TPostResult[Context, SmfDeclass] = if (preR.continu) {
+      val o2: SmfDeclass = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.flowName)
+      val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.srcType, transformName _)
+      val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.snkType)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(flowName = r0.resultOpt.getOrElse(o2.flowName), srcType = r1.resultOpt.getOrElse(o2.srcType), snkType = r2.resultOpt.getOrElse(o2.snkType))))
+      else
+        TPostResult(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: SmfDeclass = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, SmfDeclass] = pp.postSmfDeclass(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformSmfLibrary(ctx: Context, o: SmfLibrary): TPostResult[Context, SmfLibrary] = {
+    val preR: PreResult[Context, SmfLibrary] = pp.preSmfLibrary(ctx, o)
+    val r: TPostResult[Context, SmfLibrary] = if (preR.continu) {
+      val o2: SmfLibrary = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, IS[Z, SmfType]] = transformISZ(preR.ctx, o2.types, transformSmfType _)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(types = r0.resultOpt.getOrElse(o2.types))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: SmfLibrary = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, SmfLibrary] = pp.postSmfLibrary(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformSmfType(ctx: Context, o: SmfType): TPostResult[Context, SmfType] = {
+    val preR: PreResult[Context, SmfType] = pp.preSmfType(ctx, o)
+    val r: TPostResult[Context, SmfType] = if (preR.continu) {
+      val o2: SmfType = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.typeName)
+      val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.parentType, transformName _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(typeName = r0.resultOpt.getOrElse(o2.typeName), parentType = r1.resultOpt.getOrElse(o2.parentType))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: SmfType = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, SmfType] = pp.postSmfType(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {

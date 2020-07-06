@@ -2,7 +2,7 @@
 // @formatter:off
 
 /*
- Copyright (c) 2019, Robby, Kansas State University
+ Copyright (c) 2018, Kansas State University
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -233,6 +233,26 @@ object MTransformer {
 
   val PostResultErrorPropagation: MOption[ErrorPropagation] = MNone()
 
+  val PreResultSmfClause: PreResult[SmfClause] = PreResult(T, MNone())
+
+  val PostResultSmfClause: MOption[SmfClause] = MNone()
+
+  val PreResultSmfClassification: PreResult[SmfClassification] = PreResult(T, MNone())
+
+  val PostResultSmfClassification: MOption[SmfClassification] = MNone()
+
+  val PreResultSmfDeclass: PreResult[SmfDeclass] = PreResult(T, MNone())
+
+  val PostResultSmfDeclass: MOption[SmfDeclass] = MNone()
+
+  val PreResultSmfLibrary: PreResult[SmfLibrary] = PreResult(T, MNone())
+
+  val PostResultSmfLibrary: MOption[SmfLibrary] = MNone()
+
+  val PreResultSmfType: PreResult[SmfType] = PreResult(T, MNone())
+
+  val PostResultSmfType: MOption[SmfType] = MNone()
+
   val PreResultOtherAnnex: PreResult[OtherAnnex] = PreResult(T, MNone())
 
   val PostResultOtherAnnex: MOption[OtherAnnex] = MNone()
@@ -389,13 +409,6 @@ import MTransformer._
 
   def preAnnexClause(o: AnnexClause): PreResult[AnnexClause] = {
     o match {
-      case o: Emv2Library =>
-        val r: PreResult[AnnexClause] = preEmv2Library(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
-         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
-        }
-        return r
       case o: ErrorTypeDef =>
         val r: PreResult[AnnexClause] = preErrorTypeDef(o) match {
          case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
@@ -522,6 +535,34 @@ import MTransformer._
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
+      case o: SmfClause =>
+        val r: PreResult[AnnexClause] = preSmfClause(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: SmfClassification =>
+        val r: PreResult[AnnexClause] = preSmfClassification(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: SmfDeclass =>
+        val r: PreResult[AnnexClause] = preSmfDeclass(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
+      case o: SmfType =>
+        val r: PreResult[AnnexClause] = preSmfType(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
       case o: OtherAnnex =>
         val r: PreResult[AnnexClause] = preOtherAnnex(o) match {
          case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
@@ -532,15 +573,27 @@ import MTransformer._
     }
   }
 
-  def preEmv2Annex(o: Emv2Annex): PreResult[Emv2Annex] = {
+  def preAnnexLib(o: AnnexLib): PreResult[AnnexLib] = {
     o match {
       case o: Emv2Library =>
-        val r: PreResult[Emv2Annex] = preEmv2Library(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
-         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        val r: PreResult[AnnexLib] = preEmv2Library(o) match {
+         case PreResult(continu, MSome(r: AnnexLib)) => PreResult(continu, MSome[AnnexLib](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexLib")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexLib]())
         }
         return r
+      case o: SmfLibrary =>
+        val r: PreResult[AnnexLib] = preSmfLibrary(o) match {
+         case PreResult(continu, MSome(r: AnnexLib)) => PreResult(continu, MSome[AnnexLib](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexLib")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexLib]())
+        }
+        return r
+    }
+  }
+
+  def preEmv2Annex(o: Emv2Annex): PreResult[Emv2Annex] = {
+    o match {
       case o: ErrorTypeDef =>
         val r: PreResult[Emv2Annex] = preErrorTypeDef(o) match {
          case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
@@ -665,6 +718,18 @@ import MTransformer._
          case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
          case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
+        }
+        return r
+    }
+  }
+
+  def preEmv2Lib(o: Emv2Lib): PreResult[Emv2Lib] = {
+    o match {
+      case o: Emv2Library =>
+        val r: PreResult[Emv2Lib] = preEmv2Library(o) match {
+         case PreResult(continu, MSome(r: Emv2Lib)) => PreResult(continu, MSome[Emv2Lib](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Lib")
+         case PreResult(continu, _) => PreResult(continu, MNone[Emv2Lib]())
         }
         return r
     }
@@ -795,6 +860,71 @@ import MTransformer._
 
   def preErrorPropagation(o: ErrorPropagation): PreResult[ErrorPropagation] = {
     return PreResultErrorPropagation
+  }
+
+  def preSmfAnnex(o: SmfAnnex): PreResult[SmfAnnex] = {
+    o match {
+      case o: SmfClause =>
+        val r: PreResult[SmfAnnex] = preSmfClause(o) match {
+         case PreResult(continu, MSome(r: SmfAnnex)) => PreResult(continu, MSome[SmfAnnex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type SmfAnnex")
+         case PreResult(continu, _) => PreResult(continu, MNone[SmfAnnex]())
+        }
+        return r
+      case o: SmfClassification =>
+        val r: PreResult[SmfAnnex] = preSmfClassification(o) match {
+         case PreResult(continu, MSome(r: SmfAnnex)) => PreResult(continu, MSome[SmfAnnex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type SmfAnnex")
+         case PreResult(continu, _) => PreResult(continu, MNone[SmfAnnex]())
+        }
+        return r
+      case o: SmfDeclass =>
+        val r: PreResult[SmfAnnex] = preSmfDeclass(o) match {
+         case PreResult(continu, MSome(r: SmfAnnex)) => PreResult(continu, MSome[SmfAnnex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type SmfAnnex")
+         case PreResult(continu, _) => PreResult(continu, MNone[SmfAnnex]())
+        }
+        return r
+      case o: SmfType =>
+        val r: PreResult[SmfAnnex] = preSmfType(o) match {
+         case PreResult(continu, MSome(r: SmfAnnex)) => PreResult(continu, MSome[SmfAnnex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type SmfAnnex")
+         case PreResult(continu, _) => PreResult(continu, MNone[SmfAnnex]())
+        }
+        return r
+    }
+  }
+
+  def preSmfLib(o: SmfLib): PreResult[SmfLib] = {
+    o match {
+      case o: SmfLibrary =>
+        val r: PreResult[SmfLib] = preSmfLibrary(o) match {
+         case PreResult(continu, MSome(r: SmfLib)) => PreResult(continu, MSome[SmfLib](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type SmfLib")
+         case PreResult(continu, _) => PreResult(continu, MNone[SmfLib]())
+        }
+        return r
+    }
+  }
+
+  def preSmfClause(o: SmfClause): PreResult[SmfClause] = {
+    return PreResultSmfClause
+  }
+
+  def preSmfClassification(o: SmfClassification): PreResult[SmfClassification] = {
+    return PreResultSmfClassification
+  }
+
+  def preSmfDeclass(o: SmfDeclass): PreResult[SmfDeclass] = {
+    return PreResultSmfDeclass
+  }
+
+  def preSmfLibrary(o: SmfLibrary): PreResult[SmfLibrary] = {
+    return PreResultSmfLibrary
+  }
+
+  def preSmfType(o: SmfType): PreResult[SmfType] = {
+    return PreResultSmfType
   }
 
   def preOtherAnnex(o: OtherAnnex): PreResult[OtherAnnex] = {
@@ -947,13 +1077,6 @@ import MTransformer._
 
   def postAnnexClause(o: AnnexClause): MOption[AnnexClause] = {
     o match {
-      case o: Emv2Library =>
-        val r: MOption[AnnexClause] = postEmv2Library(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
-         case _ => MNone[AnnexClause]()
-        }
-        return r
       case o: ErrorTypeDef =>
         val r: MOption[AnnexClause] = postErrorTypeDef(o) match {
          case MSome(result: AnnexClause) => MSome[AnnexClause](result)
@@ -1080,6 +1203,34 @@ import MTransformer._
          case _ => MNone[AnnexClause]()
         }
         return r
+      case o: SmfClause =>
+        val r: MOption[AnnexClause] = postSmfClause(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: SmfClassification =>
+        val r: MOption[AnnexClause] = postSmfClassification(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: SmfDeclass =>
+        val r: MOption[AnnexClause] = postSmfDeclass(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
+      case o: SmfType =>
+        val r: MOption[AnnexClause] = postSmfType(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
       case o: OtherAnnex =>
         val r: MOption[AnnexClause] = postOtherAnnex(o) match {
          case MSome(result: AnnexClause) => MSome[AnnexClause](result)
@@ -1090,15 +1241,27 @@ import MTransformer._
     }
   }
 
-  def postEmv2Annex(o: Emv2Annex): MOption[Emv2Annex] = {
+  def postAnnexLib(o: AnnexLib): MOption[AnnexLib] = {
     o match {
       case o: Emv2Library =>
-        val r: MOption[Emv2Annex] = postEmv2Library(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
-         case _ => MNone[Emv2Annex]()
+        val r: MOption[AnnexLib] = postEmv2Library(o) match {
+         case MSome(result: AnnexLib) => MSome[AnnexLib](result)
+         case MSome(_) => halt("Can only produce object of type AnnexLib")
+         case _ => MNone[AnnexLib]()
         }
         return r
+      case o: SmfLibrary =>
+        val r: MOption[AnnexLib] = postSmfLibrary(o) match {
+         case MSome(result: AnnexLib) => MSome[AnnexLib](result)
+         case MSome(_) => halt("Can only produce object of type AnnexLib")
+         case _ => MNone[AnnexLib]()
+        }
+        return r
+    }
+  }
+
+  def postEmv2Annex(o: Emv2Annex): MOption[Emv2Annex] = {
+    o match {
       case o: ErrorTypeDef =>
         val r: MOption[Emv2Annex] = postErrorTypeDef(o) match {
          case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
@@ -1223,6 +1386,18 @@ import MTransformer._
          case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
          case MSome(_) => halt("Can only produce object of type Emv2Annex")
          case _ => MNone[Emv2Annex]()
+        }
+        return r
+    }
+  }
+
+  def postEmv2Lib(o: Emv2Lib): MOption[Emv2Lib] = {
+    o match {
+      case o: Emv2Library =>
+        val r: MOption[Emv2Lib] = postEmv2Library(o) match {
+         case MSome(result: Emv2Lib) => MSome[Emv2Lib](result)
+         case MSome(_) => halt("Can only produce object of type Emv2Lib")
+         case _ => MNone[Emv2Lib]()
         }
         return r
     }
@@ -1355,6 +1530,71 @@ import MTransformer._
     return PostResultErrorPropagation
   }
 
+  def postSmfAnnex(o: SmfAnnex): MOption[SmfAnnex] = {
+    o match {
+      case o: SmfClause =>
+        val r: MOption[SmfAnnex] = postSmfClause(o) match {
+         case MSome(result: SmfAnnex) => MSome[SmfAnnex](result)
+         case MSome(_) => halt("Can only produce object of type SmfAnnex")
+         case _ => MNone[SmfAnnex]()
+        }
+        return r
+      case o: SmfClassification =>
+        val r: MOption[SmfAnnex] = postSmfClassification(o) match {
+         case MSome(result: SmfAnnex) => MSome[SmfAnnex](result)
+         case MSome(_) => halt("Can only produce object of type SmfAnnex")
+         case _ => MNone[SmfAnnex]()
+        }
+        return r
+      case o: SmfDeclass =>
+        val r: MOption[SmfAnnex] = postSmfDeclass(o) match {
+         case MSome(result: SmfAnnex) => MSome[SmfAnnex](result)
+         case MSome(_) => halt("Can only produce object of type SmfAnnex")
+         case _ => MNone[SmfAnnex]()
+        }
+        return r
+      case o: SmfType =>
+        val r: MOption[SmfAnnex] = postSmfType(o) match {
+         case MSome(result: SmfAnnex) => MSome[SmfAnnex](result)
+         case MSome(_) => halt("Can only produce object of type SmfAnnex")
+         case _ => MNone[SmfAnnex]()
+        }
+        return r
+    }
+  }
+
+  def postSmfLib(o: SmfLib): MOption[SmfLib] = {
+    o match {
+      case o: SmfLibrary =>
+        val r: MOption[SmfLib] = postSmfLibrary(o) match {
+         case MSome(result: SmfLib) => MSome[SmfLib](result)
+         case MSome(_) => halt("Can only produce object of type SmfLib")
+         case _ => MNone[SmfLib]()
+        }
+        return r
+    }
+  }
+
+  def postSmfClause(o: SmfClause): MOption[SmfClause] = {
+    return PostResultSmfClause
+  }
+
+  def postSmfClassification(o: SmfClassification): MOption[SmfClassification] = {
+    return PostResultSmfClassification
+  }
+
+  def postSmfDeclass(o: SmfDeclass): MOption[SmfDeclass] = {
+    return PostResultSmfDeclass
+  }
+
+  def postSmfLibrary(o: SmfLibrary): MOption[SmfLibrary] = {
+    return PostResultSmfLibrary
+  }
+
+  def postSmfType(o: SmfType): MOption[SmfType] = {
+    return PostResultSmfType
+  }
+
   def postOtherAnnex(o: OtherAnnex): MOption[OtherAnnex] = {
     return PostResultOtherAnnex
   }
@@ -1365,10 +1605,10 @@ import MTransformer._
       val o2: Aadl = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[IS[Z, Component]] = transformISZ(o2.components, transformComponent _)
-      val r1: MOption[IS[Z, Emv2Library]] = transformISZ(o2.errorLib, transformEmv2Library _)
+      val r1: MOption[IS[Z, AnnexLib]] = transformISZ(o2.annexLib, transformAnnexLib _)
       val r2: MOption[IS[Z, Component]] = transformISZ(o2.dataComponents, transformComponent _)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(components = r0.getOrElse(o2.components), errorLib = r1.getOrElse(o2.errorLib), dataComponents = r2.getOrElse(o2.dataComponents)))
+        MSome(o2(components = r0.getOrElse(o2.components), annexLib = r1.getOrElse(o2.annexLib), dataComponents = r2.getOrElse(o2.dataComponents)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -1916,8 +2156,8 @@ import MTransformer._
       val o2: Flow = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[Name] = transformName(o2.name)
-      val r1: MOption[Option[Feature]] = transformOption(o2.source, transformFeature _)
-      val r2: MOption[Option[Feature]] = transformOption(o2.sink, transformFeature _)
+      val r1: MOption[Option[Name]] = transformOption(o2.source, transformName _)
+      val r2: MOption[Option[Name]] = transformOption(o2.sink, transformName _)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
         MSome(o2(name = r0.getOrElse(o2.name), source = r1.getOrElse(o2.source), sink = r2.getOrElse(o2.sink)))
       else
@@ -1972,16 +2212,6 @@ import MTransformer._
       val o2: AnnexClause = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: MOption[AnnexClause] = o2 match {
-        case o2: Emv2Library =>
-          val r0: MOption[Name] = transformName(o2.name)
-          val r1: MOption[IS[Z, ErrorTypeDef]] = transformISZ(o2.errorTypeDef, transformErrorTypeDef _)
-          val r2: MOption[IS[Z, ErrorTypeSetDef]] = transformISZ(o2.errorTypeSetDef, transformErrorTypeSetDef _)
-          val r3: MOption[IS[Z, ErrorAliasDef]] = transformISZ(o2.alias, transformErrorAliasDef _)
-          val r4: MOption[IS[Z, BehaveStateMachine]] = transformISZ(o2.behaveStateMachine, transformBehaveStateMachine _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
-            MSome(o2(name = r0.getOrElse(o2.name), errorTypeDef = r1.getOrElse(o2.errorTypeDef), errorTypeSetDef = r2.getOrElse(o2.errorTypeSetDef), alias = r3.getOrElse(o2.alias), behaveStateMachine = r4.getOrElse(o2.behaveStateMachine)))
-          else
-            MNone()
         case o2: ErrorTypeDef =>
           val r0: MOption[Name] = transformName(o2.id)
           val r1: MOption[Option[Name]] = transformOption(o2.extendType, transformName _)
@@ -2113,6 +2343,35 @@ import MTransformer._
             MSome(o2(id = r0.getOrElse(o2.id), source = r1.getOrElse(o2.source), condition = r2.getOrElse(o2.condition), target = r3.getOrElse(o2.target)))
           else
             MNone()
+        case o2: SmfClause =>
+          val r0: MOption[IS[Z, SmfClassification]] = transformISZ(o2.classification, transformSmfClassification _)
+          val r1: MOption[IS[Z, SmfDeclass]] = transformISZ(o2.declass, transformSmfDeclass _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(classification = r0.getOrElse(o2.classification), declass = r1.getOrElse(o2.declass)))
+          else
+            MNone()
+        case o2: SmfClassification =>
+          val r0: MOption[Name] = transformName(o2.portName)
+          val r1: MOption[Name] = transformName(o2.typeName)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(portName = r0.getOrElse(o2.portName), typeName = r1.getOrElse(o2.typeName)))
+          else
+            MNone()
+        case o2: SmfDeclass =>
+          val r0: MOption[Name] = transformName(o2.flowName)
+          val r1: MOption[Option[Name]] = transformOption(o2.srcType, transformName _)
+          val r2: MOption[Name] = transformName(o2.snkType)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(flowName = r0.getOrElse(o2.flowName), srcType = r1.getOrElse(o2.srcType), snkType = r2.getOrElse(o2.snkType)))
+          else
+            MNone()
+        case o2: SmfType =>
+          val r0: MOption[Name] = transformName(o2.typeName)
+          val r1: MOption[Option[Name]] = transformOption(o2.parentType, transformName _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(typeName = r0.getOrElse(o2.typeName), parentType = r1.getOrElse(o2.parentType)))
+          else
+            MNone()
         case o2: OtherAnnex =>
           if (hasChanged)
             MSome(o2)
@@ -2137,12 +2396,12 @@ import MTransformer._
     }
   }
 
-  def transformEmv2Annex(o: Emv2Annex): MOption[Emv2Annex] = {
-    val preR: PreResult[Emv2Annex] = preEmv2Annex(o)
-    val r: MOption[Emv2Annex] = if (preR.continu) {
-      val o2: Emv2Annex = preR.resultOpt.getOrElse(o)
+  def transformAnnexLib(o: AnnexLib): MOption[AnnexLib] = {
+    val preR: PreResult[AnnexLib] = preAnnexLib(o)
+    val r: MOption[AnnexLib] = if (preR.continu) {
+      val o2: AnnexLib = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val rOpt: MOption[Emv2Annex] = o2 match {
+      val rOpt: MOption[AnnexLib] = o2 match {
         case o2: Emv2Library =>
           val r0: MOption[Name] = transformName(o2.name)
           val r1: MOption[IS[Z, ErrorTypeDef]] = transformISZ(o2.errorTypeDef, transformErrorTypeDef _)
@@ -2153,6 +2412,37 @@ import MTransformer._
             MSome(o2(name = r0.getOrElse(o2.name), errorTypeDef = r1.getOrElse(o2.errorTypeDef), errorTypeSetDef = r2.getOrElse(o2.errorTypeSetDef), alias = r3.getOrElse(o2.alias), behaveStateMachine = r4.getOrElse(o2.behaveStateMachine)))
           else
             MNone()
+        case o2: SmfLibrary =>
+          val r0: MOption[IS[Z, SmfType]] = transformISZ(o2.types, transformSmfType _)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(types = r0.getOrElse(o2.types)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: AnnexLib = r.getOrElse(o)
+    val postR: MOption[AnnexLib] = postAnnexLib(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformEmv2Annex(o: Emv2Annex): MOption[Emv2Annex] = {
+    val preR: PreResult[Emv2Annex] = preEmv2Annex(o)
+    val r: MOption[Emv2Annex] = if (preR.continu) {
+      val o2: Emv2Annex = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[Emv2Annex] = o2 match {
         case o2: ErrorTypeDef =>
           val r0: MOption[Name] = transformName(o2.id)
           val r1: MOption[Option[Name]] = transformOption(o2.extendType, transformName _)
@@ -2294,6 +2584,41 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: Emv2Annex = r.getOrElse(o)
     val postR: MOption[Emv2Annex] = postEmv2Annex(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformEmv2Lib(o: Emv2Lib): MOption[Emv2Lib] = {
+    val preR: PreResult[Emv2Lib] = preEmv2Lib(o)
+    val r: MOption[Emv2Lib] = if (preR.continu) {
+      val o2: Emv2Lib = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[Emv2Lib] = o2 match {
+        case o2: Emv2Library =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[IS[Z, ErrorTypeDef]] = transformISZ(o2.errorTypeDef, transformErrorTypeDef _)
+          val r2: MOption[IS[Z, ErrorTypeSetDef]] = transformISZ(o2.errorTypeSetDef, transformErrorTypeSetDef _)
+          val r3: MOption[IS[Z, ErrorAliasDef]] = transformISZ(o2.alias, transformErrorAliasDef _)
+          val r4: MOption[IS[Z, BehaveStateMachine]] = transformISZ(o2.behaveStateMachine, transformBehaveStateMachine _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), errorTypeDef = r1.getOrElse(o2.errorTypeDef), errorTypeSetDef = r2.getOrElse(o2.errorTypeSetDef), alias = r3.getOrElse(o2.alias), behaveStateMachine = r4.getOrElse(o2.behaveStateMachine)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: Emv2Lib = r.getOrElse(o)
+    val postR: MOption[Emv2Lib] = postEmv2Lib(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -2924,6 +3249,231 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: ErrorPropagation = r.getOrElse(o)
     val postR: MOption[ErrorPropagation] = postErrorPropagation(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformSmfAnnex(o: SmfAnnex): MOption[SmfAnnex] = {
+    val preR: PreResult[SmfAnnex] = preSmfAnnex(o)
+    val r: MOption[SmfAnnex] = if (preR.continu) {
+      val o2: SmfAnnex = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[SmfAnnex] = o2 match {
+        case o2: SmfClause =>
+          val r0: MOption[IS[Z, SmfClassification]] = transformISZ(o2.classification, transformSmfClassification _)
+          val r1: MOption[IS[Z, SmfDeclass]] = transformISZ(o2.declass, transformSmfDeclass _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(classification = r0.getOrElse(o2.classification), declass = r1.getOrElse(o2.declass)))
+          else
+            MNone()
+        case o2: SmfClassification =>
+          val r0: MOption[Name] = transformName(o2.portName)
+          val r1: MOption[Name] = transformName(o2.typeName)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(portName = r0.getOrElse(o2.portName), typeName = r1.getOrElse(o2.typeName)))
+          else
+            MNone()
+        case o2: SmfDeclass =>
+          val r0: MOption[Name] = transformName(o2.flowName)
+          val r1: MOption[Option[Name]] = transformOption(o2.srcType, transformName _)
+          val r2: MOption[Name] = transformName(o2.snkType)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(flowName = r0.getOrElse(o2.flowName), srcType = r1.getOrElse(o2.srcType), snkType = r2.getOrElse(o2.snkType)))
+          else
+            MNone()
+        case o2: SmfType =>
+          val r0: MOption[Name] = transformName(o2.typeName)
+          val r1: MOption[Option[Name]] = transformOption(o2.parentType, transformName _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(typeName = r0.getOrElse(o2.typeName), parentType = r1.getOrElse(o2.parentType)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: SmfAnnex = r.getOrElse(o)
+    val postR: MOption[SmfAnnex] = postSmfAnnex(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformSmfLib(o: SmfLib): MOption[SmfLib] = {
+    val preR: PreResult[SmfLib] = preSmfLib(o)
+    val r: MOption[SmfLib] = if (preR.continu) {
+      val o2: SmfLib = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[SmfLib] = o2 match {
+        case o2: SmfLibrary =>
+          val r0: MOption[IS[Z, SmfType]] = transformISZ(o2.types, transformSmfType _)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(types = r0.getOrElse(o2.types)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: SmfLib = r.getOrElse(o)
+    val postR: MOption[SmfLib] = postSmfLib(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformSmfClause(o: SmfClause): MOption[SmfClause] = {
+    val preR: PreResult[SmfClause] = preSmfClause(o)
+    val r: MOption[SmfClause] = if (preR.continu) {
+      val o2: SmfClause = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, SmfClassification]] = transformISZ(o2.classification, transformSmfClassification _)
+      val r1: MOption[IS[Z, SmfDeclass]] = transformISZ(o2.declass, transformSmfDeclass _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(classification = r0.getOrElse(o2.classification), declass = r1.getOrElse(o2.declass)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: SmfClause = r.getOrElse(o)
+    val postR: MOption[SmfClause] = postSmfClause(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformSmfClassification(o: SmfClassification): MOption[SmfClassification] = {
+    val preR: PreResult[SmfClassification] = preSmfClassification(o)
+    val r: MOption[SmfClassification] = if (preR.continu) {
+      val o2: SmfClassification = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.portName)
+      val r1: MOption[Name] = transformName(o2.typeName)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(portName = r0.getOrElse(o2.portName), typeName = r1.getOrElse(o2.typeName)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: SmfClassification = r.getOrElse(o)
+    val postR: MOption[SmfClassification] = postSmfClassification(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformSmfDeclass(o: SmfDeclass): MOption[SmfDeclass] = {
+    val preR: PreResult[SmfDeclass] = preSmfDeclass(o)
+    val r: MOption[SmfDeclass] = if (preR.continu) {
+      val o2: SmfDeclass = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.flowName)
+      val r1: MOption[Option[Name]] = transformOption(o2.srcType, transformName _)
+      val r2: MOption[Name] = transformName(o2.snkType)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(flowName = r0.getOrElse(o2.flowName), srcType = r1.getOrElse(o2.srcType), snkType = r2.getOrElse(o2.snkType)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: SmfDeclass = r.getOrElse(o)
+    val postR: MOption[SmfDeclass] = postSmfDeclass(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformSmfLibrary(o: SmfLibrary): MOption[SmfLibrary] = {
+    val preR: PreResult[SmfLibrary] = preSmfLibrary(o)
+    val r: MOption[SmfLibrary] = if (preR.continu) {
+      val o2: SmfLibrary = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, SmfType]] = transformISZ(o2.types, transformSmfType _)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(types = r0.getOrElse(o2.types)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: SmfLibrary = r.getOrElse(o)
+    val postR: MOption[SmfLibrary] = postSmfLibrary(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformSmfType(o: SmfType): MOption[SmfType] = {
+    val preR: PreResult[SmfType] = preSmfType(o)
+    val r: MOption[SmfType] = if (preR.continu) {
+      val o2: SmfType = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.typeName)
+      val r1: MOption[Option[Name]] = transformOption(o2.parentType, transformName _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(typeName = r0.getOrElse(o2.typeName), parentType = r1.getOrElse(o2.parentType)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: SmfType = r.getOrElse(o)
+    val postR: MOption[SmfType] = postSmfType(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

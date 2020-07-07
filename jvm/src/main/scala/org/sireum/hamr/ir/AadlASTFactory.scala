@@ -69,7 +69,9 @@ class AadlASTFactory {
     properties: JList[Property],
     flows: JList[Flow],
     modes: JList[Mode],
-    annexes: JList[Annex]): Component =
+    annexes: JList[Annex],
+    uriFrag: String
+  ): Component =
     Component(
       identifier,
       ComponentCategory.byName(category.name).get,
@@ -81,62 +83,78 @@ class AadlASTFactory {
       isz(properties),
       isz(flows),
       isz(modes),
-      isz(annexes)
+      isz(annexes),
+      uriFrag
     )
 
   def classifier(name: Predef.String): Classifier =
     Classifier(name)
 
-  def featureEnd(identifier: Name,
-                 direction: AadlASTJavaFactory.Direction,
-                 category: AadlASTJavaFactory.FeatureCategory,
-                 classifier: Classifier,
-                 properties: JList[Property]): FeatureEnd =
+  def featureEnd(
+    identifier: Name,
+    direction: AadlASTJavaFactory.Direction,
+    category: AadlASTJavaFactory.FeatureCategory,
+    classifier: Classifier,
+    properties: JList[Property],
+    uriFrag: String
+  ): FeatureEnd =
     FeatureEnd(
       identifier,
       Direction.byName(direction.name()).get,
       FeatureCategory.byName(category.name()).get,
       if (classifier != null) Some(classifier) else None(),
-      isz(properties)
+      isz(properties),
+      uriFrag
     )
 
-  def featureGroup(identifier: Name,
-                   features: JList[Feature],
-                   isInverse: Boolean,
-                   category: AadlASTJavaFactory.FeatureCategory,
-                   //classifier: Classifier,
-                   properties: JList[Property]): FeatureGroup =
+  def featureGroup(
+    identifier: Name,
+    features: JList[Feature],
+    isInverse: Boolean,
+    category: AadlASTJavaFactory.FeatureCategory,
+    //classifier: Classifier,
+    properties: JList[Property],
+    uriFrag: String
+  ): FeatureGroup =
     FeatureGroup(
       identifier,
       isz(features),
       isInverse,
       FeatureCategory.byName(category.name()).get,
       //if (classifier != null) Some(classifier) else None(),
-      isz(properties)
+      isz(properties),
+      uriFrag
     )
 
-  def featureAccess(identifier: Name,
-                    category: AadlASTJavaFactory.FeatureCategory,
-                    classifier: Classifier,
-                    accessType: AadlASTJavaFactory.AccessType,
-                    accessCategory: AadlASTJavaFactory.AccessCategory,
-                    properties: JList[Property]): FeatureAccess =
+  def featureAccess(
+    identifier: Name,
+    category: AadlASTJavaFactory.FeatureCategory,
+    classifier: Classifier,
+    accessType: AadlASTJavaFactory.AccessType,
+    accessCategory: AadlASTJavaFactory.AccessCategory,
+    properties: JList[Property],
+    uriFrag: String
+  ): FeatureAccess =
     FeatureAccess(
       identifier,
       FeatureCategory.byName(category.name()).get,
-      if(classifier != null) Some(classifier) else None(),
+      if (classifier != null) Some(classifier) else None(),
       AccessType.byName(accessType.name()).get,
       AccessCategory.byName(accessCategory.name()).get,
-      isz(properties)
+      isz(properties),
+      uriFrag
     )
 
-  def connection(name : Name,
-                 src: JList[EndPoint],
-                 dst: JList[EndPoint],
+  def connection(
+    name: Name,
+    src: JList[EndPoint],
+    dst: JList[EndPoint],
     kind: AadlASTJavaFactory.ConnectionKind,
-                 isBiDirectional: Boolean,
-                 connectionInstances: JList[Name],
-                 properties: JList[Property]) =
+    isBiDirectional: Boolean,
+    connectionInstances: JList[Name],
+    properties: JList[Property],
+    uriFrag: String
+  ) =
     Connection(
       name,
       isz(src),
@@ -144,102 +162,66 @@ class AadlASTFactory {
       ConnectionKind.byName(kind.name()).get,
       isBiDirectional,
       isz(connectionInstances),
-      isz(properties)
+      isz(properties),
+      uriFrag
     )
 
-  def connectionInstance(name : Name,
-                         src: EndPoint,
-                         dst: EndPoint,
-                         kind: AadlASTJavaFactory.ConnectionKind,
-                         connectionRefs: JList[ConnectionReference],
-                         properties: JList[Property]) =
-    ConnectionInstance(
-      name,
-      src,
-      dst,
-      ConnectionKind.byName(kind.name()).get,
-      isz(connectionRefs),
-      isz(properties)
-    )
+  def connectionInstance(
+    name: Name,
+    src: EndPoint,
+    dst: EndPoint,
+    kind: AadlASTJavaFactory.ConnectionKind,
+    connectionRefs: JList[ConnectionReference],
+    properties: JList[Property]
+  ) =
+    ConnectionInstance(name, src, dst, ConnectionKind.byName(kind.name()).get, isz(connectionRefs), isz(properties))
 
-  def connectionReference(component: Name,
-                          feature: Name,
-                          isParent: Boolean) =
-    ConnectionReference(
-      component,
-      feature,
-      isParent
-    )
+  def connectionReference(component: Name, feature: Name, isParent: Boolean) =
+    ConnectionReference(component, feature, isParent)
 
-  def endPoint(component: Name,
-               feature: Name,
-               direction: AadlASTJavaFactory.Direction) =
+  def endPoint(component: Name, feature: Name, direction: AadlASTJavaFactory.Direction) =
     EndPoint(
       component,
       if (feature != null) Some(feature) else None(),
-      if(direction != null) Some(Direction.byName(direction.name()).get) else None()
-  )
-
-  def property(name: Name,
-               propertyValues: JList[PropertyValue],
-               appliesTo: JList[ElementRef]) =
-    Property(
-      name,
-      isz(propertyValues),
-      isz(appliesTo)
+      if (direction != null) Some(Direction.byName(direction.name()).get) else None()
     )
+
+  def property(name: Name, propertyValues: JList[PropertyValue], appliesTo: JList[ElementRef]) =
+    Property(name, isz(propertyValues), isz(appliesTo))
 
   def classifierProp(name: Predef.String) =
     ClassifierProp(name)
 
-  def rangeProp(low: UnitProp,
-                high: UnitProp) =
-    RangeProp(
-      low,
-      high
-    )
+  def rangeProp(low: UnitProp, high: UnitProp) =
+    RangeProp(low, high)
 
   def recordProp(properties: JList[Property]) =
-    RecordProp(
-      isz(properties)
-    )
+    RecordProp(isz(properties))
 
   def referenceProp(value: Name) =
-    ReferenceProp(
-      value
-    )
+    ReferenceProp(value)
 
-  def unitProp(value: Predef.String,
-               unit: Predef.String) =
-    UnitProp(
-      value,
-      if(unit != null) Some(unit) else None()
-    )
+  def unitProp(value: Predef.String, unit: Predef.String) =
+    UnitProp(value, if (unit != null) Some(unit) else None())
 
   def valueProp(value: Predef.String) =
-    ValueProp(
-      value
-    )
+    ValueProp(value)
 
   def mode(name: Name) =
-    Mode(
-      name
-    )
+    Mode(name)
 
-  def flow(name: Name,
-           kind: AadlASTJavaFactory.FlowKind, source: Name, sink: Name) =
+  def flow(name: Name, kind: AadlASTJavaFactory.FlowKind, source: Name, sink: Name, uriFrag: String) =
     Flow(
       name,
       FlowKind.byName(kind.name()).get,
-      if(source != null) Some(source) else None(),
-      if(sink != null) Some(sink) else None()
+      if (source != null) Some(source) else None(),
+      if (sink != null) Some(sink) else None(),
+      uriFrag
     )
 
   //-------------EMv2 Clause------------------
 
-  def emv2ElementRef(kind : AadlASTJavaFactory.Emv2ElementKind,
-                     name : Name,
-                     errorTypes: JList[Name]) : Emv2ElementRef = {
+  def emv2ElementRef(kind: AadlASTJavaFactory.Emv2ElementKind, name: Name, errorTypes: JList[Name]): Emv2ElementRef = {
     Emv2ElementRef(Emv2ElementKind.byName(kind.name()).get, name, isz(errorTypes))
   }
 
@@ -248,14 +230,15 @@ class AadlASTFactory {
     propagations: JList[Emv2Propagation],
     flows: JList[Emv2Flow],
     componentBehavior: Emv2BehaviorSection,
-    properties : JList[Property]
+    properties: JList[Property]
   ): Emv2Clause = {
     Emv2Clause(
       isz(libraries),
       isz(propagations),
       isz(flows),
       if (componentBehavior != null) Some(componentBehavior) else None(),
-      isz(properties))
+      isz(properties)
+    )
   }
 
   def emv2Propagation(
@@ -270,13 +253,15 @@ class AadlASTFactory {
     identifier: Name,
     kind: AadlASTJavaFactory.FlowKind,
     sourcePropagation: Emv2Propagation,
-    sinkPropagation: Emv2Propagation
+    sinkPropagation: Emv2Propagation,
+    uriFrag: String
   ): Emv2Flow = {
     Emv2Flow(
       identifier,
       FlowKind.byName(kind.name).get,
       if (sourcePropagation != null) Some(sourcePropagation) else None(),
-      if (sinkPropagation != null) Some(sinkPropagation) else None()
+      if (sinkPropagation != null) Some(sinkPropagation) else None(),
+      uriFrag
     )
   }
 
@@ -298,7 +283,8 @@ class AadlASTFactory {
       if (id != null) Some(id) else None(),
       isz(source),
       if (condition != null) Some(condition) else None(),
-      isz(target))
+      isz(target)
+    )
   }
 
   def conditionTrigger(events: JList[Name], propagationPoints: JList[Emv2Propagation]): ConditionTrigger = {
@@ -340,7 +326,9 @@ class AadlASTFactory {
       isz(useTypes).map(it => String(it)),
       isz(errorTypeDef),
       isz(errorTypeSetDef),
-      isz(alias), isz(behaveStateMachine))
+      isz(alias),
+      isz(behaveStateMachine)
+    )
   }
 
   def errorTypeDef(id: Name, extendType: Name): ErrorTypeDef = {
@@ -379,8 +367,7 @@ class AadlASTFactory {
 
   //--------------SMF-------------------
 
-  def smfClause(classes : JList[SmfClassification],
-                declasses: JList[SmfDeclass]): SmfClause = {
+  def smfClause(classes: JList[SmfClassification], declasses: JList[SmfDeclass]): SmfClause = {
     SmfClause(isz(classes), isz(declasses))
   }
 
@@ -389,15 +376,15 @@ class AadlASTFactory {
   }
 
   def smfDeclass(flowName: Name, srcType: Name, snkType: Name): SmfDeclass = {
-    SmfDeclass(flowName, if(srcType != null) Some(srcType) else None(), snkType)
+    SmfDeclass(flowName, if (srcType != null) Some(srcType) else None(), snkType)
   }
 
-  def smfLibrary(types : JList[SmfType]) : SmfLibrary = {
+  def smfLibrary(types: JList[SmfType]): SmfLibrary = {
     SmfLibrary(isz(types))
   }
 
-  def smfType(typeName: Name, parentName : Name) : SmfType = {
-    SmfType(typeName, if(parentName != null) Some(parentName) else None())
+  def smfType(typeName: Name, parentName: Name): SmfType = {
+    SmfType(typeName, if (parentName != null) Some(parentName) else None())
   }
 
   def isz[T](l: JList[T]): ISZ[T] = {

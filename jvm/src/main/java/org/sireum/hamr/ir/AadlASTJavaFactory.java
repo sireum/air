@@ -88,10 +88,11 @@ public class AadlASTJavaFactory {
                                       List<Property> properties,
                                       List<Flow> flows,
                                       List<Mode> modes,
-                                      List<Annex> annexes) {
+                                      List<Annex> annexes,
+                                      String uriFrag) {
         return f.component(identifier,
                 category, classifier, features, subComponents, connections,
-                connectionInstances, properties, flows, modes, annexes);
+                connectionInstances, properties, flows, modes, annexes, uriFrag);
     }
 
     public static Classifier classifier(String name) {
@@ -102,8 +103,9 @@ public class AadlASTJavaFactory {
                                         Direction direction,
                                         FeatureCategory category,
                                         Classifier classifier,
-                                        List<Property> properties) {
-        return f.featureEnd(identifier, direction, category, classifier, properties);
+                                        List<Property> properties,
+                                        String uriFrag) {
+        return f.featureEnd(identifier, direction, category, classifier, properties, uriFrag);
     }
 
     public static FeatureGroup featureGroup(Name identifier,
@@ -111,8 +113,9 @@ public class AadlASTJavaFactory {
                                             boolean isInverse,
                                             FeatureCategory category,
                                             //Classifier classifier,
-                                            List<Property> properties) {
-        return f.featureGroup(identifier, features, isInverse, category, properties);
+                                            List<Property> properties,
+                                            String uriFrag) {
+        return f.featureGroup(identifier, features, isInverse, category, properties, uriFrag);
     }
 
     public static FeatureAccess featureAccess(Name identifier,
@@ -120,8 +123,9 @@ public class AadlASTJavaFactory {
                                               Classifier classifier,
                                               AccessType accessType,
                                               AccessCategory accessCategory,
-                                              List<Property> properties) {
-        return f.featureAccess(identifier, category, classifier, accessType, accessCategory, properties);
+                                              List<Property> properties,
+                                              String uriFrag) {
+        return f.featureAccess(identifier, category, classifier, accessType, accessCategory, properties, uriFrag);
     }
 
     public static Connection connection(Name name,
@@ -130,8 +134,9 @@ public class AadlASTJavaFactory {
                                         ConnectionKind kind,
                                         boolean isBiDirectional,
                                         List<Name> connectionInstances,
-                                        List<Property> properties) {
-        return f.connection(name, src, dst, kind, isBiDirectional, connectionInstances, properties);
+                                        List<Property> properties,
+                                        String uriFrag) {
+        return f.connection(name, src, dst, kind, isBiDirectional, connectionInstances, properties, uriFrag);
     }
 
     public static ConnectionInstance connectionInstance(Name name,
@@ -194,8 +199,9 @@ public class AadlASTJavaFactory {
     public static Flow flow(Name name,
                             FlowKind kind,
                             Name source,
-                            Name sink) {
-        return f.flow(name, kind, source, sink);
+                            Name sink,
+                            String uriFrag) {
+        return f.flow(name, kind, source, sink, uriFrag);
     }
 
     //-------------EMv2 Clause------------------
@@ -233,8 +239,8 @@ public class AadlASTJavaFactory {
     public static Emv2Flow emv2Flow(Name identifier,
                                     FlowKind kind,
                                     Emv2Propagation sourcePropagation,
-                                    Emv2Propagation sinkPropagation) {
-        return f.emv2Flow(identifier, kind, sourcePropagation, sinkPropagation);
+                                    Emv2Propagation sinkPropagation, String uriFrag) {
+        return f.emv2Flow(identifier, kind, sourcePropagation, sinkPropagation, uriFrag);
     }
 
     public static Emv2BehaviorSection emv2BehaviorSection(List<ErrorEvent> events,

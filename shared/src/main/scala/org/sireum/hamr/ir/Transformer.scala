@@ -43,6 +43,60 @@ object Transformer {
 
   @sig trait PrePost[Context] {
 
+    @pure def preAadlInstInfo(ctx: Context, o: AadlInstInfo): PreResult[Context, AadlInstInfo] = {
+      o match {
+        case o: Component =>
+          val r: PreResult[Context, AadlInstInfo] = preComponent(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AadlInstInfo)) => PreResult(preCtx, continu, Some[AadlInstInfo](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AadlInstInfo]())
+          }
+          return r
+        case o: FeatureEnd =>
+          val r: PreResult[Context, AadlInstInfo] = preFeatureEnd(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AadlInstInfo)) => PreResult(preCtx, continu, Some[AadlInstInfo](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AadlInstInfo]())
+          }
+          return r
+        case o: FeatureGroup =>
+          val r: PreResult[Context, AadlInstInfo] = preFeatureGroup(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AadlInstInfo)) => PreResult(preCtx, continu, Some[AadlInstInfo](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AadlInstInfo]())
+          }
+          return r
+        case o: FeatureAccess =>
+          val r: PreResult[Context, AadlInstInfo] = preFeatureAccess(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AadlInstInfo)) => PreResult(preCtx, continu, Some[AadlInstInfo](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AadlInstInfo]())
+          }
+          return r
+        case o: Connection =>
+          val r: PreResult[Context, AadlInstInfo] = preConnection(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AadlInstInfo)) => PreResult(preCtx, continu, Some[AadlInstInfo](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AadlInstInfo]())
+          }
+          return r
+        case o: Flow =>
+          val r: PreResult[Context, AadlInstInfo] = preFlow(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AadlInstInfo)) => PreResult(preCtx, continu, Some[AadlInstInfo](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AadlInstInfo]())
+          }
+          return r
+        case o: Emv2Flow =>
+          val r: PreResult[Context, AadlInstInfo] = preEmv2Flow(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AadlInstInfo)) => PreResult(preCtx, continu, Some[AadlInstInfo](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AadlInstInfo]())
+          }
+          return r
+      }
+    }
+
     @pure def preAadl(ctx: Context, o: Aadl): PreResult[Context, Aadl] = {
       return PreResult(ctx, T, None())
     }
@@ -709,6 +763,60 @@ object Transformer {
 
     @pure def preOtherAnnex(ctx: Context, o: OtherAnnex): PreResult[Context, OtherAnnex] = {
       return PreResult(ctx, T, None())
+    }
+
+    @pure def postAadlInstInfo(ctx: Context, o: AadlInstInfo): TPostResult[Context, AadlInstInfo] = {
+      o match {
+        case o: Component =>
+          val r: TPostResult[Context, AadlInstInfo] = postComponent(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AadlInstInfo)) => TPostResult(postCtx, Some[AadlInstInfo](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AadlInstInfo]())
+          }
+          return r
+        case o: FeatureEnd =>
+          val r: TPostResult[Context, AadlInstInfo] = postFeatureEnd(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AadlInstInfo)) => TPostResult(postCtx, Some[AadlInstInfo](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AadlInstInfo]())
+          }
+          return r
+        case o: FeatureGroup =>
+          val r: TPostResult[Context, AadlInstInfo] = postFeatureGroup(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AadlInstInfo)) => TPostResult(postCtx, Some[AadlInstInfo](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AadlInstInfo]())
+          }
+          return r
+        case o: FeatureAccess =>
+          val r: TPostResult[Context, AadlInstInfo] = postFeatureAccess(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AadlInstInfo)) => TPostResult(postCtx, Some[AadlInstInfo](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AadlInstInfo]())
+          }
+          return r
+        case o: Connection =>
+          val r: TPostResult[Context, AadlInstInfo] = postConnection(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AadlInstInfo)) => TPostResult(postCtx, Some[AadlInstInfo](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AadlInstInfo]())
+          }
+          return r
+        case o: Flow =>
+          val r: TPostResult[Context, AadlInstInfo] = postFlow(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AadlInstInfo)) => TPostResult(postCtx, Some[AadlInstInfo](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AadlInstInfo]())
+          }
+          return r
+        case o: Emv2Flow =>
+          val r: TPostResult[Context, AadlInstInfo] = postEmv2Flow(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AadlInstInfo)) => TPostResult(postCtx, Some[AadlInstInfo](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AadlInstInfo]())
+          }
+          return r
+      }
     }
 
     @pure def postAadl(ctx: Context, o: Aadl): TPostResult[Context, Aadl] = {
@@ -1381,6 +1489,18 @@ object Transformer {
 
   }
 
+  @pure def transformOption[Context, T](ctx: Context, option: Option[T], f: (Context, T) => TPostResult[Context, T] @pure): TPostResult[Context, Option[T]] = {
+    option match {
+      case Some(v) =>
+        val r = f(ctx, v)
+        r.resultOpt match {
+          case Some(_) => return TPostResult(r.ctx, Some(r.resultOpt))
+          case _ => return TPostResult[Context, Option[T]](r.ctx, None[Option[T]]())
+        }
+      case _ => return TPostResult[Context, Option[T]](ctx, None[Option[T]]())
+    }
+  }
+
   @pure def transformISZ[Context, T](ctx: Context, s: IS[Z, T], f: (Context, T) => TPostResult[Context, T] @pure): TPostResult[Context, IS[Z, T]] = {
     val s2: MS[Z, T] = s.toMS
     var changed: B = F
@@ -1399,23 +1519,101 @@ object Transformer {
     }
   }
 
-  @pure def transformOption[Context, T](ctx: Context, option: Option[T], f: (Context, T) => TPostResult[Context, T] @pure): TPostResult[Context, Option[T]] = {
-    option match {
-      case Some(v) =>
-        val r = f(ctx, v)
-        r.resultOpt match {
-          case Some(_) => return TPostResult(r.ctx, Some(r.resultOpt))
-          case _ => return TPostResult[Context, Option[T]](r.ctx, None[Option[T]]())
-        }
-      case _ => return TPostResult[Context, Option[T]](ctx, None[Option[T]]())
-    }
-  }
-
 }
 
 import Transformer._
 
 @datatype class Transformer[Context](pp: PrePost[Context]) {
+
+  @pure def transformAadlInstInfo(ctx: Context, o: AadlInstInfo): TPostResult[Context, AadlInstInfo] = {
+    val preR: PreResult[Context, AadlInstInfo] = pp.preAadlInstInfo(ctx, o)
+    val r: TPostResult[Context, AadlInstInfo] = if (preR.continu) {
+      val o2: AadlInstInfo = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, AadlInstInfo] = o2 match {
+        case o2: Component =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.identifier)
+          val r1: TPostResult[Context, Option[Classifier]] = transformOption(r0.ctx, o2.classifier, transformClassifier _)
+          val r2: TPostResult[Context, IS[Z, Feature]] = transformISZ(r1.ctx, o2.features, transformFeature _)
+          val r3: TPostResult[Context, IS[Z, Component]] = transformISZ(r2.ctx, o2.subComponents, transformComponent _)
+          val r4: TPostResult[Context, IS[Z, Connection]] = transformISZ(r3.ctx, o2.connections, transformConnection _)
+          val r5: TPostResult[Context, IS[Z, ConnectionInstance]] = transformISZ(r4.ctx, o2.connectionInstances, transformConnectionInstance _)
+          val r6: TPostResult[Context, IS[Z, Property]] = transformISZ(r5.ctx, o2.properties, transformProperty _)
+          val r7: TPostResult[Context, IS[Z, Flow]] = transformISZ(r6.ctx, o2.flows, transformFlow _)
+          val r8: TPostResult[Context, IS[Z, Mode]] = transformISZ(r7.ctx, o2.modes, transformMode _)
+          val r9: TPostResult[Context, IS[Z, Annex]] = transformISZ(r8.ctx, o2.annexes, transformAnnex _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty || r5.resultOpt.nonEmpty || r6.resultOpt.nonEmpty || r7.resultOpt.nonEmpty || r8.resultOpt.nonEmpty || r9.resultOpt.nonEmpty)
+            TPostResult(r9.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), classifier = r1.resultOpt.getOrElse(o2.classifier), features = r2.resultOpt.getOrElse(o2.features), subComponents = r3.resultOpt.getOrElse(o2.subComponents), connections = r4.resultOpt.getOrElse(o2.connections), connectionInstances = r5.resultOpt.getOrElse(o2.connectionInstances), properties = r6.resultOpt.getOrElse(o2.properties), flows = r7.resultOpt.getOrElse(o2.flows), modes = r8.resultOpt.getOrElse(o2.modes), annexes = r9.resultOpt.getOrElse(o2.annexes))))
+          else
+            TPostResult(r9.ctx, None())
+        case o2: FeatureEnd =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.identifier)
+          val r1: TPostResult[Context, Option[Classifier]] = transformOption(r0.ctx, o2.classifier, transformClassifier _)
+          val r2: TPostResult[Context, IS[Z, Property]] = transformISZ(r1.ctx, o2.properties, transformProperty _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), classifier = r1.resultOpt.getOrElse(o2.classifier), properties = r2.resultOpt.getOrElse(o2.properties))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: FeatureGroup =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.identifier)
+          val r1: TPostResult[Context, IS[Z, Feature]] = transformISZ(r0.ctx, o2.features, transformFeature _)
+          val r2: TPostResult[Context, IS[Z, Property]] = transformISZ(r1.ctx, o2.properties, transformProperty _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), features = r1.resultOpt.getOrElse(o2.features), properties = r2.resultOpt.getOrElse(o2.properties))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: FeatureAccess =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.identifier)
+          val r1: TPostResult[Context, Option[Classifier]] = transformOption(r0.ctx, o2.classifier, transformClassifier _)
+          val r2: TPostResult[Context, IS[Z, Property]] = transformISZ(r1.ctx, o2.properties, transformProperty _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), classifier = r1.resultOpt.getOrElse(o2.classifier), properties = r2.resultOpt.getOrElse(o2.properties))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: Connection =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+          val r1: TPostResult[Context, IS[Z, EndPoint]] = transformISZ(r0.ctx, o2.src, transformEndPoint _)
+          val r2: TPostResult[Context, IS[Z, EndPoint]] = transformISZ(r1.ctx, o2.dst, transformEndPoint _)
+          val r3: TPostResult[Context, IS[Z, Name]] = transformISZ(r2.ctx, o2.connectionInstances, transformName _)
+          val r4: TPostResult[Context, IS[Z, Property]] = transformISZ(r3.ctx, o2.properties, transformProperty _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
+            TPostResult(r4.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), src = r1.resultOpt.getOrElse(o2.src), dst = r2.resultOpt.getOrElse(o2.dst), connectionInstances = r3.resultOpt.getOrElse(o2.connectionInstances), properties = r4.resultOpt.getOrElse(o2.properties))))
+          else
+            TPostResult(r4.ctx, None())
+        case o2: Flow =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+          val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.source, transformName _)
+          val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.sink, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), source = r1.resultOpt.getOrElse(o2.source), sink = r2.resultOpt.getOrElse(o2.sink))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: Emv2Flow =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.identifier)
+          val r1: TPostResult[Context, Option[Emv2Propagation]] = transformOption(r0.ctx, o2.sourcePropagation, transformEmv2Propagation _)
+          val r2: TPostResult[Context, Option[Emv2Propagation]] = transformOption(r1.ctx, o2.sinkPropagation, transformEmv2Propagation _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(identifier = r0.resultOpt.getOrElse(o2.identifier), sourcePropagation = r1.resultOpt.getOrElse(o2.sourcePropagation), sinkPropagation = r2.resultOpt.getOrElse(o2.sinkPropagation))))
+          else
+            TPostResult(r2.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: AadlInstInfo = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, AadlInstInfo] = pp.postAadlInstInfo(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
 
   @pure def transformAadl(ctx: Context, o: Aadl): TPostResult[Context, Aadl] = {
     val preR: PreResult[Context, Aadl] = pp.preAadl(ctx, o)

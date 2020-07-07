@@ -144,6 +144,18 @@ object MsgPack {
 
     def writer: MessagePack.Writer
 
+    def writeAadlInstInfo(o: AadlInstInfo): Unit = {
+      o match {
+        case o: Component => writeComponent(o)
+        case o: FeatureEnd => writeFeatureEnd(o)
+        case o: FeatureGroup => writeFeatureGroup(o)
+        case o: FeatureAccess => writeFeatureAccess(o)
+        case o: Connection => writeConnection(o)
+        case o: Flow => writeFlow(o)
+        case o: Emv2Flow => writeEmv2Flow(o)
+      }
+    }
+
     def writeAadl(o: Aadl): Unit = {
       writer.writeZ(Constants.Aadl)
       writer.writeISZ(o.components, writeComponent _)
@@ -170,6 +182,7 @@ object MsgPack {
       writer.writeISZ(o.flows, writeFlow _)
       writer.writeISZ(o.modes, writeMode _)
       writer.writeISZ(o.annexes, writeAnnex _)
+      writer.writeString(o.uriFrag)
     }
 
     def writeClassifier(o: Classifier): Unit = {
@@ -196,6 +209,7 @@ object MsgPack {
       writeFeatureCategoryType(o.category)
       writer.writeOption(o.classifier, writeClassifier _)
       writer.writeISZ(o.properties, writeProperty _)
+      writer.writeString(o.uriFrag)
     }
 
     def writeFeatureGroup(o: FeatureGroup): Unit = {
@@ -205,6 +219,7 @@ object MsgPack {
       writer.writeB(o.isInverse)
       writeFeatureCategoryType(o.category)
       writer.writeISZ(o.properties, writeProperty _)
+      writer.writeString(o.uriFrag)
     }
 
     def writeFeatureAccess(o: FeatureAccess): Unit = {
@@ -215,6 +230,7 @@ object MsgPack {
       writeAccessTypeType(o.accessType)
       writeAccessCategoryType(o.accessCategory)
       writer.writeISZ(o.properties, writeProperty _)
+      writer.writeString(o.uriFrag)
     }
 
     def writeAccessTypeType(o: AccessType.Type): Unit = {
@@ -242,6 +258,7 @@ object MsgPack {
       writer.writeB(o.isBiDirectional)
       writer.writeISZ(o.connectionInstances, writeName _)
       writer.writeISZ(o.properties, writeProperty _)
+      writer.writeString(o.uriFrag)
     }
 
     def writeConnectionInstance(o: ConnectionInstance): Unit = {
@@ -354,6 +371,7 @@ object MsgPack {
       writeFlowKindType(o.kind)
       writer.writeOption(o.source, writeName _)
       writer.writeOption(o.sink, writeName _)
+      writer.writeString(o.uriFrag)
     }
 
     def writeAnnex(o: Annex): Unit = {
@@ -567,6 +585,7 @@ object MsgPack {
       writeFlowKindType(o.kind)
       writer.writeOption(o.sourcePropagation, writeEmv2Propagation _)
       writer.writeOption(o.sinkPropagation, writeEmv2Propagation _)
+      writer.writeString(o.uriFrag)
     }
 
     def writeEmv2BehaviorSection(o: Emv2BehaviorSection): Unit = {
@@ -654,6 +673,24 @@ object MsgPack {
 
     def reader: MessagePack.Reader
 
+    def readAadlInstInfo(): AadlInstInfo = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.Component => val r = readComponentT(T); return r
+        case Constants.FeatureEnd => val r = readFeatureEndT(T); return r
+        case Constants.FeatureGroup => val r = readFeatureGroupT(T); return r
+        case Constants.FeatureAccess => val r = readFeatureAccessT(T); return r
+        case Constants.Connection => val r = readConnectionT(T); return r
+        case Constants.Flow => val r = readFlowT(T); return r
+        case Constants.Emv2Flow => val r = readEmv2FlowT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of AadlInstInfo.")
+          val r = readEmv2FlowT(T)
+          return r
+      }
+    }
+
     def readAadl(): Aadl = {
       val r = readAadlT(F)
       return r
@@ -703,7 +740,8 @@ object MsgPack {
       val flows = reader.readISZ(readFlow _)
       val modes = reader.readISZ(readMode _)
       val annexes = reader.readISZ(readAnnex _)
-      return Component(identifier, category, classifier, features, subComponents, connections, connectionInstances, properties, flows, modes, annexes)
+      val uriFrag = reader.readString()
+      return Component(identifier, category, classifier, features, subComponents, connections, connectionInstances, properties, flows, modes, annexes, uriFrag)
     }
 
     def readClassifier(): Classifier = {
@@ -752,7 +790,8 @@ object MsgPack {
       val category = readFeatureCategoryType()
       val classifier = reader.readOption(readClassifier _)
       val properties = reader.readISZ(readProperty _)
-      return FeatureEnd(identifier, direction, category, classifier, properties)
+      val uriFrag = reader.readString()
+      return FeatureEnd(identifier, direction, category, classifier, properties, uriFrag)
     }
 
     def readFeatureGroup(): FeatureGroup = {
@@ -769,7 +808,8 @@ object MsgPack {
       val isInverse = reader.readB()
       val category = readFeatureCategoryType()
       val properties = reader.readISZ(readProperty _)
-      return FeatureGroup(identifier, features, isInverse, category, properties)
+      val uriFrag = reader.readString()
+      return FeatureGroup(identifier, features, isInverse, category, properties, uriFrag)
     }
 
     def readFeatureAccess(): FeatureAccess = {
@@ -787,7 +827,8 @@ object MsgPack {
       val accessType = readAccessTypeType()
       val accessCategory = readAccessCategoryType()
       val properties = reader.readISZ(readProperty _)
-      return FeatureAccess(identifier, category, classifier, accessType, accessCategory, properties)
+      val uriFrag = reader.readString()
+      return FeatureAccess(identifier, category, classifier, accessType, accessCategory, properties, uriFrag)
     }
 
     def readAccessTypeType(): AccessType.Type = {
@@ -826,7 +867,8 @@ object MsgPack {
       val isBiDirectional = reader.readB()
       val connectionInstances = reader.readISZ(readName _)
       val properties = reader.readISZ(readProperty _)
-      return Connection(name, src, dst, kind, isBiDirectional, connectionInstances, properties)
+      val uriFrag = reader.readString()
+      return Connection(name, src, dst, kind, isBiDirectional, connectionInstances, properties, uriFrag)
     }
 
     def readConnectionInstance(): ConnectionInstance = {
@@ -1057,7 +1099,8 @@ object MsgPack {
       val kind = readFlowKindType()
       val source = reader.readOption(readName _)
       val sink = reader.readOption(readName _)
-      return Flow(name, kind, source, sink)
+      val uriFrag = reader.readString()
+      return Flow(name, kind, source, sink, uriFrag)
     }
 
     def readAnnex(): Annex = {
@@ -1455,7 +1498,8 @@ object MsgPack {
       val kind = readFlowKindType()
       val sourcePropagation = reader.readOption(readEmv2Propagation _)
       val sinkPropagation = reader.readOption(readEmv2Propagation _)
-      return Emv2Flow(identifier, kind, sourcePropagation, sinkPropagation)
+      val uriFrag = reader.readString()
+      return Emv2Flow(identifier, kind, sourcePropagation, sinkPropagation, uriFrag)
     }
 
     def readEmv2BehaviorSection(): Emv2BehaviorSection = {
@@ -1609,6 +1653,21 @@ object MsgPack {
       case Some(e) => return Either.Right(e)
       case _ => return Either.Left(r)
     }
+  }
+
+  def fromAadlInstInfo(o: AadlInstInfo, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeAadlInstInfo(o)
+    return w.result
+  }
+
+  def toAadlInstInfo(data: ISZ[U8]): Either[AadlInstInfo, MessagePack.ErrorMsg] = {
+    def fAadlInstInfo(reader: Reader): AadlInstInfo = {
+      val r = reader.readAadlInstInfo()
+      return r
+    }
+    val r = to(data, fAadlInstInfo _)
+    return r
   }
 
   def fromAadl(o: Aadl, pooling: B): ISZ[U8] = {

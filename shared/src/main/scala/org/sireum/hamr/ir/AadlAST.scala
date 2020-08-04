@@ -34,24 +34,25 @@ trait AadlInstInfo {
   def uriFrag: String
 }
 
-@datatype class Aadl(components: ISZ[Component], annexLib: ISZ[AnnexLib], dataComponents: ISZ[Component])
+@datatype class Aadl(components: ISZ[Component],
+                     annexLib: ISZ[AnnexLib],
+                     dataComponents: ISZ[Component])
 
 @datatype class Name(name: ISZ[String], pos: Option[Position])
 
-@datatype class Component(
-  identifier: Name,
-  category: ComponentCategory.Type,
-  classifier: Option[Classifier],
-  features: ISZ[Feature],
-  subComponents: ISZ[Component],
-  connections: ISZ[Connection],
-  connectionInstances: ISZ[ConnectionInstance],
-  properties: ISZ[Property],
-  flows: ISZ[Flow],
-  modes: ISZ[Mode],
-  annexes: ISZ[Annex],
-  val uriFrag: String
-) extends AadlInstInfo
+@datatype class Component(identifier: Name,
+                          category: ComponentCategory.Type,
+                          classifier: Option[Classifier],
+                          features: ISZ[Feature],
+                          subComponents: ISZ[Component],
+                          connections: ISZ[Connection],
+                          connectionInstances: ISZ[ConnectionInstance],
+                          properties: ISZ[Property],
+                          flows: ISZ[Flow],
+                          modes: ISZ[Mode],
+                          annexes: ISZ[Annex],
+                          val uriFrag: String)
+    extends AadlInstInfo
 
 @datatype class Classifier(name: String)
 
@@ -82,34 +83,34 @@ trait AadlInstInfo {
   def properties: ISZ[Property]
 }
 
-@datatype class FeatureEnd(
-  val identifier: Name,
-  direction: Direction.Type,
-  val category: FeatureCategory.Type,
-  val classifier: Option[Classifier],
-  val properties: ISZ[Property],
-  val uriFrag: String
-) extends Feature with AadlInstInfo
+@datatype class FeatureEnd(val identifier: Name,
+                           direction: Direction.Type,
+                           val category: FeatureCategory.Type,
+                           val classifier: Option[Classifier],
+                           val properties: ISZ[Property],
+                           val uriFrag: String)
+    extends Feature
+    with AadlInstInfo
 
-@datatype class FeatureGroup(
-  val identifier: Name,
-  features: ISZ[Feature],
-  isInverse: B,
-  val category: FeatureCategory.Type,
-  // val classifier: Option[Classifier],
-  val properties: ISZ[Property],
-  val uriFrag: String
-) extends Feature with AadlInstInfo
+@datatype class FeatureGroup(val identifier: Name,
+                             features: ISZ[Feature],
+                             isInverse: B,
+                             val category: FeatureCategory.Type,
+                             // val classifier: Option[Classifier],
+                             val properties: ISZ[Property],
+                             val uriFrag: String)
+    extends Feature
+    with AadlInstInfo
 
-@datatype class FeatureAccess(
-  val identifier: Name,
-  val category: FeatureCategory.Type,
-  val classifier: Option[Classifier],
-  val accessType: AccessType.Type,
-  val accessCategory: AccessCategory.Type,
-  val properties: ISZ[Property],
-  val uriFrag: String
-) extends Feature with AadlInstInfo
+@datatype class FeatureAccess(val identifier: Name,
+                              val category: FeatureCategory.Type,
+                              val classifier: Option[Classifier],
+                              val accessType: AccessType.Type,
+                              val accessCategory: AccessCategory.Type,
+                              val properties: ISZ[Property],
+                              val uriFrag: String)
+    extends Feature
+    with AadlInstInfo
 
 @enum object AccessType {
   'Provides
@@ -144,25 +145,22 @@ trait AadlInstInfo {
   'SubprogramAccessGroup
 }
 
-@datatype class Connection(
-  name: Name,
-  src: ISZ[EndPoint],
-  dst: ISZ[EndPoint],
-  kind: ConnectionKind.Type,
-  isBiDirectional: B,
-  connectionInstances: ISZ[Name],
-  properties: ISZ[Property],
-  val uriFrag: String
-) extends AadlInstInfo
+@datatype class Connection(name: Name,
+                           src: ISZ[EndPoint],
+                           dst: ISZ[EndPoint],
+                           kind: ConnectionKind.Type,
+                           isBiDirectional: B,
+                           connectionInstances: ISZ[Name],
+                           properties: ISZ[Property],
+                           val uriFrag: String)
+    extends AadlInstInfo
 
-@datatype class ConnectionInstance(
-  name: Name,
-  src: EndPoint,
-  dst: EndPoint,
-  kind: ConnectionKind.Type,
-  connectionRefs: ISZ[ConnectionReference],
-  properties: ISZ[Property]
-)
+@datatype class ConnectionInstance(name: Name,
+                                   src: EndPoint,
+                                   dst: EndPoint,
+                                   kind: ConnectionKind.Type,
+                                   connectionRefs: ISZ[ConnectionReference],
+                                   properties: ISZ[Property])
 
 @datatype class ConnectionReference(name: Name, context: Name, isParent: B)
 
@@ -175,9 +173,13 @@ trait AadlInstInfo {
   'FeatureGroup
 }
 
-@datatype class EndPoint(component: Name, feature: Option[Name], direction: Option[Direction.Type])
+@datatype class EndPoint(component: Name,
+                         feature: Option[Name],
+                         direction: Option[Direction.Type])
 
-@datatype class Property(name: Name, propertyValues: ISZ[PropertyValue], appliesTo: ISZ[ElementRef])
+@datatype class Property(name: Name,
+                         propertyValues: ISZ[PropertyValue],
+                         appliesTo: ISZ[ElementRef])
 
 @sig trait ElementRef
 
@@ -188,7 +190,8 @@ trait AadlInstInfo {
   'Flow
 }
 
-@datatype class AadlElementRef(elementKind: ElementKind.Type, name: Name) extends ElementRef
+@datatype class AadlElementRef(elementKind: ElementKind.Type, name: Name)
+    extends ElementRef
 
 @datatype trait PropertyValue
 
@@ -200,7 +203,8 @@ trait AadlInstInfo {
 
 @datatype class ReferenceProp(value: Name) extends PropertyValue
 
-@datatype class UnitProp(value: String, unit: Option[String]) extends PropertyValue
+@datatype class UnitProp(value: String, unit: Option[String])
+    extends PropertyValue
 
 @datatype class ValueProp(value: String) extends PropertyValue
 
@@ -212,7 +216,11 @@ trait AadlInstInfo {
   'Path
 }
 
-@datatype class Flow(name: Name, kind: FlowKind.Type, source: Option[Name], sink: Option[Name], val uriFrag: String)
+@datatype class Flow(name: Name,
+                     kind: FlowKind.Type,
+                     source: Option[Name],
+                     sink: Option[Name],
+                     val uriFrag: String)
     extends AadlInstInfo
 
 @datatype class Annex(name: String, clause: AnnexClause)
@@ -233,7 +241,10 @@ trait AadlInstInfo {
   'Out
 }
 
-@datatype class Emv2ElementRef(kind: Emv2ElementKind.Type, name: Name, errorTypes: ISZ[Name]) extends ElementRef
+@datatype class Emv2ElementRef(kind: Emv2ElementKind.Type,
+                               name: Name,
+                               errorTypes: ISZ[Name])
+    extends ElementRef
 
 @enum object Emv2ElementKind {
   'Source
@@ -245,44 +256,53 @@ trait AadlInstInfo {
   'BehaviorTransition
 }
 
-@datatype class Emv2Library(
-  name: Name,
-  useTypes: ISZ[String],
-  errorTypeDef: ISZ[ErrorTypeDef],
-  errorTypeSetDef: ISZ[ErrorTypeSetDef],
-  alias: ISZ[ErrorAliasDef],
-  behaveStateMachine: ISZ[BehaveStateMachine]
-) extends Emv2Lib
+@datatype class Emv2Library(name: Name,
+                            useTypes: ISZ[String],
+                            errorTypeDef: ISZ[ErrorTypeDef],
+                            errorTypeSetDef: ISZ[ErrorTypeSetDef],
+                            alias: ISZ[ErrorAliasDef],
+                            behaveStateMachine: ISZ[BehaveStateMachine])
+    extends Emv2Lib
 
 @enum object ErrorKind {
   'all
   'noerror
 }
 
-@datatype class ErrorTypeDef(id: Name, extendType: Option[Name]) extends Emv2Annex
+@datatype class ErrorTypeDef(id: Name,
+                             extendType: Option[Name],
+                             val uriFrag: String)
+    extends Emv2Annex
+    with AadlInstInfo
 
-@datatype class ErrorAliasDef(errorType: Name, aliseType: Name) extends Emv2Annex
+@datatype class ErrorAliasDef(errorType: Name, aliseType: Name)
+    extends Emv2Annex
 
-@datatype class ErrorTypeSetDef(id: Name, errorTypes: ISZ[Name]) extends Emv2Annex
+@datatype class ErrorTypeSetDef(id: Name, errorTypes: ISZ[Name])
+    extends Emv2Annex
 
-@datatype class BehaveStateMachine(
-  id: Name,
-  events: ISZ[ErrorEvent],
-  states: ISZ[ErrorState],
-  transitions: ISZ[ErrorTransition],
-  properties: ISZ[Property]
-) extends Emv2Annex
+@datatype class BehaveStateMachine(id: Name,
+                                   events: ISZ[ErrorEvent],
+                                   states: ISZ[ErrorState],
+                                   transitions: ISZ[ErrorTransition],
+                                   properties: ISZ[Property])
+    extends Emv2Annex
 
 @datatype class ErrorEvent(id: Name) extends Emv2Annex
 
 @datatype class ErrorState(id: Name, isInitial: B) extends Emv2Annex
 
-@datatype class ErrorTransition(id: Option[Name], sourceState: Name, condition: ErrorCondition, targetState: Name)
+@datatype class ErrorTransition(id: Option[Name],
+                                sourceState: Name,
+                                condition: ErrorCondition,
+                                targetState: Name)
     extends Emv2Annex
 
 @sig trait ErrorCondition extends Emv2Annex
 
-@datatype class ConditionTrigger(events: ISZ[Name], propagationPoints: ISZ[Emv2Propagation]) extends ErrorCondition
+@datatype class ConditionTrigger(events: ISZ[Name],
+                                 propagationPoints: ISZ[Emv2Propagation])
+    extends ErrorCondition
 
 @datatype class AndCondition(op: ISZ[ErrorCondition]) extends ErrorCondition
 
@@ -290,41 +310,42 @@ trait AadlInstInfo {
 
 @datatype class AllCondition(op: ISZ[ErrorCondition]) extends ErrorCondition
 
-@datatype class OrMoreCondition(number: Z, conditions: ISZ[ErrorCondition]) extends ErrorCondition
+@datatype class OrMoreCondition(number: Z, conditions: ISZ[ErrorCondition])
+    extends ErrorCondition
 
-@datatype class OrLessCondition(number: Z, conditions: ISZ[ErrorCondition]) extends ErrorCondition
+@datatype class OrLessCondition(number: Z, conditions: ISZ[ErrorCondition])
+    extends ErrorCondition
 
-@datatype class Emv2Clause(
-  libraries: ISZ[Name],
-  propagations: ISZ[Emv2Propagation],
-  flows: ISZ[Emv2Flow],
-  componentBehavior: Option[Emv2BehaviorSection],
-  properties: ISZ[Property]
-) extends Emv2Annex
-
-@datatype class Emv2Propagation(direction: PropagationDirection.Type, propagationPoint: Name, errorTokens: ISZ[Name])
+@datatype class Emv2Clause(libraries: ISZ[Name],
+                           propagations: ISZ[Emv2Propagation],
+                           flows: ISZ[Emv2Flow],
+                           componentBehavior: Option[Emv2BehaviorSection],
+                           properties: ISZ[Property])
     extends Emv2Annex
 
-@datatype class Emv2Flow(
-  identifier: Name,
-  kind: FlowKind.Type,
-  sourcePropagation: Option[Emv2Propagation],
-  sinkPropagation: Option[Emv2Propagation],
-  val uriFrag: String
-) extends Emv2Annex with AadlInstInfo
+@datatype class Emv2Propagation(direction: PropagationDirection.Type,
+                                propagationPoint: Name,
+                                errorTokens: ISZ[Name])
+    extends Emv2Annex
 
-@datatype class Emv2BehaviorSection(
-  events: ISZ[ErrorEvent],
-  transitions: ISZ[ErrorTransition],
-  propagations: ISZ[ErrorPropagation]
-) extends Emv2Annex
+@datatype class Emv2Flow(identifier: Name,
+                         kind: FlowKind.Type,
+                         sourcePropagation: Option[Emv2Propagation],
+                         sinkPropagation: Option[Emv2Propagation],
+                         val uriFrag: String)
+    extends Emv2Annex
+    with AadlInstInfo
 
-@datatype class ErrorPropagation(
-  id: Option[Name],
-  source: ISZ[Name],
-  condition: Option[ErrorCondition],
-  target: ISZ[Emv2Propagation]
-) extends Emv2Annex
+@datatype class Emv2BehaviorSection(events: ISZ[ErrorEvent],
+                                    transitions: ISZ[ErrorTransition],
+                                    propagations: ISZ[ErrorPropagation])
+    extends Emv2Annex
+
+@datatype class ErrorPropagation(id: Option[Name],
+                                 source: ISZ[Name],
+                                 condition: Option[ErrorCondition],
+                                 target: ISZ[Emv2Propagation])
+    extends Emv2Annex
 
 /**
   * End of EMV2 AST Section
@@ -336,15 +357,20 @@ trait AadlInstInfo {
 
 @sig trait SmfLib extends AnnexLib
 
-@datatype class SmfClause(classification: ISZ[SmfClassification], declass: ISZ[SmfDeclass]) extends SmfAnnex
+@datatype class SmfClause(classification: ISZ[SmfClassification],
+                          declass: ISZ[SmfDeclass])
+    extends SmfAnnex
 
-@datatype class SmfClassification(portName: Name, typeName: Name) extends SmfAnnex
+@datatype class SmfClassification(portName: Name, typeName: Name)
+    extends SmfAnnex
 
-@datatype class SmfDeclass(flowName: Name, srcType: Option[Name], snkType: Name) extends SmfAnnex
+@datatype class SmfDeclass(flowName: Name, srcType: Option[Name], snkType: Name)
+    extends SmfAnnex
 
 @datatype class SmfLibrary(types: ISZ[SmfType]) extends SmfLib
 
-@datatype class SmfType(typeName: Name, parentType: Option[Name]) extends SmfAnnex
+@datatype class SmfType(typeName: Name, parentType: Option[Name])
+    extends SmfAnnex
 
 /**
   * End of SMF AST Section

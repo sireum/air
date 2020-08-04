@@ -307,6 +307,13 @@ import MTransformer._
          case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
         }
         return r
+      case o: ErrorTypeDef =>
+        val r: PreResult[AadlInstInfo] = preErrorTypeDef(o) match {
+         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
+        }
+        return r
       case o: Emv2Flow =>
         val r: PreResult[AadlInstInfo] = preEmv2Flow(o) match {
          case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
@@ -1024,6 +1031,13 @@ import MTransformer._
         return r
       case o: Flow =>
         val r: MOption[AadlInstInfo] = postFlow(o) match {
+         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
+         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case _ => MNone[AadlInstInfo]()
+        }
+        return r
+      case o: ErrorTypeDef =>
+        val r: MOption[AadlInstInfo] = postErrorTypeDef(o) match {
          case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
          case MSome(_) => halt("Can only produce object of type AadlInstInfo")
          case _ => MNone[AadlInstInfo]()
@@ -1768,6 +1782,13 @@ import MTransformer._
           val r2: MOption[Option[Name]] = transformOption(o2.sink, transformName _)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
             MSome(o2(name = r0.getOrElse(o2.name), source = r1.getOrElse(o2.source), sink = r2.getOrElse(o2.sink)))
+          else
+            MNone()
+        case o2: ErrorTypeDef =>
+          val r0: MOption[Name] = transformName(o2.id)
+          val r1: MOption[Option[Name]] = transformOption(o2.extendType, transformName _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), extendType = r1.getOrElse(o2.extendType)))
           else
             MNone()
         case o2: Emv2Flow =>

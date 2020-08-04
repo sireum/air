@@ -45,6 +45,7 @@ object JSON {
         case o: FeatureAccess => return printFeatureAccess(o)
         case o: Connection => return printConnection(o)
         case o: Flow => return printFlow(o)
+        case o: ErrorTypeDef => return printErrorTypeDef(o)
         case o: Emv2Flow => return printEmv2Flow(o)
       }
     }
@@ -532,7 +533,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""ErrorTypeDef""""),
         ("id", printName(o.id)),
-        ("extendType", printOption(F, o.extendType, printName _))
+        ("extendType", printOption(F, o.extendType, printName _)),
+        ("uriFrag", printString(o.uriFrag))
       ))
     }
 
@@ -766,7 +768,7 @@ object JSON {
     }
 
     def parseAadlInstInfo(): AadlInstInfo = {
-      val t = parser.parseObjectTypes(ISZ("Component", "FeatureEnd", "FeatureGroup", "FeatureAccess", "Connection", "Flow", "Emv2Flow"))
+      val t = parser.parseObjectTypes(ISZ("Component", "FeatureEnd", "FeatureGroup", "FeatureAccess", "Connection", "Flow", "ErrorTypeDef", "Emv2Flow"))
       t.native match {
         case "Component" => val r = parseComponentT(T); return r
         case "FeatureEnd" => val r = parseFeatureEndT(T); return r
@@ -774,6 +776,7 @@ object JSON {
         case "FeatureAccess" => val r = parseFeatureAccessT(T); return r
         case "Connection" => val r = parseConnectionT(T); return r
         case "Flow" => val r = parseFlowT(T); return r
+        case "ErrorTypeDef" => val r = parseErrorTypeDefT(T); return r
         case "Emv2Flow" => val r = parseEmv2FlowT(T); return r
         case _ => val r = parseEmv2FlowT(T); return r
       }
@@ -1678,7 +1681,10 @@ object JSON {
       parser.parseObjectKey("extendType")
       val extendType = parser.parseOption(parseName _)
       parser.parseObjectNext()
-      return ErrorTypeDef(id, extendType)
+      parser.parseObjectKey("uriFrag")
+      val uriFrag = parser.parseString()
+      parser.parseObjectNext()
+      return ErrorTypeDef(id, extendType, uriFrag)
     }
 
     def parseErrorAliasDef(): ErrorAliasDef = {

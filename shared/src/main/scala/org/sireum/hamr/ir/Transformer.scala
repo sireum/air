@@ -87,6 +87,13 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AadlInstInfo]())
           }
           return r
+        case o: ErrorTypeDef =>
+          val r: PreResult[Context, AadlInstInfo] = preErrorTypeDef(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AadlInstInfo)) => PreResult(preCtx, continu, Some[AadlInstInfo](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AadlInstInfo]())
+          }
+          return r
         case o: Emv2Flow =>
           val r: PreResult[Context, AadlInstInfo] = preEmv2Flow(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: AadlInstInfo)) => PreResult(preCtx, continu, Some[AadlInstInfo](r))
@@ -804,6 +811,13 @@ object Transformer {
           return r
         case o: Flow =>
           val r: TPostResult[Context, AadlInstInfo] = postFlow(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AadlInstInfo)) => TPostResult(postCtx, Some[AadlInstInfo](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AadlInstInfo")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AadlInstInfo]())
+          }
+          return r
+        case o: ErrorTypeDef =>
+          val r: TPostResult[Context, AadlInstInfo] = postErrorTypeDef(ctx, o) match {
            case TPostResult(postCtx, Some(result: AadlInstInfo)) => TPostResult(postCtx, Some[AadlInstInfo](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type AadlInstInfo")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[AadlInstInfo]())
@@ -1588,6 +1602,13 @@ import Transformer._
             TPostResult(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), source = r1.resultOpt.getOrElse(o2.source), sink = r2.resultOpt.getOrElse(o2.sink))))
           else
             TPostResult(r2.ctx, None())
+        case o2: ErrorTypeDef =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.id)
+          val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.extendType, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), extendType = r1.resultOpt.getOrElse(o2.extendType))))
+          else
+            TPostResult(r1.ctx, None())
         case o2: Emv2Flow =>
           val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.identifier)
           val r1: TPostResult[Context, Option[Emv2Propagation]] = transformOption(r0.ctx, o2.sourcePropagation, transformEmv2Propagation _)

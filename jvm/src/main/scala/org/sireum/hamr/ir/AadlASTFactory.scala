@@ -32,21 +32,21 @@ import org.sireum.message.{FlatPos, Position}
 
 class AadlASTFactory {
 
-  def aadl(components: JList[Component], annexLib: JList[AnnexLib], dataComponents: JList[Component]): Aadl =
+  def aadl(components: JList[Component],
+           annexLib: JList[AnnexLib],
+           dataComponents: JList[Component]): Aadl =
     Aadl(isz(components), isz(annexLib), isz(dataComponents))
 
   def name(name: JList[Predef.String], pos: Position): Name =
     Name(isz(name).map(s => String(s)), if (pos != null) Some(pos) else None())
 
-  def flatPos(
-    url: Predef.String,
-    beginLine: Int,
-    beginColoumn: Int,
-    endLine: Int,
-    endColoumn: Int,
-    offset: Int,
-    length: Int
-  ): Position = {
+  def flatPos(url: Predef.String,
+              beginLine: Int,
+              beginColoumn: Int,
+              endLine: Int,
+              endColoumn: Int,
+              offset: Int,
+              length: Int): Position = {
     FlatPos(
       if (url != null) Some(url) else None(),
       U32(beginLine),
@@ -58,20 +58,18 @@ class AadlASTFactory {
     )
   }
 
-  def component(
-    identifier: Name,
-    category: AadlASTJavaFactory.ComponentCategory,
-    classifier: Classifier,
-    features: JList[Feature],
-    subComponents: JList[Component],
-    connections: JList[Connection],
-    connectionInstances: JList[ConnectionInstance],
-    properties: JList[Property],
-    flows: JList[Flow],
-    modes: JList[Mode],
-    annexes: JList[Annex],
-    uriFrag: String
-  ): Component =
+  def component(identifier: Name,
+                category: AadlASTJavaFactory.ComponentCategory,
+                classifier: Classifier,
+                features: JList[Feature],
+                subComponents: JList[Component],
+                connections: JList[Connection],
+                connectionInstances: JList[ConnectionInstance],
+                properties: JList[Property],
+                flows: JList[Flow],
+                modes: JList[Mode],
+                annexes: JList[Annex],
+                uriFrag: String): Component =
     Component(
       identifier,
       ComponentCategory.byName(category.name).get,
@@ -90,14 +88,12 @@ class AadlASTFactory {
   def classifier(name: Predef.String): Classifier =
     Classifier(name)
 
-  def featureEnd(
-    identifier: Name,
-    direction: AadlASTJavaFactory.Direction,
-    category: AadlASTJavaFactory.FeatureCategory,
-    classifier: Classifier,
-    properties: JList[Property],
-    uriFrag: String
-  ): FeatureEnd =
+  def featureEnd(identifier: Name,
+                 direction: AadlASTJavaFactory.Direction,
+                 category: AadlASTJavaFactory.FeatureCategory,
+                 classifier: Classifier,
+                 properties: JList[Property],
+                 uriFrag: String): FeatureEnd =
     FeatureEnd(
       identifier,
       Direction.byName(direction.name()).get,
@@ -107,15 +103,13 @@ class AadlASTFactory {
       uriFrag
     )
 
-  def featureGroup(
-    identifier: Name,
-    features: JList[Feature],
-    isInverse: Boolean,
-    category: AadlASTJavaFactory.FeatureCategory,
-    //classifier: Classifier,
-    properties: JList[Property],
-    uriFrag: String
-  ): FeatureGroup =
+  def featureGroup(identifier: Name,
+                   features: JList[Feature],
+                   isInverse: Boolean,
+                   category: AadlASTJavaFactory.FeatureCategory,
+                   //classifier: Classifier,
+                   properties: JList[Property],
+                   uriFrag: String): FeatureGroup =
     FeatureGroup(
       identifier,
       isz(features),
@@ -126,15 +120,13 @@ class AadlASTFactory {
       uriFrag
     )
 
-  def featureAccess(
-    identifier: Name,
-    category: AadlASTJavaFactory.FeatureCategory,
-    classifier: Classifier,
-    accessType: AadlASTJavaFactory.AccessType,
-    accessCategory: AadlASTJavaFactory.AccessCategory,
-    properties: JList[Property],
-    uriFrag: String
-  ): FeatureAccess =
+  def featureAccess(identifier: Name,
+                    category: AadlASTJavaFactory.FeatureCategory,
+                    classifier: Classifier,
+                    accessType: AadlASTJavaFactory.AccessType,
+                    accessCategory: AadlASTJavaFactory.AccessCategory,
+                    properties: JList[Property],
+                    uriFrag: String): FeatureAccess =
     FeatureAccess(
       identifier,
       FeatureCategory.byName(category.name()).get,
@@ -145,16 +137,14 @@ class AadlASTFactory {
       uriFrag
     )
 
-  def connection(
-    name: Name,
-    src: JList[EndPoint],
-    dst: JList[EndPoint],
-    kind: AadlASTJavaFactory.ConnectionKind,
-    isBiDirectional: Boolean,
-    connectionInstances: JList[Name],
-    properties: JList[Property],
-    uriFrag: String
-  ) =
+  def connection(name: Name,
+                 src: JList[EndPoint],
+                 dst: JList[EndPoint],
+                 kind: AadlASTJavaFactory.ConnectionKind,
+                 isBiDirectional: Boolean,
+                 connectionInstances: JList[Name],
+                 properties: JList[Property],
+                 uriFrag: String) =
     Connection(
       name,
       isz(src),
@@ -166,27 +156,37 @@ class AadlASTFactory {
       uriFrag
     )
 
-  def connectionInstance(
-    name: Name,
-    src: EndPoint,
-    dst: EndPoint,
-    kind: AadlASTJavaFactory.ConnectionKind,
-    connectionRefs: JList[ConnectionReference],
-    properties: JList[Property]
-  ) =
-    ConnectionInstance(name, src, dst, ConnectionKind.byName(kind.name()).get, isz(connectionRefs), isz(properties))
+  def connectionInstance(name: Name,
+                         src: EndPoint,
+                         dst: EndPoint,
+                         kind: AadlASTJavaFactory.ConnectionKind,
+                         connectionRefs: JList[ConnectionReference],
+                         properties: JList[Property]) =
+    ConnectionInstance(
+      name,
+      src,
+      dst,
+      ConnectionKind.byName(kind.name()).get,
+      isz(connectionRefs),
+      isz(properties)
+    )
 
   def connectionReference(component: Name, feature: Name, isParent: Boolean) =
     ConnectionReference(component, feature, isParent)
 
-  def endPoint(component: Name, feature: Name, direction: AadlASTJavaFactory.Direction) =
+  def endPoint(component: Name,
+               feature: Name,
+               direction: AadlASTJavaFactory.Direction) =
     EndPoint(
       component,
       if (feature != null) Some(feature) else None(),
-      if (direction != null) Some(Direction.byName(direction.name()).get) else None()
+      if (direction != null) Some(Direction.byName(direction.name()).get)
+      else None()
     )
 
-  def property(name: Name, propertyValues: JList[PropertyValue], appliesTo: JList[ElementRef]) =
+  def property(name: Name,
+               propertyValues: JList[PropertyValue],
+               appliesTo: JList[ElementRef]) =
     Property(name, isz(propertyValues), isz(appliesTo))
 
   def classifierProp(name: Predef.String) =
@@ -210,7 +210,11 @@ class AadlASTFactory {
   def mode(name: Name) =
     Mode(name)
 
-  def flow(name: Name, kind: AadlASTJavaFactory.FlowKind, source: Name, sink: Name, uriFrag: String) =
+  def flow(name: Name,
+           kind: AadlASTJavaFactory.FlowKind,
+           source: Name,
+           sink: Name,
+           uriFrag: String) =
     Flow(
       name,
       FlowKind.byName(kind.name()).get,
@@ -221,17 +225,21 @@ class AadlASTFactory {
 
   //-------------EMv2 Clause------------------
 
-  def emv2ElementRef(kind: AadlASTJavaFactory.Emv2ElementKind, name: Name, errorTypes: JList[Name]): Emv2ElementRef = {
-    Emv2ElementRef(Emv2ElementKind.byName(kind.name()).get, name, isz(errorTypes))
+  def emv2ElementRef(kind: AadlASTJavaFactory.Emv2ElementKind,
+                     name: Name,
+                     errorTypes: JList[Name]): Emv2ElementRef = {
+    Emv2ElementRef(
+      Emv2ElementKind.byName(kind.name()).get,
+      name,
+      isz(errorTypes)
+    )
   }
 
-  def emv2Clause(
-    libraries: JList[Name],
-    propagations: JList[Emv2Propagation],
-    flows: JList[Emv2Flow],
-    componentBehavior: Emv2BehaviorSection,
-    properties: JList[Property]
-  ): Emv2Clause = {
+  def emv2Clause(libraries: JList[Name],
+                 propagations: JList[Emv2Propagation],
+                 flows: JList[Emv2Flow],
+                 componentBehavior: Emv2BehaviorSection,
+                 properties: JList[Property]): Emv2Clause = {
     Emv2Clause(
       isz(libraries),
       isz(propagations),
@@ -241,21 +249,21 @@ class AadlASTFactory {
     )
   }
 
-  def emv2Propagation(
-    direction: AadlASTJavaFactory.PropagationDirection,
-    propagationPoint: Name,
-    errorTokens: JList[Name]
-  ): Emv2Propagation = {
-    Emv2Propagation(PropagationDirection.byName(direction.name()).get, propagationPoint, isz(errorTokens))
+  def emv2Propagation(direction: AadlASTJavaFactory.PropagationDirection,
+                      propagationPoint: Name,
+                      errorTokens: JList[Name]): Emv2Propagation = {
+    Emv2Propagation(
+      PropagationDirection.byName(direction.name()).get,
+      propagationPoint,
+      isz(errorTokens)
+    )
   }
 
-  def emv2Flow(
-    identifier: Name,
-    kind: AadlASTJavaFactory.FlowKind,
-    sourcePropagation: Emv2Propagation,
-    sinkPropagation: Emv2Propagation,
-    uriFrag: String
-  ): Emv2Flow = {
+  def emv2Flow(identifier: Name,
+               kind: AadlASTJavaFactory.FlowKind,
+               sourcePropagation: Emv2Propagation,
+               sinkPropagation: Emv2Propagation,
+               uriFrag: String): Emv2Flow = {
     Emv2Flow(
       identifier,
       FlowKind.byName(kind.name).get,
@@ -273,12 +281,10 @@ class AadlASTFactory {
     Emv2BehaviorSection(isz(events), isz(transitions), isz(propagations))
   }
 
-  def errorPropagation(
-    id: Name,
-    source: JList[Name],
-    condition: ErrorCondition,
-    target: JList[Emv2Propagation]
-  ): ErrorPropagation = {
+  def errorPropagation(id: Name,
+                       source: JList[Name],
+                       condition: ErrorCondition,
+                       target: JList[Emv2Propagation]): ErrorPropagation = {
     ErrorPropagation(
       if (id != null) Some(id) else None(),
       isz(source),
@@ -287,7 +293,10 @@ class AadlASTFactory {
     )
   }
 
-  def conditionTrigger(events: JList[Name], propagationPoints: JList[Emv2Propagation]): ConditionTrigger = {
+  def conditionTrigger(
+    events: JList[Name],
+    propagationPoints: JList[Emv2Propagation]
+  ): ConditionTrigger = {
     ConditionTrigger(isz(events), isz(propagationPoints))
   }
 
@@ -303,11 +312,13 @@ class AadlASTFactory {
     AllCondition(isz(op))
   }
 
-  def orLessCondition(number: Int, conds: JList[ErrorCondition]): OrLessCondition = {
+  def orLessCondition(number: Int,
+                      conds: JList[ErrorCondition]): OrLessCondition = {
     OrLessCondition(org.sireum.Z(number), isz(conds))
   }
 
-  def orMoreCondition(number: Int, conds: JList[ErrorCondition]): OrMoreCondition = {
+  def orMoreCondition(number: Int,
+                      conds: JList[ErrorCondition]): OrMoreCondition = {
     OrMoreCondition(org.sireum.Z(number), isz(conds))
   }
 
@@ -331,8 +342,14 @@ class AadlASTFactory {
     )
   }
 
-  def errorTypeDef(id: Name, extendType: Name): ErrorTypeDef = {
-    ErrorTypeDef(id, if (extendType != null) Some(extendType) else None())
+  def errorTypeDef(id: Name,
+                   extendType: Name,
+                   uriFrag: String): ErrorTypeDef = {
+    ErrorTypeDef(
+      id,
+      if (extendType != null) Some(extendType) else None(),
+      uriFrag
+    )
   }
 
   def errorAliseDef(errorType: Name, aliasType: Name): ErrorAliasDef = {
@@ -343,14 +360,18 @@ class AadlASTFactory {
     ErrorTypeSetDef(id, isz(errorTypes))
   }
 
-  def behaveStateMachine(
-    id: Name,
-    events: JList[ErrorEvent],
-    states: JList[ErrorState],
-    transitions: JList[ErrorTransition],
-    properties: JList[Property]
-  ): BehaveStateMachine = {
-    BehaveStateMachine(id, isz(events), isz(states), isz(transitions), isz(properties))
+  def behaveStateMachine(id: Name,
+                         events: JList[ErrorEvent],
+                         states: JList[ErrorState],
+                         transitions: JList[ErrorTransition],
+                         properties: JList[Property]): BehaveStateMachine = {
+    BehaveStateMachine(
+      id,
+      isz(events),
+      isz(states),
+      isz(transitions),
+      isz(properties)
+    )
   }
 
   def errorEvent(id: Name): ErrorEvent = {
@@ -361,13 +382,22 @@ class AadlASTFactory {
     ErrorState(id, org.sireum.B(isInitial))
   }
 
-  def errorTransition(id: Name, sourceState: Name, condition: ErrorCondition, targetState: Name): ErrorTransition = {
-    ErrorTransition(if (id != null) Some(id) else None(), sourceState, condition, targetState)
+  def errorTransition(id: Name,
+                      sourceState: Name,
+                      condition: ErrorCondition,
+                      targetState: Name): ErrorTransition = {
+    ErrorTransition(
+      if (id != null) Some(id) else None(),
+      sourceState,
+      condition,
+      targetState
+    )
   }
 
   //--------------SMF-------------------
 
-  def smfClause(classes: JList[SmfClassification], declasses: JList[SmfDeclass]): SmfClause = {
+  def smfClause(classes: JList[SmfClassification],
+                declasses: JList[SmfDeclass]): SmfClause = {
     SmfClause(isz(classes), isz(declasses))
   }
 
@@ -376,7 +406,11 @@ class AadlASTFactory {
   }
 
   def smfDeclass(flowName: Name, srcType: Name, snkType: Name): SmfDeclass = {
-    SmfDeclass(flowName, if (srcType != null) Some(srcType) else None(), snkType)
+    SmfDeclass(
+      flowName,
+      if (srcType != null) Some(srcType) else None(),
+      snkType
+    )
   }
 
   def smfLibrary(types: JList[SmfType]): SmfLibrary = {

@@ -299,8 +299,8 @@ public class AadlASTJavaFactory {
                 useTypes, errorTypeDefs, errorTypeSetDefList, alias, behaveStateMachines);
     }
 
-    public static ErrorTypeDef errorTypeDef(Name id, Name extendType) {
-        return f.errorTypeDef(id, extendType);
+    public static ErrorTypeDef errorTypeDef(Name id, Name extendType, String uriFrag) {
+        return f.errorTypeDef(id, extendType, uriFrag);
     }
 
     public static ErrorAliasDef errorAliseDef(Name errorType, Name aliasType) {

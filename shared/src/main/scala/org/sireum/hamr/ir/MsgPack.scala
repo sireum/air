@@ -152,6 +152,7 @@ object MsgPack {
         case o: FeatureAccess => writeFeatureAccess(o)
         case o: Connection => writeConnection(o)
         case o: Flow => writeFlow(o)
+        case o: ErrorTypeDef => writeErrorTypeDef(o)
         case o: Emv2Flow => writeEmv2Flow(o)
       }
     }
@@ -477,6 +478,7 @@ object MsgPack {
       writer.writeZ(Constants.ErrorTypeDef)
       writeName(o.id)
       writer.writeOption(o.extendType, writeName _)
+      writer.writeString(o.uriFrag)
     }
 
     def writeErrorAliasDef(o: ErrorAliasDef): Unit = {
@@ -683,6 +685,7 @@ object MsgPack {
         case Constants.FeatureAccess => val r = readFeatureAccessT(T); return r
         case Constants.Connection => val r = readConnectionT(T); return r
         case Constants.Flow => val r = readFlowT(T); return r
+        case Constants.ErrorTypeDef => val r = readErrorTypeDefT(T); return r
         case Constants.Emv2Flow => val r = readEmv2FlowT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of AadlInstInfo.")
@@ -1264,7 +1267,8 @@ object MsgPack {
       }
       val id = readName()
       val extendType = reader.readOption(readName _)
-      return ErrorTypeDef(id, extendType)
+      val uriFrag = reader.readString()
+      return ErrorTypeDef(id, extendType, uriFrag)
     }
 
     def readErrorAliasDef(): ErrorAliasDef = {

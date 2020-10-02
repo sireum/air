@@ -647,7 +647,7 @@ object MsgPack {
     def writeSmfType(o: SmfType): Unit = {
       writer.writeZ(Constants.SmfType)
       writeName(o.typeName)
-      writer.writeOption(o.parentType, writeName _)
+      writer.writeISZ(o.parentType, writeName _)
     }
 
     def writeOtherAnnex(o: OtherAnnex): Unit = {
@@ -1630,7 +1630,7 @@ object MsgPack {
         reader.expectZ(Constants.SmfType)
       }
       val typeName = readName()
-      val parentType = reader.readOption(readName _)
+      val parentType = reader.readISZ(readName _)
       return SmfType(typeName, parentType)
     }
 

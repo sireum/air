@@ -369,7 +369,7 @@ trait AadlInstInfo {
 
 @datatype class SmfLibrary(types: ISZ[SmfType]) extends SmfLib
 
-@datatype class SmfType(typeName: Name, parentType: Option[Name])
+@datatype class SmfType(typeName: Name, parentType: ISZ[Name])
     extends SmfAnnex
 
 /**

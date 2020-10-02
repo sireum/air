@@ -417,8 +417,8 @@ class AadlASTFactory {
     SmfLibrary(isz(types))
   }
 
-  def smfType(typeName: Name, parentName: Name): SmfType = {
-    SmfType(typeName, if (parentName != null) Some(parentName) else None())
+  def smfType(typeName: Name, parentName: JList[Name]): SmfType = {
+    SmfType(typeName,  isz(parentName))
   }
 
   def isz[T](l: JList[T]): ISZ[T] = {

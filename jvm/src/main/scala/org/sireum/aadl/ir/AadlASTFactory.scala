@@ -368,7 +368,7 @@ class AadlASTFactory {
   }
 
   def isz[T](l: JList[T]): ISZ[T] = {
-    import scala.collection.JavaConverters._
-    ISZ(l.asScala: _*)
+    import org.sireum.$internal.CollectionCompat.Converters._
+    ISZ(l.asScala.toIndexedSeq: _*)
   }
 }

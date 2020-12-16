@@ -2586,7 +2586,7 @@ import MTransformer._
             MNone()
         case o2: SmfType =>
           val r0: MOption[Name] = transformName(o2.typeName)
-          val r1: MOption[Option[Name]] = transformOption(o2.parentType, transformName _)
+          val r1: MOption[IS[Z, Name]] = transformISZ(o2.parentType, transformName _)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
             MSome(o2(typeName = r0.getOrElse(o2.typeName), parentType = r1.getOrElse(o2.parentType)))
           else
@@ -3507,7 +3507,7 @@ import MTransformer._
             MNone()
         case o2: SmfType =>
           val r0: MOption[Name] = transformName(o2.typeName)
-          val r1: MOption[Option[Name]] = transformOption(o2.parentType, transformName _)
+          val r1: MOption[IS[Z, Name]] = transformISZ(o2.parentType, transformName _)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
             MSome(o2(typeName = r0.getOrElse(o2.typeName), parentType = r1.getOrElse(o2.parentType)))
           else
@@ -3680,7 +3680,7 @@ import MTransformer._
       val o2: SmfType = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[Name] = transformName(o2.typeName)
-      val r1: MOption[Option[Name]] = transformOption(o2.parentType, transformName _)
+      val r1: MOption[IS[Z, Name]] = transformISZ(o2.parentType, transformName _)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty)
         MSome(o2(typeName = r0.getOrElse(o2.typeName), parentType = r1.getOrElse(o2.parentType)))
       else

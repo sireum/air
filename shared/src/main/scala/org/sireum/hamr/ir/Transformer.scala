@@ -2404,7 +2404,7 @@ import Transformer._
             TPostResult(r2.ctx, None())
         case o2: SmfType =>
           val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.typeName)
-          val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.parentType, transformName _)
+          val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.parentType, transformName _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(typeName = r0.resultOpt.getOrElse(o2.typeName), parentType = r1.resultOpt.getOrElse(o2.parentType))))
           else
@@ -3325,7 +3325,7 @@ import Transformer._
             TPostResult(r2.ctx, None())
         case o2: SmfType =>
           val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.typeName)
-          val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.parentType, transformName _)
+          val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.parentType, transformName _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(typeName = r0.resultOpt.getOrElse(o2.typeName), parentType = r1.resultOpt.getOrElse(o2.parentType))))
           else
@@ -3498,7 +3498,7 @@ import Transformer._
       val o2: SmfType = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.typeName)
-      val r1: TPostResult[Context, Option[Name]] = transformOption(r0.ctx, o2.parentType, transformName _)
+      val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.parentType, transformName _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
         TPostResult(r1.ctx, Some(o2(typeName = r0.resultOpt.getOrElse(o2.typeName), parentType = r1.resultOpt.getOrElse(o2.parentType))))
       else

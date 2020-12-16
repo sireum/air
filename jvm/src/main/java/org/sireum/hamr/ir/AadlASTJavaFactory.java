@@ -352,7 +352,7 @@ public class AadlASTJavaFactory {
         return f.smfLibrary(types);
     }
 
-    public static SmfType smfType(Name typeName, Name parentName) {
+    public static SmfType smfType(Name typeName, List<Name> parentName) {
         return f.smfType(typeName, parentName);
     }
 

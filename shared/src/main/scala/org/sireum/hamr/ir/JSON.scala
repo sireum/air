@@ -747,7 +747,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""SmfType""""),
         ("typeName", printName(o.typeName)),
-        ("parentType", printOption(F, o.parentType, printName _))
+        ("parentType", printISZ(F, o.parentType, printName _))
       ))
     }
 
@@ -2143,7 +2143,7 @@ object JSON {
       val typeName = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("parentType")
-      val parentType = parser.parseOption(parseName _)
+      val parentType = parser.parseISZ(parseName _)
       parser.parseObjectNext()
       return SmfType(typeName, parentType)
     }

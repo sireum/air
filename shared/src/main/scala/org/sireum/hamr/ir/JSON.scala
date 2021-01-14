@@ -39,13 +39,13 @@ object JSON {
 
     @pure def printAadlInstInfo(o: AadlInstInfo): ST = {
       o match {
-        case o: ErrorTypeDef => return printErrorTypeDef(o)
         case o: Component => return printComponent(o)
+        case o: ErrorTypeDef => return printErrorTypeDef(o)
         case o: FeatureEnd => return printFeatureEnd(o)
-        case o: Emv2Flow => return printEmv2Flow(o)
         case o: FeatureGroup => return printFeatureGroup(o)
         case o: FeatureAccess => return printFeatureAccess(o)
         case o: Connection => return printConnection(o)
+        case o: Emv2Flow => return printEmv2Flow(o)
         case o: Flow => return printFlow(o)
       }
     }
@@ -1296,15 +1296,15 @@ object JSON {
     }
 
     def parseAadlInstInfo(): AadlInstInfo = {
-      val t = parser.parseObjectTypes(ISZ("ErrorTypeDef", "Component", "FeatureEnd", "Emv2Flow", "FeatureGroup", "FeatureAccess", "Connection", "Flow"))
+      val t = parser.parseObjectTypes(ISZ("Component", "ErrorTypeDef", "FeatureEnd", "FeatureGroup", "FeatureAccess", "Connection", "Emv2Flow", "Flow"))
       t.native match {
-        case "ErrorTypeDef" => val r = parseErrorTypeDefT(T); return r
         case "Component" => val r = parseComponentT(T); return r
+        case "ErrorTypeDef" => val r = parseErrorTypeDefT(T); return r
         case "FeatureEnd" => val r = parseFeatureEndT(T); return r
-        case "Emv2Flow" => val r = parseEmv2FlowT(T); return r
         case "FeatureGroup" => val r = parseFeatureGroupT(T); return r
         case "FeatureAccess" => val r = parseFeatureAccessT(T); return r
         case "Connection" => val r = parseConnectionT(T); return r
+        case "Emv2Flow" => val r = parseEmv2FlowT(T); return r
         case "Flow" => val r = parseFlowT(T); return r
         case _ => val r = parseFlowT(T); return r
       }

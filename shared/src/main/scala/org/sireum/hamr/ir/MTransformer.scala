@@ -85,9 +85,21 @@ object MTransformer {
 
   val PostResultSmfType: MOption[SmfType] = MNone()
 
+  val PreResultAadl: PreResult[Aadl] = PreResult(T, MNone())
+
+  val PostResultAadl: MOption[Aadl] = MNone()
+
   val PreResultEmv2ElementRef: PreResult[Emv2ElementRef] = PreResult(T, MNone())
 
   val PostResultEmv2ElementRef: MOption[Emv2ElementRef] = MNone()
+
+  val PreResultName: PreResult[Name] = PreResult(T, MNone())
+
+  val PostResultName: MOption[Name] = MNone()
+
+  val PreResultComponent: PreResult[Component] = PreResult(T, MNone())
+
+  val PostResultComponent: MOption[Component] = MNone()
 
   val PreResultEmv2Library: PreResult[Emv2Library] = PreResult(T, MNone())
 
@@ -96,6 +108,10 @@ object MTransformer {
   val PreResultErrorTypeDef: PreResult[ErrorTypeDef] = PreResult(T, MNone())
 
   val PostResultErrorTypeDef: MOption[ErrorTypeDef] = MNone()
+
+  val PreResultClassifier: PreResult[Classifier] = PreResult(T, MNone())
+
+  val PostResultClassifier: MOption[Classifier] = MNone()
 
   val PreResultErrorAliasDef: PreResult[ErrorAliasDef] = PreResult(T, MNone())
 
@@ -109,29 +125,25 @@ object MTransformer {
 
   val PostResultBehaveStateMachine: MOption[BehaveStateMachine] = MNone()
 
-  val PreResultAadl: PreResult[Aadl] = PreResult(T, MNone())
+  val PreResultFeatureEnd: PreResult[FeatureEnd] = PreResult(T, MNone())
 
-  val PostResultAadl: MOption[Aadl] = MNone()
+  val PostResultFeatureEnd: MOption[FeatureEnd] = MNone()
 
   val PreResultErrorEvent: PreResult[ErrorEvent] = PreResult(T, MNone())
 
   val PostResultErrorEvent: MOption[ErrorEvent] = MNone()
 
-  val PreResultName: PreResult[Name] = PreResult(T, MNone())
-
-  val PostResultName: MOption[Name] = MNone()
-
   val PreResultErrorState: PreResult[ErrorState] = PreResult(T, MNone())
 
   val PostResultErrorState: MOption[ErrorState] = MNone()
 
-  val PreResultComponent: PreResult[Component] = PreResult(T, MNone())
-
-  val PostResultComponent: MOption[Component] = MNone()
-
   val PreResultErrorTransition: PreResult[ErrorTransition] = PreResult(T, MNone())
 
   val PostResultErrorTransition: MOption[ErrorTransition] = MNone()
+
+  val PreResultFeatureGroup: PreResult[FeatureGroup] = PreResult(T, MNone())
+
+  val PostResultFeatureGroup: MOption[FeatureGroup] = MNone()
 
   val PreResultConditionTrigger: PreResult[ConditionTrigger] = PreResult(T, MNone())
 
@@ -141,6 +153,10 @@ object MTransformer {
 
   val PostResultAndCondition: MOption[AndCondition] = MNone()
 
+  val PreResultFeatureAccess: PreResult[FeatureAccess] = PreResult(T, MNone())
+
+  val PostResultFeatureAccess: MOption[FeatureAccess] = MNone()
+
   val PreResultOrCondition: PreResult[OrCondition] = PreResult(T, MNone())
 
   val PostResultOrCondition: MOption[OrCondition] = MNone()
@@ -148,10 +164,6 @@ object MTransformer {
   val PreResultAllCondition: PreResult[AllCondition] = PreResult(T, MNone())
 
   val PostResultAllCondition: MOption[AllCondition] = MNone()
-
-  val PreResultClassifier: PreResult[Classifier] = PreResult(T, MNone())
-
-  val PostResultClassifier: MOption[Classifier] = MNone()
 
   val PreResultOrMoreCondition: PreResult[OrMoreCondition] = PreResult(T, MNone())
 
@@ -165,41 +177,29 @@ object MTransformer {
 
   val PostResultEmv2Clause: MOption[Emv2Clause] = MNone()
 
-  val PreResultFeatureEnd: PreResult[FeatureEnd] = PreResult(T, MNone())
-
-  val PostResultFeatureEnd: MOption[FeatureEnd] = MNone()
-
   val PreResultEmv2Propagation: PreResult[Emv2Propagation] = PreResult(T, MNone())
 
   val PostResultEmv2Propagation: MOption[Emv2Propagation] = MNone()
-
-  val PreResultEmv2Flow: PreResult[Emv2Flow] = PreResult(T, MNone())
-
-  val PostResultEmv2Flow: MOption[Emv2Flow] = MNone()
-
-  val PreResultFeatureGroup: PreResult[FeatureGroup] = PreResult(T, MNone())
-
-  val PostResultFeatureGroup: MOption[FeatureGroup] = MNone()
-
-  val PreResultEmv2BehaviorSection: PreResult[Emv2BehaviorSection] = PreResult(T, MNone())
-
-  val PostResultEmv2BehaviorSection: MOption[Emv2BehaviorSection] = MNone()
-
-  val PreResultFeatureAccess: PreResult[FeatureAccess] = PreResult(T, MNone())
-
-  val PostResultFeatureAccess: MOption[FeatureAccess] = MNone()
-
-  val PreResultErrorPropagation: PreResult[ErrorPropagation] = PreResult(T, MNone())
-
-  val PostResultErrorPropagation: MOption[ErrorPropagation] = MNone()
 
   val PreResultConnection: PreResult[Connection] = PreResult(T, MNone())
 
   val PostResultConnection: MOption[Connection] = MNone()
 
+  val PreResultEmv2Flow: PreResult[Emv2Flow] = PreResult(T, MNone())
+
+  val PostResultEmv2Flow: MOption[Emv2Flow] = MNone()
+
+  val PreResultEmv2BehaviorSection: PreResult[Emv2BehaviorSection] = PreResult(T, MNone())
+
+  val PostResultEmv2BehaviorSection: MOption[Emv2BehaviorSection] = MNone()
+
   val PreResultConnectionInstance: PreResult[ConnectionInstance] = PreResult(T, MNone())
 
   val PostResultConnectionInstance: MOption[ConnectionInstance] = MNone()
+
+  val PreResultErrorPropagation: PreResult[ErrorPropagation] = PreResult(T, MNone())
+
+  val PostResultErrorPropagation: MOption[ErrorPropagation] = MNone()
 
   val PreResultConnectionReference: PreResult[ConnectionReference] = PreResult(T, MNone())
 
@@ -500,6 +500,67 @@ import MTransformer._
     return PreResultSmfType
   }
 
+  def preAadlInstInfo(o: AadlInstInfo): PreResult[AadlInstInfo] = {
+    o match {
+      case o: Component =>
+        val r: PreResult[AadlInstInfo] = preComponent(o) match {
+         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
+        }
+        return r
+      case o: ErrorTypeDef =>
+        val r: PreResult[AadlInstInfo] = preErrorTypeDef(o) match {
+         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
+        }
+        return r
+      case o: FeatureEnd =>
+        val r: PreResult[AadlInstInfo] = preFeatureEnd(o) match {
+         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
+        }
+        return r
+      case o: FeatureGroup =>
+        val r: PreResult[AadlInstInfo] = preFeatureGroup(o) match {
+         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
+        }
+        return r
+      case o: FeatureAccess =>
+        val r: PreResult[AadlInstInfo] = preFeatureAccess(o) match {
+         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
+        }
+        return r
+      case o: Connection =>
+        val r: PreResult[AadlInstInfo] = preConnection(o) match {
+         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
+        }
+        return r
+      case o: Emv2Flow =>
+        val r: PreResult[AadlInstInfo] = preEmv2Flow(o) match {
+         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
+        }
+        return r
+      case o: Flow =>
+        val r: PreResult[AadlInstInfo] = preFlow(o) match {
+         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
+        }
+        return r
+    }
+  }
+
   def preEmv2Annex(o: Emv2Annex): PreResult[Emv2Annex] = {
     o match {
       case o: ErrorTypeDef =>
@@ -643,8 +704,20 @@ import MTransformer._
     }
   }
 
+  def preAadl(o: Aadl): PreResult[Aadl] = {
+    return PreResultAadl
+  }
+
   def preEmv2ElementRef(o: Emv2ElementRef): PreResult[Emv2ElementRef] = {
     return PreResultEmv2ElementRef
+  }
+
+  def preName(o: Name): PreResult[Name] = {
+    return PreResultName
+  }
+
+  def preComponent(o: Component): PreResult[Component] = {
+    return PreResultComponent
   }
 
   def preEmv2Library(o: Emv2Library): PreResult[Emv2Library] = {
@@ -655,6 +728,10 @@ import MTransformer._
     return PreResultErrorTypeDef
   }
 
+  def preClassifier(o: Classifier): PreResult[Classifier] = {
+    return PreResultClassifier
+  }
+
   def preErrorAliasDef(o: ErrorAliasDef): PreResult[ErrorAliasDef] = {
     return PreResultErrorAliasDef
   }
@@ -663,93 +740,54 @@ import MTransformer._
     return PreResultErrorTypeSetDef
   }
 
-  def preBehaveStateMachine(o: BehaveStateMachine): PreResult[BehaveStateMachine] = {
-    return PreResultBehaveStateMachine
-  }
-
-  def preAadlInstInfo(o: AadlInstInfo): PreResult[AadlInstInfo] = {
+  def preFeature(o: Feature): PreResult[Feature] = {
     o match {
-      case o: ErrorTypeDef =>
-        val r: PreResult[AadlInstInfo] = preErrorTypeDef(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
-         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
-        }
-        return r
-      case o: Component =>
-        val r: PreResult[AadlInstInfo] = preComponent(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
-         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
-        }
-        return r
       case o: FeatureEnd =>
-        val r: PreResult[AadlInstInfo] = preFeatureEnd(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
-         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
-        }
-        return r
-      case o: Emv2Flow =>
-        val r: PreResult[AadlInstInfo] = preEmv2Flow(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
-         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
+        val r: PreResult[Feature] = preFeatureEnd(o) match {
+         case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
+         case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
         }
         return r
       case o: FeatureGroup =>
-        val r: PreResult[AadlInstInfo] = preFeatureGroup(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
-         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
+        val r: PreResult[Feature] = preFeatureGroup(o) match {
+         case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
+         case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
         }
         return r
       case o: FeatureAccess =>
-        val r: PreResult[AadlInstInfo] = preFeatureAccess(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
-         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
-        }
-        return r
-      case o: Connection =>
-        val r: PreResult[AadlInstInfo] = preConnection(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
-         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
-        }
-        return r
-      case o: Flow =>
-        val r: PreResult[AadlInstInfo] = preFlow(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
-         case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
+        val r: PreResult[Feature] = preFeatureAccess(o) match {
+         case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
+         case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
         }
         return r
     }
   }
 
-  def preAadl(o: Aadl): PreResult[Aadl] = {
-    return PreResultAadl
+  def preBehaveStateMachine(o: BehaveStateMachine): PreResult[BehaveStateMachine] = {
+    return PreResultBehaveStateMachine
+  }
+
+  def preFeatureEnd(o: FeatureEnd): PreResult[FeatureEnd] = {
+    return PreResultFeatureEnd
   }
 
   def preErrorEvent(o: ErrorEvent): PreResult[ErrorEvent] = {
     return PreResultErrorEvent
   }
 
-  def preName(o: Name): PreResult[Name] = {
-    return PreResultName
-  }
-
   def preErrorState(o: ErrorState): PreResult[ErrorState] = {
     return PreResultErrorState
   }
 
-  def preComponent(o: Component): PreResult[Component] = {
-    return PreResultComponent
-  }
-
   def preErrorTransition(o: ErrorTransition): PreResult[ErrorTransition] = {
     return PreResultErrorTransition
+  }
+
+  def preFeatureGroup(o: FeatureGroup): PreResult[FeatureGroup] = {
+    return PreResultFeatureGroup
   }
 
   def preErrorCondition(o: ErrorCondition): PreResult[ErrorCondition] = {
@@ -807,16 +845,16 @@ import MTransformer._
     return PreResultAndCondition
   }
 
+  def preFeatureAccess(o: FeatureAccess): PreResult[FeatureAccess] = {
+    return PreResultFeatureAccess
+  }
+
   def preOrCondition(o: OrCondition): PreResult[OrCondition] = {
     return PreResultOrCondition
   }
 
   def preAllCondition(o: AllCondition): PreResult[AllCondition] = {
     return PreResultAllCondition
-  }
-
-  def preClassifier(o: Classifier): PreResult[Classifier] = {
-    return PreResultClassifier
   }
 
   def preOrMoreCondition(o: OrMoreCondition): PreResult[OrMoreCondition] = {
@@ -831,66 +869,28 @@ import MTransformer._
     return PreResultEmv2Clause
   }
 
-  def preFeature(o: Feature): PreResult[Feature] = {
-    o match {
-      case o: FeatureEnd =>
-        val r: PreResult[Feature] = preFeatureEnd(o) match {
-         case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
-         case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
-        }
-        return r
-      case o: FeatureGroup =>
-        val r: PreResult[Feature] = preFeatureGroup(o) match {
-         case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
-         case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
-        }
-        return r
-      case o: FeatureAccess =>
-        val r: PreResult[Feature] = preFeatureAccess(o) match {
-         case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
-         case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
-        }
-        return r
-    }
-  }
-
-  def preFeatureEnd(o: FeatureEnd): PreResult[FeatureEnd] = {
-    return PreResultFeatureEnd
-  }
-
   def preEmv2Propagation(o: Emv2Propagation): PreResult[Emv2Propagation] = {
     return PreResultEmv2Propagation
-  }
-
-  def preEmv2Flow(o: Emv2Flow): PreResult[Emv2Flow] = {
-    return PreResultEmv2Flow
-  }
-
-  def preFeatureGroup(o: FeatureGroup): PreResult[FeatureGroup] = {
-    return PreResultFeatureGroup
-  }
-
-  def preEmv2BehaviorSection(o: Emv2BehaviorSection): PreResult[Emv2BehaviorSection] = {
-    return PreResultEmv2BehaviorSection
-  }
-
-  def preFeatureAccess(o: FeatureAccess): PreResult[FeatureAccess] = {
-    return PreResultFeatureAccess
-  }
-
-  def preErrorPropagation(o: ErrorPropagation): PreResult[ErrorPropagation] = {
-    return PreResultErrorPropagation
   }
 
   def preConnection(o: Connection): PreResult[Connection] = {
     return PreResultConnection
   }
 
+  def preEmv2Flow(o: Emv2Flow): PreResult[Emv2Flow] = {
+    return PreResultEmv2Flow
+  }
+
+  def preEmv2BehaviorSection(o: Emv2BehaviorSection): PreResult[Emv2BehaviorSection] = {
+    return PreResultEmv2BehaviorSection
+  }
+
   def preConnectionInstance(o: ConnectionInstance): PreResult[ConnectionInstance] = {
     return PreResultConnectionInstance
+  }
+
+  def preErrorPropagation(o: ErrorPropagation): PreResult[ErrorPropagation] = {
+    return PreResultErrorPropagation
   }
 
   def preConnectionReference(o: ConnectionReference): PreResult[ConnectionReference] = {
@@ -1785,6 +1785,67 @@ import MTransformer._
     return PostResultSmfType
   }
 
+  def postAadlInstInfo(o: AadlInstInfo): MOption[AadlInstInfo] = {
+    o match {
+      case o: Component =>
+        val r: MOption[AadlInstInfo] = postComponent(o) match {
+         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
+         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case _ => MNone[AadlInstInfo]()
+        }
+        return r
+      case o: ErrorTypeDef =>
+        val r: MOption[AadlInstInfo] = postErrorTypeDef(o) match {
+         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
+         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case _ => MNone[AadlInstInfo]()
+        }
+        return r
+      case o: FeatureEnd =>
+        val r: MOption[AadlInstInfo] = postFeatureEnd(o) match {
+         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
+         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case _ => MNone[AadlInstInfo]()
+        }
+        return r
+      case o: FeatureGroup =>
+        val r: MOption[AadlInstInfo] = postFeatureGroup(o) match {
+         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
+         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case _ => MNone[AadlInstInfo]()
+        }
+        return r
+      case o: FeatureAccess =>
+        val r: MOption[AadlInstInfo] = postFeatureAccess(o) match {
+         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
+         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case _ => MNone[AadlInstInfo]()
+        }
+        return r
+      case o: Connection =>
+        val r: MOption[AadlInstInfo] = postConnection(o) match {
+         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
+         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case _ => MNone[AadlInstInfo]()
+        }
+        return r
+      case o: Emv2Flow =>
+        val r: MOption[AadlInstInfo] = postEmv2Flow(o) match {
+         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
+         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case _ => MNone[AadlInstInfo]()
+        }
+        return r
+      case o: Flow =>
+        val r: MOption[AadlInstInfo] = postFlow(o) match {
+         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
+         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case _ => MNone[AadlInstInfo]()
+        }
+        return r
+    }
+  }
+
   def postEmv2Annex(o: Emv2Annex): MOption[Emv2Annex] = {
     o match {
       case o: ErrorTypeDef =>
@@ -1928,8 +1989,20 @@ import MTransformer._
     }
   }
 
+  def postAadl(o: Aadl): MOption[Aadl] = {
+    return PostResultAadl
+  }
+
   def postEmv2ElementRef(o: Emv2ElementRef): MOption[Emv2ElementRef] = {
     return PostResultEmv2ElementRef
+  }
+
+  def postName(o: Name): MOption[Name] = {
+    return PostResultName
+  }
+
+  def postComponent(o: Component): MOption[Component] = {
+    return PostResultComponent
   }
 
   def postEmv2Library(o: Emv2Library): MOption[Emv2Library] = {
@@ -1940,6 +2013,10 @@ import MTransformer._
     return PostResultErrorTypeDef
   }
 
+  def postClassifier(o: Classifier): MOption[Classifier] = {
+    return PostResultClassifier
+  }
+
   def postErrorAliasDef(o: ErrorAliasDef): MOption[ErrorAliasDef] = {
     return PostResultErrorAliasDef
   }
@@ -1948,93 +2025,54 @@ import MTransformer._
     return PostResultErrorTypeSetDef
   }
 
-  def postBehaveStateMachine(o: BehaveStateMachine): MOption[BehaveStateMachine] = {
-    return PostResultBehaveStateMachine
-  }
-
-  def postAadlInstInfo(o: AadlInstInfo): MOption[AadlInstInfo] = {
+  def postFeature(o: Feature): MOption[Feature] = {
     o match {
-      case o: ErrorTypeDef =>
-        val r: MOption[AadlInstInfo] = postErrorTypeDef(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
-         case _ => MNone[AadlInstInfo]()
-        }
-        return r
-      case o: Component =>
-        val r: MOption[AadlInstInfo] = postComponent(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
-         case _ => MNone[AadlInstInfo]()
-        }
-        return r
       case o: FeatureEnd =>
-        val r: MOption[AadlInstInfo] = postFeatureEnd(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
-         case _ => MNone[AadlInstInfo]()
-        }
-        return r
-      case o: Emv2Flow =>
-        val r: MOption[AadlInstInfo] = postEmv2Flow(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
-         case _ => MNone[AadlInstInfo]()
+        val r: MOption[Feature] = postFeatureEnd(o) match {
+         case MSome(result: Feature) => MSome[Feature](result)
+         case MSome(_) => halt("Can only produce object of type Feature")
+         case _ => MNone[Feature]()
         }
         return r
       case o: FeatureGroup =>
-        val r: MOption[AadlInstInfo] = postFeatureGroup(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
-         case _ => MNone[AadlInstInfo]()
+        val r: MOption[Feature] = postFeatureGroup(o) match {
+         case MSome(result: Feature) => MSome[Feature](result)
+         case MSome(_) => halt("Can only produce object of type Feature")
+         case _ => MNone[Feature]()
         }
         return r
       case o: FeatureAccess =>
-        val r: MOption[AadlInstInfo] = postFeatureAccess(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
-         case _ => MNone[AadlInstInfo]()
-        }
-        return r
-      case o: Connection =>
-        val r: MOption[AadlInstInfo] = postConnection(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
-         case _ => MNone[AadlInstInfo]()
-        }
-        return r
-      case o: Flow =>
-        val r: MOption[AadlInstInfo] = postFlow(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
-         case _ => MNone[AadlInstInfo]()
+        val r: MOption[Feature] = postFeatureAccess(o) match {
+         case MSome(result: Feature) => MSome[Feature](result)
+         case MSome(_) => halt("Can only produce object of type Feature")
+         case _ => MNone[Feature]()
         }
         return r
     }
   }
 
-  def postAadl(o: Aadl): MOption[Aadl] = {
-    return PostResultAadl
+  def postBehaveStateMachine(o: BehaveStateMachine): MOption[BehaveStateMachine] = {
+    return PostResultBehaveStateMachine
+  }
+
+  def postFeatureEnd(o: FeatureEnd): MOption[FeatureEnd] = {
+    return PostResultFeatureEnd
   }
 
   def postErrorEvent(o: ErrorEvent): MOption[ErrorEvent] = {
     return PostResultErrorEvent
   }
 
-  def postName(o: Name): MOption[Name] = {
-    return PostResultName
-  }
-
   def postErrorState(o: ErrorState): MOption[ErrorState] = {
     return PostResultErrorState
   }
 
-  def postComponent(o: Component): MOption[Component] = {
-    return PostResultComponent
-  }
-
   def postErrorTransition(o: ErrorTransition): MOption[ErrorTransition] = {
     return PostResultErrorTransition
+  }
+
+  def postFeatureGroup(o: FeatureGroup): MOption[FeatureGroup] = {
+    return PostResultFeatureGroup
   }
 
   def postErrorCondition(o: ErrorCondition): MOption[ErrorCondition] = {
@@ -2092,16 +2130,16 @@ import MTransformer._
     return PostResultAndCondition
   }
 
+  def postFeatureAccess(o: FeatureAccess): MOption[FeatureAccess] = {
+    return PostResultFeatureAccess
+  }
+
   def postOrCondition(o: OrCondition): MOption[OrCondition] = {
     return PostResultOrCondition
   }
 
   def postAllCondition(o: AllCondition): MOption[AllCondition] = {
     return PostResultAllCondition
-  }
-
-  def postClassifier(o: Classifier): MOption[Classifier] = {
-    return PostResultClassifier
   }
 
   def postOrMoreCondition(o: OrMoreCondition): MOption[OrMoreCondition] = {
@@ -2116,66 +2154,28 @@ import MTransformer._
     return PostResultEmv2Clause
   }
 
-  def postFeature(o: Feature): MOption[Feature] = {
-    o match {
-      case o: FeatureEnd =>
-        val r: MOption[Feature] = postFeatureEnd(o) match {
-         case MSome(result: Feature) => MSome[Feature](result)
-         case MSome(_) => halt("Can only produce object of type Feature")
-         case _ => MNone[Feature]()
-        }
-        return r
-      case o: FeatureGroup =>
-        val r: MOption[Feature] = postFeatureGroup(o) match {
-         case MSome(result: Feature) => MSome[Feature](result)
-         case MSome(_) => halt("Can only produce object of type Feature")
-         case _ => MNone[Feature]()
-        }
-        return r
-      case o: FeatureAccess =>
-        val r: MOption[Feature] = postFeatureAccess(o) match {
-         case MSome(result: Feature) => MSome[Feature](result)
-         case MSome(_) => halt("Can only produce object of type Feature")
-         case _ => MNone[Feature]()
-        }
-        return r
-    }
-  }
-
-  def postFeatureEnd(o: FeatureEnd): MOption[FeatureEnd] = {
-    return PostResultFeatureEnd
-  }
-
   def postEmv2Propagation(o: Emv2Propagation): MOption[Emv2Propagation] = {
     return PostResultEmv2Propagation
-  }
-
-  def postEmv2Flow(o: Emv2Flow): MOption[Emv2Flow] = {
-    return PostResultEmv2Flow
-  }
-
-  def postFeatureGroup(o: FeatureGroup): MOption[FeatureGroup] = {
-    return PostResultFeatureGroup
-  }
-
-  def postEmv2BehaviorSection(o: Emv2BehaviorSection): MOption[Emv2BehaviorSection] = {
-    return PostResultEmv2BehaviorSection
-  }
-
-  def postFeatureAccess(o: FeatureAccess): MOption[FeatureAccess] = {
-    return PostResultFeatureAccess
-  }
-
-  def postErrorPropagation(o: ErrorPropagation): MOption[ErrorPropagation] = {
-    return PostResultErrorPropagation
   }
 
   def postConnection(o: Connection): MOption[Connection] = {
     return PostResultConnection
   }
 
+  def postEmv2Flow(o: Emv2Flow): MOption[Emv2Flow] = {
+    return PostResultEmv2Flow
+  }
+
+  def postEmv2BehaviorSection(o: Emv2BehaviorSection): MOption[Emv2BehaviorSection] = {
+    return PostResultEmv2BehaviorSection
+  }
+
   def postConnectionInstance(o: ConnectionInstance): MOption[ConnectionInstance] = {
     return PostResultConnectionInstance
+  }
+
+  def postErrorPropagation(o: ErrorPropagation): MOption[ErrorPropagation] = {
+    return PostResultErrorPropagation
   }
 
   def postConnectionReference(o: ConnectionReference): MOption[ConnectionReference] = {
@@ -3230,6 +3230,103 @@ import MTransformer._
     }
   }
 
+  def transformAadlInstInfo(o: AadlInstInfo): MOption[AadlInstInfo] = {
+    val preR: PreResult[AadlInstInfo] = preAadlInstInfo(o)
+    val r: MOption[AadlInstInfo] = if (preR.continu) {
+      val o2: AadlInstInfo = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[AadlInstInfo] = o2 match {
+        case o2: Component =>
+          val r0: MOption[Name] = transformName(o2.identifier)
+          val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
+          val r2: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
+          val r3: MOption[IS[Z, Component]] = transformISZ(o2.subComponents, transformComponent _)
+          val r4: MOption[IS[Z, Connection]] = transformISZ(o2.connections, transformConnection _)
+          val r5: MOption[IS[Z, ConnectionInstance]] = transformISZ(o2.connectionInstances, transformConnectionInstance _)
+          val r6: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          val r7: MOption[IS[Z, Flow]] = transformISZ(o2.flows, transformFlow _)
+          val r8: MOption[IS[Z, Mode]] = transformISZ(o2.modes, transformMode _)
+          val r9: MOption[IS[Z, Annex]] = transformISZ(o2.annexes, transformAnnex _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty || r6.nonEmpty || r7.nonEmpty || r8.nonEmpty || r9.nonEmpty)
+            MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), features = r2.getOrElse(o2.features), subComponents = r3.getOrElse(o2.subComponents), connections = r4.getOrElse(o2.connections), connectionInstances = r5.getOrElse(o2.connectionInstances), properties = r6.getOrElse(o2.properties), flows = r7.getOrElse(o2.flows), modes = r8.getOrElse(o2.modes), annexes = r9.getOrElse(o2.annexes)))
+          else
+            MNone()
+        case o2: ErrorTypeDef =>
+          val r0: MOption[Name] = transformName(o2.id)
+          val r1: MOption[Option[Name]] = transformOption(o2.extendType, transformName _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), extendType = r1.getOrElse(o2.extendType)))
+          else
+            MNone()
+        case o2: FeatureEnd =>
+          val r0: MOption[Name] = transformName(o2.identifier)
+          val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
+          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
+          else
+            MNone()
+        case o2: FeatureGroup =>
+          val r0: MOption[Name] = transformName(o2.identifier)
+          val r1: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
+          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features), properties = r2.getOrElse(o2.properties)))
+          else
+            MNone()
+        case o2: FeatureAccess =>
+          val r0: MOption[Name] = transformName(o2.identifier)
+          val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
+          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
+          else
+            MNone()
+        case o2: Connection =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[IS[Z, EndPoint]] = transformISZ(o2.src, transformEndPoint _)
+          val r2: MOption[IS[Z, EndPoint]] = transformISZ(o2.dst, transformEndPoint _)
+          val r3: MOption[IS[Z, Name]] = transformISZ(o2.connectionInstances, transformName _)
+          val r4: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), src = r1.getOrElse(o2.src), dst = r2.getOrElse(o2.dst), connectionInstances = r3.getOrElse(o2.connectionInstances), properties = r4.getOrElse(o2.properties)))
+          else
+            MNone()
+        case o2: Emv2Flow =>
+          val r0: MOption[Name] = transformName(o2.identifier)
+          val r1: MOption[Option[Emv2Propagation]] = transformOption(o2.sourcePropagation, transformEmv2Propagation _)
+          val r2: MOption[Option[Emv2Propagation]] = transformOption(o2.sinkPropagation, transformEmv2Propagation _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(identifier = r0.getOrElse(o2.identifier), sourcePropagation = r1.getOrElse(o2.sourcePropagation), sinkPropagation = r2.getOrElse(o2.sinkPropagation)))
+          else
+            MNone()
+        case o2: Flow =>
+          val r0: MOption[Name] = transformName(o2.name)
+          val r1: MOption[Option[Name]] = transformOption(o2.source, transformName _)
+          val r2: MOption[Option[Name]] = transformOption(o2.sink, transformName _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), source = r1.getOrElse(o2.source), sink = r2.getOrElse(o2.sink)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: AadlInstInfo = r.getOrElse(o)
+    val postR: MOption[AadlInstInfo] = postAadlInstInfo(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformEmv2Annex(o: Emv2Annex): MOption[Emv2Annex] = {
     val preR: PreResult[Emv2Annex] = preEmv2Annex(o)
     val r: MOption[Emv2Annex] = if (preR.continu) {
@@ -3421,6 +3518,35 @@ import MTransformer._
     }
   }
 
+  def transformAadl(o: Aadl): MOption[Aadl] = {
+    val preR: PreResult[Aadl] = preAadl(o)
+    val r: MOption[Aadl] = if (preR.continu) {
+      val o2: Aadl = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, Component]] = transformISZ(o2.components, transformComponent _)
+      val r1: MOption[IS[Z, AnnexLib]] = transformISZ(o2.annexLib, transformAnnexLib _)
+      val r2: MOption[IS[Z, Component]] = transformISZ(o2.dataComponents, transformComponent _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(components = r0.getOrElse(o2.components), annexLib = r1.getOrElse(o2.annexLib), dataComponents = r2.getOrElse(o2.dataComponents)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: Aadl = r.getOrElse(o)
+    val postR: MOption[Aadl] = postAadl(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformEmv2ElementRef(o: Emv2ElementRef): MOption[Emv2ElementRef] = {
     val preR: PreResult[Emv2ElementRef] = preEmv2ElementRef(o)
     val r: MOption[Emv2ElementRef] = if (preR.continu) {
@@ -3440,6 +3566,68 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: Emv2ElementRef = r.getOrElse(o)
     val postR: MOption[Emv2ElementRef] = postEmv2ElementRef(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformName(o: Name): MOption[Name] = {
+    val preR: PreResult[Name] = preName(o)
+    val r: MOption[Name] = if (preR.continu) {
+      val o2: Name = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: Name = r.getOrElse(o)
+    val postR: MOption[Name] = postName(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformComponent(o: Component): MOption[Component] = {
+    val preR: PreResult[Component] = preComponent(o)
+    val r: MOption[Component] = if (preR.continu) {
+      val o2: Component = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.identifier)
+      val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
+      val r2: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
+      val r3: MOption[IS[Z, Component]] = transformISZ(o2.subComponents, transformComponent _)
+      val r4: MOption[IS[Z, Connection]] = transformISZ(o2.connections, transformConnection _)
+      val r5: MOption[IS[Z, ConnectionInstance]] = transformISZ(o2.connectionInstances, transformConnectionInstance _)
+      val r6: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+      val r7: MOption[IS[Z, Flow]] = transformISZ(o2.flows, transformFlow _)
+      val r8: MOption[IS[Z, Mode]] = transformISZ(o2.modes, transformMode _)
+      val r9: MOption[IS[Z, Annex]] = transformISZ(o2.annexes, transformAnnex _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty || r6.nonEmpty || r7.nonEmpty || r8.nonEmpty || r9.nonEmpty)
+        MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), features = r2.getOrElse(o2.features), subComponents = r3.getOrElse(o2.subComponents), connections = r4.getOrElse(o2.connections), connectionInstances = r5.getOrElse(o2.connectionInstances), properties = r6.getOrElse(o2.properties), flows = r7.getOrElse(o2.flows), modes = r8.getOrElse(o2.modes), annexes = r9.getOrElse(o2.annexes)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: Component = r.getOrElse(o)
+    val postR: MOption[Component] = postComponent(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -3508,6 +3696,32 @@ import MTransformer._
     }
   }
 
+  def transformClassifier(o: Classifier): MOption[Classifier] = {
+    val preR: PreResult[Classifier] = preClassifier(o)
+    val r: MOption[Classifier] = if (preR.continu) {
+      val o2: Classifier = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: Classifier = r.getOrElse(o)
+    val postR: MOption[Classifier] = postClassifier(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformErrorAliasDef(o: ErrorAliasDef): MOption[ErrorAliasDef] = {
     val preR: PreResult[ErrorAliasDef] = preErrorAliasDef(o)
     val r: MOption[ErrorAliasDef] = if (preR.continu) {
@@ -3564,6 +3778,55 @@ import MTransformer._
     }
   }
 
+  def transformFeature(o: Feature): MOption[Feature] = {
+    val preR: PreResult[Feature] = preFeature(o)
+    val r: MOption[Feature] = if (preR.continu) {
+      val o2: Feature = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[Feature] = o2 match {
+        case o2: FeatureEnd =>
+          val r0: MOption[Name] = transformName(o2.identifier)
+          val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
+          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
+          else
+            MNone()
+        case o2: FeatureGroup =>
+          val r0: MOption[Name] = transformName(o2.identifier)
+          val r1: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
+          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features), properties = r2.getOrElse(o2.properties)))
+          else
+            MNone()
+        case o2: FeatureAccess =>
+          val r0: MOption[Name] = transformName(o2.identifier)
+          val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
+          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: Feature = r.getOrElse(o)
+    val postR: MOption[Feature] = postFeature(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformBehaveStateMachine(o: BehaveStateMachine): MOption[BehaveStateMachine] = {
     val preR: PreResult[BehaveStateMachine] = preBehaveStateMachine(o)
     val r: MOption[BehaveStateMachine] = if (preR.continu) {
@@ -3595,113 +3858,16 @@ import MTransformer._
     }
   }
 
-  def transformAadlInstInfo(o: AadlInstInfo): MOption[AadlInstInfo] = {
-    val preR: PreResult[AadlInstInfo] = preAadlInstInfo(o)
-    val r: MOption[AadlInstInfo] = if (preR.continu) {
-      val o2: AadlInstInfo = preR.resultOpt.getOrElse(o)
+  def transformFeatureEnd(o: FeatureEnd): MOption[FeatureEnd] = {
+    val preR: PreResult[FeatureEnd] = preFeatureEnd(o)
+    val r: MOption[FeatureEnd] = if (preR.continu) {
+      val o2: FeatureEnd = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val rOpt: MOption[AadlInstInfo] = o2 match {
-        case o2: ErrorTypeDef =>
-          val r0: MOption[Name] = transformName(o2.id)
-          val r1: MOption[Option[Name]] = transformOption(o2.extendType, transformName _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(id = r0.getOrElse(o2.id), extendType = r1.getOrElse(o2.extendType)))
-          else
-            MNone()
-        case o2: Component =>
-          val r0: MOption[Name] = transformName(o2.identifier)
-          val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
-          val r2: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
-          val r3: MOption[IS[Z, Component]] = transformISZ(o2.subComponents, transformComponent _)
-          val r4: MOption[IS[Z, Connection]] = transformISZ(o2.connections, transformConnection _)
-          val r5: MOption[IS[Z, ConnectionInstance]] = transformISZ(o2.connectionInstances, transformConnectionInstance _)
-          val r6: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
-          val r7: MOption[IS[Z, Flow]] = transformISZ(o2.flows, transformFlow _)
-          val r8: MOption[IS[Z, Mode]] = transformISZ(o2.modes, transformMode _)
-          val r9: MOption[IS[Z, Annex]] = transformISZ(o2.annexes, transformAnnex _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty || r6.nonEmpty || r7.nonEmpty || r8.nonEmpty || r9.nonEmpty)
-            MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), features = r2.getOrElse(o2.features), subComponents = r3.getOrElse(o2.subComponents), connections = r4.getOrElse(o2.connections), connectionInstances = r5.getOrElse(o2.connectionInstances), properties = r6.getOrElse(o2.properties), flows = r7.getOrElse(o2.flows), modes = r8.getOrElse(o2.modes), annexes = r9.getOrElse(o2.annexes)))
-          else
-            MNone()
-        case o2: FeatureEnd =>
-          val r0: MOption[Name] = transformName(o2.identifier)
-          val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
-          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
-          else
-            MNone()
-        case o2: Emv2Flow =>
-          val r0: MOption[Name] = transformName(o2.identifier)
-          val r1: MOption[Option[Emv2Propagation]] = transformOption(o2.sourcePropagation, transformEmv2Propagation _)
-          val r2: MOption[Option[Emv2Propagation]] = transformOption(o2.sinkPropagation, transformEmv2Propagation _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(identifier = r0.getOrElse(o2.identifier), sourcePropagation = r1.getOrElse(o2.sourcePropagation), sinkPropagation = r2.getOrElse(o2.sinkPropagation)))
-          else
-            MNone()
-        case o2: FeatureGroup =>
-          val r0: MOption[Name] = transformName(o2.identifier)
-          val r1: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
-          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features), properties = r2.getOrElse(o2.properties)))
-          else
-            MNone()
-        case o2: FeatureAccess =>
-          val r0: MOption[Name] = transformName(o2.identifier)
-          val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
-          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
-          else
-            MNone()
-        case o2: Connection =>
-          val r0: MOption[Name] = transformName(o2.name)
-          val r1: MOption[IS[Z, EndPoint]] = transformISZ(o2.src, transformEndPoint _)
-          val r2: MOption[IS[Z, EndPoint]] = transformISZ(o2.dst, transformEndPoint _)
-          val r3: MOption[IS[Z, Name]] = transformISZ(o2.connectionInstances, transformName _)
-          val r4: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
-            MSome(o2(name = r0.getOrElse(o2.name), src = r1.getOrElse(o2.src), dst = r2.getOrElse(o2.dst), connectionInstances = r3.getOrElse(o2.connectionInstances), properties = r4.getOrElse(o2.properties)))
-          else
-            MNone()
-        case o2: Flow =>
-          val r0: MOption[Name] = transformName(o2.name)
-          val r1: MOption[Option[Name]] = transformOption(o2.source, transformName _)
-          val r2: MOption[Option[Name]] = transformOption(o2.sink, transformName _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(name = r0.getOrElse(o2.name), source = r1.getOrElse(o2.source), sink = r2.getOrElse(o2.sink)))
-          else
-            MNone()
-      }
-      rOpt
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: AadlInstInfo = r.getOrElse(o)
-    val postR: MOption[AadlInstInfo] = postAadlInstInfo(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformAadl(o: Aadl): MOption[Aadl] = {
-    val preR: PreResult[Aadl] = preAadl(o)
-    val r: MOption[Aadl] = if (preR.continu) {
-      val o2: Aadl = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, Component]] = transformISZ(o2.components, transformComponent _)
-      val r1: MOption[IS[Z, AnnexLib]] = transformISZ(o2.annexLib, transformAnnexLib _)
-      val r2: MOption[IS[Z, Component]] = transformISZ(o2.dataComponents, transformComponent _)
+      val r0: MOption[Name] = transformName(o2.identifier)
+      val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
+      val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(components = r0.getOrElse(o2.components), annexLib = r1.getOrElse(o2.annexLib), dataComponents = r2.getOrElse(o2.dataComponents)))
+        MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -3710,8 +3876,8 @@ import MTransformer._
       MNone()
     }
     val hasChanged: B = r.nonEmpty
-    val o2: Aadl = r.getOrElse(o)
-    val postR: MOption[Aadl] = postAadl(o2)
+    val o2: FeatureEnd = r.getOrElse(o)
+    val postR: MOption[FeatureEnd] = postFeatureEnd(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -3748,32 +3914,6 @@ import MTransformer._
     }
   }
 
-  def transformName(o: Name): MOption[Name] = {
-    val preR: PreResult[Name] = preName(o)
-    val r: MOption[Name] = if (preR.continu) {
-      val o2: Name = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: Name = r.getOrElse(o)
-    val postR: MOption[Name] = postName(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
   def transformErrorState(o: ErrorState): MOption[ErrorState] = {
     val preR: PreResult[ErrorState] = preErrorState(o)
     val r: MOption[ErrorState] = if (preR.continu) {
@@ -3792,42 +3932,6 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: ErrorState = r.getOrElse(o)
     val postR: MOption[ErrorState] = postErrorState(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformComponent(o: Component): MOption[Component] = {
-    val preR: PreResult[Component] = preComponent(o)
-    val r: MOption[Component] = if (preR.continu) {
-      val o2: Component = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[Name] = transformName(o2.identifier)
-      val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
-      val r2: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
-      val r3: MOption[IS[Z, Component]] = transformISZ(o2.subComponents, transformComponent _)
-      val r4: MOption[IS[Z, Connection]] = transformISZ(o2.connections, transformConnection _)
-      val r5: MOption[IS[Z, ConnectionInstance]] = transformISZ(o2.connectionInstances, transformConnectionInstance _)
-      val r6: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
-      val r7: MOption[IS[Z, Flow]] = transformISZ(o2.flows, transformFlow _)
-      val r8: MOption[IS[Z, Mode]] = transformISZ(o2.modes, transformMode _)
-      val r9: MOption[IS[Z, Annex]] = transformISZ(o2.annexes, transformAnnex _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty || r6.nonEmpty || r7.nonEmpty || r8.nonEmpty || r9.nonEmpty)
-        MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), features = r2.getOrElse(o2.features), subComponents = r3.getOrElse(o2.subComponents), connections = r4.getOrElse(o2.connections), connectionInstances = r5.getOrElse(o2.connectionInstances), properties = r6.getOrElse(o2.properties), flows = r7.getOrElse(o2.flows), modes = r8.getOrElse(o2.modes), annexes = r9.getOrElse(o2.annexes)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: Component = r.getOrElse(o)
-    val postR: MOption[Component] = postComponent(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -3858,6 +3962,35 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: ErrorTransition = r.getOrElse(o)
     val postR: MOption[ErrorTransition] = postErrorTransition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformFeatureGroup(o: FeatureGroup): MOption[FeatureGroup] = {
+    val preR: PreResult[FeatureGroup] = preFeatureGroup(o)
+    val r: MOption[FeatureGroup] = if (preR.continu) {
+      val o2: FeatureGroup = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.identifier)
+      val r1: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
+      val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features), properties = r2.getOrElse(o2.properties)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: FeatureGroup = r.getOrElse(o)
+    val postR: MOption[FeatureGroup] = postFeatureGroup(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -3984,6 +4117,35 @@ import MTransformer._
     }
   }
 
+  def transformFeatureAccess(o: FeatureAccess): MOption[FeatureAccess] = {
+    val preR: PreResult[FeatureAccess] = preFeatureAccess(o)
+    val r: MOption[FeatureAccess] = if (preR.continu) {
+      val o2: FeatureAccess = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.identifier)
+      val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
+      val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: FeatureAccess = r.getOrElse(o)
+    val postR: MOption[FeatureAccess] = postFeatureAccess(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformOrCondition(o: OrCondition): MOption[OrCondition] = {
     val preR: PreResult[OrCondition] = preOrCondition(o)
     val r: MOption[OrCondition] = if (preR.continu) {
@@ -4029,32 +4191,6 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: AllCondition = r.getOrElse(o)
     val postR: MOption[AllCondition] = postAllCondition(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformClassifier(o: Classifier): MOption[Classifier] = {
-    val preR: PreResult[Classifier] = preClassifier(o)
-    val r: MOption[Classifier] = if (preR.continu) {
-      val o2: Classifier = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: Classifier = r.getOrElse(o)
-    val postR: MOption[Classifier] = postClassifier(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -4149,84 +4285,6 @@ import MTransformer._
     }
   }
 
-  def transformFeature(o: Feature): MOption[Feature] = {
-    val preR: PreResult[Feature] = preFeature(o)
-    val r: MOption[Feature] = if (preR.continu) {
-      val o2: Feature = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val rOpt: MOption[Feature] = o2 match {
-        case o2: FeatureEnd =>
-          val r0: MOption[Name] = transformName(o2.identifier)
-          val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
-          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
-          else
-            MNone()
-        case o2: FeatureGroup =>
-          val r0: MOption[Name] = transformName(o2.identifier)
-          val r1: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
-          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features), properties = r2.getOrElse(o2.properties)))
-          else
-            MNone()
-        case o2: FeatureAccess =>
-          val r0: MOption[Name] = transformName(o2.identifier)
-          val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
-          val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
-          else
-            MNone()
-      }
-      rOpt
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: Feature = r.getOrElse(o)
-    val postR: MOption[Feature] = postFeature(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformFeatureEnd(o: FeatureEnd): MOption[FeatureEnd] = {
-    val preR: PreResult[FeatureEnd] = preFeatureEnd(o)
-    val r: MOption[FeatureEnd] = if (preR.continu) {
-      val o2: FeatureEnd = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[Name] = transformName(o2.identifier)
-      val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
-      val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: FeatureEnd = r.getOrElse(o)
-    val postR: MOption[FeatureEnd] = postFeatureEnd(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
   def transformEmv2Propagation(o: Emv2Propagation): MOption[Emv2Propagation] = {
     val preR: PreResult[Emv2Propagation] = preEmv2Propagation(o)
     val r: MOption[Emv2Propagation] = if (preR.continu) {
@@ -4246,152 +4304,6 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: Emv2Propagation = r.getOrElse(o)
     val postR: MOption[Emv2Propagation] = postEmv2Propagation(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformEmv2Flow(o: Emv2Flow): MOption[Emv2Flow] = {
-    val preR: PreResult[Emv2Flow] = preEmv2Flow(o)
-    val r: MOption[Emv2Flow] = if (preR.continu) {
-      val o2: Emv2Flow = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[Name] = transformName(o2.identifier)
-      val r1: MOption[Option[Emv2Propagation]] = transformOption(o2.sourcePropagation, transformEmv2Propagation _)
-      val r2: MOption[Option[Emv2Propagation]] = transformOption(o2.sinkPropagation, transformEmv2Propagation _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(identifier = r0.getOrElse(o2.identifier), sourcePropagation = r1.getOrElse(o2.sourcePropagation), sinkPropagation = r2.getOrElse(o2.sinkPropagation)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: Emv2Flow = r.getOrElse(o)
-    val postR: MOption[Emv2Flow] = postEmv2Flow(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformFeatureGroup(o: FeatureGroup): MOption[FeatureGroup] = {
-    val preR: PreResult[FeatureGroup] = preFeatureGroup(o)
-    val r: MOption[FeatureGroup] = if (preR.continu) {
-      val o2: FeatureGroup = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[Name] = transformName(o2.identifier)
-      val r1: MOption[IS[Z, Feature]] = transformISZ(o2.features, transformFeature _)
-      val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(identifier = r0.getOrElse(o2.identifier), features = r1.getOrElse(o2.features), properties = r2.getOrElse(o2.properties)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: FeatureGroup = r.getOrElse(o)
-    val postR: MOption[FeatureGroup] = postFeatureGroup(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformEmv2BehaviorSection(o: Emv2BehaviorSection): MOption[Emv2BehaviorSection] = {
-    val preR: PreResult[Emv2BehaviorSection] = preEmv2BehaviorSection(o)
-    val r: MOption[Emv2BehaviorSection] = if (preR.continu) {
-      val o2: Emv2BehaviorSection = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, ErrorEvent]] = transformISZ(o2.events, transformErrorEvent _)
-      val r1: MOption[IS[Z, ErrorTransition]] = transformISZ(o2.transitions, transformErrorTransition _)
-      val r2: MOption[IS[Z, ErrorPropagation]] = transformISZ(o2.propagations, transformErrorPropagation _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(events = r0.getOrElse(o2.events), transitions = r1.getOrElse(o2.transitions), propagations = r2.getOrElse(o2.propagations)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: Emv2BehaviorSection = r.getOrElse(o)
-    val postR: MOption[Emv2BehaviorSection] = postEmv2BehaviorSection(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformFeatureAccess(o: FeatureAccess): MOption[FeatureAccess] = {
-    val preR: PreResult[FeatureAccess] = preFeatureAccess(o)
-    val r: MOption[FeatureAccess] = if (preR.continu) {
-      val o2: FeatureAccess = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[Name] = transformName(o2.identifier)
-      val r1: MOption[Option[Classifier]] = transformOption(o2.classifier, transformClassifier _)
-      val r2: MOption[IS[Z, Property]] = transformISZ(o2.properties, transformProperty _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(identifier = r0.getOrElse(o2.identifier), classifier = r1.getOrElse(o2.classifier), properties = r2.getOrElse(o2.properties)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: FeatureAccess = r.getOrElse(o)
-    val postR: MOption[FeatureAccess] = postFeatureAccess(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformErrorPropagation(o: ErrorPropagation): MOption[ErrorPropagation] = {
-    val preR: PreResult[ErrorPropagation] = preErrorPropagation(o)
-    val r: MOption[ErrorPropagation] = if (preR.continu) {
-      val o2: ErrorPropagation = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[Option[Name]] = transformOption(o2.id, transformName _)
-      val r1: MOption[IS[Z, Name]] = transformISZ(o2.source, transformName _)
-      val r2: MOption[Option[ErrorCondition]] = transformOption(o2.condition, transformErrorCondition _)
-      val r3: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.target, transformEmv2Propagation _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-        MSome(o2(id = r0.getOrElse(o2.id), source = r1.getOrElse(o2.source), condition = r2.getOrElse(o2.condition), target = r3.getOrElse(o2.target)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: ErrorPropagation = r.getOrElse(o)
-    val postR: MOption[ErrorPropagation] = postErrorPropagation(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -4432,6 +4344,64 @@ import MTransformer._
     }
   }
 
+  def transformEmv2Flow(o: Emv2Flow): MOption[Emv2Flow] = {
+    val preR: PreResult[Emv2Flow] = preEmv2Flow(o)
+    val r: MOption[Emv2Flow] = if (preR.continu) {
+      val o2: Emv2Flow = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.identifier)
+      val r1: MOption[Option[Emv2Propagation]] = transformOption(o2.sourcePropagation, transformEmv2Propagation _)
+      val r2: MOption[Option[Emv2Propagation]] = transformOption(o2.sinkPropagation, transformEmv2Propagation _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(identifier = r0.getOrElse(o2.identifier), sourcePropagation = r1.getOrElse(o2.sourcePropagation), sinkPropagation = r2.getOrElse(o2.sinkPropagation)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: Emv2Flow = r.getOrElse(o)
+    val postR: MOption[Emv2Flow] = postEmv2Flow(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformEmv2BehaviorSection(o: Emv2BehaviorSection): MOption[Emv2BehaviorSection] = {
+    val preR: PreResult[Emv2BehaviorSection] = preEmv2BehaviorSection(o)
+    val r: MOption[Emv2BehaviorSection] = if (preR.continu) {
+      val o2: Emv2BehaviorSection = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, ErrorEvent]] = transformISZ(o2.events, transformErrorEvent _)
+      val r1: MOption[IS[Z, ErrorTransition]] = transformISZ(o2.transitions, transformErrorTransition _)
+      val r2: MOption[IS[Z, ErrorPropagation]] = transformISZ(o2.propagations, transformErrorPropagation _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(events = r0.getOrElse(o2.events), transitions = r1.getOrElse(o2.transitions), propagations = r2.getOrElse(o2.propagations)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: Emv2BehaviorSection = r.getOrElse(o)
+    val postR: MOption[Emv2BehaviorSection] = postEmv2BehaviorSection(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformConnectionInstance(o: ConnectionInstance): MOption[ConnectionInstance] = {
     val preR: PreResult[ConnectionInstance] = preConnectionInstance(o)
     val r: MOption[ConnectionInstance] = if (preR.continu) {
@@ -4454,6 +4424,36 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: ConnectionInstance = r.getOrElse(o)
     val postR: MOption[ConnectionInstance] = postConnectionInstance(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformErrorPropagation(o: ErrorPropagation): MOption[ErrorPropagation] = {
+    val preR: PreResult[ErrorPropagation] = preErrorPropagation(o)
+    val r: MOption[ErrorPropagation] = if (preR.continu) {
+      val o2: ErrorPropagation = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Option[Name]] = transformOption(o2.id, transformName _)
+      val r1: MOption[IS[Z, Name]] = transformISZ(o2.source, transformName _)
+      val r2: MOption[Option[ErrorCondition]] = transformOption(o2.condition, transformErrorCondition _)
+      val r3: MOption[IS[Z, Emv2Propagation]] = transformISZ(o2.target, transformEmv2Propagation _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), source = r1.getOrElse(o2.source), condition = r2.getOrElse(o2.condition), target = r3.getOrElse(o2.target)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: ErrorPropagation = r.getOrElse(o)
+    val postR: MOption[ErrorPropagation] = postErrorPropagation(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

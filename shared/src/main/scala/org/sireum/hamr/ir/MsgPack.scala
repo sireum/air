@@ -232,13 +232,13 @@ object MsgPack {
 
     def writeAadlInstInfo(o: AadlInstInfo): Unit = {
       o match {
-        case o: ErrorTypeDef => writeErrorTypeDef(o)
         case o: Component => writeComponent(o)
+        case o: ErrorTypeDef => writeErrorTypeDef(o)
         case o: FeatureEnd => writeFeatureEnd(o)
-        case o: Emv2Flow => writeEmv2Flow(o)
         case o: FeatureGroup => writeFeatureGroup(o)
         case o: FeatureAccess => writeFeatureAccess(o)
         case o: Connection => writeConnection(o)
+        case o: Emv2Flow => writeEmv2Flow(o)
         case o: Flow => writeFlow(o)
       }
     }
@@ -1141,13 +1141,13 @@ object MsgPack {
       val i = reader.curr
       val t = reader.readZ()
       t match {
-        case Constants.ErrorTypeDef => val r = readErrorTypeDefT(T); return r
         case Constants.Component => val r = readComponentT(T); return r
+        case Constants.ErrorTypeDef => val r = readErrorTypeDefT(T); return r
         case Constants.FeatureEnd => val r = readFeatureEndT(T); return r
-        case Constants.Emv2Flow => val r = readEmv2FlowT(T); return r
         case Constants.FeatureGroup => val r = readFeatureGroupT(T); return r
         case Constants.FeatureAccess => val r = readFeatureAccessT(T); return r
         case Constants.Connection => val r = readConnectionT(T); return r
+        case Constants.Emv2Flow => val r = readEmv2FlowT(T); return r
         case Constants.Flow => val r = readFlowT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of AadlInstInfo.")

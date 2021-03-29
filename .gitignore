@@ -6,3 +6,5 @@ out
 /sireum
 /versions.properties
 /runtime
+*.cmd.jar
+*.cmd.com

@@ -8,3 +8,4 @@ out
 /runtime
 *.cmd.jar
 *.cmd.com
+project.json

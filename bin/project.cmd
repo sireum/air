@@ -26,13 +26,19 @@ val air = "hamr-air"
 
 val homeDir = Os.slashDir.up.canon
 
-val (airShared, airJvm) = moduleSharedJvm(
+val (airShared, airJvm) = moduleSharedJvmPub(
   baseId = air,
   baseDir = homeDir,
   sharedDeps = sharedId(library),
   sharedIvyDeps = ISZ(),
   jvmDeps = ISZ(library),
-  jvmIvyDeps = ISZ()
+  jvmIvyDeps = ISZ(),
+  pubOpt = pub(
+    desc = "HAMR AADL Intermediate Representation (AIR)",
+    url = "github.com/sireum/air",
+    licenses = org.sireum.project.ProjectUtil.bsd2,
+    devs = ISZ(jasonBelt, thari)
+  )
 )
 
 val project = Project.empty + airShared + airJvm

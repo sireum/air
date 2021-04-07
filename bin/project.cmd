@@ -36,7 +36,7 @@ val (airShared, airJvm) = moduleSharedJvmPub(
   pubOpt = pub(
     desc = "HAMR AADL Intermediate Representation (AIR)",
     url = "github.com/sireum/air",
-    licenses = org.sireum.project.ProjectUtil.bsd2,
+    licenses = bsd2,
     devs = ISZ(jasonBelt, thari)
   )
 )

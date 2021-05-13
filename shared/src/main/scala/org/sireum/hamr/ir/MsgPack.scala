@@ -88,191 +88,259 @@ object MsgPack {
 
     val BTSVariableDeclaration: Z = -7
 
-    val BTSClassifier: Z = -6
+    val BTSStateDeclaration: Z = -6
 
-    val BLESSIntConst: Z = -5
+    val BTSTransition: Z = -5
 
-    val BTSStateDeclaration: Z = -4
+    val BTSTransitionLabel: Z = -4
 
-    val BTSTransition: Z = -3
+    val BTSDispatchCondition: Z = -3
 
-    val BTSTransitionLabel: Z = -2
+    val BTSDispatchConjunction: Z = -2
 
-    val BTSDispatchCondition: Z = -1
+    val BTSDispatchTriggerStop: Z = -1
 
-    val BTSDispatchConjunction: Z = 0
+    val BTSDispatchTriggerPort: Z = 0
 
-    val BTSDispatchTriggerStop: Z = 1
+    val BTSDispatchTriggerTimeout: Z = 1
 
-    val BTSDispatchTriggerPort: Z = 2
+    val BTSExecuteConditionExp: Z = 2
 
-    val BTSDispatchTriggerTimeout: Z = 3
+    val BTSExecuteConditionTimeout: Z = 3
 
-    val BTSExecuteConditionExp: Z = 4
+    val BTSExecuteConditionOtherwise: Z = 4
 
-    val BTSExecuteConditionTimeout: Z = 5
+    val BTSModeCondition: Z = 5
 
-    val BTSExecuteConditionOtherwise: Z = 6
+    val BTSTriggerLogicalExpression: Z = 6
 
-    val BTSModeCondition: Z = 7
+    val BTSSubcomponentPort: Z = 7
 
-    val BTSTriggerLogicalExpression: Z = 8
+    val BTSInternalCondition: Z = 8
 
-    val BTSSubcomponentPort: Z = 9
+    val BTSNamedAssertion: Z = 9
 
-    val BTSInternalCondition: Z = 10
+    val BTSNamedFunction: Z = 10
 
-    val BTSNamedAssertion: Z = 11
+    val BTSNamedEnumeration: Z = 11
 
-    val BTSNamedFunction: Z = 12
+    val BTSNamelessAssertion: Z = 12
 
-    val BTSNamedEnumeration: Z = 13
+    val BTSNamelessFunction: Z = 13
 
-    val BTSNamelessAssertion: Z = 14
+    val BTSNamelessEnumeration: Z = 14
 
-    val BTSNamelessFunction: Z = 15
+    val BTSEnumerationPairs: Z = 15
 
-    val BTSNamelessEnumeration: Z = 16
+    val BTSEnumerationPair: Z = 16
 
-    val BTSEnumerationPairs: Z = 17
+    val BTSInvocation: Z = 17
 
-    val BTSEnumerationPair: Z = 18
+    val BTSActualParameter: Z = 18
 
-    val BTSInvocation: Z = 19
+    val BTSVariable: Z = 19
 
-    val BTSActualParameter: Z = 20
+    val BTSActionAnnexSubclause: Z = 20
 
-    val BTSVariable: Z = 21
+    val BTSBehaviorActions: Z = 21
 
-    val BTSBehaviorActions: Z = 22
+    val BTSAssertedAction: Z = 22
 
-    val BTSAssertedAction: Z = 23
+    val BTSSkipAction: Z = 23
 
-    val BTSSkipAction: Z = 24
+    val BTSAssignmentAction: Z = 24
 
-    val BTSAssignmentAction: Z = 25
+    val BTSSetMode: Z = 25
 
-    val BTSSetMode: Z = 26
+    val BTSWhenThrow: Z = 26
 
-    val BTSWhenThrow: Z = 27
+    val BTSFetchAdd: Z = 27
 
-    val BTSFetchAdd: Z = 28
+    val BTSFetchOr: Z = 28
 
-    val BTSFetchOr: Z = 29
+    val BTSFetchAnd: Z = 29
 
-    val BTSFetchAnd: Z = 30
+    val BTSFetchXor: Z = 30
 
-    val BTSFetchXor: Z = 31
+    val BTSSwap: Z = 31
 
-    val BTSSwap: Z = 32
+    val BTSSubprogramCallAction: Z = 32
 
-    val BTSSubprogramCallAction: Z = 33
+    val BTSFormalActual: Z = 33
 
-    val BTSFormalActual: Z = 34
+    val BTSPortOutput: Z = 34
 
-    val BTSPortOutput: Z = 35
+    val BTSPortInput: Z = 35
 
-    val BTSPortInput: Z = 36
+    val BTSFrozenPortAction: Z = 36
 
-    val BTSFrozenPortAction: Z = 37
+    val BTSPause: Z = 37
 
-    val BTSPause: Z = 38
+    val BTSIfBLESSAction: Z = 38
 
-    val BTSIfBLESSAction: Z = 39
+    val BTSGuardedAction: Z = 39
 
-    val BTSGuardedAction: Z = 40
+    val BTSIfBAAction: Z = 40
 
-    val BTSIfBAAction: Z = 41
+    val BTSConditionalActions: Z = 41
 
-    val BTSConditionalActions: Z = 42
+    val BTSWhileLoop: Z = 42
 
-    val BTSWhileLoop: Z = 43
+    val BTSForLoop: Z = 43
 
-    val BTSForLoop: Z = 44
+    val BTSDoUntilLoop: Z = 44
 
-    val BTSDoUntilLoop: Z = 45
+    val BTSExistentialLatticeQuantification: Z = 45
 
-    val BTSExistentialLatticeQuantification: Z = 46
+    val BTSCatchClauseTerm: Z = 46
 
-    val BTSCatchClauseTerm: Z = 47
+    val BTSUniversalLatticeQuantification: Z = 47
 
-    val BTSUniversalLatticeQuantification: Z = 48
+    val BTSUnaryExp: Z = 48
 
-    val BTSUnaryExp: Z = 49
+    val BTSBinaryExp: Z = 49
 
-    val BTSBinaryExp: Z = 50
+    val BTSLiteralExp: Z = 50
 
-    val BTSLiteralExp: Z = 51
+    val BTSVariableNameExp: Z = 51
 
-    val BTSVariableNameExp: Z = 52
+    val BTSPartialName: Z = 52
 
-    val BTSPartialName: Z = 53
+    val BTSIndexingExp: Z = 53
 
-    val BTSIndexingExp: Z = 54
+    val BTSAccessExp: Z = 54
 
-    val BTSAccessExp: Z = 55
+    val BTSFunctionCall: Z = 55
 
-    val BTSFunctionCall: Z = 56
+    val BTSPortValue: Z = 56
 
-    val BTSPortValue: Z = 57
+    val BTSConditionalExpression: Z = 57
 
-    val BTSConditionalExpression: Z = 58
+    val BTSTrue: Z = 58
 
-    val BTSRange: Z = 59
+    val BTSFalse: Z = 59
 
-    val BTSBehaviorTime: Z = 60
+    val BTSNull: Z = 60
 
-    val TODO: Z = 61
+    val BTSPropertyConstant: Z = 61
 
-    val Emv2ElementRef: Z = 62
+    val BTSPropertySetProperty: Z = 62
 
-    val Emv2Library: Z = 63
+    val BTSSelfProperty: Z = 63
 
-    val ErrorTypeDef: Z = 64
+    val BTSComponentProperty: Z = 64
 
-    val ErrorAliasDef: Z = 65
+    val BTSComponent: Z = 65
 
-    val ErrorTypeSetDef: Z = 66
+    val BTSPropertyField: Z = 66
 
-    val BehaveStateMachine: Z = 67
+    val BTSUniversalQuantification: Z = 67
 
-    val ErrorEvent: Z = 68
+    val BTSExistentialQuantification: Z = 68
 
-    val ErrorState: Z = 69
+    val BTSSumQuantification: Z = 69
 
-    val ErrorTransition: Z = 70
+    val BTSProductQuantification: Z = 70
 
-    val ConditionTrigger: Z = 71
+    val BTSCountingQuantification: Z = 71
 
-    val AndCondition: Z = 72
+    val BTSRange: Z = 72
 
-    val OrCondition: Z = 73
+    val BTSTypeLibrary: Z = 73
 
-    val AllCondition: Z = 74
+    val BTSTypeDeclatation: Z = 74
 
-    val OrMoreCondition: Z = 75
+    val BTSBooleanType: Z = 75
 
-    val OrLessCondition: Z = 76
+    val BTSStringType: Z = 76
 
-    val Emv2Clause: Z = 77
+    val BTSNullType: Z = 77
 
-    val Emv2Propagation: Z = 78
+    val BTSClassifier: Z = 78
 
-    val Emv2Flow: Z = 79
+    val BTSTypeName: Z = 79
 
-    val Emv2BehaviorSection: Z = 80
+    val BTSEnumerationType: Z = 80
 
-    val ErrorPropagation: Z = 81
+    val BTSQuantityType: Z = 81
 
-    val SmfClause: Z = 82
+    val BTSArrayType: Z = 82
 
-    val SmfClassification: Z = 83
+    val BTSArrayRange: Z = 83
 
-    val SmfDeclass: Z = 84
+    val BTSRecordType: Z = 84
 
-    val SmfLibrary: Z = 85
+    val BTSRecordField: Z = 85
 
-    val SmfType: Z = 86
+    val BTSUnitLibrary: Z = 86
+
+    val BTSRootDeclaration: Z = 87
+
+    val BTSUnitExtension: Z = 88
+
+    val BTSUnitName: Z = 89
+
+    val BTSUnitFormula: Z = 90
+
+    val BTSUnitFactor: Z = 91
+
+    val BTSQuantity: Z = 92
+
+    val BTSExceptionLibrary: Z = 93
+
+    val BTSExceptionDeclaration: Z = 94
+
+    val TODO: Z = 95
+
+    val Emv2ElementRef: Z = 96
+
+    val Emv2Library: Z = 97
+
+    val ErrorTypeDef: Z = 98
+
+    val ErrorAliasDef: Z = 99
+
+    val ErrorTypeSetDef: Z = 100
+
+    val BehaveStateMachine: Z = 101
+
+    val ErrorEvent: Z = 102
+
+    val ErrorState: Z = 103
+
+    val ErrorTransition: Z = 104
+
+    val ConditionTrigger: Z = 105
+
+    val AndCondition: Z = 106
+
+    val OrCondition: Z = 107
+
+    val AllCondition: Z = 108
+
+    val OrMoreCondition: Z = 109
+
+    val OrLessCondition: Z = 110
+
+    val Emv2Clause: Z = 111
+
+    val Emv2Propagation: Z = 112
+
+    val Emv2Flow: Z = 113
+
+    val Emv2BehaviorSection: Z = 114
+
+    val ErrorPropagation: Z = 115
+
+    val SmfClause: Z = 116
+
+    val SmfClassification: Z = 117
+
+    val SmfDeclass: Z = 118
+
+    val SmfLibrary: Z = 119
+
+    val SmfType: Z = 120
 
   }
 
@@ -549,6 +617,7 @@ object MsgPack {
         case o: ErrorPropagation => writeErrorPropagation(o)
         case o: OtherAnnex => writeOtherAnnex(o)
         case o: BTSBLESSAnnexClause => writeBTSBLESSAnnexClause(o)
+        case o: BTSActionAnnexSubclause => writeBTSActionAnnexSubclause(o)
       }
     }
 
@@ -557,6 +626,9 @@ object MsgPack {
         case o: SmfLibrary => writeSmfLibrary(o)
         case o: Emv2Library => writeEmv2Library(o)
         case o: OtherLib => writeOtherLib(o)
+        case o: BTSTypeLibrary => writeBTSTypeLibrary(o)
+        case o: BTSUnitLibrary => writeBTSUnitLibrary(o)
+        case o: BTSExceptionLibrary => writeBTSExceptionLibrary(o)
       }
     }
 
@@ -573,6 +645,7 @@ object MsgPack {
     def writeBLESSAnnex(o: BLESSAnnex): Unit = {
       o match {
         case o: BTSBLESSAnnexClause => writeBTSBLESSAnnexClause(o)
+        case o: BTSActionAnnexSubclause => writeBTSActionAnnexSubclause(o)
       }
     }
 
@@ -592,21 +665,12 @@ object MsgPack {
       writer.writeOption(o.category, writeBTSVariableCategoryType _)
       writeBTSType(o.varType)
       writer.writeOption(o.assignExpression, writeBTSExp _)
-      writer.writeOption(o.arraySize, writeBLESSIntConst _)
+      writer.writeOption(o.arraySize, writeBTSExp _)
       writer.writeOption(o.variableAssertion, writeBTSAssertion _)
     }
 
     def writeBTSVariableCategoryType(o: BTSVariableCategory.Type): Unit = {
       writer.writeZ(o.ordinal)
-    }
-
-    def writeBTSClassifier(o: BTSClassifier): Unit = {
-      writer.writeZ(Constants.BTSClassifier)
-      writeClassifier(o.classifier)
-    }
-
-    def writeBLESSIntConst(o: BLESSIntConst): Unit = {
-      writer.writeZ(Constants.BLESSIntConst)
     }
 
     def writeBTSStateDeclaration(o: BTSStateDeclaration): Unit = {
@@ -649,13 +713,14 @@ object MsgPack {
 
     def writeBTSDispatchCondition(o: BTSDispatchCondition): Unit = {
       writer.writeZ(Constants.BTSDispatchCondition)
-      writer.writeISZ(o.dispatchTriggers, writeBTSDispatchConjunction _)
+      writer.writeISZ(o.conjunctions, writeBTSDispatchConjunction _)
+      writeName(o.subprogramaccessdispatch)
       writer.writeISZ(o.frozenPorts, writeName _)
     }
 
     def writeBTSDispatchConjunction(o: BTSDispatchConjunction): Unit = {
       writer.writeZ(Constants.BTSDispatchConjunction)
-      writer.writeISZ(o.conjunction, writeBTSDispatchTrigger _)
+      writer.writeISZ(o.triggers, writeBTSDispatchTrigger _)
     }
 
     def writeBTSDispatchTrigger(o: BTSDispatchTrigger): Unit = {
@@ -673,12 +738,13 @@ object MsgPack {
     def writeBTSDispatchTriggerPort(o: BTSDispatchTriggerPort): Unit = {
       writer.writeZ(Constants.BTSDispatchTriggerPort)
       writeName(o.port)
+      writer.writeOption(o.portarrayindex, writer.writeZ _)
     }
 
     def writeBTSDispatchTriggerTimeout(o: BTSDispatchTriggerTimeout): Unit = {
       writer.writeZ(Constants.BTSDispatchTriggerTimeout)
       writer.writeISZ(o.ports, writeName _)
-      writer.writeOption(o.time, writeBTSBehaviorTime _)
+      writer.writeOption(o.time, writeBTSExp _)
     }
 
     def writeBTSExecuteCondition(o: BTSExecuteCondition): Unit = {
@@ -704,11 +770,12 @@ object MsgPack {
 
     def writeBTSModeCondition(o: BTSModeCondition): Unit = {
       writer.writeZ(Constants.BTSModeCondition)
-      writeBTSTriggerLogicalExpression(o.tla)
+      writeBTSTriggerLogicalExpression(o.tle)
     }
 
     def writeBTSTriggerLogicalExpression(o: BTSTriggerLogicalExpression): Unit = {
       writer.writeZ(Constants.BTSTriggerLogicalExpression)
+      writeBTSModeOperatorType(o.op)
       writer.writeISZ(o.triggers, writeBTSEventTrigger _)
     }
 
@@ -820,6 +887,17 @@ object MsgPack {
       writer.writeZ(Constants.BTSVariable)
       writeName(o.name)
       writeBTSType(o.typ)
+    }
+
+    def writeBTSActionAnnexSubclause(o: BTSActionAnnexSubclause): Unit = {
+      writer.writeZ(Constants.BTSActionAnnexSubclause)
+      writer.writeB(o.doNotProve)
+      writer.writeISZ(o.throws, writeName _)
+      writer.writeISZ(o.assertions, writeBTSAssertion _)
+      writer.writeOption(o.precondition, writeBTSAssertion _)
+      writer.writeOption(o.postcondition, writeBTSAssertion _)
+      writer.writeOption(o.invariant, writeBTSAssertion _)
+      writeBTSExistentialLatticeQuantification(o.elq)
     }
 
     def writeBTSBehaviorActions(o: BTSBehaviorActions): Unit = {
@@ -1066,7 +1144,7 @@ object MsgPack {
       writer.writeZ(Constants.BTSExistentialLatticeQuantification)
       writer.writeISZ(o.quantifiedVariables, writeBTSVariableDeclaration _)
       writeBTSBehaviorActions(o.actions)
-      writer.writeOption(o.timeout, writeBTSBehaviorTime _)
+      writer.writeOption(o.timeout, writeBTSExp _)
       writer.writeISZ(o.catchClause, writeBTSCatchClauseTerm _)
     }
 
@@ -1095,7 +1173,20 @@ object MsgPack {
         case o: BTSAccessExp => writeBTSAccessExp(o)
         case o: BTSFunctionCall => writeBTSFunctionCall(o)
         case o: BTSConditionalExpression => writeBTSConditionalExpression(o)
+        case o: BTSTrue => writeBTSTrue(o)
+        case o: BTSFalse => writeBTSFalse(o)
+        case o: BTSNull => writeBTSNull(o)
+        case o: BTSPropertyConstant => writeBTSPropertyConstant(o)
+        case o: BTSPropertySetProperty => writeBTSPropertySetProperty(o)
+        case o: BTSSelfProperty => writeBTSSelfProperty(o)
+        case o: BTSComponentProperty => writeBTSComponentProperty(o)
+        case o: BTSUniversalQuantification => writeBTSUniversalQuantification(o)
+        case o: BTSExistentialQuantification => writeBTSExistentialQuantification(o)
+        case o: BTSSumQuantification => writeBTSSumQuantification(o)
+        case o: BTSProductQuantification => writeBTSProductQuantification(o)
+        case o: BTSCountingQuantification => writeBTSCountingQuantification(o)
         case o: BTSRange => writeBTSRange(o)
+        case o: BTSQuantity => writeBTSQuantity(o)
       }
     }
 
@@ -1128,6 +1219,7 @@ object MsgPack {
       writer.writeZ(Constants.BTSLiteralExp)
       writeBTSLiteralTypeType(o.typ)
       writer.writeString(o.exp)
+      writer.writeOption(o.unit, writeName _)
     }
 
     def writeBTSValueName(o: BTSValueName): Unit = {
@@ -1185,10 +1277,111 @@ object MsgPack {
       writeBTSExp(o.f)
     }
 
+    def writeBTSTrue(o: BTSTrue): Unit = {
+      writer.writeZ(Constants.BTSTrue)
+    }
+
+    def writeBTSFalse(o: BTSFalse): Unit = {
+      writer.writeZ(Constants.BTSFalse)
+    }
+
+    def writeBTSNull(o: BTSNull): Unit = {
+      writer.writeZ(Constants.BTSNull)
+    }
+
+    def writeBTSPropertyConstant(o: BTSPropertyConstant): Unit = {
+      writer.writeZ(Constants.BTSPropertyConstant)
+      writeName(o.propertyset)
+      writeName(o.propertyconstant)
+    }
+
+    def writeBTSPropertyReference(o: BTSPropertyReference): Unit = {
+      o match {
+      }
+    }
+
+    def writeBTSPropertySetProperty(o: BTSPropertySetProperty): Unit = {
+      writer.writeZ(Constants.BTSPropertySetProperty)
+      writer.writeOption(o.propertyset, writeName _)
+      writeName(o.propertyconstant)
+      writer.writeISZ(o.field, writeBTSPropertyField _)
+    }
+
+    def writeBTSSelfProperty(o: BTSSelfProperty): Unit = {
+      writer.writeZ(Constants.BTSSelfProperty)
+      writer.writeOption(o.propertyset, writeName _)
+      writeName(o.propertyconstant)
+      writer.writeISZ(o.field, writeBTSPropertyField _)
+    }
+
+    def writeBTSComponentProperty(o: BTSComponentProperty): Unit = {
+      writer.writeZ(Constants.BTSComponentProperty)
+      writeBTSComponent(o.component)
+      writer.writeOption(o.propertyset, writeName _)
+      writeName(o.propertyconstant)
+      writer.writeISZ(o.field, writeBTSPropertyField _)
+    }
+
+    def writeBTSComponent(o: BTSComponent): Unit = {
+      writer.writeZ(Constants.BTSComponent)
+      writer.writeISZ(o.packageids, writeName _)
+      writeName(o.component)
+      writer.writeOption(o.impl, writeName _)
+    }
+
+    def writeBTSPropertyField(o: BTSPropertyField): Unit = {
+      writer.writeZ(Constants.BTSPropertyField)
+      writer.writeOption(o.index, writer.writeZ _)
+      writer.writeOption(o.variable, writeName _)
+      writer.writeOption(o.pf, writeName _)
+      writer.writeB(o.upper)
+      writer.writeB(o.lower)
+    }
+
+    def writeBTSUniversalQuantification(o: BTSUniversalQuantification): Unit = {
+      writer.writeZ(Constants.BTSUniversalQuantification)
+      writer.writeISZ(o.variables, writeBTSVariable _)
+      writer.writeOption(o.range, writeBTSRange _)
+      writer.writeOption(o.condition, writeBTSExp _)
+      writeBTSExp(o.predicate)
+    }
+
+    def writeBTSExistentialQuantification(o: BTSExistentialQuantification): Unit = {
+      writer.writeZ(Constants.BTSExistentialQuantification)
+      writer.writeISZ(o.variables, writeBTSVariable _)
+      writer.writeOption(o.range, writeBTSRange _)
+      writer.writeOption(o.condition, writeBTSExp _)
+      writeBTSExp(o.predicate)
+    }
+
+    def writeBTSSumQuantification(o: BTSSumQuantification): Unit = {
+      writer.writeZ(Constants.BTSSumQuantification)
+      writer.writeISZ(o.variables, writeBTSVariable _)
+      writer.writeOption(o.range, writeBTSRange _)
+      writer.writeOption(o.condition, writeBTSExp _)
+      writeBTSExp(o.expression)
+    }
+
+    def writeBTSProductQuantification(o: BTSProductQuantification): Unit = {
+      writer.writeZ(Constants.BTSProductQuantification)
+      writer.writeISZ(o.variables, writeBTSVariable _)
+      writer.writeOption(o.range, writeBTSRange _)
+      writer.writeOption(o.condition, writeBTSExp _)
+      writeBTSExp(o.expression)
+    }
+
+    def writeBTSCountingQuantification(o: BTSCountingQuantification): Unit = {
+      writer.writeZ(Constants.BTSCountingQuantification)
+      writer.writeISZ(o.variables, writeBTSVariable _)
+      writer.writeOption(o.range, writeBTSRange _)
+      writer.writeOption(o.condition, writeBTSExp _)
+      writeBTSExp(o.predicate)
+    }
+
     def writeBTSRange(o: BTSRange): Unit = {
       writer.writeZ(Constants.BTSRange)
       writeBTSExp(o.lb)
-      writeBTSRangeSymbolType(o.sym)
+      writeBTSRangeSymbolType(o.op)
       writeBTSExp(o.ub)
     }
 
@@ -1196,14 +1389,164 @@ object MsgPack {
       writer.writeZ(o.ordinal)
     }
 
-    def writeBTSBehaviorTime(o: BTSBehaviorTime): Unit = {
-      writer.writeZ(Constants.BTSBehaviorTime)
+    def writeBTSTypeLibrary(o: BTSTypeLibrary): Unit = {
+      writer.writeZ(Constants.BTSTypeLibrary)
+      writer.writeISZ(o.typedeclarations, writeBTSTypeDeclatation _)
+    }
+
+    def writeBTSTypeDeclatation(o: BTSTypeDeclatation): Unit = {
+      writer.writeZ(Constants.BTSTypeDeclatation)
+      writeName(o.name)
+      writeBTSType(o.ty)
     }
 
     def writeBTSType(o: BTSType): Unit = {
       o match {
+        case o: BTSBooleanType => writeBTSBooleanType(o)
+        case o: BTSStringType => writeBTSStringType(o)
+        case o: BTSNullType => writeBTSNullType(o)
         case o: BTSClassifier => writeBTSClassifier(o)
+        case o: BTSTypeName => writeBTSTypeName(o)
+        case o: BTSEnumerationType => writeBTSEnumerationType(o)
+        case o: BTSQuantityType => writeBTSQuantityType(o)
+        case o: BTSArrayType => writeBTSArrayType(o)
+        case o: BTSRecordType => writeBTSRecordType(o)
       }
+    }
+
+    def writeBTSBooleanType(o: BTSBooleanType): Unit = {
+      writer.writeZ(Constants.BTSBooleanType)
+    }
+
+    def writeBTSStringType(o: BTSStringType): Unit = {
+      writer.writeZ(Constants.BTSStringType)
+    }
+
+    def writeBTSNullType(o: BTSNullType): Unit = {
+      writer.writeZ(Constants.BTSNullType)
+    }
+
+    def writeBTSClassifier(o: BTSClassifier): Unit = {
+      writer.writeZ(Constants.BTSClassifier)
+      writeBTSComponent(o.classifier)
+    }
+
+    def writeBTSTypeName(o: BTSTypeName): Unit = {
+      writer.writeZ(Constants.BTSTypeName)
+      writeName(o.typename)
+    }
+
+    def writeBTSEnumerationType(o: BTSEnumerationType): Unit = {
+      writer.writeZ(Constants.BTSEnumerationType)
+      writer.writeISZ(o.literals, writeName _)
+    }
+
+    def writeBTSQuantityType(o: BTSQuantityType): Unit = {
+      writer.writeZ(Constants.BTSQuantityType)
+      writer.writeOption(o.unit, writeName _)
+      writer.writeB(o.scalar)
+      writer.writeB(o.whole)
+      writer.writeOption(o.lb, writer.writeF64 _)
+      writer.writeOption(o.ub, writer.writeF64 _)
+      writer.writeOption(o.step, writer.writeF64 _)
+      writer.writeOption(o.representation, writeBTSPropertyConstant _)
+    }
+
+    def writeBTSArrayType(o: BTSArrayType): Unit = {
+      writer.writeZ(Constants.BTSArrayType)
+      writer.writeISZ(o.ranges, writeBTSArrayRange _)
+      writeBTSType(o.typ)
+    }
+
+    def writeBTSArrayRange(o: BTSArrayRange): Unit = {
+      writer.writeZ(Constants.BTSArrayRange)
+      writeBTSExp(o.lb)
+      writer.writeOption(o.ub, writeBTSExp _)
+    }
+
+    def writeBTSRecordType(o: BTSRecordType): Unit = {
+      writer.writeZ(Constants.BTSRecordType)
+      writeBTSRecordKindType(o.kind)
+      writer.writeISZ(o.fields, writeBTSRecordField _)
+    }
+
+    def writeBTSRecordKindType(o: BTSRecordKind.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def writeBTSRecordField(o: BTSRecordField): Unit = {
+      writer.writeZ(Constants.BTSRecordField)
+      writeName(o.label)
+      writeBTSType(o.typ)
+    }
+
+    def writeBTSUnitLibrary(o: BTSUnitLibrary): Unit = {
+      writer.writeZ(Constants.BTSUnitLibrary)
+      writer.writeISZ(o.unitDeclarations, writeBTSUnitDeclaration _)
+    }
+
+    def writeBTSUnitDeclaration(o: BTSUnitDeclaration): Unit = {
+      o match {
+        case o: BTSRootDeclaration => writeBTSRootDeclaration(o)
+        case o: BTSUnitExtension => writeBTSUnitExtension(o)
+      }
+    }
+
+    def writeBTSRootDeclaration(o: BTSRootDeclaration): Unit = {
+      writer.writeZ(Constants.BTSRootDeclaration)
+      writer.writeB(o.base)
+      writer.writeOption(o.formula, writeBTSUnitFormula _)
+      writer.writeISZ(o.kindWords, writeName _)
+      writeBTSUnitName(o.unitName)
+      writer.writeISZ(o.factors, writeBTSUnitFactor _)
+    }
+
+    def writeBTSUnitExtension(o: BTSUnitExtension): Unit = {
+      writer.writeZ(Constants.BTSUnitExtension)
+      writeBTSUnitName(o.root)
+      writer.writeISZ(o.factors, writeBTSUnitFactor _)
+    }
+
+    def writeBTSUnitName(o: BTSUnitName): Unit = {
+      writer.writeZ(Constants.BTSUnitName)
+      writer.writeISZ(o.longname, writeName _)
+      writeName(o.name)
+    }
+
+    def writeBTSUnitFormula(o: BTSUnitFormula): Unit = {
+      writer.writeZ(Constants.BTSUnitFormula)
+      writer.writeISZ(o.top, writeBTSUnitName _)
+      writer.writeISZ(o.bottom, writeBTSUnitName _)
+    }
+
+    def writeBTSMulDivType(o: BTSMulDiv.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def writeBTSUnitFactor(o: BTSUnitFactor): Unit = {
+      writer.writeZ(Constants.BTSUnitFactor)
+      writeBTSUnitName(o.unit)
+      writeBTSMulDivType(o.op)
+      writer.writeR(o.factor)
+    }
+
+    def writeBTSQuantity(o: BTSQuantity): Unit = {
+      writer.writeZ(Constants.BTSQuantity)
+      writer.writeR(o.number)
+      writer.writeOption(o.unit, writeName _)
+      writer.writeB(o.scalar)
+    }
+
+    def writeBTSExceptionLibrary(o: BTSExceptionLibrary): Unit = {
+      writer.writeZ(Constants.BTSExceptionLibrary)
+      writer.writeISZ(o.exc, writeBTSExceptionDeclaration _)
+    }
+
+    def writeBTSExceptionDeclaration(o: BTSExceptionDeclaration): Unit = {
+      writer.writeZ(Constants.BTSExceptionDeclaration)
+      writeName(o.name)
+      writer.writeString(o.description)
+      writer.writeOption(o.code, writer.writeZ _)
     }
 
     def writeTODO(o: TODO): Unit = {
@@ -1937,9 +2280,10 @@ object MsgPack {
         case Constants.ErrorPropagation => val r = readErrorPropagationT(T); return r
         case Constants.OtherAnnex => val r = readOtherAnnexT(T); return r
         case Constants.BTSBLESSAnnexClause => val r = readBTSBLESSAnnexClauseT(T); return r
+        case Constants.BTSActionAnnexSubclause => val r = readBTSActionAnnexSubclauseT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of AnnexClause.")
-          val r = readBTSBLESSAnnexClauseT(T)
+          val r = readBTSActionAnnexSubclauseT(T)
           return r
       }
     }
@@ -1951,9 +2295,12 @@ object MsgPack {
         case Constants.SmfLibrary => val r = readSmfLibraryT(T); return r
         case Constants.Emv2Library => val r = readEmv2LibraryT(T); return r
         case Constants.OtherLib => val r = readOtherLibT(T); return r
+        case Constants.BTSTypeLibrary => val r = readBTSTypeLibraryT(T); return r
+        case Constants.BTSUnitLibrary => val r = readBTSUnitLibraryT(T); return r
+        case Constants.BTSExceptionLibrary => val r = readBTSExceptionLibraryT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of AnnexLib.")
-          val r = readOtherLibT(T)
+          val r = readBTSExceptionLibraryT(T)
           return r
       }
     }
@@ -1989,9 +2336,10 @@ object MsgPack {
       val t = reader.readZ()
       t match {
         case Constants.BTSBLESSAnnexClause => val r = readBTSBLESSAnnexClauseT(T); return r
+        case Constants.BTSActionAnnexSubclause => val r = readBTSActionAnnexSubclauseT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of BLESSAnnex.")
-          val r = readBTSBLESSAnnexClauseT(T)
+          val r = readBTSActionAnnexSubclauseT(T)
           return r
       }
     }
@@ -2027,7 +2375,7 @@ object MsgPack {
       val category = reader.readOption(readBTSVariableCategoryType _)
       val varType = readBTSType()
       val assignExpression = reader.readOption(readBTSExp _)
-      val arraySize = reader.readOption(readBLESSIntConst _)
+      val arraySize = reader.readOption(readBTSExp _)
       val variableAssertion = reader.readOption(readBTSAssertion _)
       return BTSVariableDeclaration(name, category, varType, assignExpression, arraySize, variableAssertion)
     }
@@ -2035,31 +2383,6 @@ object MsgPack {
     def readBTSVariableCategoryType(): BTSVariableCategory.Type = {
       val r = reader.readZ()
       return BTSVariableCategory.byOrdinal(r).get
-    }
-
-    def readBTSClassifier(): BTSClassifier = {
-      val r = readBTSClassifierT(F)
-      return r
-    }
-
-    def readBTSClassifierT(typeParsed: B): BTSClassifier = {
-      if (!typeParsed) {
-        reader.expectZ(Constants.BTSClassifier)
-      }
-      val classifier = readClassifier()
-      return BTSClassifier(classifier)
-    }
-
-    def readBLESSIntConst(): BLESSIntConst = {
-      val r = readBLESSIntConstT(F)
-      return r
-    }
-
-    def readBLESSIntConstT(typeParsed: B): BLESSIntConst = {
-      if (!typeParsed) {
-        reader.expectZ(Constants.BLESSIntConst)
-      }
-      return BLESSIntConst()
     }
 
     def readBTSStateDeclaration(): BTSStateDeclaration = {
@@ -2140,9 +2463,10 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.BTSDispatchCondition)
       }
-      val dispatchTriggers = reader.readISZ(readBTSDispatchConjunction _)
+      val conjunctions = reader.readISZ(readBTSDispatchConjunction _)
+      val subprogramaccessdispatch = readName()
       val frozenPorts = reader.readISZ(readName _)
-      return BTSDispatchCondition(dispatchTriggers, frozenPorts)
+      return BTSDispatchCondition(conjunctions, subprogramaccessdispatch, frozenPorts)
     }
 
     def readBTSDispatchConjunction(): BTSDispatchConjunction = {
@@ -2154,8 +2478,8 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.BTSDispatchConjunction)
       }
-      val conjunction = reader.readISZ(readBTSDispatchTrigger _)
-      return BTSDispatchConjunction(conjunction)
+      val triggers = reader.readISZ(readBTSDispatchTrigger _)
+      return BTSDispatchConjunction(triggers)
     }
 
     def readBTSDispatchTrigger(): BTSDispatchTrigger = {
@@ -2194,7 +2518,8 @@ object MsgPack {
         reader.expectZ(Constants.BTSDispatchTriggerPort)
       }
       val port = readName()
-      return BTSDispatchTriggerPort(port)
+      val portarrayindex = reader.readOption(reader.readZ _)
+      return BTSDispatchTriggerPort(port, portarrayindex)
     }
 
     def readBTSDispatchTriggerTimeout(): BTSDispatchTriggerTimeout = {
@@ -2207,7 +2532,7 @@ object MsgPack {
         reader.expectZ(Constants.BTSDispatchTriggerTimeout)
       }
       val ports = reader.readISZ(readName _)
-      val time = reader.readOption(readBTSBehaviorTime _)
+      val time = reader.readOption(readBTSExp _)
       return BTSDispatchTriggerTimeout(ports, time)
     }
 
@@ -2271,8 +2596,8 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.BTSModeCondition)
       }
-      val tla = readBTSTriggerLogicalExpression()
-      return BTSModeCondition(tla)
+      val tle = readBTSTriggerLogicalExpression()
+      return BTSModeCondition(tle)
     }
 
     def readBTSTriggerLogicalExpression(): BTSTriggerLogicalExpression = {
@@ -2284,8 +2609,9 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.BTSTriggerLogicalExpression)
       }
+      val op = readBTSModeOperatorType()
       val triggers = reader.readISZ(readBTSEventTrigger _)
-      return BTSTriggerLogicalExpression(triggers)
+      return BTSTriggerLogicalExpression(op, triggers)
     }
 
     def readBTSEventTrigger(): BTSEventTrigger = {
@@ -2519,6 +2845,25 @@ object MsgPack {
       val name = readName()
       val typ = readBTSType()
       return BTSVariable(name, typ)
+    }
+
+    def readBTSActionAnnexSubclause(): BTSActionAnnexSubclause = {
+      val r = readBTSActionAnnexSubclauseT(F)
+      return r
+    }
+
+    def readBTSActionAnnexSubclauseT(typeParsed: B): BTSActionAnnexSubclause = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSActionAnnexSubclause)
+      }
+      val doNotProve = reader.readB()
+      val throws = reader.readISZ(readName _)
+      val assertions = reader.readISZ(readBTSAssertion _)
+      val precondition = reader.readOption(readBTSAssertion _)
+      val postcondition = reader.readOption(readBTSAssertion _)
+      val invariant = reader.readOption(readBTSAssertion _)
+      val elq = readBTSExistentialLatticeQuantification()
+      return BTSActionAnnexSubclause(doNotProve, throws, assertions, precondition, postcondition, invariant, elq)
     }
 
     def readBTSBehaviorActions(): BTSBehaviorActions = {
@@ -3001,7 +3346,7 @@ object MsgPack {
       }
       val quantifiedVariables = reader.readISZ(readBTSVariableDeclaration _)
       val actions = readBTSBehaviorActions()
-      val timeout = reader.readOption(readBTSBehaviorTime _)
+      val timeout = reader.readOption(readBTSExp _)
       val catchClause = reader.readISZ(readBTSCatchClauseTerm _)
       return BTSExistentialLatticeQuantification(quantifiedVariables, actions, timeout, catchClause)
     }
@@ -3049,10 +3394,23 @@ object MsgPack {
         case Constants.BTSAccessExp => val r = readBTSAccessExpT(T); return r
         case Constants.BTSFunctionCall => val r = readBTSFunctionCallT(T); return r
         case Constants.BTSConditionalExpression => val r = readBTSConditionalExpressionT(T); return r
+        case Constants.BTSTrue => val r = readBTSTrueT(T); return r
+        case Constants.BTSFalse => val r = readBTSFalseT(T); return r
+        case Constants.BTSNull => val r = readBTSNullT(T); return r
+        case Constants.BTSPropertyConstant => val r = readBTSPropertyConstantT(T); return r
+        case Constants.BTSPropertySetProperty => val r = readBTSPropertySetPropertyT(T); return r
+        case Constants.BTSSelfProperty => val r = readBTSSelfPropertyT(T); return r
+        case Constants.BTSComponentProperty => val r = readBTSComponentPropertyT(T); return r
+        case Constants.BTSUniversalQuantification => val r = readBTSUniversalQuantificationT(T); return r
+        case Constants.BTSExistentialQuantification => val r = readBTSExistentialQuantificationT(T); return r
+        case Constants.BTSSumQuantification => val r = readBTSSumQuantificationT(T); return r
+        case Constants.BTSProductQuantification => val r = readBTSProductQuantificationT(T); return r
+        case Constants.BTSCountingQuantification => val r = readBTSCountingQuantificationT(T); return r
         case Constants.BTSRange => val r = readBTSRangeT(T); return r
+        case Constants.BTSQuantity => val r = readBTSQuantityT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of BTSExp.")
-          val r = readBTSRangeT(T)
+          val r = readBTSQuantityT(T)
           return r
       }
     }
@@ -3112,7 +3470,8 @@ object MsgPack {
       }
       val typ = readBTSLiteralTypeType()
       val exp = reader.readString()
-      return BTSLiteralExp(typ, exp)
+      val unit = reader.readOption(readName _)
+      return BTSLiteralExp(typ, exp, unit)
     }
 
     def readBTSValueName(): BTSValueName = {
@@ -3233,6 +3592,225 @@ object MsgPack {
       return BTSConditionalExpression(guard, t, f)
     }
 
+    def readBTSTrue(): BTSTrue = {
+      val r = readBTSTrueT(F)
+      return r
+    }
+
+    def readBTSTrueT(typeParsed: B): BTSTrue = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSTrue)
+      }
+      return BTSTrue()
+    }
+
+    def readBTSFalse(): BTSFalse = {
+      val r = readBTSFalseT(F)
+      return r
+    }
+
+    def readBTSFalseT(typeParsed: B): BTSFalse = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSFalse)
+      }
+      return BTSFalse()
+    }
+
+    def readBTSNull(): BTSNull = {
+      val r = readBTSNullT(F)
+      return r
+    }
+
+    def readBTSNullT(typeParsed: B): BTSNull = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSNull)
+      }
+      return BTSNull()
+    }
+
+    def readBTSPropertyConstant(): BTSPropertyConstant = {
+      val r = readBTSPropertyConstantT(F)
+      return r
+    }
+
+    def readBTSPropertyConstantT(typeParsed: B): BTSPropertyConstant = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSPropertyConstant)
+      }
+      val propertyset = readName()
+      val propertyconstant = readName()
+      return BTSPropertyConstant(propertyset, propertyconstant)
+    }
+
+    def readBTSPropertyReference(): BTSPropertyReference = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case _ =>
+          reader.error(i, s"$t is not a valid type of BTSPropertyReference.")
+          val r = read?T(T)
+          return r
+      }
+    }
+
+    def readBTSPropertySetProperty(): BTSPropertySetProperty = {
+      val r = readBTSPropertySetPropertyT(F)
+      return r
+    }
+
+    def readBTSPropertySetPropertyT(typeParsed: B): BTSPropertySetProperty = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSPropertySetProperty)
+      }
+      val propertyset = reader.readOption(readName _)
+      val propertyconstant = readName()
+      val field = reader.readISZ(readBTSPropertyField _)
+      return BTSPropertySetProperty(propertyset, propertyconstant, field)
+    }
+
+    def readBTSSelfProperty(): BTSSelfProperty = {
+      val r = readBTSSelfPropertyT(F)
+      return r
+    }
+
+    def readBTSSelfPropertyT(typeParsed: B): BTSSelfProperty = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSSelfProperty)
+      }
+      val propertyset = reader.readOption(readName _)
+      val propertyconstant = readName()
+      val field = reader.readISZ(readBTSPropertyField _)
+      return BTSSelfProperty(propertyset, propertyconstant, field)
+    }
+
+    def readBTSComponentProperty(): BTSComponentProperty = {
+      val r = readBTSComponentPropertyT(F)
+      return r
+    }
+
+    def readBTSComponentPropertyT(typeParsed: B): BTSComponentProperty = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSComponentProperty)
+      }
+      val component = readBTSComponent()
+      val propertyset = reader.readOption(readName _)
+      val propertyconstant = readName()
+      val field = reader.readISZ(readBTSPropertyField _)
+      return BTSComponentProperty(component, propertyset, propertyconstant, field)
+    }
+
+    def readBTSComponent(): BTSComponent = {
+      val r = readBTSComponentT(F)
+      return r
+    }
+
+    def readBTSComponentT(typeParsed: B): BTSComponent = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSComponent)
+      }
+      val packageids = reader.readISZ(readName _)
+      val component = readName()
+      val impl = reader.readOption(readName _)
+      return BTSComponent(packageids, component, impl)
+    }
+
+    def readBTSPropertyField(): BTSPropertyField = {
+      val r = readBTSPropertyFieldT(F)
+      return r
+    }
+
+    def readBTSPropertyFieldT(typeParsed: B): BTSPropertyField = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSPropertyField)
+      }
+      val index = reader.readOption(reader.readZ _)
+      val variable = reader.readOption(readName _)
+      val pf = reader.readOption(readName _)
+      val upper = reader.readB()
+      val lower = reader.readB()
+      return BTSPropertyField(index, variable, pf, upper, lower)
+    }
+
+    def readBTSUniversalQuantification(): BTSUniversalQuantification = {
+      val r = readBTSUniversalQuantificationT(F)
+      return r
+    }
+
+    def readBTSUniversalQuantificationT(typeParsed: B): BTSUniversalQuantification = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSUniversalQuantification)
+      }
+      val variables = reader.readISZ(readBTSVariable _)
+      val range = reader.readOption(readBTSRange _)
+      val condition = reader.readOption(readBTSExp _)
+      val predicate = readBTSExp()
+      return BTSUniversalQuantification(variables, range, condition, predicate)
+    }
+
+    def readBTSExistentialQuantification(): BTSExistentialQuantification = {
+      val r = readBTSExistentialQuantificationT(F)
+      return r
+    }
+
+    def readBTSExistentialQuantificationT(typeParsed: B): BTSExistentialQuantification = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSExistentialQuantification)
+      }
+      val variables = reader.readISZ(readBTSVariable _)
+      val range = reader.readOption(readBTSRange _)
+      val condition = reader.readOption(readBTSExp _)
+      val predicate = readBTSExp()
+      return BTSExistentialQuantification(variables, range, condition, predicate)
+    }
+
+    def readBTSSumQuantification(): BTSSumQuantification = {
+      val r = readBTSSumQuantificationT(F)
+      return r
+    }
+
+    def readBTSSumQuantificationT(typeParsed: B): BTSSumQuantification = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSSumQuantification)
+      }
+      val variables = reader.readISZ(readBTSVariable _)
+      val range = reader.readOption(readBTSRange _)
+      val condition = reader.readOption(readBTSExp _)
+      val expression = readBTSExp()
+      return BTSSumQuantification(variables, range, condition, expression)
+    }
+
+    def readBTSProductQuantification(): BTSProductQuantification = {
+      val r = readBTSProductQuantificationT(F)
+      return r
+    }
+
+    def readBTSProductQuantificationT(typeParsed: B): BTSProductQuantification = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSProductQuantification)
+      }
+      val variables = reader.readISZ(readBTSVariable _)
+      val range = reader.readOption(readBTSRange _)
+      val condition = reader.readOption(readBTSExp _)
+      val expression = readBTSExp()
+      return BTSProductQuantification(variables, range, condition, expression)
+    }
+
+    def readBTSCountingQuantification(): BTSCountingQuantification = {
+      val r = readBTSCountingQuantificationT(F)
+      return r
+    }
+
+    def readBTSCountingQuantificationT(typeParsed: B): BTSCountingQuantification = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSCountingQuantification)
+      }
+      val variables = reader.readISZ(readBTSVariable _)
+      val range = reader.readOption(readBTSRange _)
+      val condition = reader.readOption(readBTSExp _)
+      val predicate = readBTSExp()
+      return BTSCountingQuantification(variables, range, condition, predicate)
+    }
+
     def readBTSRange(): BTSRange = {
       val r = readBTSRangeT(F)
       return r
@@ -3243,9 +3821,9 @@ object MsgPack {
         reader.expectZ(Constants.BTSRange)
       }
       val lb = readBTSExp()
-      val sym = readBTSRangeSymbolType()
+      val op = readBTSRangeSymbolType()
       val ub = readBTSExp()
-      return BTSRange(lb, sym, ub)
+      return BTSRange(lb, op, ub)
     }
 
     def readBTSRangeSymbolType(): BTSRangeSymbol.Type = {
@@ -3253,28 +3831,354 @@ object MsgPack {
       return BTSRangeSymbol.byOrdinal(r).get
     }
 
-    def readBTSBehaviorTime(): BTSBehaviorTime = {
-      val r = readBTSBehaviorTimeT(F)
+    def readBTSTypeLibrary(): BTSTypeLibrary = {
+      val r = readBTSTypeLibraryT(F)
       return r
     }
 
-    def readBTSBehaviorTimeT(typeParsed: B): BTSBehaviorTime = {
+    def readBTSTypeLibraryT(typeParsed: B): BTSTypeLibrary = {
       if (!typeParsed) {
-        reader.expectZ(Constants.BTSBehaviorTime)
+        reader.expectZ(Constants.BTSTypeLibrary)
       }
-      return BTSBehaviorTime()
+      val typedeclarations = reader.readISZ(readBTSTypeDeclatation _)
+      return BTSTypeLibrary(typedeclarations)
+    }
+
+    def readBTSTypeDeclatation(): BTSTypeDeclatation = {
+      val r = readBTSTypeDeclatationT(F)
+      return r
+    }
+
+    def readBTSTypeDeclatationT(typeParsed: B): BTSTypeDeclatation = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSTypeDeclatation)
+      }
+      val name = readName()
+      val ty = readBTSType()
+      return BTSTypeDeclatation(name, ty)
     }
 
     def readBTSType(): BTSType = {
       val i = reader.curr
       val t = reader.readZ()
       t match {
+        case Constants.BTSBooleanType => val r = readBTSBooleanTypeT(T); return r
+        case Constants.BTSStringType => val r = readBTSStringTypeT(T); return r
+        case Constants.BTSNullType => val r = readBTSNullTypeT(T); return r
         case Constants.BTSClassifier => val r = readBTSClassifierT(T); return r
+        case Constants.BTSTypeName => val r = readBTSTypeNameT(T); return r
+        case Constants.BTSEnumerationType => val r = readBTSEnumerationTypeT(T); return r
+        case Constants.BTSQuantityType => val r = readBTSQuantityTypeT(T); return r
+        case Constants.BTSArrayType => val r = readBTSArrayTypeT(T); return r
+        case Constants.BTSRecordType => val r = readBTSRecordTypeT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of BTSType.")
-          val r = readBTSClassifierT(T)
+          val r = readBTSRecordTypeT(T)
           return r
       }
+    }
+
+    def readBTSBooleanType(): BTSBooleanType = {
+      val r = readBTSBooleanTypeT(F)
+      return r
+    }
+
+    def readBTSBooleanTypeT(typeParsed: B): BTSBooleanType = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSBooleanType)
+      }
+      return BTSBooleanType()
+    }
+
+    def readBTSStringType(): BTSStringType = {
+      val r = readBTSStringTypeT(F)
+      return r
+    }
+
+    def readBTSStringTypeT(typeParsed: B): BTSStringType = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSStringType)
+      }
+      return BTSStringType()
+    }
+
+    def readBTSNullType(): BTSNullType = {
+      val r = readBTSNullTypeT(F)
+      return r
+    }
+
+    def readBTSNullTypeT(typeParsed: B): BTSNullType = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSNullType)
+      }
+      return BTSNullType()
+    }
+
+    def readBTSClassifier(): BTSClassifier = {
+      val r = readBTSClassifierT(F)
+      return r
+    }
+
+    def readBTSClassifierT(typeParsed: B): BTSClassifier = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSClassifier)
+      }
+      val classifier = readBTSComponent()
+      return BTSClassifier(classifier)
+    }
+
+    def readBTSTypeName(): BTSTypeName = {
+      val r = readBTSTypeNameT(F)
+      return r
+    }
+
+    def readBTSTypeNameT(typeParsed: B): BTSTypeName = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSTypeName)
+      }
+      val typename = readName()
+      return BTSTypeName(typename)
+    }
+
+    def readBTSEnumerationType(): BTSEnumerationType = {
+      val r = readBTSEnumerationTypeT(F)
+      return r
+    }
+
+    def readBTSEnumerationTypeT(typeParsed: B): BTSEnumerationType = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSEnumerationType)
+      }
+      val literals = reader.readISZ(readName _)
+      return BTSEnumerationType(literals)
+    }
+
+    def readBTSQuantityType(): BTSQuantityType = {
+      val r = readBTSQuantityTypeT(F)
+      return r
+    }
+
+    def readBTSQuantityTypeT(typeParsed: B): BTSQuantityType = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSQuantityType)
+      }
+      val unit = reader.readOption(readName _)
+      val scalar = reader.readB()
+      val whole = reader.readB()
+      val lb = reader.readOption(reader.readF64 _)
+      val ub = reader.readOption(reader.readF64 _)
+      val step = reader.readOption(reader.readF64 _)
+      val representation = reader.readOption(readBTSPropertyConstant _)
+      return BTSQuantityType(unit, scalar, whole, lb, ub, step, representation)
+    }
+
+    def readBTSArrayType(): BTSArrayType = {
+      val r = readBTSArrayTypeT(F)
+      return r
+    }
+
+    def readBTSArrayTypeT(typeParsed: B): BTSArrayType = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSArrayType)
+      }
+      val ranges = reader.readISZ(readBTSArrayRange _)
+      val typ = readBTSType()
+      return BTSArrayType(ranges, typ)
+    }
+
+    def readBTSArrayRange(): BTSArrayRange = {
+      val r = readBTSArrayRangeT(F)
+      return r
+    }
+
+    def readBTSArrayRangeT(typeParsed: B): BTSArrayRange = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSArrayRange)
+      }
+      val lb = readBTSExp()
+      val ub = reader.readOption(readBTSExp _)
+      return BTSArrayRange(lb, ub)
+    }
+
+    def readBTSRecordType(): BTSRecordType = {
+      val r = readBTSRecordTypeT(F)
+      return r
+    }
+
+    def readBTSRecordTypeT(typeParsed: B): BTSRecordType = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSRecordType)
+      }
+      val kind = readBTSRecordKindType()
+      val fields = reader.readISZ(readBTSRecordField _)
+      return BTSRecordType(kind, fields)
+    }
+
+    def readBTSRecordKindType(): BTSRecordKind.Type = {
+      val r = reader.readZ()
+      return BTSRecordKind.byOrdinal(r).get
+    }
+
+    def readBTSRecordField(): BTSRecordField = {
+      val r = readBTSRecordFieldT(F)
+      return r
+    }
+
+    def readBTSRecordFieldT(typeParsed: B): BTSRecordField = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSRecordField)
+      }
+      val label = readName()
+      val typ = readBTSType()
+      return BTSRecordField(label, typ)
+    }
+
+    def readBTSUnitLibrary(): BTSUnitLibrary = {
+      val r = readBTSUnitLibraryT(F)
+      return r
+    }
+
+    def readBTSUnitLibraryT(typeParsed: B): BTSUnitLibrary = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSUnitLibrary)
+      }
+      val unitDeclarations = reader.readISZ(readBTSUnitDeclaration _)
+      return BTSUnitLibrary(unitDeclarations)
+    }
+
+    def readBTSUnitDeclaration(): BTSUnitDeclaration = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.BTSRootDeclaration => val r = readBTSRootDeclarationT(T); return r
+        case Constants.BTSUnitExtension => val r = readBTSUnitExtensionT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of BTSUnitDeclaration.")
+          val r = readBTSUnitExtensionT(T)
+          return r
+      }
+    }
+
+    def readBTSRootDeclaration(): BTSRootDeclaration = {
+      val r = readBTSRootDeclarationT(F)
+      return r
+    }
+
+    def readBTSRootDeclarationT(typeParsed: B): BTSRootDeclaration = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSRootDeclaration)
+      }
+      val base = reader.readB()
+      val formula = reader.readOption(readBTSUnitFormula _)
+      val kindWords = reader.readISZ(readName _)
+      val unitName = readBTSUnitName()
+      val factors = reader.readISZ(readBTSUnitFactor _)
+      return BTSRootDeclaration(base, formula, kindWords, unitName, factors)
+    }
+
+    def readBTSUnitExtension(): BTSUnitExtension = {
+      val r = readBTSUnitExtensionT(F)
+      return r
+    }
+
+    def readBTSUnitExtensionT(typeParsed: B): BTSUnitExtension = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSUnitExtension)
+      }
+      val root = readBTSUnitName()
+      val factors = reader.readISZ(readBTSUnitFactor _)
+      return BTSUnitExtension(root, factors)
+    }
+
+    def readBTSUnitName(): BTSUnitName = {
+      val r = readBTSUnitNameT(F)
+      return r
+    }
+
+    def readBTSUnitNameT(typeParsed: B): BTSUnitName = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSUnitName)
+      }
+      val longname = reader.readISZ(readName _)
+      val name = readName()
+      return BTSUnitName(longname, name)
+    }
+
+    def readBTSUnitFormula(): BTSUnitFormula = {
+      val r = readBTSUnitFormulaT(F)
+      return r
+    }
+
+    def readBTSUnitFormulaT(typeParsed: B): BTSUnitFormula = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSUnitFormula)
+      }
+      val top = reader.readISZ(readBTSUnitName _)
+      val bottom = reader.readISZ(readBTSUnitName _)
+      return BTSUnitFormula(top, bottom)
+    }
+
+    def readBTSMulDivType(): BTSMulDiv.Type = {
+      val r = reader.readZ()
+      return BTSMulDiv.byOrdinal(r).get
+    }
+
+    def readBTSUnitFactor(): BTSUnitFactor = {
+      val r = readBTSUnitFactorT(F)
+      return r
+    }
+
+    def readBTSUnitFactorT(typeParsed: B): BTSUnitFactor = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSUnitFactor)
+      }
+      val unit = readBTSUnitName()
+      val op = readBTSMulDivType()
+      val factor = reader.readR()
+      return BTSUnitFactor(unit, op, factor)
+    }
+
+    def readBTSQuantity(): BTSQuantity = {
+      val r = readBTSQuantityT(F)
+      return r
+    }
+
+    def readBTSQuantityT(typeParsed: B): BTSQuantity = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSQuantity)
+      }
+      val number = reader.readR()
+      val unit = reader.readOption(readName _)
+      val scalar = reader.readB()
+      return BTSQuantity(number, unit, scalar)
+    }
+
+    def readBTSExceptionLibrary(): BTSExceptionLibrary = {
+      val r = readBTSExceptionLibraryT(F)
+      return r
+    }
+
+    def readBTSExceptionLibraryT(typeParsed: B): BTSExceptionLibrary = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSExceptionLibrary)
+      }
+      val exc = reader.readISZ(readBTSExceptionDeclaration _)
+      return BTSExceptionLibrary(exc)
+    }
+
+    def readBTSExceptionDeclaration(): BTSExceptionDeclaration = {
+      val r = readBTSExceptionDeclarationT(F)
+      return r
+    }
+
+    def readBTSExceptionDeclarationT(typeParsed: B): BTSExceptionDeclaration = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSExceptionDeclaration)
+      }
+      val name = readName()
+      val description = reader.readString()
+      val code = reader.readOption(reader.readZ _)
+      return BTSExceptionDeclaration(name, description, code)
     }
 
     def readTODO(): TODO = {
@@ -4263,36 +5167,6 @@ object MsgPack {
     return r
   }
 
-  def fromBTSClassifier(o: BTSClassifier, pooling: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeBTSClassifier(o)
-    return w.result
-  }
-
-  def toBTSClassifier(data: ISZ[U8]): Either[BTSClassifier, MessagePack.ErrorMsg] = {
-    def fBTSClassifier(reader: Reader): BTSClassifier = {
-      val r = reader.readBTSClassifier()
-      return r
-    }
-    val r = to(data, fBTSClassifier _)
-    return r
-  }
-
-  def fromBLESSIntConst(o: BLESSIntConst, pooling: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeBLESSIntConst(o)
-    return w.result
-  }
-
-  def toBLESSIntConst(data: ISZ[U8]): Either[BLESSIntConst, MessagePack.ErrorMsg] = {
-    def fBLESSIntConst(reader: Reader): BLESSIntConst = {
-      val r = reader.readBLESSIntConst()
-      return r
-    }
-    val r = to(data, fBLESSIntConst _)
-    return r
-  }
-
   def fromBTSStateDeclaration(o: BTSStateDeclaration, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
     w.writeBTSStateDeclaration(o)
@@ -4770,6 +5644,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fBTSVariable _)
+    return r
+  }
+
+  def fromBTSActionAnnexSubclause(o: BTSActionAnnexSubclause, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSActionAnnexSubclause(o)
+    return w.result
+  }
+
+  def toBTSActionAnnexSubclause(data: ISZ[U8]): Either[BTSActionAnnexSubclause, MessagePack.ErrorMsg] = {
+    def fBTSActionAnnexSubclause(reader: Reader): BTSActionAnnexSubclause = {
+      val r = reader.readBTSActionAnnexSubclause()
+      return r
+    }
+    val r = to(data, fBTSActionAnnexSubclause _)
     return r
   }
 
@@ -5448,6 +6337,231 @@ object MsgPack {
     return r
   }
 
+  def fromBTSTrue(o: BTSTrue, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSTrue(o)
+    return w.result
+  }
+
+  def toBTSTrue(data: ISZ[U8]): Either[BTSTrue, MessagePack.ErrorMsg] = {
+    def fBTSTrue(reader: Reader): BTSTrue = {
+      val r = reader.readBTSTrue()
+      return r
+    }
+    val r = to(data, fBTSTrue _)
+    return r
+  }
+
+  def fromBTSFalse(o: BTSFalse, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSFalse(o)
+    return w.result
+  }
+
+  def toBTSFalse(data: ISZ[U8]): Either[BTSFalse, MessagePack.ErrorMsg] = {
+    def fBTSFalse(reader: Reader): BTSFalse = {
+      val r = reader.readBTSFalse()
+      return r
+    }
+    val r = to(data, fBTSFalse _)
+    return r
+  }
+
+  def fromBTSNull(o: BTSNull, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSNull(o)
+    return w.result
+  }
+
+  def toBTSNull(data: ISZ[U8]): Either[BTSNull, MessagePack.ErrorMsg] = {
+    def fBTSNull(reader: Reader): BTSNull = {
+      val r = reader.readBTSNull()
+      return r
+    }
+    val r = to(data, fBTSNull _)
+    return r
+  }
+
+  def fromBTSPropertyConstant(o: BTSPropertyConstant, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSPropertyConstant(o)
+    return w.result
+  }
+
+  def toBTSPropertyConstant(data: ISZ[U8]): Either[BTSPropertyConstant, MessagePack.ErrorMsg] = {
+    def fBTSPropertyConstant(reader: Reader): BTSPropertyConstant = {
+      val r = reader.readBTSPropertyConstant()
+      return r
+    }
+    val r = to(data, fBTSPropertyConstant _)
+    return r
+  }
+
+  def fromBTSPropertyReference(o: BTSPropertyReference, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSPropertyReference(o)
+    return w.result
+  }
+
+  def toBTSPropertyReference(data: ISZ[U8]): Either[BTSPropertyReference, MessagePack.ErrorMsg] = {
+    def fBTSPropertyReference(reader: Reader): BTSPropertyReference = {
+      val r = reader.readBTSPropertyReference()
+      return r
+    }
+    val r = to(data, fBTSPropertyReference _)
+    return r
+  }
+
+  def fromBTSPropertySetProperty(o: BTSPropertySetProperty, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSPropertySetProperty(o)
+    return w.result
+  }
+
+  def toBTSPropertySetProperty(data: ISZ[U8]): Either[BTSPropertySetProperty, MessagePack.ErrorMsg] = {
+    def fBTSPropertySetProperty(reader: Reader): BTSPropertySetProperty = {
+      val r = reader.readBTSPropertySetProperty()
+      return r
+    }
+    val r = to(data, fBTSPropertySetProperty _)
+    return r
+  }
+
+  def fromBTSSelfProperty(o: BTSSelfProperty, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSSelfProperty(o)
+    return w.result
+  }
+
+  def toBTSSelfProperty(data: ISZ[U8]): Either[BTSSelfProperty, MessagePack.ErrorMsg] = {
+    def fBTSSelfProperty(reader: Reader): BTSSelfProperty = {
+      val r = reader.readBTSSelfProperty()
+      return r
+    }
+    val r = to(data, fBTSSelfProperty _)
+    return r
+  }
+
+  def fromBTSComponentProperty(o: BTSComponentProperty, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSComponentProperty(o)
+    return w.result
+  }
+
+  def toBTSComponentProperty(data: ISZ[U8]): Either[BTSComponentProperty, MessagePack.ErrorMsg] = {
+    def fBTSComponentProperty(reader: Reader): BTSComponentProperty = {
+      val r = reader.readBTSComponentProperty()
+      return r
+    }
+    val r = to(data, fBTSComponentProperty _)
+    return r
+  }
+
+  def fromBTSComponent(o: BTSComponent, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSComponent(o)
+    return w.result
+  }
+
+  def toBTSComponent(data: ISZ[U8]): Either[BTSComponent, MessagePack.ErrorMsg] = {
+    def fBTSComponent(reader: Reader): BTSComponent = {
+      val r = reader.readBTSComponent()
+      return r
+    }
+    val r = to(data, fBTSComponent _)
+    return r
+  }
+
+  def fromBTSPropertyField(o: BTSPropertyField, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSPropertyField(o)
+    return w.result
+  }
+
+  def toBTSPropertyField(data: ISZ[U8]): Either[BTSPropertyField, MessagePack.ErrorMsg] = {
+    def fBTSPropertyField(reader: Reader): BTSPropertyField = {
+      val r = reader.readBTSPropertyField()
+      return r
+    }
+    val r = to(data, fBTSPropertyField _)
+    return r
+  }
+
+  def fromBTSUniversalQuantification(o: BTSUniversalQuantification, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSUniversalQuantification(o)
+    return w.result
+  }
+
+  def toBTSUniversalQuantification(data: ISZ[U8]): Either[BTSUniversalQuantification, MessagePack.ErrorMsg] = {
+    def fBTSUniversalQuantification(reader: Reader): BTSUniversalQuantification = {
+      val r = reader.readBTSUniversalQuantification()
+      return r
+    }
+    val r = to(data, fBTSUniversalQuantification _)
+    return r
+  }
+
+  def fromBTSExistentialQuantification(o: BTSExistentialQuantification, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSExistentialQuantification(o)
+    return w.result
+  }
+
+  def toBTSExistentialQuantification(data: ISZ[U8]): Either[BTSExistentialQuantification, MessagePack.ErrorMsg] = {
+    def fBTSExistentialQuantification(reader: Reader): BTSExistentialQuantification = {
+      val r = reader.readBTSExistentialQuantification()
+      return r
+    }
+    val r = to(data, fBTSExistentialQuantification _)
+    return r
+  }
+
+  def fromBTSSumQuantification(o: BTSSumQuantification, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSSumQuantification(o)
+    return w.result
+  }
+
+  def toBTSSumQuantification(data: ISZ[U8]): Either[BTSSumQuantification, MessagePack.ErrorMsg] = {
+    def fBTSSumQuantification(reader: Reader): BTSSumQuantification = {
+      val r = reader.readBTSSumQuantification()
+      return r
+    }
+    val r = to(data, fBTSSumQuantification _)
+    return r
+  }
+
+  def fromBTSProductQuantification(o: BTSProductQuantification, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSProductQuantification(o)
+    return w.result
+  }
+
+  def toBTSProductQuantification(data: ISZ[U8]): Either[BTSProductQuantification, MessagePack.ErrorMsg] = {
+    def fBTSProductQuantification(reader: Reader): BTSProductQuantification = {
+      val r = reader.readBTSProductQuantification()
+      return r
+    }
+    val r = to(data, fBTSProductQuantification _)
+    return r
+  }
+
+  def fromBTSCountingQuantification(o: BTSCountingQuantification, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSCountingQuantification(o)
+    return w.result
+  }
+
+  def toBTSCountingQuantification(data: ISZ[U8]): Either[BTSCountingQuantification, MessagePack.ErrorMsg] = {
+    def fBTSCountingQuantification(reader: Reader): BTSCountingQuantification = {
+      val r = reader.readBTSCountingQuantification()
+      return r
+    }
+    val r = to(data, fBTSCountingQuantification _)
+    return r
+  }
+
   def fromBTSRange(o: BTSRange, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
     w.writeBTSRange(o)
@@ -5463,18 +6577,33 @@ object MsgPack {
     return r
   }
 
-  def fromBTSBehaviorTime(o: BTSBehaviorTime, pooling: B): ISZ[U8] = {
+  def fromBTSTypeLibrary(o: BTSTypeLibrary, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeBTSBehaviorTime(o)
+    w.writeBTSTypeLibrary(o)
     return w.result
   }
 
-  def toBTSBehaviorTime(data: ISZ[U8]): Either[BTSBehaviorTime, MessagePack.ErrorMsg] = {
-    def fBTSBehaviorTime(reader: Reader): BTSBehaviorTime = {
-      val r = reader.readBTSBehaviorTime()
+  def toBTSTypeLibrary(data: ISZ[U8]): Either[BTSTypeLibrary, MessagePack.ErrorMsg] = {
+    def fBTSTypeLibrary(reader: Reader): BTSTypeLibrary = {
+      val r = reader.readBTSTypeLibrary()
       return r
     }
-    val r = to(data, fBTSBehaviorTime _)
+    val r = to(data, fBTSTypeLibrary _)
+    return r
+  }
+
+  def fromBTSTypeDeclatation(o: BTSTypeDeclatation, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSTypeDeclatation(o)
+    return w.result
+  }
+
+  def toBTSTypeDeclatation(data: ISZ[U8]): Either[BTSTypeDeclatation, MessagePack.ErrorMsg] = {
+    def fBTSTypeDeclatation(reader: Reader): BTSTypeDeclatation = {
+      val r = reader.readBTSTypeDeclatation()
+      return r
+    }
+    val r = to(data, fBTSTypeDeclatation _)
     return r
   }
 
@@ -5490,6 +6619,321 @@ object MsgPack {
       return r
     }
     val r = to(data, fBTSType _)
+    return r
+  }
+
+  def fromBTSBooleanType(o: BTSBooleanType, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSBooleanType(o)
+    return w.result
+  }
+
+  def toBTSBooleanType(data: ISZ[U8]): Either[BTSBooleanType, MessagePack.ErrorMsg] = {
+    def fBTSBooleanType(reader: Reader): BTSBooleanType = {
+      val r = reader.readBTSBooleanType()
+      return r
+    }
+    val r = to(data, fBTSBooleanType _)
+    return r
+  }
+
+  def fromBTSStringType(o: BTSStringType, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSStringType(o)
+    return w.result
+  }
+
+  def toBTSStringType(data: ISZ[U8]): Either[BTSStringType, MessagePack.ErrorMsg] = {
+    def fBTSStringType(reader: Reader): BTSStringType = {
+      val r = reader.readBTSStringType()
+      return r
+    }
+    val r = to(data, fBTSStringType _)
+    return r
+  }
+
+  def fromBTSNullType(o: BTSNullType, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSNullType(o)
+    return w.result
+  }
+
+  def toBTSNullType(data: ISZ[U8]): Either[BTSNullType, MessagePack.ErrorMsg] = {
+    def fBTSNullType(reader: Reader): BTSNullType = {
+      val r = reader.readBTSNullType()
+      return r
+    }
+    val r = to(data, fBTSNullType _)
+    return r
+  }
+
+  def fromBTSClassifier(o: BTSClassifier, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSClassifier(o)
+    return w.result
+  }
+
+  def toBTSClassifier(data: ISZ[U8]): Either[BTSClassifier, MessagePack.ErrorMsg] = {
+    def fBTSClassifier(reader: Reader): BTSClassifier = {
+      val r = reader.readBTSClassifier()
+      return r
+    }
+    val r = to(data, fBTSClassifier _)
+    return r
+  }
+
+  def fromBTSTypeName(o: BTSTypeName, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSTypeName(o)
+    return w.result
+  }
+
+  def toBTSTypeName(data: ISZ[U8]): Either[BTSTypeName, MessagePack.ErrorMsg] = {
+    def fBTSTypeName(reader: Reader): BTSTypeName = {
+      val r = reader.readBTSTypeName()
+      return r
+    }
+    val r = to(data, fBTSTypeName _)
+    return r
+  }
+
+  def fromBTSEnumerationType(o: BTSEnumerationType, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSEnumerationType(o)
+    return w.result
+  }
+
+  def toBTSEnumerationType(data: ISZ[U8]): Either[BTSEnumerationType, MessagePack.ErrorMsg] = {
+    def fBTSEnumerationType(reader: Reader): BTSEnumerationType = {
+      val r = reader.readBTSEnumerationType()
+      return r
+    }
+    val r = to(data, fBTSEnumerationType _)
+    return r
+  }
+
+  def fromBTSQuantityType(o: BTSQuantityType, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSQuantityType(o)
+    return w.result
+  }
+
+  def toBTSQuantityType(data: ISZ[U8]): Either[BTSQuantityType, MessagePack.ErrorMsg] = {
+    def fBTSQuantityType(reader: Reader): BTSQuantityType = {
+      val r = reader.readBTSQuantityType()
+      return r
+    }
+    val r = to(data, fBTSQuantityType _)
+    return r
+  }
+
+  def fromBTSArrayType(o: BTSArrayType, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSArrayType(o)
+    return w.result
+  }
+
+  def toBTSArrayType(data: ISZ[U8]): Either[BTSArrayType, MessagePack.ErrorMsg] = {
+    def fBTSArrayType(reader: Reader): BTSArrayType = {
+      val r = reader.readBTSArrayType()
+      return r
+    }
+    val r = to(data, fBTSArrayType _)
+    return r
+  }
+
+  def fromBTSArrayRange(o: BTSArrayRange, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSArrayRange(o)
+    return w.result
+  }
+
+  def toBTSArrayRange(data: ISZ[U8]): Either[BTSArrayRange, MessagePack.ErrorMsg] = {
+    def fBTSArrayRange(reader: Reader): BTSArrayRange = {
+      val r = reader.readBTSArrayRange()
+      return r
+    }
+    val r = to(data, fBTSArrayRange _)
+    return r
+  }
+
+  def fromBTSRecordType(o: BTSRecordType, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSRecordType(o)
+    return w.result
+  }
+
+  def toBTSRecordType(data: ISZ[U8]): Either[BTSRecordType, MessagePack.ErrorMsg] = {
+    def fBTSRecordType(reader: Reader): BTSRecordType = {
+      val r = reader.readBTSRecordType()
+      return r
+    }
+    val r = to(data, fBTSRecordType _)
+    return r
+  }
+
+  def fromBTSRecordField(o: BTSRecordField, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSRecordField(o)
+    return w.result
+  }
+
+  def toBTSRecordField(data: ISZ[U8]): Either[BTSRecordField, MessagePack.ErrorMsg] = {
+    def fBTSRecordField(reader: Reader): BTSRecordField = {
+      val r = reader.readBTSRecordField()
+      return r
+    }
+    val r = to(data, fBTSRecordField _)
+    return r
+  }
+
+  def fromBTSUnitLibrary(o: BTSUnitLibrary, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSUnitLibrary(o)
+    return w.result
+  }
+
+  def toBTSUnitLibrary(data: ISZ[U8]): Either[BTSUnitLibrary, MessagePack.ErrorMsg] = {
+    def fBTSUnitLibrary(reader: Reader): BTSUnitLibrary = {
+      val r = reader.readBTSUnitLibrary()
+      return r
+    }
+    val r = to(data, fBTSUnitLibrary _)
+    return r
+  }
+
+  def fromBTSUnitDeclaration(o: BTSUnitDeclaration, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSUnitDeclaration(o)
+    return w.result
+  }
+
+  def toBTSUnitDeclaration(data: ISZ[U8]): Either[BTSUnitDeclaration, MessagePack.ErrorMsg] = {
+    def fBTSUnitDeclaration(reader: Reader): BTSUnitDeclaration = {
+      val r = reader.readBTSUnitDeclaration()
+      return r
+    }
+    val r = to(data, fBTSUnitDeclaration _)
+    return r
+  }
+
+  def fromBTSRootDeclaration(o: BTSRootDeclaration, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSRootDeclaration(o)
+    return w.result
+  }
+
+  def toBTSRootDeclaration(data: ISZ[U8]): Either[BTSRootDeclaration, MessagePack.ErrorMsg] = {
+    def fBTSRootDeclaration(reader: Reader): BTSRootDeclaration = {
+      val r = reader.readBTSRootDeclaration()
+      return r
+    }
+    val r = to(data, fBTSRootDeclaration _)
+    return r
+  }
+
+  def fromBTSUnitExtension(o: BTSUnitExtension, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSUnitExtension(o)
+    return w.result
+  }
+
+  def toBTSUnitExtension(data: ISZ[U8]): Either[BTSUnitExtension, MessagePack.ErrorMsg] = {
+    def fBTSUnitExtension(reader: Reader): BTSUnitExtension = {
+      val r = reader.readBTSUnitExtension()
+      return r
+    }
+    val r = to(data, fBTSUnitExtension _)
+    return r
+  }
+
+  def fromBTSUnitName(o: BTSUnitName, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSUnitName(o)
+    return w.result
+  }
+
+  def toBTSUnitName(data: ISZ[U8]): Either[BTSUnitName, MessagePack.ErrorMsg] = {
+    def fBTSUnitName(reader: Reader): BTSUnitName = {
+      val r = reader.readBTSUnitName()
+      return r
+    }
+    val r = to(data, fBTSUnitName _)
+    return r
+  }
+
+  def fromBTSUnitFormula(o: BTSUnitFormula, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSUnitFormula(o)
+    return w.result
+  }
+
+  def toBTSUnitFormula(data: ISZ[U8]): Either[BTSUnitFormula, MessagePack.ErrorMsg] = {
+    def fBTSUnitFormula(reader: Reader): BTSUnitFormula = {
+      val r = reader.readBTSUnitFormula()
+      return r
+    }
+    val r = to(data, fBTSUnitFormula _)
+    return r
+  }
+
+  def fromBTSUnitFactor(o: BTSUnitFactor, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSUnitFactor(o)
+    return w.result
+  }
+
+  def toBTSUnitFactor(data: ISZ[U8]): Either[BTSUnitFactor, MessagePack.ErrorMsg] = {
+    def fBTSUnitFactor(reader: Reader): BTSUnitFactor = {
+      val r = reader.readBTSUnitFactor()
+      return r
+    }
+    val r = to(data, fBTSUnitFactor _)
+    return r
+  }
+
+  def fromBTSQuantity(o: BTSQuantity, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSQuantity(o)
+    return w.result
+  }
+
+  def toBTSQuantity(data: ISZ[U8]): Either[BTSQuantity, MessagePack.ErrorMsg] = {
+    def fBTSQuantity(reader: Reader): BTSQuantity = {
+      val r = reader.readBTSQuantity()
+      return r
+    }
+    val r = to(data, fBTSQuantity _)
+    return r
+  }
+
+  def fromBTSExceptionLibrary(o: BTSExceptionLibrary, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSExceptionLibrary(o)
+    return w.result
+  }
+
+  def toBTSExceptionLibrary(data: ISZ[U8]): Either[BTSExceptionLibrary, MessagePack.ErrorMsg] = {
+    def fBTSExceptionLibrary(reader: Reader): BTSExceptionLibrary = {
+      val r = reader.readBTSExceptionLibrary()
+      return r
+    }
+    val r = to(data, fBTSExceptionLibrary _)
+    return r
+  }
+
+  def fromBTSExceptionDeclaration(o: BTSExceptionDeclaration, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSExceptionDeclaration(o)
+    return w.result
+  }
+
+  def toBTSExceptionDeclaration(data: ISZ[U8]): Either[BTSExceptionDeclaration, MessagePack.ErrorMsg] = {
+    def fBTSExceptionDeclaration(reader: Reader): BTSExceptionDeclaration = {
+      val r = reader.readBTSExceptionDeclaration()
+      return r
+    }
+    val r = to(data, fBTSExceptionDeclaration _)
     return r
   }
 

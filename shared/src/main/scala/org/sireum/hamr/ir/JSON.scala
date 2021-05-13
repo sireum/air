@@ -501,12 +501,6 @@ object JSON {
       ))
     }
 
-    @pure def printBTSType(o: BTSType): ST = {
-      o match {
-        case o: BTSClassifier => return printBTSClassifier(o)
-      }
-    }
-
     @pure def printBTSClassifier(o: BTSClassifier): ST = {
       return printObject(ISZ(
         ("type", st""""BTSClassifier""""),
@@ -646,19 +640,161 @@ object JSON {
 
     @pure def printBTSModeCondition(o: BTSModeCondition): ST = {
       return printObject(ISZ(
-        ("type", st""""BTSModeCondition"""")
+        ("type", st""""BTSModeCondition""""),
+        ("tla", printBTSTriggerLogicalExpression(o.tla))
+      ))
+    }
+
+    @pure def printBTSTriggerLogicalExpression(o: BTSTriggerLogicalExpression): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSTriggerLogicalExpression""""),
+        ("triggers", printISZ(F, o.triggers, printBTSEventTrigger _))
+      ))
+    }
+
+    @pure def printBTSEventTrigger(o: BTSEventTrigger): ST = {
+      o match {
+        case o: BTSTriggerLogicalExpression => return printBTSTriggerLogicalExpression(o)
+        case o: BTSSubcomponentPort => return printBTSSubcomponentPort(o)
+      }
+    }
+
+    @pure def printBTSSubcomponentPort(o: BTSSubcomponentPort): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSSubcomponentPort""""),
+        ("sub", printISZ(F, o.sub, printName _)),
+        ("port", printName(o.port)),
+        ("index", printOption(T, o.index, printZ _))
+      ))
+    }
+
+    @pure def printBTSModeOperatorType(o: BTSModeOperator.Type): ST = {
+      val value: String = o match {
+        case BTSModeOperator.AND => "AND"
+        case BTSModeOperator.OR => "OR"
+        case BTSModeOperator.XOR => "XOR"
+        case BTSModeOperator.THEN => "THEN"
+        case BTSModeOperator.ELSE => "ELSE"
+      }
+      return printObject(ISZ(
+        ("type", printString("BTSModeOperator")),
+        ("value", printString(value))
       ))
     }
 
     @pure def printBTSInternalCondition(o: BTSInternalCondition): ST = {
       return printObject(ISZ(
-        ("type", st""""BTSInternalCondition"""")
+        ("type", st""""BTSInternalCondition""""),
+        ("internalports", printISZ(F, o.internalports, printName _))
       ))
     }
 
     @pure def printBTSAssertion(o: BTSAssertion): ST = {
+      o match {
+        case o: BTSNamedAssertion => return printBTSNamedAssertion(o)
+        case o: BTSNamedFunction => return printBTSNamedFunction(o)
+        case o: BTSNamedEnumeration => return printBTSNamedEnumeration(o)
+        case o: BTSNamelessAssertion => return printBTSNamelessAssertion(o)
+        case o: BTSNamelessFunction => return printBTSNamelessFunction(o)
+        case o: BTSNamelessEnumeration => return printBTSNamelessEnumeration(o)
+      }
+    }
+
+    @pure def printBTSNamedAssertion(o: BTSNamedAssertion): ST = {
       return printObject(ISZ(
-        ("type", st""""BTSAssertion"""")
+        ("type", st""""BTSNamedAssertion""""),
+        ("label", printName(o.label)),
+        ("formals", printISZ(F, o.formals, printBTSVariable _)),
+        ("predicate", printBTSExp(o.predicate))
+      ))
+    }
+
+    @pure def printBTSNamedFunction(o: BTSNamedFunction): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSNamedFunction""""),
+        ("label", printName(o.label)),
+        ("formals", printISZ(F, o.formals, printBTSVariable _)),
+        ("returns", printBTSType(o.returns)),
+        ("functionvalue", printBTSExp(o.functionvalue))
+      ))
+    }
+
+    @pure def printBTSNamedEnumeration(o: BTSNamedEnumeration): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSNamedEnumeration""""),
+        ("label", printName(o.label)),
+        ("assertionvariable", printName(o.assertionvariable)),
+        ("enumerationtype", printBTSType(o.enumerationtype)),
+        ("enumeration", printBTSAssertionEnumeration(o.enumeration))
+      ))
+    }
+
+    @pure def printBTSNamelessAssertion(o: BTSNamelessAssertion): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSNamelessAssertion""""),
+        ("predicate", printBTSExp(o.predicate))
+      ))
+    }
+
+    @pure def printBTSNamelessFunction(o: BTSNamelessFunction): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSNamelessFunction""""),
+        ("returns", printBTSType(o.returns)),
+        ("functionvalue", printBTSExp(o.functionvalue))
+      ))
+    }
+
+    @pure def printBTSNamelessEnumeration(o: BTSNamelessEnumeration): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSNamelessEnumeration""""),
+        ("enumeration", printBTSInvocation(o.enumeration))
+      ))
+    }
+
+    @pure def printBTSAssertionEnumeration(o: BTSAssertionEnumeration): ST = {
+      o match {
+        case o: BTSEnumerationPairs => return printBTSEnumerationPairs(o)
+        case o: BTSInvocation => return printBTSInvocation(o)
+      }
+    }
+
+    @pure def printBTSEnumerationPairs(o: BTSEnumerationPairs): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSEnumerationPairs""""),
+        ("pairs", printISZ(F, o.pairs, printBTSEnumerationPair _))
+      ))
+    }
+
+    @pure def printBTSEnumerationPair(o: BTSEnumerationPair): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSEnumerationPair""""),
+        ("literal", printName(o.literal)),
+        ("predicate", printBTSExp(o.predicate))
+      ))
+    }
+
+    @pure def printBTSInvocation(o: BTSInvocation): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSInvocation""""),
+        ("label", printName(o.label)),
+        ("params", printISZ(F, o.params, printBTSActualParameter _)),
+        ("actual", printOption(F, o.actual, printBTSExp _))
+      ))
+    }
+
+    @pure def printBTSActualParameter(o: BTSActualParameter): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSActualParameter""""),
+        ("formal", printName(o.formal)),
+        ("actual", printBTSExp(o.actual))
+      ))
+    }
+
+    @pure def printBTSVariable(o: BTSVariable): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSVariable""""),
+        ("name", printName(o.name)),
+        ("typ", printBTSType(o.typ))
       ))
     }
 
@@ -694,12 +830,23 @@ object JSON {
       o match {
         case o: BTSSkipAction => return printBTSSkipAction(o)
         case o: BTSAssignmentAction => return printBTSAssignmentAction(o)
+        case o: BTSSetMode => return printBTSSetMode(o)
+        case o: BTSWhenThrow => return printBTSWhenThrow(o)
+        case o: BTSFetchAdd => return printBTSFetchAdd(o)
+        case o: BTSFetchOr => return printBTSFetchOr(o)
+        case o: BTSFetchAnd => return printBTSFetchAnd(o)
+        case o: BTSFetchXor => return printBTSFetchXor(o)
+        case o: BTSSwap => return printBTSSwap(o)
         case o: BTSSubprogramCallAction => return printBTSSubprogramCallAction(o)
-        case o: BTSPortOutAction => return printBTSPortOutAction(o)
-        case o: BTSPortInAction => return printBTSPortInAction(o)
+        case o: BTSPortOutput => return printBTSPortOutput(o)
+        case o: BTSPortInput => return printBTSPortInput(o)
         case o: BTSFrozenPortAction => return printBTSFrozenPortAction(o)
+        case o: BTSPause => return printBTSPause(o)
         case o: BTSIfBLESSAction => return printBTSIfBLESSAction(o)
         case o: BTSIfBAAction => return printBTSIfBAAction(o)
+        case o: BTSWhileLoop => return printBTSWhileLoop(o)
+        case o: BTSForLoop => return printBTSForLoop(o)
+        case o: BTSDoUntilLoop => return printBTSDoUntilLoop(o)
         case o: BTSExistentialLatticeQuantification => return printBTSExistentialLatticeQuantification(o)
         case o: BTSUniversalLatticeQuantification => return printBTSUniversalLatticeQuantification(o)
       }
@@ -709,10 +856,18 @@ object JSON {
       o match {
         case o: BTSSkipAction => return printBTSSkipAction(o)
         case o: BTSAssignmentAction => return printBTSAssignmentAction(o)
+        case o: BTSSetMode => return printBTSSetMode(o)
+        case o: BTSWhenThrow => return printBTSWhenThrow(o)
+        case o: BTSFetchAdd => return printBTSFetchAdd(o)
+        case o: BTSFetchOr => return printBTSFetchOr(o)
+        case o: BTSFetchAnd => return printBTSFetchAnd(o)
+        case o: BTSFetchXor => return printBTSFetchXor(o)
+        case o: BTSSwap => return printBTSSwap(o)
         case o: BTSSubprogramCallAction => return printBTSSubprogramCallAction(o)
-        case o: BTSPortOutAction => return printBTSPortOutAction(o)
-        case o: BTSPortInAction => return printBTSPortInAction(o)
+        case o: BTSPortOutput => return printBTSPortOutput(o)
+        case o: BTSPortInput => return printBTSPortInput(o)
         case o: BTSFrozenPortAction => return printBTSFrozenPortAction(o)
+        case o: BTSPause => return printBTSPause(o)
       }
     }
 
@@ -725,17 +880,90 @@ object JSON {
     @pure def printBTSAssignmentAction(o: BTSAssignmentAction): ST = {
       return printObject(ISZ(
         ("type", st""""BTSAssignmentAction""""),
-        ("lhs", printBTSExp(o.lhs)),
+        ("lhs", printBTSValueName(o.lhs)),
+        ("tick", printB(o.tick)),
         ("rhs", printBTSExp(o.rhs))
+      ))
+    }
+
+    @pure def printBTSSetMode(o: BTSSetMode): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSSetMode""""),
+        ("mode", printName(o.mode))
+      ))
+    }
+
+    @pure def printBTSWhenThrow(o: BTSWhenThrow): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSWhenThrow""""),
+        ("exp", printBTSExp(o.exp)),
+        ("exception", printName(o.exception)),
+        ("message", printOption(T, o.message, printString _))
+      ))
+    }
+
+    @pure def printBTSCombinableOperation(o: BTSCombinableOperation): ST = {
+      o match {
+        case o: BTSFetchAdd => return printBTSFetchAdd(o)
+        case o: BTSFetchOr => return printBTSFetchOr(o)
+        case o: BTSFetchAnd => return printBTSFetchAnd(o)
+        case o: BTSFetchXor => return printBTSFetchXor(o)
+        case o: BTSSwap => return printBTSSwap(o)
+      }
+    }
+
+    @pure def printBTSFetchAdd(o: BTSFetchAdd): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSFetchAdd""""),
+        ("target", printName(o.target)),
+        ("arithmetic", printBTSExp(o.arithmetic)),
+        ("result", printName(o.result))
+      ))
+    }
+
+    @pure def printBTSFetchOr(o: BTSFetchOr): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSFetchOr""""),
+        ("target", printName(o.target)),
+        ("bool", printBTSExp(o.bool)),
+        ("result", printOption(F, o.result, printName _))
+      ))
+    }
+
+    @pure def printBTSFetchAnd(o: BTSFetchAnd): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSFetchAnd""""),
+        ("target", printName(o.target)),
+        ("bool", printBTSExp(o.bool)),
+        ("result", printOption(F, o.result, printName _))
+      ))
+    }
+
+    @pure def printBTSFetchXor(o: BTSFetchXor): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSFetchXor""""),
+        ("target", printName(o.target)),
+        ("bool", printBTSExp(o.bool)),
+        ("result", printOption(F, o.result, printName _))
+      ))
+    }
+
+    @pure def printBTSSwap(o: BTSSwap): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSSwap""""),
+        ("target", printName(o.target)),
+        ("reference", printName(o.reference)),
+        ("result", printName(o.result))
       ))
     }
 
     @pure def printBTSCommunicationAction(o: BTSCommunicationAction): ST = {
       o match {
         case o: BTSSubprogramCallAction => return printBTSSubprogramCallAction(o)
-        case o: BTSPortOutAction => return printBTSPortOutAction(o)
-        case o: BTSPortInAction => return printBTSPortInAction(o)
+        case o: BTSPortOutput => return printBTSPortOutput(o)
+        case o: BTSPortInput => return printBTSPortInput(o)
         case o: BTSFrozenPortAction => return printBTSFrozenPortAction(o)
+        case o: BTSPause => return printBTSPause(o)
       }
     }
 
@@ -743,30 +971,44 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""BTSSubprogramCallAction""""),
         ("name", printName(o.name)),
-        ("params", printISZ(F, o.params, printBTSFormalExpPair _))
+        ("params", printISZ(F, o.params, printBTSFormalActual _))
       ))
     }
 
-    @pure def printBTSPortOutAction(o: BTSPortOutAction): ST = {
+    @pure def printBTSFormalActual(o: BTSFormalActual): ST = {
       return printObject(ISZ(
-        ("type", st""""BTSPortOutAction""""),
-        ("name", printName(o.name)),
+        ("type", st""""BTSFormalActual""""),
+        ("formal", printName(o.formal)),
+        ("actual", printBTSExp(o.actual))
+      ))
+    }
+
+    @pure def printBTSPortOutput(o: BTSPortOutput): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSPortOutput""""),
+        ("port", printName(o.port)),
         ("exp", printOption(F, o.exp, printBTSExp _))
       ))
     }
 
-    @pure def printBTSPortInAction(o: BTSPortInAction): ST = {
+    @pure def printBTSPortInput(o: BTSPortInput): ST = {
       return printObject(ISZ(
-        ("type", st""""BTSPortInAction""""),
-        ("name", printName(o.name)),
-        ("variable", printBTSExp(o.variable))
+        ("type", st""""BTSPortInput""""),
+        ("port", printName(o.port)),
+        ("variable", printBTSValueName(o.variable))
       ))
     }
 
     @pure def printBTSFrozenPortAction(o: BTSFrozenPortAction): ST = {
       return printObject(ISZ(
         ("type", st""""BTSFrozenPortAction""""),
-        ("portName", printName(o.portName))
+        ("ports", printISZ(F, o.ports, printName _))
+      ))
+    }
+
+    @pure def printBTSPause(o: BTSPause): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSPause"""")
       ))
     }
 
@@ -774,6 +1016,9 @@ object JSON {
       o match {
         case o: BTSIfBLESSAction => return printBTSIfBLESSAction(o)
         case o: BTSIfBAAction => return printBTSIfBAAction(o)
+        case o: BTSWhileLoop => return printBTSWhileLoop(o)
+        case o: BTSForLoop => return printBTSForLoop(o)
+        case o: BTSDoUntilLoop => return printBTSDoUntilLoop(o)
       }
     }
 
@@ -810,6 +1055,37 @@ object JSON {
       ))
     }
 
+    @pure def printBTSWhileLoop(o: BTSWhileLoop): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSWhileLoop""""),
+        ("test", printBTSExp(o.test)),
+        ("invariant", printOption(F, o.invariant, printBTSNamelessAssertion _)),
+        ("bound", printOption(F, o.bound, printBTSExp _)),
+        ("elq", printBTSExistentialLatticeQuantification(o.elq))
+      ))
+    }
+
+    @pure def printBTSForLoop(o: BTSForLoop): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSForLoop""""),
+        ("count", printName(o.count)),
+        ("lowerbound", printBTSExp(o.lowerbound)),
+        ("upperbound", printBTSExp(o.upperbound)),
+        ("invariant", printOption(F, o.invariant, printBTSNamelessAssertion _)),
+        ("actions", printBTSBehaviorActions(o.actions))
+      ))
+    }
+
+    @pure def printBTSDoUntilLoop(o: BTSDoUntilLoop): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSDoUntilLoop""""),
+        ("invariant", printOption(F, o.invariant, printBTSNamelessAssertion _)),
+        ("bound", printOption(F, o.bound, printBTSExp _)),
+        ("actions", printBTSBehaviorActions(o.actions)),
+        ("guard", printBTSExp(o.guard))
+      ))
+    }
+
     @pure def printBTSQuantificationActions(o: BTSQuantificationActions): ST = {
       o match {
         case o: BTSExistentialLatticeQuantification => return printBTSExistentialLatticeQuantification(o)
@@ -823,7 +1099,16 @@ object JSON {
         ("quantifiedVariables", printISZ(F, o.quantifiedVariables, printBTSVariableDeclaration _)),
         ("actions", printBTSBehaviorActions(o.actions)),
         ("timeout", printOption(F, o.timeout, printBTSBehaviorTime _)),
-        ("catchClause", printOption(F, o.catchClause, printTODO _))
+        ("catchClause", printISZ(F, o.catchClause, printBTSCatchClauseTerm _))
+      ))
+    }
+
+    @pure def printBTSCatchClauseTerm(o: BTSCatchClauseTerm): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSCatchClauseTerm""""),
+        ("exceptions", printISZ(F, o.exceptions, printName _)),
+        ("all", printB(o.all)),
+        ("action", printBTSBasicAction(o.action))
       ))
     }
 
@@ -831,7 +1116,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""BTSUniversalLatticeQuantification""""),
         ("latticeVariables", printISZ(F, o.latticeVariables, printName _)),
-        ("range", printOption(F, o.range, printTODO _)),
+        ("lowerbound", printBTSExp(o.lowerbound)),
+        ("upperbound", printBTSExp(o.upperbound)),
         ("elq", printBTSExistentialLatticeQuantification(o.elq))
       ))
     }
@@ -841,10 +1127,12 @@ object JSON {
         case o: BTSUnaryExp => return printBTSUnaryExp(o)
         case o: BTSBinaryExp => return printBTSBinaryExp(o)
         case o: BTSLiteralExp => return printBTSLiteralExp(o)
-        case o: BTSNameExp => return printBTSNameExp(o)
+        case o: BTSVariableNameExp => return printBTSVariableNameExp(o)
         case o: BTSIndexingExp => return printBTSIndexingExp(o)
         case o: BTSAccessExp => return printBTSAccessExp(o)
         case o: BTSFunctionCall => return printBTSFunctionCall(o)
+        case o: BTSConditionalExpression => return printBTSConditionalExpression(o)
+        case o: BTSRange => return printBTSRange(o)
       }
     }
 
@@ -861,6 +1149,9 @@ object JSON {
         case BTSUnaryOp.ABS => "ABS"
         case BTSUnaryOp.NEG => "NEG"
         case BTSUnaryOp.NOT => "NOT"
+        case BTSUnaryOp.TRUNCATE => "TRUNCATE"
+        case BTSUnaryOp.ROUND => "ROUND"
+        case BTSUnaryOp.TICK => "TICK"
       }
       return printObject(ISZ(
         ("type", printString("BTSUnaryOp")),
@@ -884,19 +1175,26 @@ object JSON {
         case BTSBinaryOp.OR => "OR"
         case BTSBinaryOp.ORELSE => "ORELSE"
         case BTSBinaryOp.XOR => "XOR"
+        case BTSBinaryOp.IFF => "IFF"
+        case BTSBinaryOp.IMPLIES => "IMPLIES"
         case BTSBinaryOp.EQ => "EQ"
         case BTSBinaryOp.NEQ => "NEQ"
         case BTSBinaryOp.LT => "LT"
         case BTSBinaryOp.LTE => "LTE"
         case BTSBinaryOp.GT => "GT"
         case BTSBinaryOp.GTE => "GTE"
+        case BTSBinaryOp.FA => "FA"
+        case BTSBinaryOp.IN => "IN"
         case BTSBinaryOp.PLUS => "PLUS"
         case BTSBinaryOp.MINUS => "MINUS"
-        case BTSBinaryOp.DIV => "DIV"
+        case BTSBinaryOp.DIVIDE => "DIVIDE"
         case BTSBinaryOp.MULT => "MULT"
+        case BTSBinaryOp.DIV => "DIV"
         case BTSBinaryOp.MOD => "MOD"
         case BTSBinaryOp.REM => "REM"
         case BTSBinaryOp.EXP => "EXP"
+        case BTSBinaryOp.AT => "AT"
+        case BTSBinaryOp.CARET => "CARET"
       }
       return printObject(ISZ(
         ("type", printString("BTSBinaryOp")),
@@ -910,6 +1208,7 @@ object JSON {
         case BTSLiteralType.STRING => "STRING"
         case BTSLiteralType.INTEGER => "INTEGER"
         case BTSLiteralType.FLOAT => "FLOAT"
+        case BTSLiteralType.NUMBER => "NUMBER"
       }
       return printObject(ISZ(
         ("type", printString("BTSLiteralType")),
@@ -925,10 +1224,27 @@ object JSON {
       ))
     }
 
-    @pure def printBTSNameExp(o: BTSNameExp): ST = {
+    @pure def printBTSValueName(o: BTSValueName): ST = {
+      o match {
+        case o: BTSVariableNameExp => return printBTSVariableNameExp(o)
+        case o: BTSFunctionCall => return printBTSFunctionCall(o)
+      }
+    }
+
+    @pure def printBTSVariableNameExp(o: BTSVariableNameExp): ST = {
       return printObject(ISZ(
-        ("type", st""""BTSNameExp""""),
-        ("name", printName(o.name))
+        ("type", st""""BTSVariableNameExp""""),
+        ("name", printName(o.name)),
+        ("arrayindex", printISZ(F, o.arrayindex, printBTSExp _)),
+        ("pn", printISZ(F, o.pn, printBTSPartialName _))
+      ))
+    }
+
+    @pure def printBTSPartialName(o: BTSPartialName): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSPartialName""""),
+        ("label", printName(o.label)),
+        ("arrayindex", printISZ(F, o.arrayindex, printBTSExp _))
       ))
     }
 
@@ -952,15 +1268,59 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""BTSFunctionCall""""),
         ("name", printName(o.name)),
-        ("args", printISZ(F, o.args, printBTSFormalExpPair _))
+        ("args", printISZ(F, o.args, printBTSFormalActual _))
       ))
     }
 
-    @pure def printBTSFormalExpPair(o: BTSFormalExpPair): ST = {
+    @pure def printBTSPortValue(o: BTSPortValue): ST = {
       return printObject(ISZ(
-        ("type", st""""BTSFormalExpPair""""),
-        ("paramName", printOption(F, o.paramName, printName _)),
-        ("exp", printOption(F, o.exp, printBTSExp _))
+        ("type", st""""BTSPortValue""""),
+        ("port", printName(o.port)),
+        ("valuekind", printBTSPortValueKindType(o.valuekind))
+      ))
+    }
+
+    @pure def printBTSPortValueKindType(o: BTSPortValueKind.Type): ST = {
+      val value: String = o match {
+        case BTSPortValueKind.Q => "Q"
+        case BTSPortValueKind.FRESH => "FRESH"
+        case BTSPortValueKind.COUNT => "COUNT"
+        case BTSPortValueKind.UPDATED => "UPDATED"
+      }
+      return printObject(ISZ(
+        ("type", printString("BTSPortValueKind")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def printBTSConditionalExpression(o: BTSConditionalExpression): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSConditionalExpression""""),
+        ("guard", printBTSExp(o.guard)),
+        ("t", printBTSExp(o.t)),
+        ("f", printBTSExp(o.f))
+      ))
+    }
+
+    @pure def printBTSRange(o: BTSRange): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSRange""""),
+        ("lb", printBTSExp(o.lb)),
+        ("sym", printBTSRangeSymbolType(o.sym)),
+        ("ub", printBTSExp(o.ub))
+      ))
+    }
+
+    @pure def printBTSRangeSymbolType(o: BTSRangeSymbol.Type): ST = {
+      val value: String = o match {
+        case BTSRangeSymbol.DOTDOT => "DOTDOT"
+        case BTSRangeSymbol.DOTCOMMA => "DOTCOMMA"
+        case BTSRangeSymbol.COMMADOT => "COMMADOT"
+        case BTSRangeSymbol.COMMACOMMA => "COMMACOMMA"
+      }
+      return printObject(ISZ(
+        ("type", printString("BTSRangeSymbol")),
+        ("value", printString(value))
       ))
     }
 
@@ -968,6 +1328,12 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""BTSBehaviorTime"""")
       ))
+    }
+
+    @pure def printBTSType(o: BTSType): ST = {
+      o match {
+        case o: BTSClassifier => return printBTSClassifier(o)
+      }
     }
 
     @pure def printTODO(o: TODO): ST = {
@@ -2168,14 +2534,6 @@ object JSON {
       }
     }
 
-    def parseBTSType(): BTSType = {
-      val t = parser.parseObjectTypes(ISZ("BTSClassifier"))
-      t.native match {
-        case "BTSClassifier" => val r = parseBTSClassifierT(T); return r
-        case _ => val r = parseBTSClassifierT(T); return r
-      }
-    }
-
     def parseBTSClassifier(): BTSClassifier = {
       val r = parseBTSClassifierT(F)
       return r
@@ -2452,7 +2810,76 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("BTSModeCondition")
       }
-      return BTSModeCondition()
+      parser.parseObjectKey("tla")
+      val tla = parseBTSTriggerLogicalExpression()
+      parser.parseObjectNext()
+      return BTSModeCondition(tla)
+    }
+
+    def parseBTSTriggerLogicalExpression(): BTSTriggerLogicalExpression = {
+      val r = parseBTSTriggerLogicalExpressionT(F)
+      return r
+    }
+
+    def parseBTSTriggerLogicalExpressionT(typeParsed: B): BTSTriggerLogicalExpression = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSTriggerLogicalExpression")
+      }
+      parser.parseObjectKey("triggers")
+      val triggers = parser.parseISZ(parseBTSEventTrigger _)
+      parser.parseObjectNext()
+      return BTSTriggerLogicalExpression(triggers)
+    }
+
+    def parseBTSEventTrigger(): BTSEventTrigger = {
+      val t = parser.parseObjectTypes(ISZ("BTSTriggerLogicalExpression", "BTSSubcomponentPort"))
+      t.native match {
+        case "BTSTriggerLogicalExpression" => val r = parseBTSTriggerLogicalExpressionT(T); return r
+        case "BTSSubcomponentPort" => val r = parseBTSSubcomponentPortT(T); return r
+        case _ => val r = parseBTSSubcomponentPortT(T); return r
+      }
+    }
+
+    def parseBTSSubcomponentPort(): BTSSubcomponentPort = {
+      val r = parseBTSSubcomponentPortT(F)
+      return r
+    }
+
+    def parseBTSSubcomponentPortT(typeParsed: B): BTSSubcomponentPort = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSSubcomponentPort")
+      }
+      parser.parseObjectKey("sub")
+      val sub = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("port")
+      val port = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("index")
+      val index = parser.parseOption(parser.parseZ _)
+      parser.parseObjectNext()
+      return BTSSubcomponentPort(sub, port, index)
+    }
+
+    def parseBTSModeOperatorType(): BTSModeOperator.Type = {
+      val r = parseBTSModeOperatorT(F)
+      return r
+    }
+
+    def parseBTSModeOperatorT(typeParsed: B): BTSModeOperator.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSModeOperator")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      BTSModeOperator.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for BTSModeOperator.")
+          return BTSModeOperator.byOrdinal(0).get
+      }
     }
 
     def parseBTSInternalCondition(): BTSInternalCondition = {
@@ -2464,19 +2891,239 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("BTSInternalCondition")
       }
-      return BTSInternalCondition()
+      parser.parseObjectKey("internalports")
+      val internalports = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      return BTSInternalCondition(internalports)
     }
 
     def parseBTSAssertion(): BTSAssertion = {
-      val r = parseBTSAssertionT(F)
+      val t = parser.parseObjectTypes(ISZ("BTSNamedAssertion", "BTSNamedFunction", "BTSNamedEnumeration", "BTSNamelessAssertion", "BTSNamelessFunction", "BTSNamelessEnumeration"))
+      t.native match {
+        case "BTSNamedAssertion" => val r = parseBTSNamedAssertionT(T); return r
+        case "BTSNamedFunction" => val r = parseBTSNamedFunctionT(T); return r
+        case "BTSNamedEnumeration" => val r = parseBTSNamedEnumerationT(T); return r
+        case "BTSNamelessAssertion" => val r = parseBTSNamelessAssertionT(T); return r
+        case "BTSNamelessFunction" => val r = parseBTSNamelessFunctionT(T); return r
+        case "BTSNamelessEnumeration" => val r = parseBTSNamelessEnumerationT(T); return r
+        case _ => val r = parseBTSNamelessEnumerationT(T); return r
+      }
+    }
+
+    def parseBTSNamedAssertion(): BTSNamedAssertion = {
+      val r = parseBTSNamedAssertionT(F)
       return r
     }
 
-    def parseBTSAssertionT(typeParsed: B): BTSAssertion = {
+    def parseBTSNamedAssertionT(typeParsed: B): BTSNamedAssertion = {
       if (!typeParsed) {
-        parser.parseObjectType("BTSAssertion")
+        parser.parseObjectType("BTSNamedAssertion")
       }
-      return BTSAssertion()
+      parser.parseObjectKey("label")
+      val label = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("formals")
+      val formals = parser.parseISZ(parseBTSVariable _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("predicate")
+      val predicate = parseBTSExp()
+      parser.parseObjectNext()
+      return BTSNamedAssertion(label, formals, predicate)
+    }
+
+    def parseBTSNamedFunction(): BTSNamedFunction = {
+      val r = parseBTSNamedFunctionT(F)
+      return r
+    }
+
+    def parseBTSNamedFunctionT(typeParsed: B): BTSNamedFunction = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSNamedFunction")
+      }
+      parser.parseObjectKey("label")
+      val label = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("formals")
+      val formals = parser.parseISZ(parseBTSVariable _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("returns")
+      val returns = parseBTSType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("functionvalue")
+      val functionvalue = parseBTSExp()
+      parser.parseObjectNext()
+      return BTSNamedFunction(label, formals, returns, functionvalue)
+    }
+
+    def parseBTSNamedEnumeration(): BTSNamedEnumeration = {
+      val r = parseBTSNamedEnumerationT(F)
+      return r
+    }
+
+    def parseBTSNamedEnumerationT(typeParsed: B): BTSNamedEnumeration = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSNamedEnumeration")
+      }
+      parser.parseObjectKey("label")
+      val label = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("assertionvariable")
+      val assertionvariable = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("enumerationtype")
+      val enumerationtype = parseBTSType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("enumeration")
+      val enumeration = parseBTSAssertionEnumeration()
+      parser.parseObjectNext()
+      return BTSNamedEnumeration(label, assertionvariable, enumerationtype, enumeration)
+    }
+
+    def parseBTSNamelessAssertion(): BTSNamelessAssertion = {
+      val r = parseBTSNamelessAssertionT(F)
+      return r
+    }
+
+    def parseBTSNamelessAssertionT(typeParsed: B): BTSNamelessAssertion = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSNamelessAssertion")
+      }
+      parser.parseObjectKey("predicate")
+      val predicate = parseBTSExp()
+      parser.parseObjectNext()
+      return BTSNamelessAssertion(predicate)
+    }
+
+    def parseBTSNamelessFunction(): BTSNamelessFunction = {
+      val r = parseBTSNamelessFunctionT(F)
+      return r
+    }
+
+    def parseBTSNamelessFunctionT(typeParsed: B): BTSNamelessFunction = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSNamelessFunction")
+      }
+      parser.parseObjectKey("returns")
+      val returns = parseBTSType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("functionvalue")
+      val functionvalue = parseBTSExp()
+      parser.parseObjectNext()
+      return BTSNamelessFunction(returns, functionvalue)
+    }
+
+    def parseBTSNamelessEnumeration(): BTSNamelessEnumeration = {
+      val r = parseBTSNamelessEnumerationT(F)
+      return r
+    }
+
+    def parseBTSNamelessEnumerationT(typeParsed: B): BTSNamelessEnumeration = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSNamelessEnumeration")
+      }
+      parser.parseObjectKey("enumeration")
+      val enumeration = parseBTSInvocation()
+      parser.parseObjectNext()
+      return BTSNamelessEnumeration(enumeration)
+    }
+
+    def parseBTSAssertionEnumeration(): BTSAssertionEnumeration = {
+      val t = parser.parseObjectTypes(ISZ("BTSEnumerationPairs", "BTSInvocation"))
+      t.native match {
+        case "BTSEnumerationPairs" => val r = parseBTSEnumerationPairsT(T); return r
+        case "BTSInvocation" => val r = parseBTSInvocationT(T); return r
+        case _ => val r = parseBTSInvocationT(T); return r
+      }
+    }
+
+    def parseBTSEnumerationPairs(): BTSEnumerationPairs = {
+      val r = parseBTSEnumerationPairsT(F)
+      return r
+    }
+
+    def parseBTSEnumerationPairsT(typeParsed: B): BTSEnumerationPairs = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSEnumerationPairs")
+      }
+      parser.parseObjectKey("pairs")
+      val pairs = parser.parseISZ(parseBTSEnumerationPair _)
+      parser.parseObjectNext()
+      return BTSEnumerationPairs(pairs)
+    }
+
+    def parseBTSEnumerationPair(): BTSEnumerationPair = {
+      val r = parseBTSEnumerationPairT(F)
+      return r
+    }
+
+    def parseBTSEnumerationPairT(typeParsed: B): BTSEnumerationPair = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSEnumerationPair")
+      }
+      parser.parseObjectKey("literal")
+      val literal = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("predicate")
+      val predicate = parseBTSExp()
+      parser.parseObjectNext()
+      return BTSEnumerationPair(literal, predicate)
+    }
+
+    def parseBTSInvocation(): BTSInvocation = {
+      val r = parseBTSInvocationT(F)
+      return r
+    }
+
+    def parseBTSInvocationT(typeParsed: B): BTSInvocation = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSInvocation")
+      }
+      parser.parseObjectKey("label")
+      val label = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("params")
+      val params = parser.parseISZ(parseBTSActualParameter _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("actual")
+      val actual = parser.parseOption(parseBTSExp _)
+      parser.parseObjectNext()
+      return BTSInvocation(label, params, actual)
+    }
+
+    def parseBTSActualParameter(): BTSActualParameter = {
+      val r = parseBTSActualParameterT(F)
+      return r
+    }
+
+    def parseBTSActualParameterT(typeParsed: B): BTSActualParameter = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSActualParameter")
+      }
+      parser.parseObjectKey("formal")
+      val formal = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("actual")
+      val actual = parseBTSExp()
+      parser.parseObjectNext()
+      return BTSActualParameter(formal, actual)
+    }
+
+    def parseBTSVariable(): BTSVariable = {
+      val r = parseBTSVariableT(F)
+      return r
+    }
+
+    def parseBTSVariableT(typeParsed: B): BTSVariable = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSVariable")
+      }
+      parser.parseObjectKey("name")
+      val name = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("typ")
+      val typ = parseBTSType()
+      parser.parseObjectNext()
+      return BTSVariable(name, typ)
     }
 
     def parseBTSBehaviorActions(): BTSBehaviorActions = {
@@ -2540,16 +3187,27 @@ object JSON {
     }
 
     def parseBTSAction(): BTSAction = {
-      val t = parser.parseObjectTypes(ISZ("BTSSkipAction", "BTSAssignmentAction", "BTSSubprogramCallAction", "BTSPortOutAction", "BTSPortInAction", "BTSFrozenPortAction", "BTSIfBLESSAction", "BTSIfBAAction", "BTSExistentialLatticeQuantification", "BTSUniversalLatticeQuantification"))
+      val t = parser.parseObjectTypes(ISZ("BTSSkipAction", "BTSAssignmentAction", "BTSSetMode", "BTSWhenThrow", "BTSFetchAdd", "BTSFetchOr", "BTSFetchAnd", "BTSFetchXor", "BTSSwap", "BTSSubprogramCallAction", "BTSPortOutput", "BTSPortInput", "BTSFrozenPortAction", "BTSPause", "BTSIfBLESSAction", "BTSIfBAAction", "BTSWhileLoop", "BTSForLoop", "BTSDoUntilLoop", "BTSExistentialLatticeQuantification", "BTSUniversalLatticeQuantification"))
       t.native match {
         case "BTSSkipAction" => val r = parseBTSSkipActionT(T); return r
         case "BTSAssignmentAction" => val r = parseBTSAssignmentActionT(T); return r
+        case "BTSSetMode" => val r = parseBTSSetModeT(T); return r
+        case "BTSWhenThrow" => val r = parseBTSWhenThrowT(T); return r
+        case "BTSFetchAdd" => val r = parseBTSFetchAddT(T); return r
+        case "BTSFetchOr" => val r = parseBTSFetchOrT(T); return r
+        case "BTSFetchAnd" => val r = parseBTSFetchAndT(T); return r
+        case "BTSFetchXor" => val r = parseBTSFetchXorT(T); return r
+        case "BTSSwap" => val r = parseBTSSwapT(T); return r
         case "BTSSubprogramCallAction" => val r = parseBTSSubprogramCallActionT(T); return r
-        case "BTSPortOutAction" => val r = parseBTSPortOutActionT(T); return r
-        case "BTSPortInAction" => val r = parseBTSPortInActionT(T); return r
+        case "BTSPortOutput" => val r = parseBTSPortOutputT(T); return r
+        case "BTSPortInput" => val r = parseBTSPortInputT(T); return r
         case "BTSFrozenPortAction" => val r = parseBTSFrozenPortActionT(T); return r
+        case "BTSPause" => val r = parseBTSPauseT(T); return r
         case "BTSIfBLESSAction" => val r = parseBTSIfBLESSActionT(T); return r
         case "BTSIfBAAction" => val r = parseBTSIfBAActionT(T); return r
+        case "BTSWhileLoop" => val r = parseBTSWhileLoopT(T); return r
+        case "BTSForLoop" => val r = parseBTSForLoopT(T); return r
+        case "BTSDoUntilLoop" => val r = parseBTSDoUntilLoopT(T); return r
         case "BTSExistentialLatticeQuantification" => val r = parseBTSExistentialLatticeQuantificationT(T); return r
         case "BTSUniversalLatticeQuantification" => val r = parseBTSUniversalLatticeQuantificationT(T); return r
         case _ => val r = parseBTSUniversalLatticeQuantificationT(T); return r
@@ -2557,15 +3215,23 @@ object JSON {
     }
 
     def parseBTSBasicAction(): BTSBasicAction = {
-      val t = parser.parseObjectTypes(ISZ("BTSSkipAction", "BTSAssignmentAction", "BTSSubprogramCallAction", "BTSPortOutAction", "BTSPortInAction", "BTSFrozenPortAction"))
+      val t = parser.parseObjectTypes(ISZ("BTSSkipAction", "BTSAssignmentAction", "BTSSetMode", "BTSWhenThrow", "BTSFetchAdd", "BTSFetchOr", "BTSFetchAnd", "BTSFetchXor", "BTSSwap", "BTSSubprogramCallAction", "BTSPortOutput", "BTSPortInput", "BTSFrozenPortAction", "BTSPause"))
       t.native match {
         case "BTSSkipAction" => val r = parseBTSSkipActionT(T); return r
         case "BTSAssignmentAction" => val r = parseBTSAssignmentActionT(T); return r
+        case "BTSSetMode" => val r = parseBTSSetModeT(T); return r
+        case "BTSWhenThrow" => val r = parseBTSWhenThrowT(T); return r
+        case "BTSFetchAdd" => val r = parseBTSFetchAddT(T); return r
+        case "BTSFetchOr" => val r = parseBTSFetchOrT(T); return r
+        case "BTSFetchAnd" => val r = parseBTSFetchAndT(T); return r
+        case "BTSFetchXor" => val r = parseBTSFetchXorT(T); return r
+        case "BTSSwap" => val r = parseBTSSwapT(T); return r
         case "BTSSubprogramCallAction" => val r = parseBTSSubprogramCallActionT(T); return r
-        case "BTSPortOutAction" => val r = parseBTSPortOutActionT(T); return r
-        case "BTSPortInAction" => val r = parseBTSPortInActionT(T); return r
+        case "BTSPortOutput" => val r = parseBTSPortOutputT(T); return r
+        case "BTSPortInput" => val r = parseBTSPortInputT(T); return r
         case "BTSFrozenPortAction" => val r = parseBTSFrozenPortActionT(T); return r
-        case _ => val r = parseBTSFrozenPortActionT(T); return r
+        case "BTSPause" => val r = parseBTSPauseT(T); return r
+        case _ => val r = parseBTSPauseT(T); return r
       }
     }
 
@@ -2591,22 +3257,179 @@ object JSON {
         parser.parseObjectType("BTSAssignmentAction")
       }
       parser.parseObjectKey("lhs")
-      val lhs = parseBTSExp()
+      val lhs = parseBTSValueName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("tick")
+      val tick = parser.parseB()
       parser.parseObjectNext()
       parser.parseObjectKey("rhs")
       val rhs = parseBTSExp()
       parser.parseObjectNext()
-      return BTSAssignmentAction(lhs, rhs)
+      return BTSAssignmentAction(lhs, tick, rhs)
+    }
+
+    def parseBTSSetMode(): BTSSetMode = {
+      val r = parseBTSSetModeT(F)
+      return r
+    }
+
+    def parseBTSSetModeT(typeParsed: B): BTSSetMode = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSSetMode")
+      }
+      parser.parseObjectKey("mode")
+      val mode = parseName()
+      parser.parseObjectNext()
+      return BTSSetMode(mode)
+    }
+
+    def parseBTSWhenThrow(): BTSWhenThrow = {
+      val r = parseBTSWhenThrowT(F)
+      return r
+    }
+
+    def parseBTSWhenThrowT(typeParsed: B): BTSWhenThrow = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSWhenThrow")
+      }
+      parser.parseObjectKey("exp")
+      val exp = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("exception")
+      val exception = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("message")
+      val message = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
+      return BTSWhenThrow(exp, exception, message)
+    }
+
+    def parseBTSCombinableOperation(): BTSCombinableOperation = {
+      val t = parser.parseObjectTypes(ISZ("BTSFetchAdd", "BTSFetchOr", "BTSFetchAnd", "BTSFetchXor", "BTSSwap"))
+      t.native match {
+        case "BTSFetchAdd" => val r = parseBTSFetchAddT(T); return r
+        case "BTSFetchOr" => val r = parseBTSFetchOrT(T); return r
+        case "BTSFetchAnd" => val r = parseBTSFetchAndT(T); return r
+        case "BTSFetchXor" => val r = parseBTSFetchXorT(T); return r
+        case "BTSSwap" => val r = parseBTSSwapT(T); return r
+        case _ => val r = parseBTSSwapT(T); return r
+      }
+    }
+
+    def parseBTSFetchAdd(): BTSFetchAdd = {
+      val r = parseBTSFetchAddT(F)
+      return r
+    }
+
+    def parseBTSFetchAddT(typeParsed: B): BTSFetchAdd = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSFetchAdd")
+      }
+      parser.parseObjectKey("target")
+      val target = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("arithmetic")
+      val arithmetic = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("result")
+      val result = parseName()
+      parser.parseObjectNext()
+      return BTSFetchAdd(target, arithmetic, result)
+    }
+
+    def parseBTSFetchOr(): BTSFetchOr = {
+      val r = parseBTSFetchOrT(F)
+      return r
+    }
+
+    def parseBTSFetchOrT(typeParsed: B): BTSFetchOr = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSFetchOr")
+      }
+      parser.parseObjectKey("target")
+      val target = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("bool")
+      val bool = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("result")
+      val result = parser.parseOption(parseName _)
+      parser.parseObjectNext()
+      return BTSFetchOr(target, bool, result)
+    }
+
+    def parseBTSFetchAnd(): BTSFetchAnd = {
+      val r = parseBTSFetchAndT(F)
+      return r
+    }
+
+    def parseBTSFetchAndT(typeParsed: B): BTSFetchAnd = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSFetchAnd")
+      }
+      parser.parseObjectKey("target")
+      val target = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("bool")
+      val bool = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("result")
+      val result = parser.parseOption(parseName _)
+      parser.parseObjectNext()
+      return BTSFetchAnd(target, bool, result)
+    }
+
+    def parseBTSFetchXor(): BTSFetchXor = {
+      val r = parseBTSFetchXorT(F)
+      return r
+    }
+
+    def parseBTSFetchXorT(typeParsed: B): BTSFetchXor = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSFetchXor")
+      }
+      parser.parseObjectKey("target")
+      val target = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("bool")
+      val bool = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("result")
+      val result = parser.parseOption(parseName _)
+      parser.parseObjectNext()
+      return BTSFetchXor(target, bool, result)
+    }
+
+    def parseBTSSwap(): BTSSwap = {
+      val r = parseBTSSwapT(F)
+      return r
+    }
+
+    def parseBTSSwapT(typeParsed: B): BTSSwap = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSSwap")
+      }
+      parser.parseObjectKey("target")
+      val target = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("reference")
+      val reference = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("result")
+      val result = parseName()
+      parser.parseObjectNext()
+      return BTSSwap(target, reference, result)
     }
 
     def parseBTSCommunicationAction(): BTSCommunicationAction = {
-      val t = parser.parseObjectTypes(ISZ("BTSSubprogramCallAction", "BTSPortOutAction", "BTSPortInAction", "BTSFrozenPortAction"))
+      val t = parser.parseObjectTypes(ISZ("BTSSubprogramCallAction", "BTSPortOutput", "BTSPortInput", "BTSFrozenPortAction", "BTSPause"))
       t.native match {
         case "BTSSubprogramCallAction" => val r = parseBTSSubprogramCallActionT(T); return r
-        case "BTSPortOutAction" => val r = parseBTSPortOutActionT(T); return r
-        case "BTSPortInAction" => val r = parseBTSPortInActionT(T); return r
+        case "BTSPortOutput" => val r = parseBTSPortOutputT(T); return r
+        case "BTSPortInput" => val r = parseBTSPortInputT(T); return r
         case "BTSFrozenPortAction" => val r = parseBTSFrozenPortActionT(T); return r
-        case _ => val r = parseBTSFrozenPortActionT(T); return r
+        case "BTSPause" => val r = parseBTSPauseT(T); return r
+        case _ => val r = parseBTSPauseT(T); return r
       }
     }
 
@@ -2623,45 +3446,63 @@ object JSON {
       val name = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("params")
-      val params = parser.parseISZ(parseBTSFormalExpPair _)
+      val params = parser.parseISZ(parseBTSFormalActual _)
       parser.parseObjectNext()
       return BTSSubprogramCallAction(name, params)
     }
 
-    def parseBTSPortOutAction(): BTSPortOutAction = {
-      val r = parseBTSPortOutActionT(F)
+    def parseBTSFormalActual(): BTSFormalActual = {
+      val r = parseBTSFormalActualT(F)
       return r
     }
 
-    def parseBTSPortOutActionT(typeParsed: B): BTSPortOutAction = {
+    def parseBTSFormalActualT(typeParsed: B): BTSFormalActual = {
       if (!typeParsed) {
-        parser.parseObjectType("BTSPortOutAction")
+        parser.parseObjectType("BTSFormalActual")
       }
-      parser.parseObjectKey("name")
-      val name = parseName()
+      parser.parseObjectKey("formal")
+      val formal = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("actual")
+      val actual = parseBTSExp()
+      parser.parseObjectNext()
+      return BTSFormalActual(formal, actual)
+    }
+
+    def parseBTSPortOutput(): BTSPortOutput = {
+      val r = parseBTSPortOutputT(F)
+      return r
+    }
+
+    def parseBTSPortOutputT(typeParsed: B): BTSPortOutput = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSPortOutput")
+      }
+      parser.parseObjectKey("port")
+      val port = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("exp")
       val exp = parser.parseOption(parseBTSExp _)
       parser.parseObjectNext()
-      return BTSPortOutAction(name, exp)
+      return BTSPortOutput(port, exp)
     }
 
-    def parseBTSPortInAction(): BTSPortInAction = {
-      val r = parseBTSPortInActionT(F)
+    def parseBTSPortInput(): BTSPortInput = {
+      val r = parseBTSPortInputT(F)
       return r
     }
 
-    def parseBTSPortInActionT(typeParsed: B): BTSPortInAction = {
+    def parseBTSPortInputT(typeParsed: B): BTSPortInput = {
       if (!typeParsed) {
-        parser.parseObjectType("BTSPortInAction")
+        parser.parseObjectType("BTSPortInput")
       }
-      parser.parseObjectKey("name")
-      val name = parseName()
+      parser.parseObjectKey("port")
+      val port = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("variable")
-      val variable = parseBTSExp()
+      val variable = parseBTSValueName()
       parser.parseObjectNext()
-      return BTSPortInAction(name, variable)
+      return BTSPortInput(port, variable)
     }
 
     def parseBTSFrozenPortAction(): BTSFrozenPortAction = {
@@ -2673,18 +3514,33 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("BTSFrozenPortAction")
       }
-      parser.parseObjectKey("portName")
-      val portName = parseName()
+      parser.parseObjectKey("ports")
+      val ports = parser.parseISZ(parseName _)
       parser.parseObjectNext()
-      return BTSFrozenPortAction(portName)
+      return BTSFrozenPortAction(ports)
+    }
+
+    def parseBTSPause(): BTSPause = {
+      val r = parseBTSPauseT(F)
+      return r
+    }
+
+    def parseBTSPauseT(typeParsed: B): BTSPause = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSPause")
+      }
+      return BTSPause()
     }
 
     def parseBTSControlAction(): BTSControlAction = {
-      val t = parser.parseObjectTypes(ISZ("BTSIfBLESSAction", "BTSIfBAAction"))
+      val t = parser.parseObjectTypes(ISZ("BTSIfBLESSAction", "BTSIfBAAction", "BTSWhileLoop", "BTSForLoop", "BTSDoUntilLoop"))
       t.native match {
         case "BTSIfBLESSAction" => val r = parseBTSIfBLESSActionT(T); return r
         case "BTSIfBAAction" => val r = parseBTSIfBAActionT(T); return r
-        case _ => val r = parseBTSIfBAActionT(T); return r
+        case "BTSWhileLoop" => val r = parseBTSWhileLoopT(T); return r
+        case "BTSForLoop" => val r = parseBTSForLoopT(T); return r
+        case "BTSDoUntilLoop" => val r = parseBTSDoUntilLoopT(T); return r
+        case _ => val r = parseBTSDoUntilLoopT(T); return r
       }
     }
 
@@ -2763,6 +3619,81 @@ object JSON {
       return BTSConditionalActions(cond, actions)
     }
 
+    def parseBTSWhileLoop(): BTSWhileLoop = {
+      val r = parseBTSWhileLoopT(F)
+      return r
+    }
+
+    def parseBTSWhileLoopT(typeParsed: B): BTSWhileLoop = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSWhileLoop")
+      }
+      parser.parseObjectKey("test")
+      val test = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("invariant")
+      val invariant = parser.parseOption(parseBTSNamelessAssertion _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("bound")
+      val bound = parser.parseOption(parseBTSExp _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("elq")
+      val elq = parseBTSExistentialLatticeQuantification()
+      parser.parseObjectNext()
+      return BTSWhileLoop(test, invariant, bound, elq)
+    }
+
+    def parseBTSForLoop(): BTSForLoop = {
+      val r = parseBTSForLoopT(F)
+      return r
+    }
+
+    def parseBTSForLoopT(typeParsed: B): BTSForLoop = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSForLoop")
+      }
+      parser.parseObjectKey("count")
+      val count = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("lowerbound")
+      val lowerbound = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("upperbound")
+      val upperbound = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("invariant")
+      val invariant = parser.parseOption(parseBTSNamelessAssertion _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("actions")
+      val actions = parseBTSBehaviorActions()
+      parser.parseObjectNext()
+      return BTSForLoop(count, lowerbound, upperbound, invariant, actions)
+    }
+
+    def parseBTSDoUntilLoop(): BTSDoUntilLoop = {
+      val r = parseBTSDoUntilLoopT(F)
+      return r
+    }
+
+    def parseBTSDoUntilLoopT(typeParsed: B): BTSDoUntilLoop = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSDoUntilLoop")
+      }
+      parser.parseObjectKey("invariant")
+      val invariant = parser.parseOption(parseBTSNamelessAssertion _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("bound")
+      val bound = parser.parseOption(parseBTSExp _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("actions")
+      val actions = parseBTSBehaviorActions()
+      parser.parseObjectNext()
+      parser.parseObjectKey("guard")
+      val guard = parseBTSExp()
+      parser.parseObjectNext()
+      return BTSDoUntilLoop(invariant, bound, actions, guard)
+    }
+
     def parseBTSQuantificationActions(): BTSQuantificationActions = {
       val t = parser.parseObjectTypes(ISZ("BTSExistentialLatticeQuantification", "BTSUniversalLatticeQuantification"))
       t.native match {
@@ -2791,9 +3722,30 @@ object JSON {
       val timeout = parser.parseOption(parseBTSBehaviorTime _)
       parser.parseObjectNext()
       parser.parseObjectKey("catchClause")
-      val catchClause = parser.parseOption(parseTODO _)
+      val catchClause = parser.parseISZ(parseBTSCatchClauseTerm _)
       parser.parseObjectNext()
       return BTSExistentialLatticeQuantification(quantifiedVariables, actions, timeout, catchClause)
+    }
+
+    def parseBTSCatchClauseTerm(): BTSCatchClauseTerm = {
+      val r = parseBTSCatchClauseTermT(F)
+      return r
+    }
+
+    def parseBTSCatchClauseTermT(typeParsed: B): BTSCatchClauseTerm = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSCatchClauseTerm")
+      }
+      parser.parseObjectKey("exceptions")
+      val exceptions = parser.parseISZ(parseName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("all")
+      val all = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("action")
+      val action = parseBTSBasicAction()
+      parser.parseObjectNext()
+      return BTSCatchClauseTerm(exceptions, all, action)
     }
 
     def parseBTSUniversalLatticeQuantification(): BTSUniversalLatticeQuantification = {
@@ -2808,26 +3760,31 @@ object JSON {
       parser.parseObjectKey("latticeVariables")
       val latticeVariables = parser.parseISZ(parseName _)
       parser.parseObjectNext()
-      parser.parseObjectKey("range")
-      val range = parser.parseOption(parseTODO _)
+      parser.parseObjectKey("lowerbound")
+      val lowerbound = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("upperbound")
+      val upperbound = parseBTSExp()
       parser.parseObjectNext()
       parser.parseObjectKey("elq")
       val elq = parseBTSExistentialLatticeQuantification()
       parser.parseObjectNext()
-      return BTSUniversalLatticeQuantification(latticeVariables, range, elq)
+      return BTSUniversalLatticeQuantification(latticeVariables, lowerbound, upperbound, elq)
     }
 
     def parseBTSExp(): BTSExp = {
-      val t = parser.parseObjectTypes(ISZ("BTSUnaryExp", "BTSBinaryExp", "BTSLiteralExp", "BTSNameExp", "BTSIndexingExp", "BTSAccessExp", "BTSFunctionCall"))
+      val t = parser.parseObjectTypes(ISZ("BTSUnaryExp", "BTSBinaryExp", "BTSLiteralExp", "BTSVariableNameExp", "BTSIndexingExp", "BTSAccessExp", "BTSFunctionCall", "BTSConditionalExpression", "BTSRange"))
       t.native match {
         case "BTSUnaryExp" => val r = parseBTSUnaryExpT(T); return r
         case "BTSBinaryExp" => val r = parseBTSBinaryExpT(T); return r
         case "BTSLiteralExp" => val r = parseBTSLiteralExpT(T); return r
-        case "BTSNameExp" => val r = parseBTSNameExpT(T); return r
+        case "BTSVariableNameExp" => val r = parseBTSVariableNameExpT(T); return r
         case "BTSIndexingExp" => val r = parseBTSIndexingExpT(T); return r
         case "BTSAccessExp" => val r = parseBTSAccessExpT(T); return r
         case "BTSFunctionCall" => val r = parseBTSFunctionCallT(T); return r
-        case _ => val r = parseBTSFunctionCallT(T); return r
+        case "BTSConditionalExpression" => val r = parseBTSConditionalExpressionT(T); return r
+        case "BTSRange" => val r = parseBTSRangeT(T); return r
+        case _ => val r = parseBTSRangeT(T); return r
       }
     }
 
@@ -2951,19 +3908,52 @@ object JSON {
       return BTSLiteralExp(typ, exp)
     }
 
-    def parseBTSNameExp(): BTSNameExp = {
-      val r = parseBTSNameExpT(F)
+    def parseBTSValueName(): BTSValueName = {
+      val t = parser.parseObjectTypes(ISZ("BTSVariableNameExp", "BTSFunctionCall"))
+      t.native match {
+        case "BTSVariableNameExp" => val r = parseBTSVariableNameExpT(T); return r
+        case "BTSFunctionCall" => val r = parseBTSFunctionCallT(T); return r
+        case _ => val r = parseBTSFunctionCallT(T); return r
+      }
+    }
+
+    def parseBTSVariableNameExp(): BTSVariableNameExp = {
+      val r = parseBTSVariableNameExpT(F)
       return r
     }
 
-    def parseBTSNameExpT(typeParsed: B): BTSNameExp = {
+    def parseBTSVariableNameExpT(typeParsed: B): BTSVariableNameExp = {
       if (!typeParsed) {
-        parser.parseObjectType("BTSNameExp")
+        parser.parseObjectType("BTSVariableNameExp")
       }
       parser.parseObjectKey("name")
       val name = parseName()
       parser.parseObjectNext()
-      return BTSNameExp(name)
+      parser.parseObjectKey("arrayindex")
+      val arrayindex = parser.parseISZ(parseBTSExp _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("pn")
+      val pn = parser.parseISZ(parseBTSPartialName _)
+      parser.parseObjectNext()
+      return BTSVariableNameExp(name, arrayindex, pn)
+    }
+
+    def parseBTSPartialName(): BTSPartialName = {
+      val r = parseBTSPartialNameT(F)
+      return r
+    }
+
+    def parseBTSPartialNameT(typeParsed: B): BTSPartialName = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSPartialName")
+      }
+      parser.parseObjectKey("label")
+      val label = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("arrayindex")
+      val arrayindex = parser.parseISZ(parseBTSExp _)
+      parser.parseObjectNext()
+      return BTSPartialName(label, arrayindex)
     }
 
     def parseBTSIndexingExp(): BTSIndexingExp = {
@@ -3015,27 +4005,111 @@ object JSON {
       val name = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("args")
-      val args = parser.parseISZ(parseBTSFormalExpPair _)
+      val args = parser.parseISZ(parseBTSFormalActual _)
       parser.parseObjectNext()
       return BTSFunctionCall(name, args)
     }
 
-    def parseBTSFormalExpPair(): BTSFormalExpPair = {
-      val r = parseBTSFormalExpPairT(F)
+    def parseBTSPortValue(): BTSPortValue = {
+      val r = parseBTSPortValueT(F)
       return r
     }
 
-    def parseBTSFormalExpPairT(typeParsed: B): BTSFormalExpPair = {
+    def parseBTSPortValueT(typeParsed: B): BTSPortValue = {
       if (!typeParsed) {
-        parser.parseObjectType("BTSFormalExpPair")
+        parser.parseObjectType("BTSPortValue")
       }
-      parser.parseObjectKey("paramName")
-      val paramName = parser.parseOption(parseName _)
+      parser.parseObjectKey("port")
+      val port = parseName()
       parser.parseObjectNext()
-      parser.parseObjectKey("exp")
-      val exp = parser.parseOption(parseBTSExp _)
+      parser.parseObjectKey("valuekind")
+      val valuekind = parseBTSPortValueKindType()
       parser.parseObjectNext()
-      return BTSFormalExpPair(paramName, exp)
+      return BTSPortValue(port, valuekind)
+    }
+
+    def parseBTSPortValueKindType(): BTSPortValueKind.Type = {
+      val r = parseBTSPortValueKindT(F)
+      return r
+    }
+
+    def parseBTSPortValueKindT(typeParsed: B): BTSPortValueKind.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSPortValueKind")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      BTSPortValueKind.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for BTSPortValueKind.")
+          return BTSPortValueKind.byOrdinal(0).get
+      }
+    }
+
+    def parseBTSConditionalExpression(): BTSConditionalExpression = {
+      val r = parseBTSConditionalExpressionT(F)
+      return r
+    }
+
+    def parseBTSConditionalExpressionT(typeParsed: B): BTSConditionalExpression = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSConditionalExpression")
+      }
+      parser.parseObjectKey("guard")
+      val guard = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("t")
+      val t = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("f")
+      val f = parseBTSExp()
+      parser.parseObjectNext()
+      return BTSConditionalExpression(guard, t, f)
+    }
+
+    def parseBTSRange(): BTSRange = {
+      val r = parseBTSRangeT(F)
+      return r
+    }
+
+    def parseBTSRangeT(typeParsed: B): BTSRange = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSRange")
+      }
+      parser.parseObjectKey("lb")
+      val lb = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("sym")
+      val sym = parseBTSRangeSymbolType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("ub")
+      val ub = parseBTSExp()
+      parser.parseObjectNext()
+      return BTSRange(lb, sym, ub)
+    }
+
+    def parseBTSRangeSymbolType(): BTSRangeSymbol.Type = {
+      val r = parseBTSRangeSymbolT(F)
+      return r
+    }
+
+    def parseBTSRangeSymbolT(typeParsed: B): BTSRangeSymbol.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSRangeSymbol")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      BTSRangeSymbol.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for BTSRangeSymbol.")
+          return BTSRangeSymbol.byOrdinal(0).get
+      }
     }
 
     def parseBTSBehaviorTime(): BTSBehaviorTime = {
@@ -3048,6 +4122,14 @@ object JSON {
         parser.parseObjectType("BTSBehaviorTime")
       }
       return BTSBehaviorTime()
+    }
+
+    def parseBTSType(): BTSType = {
+      val t = parser.parseObjectTypes(ISZ("BTSClassifier"))
+      t.native match {
+        case "BTSClassifier" => val r = parseBTSClassifierT(T); return r
+        case _ => val r = parseBTSClassifierT(T); return r
+      }
     }
 
     def parseTODO(): TODO = {
@@ -4302,24 +5384,6 @@ object JSON {
     return r
   }
 
-  def fromBTSType(o: BTSType, isCompact: B): String = {
-    val st = Printer.printBTSType(o)
-    if (isCompact) {
-      return st.renderCompact
-    } else {
-      return st.render
-    }
-  }
-
-  def toBTSType(s: String): Either[BTSType, Json.ErrorMsg] = {
-    def fBTSType(parser: Parser): BTSType = {
-      val r = parser.parseBTSType()
-      return r
-    }
-    val r = to(s, fBTSType _)
-    return r
-  }
-
   def fromBTSClassifier(o: BTSClassifier, isCompact: B): String = {
     val st = Printer.printBTSClassifier(o)
     if (isCompact) {
@@ -4626,6 +5690,60 @@ object JSON {
     return r
   }
 
+  def fromBTSTriggerLogicalExpression(o: BTSTriggerLogicalExpression, isCompact: B): String = {
+    val st = Printer.printBTSTriggerLogicalExpression(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSTriggerLogicalExpression(s: String): Either[BTSTriggerLogicalExpression, Json.ErrorMsg] = {
+    def fBTSTriggerLogicalExpression(parser: Parser): BTSTriggerLogicalExpression = {
+      val r = parser.parseBTSTriggerLogicalExpression()
+      return r
+    }
+    val r = to(s, fBTSTriggerLogicalExpression _)
+    return r
+  }
+
+  def fromBTSEventTrigger(o: BTSEventTrigger, isCompact: B): String = {
+    val st = Printer.printBTSEventTrigger(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSEventTrigger(s: String): Either[BTSEventTrigger, Json.ErrorMsg] = {
+    def fBTSEventTrigger(parser: Parser): BTSEventTrigger = {
+      val r = parser.parseBTSEventTrigger()
+      return r
+    }
+    val r = to(s, fBTSEventTrigger _)
+    return r
+  }
+
+  def fromBTSSubcomponentPort(o: BTSSubcomponentPort, isCompact: B): String = {
+    val st = Printer.printBTSSubcomponentPort(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSSubcomponentPort(s: String): Either[BTSSubcomponentPort, Json.ErrorMsg] = {
+    def fBTSSubcomponentPort(parser: Parser): BTSSubcomponentPort = {
+      val r = parser.parseBTSSubcomponentPort()
+      return r
+    }
+    val r = to(s, fBTSSubcomponentPort _)
+    return r
+  }
+
   def fromBTSInternalCondition(o: BTSInternalCondition, isCompact: B): String = {
     val st = Printer.printBTSInternalCondition(o)
     if (isCompact) {
@@ -4659,6 +5777,222 @@ object JSON {
       return r
     }
     val r = to(s, fBTSAssertion _)
+    return r
+  }
+
+  def fromBTSNamedAssertion(o: BTSNamedAssertion, isCompact: B): String = {
+    val st = Printer.printBTSNamedAssertion(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSNamedAssertion(s: String): Either[BTSNamedAssertion, Json.ErrorMsg] = {
+    def fBTSNamedAssertion(parser: Parser): BTSNamedAssertion = {
+      val r = parser.parseBTSNamedAssertion()
+      return r
+    }
+    val r = to(s, fBTSNamedAssertion _)
+    return r
+  }
+
+  def fromBTSNamedFunction(o: BTSNamedFunction, isCompact: B): String = {
+    val st = Printer.printBTSNamedFunction(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSNamedFunction(s: String): Either[BTSNamedFunction, Json.ErrorMsg] = {
+    def fBTSNamedFunction(parser: Parser): BTSNamedFunction = {
+      val r = parser.parseBTSNamedFunction()
+      return r
+    }
+    val r = to(s, fBTSNamedFunction _)
+    return r
+  }
+
+  def fromBTSNamedEnumeration(o: BTSNamedEnumeration, isCompact: B): String = {
+    val st = Printer.printBTSNamedEnumeration(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSNamedEnumeration(s: String): Either[BTSNamedEnumeration, Json.ErrorMsg] = {
+    def fBTSNamedEnumeration(parser: Parser): BTSNamedEnumeration = {
+      val r = parser.parseBTSNamedEnumeration()
+      return r
+    }
+    val r = to(s, fBTSNamedEnumeration _)
+    return r
+  }
+
+  def fromBTSNamelessAssertion(o: BTSNamelessAssertion, isCompact: B): String = {
+    val st = Printer.printBTSNamelessAssertion(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSNamelessAssertion(s: String): Either[BTSNamelessAssertion, Json.ErrorMsg] = {
+    def fBTSNamelessAssertion(parser: Parser): BTSNamelessAssertion = {
+      val r = parser.parseBTSNamelessAssertion()
+      return r
+    }
+    val r = to(s, fBTSNamelessAssertion _)
+    return r
+  }
+
+  def fromBTSNamelessFunction(o: BTSNamelessFunction, isCompact: B): String = {
+    val st = Printer.printBTSNamelessFunction(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSNamelessFunction(s: String): Either[BTSNamelessFunction, Json.ErrorMsg] = {
+    def fBTSNamelessFunction(parser: Parser): BTSNamelessFunction = {
+      val r = parser.parseBTSNamelessFunction()
+      return r
+    }
+    val r = to(s, fBTSNamelessFunction _)
+    return r
+  }
+
+  def fromBTSNamelessEnumeration(o: BTSNamelessEnumeration, isCompact: B): String = {
+    val st = Printer.printBTSNamelessEnumeration(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSNamelessEnumeration(s: String): Either[BTSNamelessEnumeration, Json.ErrorMsg] = {
+    def fBTSNamelessEnumeration(parser: Parser): BTSNamelessEnumeration = {
+      val r = parser.parseBTSNamelessEnumeration()
+      return r
+    }
+    val r = to(s, fBTSNamelessEnumeration _)
+    return r
+  }
+
+  def fromBTSAssertionEnumeration(o: BTSAssertionEnumeration, isCompact: B): String = {
+    val st = Printer.printBTSAssertionEnumeration(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSAssertionEnumeration(s: String): Either[BTSAssertionEnumeration, Json.ErrorMsg] = {
+    def fBTSAssertionEnumeration(parser: Parser): BTSAssertionEnumeration = {
+      val r = parser.parseBTSAssertionEnumeration()
+      return r
+    }
+    val r = to(s, fBTSAssertionEnumeration _)
+    return r
+  }
+
+  def fromBTSEnumerationPairs(o: BTSEnumerationPairs, isCompact: B): String = {
+    val st = Printer.printBTSEnumerationPairs(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSEnumerationPairs(s: String): Either[BTSEnumerationPairs, Json.ErrorMsg] = {
+    def fBTSEnumerationPairs(parser: Parser): BTSEnumerationPairs = {
+      val r = parser.parseBTSEnumerationPairs()
+      return r
+    }
+    val r = to(s, fBTSEnumerationPairs _)
+    return r
+  }
+
+  def fromBTSEnumerationPair(o: BTSEnumerationPair, isCompact: B): String = {
+    val st = Printer.printBTSEnumerationPair(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSEnumerationPair(s: String): Either[BTSEnumerationPair, Json.ErrorMsg] = {
+    def fBTSEnumerationPair(parser: Parser): BTSEnumerationPair = {
+      val r = parser.parseBTSEnumerationPair()
+      return r
+    }
+    val r = to(s, fBTSEnumerationPair _)
+    return r
+  }
+
+  def fromBTSInvocation(o: BTSInvocation, isCompact: B): String = {
+    val st = Printer.printBTSInvocation(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSInvocation(s: String): Either[BTSInvocation, Json.ErrorMsg] = {
+    def fBTSInvocation(parser: Parser): BTSInvocation = {
+      val r = parser.parseBTSInvocation()
+      return r
+    }
+    val r = to(s, fBTSInvocation _)
+    return r
+  }
+
+  def fromBTSActualParameter(o: BTSActualParameter, isCompact: B): String = {
+    val st = Printer.printBTSActualParameter(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSActualParameter(s: String): Either[BTSActualParameter, Json.ErrorMsg] = {
+    def fBTSActualParameter(parser: Parser): BTSActualParameter = {
+      val r = parser.parseBTSActualParameter()
+      return r
+    }
+    val r = to(s, fBTSActualParameter _)
+    return r
+  }
+
+  def fromBTSVariable(o: BTSVariable, isCompact: B): String = {
+    val st = Printer.printBTSVariable(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSVariable(s: String): Either[BTSVariable, Json.ErrorMsg] = {
+    def fBTSVariable(parser: Parser): BTSVariable = {
+      val r = parser.parseBTSVariable()
+      return r
+    }
+    val r = to(s, fBTSVariable _)
     return r
   }
 
@@ -4770,6 +6104,150 @@ object JSON {
     return r
   }
 
+  def fromBTSSetMode(o: BTSSetMode, isCompact: B): String = {
+    val st = Printer.printBTSSetMode(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSSetMode(s: String): Either[BTSSetMode, Json.ErrorMsg] = {
+    def fBTSSetMode(parser: Parser): BTSSetMode = {
+      val r = parser.parseBTSSetMode()
+      return r
+    }
+    val r = to(s, fBTSSetMode _)
+    return r
+  }
+
+  def fromBTSWhenThrow(o: BTSWhenThrow, isCompact: B): String = {
+    val st = Printer.printBTSWhenThrow(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSWhenThrow(s: String): Either[BTSWhenThrow, Json.ErrorMsg] = {
+    def fBTSWhenThrow(parser: Parser): BTSWhenThrow = {
+      val r = parser.parseBTSWhenThrow()
+      return r
+    }
+    val r = to(s, fBTSWhenThrow _)
+    return r
+  }
+
+  def fromBTSCombinableOperation(o: BTSCombinableOperation, isCompact: B): String = {
+    val st = Printer.printBTSCombinableOperation(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSCombinableOperation(s: String): Either[BTSCombinableOperation, Json.ErrorMsg] = {
+    def fBTSCombinableOperation(parser: Parser): BTSCombinableOperation = {
+      val r = parser.parseBTSCombinableOperation()
+      return r
+    }
+    val r = to(s, fBTSCombinableOperation _)
+    return r
+  }
+
+  def fromBTSFetchAdd(o: BTSFetchAdd, isCompact: B): String = {
+    val st = Printer.printBTSFetchAdd(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSFetchAdd(s: String): Either[BTSFetchAdd, Json.ErrorMsg] = {
+    def fBTSFetchAdd(parser: Parser): BTSFetchAdd = {
+      val r = parser.parseBTSFetchAdd()
+      return r
+    }
+    val r = to(s, fBTSFetchAdd _)
+    return r
+  }
+
+  def fromBTSFetchOr(o: BTSFetchOr, isCompact: B): String = {
+    val st = Printer.printBTSFetchOr(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSFetchOr(s: String): Either[BTSFetchOr, Json.ErrorMsg] = {
+    def fBTSFetchOr(parser: Parser): BTSFetchOr = {
+      val r = parser.parseBTSFetchOr()
+      return r
+    }
+    val r = to(s, fBTSFetchOr _)
+    return r
+  }
+
+  def fromBTSFetchAnd(o: BTSFetchAnd, isCompact: B): String = {
+    val st = Printer.printBTSFetchAnd(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSFetchAnd(s: String): Either[BTSFetchAnd, Json.ErrorMsg] = {
+    def fBTSFetchAnd(parser: Parser): BTSFetchAnd = {
+      val r = parser.parseBTSFetchAnd()
+      return r
+    }
+    val r = to(s, fBTSFetchAnd _)
+    return r
+  }
+
+  def fromBTSFetchXor(o: BTSFetchXor, isCompact: B): String = {
+    val st = Printer.printBTSFetchXor(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSFetchXor(s: String): Either[BTSFetchXor, Json.ErrorMsg] = {
+    def fBTSFetchXor(parser: Parser): BTSFetchXor = {
+      val r = parser.parseBTSFetchXor()
+      return r
+    }
+    val r = to(s, fBTSFetchXor _)
+    return r
+  }
+
+  def fromBTSSwap(o: BTSSwap, isCompact: B): String = {
+    val st = Printer.printBTSSwap(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSSwap(s: String): Either[BTSSwap, Json.ErrorMsg] = {
+    def fBTSSwap(parser: Parser): BTSSwap = {
+      val r = parser.parseBTSSwap()
+      return r
+    }
+    val r = to(s, fBTSSwap _)
+    return r
+  }
+
   def fromBTSCommunicationAction(o: BTSCommunicationAction, isCompact: B): String = {
     val st = Printer.printBTSCommunicationAction(o)
     if (isCompact) {
@@ -4806,8 +6284,8 @@ object JSON {
     return r
   }
 
-  def fromBTSPortOutAction(o: BTSPortOutAction, isCompact: B): String = {
-    val st = Printer.printBTSPortOutAction(o)
+  def fromBTSFormalActual(o: BTSFormalActual, isCompact: B): String = {
+    val st = Printer.printBTSFormalActual(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -4815,17 +6293,17 @@ object JSON {
     }
   }
 
-  def toBTSPortOutAction(s: String): Either[BTSPortOutAction, Json.ErrorMsg] = {
-    def fBTSPortOutAction(parser: Parser): BTSPortOutAction = {
-      val r = parser.parseBTSPortOutAction()
+  def toBTSFormalActual(s: String): Either[BTSFormalActual, Json.ErrorMsg] = {
+    def fBTSFormalActual(parser: Parser): BTSFormalActual = {
+      val r = parser.parseBTSFormalActual()
       return r
     }
-    val r = to(s, fBTSPortOutAction _)
+    val r = to(s, fBTSFormalActual _)
     return r
   }
 
-  def fromBTSPortInAction(o: BTSPortInAction, isCompact: B): String = {
-    val st = Printer.printBTSPortInAction(o)
+  def fromBTSPortOutput(o: BTSPortOutput, isCompact: B): String = {
+    val st = Printer.printBTSPortOutput(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -4833,12 +6311,30 @@ object JSON {
     }
   }
 
-  def toBTSPortInAction(s: String): Either[BTSPortInAction, Json.ErrorMsg] = {
-    def fBTSPortInAction(parser: Parser): BTSPortInAction = {
-      val r = parser.parseBTSPortInAction()
+  def toBTSPortOutput(s: String): Either[BTSPortOutput, Json.ErrorMsg] = {
+    def fBTSPortOutput(parser: Parser): BTSPortOutput = {
+      val r = parser.parseBTSPortOutput()
       return r
     }
-    val r = to(s, fBTSPortInAction _)
+    val r = to(s, fBTSPortOutput _)
+    return r
+  }
+
+  def fromBTSPortInput(o: BTSPortInput, isCompact: B): String = {
+    val st = Printer.printBTSPortInput(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSPortInput(s: String): Either[BTSPortInput, Json.ErrorMsg] = {
+    def fBTSPortInput(parser: Parser): BTSPortInput = {
+      val r = parser.parseBTSPortInput()
+      return r
+    }
+    val r = to(s, fBTSPortInput _)
     return r
   }
 
@@ -4857,6 +6353,24 @@ object JSON {
       return r
     }
     val r = to(s, fBTSFrozenPortAction _)
+    return r
+  }
+
+  def fromBTSPause(o: BTSPause, isCompact: B): String = {
+    val st = Printer.printBTSPause(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSPause(s: String): Either[BTSPause, Json.ErrorMsg] = {
+    def fBTSPause(parser: Parser): BTSPause = {
+      val r = parser.parseBTSPause()
+      return r
+    }
+    val r = to(s, fBTSPause _)
     return r
   }
 
@@ -4950,6 +6464,60 @@ object JSON {
     return r
   }
 
+  def fromBTSWhileLoop(o: BTSWhileLoop, isCompact: B): String = {
+    val st = Printer.printBTSWhileLoop(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSWhileLoop(s: String): Either[BTSWhileLoop, Json.ErrorMsg] = {
+    def fBTSWhileLoop(parser: Parser): BTSWhileLoop = {
+      val r = parser.parseBTSWhileLoop()
+      return r
+    }
+    val r = to(s, fBTSWhileLoop _)
+    return r
+  }
+
+  def fromBTSForLoop(o: BTSForLoop, isCompact: B): String = {
+    val st = Printer.printBTSForLoop(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSForLoop(s: String): Either[BTSForLoop, Json.ErrorMsg] = {
+    def fBTSForLoop(parser: Parser): BTSForLoop = {
+      val r = parser.parseBTSForLoop()
+      return r
+    }
+    val r = to(s, fBTSForLoop _)
+    return r
+  }
+
+  def fromBTSDoUntilLoop(o: BTSDoUntilLoop, isCompact: B): String = {
+    val st = Printer.printBTSDoUntilLoop(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSDoUntilLoop(s: String): Either[BTSDoUntilLoop, Json.ErrorMsg] = {
+    def fBTSDoUntilLoop(parser: Parser): BTSDoUntilLoop = {
+      val r = parser.parseBTSDoUntilLoop()
+      return r
+    }
+    val r = to(s, fBTSDoUntilLoop _)
+    return r
+  }
+
   def fromBTSQuantificationActions(o: BTSQuantificationActions, isCompact: B): String = {
     val st = Printer.printBTSQuantificationActions(o)
     if (isCompact) {
@@ -4983,6 +6551,24 @@ object JSON {
       return r
     }
     val r = to(s, fBTSExistentialLatticeQuantification _)
+    return r
+  }
+
+  def fromBTSCatchClauseTerm(o: BTSCatchClauseTerm, isCompact: B): String = {
+    val st = Printer.printBTSCatchClauseTerm(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSCatchClauseTerm(s: String): Either[BTSCatchClauseTerm, Json.ErrorMsg] = {
+    def fBTSCatchClauseTerm(parser: Parser): BTSCatchClauseTerm = {
+      val r = parser.parseBTSCatchClauseTerm()
+      return r
+    }
+    val r = to(s, fBTSCatchClauseTerm _)
     return r
   }
 
@@ -5076,8 +6662,8 @@ object JSON {
     return r
   }
 
-  def fromBTSNameExp(o: BTSNameExp, isCompact: B): String = {
-    val st = Printer.printBTSNameExp(o)
+  def fromBTSValueName(o: BTSValueName, isCompact: B): String = {
+    val st = Printer.printBTSValueName(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -5085,12 +6671,48 @@ object JSON {
     }
   }
 
-  def toBTSNameExp(s: String): Either[BTSNameExp, Json.ErrorMsg] = {
-    def fBTSNameExp(parser: Parser): BTSNameExp = {
-      val r = parser.parseBTSNameExp()
+  def toBTSValueName(s: String): Either[BTSValueName, Json.ErrorMsg] = {
+    def fBTSValueName(parser: Parser): BTSValueName = {
+      val r = parser.parseBTSValueName()
       return r
     }
-    val r = to(s, fBTSNameExp _)
+    val r = to(s, fBTSValueName _)
+    return r
+  }
+
+  def fromBTSVariableNameExp(o: BTSVariableNameExp, isCompact: B): String = {
+    val st = Printer.printBTSVariableNameExp(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSVariableNameExp(s: String): Either[BTSVariableNameExp, Json.ErrorMsg] = {
+    def fBTSVariableNameExp(parser: Parser): BTSVariableNameExp = {
+      val r = parser.parseBTSVariableNameExp()
+      return r
+    }
+    val r = to(s, fBTSVariableNameExp _)
+    return r
+  }
+
+  def fromBTSPartialName(o: BTSPartialName, isCompact: B): String = {
+    val st = Printer.printBTSPartialName(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSPartialName(s: String): Either[BTSPartialName, Json.ErrorMsg] = {
+    def fBTSPartialName(parser: Parser): BTSPartialName = {
+      val r = parser.parseBTSPartialName()
+      return r
+    }
+    val r = to(s, fBTSPartialName _)
     return r
   }
 
@@ -5148,8 +6770,8 @@ object JSON {
     return r
   }
 
-  def fromBTSFormalExpPair(o: BTSFormalExpPair, isCompact: B): String = {
-    val st = Printer.printBTSFormalExpPair(o)
+  def fromBTSPortValue(o: BTSPortValue, isCompact: B): String = {
+    val st = Printer.printBTSPortValue(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -5157,12 +6779,48 @@ object JSON {
     }
   }
 
-  def toBTSFormalExpPair(s: String): Either[BTSFormalExpPair, Json.ErrorMsg] = {
-    def fBTSFormalExpPair(parser: Parser): BTSFormalExpPair = {
-      val r = parser.parseBTSFormalExpPair()
+  def toBTSPortValue(s: String): Either[BTSPortValue, Json.ErrorMsg] = {
+    def fBTSPortValue(parser: Parser): BTSPortValue = {
+      val r = parser.parseBTSPortValue()
       return r
     }
-    val r = to(s, fBTSFormalExpPair _)
+    val r = to(s, fBTSPortValue _)
+    return r
+  }
+
+  def fromBTSConditionalExpression(o: BTSConditionalExpression, isCompact: B): String = {
+    val st = Printer.printBTSConditionalExpression(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSConditionalExpression(s: String): Either[BTSConditionalExpression, Json.ErrorMsg] = {
+    def fBTSConditionalExpression(parser: Parser): BTSConditionalExpression = {
+      val r = parser.parseBTSConditionalExpression()
+      return r
+    }
+    val r = to(s, fBTSConditionalExpression _)
+    return r
+  }
+
+  def fromBTSRange(o: BTSRange, isCompact: B): String = {
+    val st = Printer.printBTSRange(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSRange(s: String): Either[BTSRange, Json.ErrorMsg] = {
+    def fBTSRange(parser: Parser): BTSRange = {
+      val r = parser.parseBTSRange()
+      return r
+    }
+    val r = to(s, fBTSRange _)
     return r
   }
 
@@ -5181,6 +6839,24 @@ object JSON {
       return r
     }
     val r = to(s, fBTSBehaviorTime _)
+    return r
+  }
+
+  def fromBTSType(o: BTSType, isCompact: B): String = {
+    val st = Printer.printBTSType(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSType(s: String): Either[BTSType, Json.ErrorMsg] = {
+    def fBTSType(parser: Parser): BTSType = {
+      val r = parser.parseBTSType()
+      return r
+    }
+    val r = to(s, fBTSType _)
     return r
   }
 

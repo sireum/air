@@ -816,18 +816,6 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def preBTSType(ctx: Context, o: BTSType): PreResult[Context, BTSType] = {
-      o match {
-        case o: BTSClassifier =>
-          val r: PreResult[Context, BTSType] = preBTSClassifier(ctx, o) match {
-           case PreResult(preCtx, continu, Some(r: BTSType)) => PreResult(preCtx, continu, Some[BTSType](r))
-           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSType")
-           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSType]())
-          }
-          return r
-      }
-    }
-
     @pure def preBTSClassifier(ctx: Context, o: BTSClassifier): PreResult[Context, BTSClassifier] = {
       return PreResult(ctx, T, None())
     }
@@ -983,11 +971,144 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def preBTSTriggerLogicalExpression(ctx: Context, o: BTSTriggerLogicalExpression): PreResult[Context, BTSTriggerLogicalExpression] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSEventTrigger(ctx: Context, o: BTSEventTrigger): PreResult[Context, BTSEventTrigger] = {
+      o match {
+        case o: BTSTriggerLogicalExpression =>
+          val r: PreResult[Context, BTSEventTrigger] = preBTSTriggerLogicalExpression(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSEventTrigger)) => PreResult(preCtx, continu, Some[BTSEventTrigger](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSEventTrigger")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSEventTrigger]())
+          }
+          return r
+        case o: BTSSubcomponentPort =>
+          val r: PreResult[Context, BTSEventTrigger] = preBTSSubcomponentPort(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSEventTrigger)) => PreResult(preCtx, continu, Some[BTSEventTrigger](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSEventTrigger")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSEventTrigger]())
+          }
+          return r
+      }
+    }
+
+    @pure def preBTSSubcomponentPort(ctx: Context, o: BTSSubcomponentPort): PreResult[Context, BTSSubcomponentPort] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def preBTSInternalCondition(ctx: Context, o: BTSInternalCondition): PreResult[Context, BTSInternalCondition] = {
       return PreResult(ctx, T, None())
     }
 
     @pure def preBTSAssertion(ctx: Context, o: BTSAssertion): PreResult[Context, BTSAssertion] = {
+      o match {
+        case o: BTSNamedAssertion =>
+          val r: PreResult[Context, BTSAssertion] = preBTSNamedAssertion(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAssertion)) => PreResult(preCtx, continu, Some[BTSAssertion](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAssertion")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAssertion]())
+          }
+          return r
+        case o: BTSNamedFunction =>
+          val r: PreResult[Context, BTSAssertion] = preBTSNamedFunction(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAssertion)) => PreResult(preCtx, continu, Some[BTSAssertion](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAssertion")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAssertion]())
+          }
+          return r
+        case o: BTSNamedEnumeration =>
+          val r: PreResult[Context, BTSAssertion] = preBTSNamedEnumeration(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAssertion)) => PreResult(preCtx, continu, Some[BTSAssertion](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAssertion")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAssertion]())
+          }
+          return r
+        case o: BTSNamelessAssertion =>
+          val r: PreResult[Context, BTSAssertion] = preBTSNamelessAssertion(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAssertion)) => PreResult(preCtx, continu, Some[BTSAssertion](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAssertion")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAssertion]())
+          }
+          return r
+        case o: BTSNamelessFunction =>
+          val r: PreResult[Context, BTSAssertion] = preBTSNamelessFunction(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAssertion)) => PreResult(preCtx, continu, Some[BTSAssertion](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAssertion")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAssertion]())
+          }
+          return r
+        case o: BTSNamelessEnumeration =>
+          val r: PreResult[Context, BTSAssertion] = preBTSNamelessEnumeration(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAssertion)) => PreResult(preCtx, continu, Some[BTSAssertion](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAssertion")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAssertion]())
+          }
+          return r
+      }
+    }
+
+    @pure def preBTSNamedAssertion(ctx: Context, o: BTSNamedAssertion): PreResult[Context, BTSNamedAssertion] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSNamedFunction(ctx: Context, o: BTSNamedFunction): PreResult[Context, BTSNamedFunction] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSNamedEnumeration(ctx: Context, o: BTSNamedEnumeration): PreResult[Context, BTSNamedEnumeration] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSNamelessAssertion(ctx: Context, o: BTSNamelessAssertion): PreResult[Context, BTSNamelessAssertion] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSNamelessFunction(ctx: Context, o: BTSNamelessFunction): PreResult[Context, BTSNamelessFunction] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSNamelessEnumeration(ctx: Context, o: BTSNamelessEnumeration): PreResult[Context, BTSNamelessEnumeration] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSAssertionEnumeration(ctx: Context, o: BTSAssertionEnumeration): PreResult[Context, BTSAssertionEnumeration] = {
+      o match {
+        case o: BTSEnumerationPairs =>
+          val r: PreResult[Context, BTSAssertionEnumeration] = preBTSEnumerationPairs(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAssertionEnumeration)) => PreResult(preCtx, continu, Some[BTSAssertionEnumeration](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAssertionEnumeration")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAssertionEnumeration]())
+          }
+          return r
+        case o: BTSInvocation =>
+          val r: PreResult[Context, BTSAssertionEnumeration] = preBTSInvocation(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAssertionEnumeration)) => PreResult(preCtx, continu, Some[BTSAssertionEnumeration](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAssertionEnumeration")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAssertionEnumeration]())
+          }
+          return r
+      }
+    }
+
+    @pure def preBTSEnumerationPairs(ctx: Context, o: BTSEnumerationPairs): PreResult[Context, BTSEnumerationPairs] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSEnumerationPair(ctx: Context, o: BTSEnumerationPair): PreResult[Context, BTSEnumerationPair] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSInvocation(ctx: Context, o: BTSInvocation): PreResult[Context, BTSInvocation] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSActualParameter(ctx: Context, o: BTSActualParameter): PreResult[Context, BTSActualParameter] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSVariable(ctx: Context, o: BTSVariable): PreResult[Context, BTSVariable] = {
       return PreResult(ctx, T, None())
     }
 
@@ -1015,6 +1136,55 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
           }
           return r
+        case o: BTSSetMode =>
+          val r: PreResult[Context, BTSAction] = preBTSSetMode(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
+          }
+          return r
+        case o: BTSWhenThrow =>
+          val r: PreResult[Context, BTSAction] = preBTSWhenThrow(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
+          }
+          return r
+        case o: BTSFetchAdd =>
+          val r: PreResult[Context, BTSAction] = preBTSFetchAdd(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
+          }
+          return r
+        case o: BTSFetchOr =>
+          val r: PreResult[Context, BTSAction] = preBTSFetchOr(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
+          }
+          return r
+        case o: BTSFetchAnd =>
+          val r: PreResult[Context, BTSAction] = preBTSFetchAnd(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
+          }
+          return r
+        case o: BTSFetchXor =>
+          val r: PreResult[Context, BTSAction] = preBTSFetchXor(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
+          }
+          return r
+        case o: BTSSwap =>
+          val r: PreResult[Context, BTSAction] = preBTSSwap(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
+          }
+          return r
         case o: BTSSubprogramCallAction =>
           val r: PreResult[Context, BTSAction] = preBTSSubprogramCallAction(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
@@ -1022,15 +1192,15 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
           }
           return r
-        case o: BTSPortOutAction =>
-          val r: PreResult[Context, BTSAction] = preBTSPortOutAction(ctx, o) match {
+        case o: BTSPortOutput =>
+          val r: PreResult[Context, BTSAction] = preBTSPortOutput(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
           }
           return r
-        case o: BTSPortInAction =>
-          val r: PreResult[Context, BTSAction] = preBTSPortInAction(ctx, o) match {
+        case o: BTSPortInput =>
+          val r: PreResult[Context, BTSAction] = preBTSPortInput(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
@@ -1038,6 +1208,13 @@ object Transformer {
           return r
         case o: BTSFrozenPortAction =>
           val r: PreResult[Context, BTSAction] = preBTSFrozenPortAction(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
+          }
+          return r
+        case o: BTSPause =>
+          val r: PreResult[Context, BTSAction] = preBTSPause(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
@@ -1052,6 +1229,27 @@ object Transformer {
           return r
         case o: BTSIfBAAction =>
           val r: PreResult[Context, BTSAction] = preBTSIfBAAction(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
+          }
+          return r
+        case o: BTSWhileLoop =>
+          val r: PreResult[Context, BTSAction] = preBTSWhileLoop(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
+          }
+          return r
+        case o: BTSForLoop =>
+          val r: PreResult[Context, BTSAction] = preBTSForLoop(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
+          }
+          return r
+        case o: BTSDoUntilLoop =>
+          val r: PreResult[Context, BTSAction] = preBTSDoUntilLoop(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSAction)) => PreResult(preCtx, continu, Some[BTSAction](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSAction")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSAction]())
@@ -1090,6 +1288,55 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSBasicAction]())
           }
           return r
+        case o: BTSSetMode =>
+          val r: PreResult[Context, BTSBasicAction] = preBTSSetMode(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSBasicAction)) => PreResult(preCtx, continu, Some[BTSBasicAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSWhenThrow =>
+          val r: PreResult[Context, BTSBasicAction] = preBTSWhenThrow(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSBasicAction)) => PreResult(preCtx, continu, Some[BTSBasicAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSFetchAdd =>
+          val r: PreResult[Context, BTSBasicAction] = preBTSFetchAdd(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSBasicAction)) => PreResult(preCtx, continu, Some[BTSBasicAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSFetchOr =>
+          val r: PreResult[Context, BTSBasicAction] = preBTSFetchOr(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSBasicAction)) => PreResult(preCtx, continu, Some[BTSBasicAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSFetchAnd =>
+          val r: PreResult[Context, BTSBasicAction] = preBTSFetchAnd(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSBasicAction)) => PreResult(preCtx, continu, Some[BTSBasicAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSFetchXor =>
+          val r: PreResult[Context, BTSBasicAction] = preBTSFetchXor(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSBasicAction)) => PreResult(preCtx, continu, Some[BTSBasicAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSSwap =>
+          val r: PreResult[Context, BTSBasicAction] = preBTSSwap(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSBasicAction)) => PreResult(preCtx, continu, Some[BTSBasicAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSBasicAction]())
+          }
+          return r
         case o: BTSSubprogramCallAction =>
           val r: PreResult[Context, BTSBasicAction] = preBTSSubprogramCallAction(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSBasicAction)) => PreResult(preCtx, continu, Some[BTSBasicAction](r))
@@ -1097,15 +1344,15 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSBasicAction]())
           }
           return r
-        case o: BTSPortOutAction =>
-          val r: PreResult[Context, BTSBasicAction] = preBTSPortOutAction(ctx, o) match {
+        case o: BTSPortOutput =>
+          val r: PreResult[Context, BTSBasicAction] = preBTSPortOutput(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSBasicAction)) => PreResult(preCtx, continu, Some[BTSBasicAction](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSBasicAction")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSBasicAction]())
           }
           return r
-        case o: BTSPortInAction =>
-          val r: PreResult[Context, BTSBasicAction] = preBTSPortInAction(ctx, o) match {
+        case o: BTSPortInput =>
+          val r: PreResult[Context, BTSBasicAction] = preBTSPortInput(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSBasicAction)) => PreResult(preCtx, continu, Some[BTSBasicAction](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSBasicAction")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSBasicAction]())
@@ -1113,6 +1360,13 @@ object Transformer {
           return r
         case o: BTSFrozenPortAction =>
           val r: PreResult[Context, BTSBasicAction] = preBTSFrozenPortAction(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSBasicAction)) => PreResult(preCtx, continu, Some[BTSBasicAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSPause =>
+          val r: PreResult[Context, BTSBasicAction] = preBTSPause(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSBasicAction)) => PreResult(preCtx, continu, Some[BTSBasicAction](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSBasicAction")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSBasicAction]())
@@ -1129,6 +1383,74 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def preBTSSetMode(ctx: Context, o: BTSSetMode): PreResult[Context, BTSSetMode] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSWhenThrow(ctx: Context, o: BTSWhenThrow): PreResult[Context, BTSWhenThrow] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSCombinableOperation(ctx: Context, o: BTSCombinableOperation): PreResult[Context, BTSCombinableOperation] = {
+      o match {
+        case o: BTSFetchAdd =>
+          val r: PreResult[Context, BTSCombinableOperation] = preBTSFetchAdd(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSCombinableOperation)) => PreResult(preCtx, continu, Some[BTSCombinableOperation](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSCombinableOperation")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSCombinableOperation]())
+          }
+          return r
+        case o: BTSFetchOr =>
+          val r: PreResult[Context, BTSCombinableOperation] = preBTSFetchOr(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSCombinableOperation)) => PreResult(preCtx, continu, Some[BTSCombinableOperation](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSCombinableOperation")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSCombinableOperation]())
+          }
+          return r
+        case o: BTSFetchAnd =>
+          val r: PreResult[Context, BTSCombinableOperation] = preBTSFetchAnd(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSCombinableOperation)) => PreResult(preCtx, continu, Some[BTSCombinableOperation](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSCombinableOperation")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSCombinableOperation]())
+          }
+          return r
+        case o: BTSFetchXor =>
+          val r: PreResult[Context, BTSCombinableOperation] = preBTSFetchXor(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSCombinableOperation)) => PreResult(preCtx, continu, Some[BTSCombinableOperation](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSCombinableOperation")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSCombinableOperation]())
+          }
+          return r
+        case o: BTSSwap =>
+          val r: PreResult[Context, BTSCombinableOperation] = preBTSSwap(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSCombinableOperation)) => PreResult(preCtx, continu, Some[BTSCombinableOperation](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSCombinableOperation")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSCombinableOperation]())
+          }
+          return r
+      }
+    }
+
+    @pure def preBTSFetchAdd(ctx: Context, o: BTSFetchAdd): PreResult[Context, BTSFetchAdd] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSFetchOr(ctx: Context, o: BTSFetchOr): PreResult[Context, BTSFetchOr] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSFetchAnd(ctx: Context, o: BTSFetchAnd): PreResult[Context, BTSFetchAnd] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSFetchXor(ctx: Context, o: BTSFetchXor): PreResult[Context, BTSFetchXor] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSSwap(ctx: Context, o: BTSSwap): PreResult[Context, BTSSwap] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def preBTSCommunicationAction(ctx: Context, o: BTSCommunicationAction): PreResult[Context, BTSCommunicationAction] = {
       o match {
         case o: BTSSubprogramCallAction =>
@@ -1138,15 +1460,15 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSCommunicationAction]())
           }
           return r
-        case o: BTSPortOutAction =>
-          val r: PreResult[Context, BTSCommunicationAction] = preBTSPortOutAction(ctx, o) match {
+        case o: BTSPortOutput =>
+          val r: PreResult[Context, BTSCommunicationAction] = preBTSPortOutput(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSCommunicationAction)) => PreResult(preCtx, continu, Some[BTSCommunicationAction](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSCommunicationAction")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSCommunicationAction]())
           }
           return r
-        case o: BTSPortInAction =>
-          val r: PreResult[Context, BTSCommunicationAction] = preBTSPortInAction(ctx, o) match {
+        case o: BTSPortInput =>
+          val r: PreResult[Context, BTSCommunicationAction] = preBTSPortInput(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSCommunicationAction)) => PreResult(preCtx, continu, Some[BTSCommunicationAction](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSCommunicationAction")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSCommunicationAction]())
@@ -1159,6 +1481,13 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSCommunicationAction]())
           }
           return r
+        case o: BTSPause =>
+          val r: PreResult[Context, BTSCommunicationAction] = preBTSPause(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSCommunicationAction)) => PreResult(preCtx, continu, Some[BTSCommunicationAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSCommunicationAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSCommunicationAction]())
+          }
+          return r
       }
     }
 
@@ -1166,15 +1495,23 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def preBTSPortOutAction(ctx: Context, o: BTSPortOutAction): PreResult[Context, BTSPortOutAction] = {
+    @pure def preBTSFormalActual(ctx: Context, o: BTSFormalActual): PreResult[Context, BTSFormalActual] = {
       return PreResult(ctx, T, None())
     }
 
-    @pure def preBTSPortInAction(ctx: Context, o: BTSPortInAction): PreResult[Context, BTSPortInAction] = {
+    @pure def preBTSPortOutput(ctx: Context, o: BTSPortOutput): PreResult[Context, BTSPortOutput] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSPortInput(ctx: Context, o: BTSPortInput): PreResult[Context, BTSPortInput] = {
       return PreResult(ctx, T, None())
     }
 
     @pure def preBTSFrozenPortAction(ctx: Context, o: BTSFrozenPortAction): PreResult[Context, BTSFrozenPortAction] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSPause(ctx: Context, o: BTSPause): PreResult[Context, BTSPause] = {
       return PreResult(ctx, T, None())
     }
 
@@ -1189,6 +1526,27 @@ object Transformer {
           return r
         case o: BTSIfBAAction =>
           val r: PreResult[Context, BTSControlAction] = preBTSIfBAAction(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSControlAction)) => PreResult(preCtx, continu, Some[BTSControlAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSControlAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSControlAction]())
+          }
+          return r
+        case o: BTSWhileLoop =>
+          val r: PreResult[Context, BTSControlAction] = preBTSWhileLoop(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSControlAction)) => PreResult(preCtx, continu, Some[BTSControlAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSControlAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSControlAction]())
+          }
+          return r
+        case o: BTSForLoop =>
+          val r: PreResult[Context, BTSControlAction] = preBTSForLoop(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSControlAction)) => PreResult(preCtx, continu, Some[BTSControlAction](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSControlAction")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSControlAction]())
+          }
+          return r
+        case o: BTSDoUntilLoop =>
+          val r: PreResult[Context, BTSControlAction] = preBTSDoUntilLoop(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSControlAction)) => PreResult(preCtx, continu, Some[BTSControlAction](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSControlAction")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSControlAction]())
@@ -1213,6 +1571,18 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def preBTSWhileLoop(ctx: Context, o: BTSWhileLoop): PreResult[Context, BTSWhileLoop] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSForLoop(ctx: Context, o: BTSForLoop): PreResult[Context, BTSForLoop] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSDoUntilLoop(ctx: Context, o: BTSDoUntilLoop): PreResult[Context, BTSDoUntilLoop] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def preBTSQuantificationActions(ctx: Context, o: BTSQuantificationActions): PreResult[Context, BTSQuantificationActions] = {
       o match {
         case o: BTSExistentialLatticeQuantification =>
@@ -1233,6 +1603,10 @@ object Transformer {
     }
 
     @pure def preBTSExistentialLatticeQuantification(ctx: Context, o: BTSExistentialLatticeQuantification): PreResult[Context, BTSExistentialLatticeQuantification] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSCatchClauseTerm(ctx: Context, o: BTSCatchClauseTerm): PreResult[Context, BTSCatchClauseTerm] = {
       return PreResult(ctx, T, None())
     }
 
@@ -1263,8 +1637,8 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSExp]())
           }
           return r
-        case o: BTSNameExp =>
-          val r: PreResult[Context, BTSExp] = preBTSNameExp(ctx, o) match {
+        case o: BTSVariableNameExp =>
+          val r: PreResult[Context, BTSExp] = preBTSVariableNameExp(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: BTSExp)) => PreResult(preCtx, continu, Some[BTSExp](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSExp")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSExp]())
@@ -1291,6 +1665,20 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSExp]())
           }
           return r
+        case o: BTSConditionalExpression =>
+          val r: PreResult[Context, BTSExp] = preBTSConditionalExpression(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSExp)) => PreResult(preCtx, continu, Some[BTSExp](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSExp")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSExp]())
+          }
+          return r
+        case o: BTSRange =>
+          val r: PreResult[Context, BTSExp] = preBTSRange(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSExp)) => PreResult(preCtx, continu, Some[BTSExp](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSExp")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSExp]())
+          }
+          return r
       }
     }
 
@@ -1306,7 +1694,30 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def preBTSNameExp(ctx: Context, o: BTSNameExp): PreResult[Context, BTSNameExp] = {
+    @pure def preBTSValueName(ctx: Context, o: BTSValueName): PreResult[Context, BTSValueName] = {
+      o match {
+        case o: BTSVariableNameExp =>
+          val r: PreResult[Context, BTSValueName] = preBTSVariableNameExp(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSValueName)) => PreResult(preCtx, continu, Some[BTSValueName](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSValueName")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSValueName]())
+          }
+          return r
+        case o: BTSFunctionCall =>
+          val r: PreResult[Context, BTSValueName] = preBTSFunctionCall(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSValueName)) => PreResult(preCtx, continu, Some[BTSValueName](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSValueName")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSValueName]())
+          }
+          return r
+      }
+    }
+
+    @pure def preBTSVariableNameExp(ctx: Context, o: BTSVariableNameExp): PreResult[Context, BTSVariableNameExp] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSPartialName(ctx: Context, o: BTSPartialName): PreResult[Context, BTSPartialName] = {
       return PreResult(ctx, T, None())
     }
 
@@ -1322,12 +1733,32 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def preBTSFormalExpPair(ctx: Context, o: BTSFormalExpPair): PreResult[Context, BTSFormalExpPair] = {
+    @pure def preBTSPortValue(ctx: Context, o: BTSPortValue): PreResult[Context, BTSPortValue] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSConditionalExpression(ctx: Context, o: BTSConditionalExpression): PreResult[Context, BTSConditionalExpression] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSRange(ctx: Context, o: BTSRange): PreResult[Context, BTSRange] = {
       return PreResult(ctx, T, None())
     }
 
     @pure def preBTSBehaviorTime(ctx: Context, o: BTSBehaviorTime): PreResult[Context, BTSBehaviorTime] = {
       return PreResult(ctx, T, None())
+    }
+
+    @pure def preBTSType(ctx: Context, o: BTSType): PreResult[Context, BTSType] = {
+      o match {
+        case o: BTSClassifier =>
+          val r: PreResult[Context, BTSType] = preBTSClassifier(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: BTSType)) => PreResult(preCtx, continu, Some[BTSType](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type BTSType")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[BTSType]())
+          }
+          return r
+      }
     }
 
     @pure def preTODO(ctx: Context, o: TODO): PreResult[Context, TODO] = {
@@ -2101,18 +2532,6 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def postBTSType(ctx: Context, o: BTSType): TPostResult[Context, BTSType] = {
-      o match {
-        case o: BTSClassifier =>
-          val r: TPostResult[Context, BTSType] = postBTSClassifier(ctx, o) match {
-           case TPostResult(postCtx, Some(result: BTSType)) => TPostResult(postCtx, Some[BTSType](result))
-           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSType")
-           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSType]())
-          }
-          return r
-      }
-    }
-
     @pure def postBTSClassifier(ctx: Context, o: BTSClassifier): TPostResult[Context, BTSClassifier] = {
       return TPostResult(ctx, None())
     }
@@ -2268,11 +2687,144 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
+    @pure def postBTSTriggerLogicalExpression(ctx: Context, o: BTSTriggerLogicalExpression): TPostResult[Context, BTSTriggerLogicalExpression] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSEventTrigger(ctx: Context, o: BTSEventTrigger): TPostResult[Context, BTSEventTrigger] = {
+      o match {
+        case o: BTSTriggerLogicalExpression =>
+          val r: TPostResult[Context, BTSEventTrigger] = postBTSTriggerLogicalExpression(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSEventTrigger)) => TPostResult(postCtx, Some[BTSEventTrigger](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSEventTrigger")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSEventTrigger]())
+          }
+          return r
+        case o: BTSSubcomponentPort =>
+          val r: TPostResult[Context, BTSEventTrigger] = postBTSSubcomponentPort(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSEventTrigger)) => TPostResult(postCtx, Some[BTSEventTrigger](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSEventTrigger")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSEventTrigger]())
+          }
+          return r
+      }
+    }
+
+    @pure def postBTSSubcomponentPort(ctx: Context, o: BTSSubcomponentPort): TPostResult[Context, BTSSubcomponentPort] = {
+      return TPostResult(ctx, None())
+    }
+
     @pure def postBTSInternalCondition(ctx: Context, o: BTSInternalCondition): TPostResult[Context, BTSInternalCondition] = {
       return TPostResult(ctx, None())
     }
 
     @pure def postBTSAssertion(ctx: Context, o: BTSAssertion): TPostResult[Context, BTSAssertion] = {
+      o match {
+        case o: BTSNamedAssertion =>
+          val r: TPostResult[Context, BTSAssertion] = postBTSNamedAssertion(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAssertion)) => TPostResult(postCtx, Some[BTSAssertion](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAssertion")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAssertion]())
+          }
+          return r
+        case o: BTSNamedFunction =>
+          val r: TPostResult[Context, BTSAssertion] = postBTSNamedFunction(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAssertion)) => TPostResult(postCtx, Some[BTSAssertion](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAssertion")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAssertion]())
+          }
+          return r
+        case o: BTSNamedEnumeration =>
+          val r: TPostResult[Context, BTSAssertion] = postBTSNamedEnumeration(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAssertion)) => TPostResult(postCtx, Some[BTSAssertion](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAssertion")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAssertion]())
+          }
+          return r
+        case o: BTSNamelessAssertion =>
+          val r: TPostResult[Context, BTSAssertion] = postBTSNamelessAssertion(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAssertion)) => TPostResult(postCtx, Some[BTSAssertion](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAssertion")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAssertion]())
+          }
+          return r
+        case o: BTSNamelessFunction =>
+          val r: TPostResult[Context, BTSAssertion] = postBTSNamelessFunction(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAssertion)) => TPostResult(postCtx, Some[BTSAssertion](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAssertion")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAssertion]())
+          }
+          return r
+        case o: BTSNamelessEnumeration =>
+          val r: TPostResult[Context, BTSAssertion] = postBTSNamelessEnumeration(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAssertion)) => TPostResult(postCtx, Some[BTSAssertion](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAssertion")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAssertion]())
+          }
+          return r
+      }
+    }
+
+    @pure def postBTSNamedAssertion(ctx: Context, o: BTSNamedAssertion): TPostResult[Context, BTSNamedAssertion] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSNamedFunction(ctx: Context, o: BTSNamedFunction): TPostResult[Context, BTSNamedFunction] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSNamedEnumeration(ctx: Context, o: BTSNamedEnumeration): TPostResult[Context, BTSNamedEnumeration] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSNamelessAssertion(ctx: Context, o: BTSNamelessAssertion): TPostResult[Context, BTSNamelessAssertion] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSNamelessFunction(ctx: Context, o: BTSNamelessFunction): TPostResult[Context, BTSNamelessFunction] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSNamelessEnumeration(ctx: Context, o: BTSNamelessEnumeration): TPostResult[Context, BTSNamelessEnumeration] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSAssertionEnumeration(ctx: Context, o: BTSAssertionEnumeration): TPostResult[Context, BTSAssertionEnumeration] = {
+      o match {
+        case o: BTSEnumerationPairs =>
+          val r: TPostResult[Context, BTSAssertionEnumeration] = postBTSEnumerationPairs(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAssertionEnumeration)) => TPostResult(postCtx, Some[BTSAssertionEnumeration](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAssertionEnumeration")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAssertionEnumeration]())
+          }
+          return r
+        case o: BTSInvocation =>
+          val r: TPostResult[Context, BTSAssertionEnumeration] = postBTSInvocation(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAssertionEnumeration)) => TPostResult(postCtx, Some[BTSAssertionEnumeration](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAssertionEnumeration")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAssertionEnumeration]())
+          }
+          return r
+      }
+    }
+
+    @pure def postBTSEnumerationPairs(ctx: Context, o: BTSEnumerationPairs): TPostResult[Context, BTSEnumerationPairs] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSEnumerationPair(ctx: Context, o: BTSEnumerationPair): TPostResult[Context, BTSEnumerationPair] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSInvocation(ctx: Context, o: BTSInvocation): TPostResult[Context, BTSInvocation] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSActualParameter(ctx: Context, o: BTSActualParameter): TPostResult[Context, BTSActualParameter] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSVariable(ctx: Context, o: BTSVariable): TPostResult[Context, BTSVariable] = {
       return TPostResult(ctx, None())
     }
 
@@ -2300,6 +2852,55 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
           }
           return r
+        case o: BTSSetMode =>
+          val r: TPostResult[Context, BTSAction] = postBTSSetMode(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
+          }
+          return r
+        case o: BTSWhenThrow =>
+          val r: TPostResult[Context, BTSAction] = postBTSWhenThrow(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
+          }
+          return r
+        case o: BTSFetchAdd =>
+          val r: TPostResult[Context, BTSAction] = postBTSFetchAdd(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
+          }
+          return r
+        case o: BTSFetchOr =>
+          val r: TPostResult[Context, BTSAction] = postBTSFetchOr(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
+          }
+          return r
+        case o: BTSFetchAnd =>
+          val r: TPostResult[Context, BTSAction] = postBTSFetchAnd(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
+          }
+          return r
+        case o: BTSFetchXor =>
+          val r: TPostResult[Context, BTSAction] = postBTSFetchXor(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
+          }
+          return r
+        case o: BTSSwap =>
+          val r: TPostResult[Context, BTSAction] = postBTSSwap(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
+          }
+          return r
         case o: BTSSubprogramCallAction =>
           val r: TPostResult[Context, BTSAction] = postBTSSubprogramCallAction(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
@@ -2307,15 +2908,15 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
           }
           return r
-        case o: BTSPortOutAction =>
-          val r: TPostResult[Context, BTSAction] = postBTSPortOutAction(ctx, o) match {
+        case o: BTSPortOutput =>
+          val r: TPostResult[Context, BTSAction] = postBTSPortOutput(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
           }
           return r
-        case o: BTSPortInAction =>
-          val r: TPostResult[Context, BTSAction] = postBTSPortInAction(ctx, o) match {
+        case o: BTSPortInput =>
+          val r: TPostResult[Context, BTSAction] = postBTSPortInput(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
@@ -2323,6 +2924,13 @@ object Transformer {
           return r
         case o: BTSFrozenPortAction =>
           val r: TPostResult[Context, BTSAction] = postBTSFrozenPortAction(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
+          }
+          return r
+        case o: BTSPause =>
+          val r: TPostResult[Context, BTSAction] = postBTSPause(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
@@ -2337,6 +2945,27 @@ object Transformer {
           return r
         case o: BTSIfBAAction =>
           val r: TPostResult[Context, BTSAction] = postBTSIfBAAction(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
+          }
+          return r
+        case o: BTSWhileLoop =>
+          val r: TPostResult[Context, BTSAction] = postBTSWhileLoop(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
+          }
+          return r
+        case o: BTSForLoop =>
+          val r: TPostResult[Context, BTSAction] = postBTSForLoop(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
+          }
+          return r
+        case o: BTSDoUntilLoop =>
+          val r: TPostResult[Context, BTSAction] = postBTSDoUntilLoop(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSAction)) => TPostResult(postCtx, Some[BTSAction](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSAction")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSAction]())
@@ -2375,6 +3004,55 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSBasicAction]())
           }
           return r
+        case o: BTSSetMode =>
+          val r: TPostResult[Context, BTSBasicAction] = postBTSSetMode(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSBasicAction)) => TPostResult(postCtx, Some[BTSBasicAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSWhenThrow =>
+          val r: TPostResult[Context, BTSBasicAction] = postBTSWhenThrow(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSBasicAction)) => TPostResult(postCtx, Some[BTSBasicAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSFetchAdd =>
+          val r: TPostResult[Context, BTSBasicAction] = postBTSFetchAdd(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSBasicAction)) => TPostResult(postCtx, Some[BTSBasicAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSFetchOr =>
+          val r: TPostResult[Context, BTSBasicAction] = postBTSFetchOr(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSBasicAction)) => TPostResult(postCtx, Some[BTSBasicAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSFetchAnd =>
+          val r: TPostResult[Context, BTSBasicAction] = postBTSFetchAnd(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSBasicAction)) => TPostResult(postCtx, Some[BTSBasicAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSFetchXor =>
+          val r: TPostResult[Context, BTSBasicAction] = postBTSFetchXor(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSBasicAction)) => TPostResult(postCtx, Some[BTSBasicAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSSwap =>
+          val r: TPostResult[Context, BTSBasicAction] = postBTSSwap(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSBasicAction)) => TPostResult(postCtx, Some[BTSBasicAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSBasicAction]())
+          }
+          return r
         case o: BTSSubprogramCallAction =>
           val r: TPostResult[Context, BTSBasicAction] = postBTSSubprogramCallAction(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSBasicAction)) => TPostResult(postCtx, Some[BTSBasicAction](result))
@@ -2382,15 +3060,15 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSBasicAction]())
           }
           return r
-        case o: BTSPortOutAction =>
-          val r: TPostResult[Context, BTSBasicAction] = postBTSPortOutAction(ctx, o) match {
+        case o: BTSPortOutput =>
+          val r: TPostResult[Context, BTSBasicAction] = postBTSPortOutput(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSBasicAction)) => TPostResult(postCtx, Some[BTSBasicAction](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSBasicAction")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSBasicAction]())
           }
           return r
-        case o: BTSPortInAction =>
-          val r: TPostResult[Context, BTSBasicAction] = postBTSPortInAction(ctx, o) match {
+        case o: BTSPortInput =>
+          val r: TPostResult[Context, BTSBasicAction] = postBTSPortInput(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSBasicAction)) => TPostResult(postCtx, Some[BTSBasicAction](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSBasicAction")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSBasicAction]())
@@ -2398,6 +3076,13 @@ object Transformer {
           return r
         case o: BTSFrozenPortAction =>
           val r: TPostResult[Context, BTSBasicAction] = postBTSFrozenPortAction(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSBasicAction)) => TPostResult(postCtx, Some[BTSBasicAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSBasicAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSBasicAction]())
+          }
+          return r
+        case o: BTSPause =>
+          val r: TPostResult[Context, BTSBasicAction] = postBTSPause(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSBasicAction)) => TPostResult(postCtx, Some[BTSBasicAction](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSBasicAction")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSBasicAction]())
@@ -2414,6 +3099,74 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
+    @pure def postBTSSetMode(ctx: Context, o: BTSSetMode): TPostResult[Context, BTSSetMode] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSWhenThrow(ctx: Context, o: BTSWhenThrow): TPostResult[Context, BTSWhenThrow] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSCombinableOperation(ctx: Context, o: BTSCombinableOperation): TPostResult[Context, BTSCombinableOperation] = {
+      o match {
+        case o: BTSFetchAdd =>
+          val r: TPostResult[Context, BTSCombinableOperation] = postBTSFetchAdd(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSCombinableOperation)) => TPostResult(postCtx, Some[BTSCombinableOperation](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSCombinableOperation")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSCombinableOperation]())
+          }
+          return r
+        case o: BTSFetchOr =>
+          val r: TPostResult[Context, BTSCombinableOperation] = postBTSFetchOr(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSCombinableOperation)) => TPostResult(postCtx, Some[BTSCombinableOperation](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSCombinableOperation")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSCombinableOperation]())
+          }
+          return r
+        case o: BTSFetchAnd =>
+          val r: TPostResult[Context, BTSCombinableOperation] = postBTSFetchAnd(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSCombinableOperation)) => TPostResult(postCtx, Some[BTSCombinableOperation](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSCombinableOperation")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSCombinableOperation]())
+          }
+          return r
+        case o: BTSFetchXor =>
+          val r: TPostResult[Context, BTSCombinableOperation] = postBTSFetchXor(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSCombinableOperation)) => TPostResult(postCtx, Some[BTSCombinableOperation](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSCombinableOperation")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSCombinableOperation]())
+          }
+          return r
+        case o: BTSSwap =>
+          val r: TPostResult[Context, BTSCombinableOperation] = postBTSSwap(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSCombinableOperation)) => TPostResult(postCtx, Some[BTSCombinableOperation](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSCombinableOperation")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSCombinableOperation]())
+          }
+          return r
+      }
+    }
+
+    @pure def postBTSFetchAdd(ctx: Context, o: BTSFetchAdd): TPostResult[Context, BTSFetchAdd] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSFetchOr(ctx: Context, o: BTSFetchOr): TPostResult[Context, BTSFetchOr] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSFetchAnd(ctx: Context, o: BTSFetchAnd): TPostResult[Context, BTSFetchAnd] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSFetchXor(ctx: Context, o: BTSFetchXor): TPostResult[Context, BTSFetchXor] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSSwap(ctx: Context, o: BTSSwap): TPostResult[Context, BTSSwap] = {
+      return TPostResult(ctx, None())
+    }
+
     @pure def postBTSCommunicationAction(ctx: Context, o: BTSCommunicationAction): TPostResult[Context, BTSCommunicationAction] = {
       o match {
         case o: BTSSubprogramCallAction =>
@@ -2423,15 +3176,15 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSCommunicationAction]())
           }
           return r
-        case o: BTSPortOutAction =>
-          val r: TPostResult[Context, BTSCommunicationAction] = postBTSPortOutAction(ctx, o) match {
+        case o: BTSPortOutput =>
+          val r: TPostResult[Context, BTSCommunicationAction] = postBTSPortOutput(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSCommunicationAction)) => TPostResult(postCtx, Some[BTSCommunicationAction](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSCommunicationAction")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSCommunicationAction]())
           }
           return r
-        case o: BTSPortInAction =>
-          val r: TPostResult[Context, BTSCommunicationAction] = postBTSPortInAction(ctx, o) match {
+        case o: BTSPortInput =>
+          val r: TPostResult[Context, BTSCommunicationAction] = postBTSPortInput(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSCommunicationAction)) => TPostResult(postCtx, Some[BTSCommunicationAction](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSCommunicationAction")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSCommunicationAction]())
@@ -2444,6 +3197,13 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSCommunicationAction]())
           }
           return r
+        case o: BTSPause =>
+          val r: TPostResult[Context, BTSCommunicationAction] = postBTSPause(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSCommunicationAction)) => TPostResult(postCtx, Some[BTSCommunicationAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSCommunicationAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSCommunicationAction]())
+          }
+          return r
       }
     }
 
@@ -2451,15 +3211,23 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def postBTSPortOutAction(ctx: Context, o: BTSPortOutAction): TPostResult[Context, BTSPortOutAction] = {
+    @pure def postBTSFormalActual(ctx: Context, o: BTSFormalActual): TPostResult[Context, BTSFormalActual] = {
       return TPostResult(ctx, None())
     }
 
-    @pure def postBTSPortInAction(ctx: Context, o: BTSPortInAction): TPostResult[Context, BTSPortInAction] = {
+    @pure def postBTSPortOutput(ctx: Context, o: BTSPortOutput): TPostResult[Context, BTSPortOutput] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSPortInput(ctx: Context, o: BTSPortInput): TPostResult[Context, BTSPortInput] = {
       return TPostResult(ctx, None())
     }
 
     @pure def postBTSFrozenPortAction(ctx: Context, o: BTSFrozenPortAction): TPostResult[Context, BTSFrozenPortAction] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSPause(ctx: Context, o: BTSPause): TPostResult[Context, BTSPause] = {
       return TPostResult(ctx, None())
     }
 
@@ -2474,6 +3242,27 @@ object Transformer {
           return r
         case o: BTSIfBAAction =>
           val r: TPostResult[Context, BTSControlAction] = postBTSIfBAAction(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSControlAction)) => TPostResult(postCtx, Some[BTSControlAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSControlAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSControlAction]())
+          }
+          return r
+        case o: BTSWhileLoop =>
+          val r: TPostResult[Context, BTSControlAction] = postBTSWhileLoop(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSControlAction)) => TPostResult(postCtx, Some[BTSControlAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSControlAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSControlAction]())
+          }
+          return r
+        case o: BTSForLoop =>
+          val r: TPostResult[Context, BTSControlAction] = postBTSForLoop(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSControlAction)) => TPostResult(postCtx, Some[BTSControlAction](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSControlAction")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSControlAction]())
+          }
+          return r
+        case o: BTSDoUntilLoop =>
+          val r: TPostResult[Context, BTSControlAction] = postBTSDoUntilLoop(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSControlAction)) => TPostResult(postCtx, Some[BTSControlAction](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSControlAction")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSControlAction]())
@@ -2498,6 +3287,18 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
+    @pure def postBTSWhileLoop(ctx: Context, o: BTSWhileLoop): TPostResult[Context, BTSWhileLoop] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSForLoop(ctx: Context, o: BTSForLoop): TPostResult[Context, BTSForLoop] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSDoUntilLoop(ctx: Context, o: BTSDoUntilLoop): TPostResult[Context, BTSDoUntilLoop] = {
+      return TPostResult(ctx, None())
+    }
+
     @pure def postBTSQuantificationActions(ctx: Context, o: BTSQuantificationActions): TPostResult[Context, BTSQuantificationActions] = {
       o match {
         case o: BTSExistentialLatticeQuantification =>
@@ -2518,6 +3319,10 @@ object Transformer {
     }
 
     @pure def postBTSExistentialLatticeQuantification(ctx: Context, o: BTSExistentialLatticeQuantification): TPostResult[Context, BTSExistentialLatticeQuantification] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSCatchClauseTerm(ctx: Context, o: BTSCatchClauseTerm): TPostResult[Context, BTSCatchClauseTerm] = {
       return TPostResult(ctx, None())
     }
 
@@ -2548,8 +3353,8 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSExp]())
           }
           return r
-        case o: BTSNameExp =>
-          val r: TPostResult[Context, BTSExp] = postBTSNameExp(ctx, o) match {
+        case o: BTSVariableNameExp =>
+          val r: TPostResult[Context, BTSExp] = postBTSVariableNameExp(ctx, o) match {
            case TPostResult(postCtx, Some(result: BTSExp)) => TPostResult(postCtx, Some[BTSExp](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSExp")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSExp]())
@@ -2576,6 +3381,20 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSExp]())
           }
           return r
+        case o: BTSConditionalExpression =>
+          val r: TPostResult[Context, BTSExp] = postBTSConditionalExpression(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSExp)) => TPostResult(postCtx, Some[BTSExp](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSExp")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSExp]())
+          }
+          return r
+        case o: BTSRange =>
+          val r: TPostResult[Context, BTSExp] = postBTSRange(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSExp)) => TPostResult(postCtx, Some[BTSExp](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSExp")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSExp]())
+          }
+          return r
       }
     }
 
@@ -2591,7 +3410,30 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def postBTSNameExp(ctx: Context, o: BTSNameExp): TPostResult[Context, BTSNameExp] = {
+    @pure def postBTSValueName(ctx: Context, o: BTSValueName): TPostResult[Context, BTSValueName] = {
+      o match {
+        case o: BTSVariableNameExp =>
+          val r: TPostResult[Context, BTSValueName] = postBTSVariableNameExp(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSValueName)) => TPostResult(postCtx, Some[BTSValueName](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSValueName")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSValueName]())
+          }
+          return r
+        case o: BTSFunctionCall =>
+          val r: TPostResult[Context, BTSValueName] = postBTSFunctionCall(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSValueName)) => TPostResult(postCtx, Some[BTSValueName](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSValueName")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSValueName]())
+          }
+          return r
+      }
+    }
+
+    @pure def postBTSVariableNameExp(ctx: Context, o: BTSVariableNameExp): TPostResult[Context, BTSVariableNameExp] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSPartialName(ctx: Context, o: BTSPartialName): TPostResult[Context, BTSPartialName] = {
       return TPostResult(ctx, None())
     }
 
@@ -2607,12 +3449,32 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def postBTSFormalExpPair(ctx: Context, o: BTSFormalExpPair): TPostResult[Context, BTSFormalExpPair] = {
+    @pure def postBTSPortValue(ctx: Context, o: BTSPortValue): TPostResult[Context, BTSPortValue] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSConditionalExpression(ctx: Context, o: BTSConditionalExpression): TPostResult[Context, BTSConditionalExpression] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSRange(ctx: Context, o: BTSRange): TPostResult[Context, BTSRange] = {
       return TPostResult(ctx, None())
     }
 
     @pure def postBTSBehaviorTime(ctx: Context, o: BTSBehaviorTime): TPostResult[Context, BTSBehaviorTime] = {
       return TPostResult(ctx, None())
+    }
+
+    @pure def postBTSType(ctx: Context, o: BTSType): TPostResult[Context, BTSType] = {
+      o match {
+        case o: BTSClassifier =>
+          val r: TPostResult[Context, BTSType] = postBTSClassifier(ctx, o) match {
+           case TPostResult(postCtx, Some(result: BTSType)) => TPostResult(postCtx, Some[BTSType](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type BTSType")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[BTSType]())
+          }
+          return r
+      }
     }
 
     @pure def postTODO(ctx: Context, o: TODO): TPostResult[Context, TODO] = {
@@ -4802,37 +5664,6 @@ import Transformer._
     }
   }
 
-  @pure def transformBTSType(ctx: Context, o: BTSType): TPostResult[Context, BTSType] = {
-    val preR: PreResult[Context, BTSType] = pp.preBTSType(ctx, o)
-    val r: TPostResult[Context, BTSType] = if (preR.continu) {
-      val o2: BTSType = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val rOpt: TPostResult[Context, BTSType] = o2 match {
-        case o2: BTSClassifier =>
-          val r0: TPostResult[Context, Classifier] = transformClassifier(preR.ctx, o2.classifier)
-          if (hasChanged || r0.resultOpt.nonEmpty)
-            TPostResult(r0.ctx, Some(o2(classifier = r0.resultOpt.getOrElse(o2.classifier))))
-          else
-            TPostResult(r0.ctx, None())
-      }
-      rOpt
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: BTSType = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, BTSType] = pp.postBTSType(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
   @pure def transformBTSClassifier(ctx: Context, o: BTSClassifier): TPostResult[Context, BTSClassifier] = {
     val preR: PreResult[Context, BTSClassifier] = pp.preBTSClassifier(ctx, o)
     val r: TPostResult[Context, BTSClassifier] = if (preR.continu) {
@@ -5003,15 +5834,17 @@ import Transformer._
           else
             TPostResult(preR.ctx, None())
         case o2: BTSModeCondition =>
-          if (hasChanged)
-            TPostResult(preR.ctx, Some(o2))
+          val r0: TPostResult[Context, BTSTriggerLogicalExpression] = transformBTSTriggerLogicalExpression(preR.ctx, o2.tla)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(tla = r0.resultOpt.getOrElse(o2.tla))))
           else
-            TPostResult(preR.ctx, None())
+            TPostResult(r0.ctx, None())
         case o2: BTSInternalCondition =>
-          if (hasChanged)
-            TPostResult(preR.ctx, Some(o2))
+          val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.internalports, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(internalports = r0.resultOpt.getOrElse(o2.internalports))))
           else
-            TPostResult(preR.ctx, None())
+            TPostResult(r0.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -5335,10 +6168,11 @@ import Transformer._
     val r: TPostResult[Context, BTSModeCondition] = if (preR.continu) {
       val o2: BTSModeCondition = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        TPostResult(preR.ctx, Some(o2))
+      val r0: TPostResult[Context, BTSTriggerLogicalExpression] = transformBTSTriggerLogicalExpression(preR.ctx, o2.tla)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(tla = r0.resultOpt.getOrElse(o2.tla))))
       else
-        TPostResult(preR.ctx, None())
+        TPostResult(r0.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -5356,15 +6190,109 @@ import Transformer._
     }
   }
 
+  @pure def transformBTSTriggerLogicalExpression(ctx: Context, o: BTSTriggerLogicalExpression): TPostResult[Context, BTSTriggerLogicalExpression] = {
+    val preR: PreResult[Context, BTSTriggerLogicalExpression] = pp.preBTSTriggerLogicalExpression(ctx, o)
+    val r: TPostResult[Context, BTSTriggerLogicalExpression] = if (preR.continu) {
+      val o2: BTSTriggerLogicalExpression = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, IS[Z, BTSEventTrigger]] = transformISZ(preR.ctx, o2.triggers, transformBTSEventTrigger _)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(triggers = r0.resultOpt.getOrElse(o2.triggers))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSTriggerLogicalExpression = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSTriggerLogicalExpression] = pp.postBTSTriggerLogicalExpression(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSEventTrigger(ctx: Context, o: BTSEventTrigger): TPostResult[Context, BTSEventTrigger] = {
+    val preR: PreResult[Context, BTSEventTrigger] = pp.preBTSEventTrigger(ctx, o)
+    val r: TPostResult[Context, BTSEventTrigger] = if (preR.continu) {
+      val o2: BTSEventTrigger = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, BTSEventTrigger] = o2 match {
+        case o2: BTSTriggerLogicalExpression =>
+          val r0: TPostResult[Context, IS[Z, BTSEventTrigger]] = transformISZ(preR.ctx, o2.triggers, transformBTSEventTrigger _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(triggers = r0.resultOpt.getOrElse(o2.triggers))))
+          else
+            TPostResult(r0.ctx, None())
+        case o2: BTSSubcomponentPort =>
+          val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.sub, transformName _)
+          val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.port)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(sub = r0.resultOpt.getOrElse(o2.sub), port = r1.resultOpt.getOrElse(o2.port))))
+          else
+            TPostResult(r1.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSEventTrigger = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSEventTrigger] = pp.postBTSEventTrigger(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSSubcomponentPort(ctx: Context, o: BTSSubcomponentPort): TPostResult[Context, BTSSubcomponentPort] = {
+    val preR: PreResult[Context, BTSSubcomponentPort] = pp.preBTSSubcomponentPort(ctx, o)
+    val r: TPostResult[Context, BTSSubcomponentPort] = if (preR.continu) {
+      val o2: BTSSubcomponentPort = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.sub, transformName _)
+      val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.port)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(sub = r0.resultOpt.getOrElse(o2.sub), port = r1.resultOpt.getOrElse(o2.port))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSSubcomponentPort = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSSubcomponentPort] = pp.postBTSSubcomponentPort(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transformBTSInternalCondition(ctx: Context, o: BTSInternalCondition): TPostResult[Context, BTSInternalCondition] = {
     val preR: PreResult[Context, BTSInternalCondition] = pp.preBTSInternalCondition(ctx, o)
     val r: TPostResult[Context, BTSInternalCondition] = if (preR.continu) {
       val o2: BTSInternalCondition = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        TPostResult(preR.ctx, Some(o2))
+      val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.internalports, transformName _)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(internalports = r0.resultOpt.getOrElse(o2.internalports))))
       else
-        TPostResult(preR.ctx, None())
+        TPostResult(r0.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -5387,10 +6315,54 @@ import Transformer._
     val r: TPostResult[Context, BTSAssertion] = if (preR.continu) {
       val o2: BTSAssertion = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        TPostResult(preR.ctx, Some(o2))
-      else
-        TPostResult(preR.ctx, None())
+      val rOpt: TPostResult[Context, BTSAssertion] = o2 match {
+        case o2: BTSNamedAssertion =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.label)
+          val r1: TPostResult[Context, IS[Z, BTSVariable]] = transformISZ(r0.ctx, o2.formals, transformBTSVariable _)
+          val r2: TPostResult[Context, BTSExp] = transformBTSExp(r1.ctx, o2.predicate)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), formals = r1.resultOpt.getOrElse(o2.formals), predicate = r2.resultOpt.getOrElse(o2.predicate))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSNamedFunction =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.label)
+          val r1: TPostResult[Context, IS[Z, BTSVariable]] = transformISZ(r0.ctx, o2.formals, transformBTSVariable _)
+          val r2: TPostResult[Context, BTSType] = transformBTSType(r1.ctx, o2.returns)
+          val r3: TPostResult[Context, BTSExp] = transformBTSExp(r2.ctx, o2.functionvalue)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), formals = r1.resultOpt.getOrElse(o2.formals), returns = r2.resultOpt.getOrElse(o2.returns), functionvalue = r3.resultOpt.getOrElse(o2.functionvalue))))
+          else
+            TPostResult(r3.ctx, None())
+        case o2: BTSNamedEnumeration =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.label)
+          val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.assertionvariable)
+          val r2: TPostResult[Context, BTSType] = transformBTSType(r1.ctx, o2.enumerationtype)
+          val r3: TPostResult[Context, BTSAssertionEnumeration] = transformBTSAssertionEnumeration(r2.ctx, o2.enumeration)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), assertionvariable = r1.resultOpt.getOrElse(o2.assertionvariable), enumerationtype = r2.resultOpt.getOrElse(o2.enumerationtype), enumeration = r3.resultOpt.getOrElse(o2.enumeration))))
+          else
+            TPostResult(r3.ctx, None())
+        case o2: BTSNamelessAssertion =>
+          val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.predicate)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(predicate = r0.resultOpt.getOrElse(o2.predicate))))
+          else
+            TPostResult(r0.ctx, None())
+        case o2: BTSNamelessFunction =>
+          val r0: TPostResult[Context, BTSType] = transformBTSType(preR.ctx, o2.returns)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.functionvalue)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(returns = r0.resultOpt.getOrElse(o2.returns), functionvalue = r1.resultOpt.getOrElse(o2.functionvalue))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: BTSNamelessEnumeration =>
+          val r0: TPostResult[Context, BTSInvocation] = transformBTSInvocation(preR.ctx, o2.enumeration)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(enumeration = r0.resultOpt.getOrElse(o2.enumeration))))
+          else
+            TPostResult(r0.ctx, None())
+      }
+      rOpt
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -5399,6 +6371,356 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: BTSAssertion = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, BTSAssertion] = pp.postBTSAssertion(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSNamedAssertion(ctx: Context, o: BTSNamedAssertion): TPostResult[Context, BTSNamedAssertion] = {
+    val preR: PreResult[Context, BTSNamedAssertion] = pp.preBTSNamedAssertion(ctx, o)
+    val r: TPostResult[Context, BTSNamedAssertion] = if (preR.continu) {
+      val o2: BTSNamedAssertion = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.label)
+      val r1: TPostResult[Context, IS[Z, BTSVariable]] = transformISZ(r0.ctx, o2.formals, transformBTSVariable _)
+      val r2: TPostResult[Context, BTSExp] = transformBTSExp(r1.ctx, o2.predicate)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), formals = r1.resultOpt.getOrElse(o2.formals), predicate = r2.resultOpt.getOrElse(o2.predicate))))
+      else
+        TPostResult(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSNamedAssertion = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSNamedAssertion] = pp.postBTSNamedAssertion(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSNamedFunction(ctx: Context, o: BTSNamedFunction): TPostResult[Context, BTSNamedFunction] = {
+    val preR: PreResult[Context, BTSNamedFunction] = pp.preBTSNamedFunction(ctx, o)
+    val r: TPostResult[Context, BTSNamedFunction] = if (preR.continu) {
+      val o2: BTSNamedFunction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.label)
+      val r1: TPostResult[Context, IS[Z, BTSVariable]] = transformISZ(r0.ctx, o2.formals, transformBTSVariable _)
+      val r2: TPostResult[Context, BTSType] = transformBTSType(r1.ctx, o2.returns)
+      val r3: TPostResult[Context, BTSExp] = transformBTSExp(r2.ctx, o2.functionvalue)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+        TPostResult(r3.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), formals = r1.resultOpt.getOrElse(o2.formals), returns = r2.resultOpt.getOrElse(o2.returns), functionvalue = r3.resultOpt.getOrElse(o2.functionvalue))))
+      else
+        TPostResult(r3.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSNamedFunction = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSNamedFunction] = pp.postBTSNamedFunction(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSNamedEnumeration(ctx: Context, o: BTSNamedEnumeration): TPostResult[Context, BTSNamedEnumeration] = {
+    val preR: PreResult[Context, BTSNamedEnumeration] = pp.preBTSNamedEnumeration(ctx, o)
+    val r: TPostResult[Context, BTSNamedEnumeration] = if (preR.continu) {
+      val o2: BTSNamedEnumeration = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.label)
+      val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.assertionvariable)
+      val r2: TPostResult[Context, BTSType] = transformBTSType(r1.ctx, o2.enumerationtype)
+      val r3: TPostResult[Context, BTSAssertionEnumeration] = transformBTSAssertionEnumeration(r2.ctx, o2.enumeration)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+        TPostResult(r3.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), assertionvariable = r1.resultOpt.getOrElse(o2.assertionvariable), enumerationtype = r2.resultOpt.getOrElse(o2.enumerationtype), enumeration = r3.resultOpt.getOrElse(o2.enumeration))))
+      else
+        TPostResult(r3.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSNamedEnumeration = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSNamedEnumeration] = pp.postBTSNamedEnumeration(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSNamelessAssertion(ctx: Context, o: BTSNamelessAssertion): TPostResult[Context, BTSNamelessAssertion] = {
+    val preR: PreResult[Context, BTSNamelessAssertion] = pp.preBTSNamelessAssertion(ctx, o)
+    val r: TPostResult[Context, BTSNamelessAssertion] = if (preR.continu) {
+      val o2: BTSNamelessAssertion = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.predicate)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(predicate = r0.resultOpt.getOrElse(o2.predicate))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSNamelessAssertion = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSNamelessAssertion] = pp.postBTSNamelessAssertion(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSNamelessFunction(ctx: Context, o: BTSNamelessFunction): TPostResult[Context, BTSNamelessFunction] = {
+    val preR: PreResult[Context, BTSNamelessFunction] = pp.preBTSNamelessFunction(ctx, o)
+    val r: TPostResult[Context, BTSNamelessFunction] = if (preR.continu) {
+      val o2: BTSNamelessFunction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, BTSType] = transformBTSType(preR.ctx, o2.returns)
+      val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.functionvalue)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(returns = r0.resultOpt.getOrElse(o2.returns), functionvalue = r1.resultOpt.getOrElse(o2.functionvalue))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSNamelessFunction = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSNamelessFunction] = pp.postBTSNamelessFunction(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSNamelessEnumeration(ctx: Context, o: BTSNamelessEnumeration): TPostResult[Context, BTSNamelessEnumeration] = {
+    val preR: PreResult[Context, BTSNamelessEnumeration] = pp.preBTSNamelessEnumeration(ctx, o)
+    val r: TPostResult[Context, BTSNamelessEnumeration] = if (preR.continu) {
+      val o2: BTSNamelessEnumeration = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, BTSInvocation] = transformBTSInvocation(preR.ctx, o2.enumeration)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(enumeration = r0.resultOpt.getOrElse(o2.enumeration))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSNamelessEnumeration = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSNamelessEnumeration] = pp.postBTSNamelessEnumeration(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSAssertionEnumeration(ctx: Context, o: BTSAssertionEnumeration): TPostResult[Context, BTSAssertionEnumeration] = {
+    val preR: PreResult[Context, BTSAssertionEnumeration] = pp.preBTSAssertionEnumeration(ctx, o)
+    val r: TPostResult[Context, BTSAssertionEnumeration] = if (preR.continu) {
+      val o2: BTSAssertionEnumeration = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, BTSAssertionEnumeration] = o2 match {
+        case o2: BTSEnumerationPairs =>
+          val r0: TPostResult[Context, IS[Z, BTSEnumerationPair]] = transformISZ(preR.ctx, o2.pairs, transformBTSEnumerationPair _)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(pairs = r0.resultOpt.getOrElse(o2.pairs))))
+          else
+            TPostResult(r0.ctx, None())
+        case o2: BTSInvocation =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.label)
+          val r1: TPostResult[Context, IS[Z, BTSActualParameter]] = transformISZ(r0.ctx, o2.params, transformBTSActualParameter _)
+          val r2: TPostResult[Context, Option[BTSExp]] = transformOption(r1.ctx, o2.actual, transformBTSExp _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), params = r1.resultOpt.getOrElse(o2.params), actual = r2.resultOpt.getOrElse(o2.actual))))
+          else
+            TPostResult(r2.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSAssertionEnumeration = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSAssertionEnumeration] = pp.postBTSAssertionEnumeration(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSEnumerationPairs(ctx: Context, o: BTSEnumerationPairs): TPostResult[Context, BTSEnumerationPairs] = {
+    val preR: PreResult[Context, BTSEnumerationPairs] = pp.preBTSEnumerationPairs(ctx, o)
+    val r: TPostResult[Context, BTSEnumerationPairs] = if (preR.continu) {
+      val o2: BTSEnumerationPairs = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, IS[Z, BTSEnumerationPair]] = transformISZ(preR.ctx, o2.pairs, transformBTSEnumerationPair _)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(pairs = r0.resultOpt.getOrElse(o2.pairs))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSEnumerationPairs = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSEnumerationPairs] = pp.postBTSEnumerationPairs(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSEnumerationPair(ctx: Context, o: BTSEnumerationPair): TPostResult[Context, BTSEnumerationPair] = {
+    val preR: PreResult[Context, BTSEnumerationPair] = pp.preBTSEnumerationPair(ctx, o)
+    val r: TPostResult[Context, BTSEnumerationPair] = if (preR.continu) {
+      val o2: BTSEnumerationPair = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.literal)
+      val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.predicate)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(literal = r0.resultOpt.getOrElse(o2.literal), predicate = r1.resultOpt.getOrElse(o2.predicate))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSEnumerationPair = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSEnumerationPair] = pp.postBTSEnumerationPair(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSInvocation(ctx: Context, o: BTSInvocation): TPostResult[Context, BTSInvocation] = {
+    val preR: PreResult[Context, BTSInvocation] = pp.preBTSInvocation(ctx, o)
+    val r: TPostResult[Context, BTSInvocation] = if (preR.continu) {
+      val o2: BTSInvocation = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.label)
+      val r1: TPostResult[Context, IS[Z, BTSActualParameter]] = transformISZ(r0.ctx, o2.params, transformBTSActualParameter _)
+      val r2: TPostResult[Context, Option[BTSExp]] = transformOption(r1.ctx, o2.actual, transformBTSExp _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), params = r1.resultOpt.getOrElse(o2.params), actual = r2.resultOpt.getOrElse(o2.actual))))
+      else
+        TPostResult(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSInvocation = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSInvocation] = pp.postBTSInvocation(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSActualParameter(ctx: Context, o: BTSActualParameter): TPostResult[Context, BTSActualParameter] = {
+    val preR: PreResult[Context, BTSActualParameter] = pp.preBTSActualParameter(ctx, o)
+    val r: TPostResult[Context, BTSActualParameter] = if (preR.continu) {
+      val o2: BTSActualParameter = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.formal)
+      val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.actual)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(formal = r0.resultOpt.getOrElse(o2.formal), actual = r1.resultOpt.getOrElse(o2.actual))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSActualParameter = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSActualParameter] = pp.postBTSActualParameter(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSVariable(ctx: Context, o: BTSVariable): TPostResult[Context, BTSVariable] = {
+    val preR: PreResult[Context, BTSVariable] = pp.preBTSVariable(ctx, o)
+    val r: TPostResult[Context, BTSVariable] = if (preR.continu) {
+      val o2: BTSVariable = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+      val r1: TPostResult[Context, BTSType] = transformBTSType(r0.ctx, o2.typ)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), typ = r1.resultOpt.getOrElse(o2.typ))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSVariable = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSVariable] = pp.postBTSVariable(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -5476,39 +6798,97 @@ import Transformer._
           else
             TPostResult(preR.ctx, None())
         case o2: BTSAssignmentAction =>
-          val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.lhs)
+          val r0: TPostResult[Context, BTSValueName] = transformBTSValueName(preR.ctx, o2.lhs)
           val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.rhs)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
           else
             TPostResult(r1.ctx, None())
+        case o2: BTSSetMode =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.mode)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(mode = r0.resultOpt.getOrElse(o2.mode))))
+          else
+            TPostResult(r0.ctx, None())
+        case o2: BTSWhenThrow =>
+          val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.exp)
+          val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.exception)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), exception = r1.resultOpt.getOrElse(o2.exception))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: BTSFetchAdd =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.arithmetic)
+          val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.result)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), arithmetic = r1.resultOpt.getOrElse(o2.arithmetic), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSFetchOr =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.bool)
+          val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.result, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), bool = r1.resultOpt.getOrElse(o2.bool), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSFetchAnd =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.bool)
+          val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.result, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), bool = r1.resultOpt.getOrElse(o2.bool), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSFetchXor =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.bool)
+          val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.result, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), bool = r1.resultOpt.getOrElse(o2.bool), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSSwap =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.reference)
+          val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.result)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), reference = r1.resultOpt.getOrElse(o2.reference), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
         case o2: BTSSubprogramCallAction =>
           val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-          val r1: TPostResult[Context, IS[Z, BTSFormalExpPair]] = transformISZ(r0.ctx, o2.params, transformBTSFormalExpPair _)
+          val r1: TPostResult[Context, IS[Z, BTSFormalActual]] = transformISZ(r0.ctx, o2.params, transformBTSFormalActual _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), params = r1.resultOpt.getOrElse(o2.params))))
           else
             TPostResult(r1.ctx, None())
-        case o2: BTSPortOutAction =>
-          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+        case o2: BTSPortOutput =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.port)
           val r1: TPostResult[Context, Option[BTSExp]] = transformOption(r0.ctx, o2.exp, transformBTSExp _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), exp = r1.resultOpt.getOrElse(o2.exp))))
+            TPostResult(r1.ctx, Some(o2(port = r0.resultOpt.getOrElse(o2.port), exp = r1.resultOpt.getOrElse(o2.exp))))
           else
             TPostResult(r1.ctx, None())
-        case o2: BTSPortInAction =>
-          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.variable)
+        case o2: BTSPortInput =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.port)
+          val r1: TPostResult[Context, BTSValueName] = transformBTSValueName(r0.ctx, o2.variable)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), variable = r1.resultOpt.getOrElse(o2.variable))))
+            TPostResult(r1.ctx, Some(o2(port = r0.resultOpt.getOrElse(o2.port), variable = r1.resultOpt.getOrElse(o2.variable))))
           else
             TPostResult(r1.ctx, None())
         case o2: BTSFrozenPortAction =>
-          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.portName)
+          val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.ports, transformName _)
           if (hasChanged || r0.resultOpt.nonEmpty)
-            TPostResult(r0.ctx, Some(o2(portName = r0.resultOpt.getOrElse(o2.portName))))
+            TPostResult(r0.ctx, Some(o2(ports = r0.resultOpt.getOrElse(o2.ports))))
           else
             TPostResult(r0.ctx, None())
+        case o2: BTSPause =>
+          if (hasChanged)
+            TPostResult(preR.ctx, Some(o2))
+          else
+            TPostResult(preR.ctx, None())
         case o2: BTSIfBLESSAction =>
           val r0: TPostResult[Context, Option[TODO]] = transformOption(preR.ctx, o2.availability, transformTODO _)
           val r1: TPostResult[Context, IS[Z, BTSGuardedAction]] = transformISZ(r0.ctx, o2.alternatives, transformBTSGuardedAction _)
@@ -5524,23 +6904,52 @@ import Transformer._
             TPostResult(r2.ctx, Some(o2(ifBranch = r0.resultOpt.getOrElse(o2.ifBranch), elseIfBranches = r1.resultOpt.getOrElse(o2.elseIfBranches), elseBranch = r2.resultOpt.getOrElse(o2.elseBranch))))
           else
             TPostResult(r2.ctx, None())
+        case o2: BTSWhileLoop =>
+          val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.test)
+          val r1: TPostResult[Context, Option[BTSNamelessAssertion]] = transformOption(r0.ctx, o2.invariant, transformBTSNamelessAssertion _)
+          val r2: TPostResult[Context, Option[BTSExp]] = transformOption(r1.ctx, o2.bound, transformBTSExp _)
+          val r3: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r2.ctx, o2.elq)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(test = r0.resultOpt.getOrElse(o2.test), invariant = r1.resultOpt.getOrElse(o2.invariant), bound = r2.resultOpt.getOrElse(o2.bound), elq = r3.resultOpt.getOrElse(o2.elq))))
+          else
+            TPostResult(r3.ctx, None())
+        case o2: BTSForLoop =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.count)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.lowerbound)
+          val r2: TPostResult[Context, BTSExp] = transformBTSExp(r1.ctx, o2.upperbound)
+          val r3: TPostResult[Context, Option[BTSNamelessAssertion]] = transformOption(r2.ctx, o2.invariant, transformBTSNamelessAssertion _)
+          val r4: TPostResult[Context, BTSBehaviorActions] = transformBTSBehaviorActions(r3.ctx, o2.actions)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
+            TPostResult(r4.ctx, Some(o2(count = r0.resultOpt.getOrElse(o2.count), lowerbound = r1.resultOpt.getOrElse(o2.lowerbound), upperbound = r2.resultOpt.getOrElse(o2.upperbound), invariant = r3.resultOpt.getOrElse(o2.invariant), actions = r4.resultOpt.getOrElse(o2.actions))))
+          else
+            TPostResult(r4.ctx, None())
+        case o2: BTSDoUntilLoop =>
+          val r0: TPostResult[Context, Option[BTSNamelessAssertion]] = transformOption(preR.ctx, o2.invariant, transformBTSNamelessAssertion _)
+          val r1: TPostResult[Context, Option[BTSExp]] = transformOption(r0.ctx, o2.bound, transformBTSExp _)
+          val r2: TPostResult[Context, BTSBehaviorActions] = transformBTSBehaviorActions(r1.ctx, o2.actions)
+          val r3: TPostResult[Context, BTSExp] = transformBTSExp(r2.ctx, o2.guard)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(invariant = r0.resultOpt.getOrElse(o2.invariant), bound = r1.resultOpt.getOrElse(o2.bound), actions = r2.resultOpt.getOrElse(o2.actions), guard = r3.resultOpt.getOrElse(o2.guard))))
+          else
+            TPostResult(r3.ctx, None())
         case o2: BTSExistentialLatticeQuantification =>
           val r0: TPostResult[Context, IS[Z, BTSVariableDeclaration]] = transformISZ(preR.ctx, o2.quantifiedVariables, transformBTSVariableDeclaration _)
           val r1: TPostResult[Context, BTSBehaviorActions] = transformBTSBehaviorActions(r0.ctx, o2.actions)
           val r2: TPostResult[Context, Option[BTSBehaviorTime]] = transformOption(r1.ctx, o2.timeout, transformBTSBehaviorTime _)
-          val r3: TPostResult[Context, Option[TODO]] = transformOption(r2.ctx, o2.catchClause, transformTODO _)
+          val r3: TPostResult[Context, IS[Z, BTSCatchClauseTerm]] = transformISZ(r2.ctx, o2.catchClause, transformBTSCatchClauseTerm _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
             TPostResult(r3.ctx, Some(o2(quantifiedVariables = r0.resultOpt.getOrElse(o2.quantifiedVariables), actions = r1.resultOpt.getOrElse(o2.actions), timeout = r2.resultOpt.getOrElse(o2.timeout), catchClause = r3.resultOpt.getOrElse(o2.catchClause))))
           else
             TPostResult(r3.ctx, None())
         case o2: BTSUniversalLatticeQuantification =>
           val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.latticeVariables, transformName _)
-          val r1: TPostResult[Context, Option[TODO]] = transformOption(r0.ctx, o2.range, transformTODO _)
-          val r2: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r1.ctx, o2.elq)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            TPostResult(r2.ctx, Some(o2(latticeVariables = r0.resultOpt.getOrElse(o2.latticeVariables), range = r1.resultOpt.getOrElse(o2.range), elq = r2.resultOpt.getOrElse(o2.elq))))
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.lowerbound)
+          val r2: TPostResult[Context, BTSExp] = transformBTSExp(r1.ctx, o2.upperbound)
+          val r3: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r2.ctx, o2.elq)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(latticeVariables = r0.resultOpt.getOrElse(o2.latticeVariables), lowerbound = r1.resultOpt.getOrElse(o2.lowerbound), upperbound = r2.resultOpt.getOrElse(o2.upperbound), elq = r3.resultOpt.getOrElse(o2.elq))))
           else
-            TPostResult(r2.ctx, None())
+            TPostResult(r3.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -5572,39 +6981,97 @@ import Transformer._
           else
             TPostResult(preR.ctx, None())
         case o2: BTSAssignmentAction =>
-          val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.lhs)
+          val r0: TPostResult[Context, BTSValueName] = transformBTSValueName(preR.ctx, o2.lhs)
           val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.rhs)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
           else
             TPostResult(r1.ctx, None())
+        case o2: BTSSetMode =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.mode)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(mode = r0.resultOpt.getOrElse(o2.mode))))
+          else
+            TPostResult(r0.ctx, None())
+        case o2: BTSWhenThrow =>
+          val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.exp)
+          val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.exception)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), exception = r1.resultOpt.getOrElse(o2.exception))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: BTSFetchAdd =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.arithmetic)
+          val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.result)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), arithmetic = r1.resultOpt.getOrElse(o2.arithmetic), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSFetchOr =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.bool)
+          val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.result, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), bool = r1.resultOpt.getOrElse(o2.bool), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSFetchAnd =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.bool)
+          val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.result, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), bool = r1.resultOpt.getOrElse(o2.bool), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSFetchXor =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.bool)
+          val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.result, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), bool = r1.resultOpt.getOrElse(o2.bool), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSSwap =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.reference)
+          val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.result)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), reference = r1.resultOpt.getOrElse(o2.reference), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
         case o2: BTSSubprogramCallAction =>
           val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-          val r1: TPostResult[Context, IS[Z, BTSFormalExpPair]] = transformISZ(r0.ctx, o2.params, transformBTSFormalExpPair _)
+          val r1: TPostResult[Context, IS[Z, BTSFormalActual]] = transformISZ(r0.ctx, o2.params, transformBTSFormalActual _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), params = r1.resultOpt.getOrElse(o2.params))))
           else
             TPostResult(r1.ctx, None())
-        case o2: BTSPortOutAction =>
-          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+        case o2: BTSPortOutput =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.port)
           val r1: TPostResult[Context, Option[BTSExp]] = transformOption(r0.ctx, o2.exp, transformBTSExp _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), exp = r1.resultOpt.getOrElse(o2.exp))))
+            TPostResult(r1.ctx, Some(o2(port = r0.resultOpt.getOrElse(o2.port), exp = r1.resultOpt.getOrElse(o2.exp))))
           else
             TPostResult(r1.ctx, None())
-        case o2: BTSPortInAction =>
-          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.variable)
+        case o2: BTSPortInput =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.port)
+          val r1: TPostResult[Context, BTSValueName] = transformBTSValueName(r0.ctx, o2.variable)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), variable = r1.resultOpt.getOrElse(o2.variable))))
+            TPostResult(r1.ctx, Some(o2(port = r0.resultOpt.getOrElse(o2.port), variable = r1.resultOpt.getOrElse(o2.variable))))
           else
             TPostResult(r1.ctx, None())
         case o2: BTSFrozenPortAction =>
-          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.portName)
+          val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.ports, transformName _)
           if (hasChanged || r0.resultOpt.nonEmpty)
-            TPostResult(r0.ctx, Some(o2(portName = r0.resultOpt.getOrElse(o2.portName))))
+            TPostResult(r0.ctx, Some(o2(ports = r0.resultOpt.getOrElse(o2.ports))))
           else
             TPostResult(r0.ctx, None())
+        case o2: BTSPause =>
+          if (hasChanged)
+            TPostResult(preR.ctx, Some(o2))
+          else
+            TPostResult(preR.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -5655,7 +7122,7 @@ import Transformer._
     val r: TPostResult[Context, BTSAssignmentAction] = if (preR.continu) {
       val o2: BTSAssignmentAction = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.lhs)
+      val r0: TPostResult[Context, BTSValueName] = transformBTSValueName(preR.ctx, o2.lhs)
       val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.rhs)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
         TPostResult(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
@@ -5678,6 +7145,271 @@ import Transformer._
     }
   }
 
+  @pure def transformBTSSetMode(ctx: Context, o: BTSSetMode): TPostResult[Context, BTSSetMode] = {
+    val preR: PreResult[Context, BTSSetMode] = pp.preBTSSetMode(ctx, o)
+    val r: TPostResult[Context, BTSSetMode] = if (preR.continu) {
+      val o2: BTSSetMode = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.mode)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(mode = r0.resultOpt.getOrElse(o2.mode))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSSetMode = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSSetMode] = pp.postBTSSetMode(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSWhenThrow(ctx: Context, o: BTSWhenThrow): TPostResult[Context, BTSWhenThrow] = {
+    val preR: PreResult[Context, BTSWhenThrow] = pp.preBTSWhenThrow(ctx, o)
+    val r: TPostResult[Context, BTSWhenThrow] = if (preR.continu) {
+      val o2: BTSWhenThrow = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.exp)
+      val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.exception)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), exception = r1.resultOpt.getOrElse(o2.exception))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSWhenThrow = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSWhenThrow] = pp.postBTSWhenThrow(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSCombinableOperation(ctx: Context, o: BTSCombinableOperation): TPostResult[Context, BTSCombinableOperation] = {
+    val preR: PreResult[Context, BTSCombinableOperation] = pp.preBTSCombinableOperation(ctx, o)
+    val r: TPostResult[Context, BTSCombinableOperation] = if (preR.continu) {
+      val o2: BTSCombinableOperation = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, BTSCombinableOperation] = o2 match {
+        case o2: BTSFetchAdd =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.arithmetic)
+          val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.result)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), arithmetic = r1.resultOpt.getOrElse(o2.arithmetic), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSFetchOr =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.bool)
+          val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.result, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), bool = r1.resultOpt.getOrElse(o2.bool), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSFetchAnd =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.bool)
+          val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.result, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), bool = r1.resultOpt.getOrElse(o2.bool), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSFetchXor =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.bool)
+          val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.result, transformName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), bool = r1.resultOpt.getOrElse(o2.bool), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSSwap =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+          val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.reference)
+          val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.result)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), reference = r1.resultOpt.getOrElse(o2.reference), result = r2.resultOpt.getOrElse(o2.result))))
+          else
+            TPostResult(r2.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSCombinableOperation = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSCombinableOperation] = pp.postBTSCombinableOperation(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSFetchAdd(ctx: Context, o: BTSFetchAdd): TPostResult[Context, BTSFetchAdd] = {
+    val preR: PreResult[Context, BTSFetchAdd] = pp.preBTSFetchAdd(ctx, o)
+    val r: TPostResult[Context, BTSFetchAdd] = if (preR.continu) {
+      val o2: BTSFetchAdd = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+      val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.arithmetic)
+      val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.result)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), arithmetic = r1.resultOpt.getOrElse(o2.arithmetic), result = r2.resultOpt.getOrElse(o2.result))))
+      else
+        TPostResult(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSFetchAdd = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSFetchAdd] = pp.postBTSFetchAdd(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSFetchOr(ctx: Context, o: BTSFetchOr): TPostResult[Context, BTSFetchOr] = {
+    val preR: PreResult[Context, BTSFetchOr] = pp.preBTSFetchOr(ctx, o)
+    val r: TPostResult[Context, BTSFetchOr] = if (preR.continu) {
+      val o2: BTSFetchOr = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+      val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.bool)
+      val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.result, transformName _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), bool = r1.resultOpt.getOrElse(o2.bool), result = r2.resultOpt.getOrElse(o2.result))))
+      else
+        TPostResult(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSFetchOr = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSFetchOr] = pp.postBTSFetchOr(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSFetchAnd(ctx: Context, o: BTSFetchAnd): TPostResult[Context, BTSFetchAnd] = {
+    val preR: PreResult[Context, BTSFetchAnd] = pp.preBTSFetchAnd(ctx, o)
+    val r: TPostResult[Context, BTSFetchAnd] = if (preR.continu) {
+      val o2: BTSFetchAnd = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+      val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.bool)
+      val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.result, transformName _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), bool = r1.resultOpt.getOrElse(o2.bool), result = r2.resultOpt.getOrElse(o2.result))))
+      else
+        TPostResult(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSFetchAnd = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSFetchAnd] = pp.postBTSFetchAnd(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSFetchXor(ctx: Context, o: BTSFetchXor): TPostResult[Context, BTSFetchXor] = {
+    val preR: PreResult[Context, BTSFetchXor] = pp.preBTSFetchXor(ctx, o)
+    val r: TPostResult[Context, BTSFetchXor] = if (preR.continu) {
+      val o2: BTSFetchXor = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+      val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.bool)
+      val r2: TPostResult[Context, Option[Name]] = transformOption(r1.ctx, o2.result, transformName _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), bool = r1.resultOpt.getOrElse(o2.bool), result = r2.resultOpt.getOrElse(o2.result))))
+      else
+        TPostResult(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSFetchXor = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSFetchXor] = pp.postBTSFetchXor(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSSwap(ctx: Context, o: BTSSwap): TPostResult[Context, BTSSwap] = {
+    val preR: PreResult[Context, BTSSwap] = pp.preBTSSwap(ctx, o)
+    val r: TPostResult[Context, BTSSwap] = if (preR.continu) {
+      val o2: BTSSwap = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.target)
+      val r1: TPostResult[Context, Name] = transformName(r0.ctx, o2.reference)
+      val r2: TPostResult[Context, Name] = transformName(r1.ctx, o2.result)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(target = r0.resultOpt.getOrElse(o2.target), reference = r1.resultOpt.getOrElse(o2.reference), result = r2.resultOpt.getOrElse(o2.result))))
+      else
+        TPostResult(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSSwap = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSSwap] = pp.postBTSSwap(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transformBTSCommunicationAction(ctx: Context, o: BTSCommunicationAction): TPostResult[Context, BTSCommunicationAction] = {
     val preR: PreResult[Context, BTSCommunicationAction] = pp.preBTSCommunicationAction(ctx, o)
     val r: TPostResult[Context, BTSCommunicationAction] = if (preR.continu) {
@@ -5686,31 +7418,36 @@ import Transformer._
       val rOpt: TPostResult[Context, BTSCommunicationAction] = o2 match {
         case o2: BTSSubprogramCallAction =>
           val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-          val r1: TPostResult[Context, IS[Z, BTSFormalExpPair]] = transformISZ(r0.ctx, o2.params, transformBTSFormalExpPair _)
+          val r1: TPostResult[Context, IS[Z, BTSFormalActual]] = transformISZ(r0.ctx, o2.params, transformBTSFormalActual _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), params = r1.resultOpt.getOrElse(o2.params))))
           else
             TPostResult(r1.ctx, None())
-        case o2: BTSPortOutAction =>
-          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+        case o2: BTSPortOutput =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.port)
           val r1: TPostResult[Context, Option[BTSExp]] = transformOption(r0.ctx, o2.exp, transformBTSExp _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), exp = r1.resultOpt.getOrElse(o2.exp))))
+            TPostResult(r1.ctx, Some(o2(port = r0.resultOpt.getOrElse(o2.port), exp = r1.resultOpt.getOrElse(o2.exp))))
           else
             TPostResult(r1.ctx, None())
-        case o2: BTSPortInAction =>
-          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.variable)
+        case o2: BTSPortInput =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.port)
+          val r1: TPostResult[Context, BTSValueName] = transformBTSValueName(r0.ctx, o2.variable)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), variable = r1.resultOpt.getOrElse(o2.variable))))
+            TPostResult(r1.ctx, Some(o2(port = r0.resultOpt.getOrElse(o2.port), variable = r1.resultOpt.getOrElse(o2.variable))))
           else
             TPostResult(r1.ctx, None())
         case o2: BTSFrozenPortAction =>
-          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.portName)
+          val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.ports, transformName _)
           if (hasChanged || r0.resultOpt.nonEmpty)
-            TPostResult(r0.ctx, Some(o2(portName = r0.resultOpt.getOrElse(o2.portName))))
+            TPostResult(r0.ctx, Some(o2(ports = r0.resultOpt.getOrElse(o2.ports))))
           else
             TPostResult(r0.ctx, None())
+        case o2: BTSPause =>
+          if (hasChanged)
+            TPostResult(preR.ctx, Some(o2))
+          else
+            TPostResult(preR.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -5736,7 +7473,7 @@ import Transformer._
       val o2: BTSSubprogramCallAction = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-      val r1: TPostResult[Context, IS[Z, BTSFormalExpPair]] = transformISZ(r0.ctx, o2.params, transformBTSFormalExpPair _)
+      val r1: TPostResult[Context, IS[Z, BTSFormalActual]] = transformISZ(r0.ctx, o2.params, transformBTSFormalActual _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
         TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), params = r1.resultOpt.getOrElse(o2.params))))
       else
@@ -5758,15 +7495,15 @@ import Transformer._
     }
   }
 
-  @pure def transformBTSPortOutAction(ctx: Context, o: BTSPortOutAction): TPostResult[Context, BTSPortOutAction] = {
-    val preR: PreResult[Context, BTSPortOutAction] = pp.preBTSPortOutAction(ctx, o)
-    val r: TPostResult[Context, BTSPortOutAction] = if (preR.continu) {
-      val o2: BTSPortOutAction = preR.resultOpt.getOrElse(o)
+  @pure def transformBTSFormalActual(ctx: Context, o: BTSFormalActual): TPostResult[Context, BTSFormalActual] = {
+    val preR: PreResult[Context, BTSFormalActual] = pp.preBTSFormalActual(ctx, o)
+    val r: TPostResult[Context, BTSFormalActual] = if (preR.continu) {
+      val o2: BTSFormalActual = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-      val r1: TPostResult[Context, Option[BTSExp]] = transformOption(r0.ctx, o2.exp, transformBTSExp _)
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.formal)
+      val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.actual)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), exp = r1.resultOpt.getOrElse(o2.exp))))
+        TPostResult(r1.ctx, Some(o2(formal = r0.resultOpt.getOrElse(o2.formal), actual = r1.resultOpt.getOrElse(o2.actual))))
       else
         TPostResult(r1.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
@@ -5775,8 +7512,8 @@ import Transformer._
       TPostResult(preR.ctx, None())
     }
     val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: BTSPortOutAction = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, BTSPortOutAction] = pp.postBTSPortOutAction(r.ctx, o2)
+    val o2: BTSFormalActual = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSFormalActual] = pp.postBTSFormalActual(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -5786,15 +7523,15 @@ import Transformer._
     }
   }
 
-  @pure def transformBTSPortInAction(ctx: Context, o: BTSPortInAction): TPostResult[Context, BTSPortInAction] = {
-    val preR: PreResult[Context, BTSPortInAction] = pp.preBTSPortInAction(ctx, o)
-    val r: TPostResult[Context, BTSPortInAction] = if (preR.continu) {
-      val o2: BTSPortInAction = preR.resultOpt.getOrElse(o)
+  @pure def transformBTSPortOutput(ctx: Context, o: BTSPortOutput): TPostResult[Context, BTSPortOutput] = {
+    val preR: PreResult[Context, BTSPortOutput] = pp.preBTSPortOutput(ctx, o)
+    val r: TPostResult[Context, BTSPortOutput] = if (preR.continu) {
+      val o2: BTSPortOutput = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-      val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.variable)
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.port)
+      val r1: TPostResult[Context, Option[BTSExp]] = transformOption(r0.ctx, o2.exp, transformBTSExp _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), variable = r1.resultOpt.getOrElse(o2.variable))))
+        TPostResult(r1.ctx, Some(o2(port = r0.resultOpt.getOrElse(o2.port), exp = r1.resultOpt.getOrElse(o2.exp))))
       else
         TPostResult(r1.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
@@ -5803,8 +7540,36 @@ import Transformer._
       TPostResult(preR.ctx, None())
     }
     val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: BTSPortInAction = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, BTSPortInAction] = pp.postBTSPortInAction(r.ctx, o2)
+    val o2: BTSPortOutput = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSPortOutput] = pp.postBTSPortOutput(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSPortInput(ctx: Context, o: BTSPortInput): TPostResult[Context, BTSPortInput] = {
+    val preR: PreResult[Context, BTSPortInput] = pp.preBTSPortInput(ctx, o)
+    val r: TPostResult[Context, BTSPortInput] = if (preR.continu) {
+      val o2: BTSPortInput = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.port)
+      val r1: TPostResult[Context, BTSValueName] = transformBTSValueName(r0.ctx, o2.variable)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(port = r0.resultOpt.getOrElse(o2.port), variable = r1.resultOpt.getOrElse(o2.variable))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSPortInput = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSPortInput] = pp.postBTSPortInput(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -5819,9 +7584,9 @@ import Transformer._
     val r: TPostResult[Context, BTSFrozenPortAction] = if (preR.continu) {
       val o2: BTSFrozenPortAction = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.portName)
+      val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.ports, transformName _)
       if (hasChanged || r0.resultOpt.nonEmpty)
-        TPostResult(r0.ctx, Some(o2(portName = r0.resultOpt.getOrElse(o2.portName))))
+        TPostResult(r0.ctx, Some(o2(ports = r0.resultOpt.getOrElse(o2.ports))))
       else
         TPostResult(r0.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
@@ -5832,6 +7597,32 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: BTSFrozenPortAction = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, BTSFrozenPortAction] = pp.postBTSFrozenPortAction(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSPause(ctx: Context, o: BTSPause): TPostResult[Context, BTSPause] = {
+    val preR: PreResult[Context, BTSPause] = pp.preBTSPause(ctx, o)
+    val r: TPostResult[Context, BTSPause] = if (preR.continu) {
+      val o2: BTSPause = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        TPostResult(preR.ctx, Some(o2))
+      else
+        TPostResult(preR.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSPause = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSPause] = pp.postBTSPause(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -5862,6 +7653,34 @@ import Transformer._
             TPostResult(r2.ctx, Some(o2(ifBranch = r0.resultOpt.getOrElse(o2.ifBranch), elseIfBranches = r1.resultOpt.getOrElse(o2.elseIfBranches), elseBranch = r2.resultOpt.getOrElse(o2.elseBranch))))
           else
             TPostResult(r2.ctx, None())
+        case o2: BTSWhileLoop =>
+          val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.test)
+          val r1: TPostResult[Context, Option[BTSNamelessAssertion]] = transformOption(r0.ctx, o2.invariant, transformBTSNamelessAssertion _)
+          val r2: TPostResult[Context, Option[BTSExp]] = transformOption(r1.ctx, o2.bound, transformBTSExp _)
+          val r3: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r2.ctx, o2.elq)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(test = r0.resultOpt.getOrElse(o2.test), invariant = r1.resultOpt.getOrElse(o2.invariant), bound = r2.resultOpt.getOrElse(o2.bound), elq = r3.resultOpt.getOrElse(o2.elq))))
+          else
+            TPostResult(r3.ctx, None())
+        case o2: BTSForLoop =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.count)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.lowerbound)
+          val r2: TPostResult[Context, BTSExp] = transformBTSExp(r1.ctx, o2.upperbound)
+          val r3: TPostResult[Context, Option[BTSNamelessAssertion]] = transformOption(r2.ctx, o2.invariant, transformBTSNamelessAssertion _)
+          val r4: TPostResult[Context, BTSBehaviorActions] = transformBTSBehaviorActions(r3.ctx, o2.actions)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
+            TPostResult(r4.ctx, Some(o2(count = r0.resultOpt.getOrElse(o2.count), lowerbound = r1.resultOpt.getOrElse(o2.lowerbound), upperbound = r2.resultOpt.getOrElse(o2.upperbound), invariant = r3.resultOpt.getOrElse(o2.invariant), actions = r4.resultOpt.getOrElse(o2.actions))))
+          else
+            TPostResult(r4.ctx, None())
+        case o2: BTSDoUntilLoop =>
+          val r0: TPostResult[Context, Option[BTSNamelessAssertion]] = transformOption(preR.ctx, o2.invariant, transformBTSNamelessAssertion _)
+          val r1: TPostResult[Context, Option[BTSExp]] = transformOption(r0.ctx, o2.bound, transformBTSExp _)
+          val r2: TPostResult[Context, BTSBehaviorActions] = transformBTSBehaviorActions(r1.ctx, o2.actions)
+          val r3: TPostResult[Context, BTSExp] = transformBTSExp(r2.ctx, o2.guard)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(invariant = r0.resultOpt.getOrElse(o2.invariant), bound = r1.resultOpt.getOrElse(o2.bound), actions = r2.resultOpt.getOrElse(o2.actions), guard = r3.resultOpt.getOrElse(o2.guard))))
+          else
+            TPostResult(r3.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -5994,6 +7813,97 @@ import Transformer._
     }
   }
 
+  @pure def transformBTSWhileLoop(ctx: Context, o: BTSWhileLoop): TPostResult[Context, BTSWhileLoop] = {
+    val preR: PreResult[Context, BTSWhileLoop] = pp.preBTSWhileLoop(ctx, o)
+    val r: TPostResult[Context, BTSWhileLoop] = if (preR.continu) {
+      val o2: BTSWhileLoop = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.test)
+      val r1: TPostResult[Context, Option[BTSNamelessAssertion]] = transformOption(r0.ctx, o2.invariant, transformBTSNamelessAssertion _)
+      val r2: TPostResult[Context, Option[BTSExp]] = transformOption(r1.ctx, o2.bound, transformBTSExp _)
+      val r3: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r2.ctx, o2.elq)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+        TPostResult(r3.ctx, Some(o2(test = r0.resultOpt.getOrElse(o2.test), invariant = r1.resultOpt.getOrElse(o2.invariant), bound = r2.resultOpt.getOrElse(o2.bound), elq = r3.resultOpt.getOrElse(o2.elq))))
+      else
+        TPostResult(r3.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSWhileLoop = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSWhileLoop] = pp.postBTSWhileLoop(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSForLoop(ctx: Context, o: BTSForLoop): TPostResult[Context, BTSForLoop] = {
+    val preR: PreResult[Context, BTSForLoop] = pp.preBTSForLoop(ctx, o)
+    val r: TPostResult[Context, BTSForLoop] = if (preR.continu) {
+      val o2: BTSForLoop = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.count)
+      val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.lowerbound)
+      val r2: TPostResult[Context, BTSExp] = transformBTSExp(r1.ctx, o2.upperbound)
+      val r3: TPostResult[Context, Option[BTSNamelessAssertion]] = transformOption(r2.ctx, o2.invariant, transformBTSNamelessAssertion _)
+      val r4: TPostResult[Context, BTSBehaviorActions] = transformBTSBehaviorActions(r3.ctx, o2.actions)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
+        TPostResult(r4.ctx, Some(o2(count = r0.resultOpt.getOrElse(o2.count), lowerbound = r1.resultOpt.getOrElse(o2.lowerbound), upperbound = r2.resultOpt.getOrElse(o2.upperbound), invariant = r3.resultOpt.getOrElse(o2.invariant), actions = r4.resultOpt.getOrElse(o2.actions))))
+      else
+        TPostResult(r4.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSForLoop = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSForLoop] = pp.postBTSForLoop(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSDoUntilLoop(ctx: Context, o: BTSDoUntilLoop): TPostResult[Context, BTSDoUntilLoop] = {
+    val preR: PreResult[Context, BTSDoUntilLoop] = pp.preBTSDoUntilLoop(ctx, o)
+    val r: TPostResult[Context, BTSDoUntilLoop] = if (preR.continu) {
+      val o2: BTSDoUntilLoop = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Option[BTSNamelessAssertion]] = transformOption(preR.ctx, o2.invariant, transformBTSNamelessAssertion _)
+      val r1: TPostResult[Context, Option[BTSExp]] = transformOption(r0.ctx, o2.bound, transformBTSExp _)
+      val r2: TPostResult[Context, BTSBehaviorActions] = transformBTSBehaviorActions(r1.ctx, o2.actions)
+      val r3: TPostResult[Context, BTSExp] = transformBTSExp(r2.ctx, o2.guard)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+        TPostResult(r3.ctx, Some(o2(invariant = r0.resultOpt.getOrElse(o2.invariant), bound = r1.resultOpt.getOrElse(o2.bound), actions = r2.resultOpt.getOrElse(o2.actions), guard = r3.resultOpt.getOrElse(o2.guard))))
+      else
+        TPostResult(r3.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSDoUntilLoop = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSDoUntilLoop] = pp.postBTSDoUntilLoop(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transformBTSQuantificationActions(ctx: Context, o: BTSQuantificationActions): TPostResult[Context, BTSQuantificationActions] = {
     val preR: PreResult[Context, BTSQuantificationActions] = pp.preBTSQuantificationActions(ctx, o)
     val r: TPostResult[Context, BTSQuantificationActions] = if (preR.continu) {
@@ -6004,19 +7914,20 @@ import Transformer._
           val r0: TPostResult[Context, IS[Z, BTSVariableDeclaration]] = transformISZ(preR.ctx, o2.quantifiedVariables, transformBTSVariableDeclaration _)
           val r1: TPostResult[Context, BTSBehaviorActions] = transformBTSBehaviorActions(r0.ctx, o2.actions)
           val r2: TPostResult[Context, Option[BTSBehaviorTime]] = transformOption(r1.ctx, o2.timeout, transformBTSBehaviorTime _)
-          val r3: TPostResult[Context, Option[TODO]] = transformOption(r2.ctx, o2.catchClause, transformTODO _)
+          val r3: TPostResult[Context, IS[Z, BTSCatchClauseTerm]] = transformISZ(r2.ctx, o2.catchClause, transformBTSCatchClauseTerm _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
             TPostResult(r3.ctx, Some(o2(quantifiedVariables = r0.resultOpt.getOrElse(o2.quantifiedVariables), actions = r1.resultOpt.getOrElse(o2.actions), timeout = r2.resultOpt.getOrElse(o2.timeout), catchClause = r3.resultOpt.getOrElse(o2.catchClause))))
           else
             TPostResult(r3.ctx, None())
         case o2: BTSUniversalLatticeQuantification =>
           val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.latticeVariables, transformName _)
-          val r1: TPostResult[Context, Option[TODO]] = transformOption(r0.ctx, o2.range, transformTODO _)
-          val r2: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r1.ctx, o2.elq)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            TPostResult(r2.ctx, Some(o2(latticeVariables = r0.resultOpt.getOrElse(o2.latticeVariables), range = r1.resultOpt.getOrElse(o2.range), elq = r2.resultOpt.getOrElse(o2.elq))))
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.lowerbound)
+          val r2: TPostResult[Context, BTSExp] = transformBTSExp(r1.ctx, o2.upperbound)
+          val r3: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r2.ctx, o2.elq)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(latticeVariables = r0.resultOpt.getOrElse(o2.latticeVariables), lowerbound = r1.resultOpt.getOrElse(o2.lowerbound), upperbound = r2.resultOpt.getOrElse(o2.upperbound), elq = r3.resultOpt.getOrElse(o2.elq))))
           else
-            TPostResult(r2.ctx, None())
+            TPostResult(r3.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -6044,7 +7955,7 @@ import Transformer._
       val r0: TPostResult[Context, IS[Z, BTSVariableDeclaration]] = transformISZ(preR.ctx, o2.quantifiedVariables, transformBTSVariableDeclaration _)
       val r1: TPostResult[Context, BTSBehaviorActions] = transformBTSBehaviorActions(r0.ctx, o2.actions)
       val r2: TPostResult[Context, Option[BTSBehaviorTime]] = transformOption(r1.ctx, o2.timeout, transformBTSBehaviorTime _)
-      val r3: TPostResult[Context, Option[TODO]] = transformOption(r2.ctx, o2.catchClause, transformTODO _)
+      val r3: TPostResult[Context, IS[Z, BTSCatchClauseTerm]] = transformISZ(r2.ctx, o2.catchClause, transformBTSCatchClauseTerm _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
         TPostResult(r3.ctx, Some(o2(quantifiedVariables = r0.resultOpt.getOrElse(o2.quantifiedVariables), actions = r1.resultOpt.getOrElse(o2.actions), timeout = r2.resultOpt.getOrElse(o2.timeout), catchClause = r3.resultOpt.getOrElse(o2.catchClause))))
       else
@@ -6066,18 +7977,47 @@ import Transformer._
     }
   }
 
+  @pure def transformBTSCatchClauseTerm(ctx: Context, o: BTSCatchClauseTerm): TPostResult[Context, BTSCatchClauseTerm] = {
+    val preR: PreResult[Context, BTSCatchClauseTerm] = pp.preBTSCatchClauseTerm(ctx, o)
+    val r: TPostResult[Context, BTSCatchClauseTerm] = if (preR.continu) {
+      val o2: BTSCatchClauseTerm = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.exceptions, transformName _)
+      val r1: TPostResult[Context, BTSBasicAction] = transformBTSBasicAction(r0.ctx, o2.action)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(exceptions = r0.resultOpt.getOrElse(o2.exceptions), action = r1.resultOpt.getOrElse(o2.action))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSCatchClauseTerm = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSCatchClauseTerm] = pp.postBTSCatchClauseTerm(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transformBTSUniversalLatticeQuantification(ctx: Context, o: BTSUniversalLatticeQuantification): TPostResult[Context, BTSUniversalLatticeQuantification] = {
     val preR: PreResult[Context, BTSUniversalLatticeQuantification] = pp.preBTSUniversalLatticeQuantification(ctx, o)
     val r: TPostResult[Context, BTSUniversalLatticeQuantification] = if (preR.continu) {
       val o2: BTSUniversalLatticeQuantification = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: TPostResult[Context, IS[Z, Name]] = transformISZ(preR.ctx, o2.latticeVariables, transformName _)
-      val r1: TPostResult[Context, Option[TODO]] = transformOption(r0.ctx, o2.range, transformTODO _)
-      val r2: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r1.ctx, o2.elq)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-        TPostResult(r2.ctx, Some(o2(latticeVariables = r0.resultOpt.getOrElse(o2.latticeVariables), range = r1.resultOpt.getOrElse(o2.range), elq = r2.resultOpt.getOrElse(o2.elq))))
+      val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.lowerbound)
+      val r2: TPostResult[Context, BTSExp] = transformBTSExp(r1.ctx, o2.upperbound)
+      val r3: TPostResult[Context, BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(r2.ctx, o2.elq)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+        TPostResult(r3.ctx, Some(o2(latticeVariables = r0.resultOpt.getOrElse(o2.latticeVariables), lowerbound = r1.resultOpt.getOrElse(o2.lowerbound), upperbound = r2.resultOpt.getOrElse(o2.upperbound), elq = r3.resultOpt.getOrElse(o2.elq))))
       else
-        TPostResult(r2.ctx, None())
+        TPostResult(r3.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -6119,12 +8059,14 @@ import Transformer._
             TPostResult(preR.ctx, Some(o2))
           else
             TPostResult(preR.ctx, None())
-        case o2: BTSNameExp =>
+        case o2: BTSVariableNameExp =>
           val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-          if (hasChanged || r0.resultOpt.nonEmpty)
-            TPostResult(r0.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name))))
+          val r1: TPostResult[Context, IS[Z, BTSExp]] = transformISZ(r0.ctx, o2.arrayindex, transformBTSExp _)
+          val r2: TPostResult[Context, IS[Z, BTSPartialName]] = transformISZ(r1.ctx, o2.pn, transformBTSPartialName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), arrayindex = r1.resultOpt.getOrElse(o2.arrayindex), pn = r2.resultOpt.getOrElse(o2.pn))))
           else
-            TPostResult(r0.ctx, None())
+            TPostResult(r2.ctx, None())
         case o2: BTSIndexingExp =>
           val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.exp)
           val r1: TPostResult[Context, IS[Z, BTSExp]] = transformISZ(r0.ctx, o2.indices, transformBTSExp _)
@@ -6140,9 +8082,24 @@ import Transformer._
             TPostResult(r0.ctx, None())
         case o2: BTSFunctionCall =>
           val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-          val r1: TPostResult[Context, IS[Z, BTSFormalExpPair]] = transformISZ(r0.ctx, o2.args, transformBTSFormalExpPair _)
+          val r1: TPostResult[Context, IS[Z, BTSFormalActual]] = transformISZ(r0.ctx, o2.args, transformBTSFormalActual _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), args = r1.resultOpt.getOrElse(o2.args))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: BTSConditionalExpression =>
+          val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.guard)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.t)
+          val r2: TPostResult[Context, BTSExp] = transformBTSExp(r1.ctx, o2.f)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(guard = r0.resultOpt.getOrElse(o2.guard), t = r1.resultOpt.getOrElse(o2.t), f = r2.resultOpt.getOrElse(o2.f))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSRange =>
+          val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.lb)
+          val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.ub)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(lb = r0.resultOpt.getOrElse(o2.lb), ub = r1.resultOpt.getOrElse(o2.ub))))
           else
             TPostResult(r1.ctx, None())
       }
@@ -6245,24 +8202,94 @@ import Transformer._
     }
   }
 
-  @pure def transformBTSNameExp(ctx: Context, o: BTSNameExp): TPostResult[Context, BTSNameExp] = {
-    val preR: PreResult[Context, BTSNameExp] = pp.preBTSNameExp(ctx, o)
-    val r: TPostResult[Context, BTSNameExp] = if (preR.continu) {
-      val o2: BTSNameExp = preR.resultOpt.getOrElse(o)
+  @pure def transformBTSValueName(ctx: Context, o: BTSValueName): TPostResult[Context, BTSValueName] = {
+    val preR: PreResult[Context, BTSValueName] = pp.preBTSValueName(ctx, o)
+    val r: TPostResult[Context, BTSValueName] = if (preR.continu) {
+      val o2: BTSValueName = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-      if (hasChanged || r0.resultOpt.nonEmpty)
-        TPostResult(r0.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name))))
-      else
-        TPostResult(r0.ctx, None())
+      val rOpt: TPostResult[Context, BTSValueName] = o2 match {
+        case o2: BTSVariableNameExp =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+          val r1: TPostResult[Context, IS[Z, BTSExp]] = transformISZ(r0.ctx, o2.arrayindex, transformBTSExp _)
+          val r2: TPostResult[Context, IS[Z, BTSPartialName]] = transformISZ(r1.ctx, o2.pn, transformBTSPartialName _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), arrayindex = r1.resultOpt.getOrElse(o2.arrayindex), pn = r2.resultOpt.getOrElse(o2.pn))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: BTSFunctionCall =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+          val r1: TPostResult[Context, IS[Z, BTSFormalActual]] = transformISZ(r0.ctx, o2.args, transformBTSFormalActual _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), args = r1.resultOpt.getOrElse(o2.args))))
+          else
+            TPostResult(r1.ctx, None())
+      }
+      rOpt
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
       TPostResult(preR.ctx, None())
     }
     val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: BTSNameExp = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, BTSNameExp] = pp.postBTSNameExp(r.ctx, o2)
+    val o2: BTSValueName = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSValueName] = pp.postBTSValueName(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSVariableNameExp(ctx: Context, o: BTSVariableNameExp): TPostResult[Context, BTSVariableNameExp] = {
+    val preR: PreResult[Context, BTSVariableNameExp] = pp.preBTSVariableNameExp(ctx, o)
+    val r: TPostResult[Context, BTSVariableNameExp] = if (preR.continu) {
+      val o2: BTSVariableNameExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+      val r1: TPostResult[Context, IS[Z, BTSExp]] = transformISZ(r0.ctx, o2.arrayindex, transformBTSExp _)
+      val r2: TPostResult[Context, IS[Z, BTSPartialName]] = transformISZ(r1.ctx, o2.pn, transformBTSPartialName _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), arrayindex = r1.resultOpt.getOrElse(o2.arrayindex), pn = r2.resultOpt.getOrElse(o2.pn))))
+      else
+        TPostResult(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSVariableNameExp = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSVariableNameExp] = pp.postBTSVariableNameExp(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSPartialName(ctx: Context, o: BTSPartialName): TPostResult[Context, BTSPartialName] = {
+    val preR: PreResult[Context, BTSPartialName] = pp.preBTSPartialName(ctx, o)
+    val r: TPostResult[Context, BTSPartialName] = if (preR.continu) {
+      val o2: BTSPartialName = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.label)
+      val r1: TPostResult[Context, IS[Z, BTSExp]] = transformISZ(r0.ctx, o2.arrayindex, transformBTSExp _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), arrayindex = r1.resultOpt.getOrElse(o2.arrayindex))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSPartialName = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSPartialName] = pp.postBTSPartialName(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -6333,7 +8360,7 @@ import Transformer._
       val o2: BTSFunctionCall = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-      val r1: TPostResult[Context, IS[Z, BTSFormalExpPair]] = transformISZ(r0.ctx, o2.args, transformBTSFormalExpPair _)
+      val r1: TPostResult[Context, IS[Z, BTSFormalActual]] = transformISZ(r0.ctx, o2.args, transformBTSFormalActual _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
         TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), args = r1.resultOpt.getOrElse(o2.args))))
       else
@@ -6355,15 +8382,71 @@ import Transformer._
     }
   }
 
-  @pure def transformBTSFormalExpPair(ctx: Context, o: BTSFormalExpPair): TPostResult[Context, BTSFormalExpPair] = {
-    val preR: PreResult[Context, BTSFormalExpPair] = pp.preBTSFormalExpPair(ctx, o)
-    val r: TPostResult[Context, BTSFormalExpPair] = if (preR.continu) {
-      val o2: BTSFormalExpPair = preR.resultOpt.getOrElse(o)
+  @pure def transformBTSPortValue(ctx: Context, o: BTSPortValue): TPostResult[Context, BTSPortValue] = {
+    val preR: PreResult[Context, BTSPortValue] = pp.preBTSPortValue(ctx, o)
+    val r: TPostResult[Context, BTSPortValue] = if (preR.continu) {
+      val o2: BTSPortValue = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, Option[Name]] = transformOption(preR.ctx, o2.paramName, transformName _)
-      val r1: TPostResult[Context, Option[BTSExp]] = transformOption(r0.ctx, o2.exp, transformBTSExp _)
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.port)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(port = r0.resultOpt.getOrElse(o2.port))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSPortValue = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSPortValue] = pp.postBTSPortValue(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSConditionalExpression(ctx: Context, o: BTSConditionalExpression): TPostResult[Context, BTSConditionalExpression] = {
+    val preR: PreResult[Context, BTSConditionalExpression] = pp.preBTSConditionalExpression(ctx, o)
+    val r: TPostResult[Context, BTSConditionalExpression] = if (preR.continu) {
+      val o2: BTSConditionalExpression = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.guard)
+      val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.t)
+      val r2: TPostResult[Context, BTSExp] = transformBTSExp(r1.ctx, o2.f)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(guard = r0.resultOpt.getOrElse(o2.guard), t = r1.resultOpt.getOrElse(o2.t), f = r2.resultOpt.getOrElse(o2.f))))
+      else
+        TPostResult(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSConditionalExpression = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSConditionalExpression] = pp.postBTSConditionalExpression(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSRange(ctx: Context, o: BTSRange): TPostResult[Context, BTSRange] = {
+    val preR: PreResult[Context, BTSRange] = pp.preBTSRange(ctx, o)
+    val r: TPostResult[Context, BTSRange] = if (preR.continu) {
+      val o2: BTSRange = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, BTSExp] = transformBTSExp(preR.ctx, o2.lb)
+      val r1: TPostResult[Context, BTSExp] = transformBTSExp(r0.ctx, o2.ub)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        TPostResult(r1.ctx, Some(o2(paramName = r0.resultOpt.getOrElse(o2.paramName), exp = r1.resultOpt.getOrElse(o2.exp))))
+        TPostResult(r1.ctx, Some(o2(lb = r0.resultOpt.getOrElse(o2.lb), ub = r1.resultOpt.getOrElse(o2.ub))))
       else
         TPostResult(r1.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
@@ -6372,8 +8455,8 @@ import Transformer._
       TPostResult(preR.ctx, None())
     }
     val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: BTSFormalExpPair = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, BTSFormalExpPair] = pp.postBTSFormalExpPair(r.ctx, o2)
+    val o2: BTSRange = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSRange] = pp.postBTSRange(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -6400,6 +8483,37 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: BTSBehaviorTime = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, BTSBehaviorTime] = pp.postBTSBehaviorTime(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformBTSType(ctx: Context, o: BTSType): TPostResult[Context, BTSType] = {
+    val preR: PreResult[Context, BTSType] = pp.preBTSType(ctx, o)
+    val r: TPostResult[Context, BTSType] = if (preR.continu) {
+      val o2: BTSType = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, BTSType] = o2 match {
+        case o2: BTSClassifier =>
+          val r0: TPostResult[Context, Classifier] = transformClassifier(preR.ctx, o2.classifier)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(classifier = r0.resultOpt.getOrElse(o2.classifier))))
+          else
+            TPostResult(r0.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: BTSType = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, BTSType] = pp.postBTSType(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {

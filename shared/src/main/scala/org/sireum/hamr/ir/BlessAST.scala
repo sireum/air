@@ -36,7 +36,7 @@ import org.sireum._
 @sig trait BLESSAnnex extends AnnexClause
 
 /* XText
-BLESSAnnexSubclause:
+BLESSSubclause returns BLESSSubclause:
 	{BLESSAnnexSubclause}
 	no_proof ?= 'DO_NOT_PROVE'?
 assert_clause=AssertClause?
@@ -47,6 +47,21 @@ variables=VariablesSection?
 ( 'states' states+=BehaviorState+ )?
 // Transitions in the transition system
 transitions=Transitions?
+;
+AssertClause:
+  'assert' (assertions+=NamedAssertion)+
+;
+InvariantClause:
+  'invariant' inv=Assertion
+;
+VariablesSection:
+	'variables' behavior_variables+=VariableDeclaration+
+;
+StatesSection:
+	  ( st='states' states+=BehaviorState+ )
+;
+Transitions:
+  'transitions' bt+=BehaviorTransition+
 ;
 */
 
@@ -68,41 +83,23 @@ transitions=Transitions?
                                     ) extends BLESSAnnex
 
 
-/*
-InvariantClause returns InvariantClause:
-//  {InvariantClause}
-'invariant' inv=Assertion
-;
-*/
 
-// TODO: double check that invariants are assertions
-// no new AIR structures to add since invariants are just assertion clauses
-
-// TODO: need to understand variable_names / Declarator grammar structure
 /* xText
-VariablesSection returns Variables:
-'variables'
-( bv+=BehaviorVariable
-)+
-;
-BehaviorVariable:
-  // TODO: I don't understand this structure
-  variable_names+=Declarator ( comma?=',' variable_names+=Declarator
-  	  ( ',' variable_names+=Declarator)* )?
-  ':'
-  (
-  	nonvolitile?='nonvolatile'
+VariableDeclaration:
+  variable=Variable
+	( //modifier
+	  nonvolatile?='nonvolatile'
   	| shared?='shared'
   	| constant?='constant'
     | spread?='spread'
-    | final='final')?
-  type=Type
+    | final?='final'
+  )?
   ( assign?=':=' expression=Expression )?
   assertion=Assertion?
-  ';'
+  ';'?
   ;
-Declarator:
-	variable=ID ( '[' array_size+=ValueConstant ']' )*
+Variable:
+	name=ID '~' tod=TypeOrReference
 ;
 */
 
@@ -112,11 +109,11 @@ Declarator:
 // generate on BTSVariableDeclaration per variable.
 
 @datatype class BTSVariableDeclaration (
-                                         name: Name,
+                                         name: Name,  //variable name
                                          category: Option[BTSVariableCategory.Type],
                                          varType: BTSType,
                                          assignExpression: Option[BTSExp],
-                                           arraySize: Option[BLESSIntConst],
+ /*this can be removed, if not used by BA*/ arraySize: Option[BLESSIntConst],  //not used in BLESS, array size is part of type
                                          variableAssertion: Option[BTSAssertion]) //extends BTSBLESSAnnexClause
 
 // Categories of behavior variables in BA/BLESS
@@ -128,12 +125,9 @@ Declarator:
   'Final
 }
 
-// TODO: Complete type grammar
-@sig trait BTSType
-
 @datatype class BTSClassifier (classifier: Classifier) extends BTSType
 
-// TODO: Complete constant grammar --  used for array size above
+// move to Value section
 @datatype class BLESSIntConst () //extends BLESSExpression
 
 
@@ -145,7 +139,7 @@ name=ID
 initial?='initial'?
 complete?='complete'?
 final?='final'?
-'state' state_assertion=Assertion? ';'
+'state' state_assertion=Assertion? ';'?
 ;
 */
 
@@ -161,7 +155,7 @@ final?='final'?
 @enum object BTSStateCategory {
   'Initial
   'Complete
-  'Execute
+  'Execute  //actually it should be Execution
   'Final
 }
 
@@ -194,7 +188,6 @@ id=ID ( '[' priority=INTEGER_LIT ']' )?
                                      id: Name,     // name of transition
                                      priority: Option[Z]   // priority of transition
                                    )
-// **** stopped here *****
 
 
 // Dispatch conditions are needed to leave execution.
@@ -210,20 +203,11 @@ DispatchExpression returns DispatchExpression:
   | provides=[aadl2::SubprogramAccess]
 ;
 DispatchConjunction returns DispatchConjunction:
-//  {DispatchConjunction}
   trigger+=DispatchTrigger
     ( and?='and' trigger+=DispatchTrigger
     	( 'and' trigger+=DispatchTrigger)* )?
 ;
-DispatchTrigger returns DispatchTrigger:
-//  {DispatchTrigger}
-  stop?='stop'
-  | port=[aadl2::Port]
-  | timeout?='timeout'
-   ( ( lp?='(' ports+=[aadl2::Port] ('or'? ports+=[aadl2::Port])* ')' )? time=BehaviorTime )?
-;
 */
-
 
 // enable polymorphism for different types of transition conditions
 @sig trait BTSTransitionCondition
@@ -234,14 +218,34 @@ DispatchTrigger returns DispatchTrigger:
 
 @datatype class BTSDispatchConjunction(conjunction: ISZ[BTSDispatchTrigger])
 
+/*
+DispatchTrigger:
+  stop='stop'
+  | port=PortName
+  | timeout='timeout'
+   ( ( lp?='(' ports+=[aadl2::NamedElement|ID] ( '[' indicies+=NUMBER ']' )?
+   	('or'? ports+=[aadl2::NamedElement|ID] ( '[' indicies+=NUMBER ']' )?)* ')' )?
+   	 time=BehaviorTime )?
+;
+ */
 @sig trait BTSDispatchTrigger
 
 @datatype class BTSDispatchTriggerStop extends BTSDispatchTrigger
 
-@datatype class BTSDispatchTriggerPort(port: Name) extends BTSDispatchTrigger
+/*
+PortName:
+  port=[aadl2::NamedElement|ID]
+  ( '[' index=NUMBER ']' )?
+;
+ */
+@datatype class BTSDispatchTriggerPort(port: Name
+                                      //adding port index (so you can trigger off a port in an array)
+                                      //breaks BTSGen.scala at line 522
+                                      // , portarrayindex : Option[Z]
+                                      ) extends BTSDispatchTrigger
 
 @datatype class BTSDispatchTriggerTimeout(ports: ISZ[Name],
-                                          time: Option[BTSBehaviorTime]) extends BTSDispatchTrigger
+                                          time: Option[BTSExp]) extends BTSDispatchTrigger
 
 // Execute conditions are needed to leave execution states
 /* Xtext
@@ -253,7 +257,6 @@ ExecuteCondition:
 ;
 */
 
-// TODO: Complete grammar for execute conditions
 @sig trait BTSExecuteCondition extends BTSTransitionCondition
 
 @datatype class BTSExecuteConditionExp (exp: BTSExp) extends BTSExecuteCondition // TODO can be a relation
@@ -262,29 +265,55 @@ ExecuteCondition:
 
 @datatype class BTSExecuteConditionOtherwise () extends BTSExecuteCondition
 
-// Brian says this is present to be compatible with BA.  Currently not supported in BLESS.
-// See annex document for BA.   Could be relevant to GUMBO goals to for aligning mode
-// state machines.
+// Brian says this is present to be compatible with BA.
+// Currently not supported in BLESS, but it could be, if there Runtime Service implemented to change modes.
+// Reaching down the subcomponent hierarchy to get event delivery will be hard, but not for BLESS
 /* Xtext
 ModeCondition:
 	'on' tle=TriggerLogicalExpression
 ;
+*/
+@datatype class BTSModeCondition (tla : BTSTriggerLogicalExpression) extends BTSTransitionCondition
+
+ /*
+TriggerLogicalExpression:
+	first=EventTrigger ( op=LogicalOperator trigger+=EventTrigger
+		  (ops+=LogicalOperator trigger+=EventTrigger)*)?
+;
+*/
+@datatype class BTSTriggerLogicalExpression (  // op : BTSModeOperator, NOT FINDING BTSModeOperator upon bin/build.cmd regen-air
+                                             triggers : ISZ[BTSEventTrigger]) extends BTSEventTrigger
+
+/*
 EventTrigger:
 //	subcomponent=SubcomponentName
-	sub+=ID ( '.' sub+=ID )* '.' port=ID
-	| '(' tle=TriggerLogicalExpression ')'
+ sub+=ID ( '.' sub+=ID )* '.' port=ID  ( '[' NUMBER ']' )?
+ | '(' tle=TriggerLogicalExpression ')'
 ;
-LogicalOperator:
-	op='and'
-	| op='or'
-	| op='xor'
-	| 'and' op='then'
-	| 'or' op='else'
-;
- */
+*/
+@sig trait BTSEventTrigger
 
-// TODO: Complete grammar for mode conditions
-@datatype class BTSModeCondition extends BTSTransitionCondition
+@datatype class BTSSubcomponentPort  //this should reference an AADL port
+(sub : ISZ[Name], port : Name, index : Option[Z]) extends BTSEventTrigger
+
+/*
+LogicalOperator:
+ op='and'
+ | op='or'
+ | op='xor'
+ | 'and' op='then'
+ | 'or' op='else'
+;
+*/
+// xor will allow mode negation which may be a problem
+@enum object BTSModeOperator {
+  'AND
+  'OR
+  'XOR
+  'THEN
+  'ELSE
+}
+
 
 // Brian says that this was added to support communication between Error Models and BLESS.
 // Could be relevant to GUMBO goals to for aligning mode EMv2 and BA state machines
@@ -292,12 +321,11 @@ LogicalOperator:
 //
 /* Xtext
 InternalCondition:
-	'on' 'internal' first=[aadl2::Port] ( or?='or' ports+=[aadl2::Port] )*
+	'on' 'internal' first=[aadl2::Port] ( 'or' ports+=[aadl2::Port] )*
 ;
  */
 
-// TODO: Complete grammar for internal conditions
-@datatype class BTSInternalCondition extends BTSTransitionCondition
+@datatype class BTSInternalCondition (internalports : ISZ[Name]) extends BTSTransitionCondition
 
 
 
@@ -306,23 +334,123 @@ InternalCondition:
  * ASSERTION
  *********************************************/
 
-/* XText
- (Assertion clause in separate file -- add definition later)
+
+/*
+Assertion :
+	namedassertion=NamedAssertion |
+	namelessassertion=NamelessAssertion |
+	namelessfunction=NamelessFunction |
+	namelessenumeration=NamelessEnumeration
+	;
  */
+@sig trait BTSAssertion
 
-// TODO: Add grammar for assertion
-@datatype class BTSAssertion ( /* need to add definition */ ) //extends BLESSAnnex
+/*
+NamedAssertion:
+	'<<'
+	name=ID ':'
+	(
+		formals=VariableList?
+		  ( //assertion_predicate
+		  pred?=':'  predicate=Predicate
+		  | //assertion_function
+		  'returns' tod=TypeOrReference func?=':='	functionvalue=AssertionFunctionValue
+		  )
+		| //assertion_enumeration
+		assertionvariable=ID '~' enumerationType=[TypeDeclaration] enumer?='+=>' enumeration=AssertionEnumeration
+	)
+	'>>'
+;
+ */
+@datatype class BTSNamedAssertion (label : Name,
+                                   formals : ISZ[BTSVariable],
+                                   predicate : BTSExp  //must be boolean
+                                  ) extends BTSAssertion
 
+@datatype class BTSNamedFunction (label : Name,
+                                  formals : ISZ[BTSVariable],
+                                  returns : BTSType,
+                                  functionvalue : BTSExp  //must be non-boolean
+                                 ) extends BTSAssertion
 
+@datatype class BTSNamedEnumeration (label : Name,
+                                     assertionvariable : Name,
+                                     enumerationtype : BTSType,  //must be an enumeration
+                                    enumeration : BTSAssertionEnumeration
+                                    ) extends BTSAssertion
 
+/*
+NamelessAssertion:  '<<' predicate=Predicate '>>' ;
+ */
+@datatype class BTSNamelessAssertion (predicate : BTSExp) extends BTSAssertion
 
+/*
+NamelessFunction:  '<<' 'returns' tod=TypeOrReference func?=':=' functionvalue=AssertionFunctionValue '>>' ;
+ */
+@datatype class BTSNamelessFunction (returns : BTSType,
+                                     functionvalue : BTSExp ) extends BTSAssertion
+
+/*
+NamelessEnumeration:  '<<' '+=>' enumeration=Invocation '>>';
+ */
+@datatype class BTSNamelessEnumeration (enumeration : BTSInvocation) extends BTSAssertion
+
+/*
+AssertionEnumeration:
+  pred=Invocation
+  |
+  ( pair+=EnumerationPair (',' pair+=EnumerationPair)* )
+;
+ */
+@sig trait BTSAssertionEnumeration
+
+@datatype class BTSEnumerationPairs (pairs : ISZ[BTSEnumerationPair]) extends BTSAssertionEnumeration
+
+/*
+EnumerationPair returns EnumerationPair:
+  enumeration_literal=ID '->' predicate=Predicate
+  ;
+ */
+@datatype class BTSEnumerationPair (literal : Name,
+                                    predicate : BTSExp)
+
+/*
+Invocation:
+	label=[NamedAssertion|ID]
+	'(' 	//actual_assertion_parameter_list
+	( (params+=ActualParameter ( ',' params+=ActualParameter )* )
+		|
+		actual_parameter=NumericExpression
+	)?
+	 ')'
+;
+ */
+@datatype class BTSInvocation (label : Name,
+                               params : ISZ[BTSActualParameter],
+                               actual : Option[BTSExp]) extends BTSAssertionEnumeration
+
+/*
+ActualParameter:
+	formal=ID ':' actual=Expression
+;
+ */
+@datatype class BTSActualParameter (formal : Name, actual : BTSExp)
+
+/*
+Variable:
+	name=ID '~' tod=TypeOrReference
+;
+ */
+@datatype class BTSVariable (name : Name, typ : BTSType)
 
 /*********************************************
- * SUB BLESS
+ * ACTION
  *********************************************/
-// TODO: Complete expression grammar
 
-// TODO: Complete transition action grammar
+
+/*
+
+ */
 @datatype class BTSBehaviorActions (executionOrder: BTSExecutionOrder.Type,
                                     actions: ISZ[BTSAssertedAction])
 
@@ -336,40 +464,191 @@ InternalCondition:
                                   postcondition: Option[BTSAssertion])
 
 
-
-// ACTIONS
+/*
+Action:
+   basic=BasicAction
+  | if_fi=Alternative
+  | wl=WhileLoop
+  | fl=ForLoop
+  | du=DoUntilLoop
+  | elq=ExistentialLatticeQuantification //forall_action
+  | ulq=UniversalLatticeQuantification   //behavior_action_block
+  | la=LockingAction
+;
+ */
 @sig trait BTSAction
 
+/*
+BasicAction:
+  skip='skip'
+  | assign=Assignment
+  | 'setmode' mode=[aadl2::Mode]
+  | when=WhenThrow
+  | comb=CombinableOperation
+  | communication=CommunicationAction
+  | computation=Computation
+  | multi_assign=SimultaneousAssignment
+  | exc=IssueException
+;
+ */
 @sig trait BTSBasicAction extends BTSAction
 
 @datatype class BTSSkipAction extends BTSBasicAction
 
-@datatype class BTSAssignmentAction(lhs : BTSExp,
+/*
+Assignment:
+   lhs=NameTick asgn=':=' rhs=ExpressionOrAny
+;
+ */
+@datatype class BTSAssignmentAction(lhs : BTSValueName,
+                                    tick : B,
                                     rhs : BTSExp) extends  BTSBasicAction
 
+@datatype class BTSSetMode (mode : Name) extends  BTSBasicAction
+
+/*
+WhenThrow:
+  'when' '(' exp=Expression ')' 'throw' exception=[Exception]  message=STRING?
+;
+ */
+@datatype class BTSWhenThrow (exp : BTSExp,
+                              exception : Name,
+                              message : Option[String]) extends  BTSBasicAction
+
+/*
+CombinableOperation returns CombinableOperation:
+  f_add?='fetchadd' '(' target=[Variable] ',' arithmetic=Expression ',' result=[Variable] ')'
+  |
+  ( f_or?='fetchor' | f_and?='fetchand' | f_xor?='fetchxor' )
+    '(' target=[Variable] ',' bool=Expression ( ',' result=[Variable] )? ')'
+  |
+  sw?='swap' '(' target=[Variable] ',' reference=[Variable] ',' result=[Variable] ')'
+;
+ */
+@sig trait BTSCombinableOperation extends  BTSBasicAction
+@datatype class BTSFetchAdd (target : Name,
+                             arithmetic : BTSExp,
+                             result : Name) extends BTSCombinableOperation
+@datatype class BTSFetchOr (target : Name,
+                             bool : BTSExp,
+                             result : Option[Name]) extends BTSCombinableOperation
+@datatype class BTSFetchAnd (target : Name,
+                             bool : BTSExp,
+                             result : Option[Name]) extends BTSCombinableOperation
+@datatype class BTSFetchXor (target : Name,
+                             bool : BTSExp,
+                             result : Option[Name]) extends BTSCombinableOperation
+@datatype class BTSSwap (target : Name,
+                         reference : Name,
+                         result : Name) extends BTSCombinableOperation
+
+/*
+CommunicationAction:
+  pc=SubprogramCall
+  |
+  po=PortOutput
+  |
+  pi=PortInput
+  |  //freeze port
+  fp=FreezePort
+  |
+  pause=Pause
+;
+ */
 @sig trait BTSCommunicationAction extends BTSBasicAction
 
+/*
+SubprogramCall:
+  procedure=[aadl2::SubprogramClassifier]
+  '(' parameters=FormalActualList? ')'
+;
+FormalActualList:
+  variables+=FormalActual ( comma?=',' variables+=FormalActual ( ',' variables+=FormalActual )* )?
+;
+ */
 @datatype class BTSSubprogramCallAction(name: Name,
-                                        params: ISZ[BTSFormalExpPair]) extends BTSCommunicationAction
+                                        params: ISZ[BTSFormalActual]) extends BTSCommunicationAction
 
-@datatype class BTSPortOutAction(name: Name,
+/*
+FormalActual:
+  ( formal=[aadl2::Parameter]
+    ':' )? actual=SubProgramParameter
+;
+SubProgramParameter:
+	value=ValueName
+	| constant=Constant
+	| expression=ParenthesizedSubexpression
+;
+ */
+@datatype class BTSFormalActual(formal: Name,
+                                actual: BTSExp)  //may want to be more specific about the type parameter
+
+/*
+PortOutput:
+  port=[aadl2::Port|ID]
+    '!' ( '(' eor=Expression  // ExpressionOrRelation
+    	')' )?
+;
+ */
+@datatype class BTSPortOutput(port: Name,
                                  exp: Option[BTSExp]) extends BTSCommunicationAction
+/*
+PortInput:
+  port=[aadl2::Port|ID] '?' '(' target=ValueName ')'
+   ;
+ */
+@datatype class BTSPortInput(port: Name,
+                                variable: BTSValueName) extends BTSCommunicationAction
 
-@datatype class BTSPortInAction(name: Name,
-                                variable: BTSExp) extends BTSCommunicationAction
+/*
+FreezePort:
+   'frozen' '(' frozen+=[aadl2::Port|ID] ( ','  frozen+=[aadl2::Port|ID] )* ')'
+ ;
+ */
+@datatype class BTSFrozenPortAction(ports: ISZ[Name]) extends BTSCommunicationAction
 
-@datatype class BTSFrozenPortAction(portName: Name) extends BTSCommunicationAction
-
+/*
+Pause: pause='pause' ;
+ */
+@datatype class BTSPause extends BTSCommunicationAction
 
 
 @sig trait BTSControlAction extends BTSAction
 
-@datatype class BTSIfBLESSAction (availability: Option[TODO], // TODO
+/*
+Alternative:
+  'if'
+'(' guard=BooleanExpression
+  (
+  blessalt=BLESSAlternative
+  | baalt=BAAlternative
+	)
+;
+BLESSAlternative:
+	 ')~>' action=AssertedAction
+	  ( '[]' alternative+=GuardedAction )+
+  'fi'
+;
+ */
+@datatype class BTSIfBLESSAction (availability: Option[TODO], // TODO   All availablilities have been removed from BLESS
                                   alternatives: ISZ[BTSGuardedAction]) extends BTSControlAction
 
+/*
+GuardedAction:
+  '(' guard=BooleanExpression ')~>' action=AssertedAction
+;
+ */
 @datatype class BTSGuardedAction (guard: BTSExp,
                                   action: BTSAssertedAction)
-
+/*
+BAAlternative:
+   //BA2015 reconciliation  add if-elsif-else-end if
+  ')' actions+=BehaviorActions
+  ('elsif' '(' test+=BooleanExpression ')' actions+=BehaviorActions  )*
+  ('else' actions+=BehaviorActions)?
+  'end' 'if'
+;
+ */
 @datatype class BTSIfBAAction (ifBranch: BTSConditionalActions,
                                elseIfBranches: ISZ[BTSConditionalActions],
                                elseBranch: Option[BTSBehaviorActions]) extends BTSControlAction
@@ -377,18 +656,106 @@ InternalCondition:
 @datatype class BTSConditionalActions (cond: BTSExp,
                                        actions: BTSBehaviorActions)
 
+/*
+WhileLoop:
+  'while'
+  '(' test=BooleanExpression ')'
+  ( invariant?='invariant' inv=NamelessAssertion )?
+  ( bound?='bound' bound_function=Expression )?
+  elq=ExistentialLatticeQuantification
+;
+ */
+@datatype class BTSWhileLoop (test : BTSExp,
+                              invariant : Option[BTSNamelessAssertion],
+                              bound : Option[BTSExp],
+                              elq : BTSExistentialLatticeQuantification) extends BTSControlAction
+
+/*
+ForLoop:
+  'for'
+  count=ForallVariable
+  'in' lower_bound=Expression DOTDOT upper_bound=Expression
+  ( invariant?='invariant' inv=NamelessAssertion )?
+  '{'  action=BehaviorActions '}'
+;
+ForallVariable:
+  name=ID
+;
+ */
+@datatype class BTSForLoop (count : Name,
+                            lowerbound : BTSExp,
+                            upperbound : BTSExp,
+                            invariant : Option[BTSNamelessAssertion],
+                            actions : BTSBehaviorActions
+                           ) extends BTSControlAction
+
+/*
+DoUntilLoop:
+  'do'
+  ( invariant?='invariant' inv=NamelessAssertion )?
+  ( bound?='bound' bnd=Expression )?
+  actions=BehaviorActions
+  'until' '(' guard=BooleanExpression ')'
+;
+ */
+@datatype class BTSDoUntilLoop (invariant : Option[BTSNamelessAssertion],
+                                bound : Option[BTSExp],
+                                actions : BTSBehaviorActions,
+                                guard :BTSExp
+                               ) extends BTSControlAction
 
 
 @sig trait BTSQuantificationActions extends BTSAction
 
+/*
+ExistentialLatticeQuantification:
+  quantified_variables=QuantifiedVariables?
+  '{'
+  actions=BehaviorActions
+   '}'
+  timeout=ActionTimeout?
+  catch_clause=CatchClause?
+;
+QuantifiedVariables:
+  'declare' variables+=VariableDeclaration+
+;
+ActionTimeout:
+  'timeout' duration=BehaviorTime
+;
+CatchClause:
+  'catch'
+  ( catches+=CatchClauseTerm )+
+;
+ */
 @datatype class BTSExistentialLatticeQuantification (quantifiedVariables: ISZ[BTSVariableDeclaration],
                                                      actions: BTSBehaviorActions,
-                                                     timeout: Option[BTSBehaviorTime],
-                                                     catchClause: Option[TODO] // TODO
+                                                     timeout: Option[BTSExp],
+                                                     catchClause: ISZ[BTSCatchClauseTerm]
                                                     ) extends BTSQuantificationActions
 
+/*
+CatchClauseTerm:
+  '(' //exception_label
+  ( exceptions+=[Exception]+ | all?='all' ) ':' action=BasicAction
+  ')'
+;
+ */
+@datatype class BTSCatchClauseTerm (exceptions : ISZ[Name],
+                                    all : B,
+                                    action : BTSBasicAction)
+
+/*
+UniversalLatticeQuantification returns UniversalLatticeQuantification:
+//  {UniversalLatticeQuantification}
+  'forall'
+  variables+=ForallVariable+
+    'in'   lower_bound=Expression  DOTDOT upper_bound=Expression
+  elq=ExistentialLatticeQuantification
+;
+ */
 @datatype class BTSUniversalLatticeQuantification (latticeVariables: ISZ[Name],
-                                                   range: Option[TODO], // TODO
+                                                   lowerbound : BTSExp,
+                                                   upperbound : BTSExp,
                                                    elq: BTSExistentialLatticeQuantification
                                                   ) extends BTSQuantificationActions
 
@@ -398,7 +765,7 @@ InternalCondition:
 
 
 
-// EXPRESSIONS
+///////////////   EXPRESSION        ///////////////////
 @sig trait BTSExp
 
 @datatype class BTSUnaryExp(op: BTSUnaryOp.Type,
@@ -408,6 +775,9 @@ InternalCondition:
   'ABS
   'NEG
   'NOT
+  'TRUNCATE
+  'ROUND
+  'TICK
 }
 
 @datatype class BTSBinaryExp(op: BTSBinaryOp.Type,
@@ -420,6 +790,8 @@ InternalCondition:
   'OR
   'ORELSE
   'XOR
+  'IFF
+  'IMPLIES
 
   'EQ
   'NEQ
@@ -427,14 +799,20 @@ InternalCondition:
   'LTE
   'GT
   'GTE
+  'FA
+  'IN
 
   'PLUS
   'MINUS
-  'DIV
+  'DIVIDE
   'MULT
+  'DIV
   'MOD
   'REM
   'EXP
+
+  'AT
+  'CARET
 }
 
 @enum object BTSLiteralType {
@@ -442,29 +820,194 @@ InternalCondition:
   'STRING
   'INTEGER
   'FLOAT
+  'NUMBER
   // NULL, INT, LONG, CHAR, DOUBLE, RATIONAL
 }
 
 @datatype class BTSLiteralExp(typ: BTSLiteralType.Type,
-                              exp: String) extends BTSExp
+                              exp: String
+                             unit : Option[Name]) extends BTSExp
 
-@datatype class BTSNameExp(name: Name) extends BTSExp
 
-@datatype class BTSIndexingExp(exp: BTSExp,
+@sig trait BTSValueName extends BTSExp
+
+@datatype class BTSVariableNameExp(name: Name,
+                                   arrayindex : ISZ[BTSExp],
+                                  pn : ISZ[BTSPartialName]) extends BTSValueName
+/*
+PartialName:
+	record_id=ID  //[RecordField]
+	 ( lb?='[' array_index+=IndexExpressionOrRange ']'
+		( '[' array_index+=IndexExpressionOrRange ']' )* )?
+;
+ */
+@datatype class BTSPartialName (label : Name,
+                                arrayindex : ISZ[BTSExp])
+
+// WHAT IS THIS FOR?
+@datatype class BTSIndexingExp (exp: BTSExp,
                                indices: ISZ[BTSExp]) extends BTSExp
 
-@datatype class BTSAccessExp(exp: BTSExp,
+// WHAT IS THIS FOR?
+@datatype class BTSAccessExp (exp: BTSExp,
                              attributeName: String) extends BTSExp
 
-@datatype class BTSFunctionCall(name: Name,
-                                args: ISZ[BTSFormalExpPair]) extends BTSExp
+@datatype class BTSFunctionCall (name: Name,
+                                args: ISZ[BTSFormalActual]) extends BTSValueName
 
-@datatype class BTSFormalExpPair(paramName: Option[Name],
-                                 exp: Option[BTSExp])
+@datatype class BTSPortValue (port : Name,
+                                valuekind : BTSPortValueKind.Type )
+
+@enum object BTSPortValueKind {
+  'Q
+  'FRESH
+  'COUNT
+  'UPDATED
+}
+
+@datatype class BTSConditionalExpression (guard : BTSExp,
+                                          t : BTSExp,
+                                          f : BTSExp) extends BTSExp
+@datatype class BTSRange (lb : BTSExp,
+                          sym : BTSRangeSymbol.Type,
+                          ub : BTSExp) extends BTSExp
+@enum object BTSRangeSymbol {
+  'DOTDOT
+  'DOTCOMMA
+  'COMMADOT
+  'COMMACOMMA
+}
+
+@datatype class BTSTrue extends BTSExp
+@datatype class BTSFalse extends BTSExp
+@datatype class BTSNull extends BTSExp
+@datatype class BTSPropertyConstant (propertyset : Name,
+                                     propertyconstant : Name) extends BTSExp
+
+/*
+PropertyReference:
+'#' pname=[aadl2::Property|QCLREF] ( field+=PropertyField )*
+//component_element_reference
+| self?='self' '#' spname=[aadl2::Property|QCLREF] ( field+=PropertyField )*
+| component=[aadl2::ComponentClassifier|QCREF] '#' cpname=[aadl2::Property|QCLREF]
+   ( field+=PropertyField )*
+;
+ */
+@sig trait BTSPropertyReference extends BTSExp
+@datatype class BTSPropertySetProperty (propertyset : Option[Name],
+                                        propertyconstant : Name,
+                                        field : ISZ[BTSPropertyField]) extends BTSExp
+@datatype class BTSSelfProperty (propertyset : Option[Name],
+                                 propertyconstant : Name,
+                                 field : ISZ[BTSPropertyField]) extends BTSExp
+@datatype class BTSComponentProperty (component : BTSComponent,
+                                      propertyset : Option[Name],
+                                      propertyconstant : Name,
+                                      field : ISZ[BTSPropertyField]) extends BTSExp
+
+/*
+QCREF:
+	(ID '::')* ID ('.' ID)?;
+ */
+@datatype class BTSComponent (packageids : ISZ[Name],
+                              component : Name,
+                              impl : Option[Name])
+
+/*
+PropertyField:
+	'[' (index=NUMBER | variable=[Variable]) ']'  //must check that number is integer
+	| '.'  (pf=ID | upper='upper_bound' | lower='lower_bound')
+;
+ */
+@datatype class BTSPropertyField (index : Option[Z],
+                                  variable : Option[Name],
+                                  pf : Option[Name],
+                                  upper : B,
+                                  lower : B)
 
 
+  //@datatype class BTSBehaviorTime // TODO
 
-@datatype class BTSBehaviorTime // TODO
+/////////////////////////   TYPE    ///////////////////////////  BTSExp
+
+//////////////////////  ASSERTION   ///////////////////
+
+/*
+UniversalQuantification:
+  'all' variables=LogicVariables
+    (in?='in' range=Range | which?='which' condition=Predicate )
+     'are' predicate=Predicate
+;
+ */
+  @datatype class BTSUniversalQuantification (variables : ISZ[BTSVariable],
+                                              range : Option[BTCRange],
+                                              condition : Option[BTCExp],
+                                              predicate : BTSExp
+                                             ) extends BTSExp
+
+/*
+ExistentialQuantification:
+  'exists' variables=LogicVariables
+    (in?='in' range=Range | which?='which' condition=Predicate )
+     'that' predicate=Predicate
+;
+ */
+  @datatype class BTSExistentialQuantification (variables : ISZ[BTSVariable],
+                                                range : Option[BTCRange],
+                                                condition : Option[BTCExp],
+                                                predicate : BTSExp
+                                               ) extends BTSExp
+
+/*
+SumQuantification:
+  'sum' variables=LogicVariables
+    (in?='in' range=Range | which?='which' condition=Predicate )
+     'of' numeric_expression=NumericExpression ;
+ */
+  @datatype class BTSSumQuantification (variables : ISZ[BTSVariable],
+                                        range : Option[BTCRange],
+                                        condition : Option[BTCExp],
+                                        expression : BTSExp
+                                       ) extends BTSExp
+
+/*
+ProductQuantification:
+  'product' variables=LogicVariables
+    (in?='in' range=Range | which?='which' condition=Predicate )
+     'of' numeric_expression=NumericExpression ;
+ */
+  @datatype class BTSProductQuantification (variables : ISZ[BTSVariable],
+                                            range : Option[BTCRange],
+                                            condition : Option[BTCExp],
+                                            expression : BTSExp
+                                           ) extends BTSExp
+
+/*
+CountingQuantification:
+  'numberof' variables=LogicVariables
+    (in?='in' range=Range | which?='which' condition=Predicate )
+     'that' counted=Predicate ;
+ */
+  @datatype class BTSCountingQuantification (variables : ISZ[BTSVariable],
+                                             range : Option[BTCRange],
+                                             condition : Option[BTCExp],
+                                             predicate : BTSExp
+                                            ) extends BTSExp
+/*
+Variable:
+	name=ID '~' tod=TypeOrReference
+;
+ */
+  @datatype class BTSVariable(name : Name,
+                              tod : BTSTypeOrReference)
+
+
+////////////////   TYPE   ////////////////////
+
+@sig trait BTSType
+
+//type as data component for BA
+  @datatype class BTSClassifier (classifier: BTSComponent) extends BTSType
 
 
 @datatype class TODO

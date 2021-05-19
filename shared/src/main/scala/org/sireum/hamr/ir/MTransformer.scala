@@ -429,6 +429,10 @@ object MTransformer {
 
   val PostResultTODO: MOption[TODO] = MNone()
 
+  val PreResultAttr: PreResult[Attr] = PreResult(T, MNone())
+
+  val PostResultAttr: MOption[Attr] = MNone()
+
 }
 
 import MTransformer._
@@ -1720,6 +1724,10 @@ import MTransformer._
     return PreResultTODO
   }
 
+  def preAttr(o: Attr): PreResult[Attr] = {
+    return PreResultAttr
+  }
+
   def postSmfAnnex(o: SmfAnnex): MOption[SmfAnnex] = {
     o match {
       case o: SmfClause =>
@@ -3003,6 +3011,10 @@ import MTransformer._
 
   def postTODO(o: TODO): MOption[TODO] = {
     return PostResultTODO
+  }
+
+  def postAttr(o: Attr): MOption[Attr] = {
+    return PostResultAttr
   }
 
   def transformSmfAnnex(o: SmfAnnex): MOption[SmfAnnex] = {
@@ -6774,6 +6786,32 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: TODO = r.getOrElse(o)
     val postR: MOption[TODO] = postTODO(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformAttr(o: Attr): MOption[Attr] = {
+    val preR: PreResult[Attr] = preAttr(o)
+    val r: MOption[Attr] = if (preR.continu) {
+      val o2: Attr = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: Attr = r.getOrElse(o)
+    val postR: MOption[Attr] = postAttr(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

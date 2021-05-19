@@ -852,7 +852,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""BTSUnaryExp""""),
         ("op", printBTSUnaryOpType(o.op)),
-        ("exp", printBTSExp(o.exp))
+        ("exp", printBTSExp(o.exp)),
+        ("pos", printOption(F, o.pos, printPosition _))
       ))
     }
 
@@ -873,7 +874,8 @@ object JSON {
         ("type", st""""BTSBinaryExp""""),
         ("op", printBTSBinaryOpType(o.op)),
         ("lhs", printBTSExp(o.lhs)),
-        ("rhs", printBTSExp(o.rhs))
+        ("rhs", printBTSExp(o.rhs)),
+        ("pos", printOption(F, o.pos, printPosition _))
       ))
     }
 
@@ -921,14 +923,16 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""BTSLiteralExp""""),
         ("typ", printBTSLiteralTypeType(o.typ)),
-        ("exp", printString(o.exp))
+        ("exp", printString(o.exp)),
+        ("pos", printOption(F, o.pos, printPosition _))
       ))
     }
 
     @pure def printBTSNameExp(o: BTSNameExp): ST = {
       return printObject(ISZ(
         ("type", st""""BTSNameExp""""),
-        ("name", printName(o.name))
+        ("name", printName(o.name)),
+        ("pos", printOption(F, o.pos, printPosition _))
       ))
     }
 
@@ -936,7 +940,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""BTSIndexingExp""""),
         ("exp", printBTSExp(o.exp)),
-        ("indices", printISZ(F, o.indices, printBTSExp _))
+        ("indices", printISZ(F, o.indices, printBTSExp _)),
+        ("pos", printOption(F, o.pos, printPosition _))
       ))
     }
 
@@ -944,7 +949,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""BTSAccessExp""""),
         ("exp", printBTSExp(o.exp)),
-        ("attributeName", printString(o.attributeName))
+        ("attributeName", printString(o.attributeName)),
+        ("pos", printOption(F, o.pos, printPosition _))
       ))
     }
 
@@ -952,7 +958,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""BTSFunctionCall""""),
         ("name", printName(o.name)),
-        ("args", printISZ(F, o.args, printBTSFormalExpPair _))
+        ("args", printISZ(F, o.args, printBTSFormalExpPair _)),
+        ("pos", printOption(F, o.pos, printPosition _))
       ))
     }
 
@@ -960,7 +967,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""BTSFormalExpPair""""),
         ("paramName", printOption(F, o.paramName, printName _)),
-        ("exp", printOption(F, o.exp, printBTSExp _))
+        ("exp", printOption(F, o.exp, printBTSExp _)),
+        ("pos", printOption(F, o.pos, printPosition _))
       ))
     }
 
@@ -973,6 +981,13 @@ object JSON {
     @pure def printTODO(o: TODO): ST = {
       return printObject(ISZ(
         ("type", st""""TODO"""")
+      ))
+    }
+
+    @pure def printAttr(o: Attr): ST = {
+      return printObject(ISZ(
+        ("type", st""""Attr""""),
+        ("posOpt", printOption(F, o.posOpt, printPosition _))
       ))
     }
 
@@ -2846,7 +2861,10 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parseBTSExp()
       parser.parseObjectNext()
-      return BTSUnaryExp(op, exp)
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return BTSUnaryExp(op, exp, pos)
     }
 
     def parseBTSUnaryOpType(): BTSUnaryOp.Type = {
@@ -2888,7 +2906,10 @@ object JSON {
       parser.parseObjectKey("rhs")
       val rhs = parseBTSExp()
       parser.parseObjectNext()
-      return BTSBinaryExp(op, lhs, rhs)
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return BTSBinaryExp(op, lhs, rhs, pos)
     }
 
     def parseBTSBinaryOpType(): BTSBinaryOp.Type = {
@@ -2948,7 +2969,10 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parser.parseString()
       parser.parseObjectNext()
-      return BTSLiteralExp(typ, exp)
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return BTSLiteralExp(typ, exp, pos)
     }
 
     def parseBTSNameExp(): BTSNameExp = {
@@ -2963,7 +2987,10 @@ object JSON {
       parser.parseObjectKey("name")
       val name = parseName()
       parser.parseObjectNext()
-      return BTSNameExp(name)
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return BTSNameExp(name, pos)
     }
 
     def parseBTSIndexingExp(): BTSIndexingExp = {
@@ -2981,7 +3008,10 @@ object JSON {
       parser.parseObjectKey("indices")
       val indices = parser.parseISZ(parseBTSExp _)
       parser.parseObjectNext()
-      return BTSIndexingExp(exp, indices)
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return BTSIndexingExp(exp, indices, pos)
     }
 
     def parseBTSAccessExp(): BTSAccessExp = {
@@ -2999,7 +3029,10 @@ object JSON {
       parser.parseObjectKey("attributeName")
       val attributeName = parser.parseString()
       parser.parseObjectNext()
-      return BTSAccessExp(exp, attributeName)
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return BTSAccessExp(exp, attributeName, pos)
     }
 
     def parseBTSFunctionCall(): BTSFunctionCall = {
@@ -3017,7 +3050,10 @@ object JSON {
       parser.parseObjectKey("args")
       val args = parser.parseISZ(parseBTSFormalExpPair _)
       parser.parseObjectNext()
-      return BTSFunctionCall(name, args)
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return BTSFunctionCall(name, args, pos)
     }
 
     def parseBTSFormalExpPair(): BTSFormalExpPair = {
@@ -3035,7 +3071,10 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parser.parseOption(parseBTSExp _)
       parser.parseObjectNext()
-      return BTSFormalExpPair(paramName, exp)
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return BTSFormalExpPair(paramName, exp, pos)
     }
 
     def parseBTSBehaviorTime(): BTSBehaviorTime = {
@@ -3060,6 +3099,21 @@ object JSON {
         parser.parseObjectType("TODO")
       }
       return TODO()
+    }
+
+    def parseAttr(): Attr = {
+      val r = parseAttrT(F)
+      return r
+    }
+
+    def parseAttrT(typeParsed: B): Attr = {
+      if (!typeParsed) {
+        parser.parseObjectType("Attr")
+      }
+      parser.parseObjectKey("posOpt")
+      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return Attr(posOpt)
     }
 
     def parseEmv2Annex(): Emv2Annex = {
@@ -5199,6 +5253,24 @@ object JSON {
       return r
     }
     val r = to(s, fTODO _)
+    return r
+  }
+
+  def fromAttr(o: Attr, isCompact: B): String = {
+    val st = Printer.printAttr(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toAttr(s: String): Either[Attr, Json.ErrorMsg] = {
+    def fAttr(parser: Parser): Attr = {
+      val r = parser.parseAttr()
+      return r
+    }
+    val r = to(s, fAttr _)
     return r
   }
 

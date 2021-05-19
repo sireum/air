@@ -168,55 +168,57 @@ object MsgPack {
 
     val TODO: Z = 33
 
-    val Emv2ElementRef: Z = 34
+    val Attr: Z = 34
 
-    val Emv2Library: Z = 35
+    val Emv2ElementRef: Z = 35
 
-    val ErrorTypeDef: Z = 36
+    val Emv2Library: Z = 36
 
-    val ErrorAliasDef: Z = 37
+    val ErrorTypeDef: Z = 37
 
-    val ErrorTypeSetDef: Z = 38
+    val ErrorAliasDef: Z = 38
 
-    val BehaveStateMachine: Z = 39
+    val ErrorTypeSetDef: Z = 39
 
-    val ErrorEvent: Z = 40
+    val BehaveStateMachine: Z = 40
 
-    val ErrorState: Z = 41
+    val ErrorEvent: Z = 41
 
-    val ErrorTransition: Z = 42
+    val ErrorState: Z = 42
 
-    val ConditionTrigger: Z = 43
+    val ErrorTransition: Z = 43
 
-    val AndCondition: Z = 44
+    val ConditionTrigger: Z = 44
 
-    val OrCondition: Z = 45
+    val AndCondition: Z = 45
 
-    val AllCondition: Z = 46
+    val OrCondition: Z = 46
 
-    val OrMoreCondition: Z = 47
+    val AllCondition: Z = 47
 
-    val OrLessCondition: Z = 48
+    val OrMoreCondition: Z = 48
 
-    val Emv2Clause: Z = 49
+    val OrLessCondition: Z = 49
 
-    val Emv2Propagation: Z = 50
+    val Emv2Clause: Z = 50
 
-    val Emv2Flow: Z = 51
+    val Emv2Propagation: Z = 51
 
-    val Emv2BehaviorSection: Z = 52
+    val Emv2Flow: Z = 52
 
-    val ErrorPropagation: Z = 53
+    val Emv2BehaviorSection: Z = 53
 
-    val SmfClause: Z = 54
+    val ErrorPropagation: Z = 54
 
-    val SmfClassification: Z = 55
+    val SmfClause: Z = 55
 
-    val SmfDeclass: Z = 56
+    val SmfClassification: Z = 56
 
-    val SmfLibrary: Z = 57
+    val SmfDeclass: Z = 57
 
-    val SmfType: Z = 58
+    val SmfLibrary: Z = 58
+
+    val SmfType: Z = 59
 
   }
 
@@ -819,6 +821,7 @@ object MsgPack {
       writer.writeZ(Constants.BTSUnaryExp)
       writeBTSUnaryOpType(o.op)
       writeBTSExp(o.exp)
+      writer.writeOption(o.pos, writer.writePosition _)
     }
 
     def writeBTSUnaryOpType(o: BTSUnaryOp.Type): Unit = {
@@ -830,6 +833,7 @@ object MsgPack {
       writeBTSBinaryOpType(o.op)
       writeBTSExp(o.lhs)
       writeBTSExp(o.rhs)
+      writer.writeOption(o.pos, writer.writePosition _)
     }
 
     def writeBTSBinaryOpType(o: BTSBinaryOp.Type): Unit = {
@@ -844,35 +848,41 @@ object MsgPack {
       writer.writeZ(Constants.BTSLiteralExp)
       writeBTSLiteralTypeType(o.typ)
       writer.writeString(o.exp)
+      writer.writeOption(o.pos, writer.writePosition _)
     }
 
     def writeBTSNameExp(o: BTSNameExp): Unit = {
       writer.writeZ(Constants.BTSNameExp)
       writeName(o.name)
+      writer.writeOption(o.pos, writer.writePosition _)
     }
 
     def writeBTSIndexingExp(o: BTSIndexingExp): Unit = {
       writer.writeZ(Constants.BTSIndexingExp)
       writeBTSExp(o.exp)
       writer.writeISZ(o.indices, writeBTSExp _)
+      writer.writeOption(o.pos, writer.writePosition _)
     }
 
     def writeBTSAccessExp(o: BTSAccessExp): Unit = {
       writer.writeZ(Constants.BTSAccessExp)
       writeBTSExp(o.exp)
       writer.writeString(o.attributeName)
+      writer.writeOption(o.pos, writer.writePosition _)
     }
 
     def writeBTSFunctionCall(o: BTSFunctionCall): Unit = {
       writer.writeZ(Constants.BTSFunctionCall)
       writeName(o.name)
       writer.writeISZ(o.args, writeBTSFormalExpPair _)
+      writer.writeOption(o.pos, writer.writePosition _)
     }
 
     def writeBTSFormalExpPair(o: BTSFormalExpPair): Unit = {
       writer.writeZ(Constants.BTSFormalExpPair)
       writer.writeOption(o.paramName, writeName _)
       writer.writeOption(o.exp, writeBTSExp _)
+      writer.writeOption(o.pos, writer.writePosition _)
     }
 
     def writeBTSBehaviorTime(o: BTSBehaviorTime): Unit = {
@@ -881,6 +891,11 @@ object MsgPack {
 
     def writeTODO(o: TODO): Unit = {
       writer.writeZ(Constants.TODO)
+    }
+
+    def writeAttr(o: Attr): Unit = {
+      writer.writeZ(Constants.Attr)
+      writer.writeOption(o.posOpt, writer.writePosition _)
     }
 
     def writeEmv2Annex(o: Emv2Annex): Unit = {
@@ -2294,7 +2309,8 @@ object MsgPack {
       }
       val op = readBTSUnaryOpType()
       val exp = readBTSExp()
-      return BTSUnaryExp(op, exp)
+      val pos = reader.readOption(reader.readPosition _)
+      return BTSUnaryExp(op, exp, pos)
     }
 
     def readBTSUnaryOpType(): BTSUnaryOp.Type = {
@@ -2314,7 +2330,8 @@ object MsgPack {
       val op = readBTSBinaryOpType()
       val lhs = readBTSExp()
       val rhs = readBTSExp()
-      return BTSBinaryExp(op, lhs, rhs)
+      val pos = reader.readOption(reader.readPosition _)
+      return BTSBinaryExp(op, lhs, rhs, pos)
     }
 
     def readBTSBinaryOpType(): BTSBinaryOp.Type = {
@@ -2338,7 +2355,8 @@ object MsgPack {
       }
       val typ = readBTSLiteralTypeType()
       val exp = reader.readString()
-      return BTSLiteralExp(typ, exp)
+      val pos = reader.readOption(reader.readPosition _)
+      return BTSLiteralExp(typ, exp, pos)
     }
 
     def readBTSNameExp(): BTSNameExp = {
@@ -2351,7 +2369,8 @@ object MsgPack {
         reader.expectZ(Constants.BTSNameExp)
       }
       val name = readName()
-      return BTSNameExp(name)
+      val pos = reader.readOption(reader.readPosition _)
+      return BTSNameExp(name, pos)
     }
 
     def readBTSIndexingExp(): BTSIndexingExp = {
@@ -2365,7 +2384,8 @@ object MsgPack {
       }
       val exp = readBTSExp()
       val indices = reader.readISZ(readBTSExp _)
-      return BTSIndexingExp(exp, indices)
+      val pos = reader.readOption(reader.readPosition _)
+      return BTSIndexingExp(exp, indices, pos)
     }
 
     def readBTSAccessExp(): BTSAccessExp = {
@@ -2379,7 +2399,8 @@ object MsgPack {
       }
       val exp = readBTSExp()
       val attributeName = reader.readString()
-      return BTSAccessExp(exp, attributeName)
+      val pos = reader.readOption(reader.readPosition _)
+      return BTSAccessExp(exp, attributeName, pos)
     }
 
     def readBTSFunctionCall(): BTSFunctionCall = {
@@ -2393,7 +2414,8 @@ object MsgPack {
       }
       val name = readName()
       val args = reader.readISZ(readBTSFormalExpPair _)
-      return BTSFunctionCall(name, args)
+      val pos = reader.readOption(reader.readPosition _)
+      return BTSFunctionCall(name, args, pos)
     }
 
     def readBTSFormalExpPair(): BTSFormalExpPair = {
@@ -2407,7 +2429,8 @@ object MsgPack {
       }
       val paramName = reader.readOption(readName _)
       val exp = reader.readOption(readBTSExp _)
-      return BTSFormalExpPair(paramName, exp)
+      val pos = reader.readOption(reader.readPosition _)
+      return BTSFormalExpPair(paramName, exp, pos)
     }
 
     def readBTSBehaviorTime(): BTSBehaviorTime = {
@@ -2432,6 +2455,19 @@ object MsgPack {
         reader.expectZ(Constants.TODO)
       }
       return TODO()
+    }
+
+    def readAttr(): Attr = {
+      val r = readAttrT(F)
+      return r
+    }
+
+    def readAttrT(typeParsed: B): Attr = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.Attr)
+      }
+      val posOpt = reader.readOption(reader.readPosition _)
+      return Attr(posOpt)
     }
 
     def readEmv2Annex(): Emv2Annex = {
@@ -4155,6 +4191,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fTODO _)
+    return r
+  }
+
+  def fromAttr(o: Attr, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeAttr(o)
+    return w.result
+  }
+
+  def toAttr(data: ISZ[U8]): Either[Attr, MessagePack.ErrorMsg] = {
+    def fAttr(reader: Reader): Attr = {
+      val r = reader.readAttr()
+      return r
+    }
+    val r = to(data, fAttr _)
     return r
   }
 

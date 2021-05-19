@@ -26,6 +26,7 @@
 package org.sireum.hamr.ir
 
 import org.sireum._
+import org.sireum.message.Position
 
 /* ===============================================================================
  *
@@ -116,7 +117,7 @@ Declarator:
                                          category: Option[BTSVariableCategory.Type],
                                          varType: BTSType,
                                          assignExpression: Option[BTSExp],
-                                           arraySize: Option[BLESSIntConst],
+                                         arraySize: Option[BLESSIntConst],
                                          variableAssertion: Option[BTSAssertion]) //extends BTSBLESSAnnexClause
 
 // Categories of behavior variables in BA/BLESS
@@ -399,10 +400,15 @@ InternalCondition:
 
 
 // EXPRESSIONS
-@sig trait BTSExp
+@sig trait BTSExp {
+  // adding pos because 1) because it will eventually be useful, and
+  //                    2) a quick way to ensure hash values are unique -- assuming pos is populated
+  @pure def pos: Option[Position]
+}
 
 @datatype class BTSUnaryExp(op: BTSUnaryOp.Type,
-                            exp: BTSExp) extends BTSExp
+                            exp: BTSExp,
+                            val pos: Option[Position]) extends BTSExp
 
 @enum object BTSUnaryOp {
   'ABS
@@ -412,7 +418,8 @@ InternalCondition:
 
 @datatype class BTSBinaryExp(op: BTSBinaryOp.Type,
                              lhs: BTSExp,
-                             rhs: BTSExp) extends BTSExp
+                             rhs: BTSExp,
+                             val pos: Option[Position]) extends BTSExp
 
 @enum object BTSBinaryOp {
   'AND
@@ -446,21 +453,27 @@ InternalCondition:
 }
 
 @datatype class BTSLiteralExp(typ: BTSLiteralType.Type,
-                              exp: String) extends BTSExp
+                              exp: String,
+                              val pos: Option[Position]) extends BTSExp
 
-@datatype class BTSNameExp(name: Name) extends BTSExp
+@datatype class BTSNameExp(name: Name,
+                           val pos: Option[Position]) extends BTSExp
 
 @datatype class BTSIndexingExp(exp: BTSExp,
-                               indices: ISZ[BTSExp]) extends BTSExp
+                               indices: ISZ[BTSExp],
+                               val pos: Option[Position]) extends BTSExp
 
 @datatype class BTSAccessExp(exp: BTSExp,
-                             attributeName: String) extends BTSExp
+                             attributeName: String,
+                             val pos: Option[Position]) extends BTSExp
 
 @datatype class BTSFunctionCall(name: Name,
-                                args: ISZ[BTSFormalExpPair]) extends BTSExp
+                                args: ISZ[BTSFormalExpPair],
+                                val pos: Option[Position]) extends BTSExp
 
 @datatype class BTSFormalExpPair(paramName: Option[Name],
-                                 exp: Option[BTSExp])
+                                 exp: Option[BTSExp],
+                                 val pos: Option[Position])
 
 
 
@@ -468,3 +481,6 @@ InternalCondition:
 
 
 @datatype class TODO
+
+
+@datatype class Attr(posOpt: Option[Position])

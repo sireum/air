@@ -1334,6 +1334,10 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def preAttr(ctx: Context, o: Attr): PreResult[Context, Attr] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def postSmfAnnex(ctx: Context, o: SmfAnnex): TPostResult[Context, SmfAnnex] = {
       o match {
         case o: SmfClause =>
@@ -2616,6 +2620,10 @@ object Transformer {
     }
 
     @pure def postTODO(ctx: Context, o: TODO): TPostResult[Context, TODO] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postAttr(ctx: Context, o: Attr): TPostResult[Context, Attr] = {
       return TPostResult(ctx, None())
     }
 
@@ -6426,6 +6434,32 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: TODO = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, TODO] = pp.postTODO(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformAttr(ctx: Context, o: Attr): TPostResult[Context, Attr] = {
+    val preR: PreResult[Context, Attr] = pp.preAttr(ctx, o)
+    val r: TPostResult[Context, Attr] = if (preR.continu) {
+      val o2: Attr = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        TPostResult(preR.ctx, Some(o2))
+      else
+        TPostResult(preR.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: Attr = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, Attr] = pp.postAttr(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {

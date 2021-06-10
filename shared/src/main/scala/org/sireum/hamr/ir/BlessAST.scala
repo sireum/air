@@ -116,11 +116,11 @@ Variable:
 
 // Categories of behavior variables in BA/BLESS
 @enum object BTSVariableCategory {
-  'Nonvolatile
-  'Shared
-  'Constant
-  'Spread
-  'Final
+  "Nonvolatile"
+  "Shared"
+  "Constant"
+  "Spread"
+  "Final"
 }
 
 /* XText

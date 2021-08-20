@@ -7,7 +7,7 @@ if [ ! -e sireum ]; then
   chmod +x sireum
 fi
 if [ ! -e mill-standalone ]; then
-  ${CURL} mill-standalone https://github.com/sireum/releases/releases/download/mill/mill
+  ${CURL} mill-standalone https://github.com/sireum/rolling/releases/download/mill/standalone
   chmod +x mill-standalone
 fi
 if [ ! -e versions.properties ]; then

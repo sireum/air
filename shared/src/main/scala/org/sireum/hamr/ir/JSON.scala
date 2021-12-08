@@ -26,7 +26,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// This file is auto-generated from AadlAST.scala, BlessAST.scala, Emv2AST.scala, SmfAST.scala
+// This file is auto-generated from AadlAST.scala, BlessAST.scala, Emv2AST.scala, GumboAST.scala, SmfAST.scala
 
 package org.sireum.hamr.ir
 
@@ -431,6 +431,7 @@ object JSON {
         case o: Emv2BehaviorSection => return printEmv2BehaviorSection(o)
         case o: ErrorPropagation => return printErrorPropagation(o)
         case o: OtherAnnex => return printOtherAnnex(o)
+        case o: GclSubclause => return printGclSubclause(o)
         case o: BTSBLESSAnnexClause => return printBTSBLESSAnnexClause(o)
       }
     }
@@ -1246,6 +1247,150 @@ object JSON {
       ))
     }
 
+    @pure def printGclAnnex(o: GclAnnex): ST = {
+      o match {
+        case o: GclSubclause => return printGclSubclause(o)
+      }
+    }
+
+    @pure def printGclSubclause(o: GclSubclause): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclSubclause""""),
+        ("state", printISZ(F, o.state, printGclStateVar _)),
+        ("invariants", printISZ(F, o.invariants, printGclInvariant _)),
+        ("initializes", printISZ(F, o.initializes, printGclGuarantee _)),
+        ("integration", printOption(F, o.integration, printGclIntegration _)),
+        ("compute", printOption(F, o.compute, printGclCompute _))
+      ))
+    }
+
+    @pure def printGclStateVar(o: GclStateVar): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclStateVar""""),
+        ("name", printString(o.name)),
+        ("exp", printGclExp(o.exp))
+      ))
+    }
+
+    @pure def printGclInvariant(o: GclInvariant): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclInvariant""""),
+        ("name", printString(o.name)),
+        ("exp", printGclExp(o.exp))
+      ))
+    }
+
+    @pure def printGclGuarantee(o: GclGuarantee): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclGuarantee""""),
+        ("name", printString(o.name)),
+        ("exp", printGclExp(o.exp))
+      ))
+    }
+
+    @pure def printGclIntegration(o: GclIntegration): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclIntegration"""")
+      ))
+    }
+
+    @pure def printGclCompute(o: GclCompute): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclCompute"""")
+      ))
+    }
+
+    @pure def printGclExp(o: GclExp): ST = {
+      o match {
+        case o: GclUnaryExp => return printGclUnaryExp(o)
+        case o: GclBinaryExp => return printGclBinaryExp(o)
+        case o: GclLiteralExp => return printGclLiteralExp(o)
+      }
+    }
+
+    @pure def printGclUnaryOpType(o: GclUnaryOp.Type): ST = {
+      val value: String = o match {
+        case GclUnaryOp.Abs => "Abs"
+        case GclUnaryOp.Neg => "Neg"
+        case GclUnaryOp.Not => "Not"
+      }
+      return printObject(ISZ(
+        ("type", printString("GclUnaryOp")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def printGclBinaryOpType(o: GclBinaryOp.Type): ST = {
+      val value: String = o match {
+        case GclBinaryOp.And => "And"
+        case GclBinaryOp.AndThen => "AndThen"
+        case GclBinaryOp.Or => "Or"
+        case GclBinaryOp.OrElse => "OrElse"
+        case GclBinaryOp.Xor => "Xor"
+        case GclBinaryOp.Implies => "Implies"
+        case GclBinaryOp.Equiv => "Equiv"
+        case GclBinaryOp.Eq => "Eq"
+        case GclBinaryOp.Neq => "Neq"
+        case GclBinaryOp.Lt => "Lt"
+        case GclBinaryOp.Lte => "Lte"
+        case GclBinaryOp.Gt => "Gt"
+        case GclBinaryOp.Gte => "Gte"
+        case GclBinaryOp.Plus => "Plus"
+        case GclBinaryOp.Minus => "Minus"
+        case GclBinaryOp.Div => "Div"
+        case GclBinaryOp.Mult => "Mult"
+        case GclBinaryOp.Mod => "Mod"
+        case GclBinaryOp.Rem => "Rem"
+        case GclBinaryOp.Exp => "Exp"
+      }
+      return printObject(ISZ(
+        ("type", printString("GclBinaryOp")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def printGclLiteralTypeType(o: GclLiteralType.Type): ST = {
+      val value: String = o match {
+        case GclLiteralType.Boolean => "Boolean"
+        case GclLiteralType.String => "String"
+        case GclLiteralType.Integer => "Integer"
+        case GclLiteralType.Float => "Float"
+        case GclLiteralType.Real => "Real"
+      }
+      return printObject(ISZ(
+        ("type", printString("GclLiteralType")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def printGclUnaryExp(o: GclUnaryExp): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclUnaryExp""""),
+        ("op", printGclUnaryOpType(o.op)),
+        ("exp", printGclExp(o.exp)),
+        ("pos", printOption(F, o.pos, printPosition _))
+      ))
+    }
+
+    @pure def printGclBinaryExp(o: GclBinaryExp): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclBinaryExp""""),
+        ("op", printGclBinaryOpType(o.op)),
+        ("lhs", printGclExp(o.lhs)),
+        ("rhs", printGclExp(o.rhs)),
+        ("pos", printOption(F, o.pos, printPosition _))
+      ))
+    }
+
+    @pure def printGclLiteralExp(o: GclLiteralExp): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclLiteralExp""""),
+        ("typ", printGclLiteralTypeType(o.typ)),
+        ("exp", printString(o.exp)),
+        ("pos", printOption(F, o.pos, printPosition _))
+      ))
+    }
+
     @pure def printSmfAnnex(o: SmfAnnex): ST = {
       o match {
         case o: SmfClause => return printSmfClause(o)
@@ -1303,7 +1448,7 @@ object JSON {
 
   }
 
-  @record class Parser(input: String) {
+  @record class Parser(val input: String) {
     val parser: Json.Parser = Json.Parser.create(input)
 
     def errorOpt: Option[Json.ErrorMsg] = {
@@ -2024,7 +2169,7 @@ object JSON {
     }
 
     def parseAnnexClause(): AnnexClause = {
-      val t = parser.parseObjectTypes(ISZ("SmfClause", "SmfClassification", "SmfDeclass", "SmfType", "ErrorTypeDef", "ErrorAliasDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "AllCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation", "OtherAnnex", "BTSBLESSAnnexClause"))
+      val t = parser.parseObjectTypes(ISZ("SmfClause", "SmfClassification", "SmfDeclass", "SmfType", "ErrorTypeDef", "ErrorAliasDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "AllCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation", "OtherAnnex", "GclSubclause", "BTSBLESSAnnexClause"))
       t.native match {
         case "SmfClause" => val r = parseSmfClauseT(T); return r
         case "SmfClassification" => val r = parseSmfClassificationT(T); return r
@@ -2049,6 +2194,7 @@ object JSON {
         case "Emv2BehaviorSection" => val r = parseEmv2BehaviorSectionT(T); return r
         case "ErrorPropagation" => val r = parseErrorPropagationT(T); return r
         case "OtherAnnex" => val r = parseOtherAnnexT(T); return r
+        case "GclSubclause" => val r = parseGclSubclauseT(T); return r
         case "BTSBLESSAnnexClause" => val r = parseBTSBLESSAnnexClauseT(T); return r
         case _ => val r = parseBTSBLESSAnnexClauseT(T); return r
       }
@@ -3634,6 +3780,258 @@ object JSON {
       val target = parser.parseISZ(parseEmv2Propagation _)
       parser.parseObjectNext()
       return ErrorPropagation(id, source, condition, target)
+    }
+
+    def parseGclAnnex(): GclAnnex = {
+      val t = parser.parseObjectTypes(ISZ("GclSubclause"))
+      t.native match {
+        case "GclSubclause" => val r = parseGclSubclauseT(T); return r
+        case _ => val r = parseGclSubclauseT(T); return r
+      }
+    }
+
+    def parseGclSubclause(): GclSubclause = {
+      val r = parseGclSubclauseT(F)
+      return r
+    }
+
+    def parseGclSubclauseT(typeParsed: B): GclSubclause = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclSubclause")
+      }
+      parser.parseObjectKey("state")
+      val state = parser.parseISZ(parseGclStateVar _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("invariants")
+      val invariants = parser.parseISZ(parseGclInvariant _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("initializes")
+      val initializes = parser.parseISZ(parseGclGuarantee _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("integration")
+      val integration = parser.parseOption(parseGclIntegration _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("compute")
+      val compute = parser.parseOption(parseGclCompute _)
+      parser.parseObjectNext()
+      return GclSubclause(state, invariants, initializes, integration, compute)
+    }
+
+    def parseGclStateVar(): GclStateVar = {
+      val r = parseGclStateVarT(F)
+      return r
+    }
+
+    def parseGclStateVarT(typeParsed: B): GclStateVar = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclStateVar")
+      }
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("exp")
+      val exp = parseGclExp()
+      parser.parseObjectNext()
+      return GclStateVar(name, exp)
+    }
+
+    def parseGclInvariant(): GclInvariant = {
+      val r = parseGclInvariantT(F)
+      return r
+    }
+
+    def parseGclInvariantT(typeParsed: B): GclInvariant = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclInvariant")
+      }
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("exp")
+      val exp = parseGclExp()
+      parser.parseObjectNext()
+      return GclInvariant(name, exp)
+    }
+
+    def parseGclGuarantee(): GclGuarantee = {
+      val r = parseGclGuaranteeT(F)
+      return r
+    }
+
+    def parseGclGuaranteeT(typeParsed: B): GclGuarantee = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclGuarantee")
+      }
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("exp")
+      val exp = parseGclExp()
+      parser.parseObjectNext()
+      return GclGuarantee(name, exp)
+    }
+
+    def parseGclIntegration(): GclIntegration = {
+      val r = parseGclIntegrationT(F)
+      return r
+    }
+
+    def parseGclIntegrationT(typeParsed: B): GclIntegration = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclIntegration")
+      }
+      return GclIntegration()
+    }
+
+    def parseGclCompute(): GclCompute = {
+      val r = parseGclComputeT(F)
+      return r
+    }
+
+    def parseGclComputeT(typeParsed: B): GclCompute = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclCompute")
+      }
+      return GclCompute()
+    }
+
+    def parseGclExp(): GclExp = {
+      val t = parser.parseObjectTypes(ISZ("GclUnaryExp", "GclBinaryExp", "GclLiteralExp"))
+      t.native match {
+        case "GclUnaryExp" => val r = parseGclUnaryExpT(T); return r
+        case "GclBinaryExp" => val r = parseGclBinaryExpT(T); return r
+        case "GclLiteralExp" => val r = parseGclLiteralExpT(T); return r
+        case _ => val r = parseGclLiteralExpT(T); return r
+      }
+    }
+
+    def parseGclUnaryOpType(): GclUnaryOp.Type = {
+      val r = parseGclUnaryOpT(F)
+      return r
+    }
+
+    def parseGclUnaryOpT(typeParsed: B): GclUnaryOp.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclUnaryOp")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      GclUnaryOp.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for GclUnaryOp.")
+          return GclUnaryOp.byOrdinal(0).get
+      }
+    }
+
+    def parseGclBinaryOpType(): GclBinaryOp.Type = {
+      val r = parseGclBinaryOpT(F)
+      return r
+    }
+
+    def parseGclBinaryOpT(typeParsed: B): GclBinaryOp.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclBinaryOp")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      GclBinaryOp.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for GclBinaryOp.")
+          return GclBinaryOp.byOrdinal(0).get
+      }
+    }
+
+    def parseGclLiteralTypeType(): GclLiteralType.Type = {
+      val r = parseGclLiteralTypeT(F)
+      return r
+    }
+
+    def parseGclLiteralTypeT(typeParsed: B): GclLiteralType.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclLiteralType")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      GclLiteralType.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for GclLiteralType.")
+          return GclLiteralType.byOrdinal(0).get
+      }
+    }
+
+    def parseGclUnaryExp(): GclUnaryExp = {
+      val r = parseGclUnaryExpT(F)
+      return r
+    }
+
+    def parseGclUnaryExpT(typeParsed: B): GclUnaryExp = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclUnaryExp")
+      }
+      parser.parseObjectKey("op")
+      val op = parseGclUnaryOpType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("exp")
+      val exp = parseGclExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return GclUnaryExp(op, exp, pos)
+    }
+
+    def parseGclBinaryExp(): GclBinaryExp = {
+      val r = parseGclBinaryExpT(F)
+      return r
+    }
+
+    def parseGclBinaryExpT(typeParsed: B): GclBinaryExp = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclBinaryExp")
+      }
+      parser.parseObjectKey("op")
+      val op = parseGclBinaryOpType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("lhs")
+      val lhs = parseGclExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("rhs")
+      val rhs = parseGclExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return GclBinaryExp(op, lhs, rhs, pos)
+    }
+
+    def parseGclLiteralExp(): GclLiteralExp = {
+      val r = parseGclLiteralExpT(F)
+      return r
+    }
+
+    def parseGclLiteralExpT(typeParsed: B): GclLiteralExp = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclLiteralExp")
+      }
+      parser.parseObjectKey("typ")
+      val typ = parseGclLiteralTypeType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("exp")
+      val exp = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return GclLiteralExp(typ, exp, pos)
     }
 
     def parseSmfAnnex(): SmfAnnex = {
@@ -5685,6 +6083,204 @@ object JSON {
       return r
     }
     val r = to(s, fErrorPropagation _)
+    return r
+  }
+
+  def fromGclAnnex(o: GclAnnex, isCompact: B): String = {
+    val st = Printer.printGclAnnex(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclAnnex(s: String): Either[GclAnnex, Json.ErrorMsg] = {
+    def fGclAnnex(parser: Parser): GclAnnex = {
+      val r = parser.parseGclAnnex()
+      return r
+    }
+    val r = to(s, fGclAnnex _)
+    return r
+  }
+
+  def fromGclSubclause(o: GclSubclause, isCompact: B): String = {
+    val st = Printer.printGclSubclause(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclSubclause(s: String): Either[GclSubclause, Json.ErrorMsg] = {
+    def fGclSubclause(parser: Parser): GclSubclause = {
+      val r = parser.parseGclSubclause()
+      return r
+    }
+    val r = to(s, fGclSubclause _)
+    return r
+  }
+
+  def fromGclStateVar(o: GclStateVar, isCompact: B): String = {
+    val st = Printer.printGclStateVar(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclStateVar(s: String): Either[GclStateVar, Json.ErrorMsg] = {
+    def fGclStateVar(parser: Parser): GclStateVar = {
+      val r = parser.parseGclStateVar()
+      return r
+    }
+    val r = to(s, fGclStateVar _)
+    return r
+  }
+
+  def fromGclInvariant(o: GclInvariant, isCompact: B): String = {
+    val st = Printer.printGclInvariant(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclInvariant(s: String): Either[GclInvariant, Json.ErrorMsg] = {
+    def fGclInvariant(parser: Parser): GclInvariant = {
+      val r = parser.parseGclInvariant()
+      return r
+    }
+    val r = to(s, fGclInvariant _)
+    return r
+  }
+
+  def fromGclGuarantee(o: GclGuarantee, isCompact: B): String = {
+    val st = Printer.printGclGuarantee(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclGuarantee(s: String): Either[GclGuarantee, Json.ErrorMsg] = {
+    def fGclGuarantee(parser: Parser): GclGuarantee = {
+      val r = parser.parseGclGuarantee()
+      return r
+    }
+    val r = to(s, fGclGuarantee _)
+    return r
+  }
+
+  def fromGclIntegration(o: GclIntegration, isCompact: B): String = {
+    val st = Printer.printGclIntegration(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclIntegration(s: String): Either[GclIntegration, Json.ErrorMsg] = {
+    def fGclIntegration(parser: Parser): GclIntegration = {
+      val r = parser.parseGclIntegration()
+      return r
+    }
+    val r = to(s, fGclIntegration _)
+    return r
+  }
+
+  def fromGclCompute(o: GclCompute, isCompact: B): String = {
+    val st = Printer.printGclCompute(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclCompute(s: String): Either[GclCompute, Json.ErrorMsg] = {
+    def fGclCompute(parser: Parser): GclCompute = {
+      val r = parser.parseGclCompute()
+      return r
+    }
+    val r = to(s, fGclCompute _)
+    return r
+  }
+
+  def fromGclExp(o: GclExp, isCompact: B): String = {
+    val st = Printer.printGclExp(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclExp(s: String): Either[GclExp, Json.ErrorMsg] = {
+    def fGclExp(parser: Parser): GclExp = {
+      val r = parser.parseGclExp()
+      return r
+    }
+    val r = to(s, fGclExp _)
+    return r
+  }
+
+  def fromGclUnaryExp(o: GclUnaryExp, isCompact: B): String = {
+    val st = Printer.printGclUnaryExp(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclUnaryExp(s: String): Either[GclUnaryExp, Json.ErrorMsg] = {
+    def fGclUnaryExp(parser: Parser): GclUnaryExp = {
+      val r = parser.parseGclUnaryExp()
+      return r
+    }
+    val r = to(s, fGclUnaryExp _)
+    return r
+  }
+
+  def fromGclBinaryExp(o: GclBinaryExp, isCompact: B): String = {
+    val st = Printer.printGclBinaryExp(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclBinaryExp(s: String): Either[GclBinaryExp, Json.ErrorMsg] = {
+    def fGclBinaryExp(parser: Parser): GclBinaryExp = {
+      val r = parser.parseGclBinaryExp()
+      return r
+    }
+    val r = to(s, fGclBinaryExp _)
+    return r
+  }
+
+  def fromGclLiteralExp(o: GclLiteralExp, isCompact: B): String = {
+    val st = Printer.printGclLiteralExp(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclLiteralExp(s: String): Either[GclLiteralExp, Json.ErrorMsg] = {
+    def fGclLiteralExp(parser: Parser): GclLiteralExp = {
+      val r = parser.parseGclLiteralExp()
+      return r
+    }
+    val r = to(s, fGclLiteralExp _)
     return r
   }
 

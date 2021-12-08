@@ -26,7 +26,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// This file is auto-generated from AadlAST.scala, BlessAST.scala, Emv2AST.scala, SmfAST.scala
+// This file is auto-generated from AadlAST.scala, BlessAST.scala, Emv2AST.scala, GumboAST.scala, SmfAST.scala
 
 package org.sireum.hamr.ir
 
@@ -210,15 +210,33 @@ object MsgPack {
 
     val ErrorPropagation: Z = 54
 
-    val SmfClause: Z = 55
+    val GclSubclause: Z = 55
 
-    val SmfClassification: Z = 56
+    val GclStateVar: Z = 56
 
-    val SmfDeclass: Z = 57
+    val GclInvariant: Z = 57
 
-    val SmfLibrary: Z = 58
+    val GclGuarantee: Z = 58
 
-    val SmfType: Z = 59
+    val GclIntegration: Z = 59
+
+    val GclCompute: Z = 60
+
+    val GclUnaryExp: Z = 61
+
+    val GclBinaryExp: Z = 62
+
+    val GclLiteralExp: Z = 63
+
+    val SmfClause: Z = 64
+
+    val SmfClassification: Z = 65
+
+    val SmfDeclass: Z = 66
+
+    val SmfLibrary: Z = 67
+
+    val SmfType: Z = 68
 
   }
 
@@ -494,6 +512,7 @@ object MsgPack {
         case o: Emv2BehaviorSection => writeEmv2BehaviorSection(o)
         case o: ErrorPropagation => writeErrorPropagation(o)
         case o: OtherAnnex => writeOtherAnnex(o)
+        case o: GclSubclause => writeGclSubclause(o)
         case o: BTSBLESSAnnexClause => writeBTSBLESSAnnexClause(o)
       }
     }
@@ -1087,6 +1106,89 @@ object MsgPack {
       writer.writeISZ(o.target, writeEmv2Propagation _)
     }
 
+    def writeGclAnnex(o: GclAnnex): Unit = {
+      o match {
+        case o: GclSubclause => writeGclSubclause(o)
+      }
+    }
+
+    def writeGclSubclause(o: GclSubclause): Unit = {
+      writer.writeZ(Constants.GclSubclause)
+      writer.writeISZ(o.state, writeGclStateVar _)
+      writer.writeISZ(o.invariants, writeGclInvariant _)
+      writer.writeISZ(o.initializes, writeGclGuarantee _)
+      writer.writeOption(o.integration, writeGclIntegration _)
+      writer.writeOption(o.compute, writeGclCompute _)
+    }
+
+    def writeGclStateVar(o: GclStateVar): Unit = {
+      writer.writeZ(Constants.GclStateVar)
+      writer.writeString(o.name)
+      writeGclExp(o.exp)
+    }
+
+    def writeGclInvariant(o: GclInvariant): Unit = {
+      writer.writeZ(Constants.GclInvariant)
+      writer.writeString(o.name)
+      writeGclExp(o.exp)
+    }
+
+    def writeGclGuarantee(o: GclGuarantee): Unit = {
+      writer.writeZ(Constants.GclGuarantee)
+      writer.writeString(o.name)
+      writeGclExp(o.exp)
+    }
+
+    def writeGclIntegration(o: GclIntegration): Unit = {
+      writer.writeZ(Constants.GclIntegration)
+    }
+
+    def writeGclCompute(o: GclCompute): Unit = {
+      writer.writeZ(Constants.GclCompute)
+    }
+
+    def writeGclExp(o: GclExp): Unit = {
+      o match {
+        case o: GclUnaryExp => writeGclUnaryExp(o)
+        case o: GclBinaryExp => writeGclBinaryExp(o)
+        case o: GclLiteralExp => writeGclLiteralExp(o)
+      }
+    }
+
+    def writeGclUnaryOpType(o: GclUnaryOp.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def writeGclBinaryOpType(o: GclBinaryOp.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def writeGclLiteralTypeType(o: GclLiteralType.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def writeGclUnaryExp(o: GclUnaryExp): Unit = {
+      writer.writeZ(Constants.GclUnaryExp)
+      writeGclUnaryOpType(o.op)
+      writeGclExp(o.exp)
+      writer.writeOption(o.pos, writer.writePosition _)
+    }
+
+    def writeGclBinaryExp(o: GclBinaryExp): Unit = {
+      writer.writeZ(Constants.GclBinaryExp)
+      writeGclBinaryOpType(o.op)
+      writeGclExp(o.lhs)
+      writeGclExp(o.rhs)
+      writer.writeOption(o.pos, writer.writePosition _)
+    }
+
+    def writeGclLiteralExp(o: GclLiteralExp): Unit = {
+      writer.writeZ(Constants.GclLiteralExp)
+      writeGclLiteralTypeType(o.typ)
+      writer.writeString(o.exp)
+      writer.writeOption(o.pos, writer.writePosition _)
+    }
+
     def writeSmfAnnex(o: SmfAnnex): Unit = {
       o match {
         case o: SmfClause => writeSmfClause(o)
@@ -1624,6 +1726,7 @@ object MsgPack {
         case Constants.Emv2BehaviorSection => val r = readEmv2BehaviorSectionT(T); return r
         case Constants.ErrorPropagation => val r = readErrorPropagationT(T); return r
         case Constants.OtherAnnex => val r = readOtherAnnexT(T); return r
+        case Constants.GclSubclause => val r = readGclSubclauseT(T); return r
         case Constants.BTSBLESSAnnexClause => val r = readBTSBLESSAnnexClauseT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of AnnexClause.")
@@ -2838,6 +2941,176 @@ object MsgPack {
       val condition = reader.readOption(readErrorCondition _)
       val target = reader.readISZ(readEmv2Propagation _)
       return ErrorPropagation(id, source, condition, target)
+    }
+
+    def readGclAnnex(): GclAnnex = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.GclSubclause => val r = readGclSubclauseT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of GclAnnex.")
+          val r = readGclSubclauseT(T)
+          return r
+      }
+    }
+
+    def readGclSubclause(): GclSubclause = {
+      val r = readGclSubclauseT(F)
+      return r
+    }
+
+    def readGclSubclauseT(typeParsed: B): GclSubclause = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclSubclause)
+      }
+      val state = reader.readISZ(readGclStateVar _)
+      val invariants = reader.readISZ(readGclInvariant _)
+      val initializes = reader.readISZ(readGclGuarantee _)
+      val integration = reader.readOption(readGclIntegration _)
+      val compute = reader.readOption(readGclCompute _)
+      return GclSubclause(state, invariants, initializes, integration, compute)
+    }
+
+    def readGclStateVar(): GclStateVar = {
+      val r = readGclStateVarT(F)
+      return r
+    }
+
+    def readGclStateVarT(typeParsed: B): GclStateVar = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclStateVar)
+      }
+      val name = reader.readString()
+      val exp = readGclExp()
+      return GclStateVar(name, exp)
+    }
+
+    def readGclInvariant(): GclInvariant = {
+      val r = readGclInvariantT(F)
+      return r
+    }
+
+    def readGclInvariantT(typeParsed: B): GclInvariant = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclInvariant)
+      }
+      val name = reader.readString()
+      val exp = readGclExp()
+      return GclInvariant(name, exp)
+    }
+
+    def readGclGuarantee(): GclGuarantee = {
+      val r = readGclGuaranteeT(F)
+      return r
+    }
+
+    def readGclGuaranteeT(typeParsed: B): GclGuarantee = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclGuarantee)
+      }
+      val name = reader.readString()
+      val exp = readGclExp()
+      return GclGuarantee(name, exp)
+    }
+
+    def readGclIntegration(): GclIntegration = {
+      val r = readGclIntegrationT(F)
+      return r
+    }
+
+    def readGclIntegrationT(typeParsed: B): GclIntegration = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclIntegration)
+      }
+      return GclIntegration()
+    }
+
+    def readGclCompute(): GclCompute = {
+      val r = readGclComputeT(F)
+      return r
+    }
+
+    def readGclComputeT(typeParsed: B): GclCompute = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclCompute)
+      }
+      return GclCompute()
+    }
+
+    def readGclExp(): GclExp = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.GclUnaryExp => val r = readGclUnaryExpT(T); return r
+        case Constants.GclBinaryExp => val r = readGclBinaryExpT(T); return r
+        case Constants.GclLiteralExp => val r = readGclLiteralExpT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of GclExp.")
+          val r = readGclLiteralExpT(T)
+          return r
+      }
+    }
+
+    def readGclUnaryOpType(): GclUnaryOp.Type = {
+      val r = reader.readZ()
+      return GclUnaryOp.byOrdinal(r).get
+    }
+
+    def readGclBinaryOpType(): GclBinaryOp.Type = {
+      val r = reader.readZ()
+      return GclBinaryOp.byOrdinal(r).get
+    }
+
+    def readGclLiteralTypeType(): GclLiteralType.Type = {
+      val r = reader.readZ()
+      return GclLiteralType.byOrdinal(r).get
+    }
+
+    def readGclUnaryExp(): GclUnaryExp = {
+      val r = readGclUnaryExpT(F)
+      return r
+    }
+
+    def readGclUnaryExpT(typeParsed: B): GclUnaryExp = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclUnaryExp)
+      }
+      val op = readGclUnaryOpType()
+      val exp = readGclExp()
+      val pos = reader.readOption(reader.readPosition _)
+      return GclUnaryExp(op, exp, pos)
+    }
+
+    def readGclBinaryExp(): GclBinaryExp = {
+      val r = readGclBinaryExpT(F)
+      return r
+    }
+
+    def readGclBinaryExpT(typeParsed: B): GclBinaryExp = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclBinaryExp)
+      }
+      val op = readGclBinaryOpType()
+      val lhs = readGclExp()
+      val rhs = readGclExp()
+      val pos = reader.readOption(reader.readPosition _)
+      return GclBinaryExp(op, lhs, rhs, pos)
+    }
+
+    def readGclLiteralExp(): GclLiteralExp = {
+      val r = readGclLiteralExpT(F)
+      return r
+    }
+
+    def readGclLiteralExpT(typeParsed: B): GclLiteralExp = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclLiteralExp)
+      }
+      val typ = readGclLiteralTypeType()
+      val exp = reader.readString()
+      val pos = reader.readOption(reader.readPosition _)
+      return GclLiteralExp(typ, exp, pos)
     }
 
     def readSmfAnnex(): SmfAnnex = {
@@ -4551,6 +4824,171 @@ object MsgPack {
       return r
     }
     val r = to(data, fErrorPropagation _)
+    return r
+  }
+
+  def fromGclAnnex(o: GclAnnex, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclAnnex(o)
+    return w.result
+  }
+
+  def toGclAnnex(data: ISZ[U8]): Either[GclAnnex, MessagePack.ErrorMsg] = {
+    def fGclAnnex(reader: Reader): GclAnnex = {
+      val r = reader.readGclAnnex()
+      return r
+    }
+    val r = to(data, fGclAnnex _)
+    return r
+  }
+
+  def fromGclSubclause(o: GclSubclause, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclSubclause(o)
+    return w.result
+  }
+
+  def toGclSubclause(data: ISZ[U8]): Either[GclSubclause, MessagePack.ErrorMsg] = {
+    def fGclSubclause(reader: Reader): GclSubclause = {
+      val r = reader.readGclSubclause()
+      return r
+    }
+    val r = to(data, fGclSubclause _)
+    return r
+  }
+
+  def fromGclStateVar(o: GclStateVar, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclStateVar(o)
+    return w.result
+  }
+
+  def toGclStateVar(data: ISZ[U8]): Either[GclStateVar, MessagePack.ErrorMsg] = {
+    def fGclStateVar(reader: Reader): GclStateVar = {
+      val r = reader.readGclStateVar()
+      return r
+    }
+    val r = to(data, fGclStateVar _)
+    return r
+  }
+
+  def fromGclInvariant(o: GclInvariant, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclInvariant(o)
+    return w.result
+  }
+
+  def toGclInvariant(data: ISZ[U8]): Either[GclInvariant, MessagePack.ErrorMsg] = {
+    def fGclInvariant(reader: Reader): GclInvariant = {
+      val r = reader.readGclInvariant()
+      return r
+    }
+    val r = to(data, fGclInvariant _)
+    return r
+  }
+
+  def fromGclGuarantee(o: GclGuarantee, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclGuarantee(o)
+    return w.result
+  }
+
+  def toGclGuarantee(data: ISZ[U8]): Either[GclGuarantee, MessagePack.ErrorMsg] = {
+    def fGclGuarantee(reader: Reader): GclGuarantee = {
+      val r = reader.readGclGuarantee()
+      return r
+    }
+    val r = to(data, fGclGuarantee _)
+    return r
+  }
+
+  def fromGclIntegration(o: GclIntegration, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclIntegration(o)
+    return w.result
+  }
+
+  def toGclIntegration(data: ISZ[U8]): Either[GclIntegration, MessagePack.ErrorMsg] = {
+    def fGclIntegration(reader: Reader): GclIntegration = {
+      val r = reader.readGclIntegration()
+      return r
+    }
+    val r = to(data, fGclIntegration _)
+    return r
+  }
+
+  def fromGclCompute(o: GclCompute, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclCompute(o)
+    return w.result
+  }
+
+  def toGclCompute(data: ISZ[U8]): Either[GclCompute, MessagePack.ErrorMsg] = {
+    def fGclCompute(reader: Reader): GclCompute = {
+      val r = reader.readGclCompute()
+      return r
+    }
+    val r = to(data, fGclCompute _)
+    return r
+  }
+
+  def fromGclExp(o: GclExp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclExp(o)
+    return w.result
+  }
+
+  def toGclExp(data: ISZ[U8]): Either[GclExp, MessagePack.ErrorMsg] = {
+    def fGclExp(reader: Reader): GclExp = {
+      val r = reader.readGclExp()
+      return r
+    }
+    val r = to(data, fGclExp _)
+    return r
+  }
+
+  def fromGclUnaryExp(o: GclUnaryExp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclUnaryExp(o)
+    return w.result
+  }
+
+  def toGclUnaryExp(data: ISZ[U8]): Either[GclUnaryExp, MessagePack.ErrorMsg] = {
+    def fGclUnaryExp(reader: Reader): GclUnaryExp = {
+      val r = reader.readGclUnaryExp()
+      return r
+    }
+    val r = to(data, fGclUnaryExp _)
+    return r
+  }
+
+  def fromGclBinaryExp(o: GclBinaryExp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclBinaryExp(o)
+    return w.result
+  }
+
+  def toGclBinaryExp(data: ISZ[U8]): Either[GclBinaryExp, MessagePack.ErrorMsg] = {
+    def fGclBinaryExp(reader: Reader): GclBinaryExp = {
+      val r = reader.readGclBinaryExp()
+      return r
+    }
+    val r = to(data, fGclBinaryExp _)
+    return r
+  }
+
+  def fromGclLiteralExp(o: GclLiteralExp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclLiteralExp(o)
+    return w.result
+  }
+
+  def toGclLiteralExp(data: ISZ[U8]): Either[GclLiteralExp, MessagePack.ErrorMsg] = {
+    def fGclLiteralExp(reader: Reader): GclLiteralExp = {
+      val r = reader.readGclLiteralExp()
+      return r
+    }
+    val r = to(data, fGclLiteralExp _)
     return r
   }
 

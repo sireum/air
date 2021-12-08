@@ -9,3 +9,9 @@ out
 *.cmd.jar
 *.cmd.com
 project.json
+bin/linux/
+bin/mac/
+bin/win/
+bin/scala/
+bin/sireum*
+lib

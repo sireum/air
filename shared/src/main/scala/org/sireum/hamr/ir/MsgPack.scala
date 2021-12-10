@@ -226,17 +226,23 @@ object MsgPack {
 
     val GclBinaryExp: Z = 62
 
-    val GclLiteralExp: Z = 63
+    val GclNameExp: Z = 63
 
-    val SmfClause: Z = 64
+    val GclAccessExp: Z = 64
 
-    val SmfClassification: Z = 65
+    val GclLiteralExp: Z = 65
 
-    val SmfDeclass: Z = 66
+    val GclTODO: Z = 66
 
-    val SmfLibrary: Z = 67
+    val SmfClause: Z = 67
 
-    val SmfType: Z = 68
+    val SmfClassification: Z = 68
+
+    val SmfDeclass: Z = 69
+
+    val SmfLibrary: Z = 70
+
+    val SmfType: Z = 71
 
   }
 
@@ -1151,6 +1157,8 @@ object MsgPack {
       o match {
         case o: GclUnaryExp => writeGclUnaryExp(o)
         case o: GclBinaryExp => writeGclBinaryExp(o)
+        case o: GclNameExp => writeGclNameExp(o)
+        case o: GclAccessExp => writeGclAccessExp(o)
         case o: GclLiteralExp => writeGclLiteralExp(o)
       }
     }
@@ -1182,11 +1190,28 @@ object MsgPack {
       writer.writeOption(o.pos, writer.writePosition _)
     }
 
+    def writeGclNameExp(o: GclNameExp): Unit = {
+      writer.writeZ(Constants.GclNameExp)
+      writeName(o.name)
+      writer.writeOption(o.pos, writer.writePosition _)
+    }
+
+    def writeGclAccessExp(o: GclAccessExp): Unit = {
+      writer.writeZ(Constants.GclAccessExp)
+      writeGclExp(o.exp)
+      writer.writeString(o.attributeName)
+      writer.writeOption(o.pos, writer.writePosition _)
+    }
+
     def writeGclLiteralExp(o: GclLiteralExp): Unit = {
       writer.writeZ(Constants.GclLiteralExp)
       writeGclLiteralTypeType(o.typ)
       writer.writeString(o.exp)
       writer.writeOption(o.pos, writer.writePosition _)
+    }
+
+    def writeGclTODO(o: GclTODO): Unit = {
+      writer.writeZ(Constants.GclTODO)
     }
 
     def writeSmfAnnex(o: SmfAnnex): Unit = {
@@ -3044,6 +3069,8 @@ object MsgPack {
       t match {
         case Constants.GclUnaryExp => val r = readGclUnaryExpT(T); return r
         case Constants.GclBinaryExp => val r = readGclBinaryExpT(T); return r
+        case Constants.GclNameExp => val r = readGclNameExpT(T); return r
+        case Constants.GclAccessExp => val r = readGclAccessExpT(T); return r
         case Constants.GclLiteralExp => val r = readGclLiteralExpT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of GclExp.")
@@ -3098,6 +3125,35 @@ object MsgPack {
       return GclBinaryExp(op, lhs, rhs, pos)
     }
 
+    def readGclNameExp(): GclNameExp = {
+      val r = readGclNameExpT(F)
+      return r
+    }
+
+    def readGclNameExpT(typeParsed: B): GclNameExp = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclNameExp)
+      }
+      val name = readName()
+      val pos = reader.readOption(reader.readPosition _)
+      return GclNameExp(name, pos)
+    }
+
+    def readGclAccessExp(): GclAccessExp = {
+      val r = readGclAccessExpT(F)
+      return r
+    }
+
+    def readGclAccessExpT(typeParsed: B): GclAccessExp = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclAccessExp)
+      }
+      val exp = readGclExp()
+      val attributeName = reader.readString()
+      val pos = reader.readOption(reader.readPosition _)
+      return GclAccessExp(exp, attributeName, pos)
+    }
+
     def readGclLiteralExp(): GclLiteralExp = {
       val r = readGclLiteralExpT(F)
       return r
@@ -3111,6 +3167,18 @@ object MsgPack {
       val exp = reader.readString()
       val pos = reader.readOption(reader.readPosition _)
       return GclLiteralExp(typ, exp, pos)
+    }
+
+    def readGclTODO(): GclTODO = {
+      val r = readGclTODOT(F)
+      return r
+    }
+
+    def readGclTODOT(typeParsed: B): GclTODO = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclTODO)
+      }
+      return GclTODO()
     }
 
     def readSmfAnnex(): SmfAnnex = {
@@ -4977,6 +5045,36 @@ object MsgPack {
     return r
   }
 
+  def fromGclNameExp(o: GclNameExp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclNameExp(o)
+    return w.result
+  }
+
+  def toGclNameExp(data: ISZ[U8]): Either[GclNameExp, MessagePack.ErrorMsg] = {
+    def fGclNameExp(reader: Reader): GclNameExp = {
+      val r = reader.readGclNameExp()
+      return r
+    }
+    val r = to(data, fGclNameExp _)
+    return r
+  }
+
+  def fromGclAccessExp(o: GclAccessExp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclAccessExp(o)
+    return w.result
+  }
+
+  def toGclAccessExp(data: ISZ[U8]): Either[GclAccessExp, MessagePack.ErrorMsg] = {
+    def fGclAccessExp(reader: Reader): GclAccessExp = {
+      val r = reader.readGclAccessExp()
+      return r
+    }
+    val r = to(data, fGclAccessExp _)
+    return r
+  }
+
   def fromGclLiteralExp(o: GclLiteralExp, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
     w.writeGclLiteralExp(o)
@@ -4989,6 +5087,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fGclLiteralExp _)
+    return r
+  }
+
+  def fromGclTODO(o: GclTODO, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclTODO(o)
+    return w.result
+  }
+
+  def toGclTODO(data: ISZ[U8]): Either[GclTODO, MessagePack.ErrorMsg] = {
+    def fGclTODO(reader: Reader): GclTODO = {
+      val r = reader.readGclTODO()
+      return r
+    }
+    val r = to(data, fGclTODO _)
     return r
   }
 

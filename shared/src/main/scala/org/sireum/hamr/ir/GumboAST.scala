@@ -30,24 +30,24 @@ import org.sireum.message.Position
 
 @sig trait GclAnnex extends AnnexClause
 
-@datatype class GclSubclause (state: ISZ[GclStateVar],
-                                invariants: ISZ[GclInvariant],
-                                initializes: ISZ[GclGuarantee],
-                                integration: Option[GclIntegration],
-                                compute: Option[GclCompute]) extends GclAnnex
+@datatype class GclSubclause(state: ISZ[GclStateVar],
+                             invariants: ISZ[GclInvariant],
+                             initializes: ISZ[GclGuarantee],
+                             integration: Option[GclIntegration],
+                             compute: Option[GclCompute]) extends GclAnnex
 
-@datatype class GclStateVar (name: String,
+@datatype class GclStateVar(name: String,
+                            exp: GclExp)
+
+@datatype class GclInvariant(name: String,
                              exp: GclExp)
-
-@datatype class GclInvariant (name: String,
-                              exp: GclExp)
 
 @datatype class GclGuarantee(name: String,
                              exp: GclExp)
 
-@datatype class GclIntegration ()
+@datatype class GclIntegration()
 
-@datatype class GclCompute ()
+@datatype class GclCompute()
 
 @sig trait GclExp {
   @pure def pos: Option[Position]
@@ -89,7 +89,6 @@ import org.sireum.message.Position
   "Boolean"
   "String"
   "Integer"
-  "Float"
   "Real"
 }
 
@@ -102,6 +101,15 @@ import org.sireum.message.Position
                              rhs: GclExp,
                              val pos: Option[Position]) extends GclExp
 
+@datatype class GclNameExp(name: Name,
+                           val pos: Option[Position]) extends GclExp
+
+@datatype class GclAccessExp(exp: GclExp,
+                             attributeName: String,
+                             val pos: Option[Position]) extends GclExp
+
 @datatype class GclLiteralExp(typ: GclLiteralType.Type,
                               exp: String,
                               val pos: Option[Position]) extends GclExp
+
+@datatype class GclTODO

@@ -297,9 +297,21 @@ object MTransformer {
 
   val PostResultGclBinaryExp: MOption[GclBinaryExp] = MNone()
 
+  val PreResultGclNameExp: PreResult[GclNameExp] = PreResult(T, MNone())
+
+  val PostResultGclNameExp: MOption[GclNameExp] = MNone()
+
+  val PreResultGclAccessExp: PreResult[GclAccessExp] = PreResult(T, MNone())
+
+  val PostResultGclAccessExp: MOption[GclAccessExp] = MNone()
+
   val PreResultGclLiteralExp: PreResult[GclLiteralExp] = PreResult(T, MNone())
 
   val PostResultGclLiteralExp: MOption[GclLiteralExp] = MNone()
+
+  val PreResultGclTODO: PreResult[GclTODO] = PreResult(T, MNone())
+
+  val PostResultGclTODO: MOption[GclTODO] = MNone()
 
   val PreResultBTSVariableDeclaration: PreResult[BTSVariableDeclaration] = PreResult(T, MNone())
 
@@ -1293,6 +1305,20 @@ import MTransformer._
          case PreResult(continu, _) => PreResult(continu, MNone[GclExp]())
         }
         return r
+      case o: GclNameExp =>
+        val r: PreResult[GclExp] = preGclNameExp(o) match {
+         case PreResult(continu, MSome(r: GclExp)) => PreResult(continu, MSome[GclExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[GclExp]())
+        }
+        return r
+      case o: GclAccessExp =>
+        val r: PreResult[GclExp] = preGclAccessExp(o) match {
+         case PreResult(continu, MSome(r: GclExp)) => PreResult(continu, MSome[GclExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[GclExp]())
+        }
+        return r
       case o: GclLiteralExp =>
         val r: PreResult[GclExp] = preGclLiteralExp(o) match {
          case PreResult(continu, MSome(r: GclExp)) => PreResult(continu, MSome[GclExp](r))
@@ -1315,8 +1341,20 @@ import MTransformer._
     return PreResultGclBinaryExp
   }
 
+  def preGclNameExp(o: GclNameExp): PreResult[GclNameExp] = {
+    return PreResultGclNameExp
+  }
+
+  def preGclAccessExp(o: GclAccessExp): PreResult[GclAccessExp] = {
+    return PreResultGclAccessExp
+  }
+
   def preGclLiteralExp(o: GclLiteralExp): PreResult[GclLiteralExp] = {
     return PreResultGclLiteralExp
+  }
+
+  def preGclTODO(o: GclTODO): PreResult[GclTODO] = {
+    return PreResultGclTODO
   }
 
   def preBTSVariableDeclaration(o: BTSVariableDeclaration): PreResult[BTSVariableDeclaration] = {
@@ -2663,6 +2701,20 @@ import MTransformer._
          case _ => MNone[GclExp]()
         }
         return r
+      case o: GclNameExp =>
+        val r: MOption[GclExp] = postGclNameExp(o) match {
+         case MSome(result: GclExp) => MSome[GclExp](result)
+         case MSome(_) => halt("Can only produce object of type GclExp")
+         case _ => MNone[GclExp]()
+        }
+        return r
+      case o: GclAccessExp =>
+        val r: MOption[GclExp] = postGclAccessExp(o) match {
+         case MSome(result: GclExp) => MSome[GclExp](result)
+         case MSome(_) => halt("Can only produce object of type GclExp")
+         case _ => MNone[GclExp]()
+        }
+        return r
       case o: GclLiteralExp =>
         val r: MOption[GclExp] = postGclLiteralExp(o) match {
          case MSome(result: GclExp) => MSome[GclExp](result)
@@ -2685,8 +2737,20 @@ import MTransformer._
     return PostResultGclBinaryExp
   }
 
+  def postGclNameExp(o: GclNameExp): MOption[GclNameExp] = {
+    return PostResultGclNameExp
+  }
+
+  def postGclAccessExp(o: GclAccessExp): MOption[GclAccessExp] = {
+    return PostResultGclAccessExp
+  }
+
   def postGclLiteralExp(o: GclLiteralExp): MOption[GclLiteralExp] = {
     return PostResultGclLiteralExp
+  }
+
+  def postGclTODO(o: GclTODO): MOption[GclTODO] = {
+    return PostResultGclTODO
   }
 
   def postBTSVariableDeclaration(o: BTSVariableDeclaration): MOption[BTSVariableDeclaration] = {
@@ -5526,6 +5590,18 @@ import MTransformer._
             MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
           else
             MNone()
+        case o2: GclNameExp =>
+          val r0: MOption[Name] = transformName(o2.name)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name)))
+          else
+            MNone()
+        case o2: GclAccessExp =>
+          val r0: MOption[GclExp] = transformGclExp(o2.exp)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp)))
+          else
+            MNone()
         case o2: GclLiteralExp =>
           if (hasChanged)
             MSome(o2)
@@ -5636,6 +5712,60 @@ import MTransformer._
     }
   }
 
+  def transformGclNameExp(o: GclNameExp): MOption[GclNameExp] = {
+    val preR: PreResult[GclNameExp] = preGclNameExp(o)
+    val r: MOption[GclNameExp] = if (preR.continu) {
+      val o2: GclNameExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.name)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: GclNameExp = r.getOrElse(o)
+    val postR: MOption[GclNameExp] = postGclNameExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformGclAccessExp(o: GclAccessExp): MOption[GclAccessExp] = {
+    val preR: PreResult[GclAccessExp] = preGclAccessExp(o)
+    val r: MOption[GclAccessExp] = if (preR.continu) {
+      val o2: GclAccessExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[GclExp] = transformGclExp(o2.exp)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(exp = r0.getOrElse(o2.exp)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: GclAccessExp = r.getOrElse(o)
+    val postR: MOption[GclAccessExp] = postGclAccessExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformGclLiteralExp(o: GclLiteralExp): MOption[GclLiteralExp] = {
     val preR: PreResult[GclLiteralExp] = preGclLiteralExp(o)
     val r: MOption[GclLiteralExp] = if (preR.continu) {
@@ -5653,6 +5783,32 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: GclLiteralExp = r.getOrElse(o)
     val postR: MOption[GclLiteralExp] = postGclLiteralExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformGclTODO(o: GclTODO): MOption[GclTODO] = {
+    val preR: PreResult[GclTODO] = preGclTODO(o)
+    val r: MOption[GclTODO] = if (preR.continu) {
+      val o2: GclTODO = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: GclTODO = r.getOrElse(o)
+    val postR: MOption[GclTODO] = postGclTODO(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

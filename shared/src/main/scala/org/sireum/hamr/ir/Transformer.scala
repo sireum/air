@@ -869,6 +869,20 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclExp]())
           }
           return r
+        case o: GclNameExp =>
+          val r: PreResult[Context, GclExp] = preGclNameExp(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclExp)) => PreResult(preCtx, continu, Some[GclExp](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclExp")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclExp]())
+          }
+          return r
+        case o: GclAccessExp =>
+          val r: PreResult[Context, GclExp] = preGclAccessExp(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclExp)) => PreResult(preCtx, continu, Some[GclExp](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclExp")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclExp]())
+          }
+          return r
         case o: GclLiteralExp =>
           val r: PreResult[Context, GclExp] = preGclLiteralExp(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: GclExp)) => PreResult(preCtx, continu, Some[GclExp](r))
@@ -891,7 +905,19 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def preGclNameExp(ctx: Context, o: GclNameExp): PreResult[Context, GclNameExp] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preGclAccessExp(ctx: Context, o: GclAccessExp): PreResult[Context, GclAccessExp] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def preGclLiteralExp(ctx: Context, o: GclLiteralExp): PreResult[Context, GclLiteralExp] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preGclTODO(ctx: Context, o: GclTODO): PreResult[Context, GclTODO] = {
       return PreResult(ctx, T, None())
     }
 
@@ -2239,6 +2265,20 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclExp]())
           }
           return r
+        case o: GclNameExp =>
+          val r: TPostResult[Context, GclExp] = postGclNameExp(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclExp)) => TPostResult(postCtx, Some[GclExp](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclExp")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclExp]())
+          }
+          return r
+        case o: GclAccessExp =>
+          val r: TPostResult[Context, GclExp] = postGclAccessExp(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclExp)) => TPostResult(postCtx, Some[GclExp](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclExp")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclExp]())
+          }
+          return r
         case o: GclLiteralExp =>
           val r: TPostResult[Context, GclExp] = postGclLiteralExp(ctx, o) match {
            case TPostResult(postCtx, Some(result: GclExp)) => TPostResult(postCtx, Some[GclExp](result))
@@ -2261,7 +2301,19 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
+    @pure def postGclNameExp(ctx: Context, o: GclNameExp): TPostResult[Context, GclNameExp] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postGclAccessExp(ctx: Context, o: GclAccessExp): TPostResult[Context, GclAccessExp] = {
+      return TPostResult(ctx, None())
+    }
+
     @pure def postGclLiteralExp(ctx: Context, o: GclLiteralExp): TPostResult[Context, GclLiteralExp] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postGclTODO(ctx: Context, o: GclTODO): TPostResult[Context, GclTODO] = {
       return TPostResult(ctx, None())
     }
 
@@ -5140,6 +5192,18 @@ import Transformer._
             TPostResult(r1.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs))))
           else
             TPostResult(r1.ctx, None())
+        case o2: GclNameExp =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name))))
+          else
+            TPostResult(r0.ctx, None())
+        case o2: GclAccessExp =>
+          val r0: TPostResult[Context, GclExp] = transformGclExp(preR.ctx, o2.exp)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp))))
+          else
+            TPostResult(r0.ctx, None())
         case o2: GclLiteralExp =>
           if (hasChanged)
             TPostResult(preR.ctx, Some(o2))
@@ -5250,6 +5314,60 @@ import Transformer._
     }
   }
 
+  @pure def transformGclNameExp(ctx: Context, o: GclNameExp): TPostResult[Context, GclNameExp] = {
+    val preR: PreResult[Context, GclNameExp] = pp.preGclNameExp(ctx, o)
+    val r: TPostResult[Context, GclNameExp] = if (preR.continu) {
+      val o2: GclNameExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclNameExp = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclNameExp] = pp.postGclNameExp(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformGclAccessExp(ctx: Context, o: GclAccessExp): TPostResult[Context, GclAccessExp] = {
+    val preR: PreResult[Context, GclAccessExp] = pp.preGclAccessExp(ctx, o)
+    val r: TPostResult[Context, GclAccessExp] = if (preR.continu) {
+      val o2: GclAccessExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, GclExp] = transformGclExp(preR.ctx, o2.exp)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclAccessExp = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclAccessExp] = pp.postGclAccessExp(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transformGclLiteralExp(ctx: Context, o: GclLiteralExp): TPostResult[Context, GclLiteralExp] = {
     val preR: PreResult[Context, GclLiteralExp] = pp.preGclLiteralExp(ctx, o)
     val r: TPostResult[Context, GclLiteralExp] = if (preR.continu) {
@@ -5267,6 +5385,32 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: GclLiteralExp = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, GclLiteralExp] = pp.postGclLiteralExp(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformGclTODO(ctx: Context, o: GclTODO): TPostResult[Context, GclTODO] = {
+    val preR: PreResult[Context, GclTODO] = pp.preGclTODO(ctx, o)
+    val r: TPostResult[Context, GclTODO] = if (preR.continu) {
+      val o2: GclTODO = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        TPostResult(preR.ctx, Some(o2))
+      else
+        TPostResult(preR.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclTODO = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclTODO] = pp.postGclTODO(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {

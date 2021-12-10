@@ -1304,6 +1304,8 @@ object JSON {
       o match {
         case o: GclUnaryExp => return printGclUnaryExp(o)
         case o: GclBinaryExp => return printGclBinaryExp(o)
+        case o: GclNameExp => return printGclNameExp(o)
+        case o: GclAccessExp => return printGclAccessExp(o)
         case o: GclLiteralExp => return printGclLiteralExp(o)
       }
     }
@@ -1354,7 +1356,6 @@ object JSON {
         case GclLiteralType.Boolean => "Boolean"
         case GclLiteralType.String => "String"
         case GclLiteralType.Integer => "Integer"
-        case GclLiteralType.Float => "Float"
         case GclLiteralType.Real => "Real"
       }
       return printObject(ISZ(
@@ -1382,12 +1383,35 @@ object JSON {
       ))
     }
 
+    @pure def printGclNameExp(o: GclNameExp): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclNameExp""""),
+        ("name", printName(o.name)),
+        ("pos", printOption(F, o.pos, printPosition _))
+      ))
+    }
+
+    @pure def printGclAccessExp(o: GclAccessExp): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclAccessExp""""),
+        ("exp", printGclExp(o.exp)),
+        ("attributeName", printString(o.attributeName)),
+        ("pos", printOption(F, o.pos, printPosition _))
+      ))
+    }
+
     @pure def printGclLiteralExp(o: GclLiteralExp): ST = {
       return printObject(ISZ(
         ("type", st""""GclLiteralExp""""),
         ("typ", printGclLiteralTypeType(o.typ)),
         ("exp", printString(o.exp)),
         ("pos", printOption(F, o.pos, printPosition _))
+      ))
+    }
+
+    @pure def printGclTODO(o: GclTODO): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclTODO"""")
       ))
     }
 
@@ -3896,10 +3920,12 @@ object JSON {
     }
 
     def parseGclExp(): GclExp = {
-      val t = parser.parseObjectTypes(ISZ("GclUnaryExp", "GclBinaryExp", "GclLiteralExp"))
+      val t = parser.parseObjectTypes(ISZ("GclUnaryExp", "GclBinaryExp", "GclNameExp", "GclAccessExp", "GclLiteralExp"))
       t.native match {
         case "GclUnaryExp" => val r = parseGclUnaryExpT(T); return r
         case "GclBinaryExp" => val r = parseGclBinaryExpT(T); return r
+        case "GclNameExp" => val r = parseGclNameExpT(T); return r
+        case "GclAccessExp" => val r = parseGclAccessExpT(T); return r
         case "GclLiteralExp" => val r = parseGclLiteralExpT(T); return r
         case _ => val r = parseGclLiteralExpT(T); return r
       }
@@ -4013,6 +4039,45 @@ object JSON {
       return GclBinaryExp(op, lhs, rhs, pos)
     }
 
+    def parseGclNameExp(): GclNameExp = {
+      val r = parseGclNameExpT(F)
+      return r
+    }
+
+    def parseGclNameExpT(typeParsed: B): GclNameExp = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclNameExp")
+      }
+      parser.parseObjectKey("name")
+      val name = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return GclNameExp(name, pos)
+    }
+
+    def parseGclAccessExp(): GclAccessExp = {
+      val r = parseGclAccessExpT(F)
+      return r
+    }
+
+    def parseGclAccessExpT(typeParsed: B): GclAccessExp = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclAccessExp")
+      }
+      parser.parseObjectKey("exp")
+      val exp = parseGclExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("attributeName")
+      val attributeName = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return GclAccessExp(exp, attributeName, pos)
+    }
+
     def parseGclLiteralExp(): GclLiteralExp = {
       val r = parseGclLiteralExpT(F)
       return r
@@ -4032,6 +4097,18 @@ object JSON {
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
       return GclLiteralExp(typ, exp, pos)
+    }
+
+    def parseGclTODO(): GclTODO = {
+      val r = parseGclTODOT(F)
+      return r
+    }
+
+    def parseGclTODOT(typeParsed: B): GclTODO = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclTODO")
+      }
+      return GclTODO()
     }
 
     def parseSmfAnnex(): SmfAnnex = {
@@ -6266,6 +6343,42 @@ object JSON {
     return r
   }
 
+  def fromGclNameExp(o: GclNameExp, isCompact: B): String = {
+    val st = Printer.printGclNameExp(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclNameExp(s: String): Either[GclNameExp, Json.ErrorMsg] = {
+    def fGclNameExp(parser: Parser): GclNameExp = {
+      val r = parser.parseGclNameExp()
+      return r
+    }
+    val r = to(s, fGclNameExp _)
+    return r
+  }
+
+  def fromGclAccessExp(o: GclAccessExp, isCompact: B): String = {
+    val st = Printer.printGclAccessExp(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclAccessExp(s: String): Either[GclAccessExp, Json.ErrorMsg] = {
+    def fGclAccessExp(parser: Parser): GclAccessExp = {
+      val r = parser.parseGclAccessExp()
+      return r
+    }
+    val r = to(s, fGclAccessExp _)
+    return r
+  }
+
   def fromGclLiteralExp(o: GclLiteralExp, isCompact: B): String = {
     val st = Printer.printGclLiteralExp(o)
     if (isCompact) {
@@ -6281,6 +6394,24 @@ object JSON {
       return r
     }
     val r = to(s, fGclLiteralExp _)
+    return r
+  }
+
+  def fromGclTODO(o: GclTODO, isCompact: B): String = {
+    val st = Printer.printGclTODO(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclTODO(s: String): Either[GclTODO, Json.ErrorMsg] = {
+    def fGclTODO(parser: Parser): GclTODO = {
+      val r = parser.parseGclTODO()
+      return r
+    }
+    val r = to(s, fGclTODO _)
     return r
   }
 

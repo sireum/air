@@ -1290,7 +1290,9 @@ object JSON {
 
     @pure def printGclIntegration(o: GclIntegration): ST = {
       return printObject(ISZ(
-        ("type", st""""GclIntegration"""")
+        ("type", st""""GclIntegration""""),
+        ("name", printString(o.name)),
+        ("exp", printGclExp(o.exp))
       ))
     }
 
@@ -3904,7 +3906,13 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("GclIntegration")
       }
-      return GclIntegration()
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("exp")
+      val exp = parseGclExp()
+      parser.parseObjectNext()
+      return GclIntegration(name, exp)
     }
 
     def parseGclCompute(): GclCompute = {

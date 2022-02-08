@@ -45,7 +45,8 @@ import org.sireum.message.Position
 @datatype class GclGuarantee(name: String,
                              exp: GclExp)
 
-@datatype class GclIntegration()
+@datatype class GclIntegration(name: String,
+                               exp: GclExp)
 
 @datatype class GclCompute()
 

@@ -1147,6 +1147,8 @@ object MsgPack {
 
     def writeGclIntegration(o: GclIntegration): Unit = {
       writer.writeZ(Constants.GclIntegration)
+      writer.writeString(o.name)
+      writeGclExp(o.exp)
     }
 
     def writeGclCompute(o: GclCompute): Unit = {
@@ -3048,7 +3050,9 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.GclIntegration)
       }
-      return GclIntegration()
+      val name = reader.readString()
+      val exp = readGclExp()
+      return GclIntegration(name, exp)
     }
 
     def readGclCompute(): GclCompute = {

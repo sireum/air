@@ -281,13 +281,13 @@ object MTransformer {
 
   val PostResultGclIntegration: MOption[GclIntegration] = MNone()
 
-  val PreResultGclCompute: PreResult[GclCompute] = PreResult(T, MNone())
-
-  val PostResultGclCompute: MOption[GclCompute] = MNone()
-
   val PreResultBTSBLESSAnnexClause: PreResult[BTSBLESSAnnexClause] = PreResult(T, MNone())
 
   val PostResultBTSBLESSAnnexClause: MOption[BTSBLESSAnnexClause] = MNone()
+
+  val PreResultGclCompute: PreResult[GclCompute] = PreResult(T, MNone())
+
+  val PostResultGclCompute: MOption[GclCompute] = MNone()
 
   val PreResultGclUnaryExp: PreResult[GclUnaryExp] = PreResult(T, MNone())
 
@@ -1285,6 +1285,10 @@ import MTransformer._
     return PreResultGclIntegration
   }
 
+  def preBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): PreResult[BTSBLESSAnnexClause] = {
+    return PreResultBTSBLESSAnnexClause
+  }
+
   def preGclCompute(o: GclCompute): PreResult[GclCompute] = {
     return PreResultGclCompute
   }
@@ -1327,10 +1331,6 @@ import MTransformer._
         }
         return r
     }
-  }
-
-  def preBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): PreResult[BTSBLESSAnnexClause] = {
-    return PreResultBTSBLESSAnnexClause
   }
 
   def preGclUnaryExp(o: GclUnaryExp): PreResult[GclUnaryExp] = {
@@ -2681,6 +2681,10 @@ import MTransformer._
     return PostResultGclIntegration
   }
 
+  def postBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): MOption[BTSBLESSAnnexClause] = {
+    return PostResultBTSBLESSAnnexClause
+  }
+
   def postGclCompute(o: GclCompute): MOption[GclCompute] = {
     return PostResultGclCompute
   }
@@ -2723,10 +2727,6 @@ import MTransformer._
         }
         return r
     }
-  }
-
-  def postBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): MOption[BTSBLESSAnnexClause] = {
-    return PostResultBTSBLESSAnnexClause
   }
 
   def postGclUnaryExp(o: GclUnaryExp): MOption[GclUnaryExp] = {
@@ -5524,8 +5524,9 @@ import MTransformer._
     val r: MOption[GclIntegration] = if (preR.continu) {
       val o2: GclIntegration = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
+      val r0: MOption[GclExp] = transformGclExp(o2.exp)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(exp = r0.getOrElse(o2.exp)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -5536,6 +5537,37 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: GclIntegration = r.getOrElse(o)
     val postR: MOption[GclIntegration] = postGclIntegration(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): MOption[BTSBLESSAnnexClause] = {
+    val preR: PreResult[BTSBLESSAnnexClause] = preBTSBLESSAnnexClause(o)
+    val r: MOption[BTSBLESSAnnexClause] = if (preR.continu) {
+      val o2: BTSBLESSAnnexClause = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.assertions, transformBTSAssertion _)
+      val r1: MOption[Option[BTSAssertion]] = transformOption(o2.invariant, transformBTSAssertion _)
+      val r2: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.variables, transformBTSVariableDeclaration _)
+      val r3: MOption[IS[Z, BTSStateDeclaration]] = transformISZ(o2.states, transformBTSStateDeclaration _)
+      val r4: MOption[IS[Z, BTSTransition]] = transformISZ(o2.transitions, transformBTSTransition _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(assertions = r0.getOrElse(o2.assertions), invariant = r1.getOrElse(o2.invariant), variables = r2.getOrElse(o2.variables), states = r3.getOrElse(o2.states), transitions = r4.getOrElse(o2.transitions)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSBLESSAnnexClause = r.getOrElse(o)
+    val postR: MOption[BTSBLESSAnnexClause] = postBTSBLESSAnnexClause(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -5617,37 +5649,6 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: GclExp = r.getOrElse(o)
     val postR: MOption[GclExp] = postGclExp(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): MOption[BTSBLESSAnnexClause] = {
-    val preR: PreResult[BTSBLESSAnnexClause] = preBTSBLESSAnnexClause(o)
-    val r: MOption[BTSBLESSAnnexClause] = if (preR.continu) {
-      val o2: BTSBLESSAnnexClause = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.assertions, transformBTSAssertion _)
-      val r1: MOption[Option[BTSAssertion]] = transformOption(o2.invariant, transformBTSAssertion _)
-      val r2: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.variables, transformBTSVariableDeclaration _)
-      val r3: MOption[IS[Z, BTSStateDeclaration]] = transformISZ(o2.states, transformBTSStateDeclaration _)
-      val r4: MOption[IS[Z, BTSTransition]] = transformISZ(o2.transitions, transformBTSTransition _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
-        MSome(o2(assertions = r0.getOrElse(o2.assertions), invariant = r1.getOrElse(o2.invariant), variables = r2.getOrElse(o2.variables), states = r3.getOrElse(o2.states), transitions = r4.getOrElse(o2.transitions)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: BTSBLESSAnnexClause = r.getOrElse(o)
-    val postR: MOption[BTSBLESSAnnexClause] = postBTSBLESSAnnexClause(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

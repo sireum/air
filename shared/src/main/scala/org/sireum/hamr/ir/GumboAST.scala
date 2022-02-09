@@ -42,11 +42,18 @@ import org.sireum.message.Position
 @datatype class GclInvariant(name: String,
                              exp: GclExp)
 
-@datatype class GclGuarantee(name: String,
-                             exp: GclExp)
+@sig trait GclSpec {
+  def name: String
+  def exp: GclExp
+}
 
-@datatype class GclIntegration(name: String,
-                               exp: GclExp)
+@datatype class GclAssume(val name: String,
+                          val exp: GclExp) extends GclSpec
+
+@datatype class GclGuarantee(val name: String,
+                             val exp: GclExp) extends GclSpec
+
+@datatype class GclIntegration(val specs: ISZ[GclSpec])
 
 @datatype class GclCompute()
 

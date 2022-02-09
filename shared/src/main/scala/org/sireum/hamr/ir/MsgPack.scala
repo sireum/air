@@ -216,33 +216,35 @@ object MsgPack {
 
     val GclInvariant: Z = 57
 
-    val GclGuarantee: Z = 58
+    val GclAssume: Z = 58
 
-    val GclIntegration: Z = 59
+    val GclGuarantee: Z = 59
 
-    val GclCompute: Z = 60
+    val GclIntegration: Z = 60
 
-    val GclUnaryExp: Z = 61
+    val GclCompute: Z = 61
 
-    val GclBinaryExp: Z = 62
+    val GclUnaryExp: Z = 62
 
-    val GclNameExp: Z = 63
+    val GclBinaryExp: Z = 63
 
-    val GclAccessExp: Z = 64
+    val GclNameExp: Z = 64
 
-    val GclLiteralExp: Z = 65
+    val GclAccessExp: Z = 65
 
-    val GclTODO: Z = 66
+    val GclLiteralExp: Z = 66
 
-    val SmfClause: Z = 67
+    val GclTODO: Z = 67
 
-    val SmfClassification: Z = 68
+    val SmfClause: Z = 68
 
-    val SmfDeclass: Z = 69
+    val SmfClassification: Z = 69
 
-    val SmfLibrary: Z = 70
+    val SmfDeclass: Z = 70
 
-    val SmfType: Z = 71
+    val SmfLibrary: Z = 71
+
+    val SmfType: Z = 72
 
   }
 
@@ -1139,6 +1141,19 @@ object MsgPack {
       writeGclExp(o.exp)
     }
 
+    def writeGclSpec(o: GclSpec): Unit = {
+      o match {
+        case o: GclAssume => writeGclAssume(o)
+        case o: GclGuarantee => writeGclGuarantee(o)
+      }
+    }
+
+    def writeGclAssume(o: GclAssume): Unit = {
+      writer.writeZ(Constants.GclAssume)
+      writer.writeString(o.name)
+      writeGclExp(o.exp)
+    }
+
     def writeGclGuarantee(o: GclGuarantee): Unit = {
       writer.writeZ(Constants.GclGuarantee)
       writer.writeString(o.name)
@@ -1147,8 +1162,7 @@ object MsgPack {
 
     def writeGclIntegration(o: GclIntegration): Unit = {
       writer.writeZ(Constants.GclIntegration)
-      writer.writeString(o.name)
-      writeGclExp(o.exp)
+      writer.writeISZ(o.specs, writeGclSpec _)
     }
 
     def writeGclCompute(o: GclCompute): Unit = {
@@ -3027,6 +3041,33 @@ object MsgPack {
       return GclInvariant(name, exp)
     }
 
+    def readGclSpec(): GclSpec = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.GclAssume => val r = readGclAssumeT(T); return r
+        case Constants.GclGuarantee => val r = readGclGuaranteeT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of GclSpec.")
+          val r = readGclGuaranteeT(T)
+          return r
+      }
+    }
+
+    def readGclAssume(): GclAssume = {
+      val r = readGclAssumeT(F)
+      return r
+    }
+
+    def readGclAssumeT(typeParsed: B): GclAssume = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclAssume)
+      }
+      val name = reader.readString()
+      val exp = readGclExp()
+      return GclAssume(name, exp)
+    }
+
     def readGclGuarantee(): GclGuarantee = {
       val r = readGclGuaranteeT(F)
       return r
@@ -3050,9 +3091,8 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.GclIntegration)
       }
-      val name = reader.readString()
-      val exp = readGclExp()
-      return GclIntegration(name, exp)
+      val specs = reader.readISZ(readGclSpec _)
+      return GclIntegration(specs)
     }
 
     def readGclCompute(): GclCompute = {
@@ -4956,6 +4996,36 @@ object MsgPack {
       return r
     }
     val r = to(data, fGclInvariant _)
+    return r
+  }
+
+  def fromGclSpec(o: GclSpec, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclSpec(o)
+    return w.result
+  }
+
+  def toGclSpec(data: ISZ[U8]): Either[GclSpec, MessagePack.ErrorMsg] = {
+    def fGclSpec(reader: Reader): GclSpec = {
+      val r = reader.readGclSpec()
+      return r
+    }
+    val r = to(data, fGclSpec _)
+    return r
+  }
+
+  def fromGclAssume(o: GclAssume, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclAssume(o)
+    return w.result
+  }
+
+  def toGclAssume(data: ISZ[U8]): Either[GclAssume, MessagePack.ErrorMsg] = {
+    def fGclAssume(reader: Reader): GclAssume = {
+      val r = reader.readGclAssume()
+      return r
+    }
+    val r = to(data, fGclAssume _)
     return r
   }
 

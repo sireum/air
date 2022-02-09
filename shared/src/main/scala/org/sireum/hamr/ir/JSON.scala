@@ -1280,6 +1280,21 @@ object JSON {
       ))
     }
 
+    @pure def printGclSpec(o: GclSpec): ST = {
+      o match {
+        case o: GclAssume => return printGclAssume(o)
+        case o: GclGuarantee => return printGclGuarantee(o)
+      }
+    }
+
+    @pure def printGclAssume(o: GclAssume): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclAssume""""),
+        ("name", printString(o.name)),
+        ("exp", printGclExp(o.exp))
+      ))
+    }
+
     @pure def printGclGuarantee(o: GclGuarantee): ST = {
       return printObject(ISZ(
         ("type", st""""GclGuarantee""""),
@@ -1291,8 +1306,7 @@ object JSON {
     @pure def printGclIntegration(o: GclIntegration): ST = {
       return printObject(ISZ(
         ("type", st""""GclIntegration""""),
-        ("name", printString(o.name)),
-        ("exp", printGclExp(o.exp))
+        ("specs", printISZ(F, o.specs, printGclSpec _))
       ))
     }
 
@@ -3879,6 +3893,33 @@ object JSON {
       return GclInvariant(name, exp)
     }
 
+    def parseGclSpec(): GclSpec = {
+      val t = parser.parseObjectTypes(ISZ("GclAssume", "GclGuarantee"))
+      t.native match {
+        case "GclAssume" => val r = parseGclAssumeT(T); return r
+        case "GclGuarantee" => val r = parseGclGuaranteeT(T); return r
+        case _ => val r = parseGclGuaranteeT(T); return r
+      }
+    }
+
+    def parseGclAssume(): GclAssume = {
+      val r = parseGclAssumeT(F)
+      return r
+    }
+
+    def parseGclAssumeT(typeParsed: B): GclAssume = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclAssume")
+      }
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("exp")
+      val exp = parseGclExp()
+      parser.parseObjectNext()
+      return GclAssume(name, exp)
+    }
+
     def parseGclGuarantee(): GclGuarantee = {
       val r = parseGclGuaranteeT(F)
       return r
@@ -3906,13 +3947,10 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("GclIntegration")
       }
-      parser.parseObjectKey("name")
-      val name = parser.parseString()
+      parser.parseObjectKey("specs")
+      val specs = parser.parseISZ(parseGclSpec _)
       parser.parseObjectNext()
-      parser.parseObjectKey("exp")
-      val exp = parseGclExp()
-      parser.parseObjectNext()
-      return GclIntegration(name, exp)
+      return GclIntegration(specs)
     }
 
     def parseGclCompute(): GclCompute = {
@@ -6240,6 +6278,42 @@ object JSON {
       return r
     }
     val r = to(s, fGclInvariant _)
+    return r
+  }
+
+  def fromGclSpec(o: GclSpec, isCompact: B): String = {
+    val st = Printer.printGclSpec(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclSpec(s: String): Either[GclSpec, Json.ErrorMsg] = {
+    def fGclSpec(parser: Parser): GclSpec = {
+      val r = parser.parseGclSpec()
+      return r
+    }
+    val r = to(s, fGclSpec _)
+    return r
+  }
+
+  def fromGclAssume(o: GclAssume, isCompact: B): String = {
+    val st = Printer.printGclAssume(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclAssume(s: String): Either[GclAssume, Json.ErrorMsg] = {
+    def fGclAssume(parser: Parser): GclAssume = {
+      val r = parser.parseGclAssume()
+      return r
+    }
+    val r = to(s, fGclAssume _)
     return r
   }
 

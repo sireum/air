@@ -21,6 +21,7 @@ import org.sireum.project.ProjectUtil._
 import org.sireum.project.Project
 
 val library = "library"
+val slangTipe = "slang-tipe"
 
 val air = "hamr-air"
 
@@ -29,7 +30,7 @@ val homeDir = Os.slashDir.up.canon
 val (airShared, airJvm) = moduleSharedJvmPub(
   baseId = air,
   baseDir = homeDir,
-  sharedDeps = sharedId(library),
+  sharedDeps = sharedId(library) :+ slangTipe,
   sharedIvyDeps = ISZ(),
   jvmDeps = ISZ(library),
   jvmIvyDeps = ISZ(),

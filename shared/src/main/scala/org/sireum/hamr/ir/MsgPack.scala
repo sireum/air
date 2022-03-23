@@ -222,29 +222,33 @@ object MsgPack {
 
     val GclIntegration: Z = 60
 
-    val GclCompute: Z = 61
+    val GclCaseStatement: Z = 61
 
-    val GclUnaryExp: Z = 62
+    val GclCompute: Z = 62
 
-    val GclBinaryExp: Z = 63
+    val GclUnaryExp: Z = 63
 
-    val GclNameExp: Z = 64
+    val GclBinaryExp: Z = 64
 
-    val GclAccessExp: Z = 65
+    val GclNameExp: Z = 65
 
-    val GclLiteralExp: Z = 66
+    val GclAccessExp: Z = 66
 
-    val GclTODO: Z = 67
+    val GclLiteralExp: Z = 67
 
-    val SmfClause: Z = 68
+    val GclEnumLitExp: Z = 68
 
-    val SmfClassification: Z = 69
+    val GclTODO: Z = 69
 
-    val SmfDeclass: Z = 70
+    val SmfClause: Z = 70
 
-    val SmfLibrary: Z = 71
+    val SmfClassification: Z = 71
 
-    val SmfType: Z = 72
+    val SmfDeclass: Z = 72
+
+    val SmfLibrary: Z = 73
+
+    val SmfType: Z = 74
 
   }
 
@@ -1139,6 +1143,7 @@ object MsgPack {
       writer.writeZ(Constants.GclInvariant)
       writer.writeString(o.name)
       writeGclExp(o.exp)
+      writer.writeString(o.slangExp)
     }
 
     def writeGclSpec(o: GclSpec): Unit = {
@@ -1152,12 +1157,14 @@ object MsgPack {
       writer.writeZ(Constants.GclAssume)
       writer.writeString(o.name)
       writeGclExp(o.exp)
+      writer.writeString(o.slangExp)
     }
 
     def writeGclGuarantee(o: GclGuarantee): Unit = {
       writer.writeZ(Constants.GclGuarantee)
       writer.writeString(o.name)
       writeGclExp(o.exp)
+      writer.writeString(o.slangExp)
     }
 
     def writeGclIntegration(o: GclIntegration): Unit = {
@@ -1165,8 +1172,18 @@ object MsgPack {
       writer.writeISZ(o.specs, writeGclSpec _)
     }
 
+    def writeGclCaseStatement(o: GclCaseStatement): Unit = {
+      writer.writeZ(Constants.GclCaseStatement)
+      writer.writeString(o.name)
+      writeGclExp(o.assumes)
+      writer.writeString(o.slangAssumes)
+      writeGclExp(o.guarentees)
+      writer.writeString(o.slangGuarentees)
+    }
+
     def writeGclCompute(o: GclCompute): Unit = {
       writer.writeZ(Constants.GclCompute)
+      writer.writeISZ(o.cases, writeGclCaseStatement _)
     }
 
     def writeGclExp(o: GclExp): Unit = {
@@ -1176,6 +1193,7 @@ object MsgPack {
         case o: GclNameExp => writeGclNameExp(o)
         case o: GclAccessExp => writeGclAccessExp(o)
         case o: GclLiteralExp => writeGclLiteralExp(o)
+        case o: GclEnumLitExp => writeGclEnumLitExp(o)
       }
     }
 
@@ -1223,6 +1241,13 @@ object MsgPack {
       writer.writeZ(Constants.GclLiteralExp)
       writeGclLiteralTypeType(o.typ)
       writer.writeString(o.exp)
+      writer.writeOption(o.pos, writer.writePosition _)
+    }
+
+    def writeGclEnumLitExp(o: GclEnumLitExp): Unit = {
+      writer.writeZ(Constants.GclEnumLitExp)
+      writer.writeString(o.classifier)
+      writer.writeString(o.value)
       writer.writeOption(o.pos, writer.writePosition _)
     }
 
@@ -3038,7 +3063,8 @@ object MsgPack {
       }
       val name = reader.readString()
       val exp = readGclExp()
-      return GclInvariant(name, exp)
+      val slangExp = reader.readString()
+      return GclInvariant(name, exp, slangExp)
     }
 
     def readGclSpec(): GclSpec = {
@@ -3065,7 +3091,8 @@ object MsgPack {
       }
       val name = reader.readString()
       val exp = readGclExp()
-      return GclAssume(name, exp)
+      val slangExp = reader.readString()
+      return GclAssume(name, exp, slangExp)
     }
 
     def readGclGuarantee(): GclGuarantee = {
@@ -3079,7 +3106,8 @@ object MsgPack {
       }
       val name = reader.readString()
       val exp = readGclExp()
-      return GclGuarantee(name, exp)
+      val slangExp = reader.readString()
+      return GclGuarantee(name, exp, slangExp)
     }
 
     def readGclIntegration(): GclIntegration = {
@@ -3095,6 +3123,23 @@ object MsgPack {
       return GclIntegration(specs)
     }
 
+    def readGclCaseStatement(): GclCaseStatement = {
+      val r = readGclCaseStatementT(F)
+      return r
+    }
+
+    def readGclCaseStatementT(typeParsed: B): GclCaseStatement = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclCaseStatement)
+      }
+      val name = reader.readString()
+      val assumes = readGclExp()
+      val slangAssumes = reader.readString()
+      val guarentees = readGclExp()
+      val slangGuarentees = reader.readString()
+      return GclCaseStatement(name, assumes, slangAssumes, guarentees, slangGuarentees)
+    }
+
     def readGclCompute(): GclCompute = {
       val r = readGclComputeT(F)
       return r
@@ -3104,7 +3149,8 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants.GclCompute)
       }
-      return GclCompute()
+      val cases = reader.readISZ(readGclCaseStatement _)
+      return GclCompute(cases)
     }
 
     def readGclExp(): GclExp = {
@@ -3116,9 +3162,10 @@ object MsgPack {
         case Constants.GclNameExp => val r = readGclNameExpT(T); return r
         case Constants.GclAccessExp => val r = readGclAccessExpT(T); return r
         case Constants.GclLiteralExp => val r = readGclLiteralExpT(T); return r
+        case Constants.GclEnumLitExp => val r = readGclEnumLitExpT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of GclExp.")
-          val r = readGclLiteralExpT(T)
+          val r = readGclEnumLitExpT(T)
           return r
       }
     }
@@ -3211,6 +3258,21 @@ object MsgPack {
       val exp = reader.readString()
       val pos = reader.readOption(reader.readPosition _)
       return GclLiteralExp(typ, exp, pos)
+    }
+
+    def readGclEnumLitExp(): GclEnumLitExp = {
+      val r = readGclEnumLitExpT(F)
+      return r
+    }
+
+    def readGclEnumLitExpT(typeParsed: B): GclEnumLitExp = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.GclEnumLitExp)
+      }
+      val classifier = reader.readString()
+      val value = reader.readString()
+      val pos = reader.readOption(reader.readPosition _)
+      return GclEnumLitExp(classifier, value, pos)
     }
 
     def readGclTODO(): GclTODO = {
@@ -5059,6 +5121,21 @@ object MsgPack {
     return r
   }
 
+  def fromGclCaseStatement(o: GclCaseStatement, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclCaseStatement(o)
+    return w.result
+  }
+
+  def toGclCaseStatement(data: ISZ[U8]): Either[GclCaseStatement, MessagePack.ErrorMsg] = {
+    def fGclCaseStatement(reader: Reader): GclCaseStatement = {
+      val r = reader.readGclCaseStatement()
+      return r
+    }
+    val r = to(data, fGclCaseStatement _)
+    return r
+  }
+
   def fromGclCompute(o: GclCompute, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
     w.writeGclCompute(o)
@@ -5161,6 +5238,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fGclLiteralExp _)
+    return r
+  }
+
+  def fromGclEnumLitExp(o: GclEnumLitExp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclEnumLitExp(o)
+    return w.result
+  }
+
+  def toGclEnumLitExp(data: ISZ[U8]): Either[GclEnumLitExp, MessagePack.ErrorMsg] = {
+    def fGclEnumLitExp(reader: Reader): GclEnumLitExp = {
+      val r = reader.readGclEnumLitExp()
+      return r
+    }
+    val r = to(data, fGclEnumLitExp _)
     return r
   }
 

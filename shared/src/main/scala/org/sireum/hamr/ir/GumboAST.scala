@@ -40,22 +40,32 @@ import org.sireum.message.Position
                             exp: GclExp)
 
 @datatype class GclInvariant(name: String,
-                             exp: GclExp)
+                             exp: GclExp,
+                             slangExp: String)
 
 @sig trait GclSpec {
   def name: String
   def exp: GclExp
+  def slangExp: String
 }
 
 @datatype class GclAssume(val name: String,
-                          val exp: GclExp) extends GclSpec
+                          val exp: GclExp,
+                          slangExp: String) extends GclSpec
 
 @datatype class GclGuarantee(val name: String,
-                             val exp: GclExp) extends GclSpec
+                             val exp: GclExp,
+                             slangExp: String) extends GclSpec
 
 @datatype class GclIntegration(val specs: ISZ[GclSpec])
 
-@datatype class GclCompute()
+@datatype class GclCaseStatement(val name: String,
+                                 val assumes: GclExp,
+                                 val slangAssumes: String,
+                                 val guarentees: GclExp,
+                                 val slangGuarentees: String)
+
+@datatype class GclCompute(cases: ISZ[GclCaseStatement])
 
 @sig trait GclExp {
   @pure def pos: Option[Position]
@@ -118,6 +128,10 @@ import org.sireum.message.Position
 
 @datatype class GclLiteralExp(typ: GclLiteralType.Type,
                               exp: String,
+                              val pos: Option[Position]) extends GclExp
+
+@datatype class GclEnumLitExp(val classifier: String,
+                              val value: String,
                               val pos: Option[Position]) extends GclExp
 
 @datatype class GclTODO

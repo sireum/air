@@ -1276,7 +1276,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""GclInvariant""""),
         ("name", printString(o.name)),
-        ("exp", printGclExp(o.exp))
+        ("exp", printGclExp(o.exp)),
+        ("slangExp", printString(o.slangExp))
       ))
     }
 
@@ -1291,7 +1292,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""GclAssume""""),
         ("name", printString(o.name)),
-        ("exp", printGclExp(o.exp))
+        ("exp", printGclExp(o.exp)),
+        ("slangExp", printString(o.slangExp))
       ))
     }
 
@@ -1299,7 +1301,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""GclGuarantee""""),
         ("name", printString(o.name)),
-        ("exp", printGclExp(o.exp))
+        ("exp", printGclExp(o.exp)),
+        ("slangExp", printString(o.slangExp))
       ))
     }
 
@@ -1310,9 +1313,21 @@ object JSON {
       ))
     }
 
+    @pure def printGclCaseStatement(o: GclCaseStatement): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclCaseStatement""""),
+        ("name", printString(o.name)),
+        ("assumes", printGclExp(o.assumes)),
+        ("slangAssumes", printString(o.slangAssumes)),
+        ("guarentees", printGclExp(o.guarentees)),
+        ("slangGuarentees", printString(o.slangGuarentees))
+      ))
+    }
+
     @pure def printGclCompute(o: GclCompute): ST = {
       return printObject(ISZ(
-        ("type", st""""GclCompute"""")
+        ("type", st""""GclCompute""""),
+        ("cases", printISZ(F, o.cases, printGclCaseStatement _))
       ))
     }
 
@@ -1323,6 +1338,7 @@ object JSON {
         case o: GclNameExp => return printGclNameExp(o)
         case o: GclAccessExp => return printGclAccessExp(o)
         case o: GclLiteralExp => return printGclLiteralExp(o)
+        case o: GclEnumLitExp => return printGclEnumLitExp(o)
       }
     }
 
@@ -1421,6 +1437,15 @@ object JSON {
         ("type", st""""GclLiteralExp""""),
         ("typ", printGclLiteralTypeType(o.typ)),
         ("exp", printString(o.exp)),
+        ("pos", printOption(F, o.pos, printPosition _))
+      ))
+    }
+
+    @pure def printGclEnumLitExp(o: GclEnumLitExp): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclEnumLitExp""""),
+        ("classifier", printString(o.classifier)),
+        ("value", printString(o.value)),
         ("pos", printOption(F, o.pos, printPosition _))
       ))
     }
@@ -3890,7 +3915,10 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parseGclExp()
       parser.parseObjectNext()
-      return GclInvariant(name, exp)
+      parser.parseObjectKey("slangExp")
+      val slangExp = parser.parseString()
+      parser.parseObjectNext()
+      return GclInvariant(name, exp, slangExp)
     }
 
     def parseGclSpec(): GclSpec = {
@@ -3917,7 +3945,10 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parseGclExp()
       parser.parseObjectNext()
-      return GclAssume(name, exp)
+      parser.parseObjectKey("slangExp")
+      val slangExp = parser.parseString()
+      parser.parseObjectNext()
+      return GclAssume(name, exp, slangExp)
     }
 
     def parseGclGuarantee(): GclGuarantee = {
@@ -3935,7 +3966,10 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parseGclExp()
       parser.parseObjectNext()
-      return GclGuarantee(name, exp)
+      parser.parseObjectKey("slangExp")
+      val slangExp = parser.parseString()
+      parser.parseObjectNext()
+      return GclGuarantee(name, exp, slangExp)
     }
 
     def parseGclIntegration(): GclIntegration = {
@@ -3953,6 +3987,33 @@ object JSON {
       return GclIntegration(specs)
     }
 
+    def parseGclCaseStatement(): GclCaseStatement = {
+      val r = parseGclCaseStatementT(F)
+      return r
+    }
+
+    def parseGclCaseStatementT(typeParsed: B): GclCaseStatement = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclCaseStatement")
+      }
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("assumes")
+      val assumes = parseGclExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("slangAssumes")
+      val slangAssumes = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("guarentees")
+      val guarentees = parseGclExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("slangGuarentees")
+      val slangGuarentees = parser.parseString()
+      parser.parseObjectNext()
+      return GclCaseStatement(name, assumes, slangAssumes, guarentees, slangGuarentees)
+    }
+
     def parseGclCompute(): GclCompute = {
       val r = parseGclComputeT(F)
       return r
@@ -3962,18 +4023,22 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("GclCompute")
       }
-      return GclCompute()
+      parser.parseObjectKey("cases")
+      val cases = parser.parseISZ(parseGclCaseStatement _)
+      parser.parseObjectNext()
+      return GclCompute(cases)
     }
 
     def parseGclExp(): GclExp = {
-      val t = parser.parseObjectTypes(ISZ("GclUnaryExp", "GclBinaryExp", "GclNameExp", "GclAccessExp", "GclLiteralExp"))
+      val t = parser.parseObjectTypes(ISZ("GclUnaryExp", "GclBinaryExp", "GclNameExp", "GclAccessExp", "GclLiteralExp", "GclEnumLitExp"))
       t.native match {
         case "GclUnaryExp" => val r = parseGclUnaryExpT(T); return r
         case "GclBinaryExp" => val r = parseGclBinaryExpT(T); return r
         case "GclNameExp" => val r = parseGclNameExpT(T); return r
         case "GclAccessExp" => val r = parseGclAccessExpT(T); return r
         case "GclLiteralExp" => val r = parseGclLiteralExpT(T); return r
-        case _ => val r = parseGclLiteralExpT(T); return r
+        case "GclEnumLitExp" => val r = parseGclEnumLitExpT(T); return r
+        case _ => val r = parseGclEnumLitExpT(T); return r
       }
     }
 
@@ -4143,6 +4208,27 @@ object JSON {
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
       return GclLiteralExp(typ, exp, pos)
+    }
+
+    def parseGclEnumLitExp(): GclEnumLitExp = {
+      val r = parseGclEnumLitExpT(F)
+      return r
+    }
+
+    def parseGclEnumLitExpT(typeParsed: B): GclEnumLitExp = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclEnumLitExp")
+      }
+      parser.parseObjectKey("classifier")
+      val classifier = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("value")
+      val value = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return GclEnumLitExp(classifier, value, pos)
     }
 
     def parseGclTODO(): GclTODO = {
@@ -6353,6 +6439,24 @@ object JSON {
     return r
   }
 
+  def fromGclCaseStatement(o: GclCaseStatement, isCompact: B): String = {
+    val st = Printer.printGclCaseStatement(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclCaseStatement(s: String): Either[GclCaseStatement, Json.ErrorMsg] = {
+    def fGclCaseStatement(parser: Parser): GclCaseStatement = {
+      val r = parser.parseGclCaseStatement()
+      return r
+    }
+    val r = to(s, fGclCaseStatement _)
+    return r
+  }
+
   def fromGclCompute(o: GclCompute, isCompact: B): String = {
     val st = Printer.printGclCompute(o)
     if (isCompact) {
@@ -6476,6 +6580,24 @@ object JSON {
       return r
     }
     val r = to(s, fGclLiteralExp _)
+    return r
+  }
+
+  def fromGclEnumLitExp(o: GclEnumLitExp, isCompact: B): String = {
+    val st = Printer.printGclEnumLitExp(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclEnumLitExp(s: String): Either[GclEnumLitExp, Json.ErrorMsg] = {
+    def fGclEnumLitExp(parser: Parser): GclEnumLitExp = {
+      val r = parser.parseGclEnumLitExp()
+      return r
+    }
+    val r = to(s, fGclEnumLitExp _)
     return r
   }
 

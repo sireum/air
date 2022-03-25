@@ -37,101 +37,28 @@ import org.sireum.message.Position
                              compute: Option[GclCompute]) extends GclAnnex
 
 @datatype class GclStateVar(name: String,
-                            exp: GclExp)
+                            exp: org.sireum.lang.ast.Exp)
 
 @datatype class GclInvariant(name: String,
-                             exp: GclExp,
-                             slangExp: String)
+                             exp: org.sireum.lang.ast.Exp)
 
 @sig trait GclSpec {
   def name: String
-  def exp: GclExp
-  def slangExp: String
+  def exp: org.sireum.lang.ast.Exp
 }
 
 @datatype class GclAssume(val name: String,
-                          val exp: GclExp,
-                          slangExp: String) extends GclSpec
+                          val exp: org.sireum.lang.ast.Exp) extends GclSpec
 
 @datatype class GclGuarantee(val name: String,
-                             val exp: GclExp,
-                             slangExp: String) extends GclSpec
+                             val exp: org.sireum.lang.ast.Exp) extends GclSpec
 
 @datatype class GclIntegration(val specs: ISZ[GclSpec])
 
 @datatype class GclCaseStatement(val name: String,
-                                 val assumes: GclExp,
-                                 val slangAssumes: String,
-                                 val guarentees: GclExp,
-                                 val slangGuarentees: String)
+                                 val assumes: org.sireum.lang.ast.Exp,
+                                 val guarantees: org.sireum.lang.ast.Exp)
 
 @datatype class GclCompute(cases: ISZ[GclCaseStatement])
-
-@sig trait GclExp {
-  @pure def pos: Option[Position]
-}
-
-@enum object GclUnaryOp {
-  "Abs"
-  "Neg"
-  "Not"
-}
-
-@enum object GclBinaryOp {
-  "And"
-  "AndThen"
-  "Or"
-  "OrElse"
-  "Xor"
-
-  "Implies"
-  "Equiv"
-
-  "Eq"
-  "Neq"
-  "Lt"
-  "Lte"
-  "Gt"
-  "Gte"
-
-  "Plus"
-  "Minus"
-  "Div"
-  "Mult"
-  "Mod"
-  "Rem"
-  "Exp"
-}
-
-@enum object GclLiteralType {
-  "Boolean"
-  "String"
-  "Integer"
-  "Real"
-}
-
-@datatype class GclUnaryExp(op: GclUnaryOp.Type,
-                            exp: GclExp,
-                            val pos: Option[Position]) extends GclExp
-
-@datatype class GclBinaryExp(op: GclBinaryOp.Type,
-                             lhs: GclExp,
-                             rhs: GclExp,
-                             val pos: Option[Position]) extends GclExp
-
-@datatype class GclNameExp(name: Name,
-                           val pos: Option[Position]) extends GclExp
-
-@datatype class GclAccessExp(exp: GclExp,
-                             attributeName: String,
-                             val pos: Option[Position]) extends GclExp
-
-@datatype class GclLiteralExp(typ: GclLiteralType.Type,
-                              exp: String,
-                              val pos: Option[Position]) extends GclExp
-
-@datatype class GclEnumLitExp(val classifier: String,
-                              val value: String,
-                              val pos: Option[Position]) extends GclExp
 
 @datatype class GclTODO

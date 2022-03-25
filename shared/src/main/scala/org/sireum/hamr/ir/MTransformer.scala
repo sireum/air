@@ -26,7 +26,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// This file is auto-generated from AadlAST.scala, BlessAST.scala, Emv2AST.scala, GumboAST.scala, SmfAST.scala
+// This file is auto-generated from AadlAST.scala, BlessAST.scala, Emv2AST.scala, GumboAST.scala, SmfAST.scala, AST.scala, Typed.scala
 
 package org.sireum.hamr.ir
 
@@ -64,6 +64,558 @@ object MTransformer {
       case _ => return MNone()
     }
   }
+
+  val PreResult_langastTopUnitProgram: PreResult[org.sireum.lang.ast.TopUnit] = PreResult(T, MNone())
+
+  val PostResult_langastTopUnitProgram: MOption[org.sireum.lang.ast.TopUnit] = MNone()
+
+  val PreResult_langastTopUnitSequentUnit: PreResult[org.sireum.lang.ast.TopUnit] = PreResult(T, MNone())
+
+  val PostResult_langastTopUnitSequentUnit: MOption[org.sireum.lang.ast.TopUnit] = MNone()
+
+  val PreResult_langastTopUnitTruthTableUnit: PreResult[org.sireum.lang.ast.TopUnit] = PreResult(T, MNone())
+
+  val PostResult_langastTopUnitTruthTableUnit: MOption[org.sireum.lang.ast.TopUnit] = MNone()
+
+  val PreResult_langastLoopContract: PreResult[org.sireum.lang.ast.LoopContract] = PreResult(T, MNone())
+
+  val PostResult_langastLoopContract: MOption[org.sireum.lang.ast.LoopContract] = MNone()
+
+  val PreResult_langastStmtImport: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtImport: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtImportImporter: PreResult[org.sireum.lang.ast.Stmt.Import.Importer] = PreResult(T, MNone())
+
+  val PostResult_langastStmtImportImporter: MOption[org.sireum.lang.ast.Stmt.Import.Importer] = MNone()
+
+  val PreResult_langastStmtImportMultiSelector: PreResult[org.sireum.lang.ast.Stmt.Import.Selector] = PreResult(T, MNone())
+
+  val PostResult_langastStmtImportMultiSelector: MOption[org.sireum.lang.ast.Stmt.Import.Selector] = MNone()
+
+  val PreResult_langastStmtImportWildcardSelector: PreResult[org.sireum.lang.ast.Stmt.Import.Selector] = PreResult(T, MNone())
+
+  val PostResult_langastStmtImportWildcardSelector: MOption[org.sireum.lang.ast.Stmt.Import.Selector] = MNone()
+
+  val PreResult_langastStmtImportNamedSelector: PreResult[org.sireum.lang.ast.Stmt.Import.NamedSelector] = PreResult(T, MNone())
+
+  val PostResult_langastStmtImportNamedSelector: MOption[org.sireum.lang.ast.Stmt.Import.NamedSelector] = MNone()
+
+  val PreResult_langastStmtVar: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtVar: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtVarPattern: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtVarPattern: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtSpecVar: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtSpecVar: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtMethod: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtMethod: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtExtMethod: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtExtMethod: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtJustMethod: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtJustMethod: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtSpecMethod: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtSpecMethod: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtEnum: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtEnum: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtSubZ: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtSubZ: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtObject: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtObject: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtSig: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtSig: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtAdt: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtAdt: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtTypeAlias: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtTypeAlias: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtAssign: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtAssign: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtBlock: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtBlock: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtIf: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtIf: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtMatch: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtMatch: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtWhile: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtWhile: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtDoWhile: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtDoWhile: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtFor: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtFor: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtReturn: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtReturn: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtExpr: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtExpr: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
+  val PreResult_langastStmtFact: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
+
+  val PostResult_langastStmtFact: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
+
+  val PreResult_langastStmtInv: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
+
+  val PostResult_langastStmtInv: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
+
+  val PreResult_langastStmtTheorem: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
+
+  val PostResult_langastStmtTheorem: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
+
+  val PreResult_langastStmtDataRefinement: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
+
+  val PostResult_langastStmtDataRefinement: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
+
+  val PreResult_langastStmtSpecLabel: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
+
+  val PostResult_langastStmtSpecLabel: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
+
+  val PreResult_langastStmtSpecBlock: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
+
+  val PostResult_langastStmtSpecBlock: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
+
+  val PreResult_langastStmtDeduceSequent: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
+
+  val PostResult_langastStmtDeduceSequent: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
+
+  val PreResult_langastStmtDeduceSteps: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
+
+  val PostResult_langastStmtDeduceSteps: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
+
+  val PreResult_langastStmtHavoc: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
+
+  val PostResult_langastStmtHavoc: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
+
+  val PreResult_langastMethodContractAccesses: PreResult[org.sireum.lang.ast.MethodContract.Accesses] = PreResult(T, MNone())
+
+  val PostResult_langastMethodContractAccesses: MOption[org.sireum.lang.ast.MethodContract.Accesses] = MNone()
+
+  val PreResult_langastMethodContractClaims: PreResult[org.sireum.lang.ast.MethodContract.Claims] = PreResult(T, MNone())
+
+  val PostResult_langastMethodContractClaims: MOption[org.sireum.lang.ast.MethodContract.Claims] = MNone()
+
+  val PreResult_langastMethodContractSimple: PreResult[org.sireum.lang.ast.MethodContract] = PreResult(T, MNone())
+
+  val PostResult_langastMethodContractSimple: MOption[org.sireum.lang.ast.MethodContract] = MNone()
+
+  val PreResult_langastMethodContractCases: PreResult[org.sireum.lang.ast.MethodContract] = PreResult(T, MNone())
+
+  val PostResult_langastMethodContractCases: MOption[org.sireum.lang.ast.MethodContract] = MNone()
+
+  val PreResult_langastMethodContractCase: PreResult[org.sireum.lang.ast.MethodContract.Case] = PreResult(T, MNone())
+
+  val PostResult_langastMethodContractCase: MOption[org.sireum.lang.ast.MethodContract.Case] = MNone()
+
+  val PreResult_langastSequent: PreResult[org.sireum.lang.ast.Sequent] = PreResult(T, MNone())
+
+  val PostResult_langastSequent: MOption[org.sireum.lang.ast.Sequent] = MNone()
+
+  val PreResult_langastProofAst: PreResult[org.sireum.lang.ast.ProofAst] = PreResult(T, MNone())
+
+  val PostResult_langastProofAst: MOption[org.sireum.lang.ast.ProofAst] = MNone()
+
+  val PreResult_langastProofAstStepIdNum: PreResult[org.sireum.lang.ast.ProofAst.StepId] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepIdNum: MOption[org.sireum.lang.ast.ProofAst.StepId] = MNone()
+
+  val PreResult_langastProofAstStepIdStr: PreResult[org.sireum.lang.ast.ProofAst.StepId] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepIdStr: MOption[org.sireum.lang.ast.ProofAst.StepId] = MNone()
+
+  val PreResult_langastProofAstStepRegular: PreResult[org.sireum.lang.ast.ProofAst.Step] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepRegular: MOption[org.sireum.lang.ast.ProofAst.Step] = MNone()
+
+  val PreResult_langastProofAstStepAssume: PreResult[org.sireum.lang.ast.ProofAst.Step] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepAssume: MOption[org.sireum.lang.ast.ProofAst.Step] = MNone()
+
+  val PreResult_langastProofAstStepAssert: PreResult[org.sireum.lang.ast.ProofAst.Step] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepAssert: MOption[org.sireum.lang.ast.ProofAst.Step] = MNone()
+
+  val PreResult_langastProofAstStepSubProof: PreResult[org.sireum.lang.ast.ProofAst.Step] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepSubProof: MOption[org.sireum.lang.ast.ProofAst.Step] = MNone()
+
+  val PreResult_langastProofAstStepLet: PreResult[org.sireum.lang.ast.ProofAst.Step] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepLet: MOption[org.sireum.lang.ast.ProofAst.Step] = MNone()
+
+  val PreResult_langastProofAstStepLetParam: PreResult[org.sireum.lang.ast.ProofAst.Step.Let.Param] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepLetParam: MOption[org.sireum.lang.ast.ProofAst.Step.Let.Param] = MNone()
+
+  val PreResult_langastProofAstStepStructInduction: PreResult[org.sireum.lang.ast.ProofAst.Step] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepStructInduction: MOption[org.sireum.lang.ast.ProofAst.Step] = MNone()
+
+  val PreResult_langastProofAstStepStructInductionMatchCase: PreResult[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepStructInductionMatchCase: MOption[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = MNone()
+
+  val PreResult_langastProofAstStepStructInductionMatchDefault: PreResult[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepStructInductionMatchDefault: MOption[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = MNone()
+
+  val PreResult_langastProofAstStepJustificationApply: PreResult[org.sireum.lang.ast.ProofAst.Step.Justification] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepJustificationApply: MOption[org.sireum.lang.ast.ProofAst.Step.Justification] = MNone()
+
+  val PreResult_langastProofAstStepJustificationIncept: PreResult[org.sireum.lang.ast.ProofAst.Step.Inception] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepJustificationIncept: MOption[org.sireum.lang.ast.ProofAst.Step.Inception] = MNone()
+
+  val PreResult_langastProofAstStepJustificationInceptNamed: PreResult[org.sireum.lang.ast.ProofAst.Step.Inception] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepJustificationInceptNamed: MOption[org.sireum.lang.ast.ProofAst.Step.Inception] = MNone()
+
+  val PreResult_langastProofAstStepJustificationInceptEta: PreResult[org.sireum.lang.ast.ProofAst.Step.Inception] = PreResult(T, MNone())
+
+  val PostResult_langastProofAstStepJustificationInceptEta: MOption[org.sireum.lang.ast.ProofAst.Step.Inception] = MNone()
+
+  val PreResult_langastCase: PreResult[org.sireum.lang.ast.Case] = PreResult(T, MNone())
+
+  val PostResult_langastCase: MOption[org.sireum.lang.ast.Case] = MNone()
+
+  val PreResult_langastEnumGenRangeExpr: PreResult[org.sireum.lang.ast.EnumGen.Range] = PreResult(T, MNone())
+
+  val PostResult_langastEnumGenRangeExpr: MOption[org.sireum.lang.ast.EnumGen.Range] = MNone()
+
+  val PreResult_langastEnumGenRangeStep: PreResult[org.sireum.lang.ast.EnumGen.Range] = PreResult(T, MNone())
+
+  val PostResult_langastEnumGenRangeStep: MOption[org.sireum.lang.ast.EnumGen.Range] = MNone()
+
+  val PreResult_langastEnumGenFor: PreResult[org.sireum.lang.ast.EnumGen.For] = PreResult(T, MNone())
+
+  val PostResult_langastEnumGenFor: MOption[org.sireum.lang.ast.EnumGen.For] = MNone()
+
+  val PreResult_langastTypeNamed: PreResult[org.sireum.lang.ast.Type] = PreResult(T, MNone())
+
+  val PostResult_langastTypeNamed: MOption[org.sireum.lang.ast.Type] = MNone()
+
+  val PreResult_langastTypeFun: PreResult[org.sireum.lang.ast.Type] = PreResult(T, MNone())
+
+  val PostResult_langastTypeFun: MOption[org.sireum.lang.ast.Type] = MNone()
+
+  val PreResult_langastTypeTuple: PreResult[org.sireum.lang.ast.Type] = PreResult(T, MNone())
+
+  val PostResult_langastTypeTuple: MOption[org.sireum.lang.ast.Type] = MNone()
+
+  val PreResult_langastPatternLiteral: PreResult[org.sireum.lang.ast.Pattern] = PreResult(T, MNone())
+
+  val PostResult_langastPatternLiteral: MOption[org.sireum.lang.ast.Pattern] = MNone()
+
+  val PreResult_langastPatternLitInterpolate: PreResult[org.sireum.lang.ast.Pattern] = PreResult(T, MNone())
+
+  val PostResult_langastPatternLitInterpolate: MOption[org.sireum.lang.ast.Pattern] = MNone()
+
+  val PreResult_langastPatternRef: PreResult[org.sireum.lang.ast.Pattern] = PreResult(T, MNone())
+
+  val PostResult_langastPatternRef: MOption[org.sireum.lang.ast.Pattern] = MNone()
+
+  val PreResult_langastPatternVarBinding: PreResult[org.sireum.lang.ast.Pattern] = PreResult(T, MNone())
+
+  val PostResult_langastPatternVarBinding: MOption[org.sireum.lang.ast.Pattern] = MNone()
+
+  val PreResult_langastPatternWildcard: PreResult[org.sireum.lang.ast.Pattern] = PreResult(T, MNone())
+
+  val PostResult_langastPatternWildcard: MOption[org.sireum.lang.ast.Pattern] = MNone()
+
+  val PreResult_langastPatternSeqWildcard: PreResult[org.sireum.lang.ast.Pattern] = PreResult(T, MNone())
+
+  val PostResult_langastPatternSeqWildcard: MOption[org.sireum.lang.ast.Pattern] = MNone()
+
+  val PreResult_langastPatternStructure: PreResult[org.sireum.lang.ast.Pattern] = PreResult(T, MNone())
+
+  val PostResult_langastPatternStructure: MOption[org.sireum.lang.ast.Pattern] = MNone()
+
+  val PreResult_langastExpLitB: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpLitB: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpLitC: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpLitC: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpLitZ: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpLitZ: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpLitF32: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpLitF32: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpLitF64: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpLitF64: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpLitR: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpLitR: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpLitString: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpLitString: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpLitStepId: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpLitStepId: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpStringInterpolate: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpStringInterpolate: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpThis: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpThis: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpSuper: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpSuper: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpUnary: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpUnary: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpBinary: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpBinary: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpIdent: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpIdent: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpEta: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpEta: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpTuple: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpTuple: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpSelect: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpSelect: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpInvoke: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpInvoke: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpInvokeNamed: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpInvokeNamed: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpIf: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpIf: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpFunParam: PreResult[org.sireum.lang.ast.Exp.Fun.Param] = PreResult(T, MNone())
+
+  val PostResult_langastExpFunParam: MOption[org.sireum.lang.ast.Exp.Fun.Param] = MNone()
+
+  val PreResult_langastExpFun: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpFun: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpForYield: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpForYield: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpQuantType: PreResult[org.sireum.lang.ast.Exp.Quant] = PreResult(T, MNone())
+
+  val PostResult_langastExpQuantType: MOption[org.sireum.lang.ast.Exp.Quant] = MNone()
+
+  val PreResult_langastExpQuantRange: PreResult[org.sireum.lang.ast.Exp.Quant] = PreResult(T, MNone())
+
+  val PostResult_langastExpQuantRange: MOption[org.sireum.lang.ast.Exp.Quant] = MNone()
+
+  val PreResult_langastExpQuantEach: PreResult[org.sireum.lang.ast.Exp.Quant] = PreResult(T, MNone())
+
+  val PostResult_langastExpQuantEach: MOption[org.sireum.lang.ast.Exp.Quant] = MNone()
+
+  val PreResult_langastExpInput: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpInput: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpOldVal: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpOldVal: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpLoopIndex: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpLoopIndex: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpStateSeq: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpStateSeq: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpStateSeqFragment: PreResult[org.sireum.lang.ast.Exp.StateSeq.Fragment] = PreResult(T, MNone())
+
+  val PostResult_langastExpStateSeqFragment: MOption[org.sireum.lang.ast.Exp.StateSeq.Fragment] = MNone()
+
+  val PreResult_langastExpResult: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpResult: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastNamedArg: PreResult[org.sireum.lang.ast.NamedArg] = PreResult(T, MNone())
+
+  val PostResult_langastNamedArg: MOption[org.sireum.lang.ast.NamedArg] = MNone()
+
+  val PreResult_langastId: PreResult[org.sireum.lang.ast.Id] = PreResult(T, MNone())
+
+  val PostResult_langastId: MOption[org.sireum.lang.ast.Id] = MNone()
+
+  val PreResult_langastName: PreResult[org.sireum.lang.ast.Name] = PreResult(T, MNone())
+
+  val PostResult_langastName: MOption[org.sireum.lang.ast.Name] = MNone()
+
+  val PreResult_langastBody: PreResult[org.sireum.lang.ast.Body] = PreResult(T, MNone())
+
+  val PostResult_langastBody: MOption[org.sireum.lang.ast.Body] = MNone()
+
+  val PreResult_langastAdtParam: PreResult[org.sireum.lang.ast.AdtParam] = PreResult(T, MNone())
+
+  val PostResult_langastAdtParam: MOption[org.sireum.lang.ast.AdtParam] = MNone()
+
+  val PreResult_langastMethodSig: PreResult[org.sireum.lang.ast.MethodSig] = PreResult(T, MNone())
+
+  val PostResult_langastMethodSig: MOption[org.sireum.lang.ast.MethodSig] = MNone()
+
+  val PreResult_langastParam: PreResult[org.sireum.lang.ast.Param] = PreResult(T, MNone())
+
+  val PostResult_langastParam: MOption[org.sireum.lang.ast.Param] = MNone()
+
+  val PreResult_langastTypeParam: PreResult[org.sireum.lang.ast.TypeParam] = PreResult(T, MNone())
+
+  val PostResult_langastTypeParam: MOption[org.sireum.lang.ast.TypeParam] = MNone()
+
+  val PreResult_langastAttr: PreResult[org.sireum.lang.ast.Attr] = PreResult(T, MNone())
+
+  val PostResult_langastAttr: MOption[org.sireum.lang.ast.Attr] = MNone()
+
+  val PreResult_langastTypedAttr: PreResult[org.sireum.lang.ast.TypedAttr] = PreResult(T, MNone())
+
+  val PostResult_langastTypedAttr: MOption[org.sireum.lang.ast.TypedAttr] = MNone()
+
+  val PreResult_langastResolvedAttr: PreResult[org.sireum.lang.ast.ResolvedAttr] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedAttr: MOption[org.sireum.lang.ast.ResolvedAttr] = MNone()
+
+  val PreResult_langastResolvedInfoBuiltIn: PreResult[org.sireum.lang.ast.ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedInfoBuiltIn: MOption[org.sireum.lang.ast.ResolvedInfo] = MNone()
+
+  val PreResult_langastResolvedInfoPackage: PreResult[org.sireum.lang.ast.ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedInfoPackage: MOption[org.sireum.lang.ast.ResolvedInfo] = MNone()
+
+  val PreResult_langastResolvedInfoEnum: PreResult[org.sireum.lang.ast.ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedInfoEnum: MOption[org.sireum.lang.ast.ResolvedInfo] = MNone()
+
+  val PreResult_langastResolvedInfoEnumElement: PreResult[org.sireum.lang.ast.ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedInfoEnumElement: MOption[org.sireum.lang.ast.ResolvedInfo] = MNone()
+
+  val PreResult_langastResolvedInfoObject: PreResult[org.sireum.lang.ast.ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedInfoObject: MOption[org.sireum.lang.ast.ResolvedInfo] = MNone()
+
+  val PreResult_langastResolvedInfoVar: PreResult[org.sireum.lang.ast.ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedInfoVar: MOption[org.sireum.lang.ast.ResolvedInfo] = MNone()
+
+  val PreResult_langastResolvedInfoMethod: PreResult[org.sireum.lang.ast.ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedInfoMethod: MOption[org.sireum.lang.ast.ResolvedInfo] = MNone()
+
+  val PreResult_langastResolvedInfoMethods: PreResult[org.sireum.lang.ast.ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedInfoMethods: MOption[org.sireum.lang.ast.ResolvedInfo] = MNone()
+
+  val PreResult_langastResolvedInfoTuple: PreResult[org.sireum.lang.ast.ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedInfoTuple: MOption[org.sireum.lang.ast.ResolvedInfo] = MNone()
+
+  val PreResult_langastResolvedInfoLocalVar: PreResult[org.sireum.lang.ast.ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedInfoLocalVar: MOption[org.sireum.lang.ast.ResolvedInfo] = MNone()
+
+  val PreResult_langastResolvedInfoFact: PreResult[org.sireum.lang.ast.ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedInfoFact: MOption[org.sireum.lang.ast.ResolvedInfo] = MNone()
+
+  val PreResult_langastResolvedInfoTheorem: PreResult[org.sireum.lang.ast.ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedInfoTheorem: MOption[org.sireum.lang.ast.ResolvedInfo] = MNone()
+
+  val PreResult_langastResolvedInfoInv: PreResult[org.sireum.lang.ast.ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResult_langastResolvedInfoInv: MOption[org.sireum.lang.ast.ResolvedInfo] = MNone()
+
+  val PreResult_langastTruthTableRow: PreResult[org.sireum.lang.ast.TruthTable.Row] = PreResult(T, MNone())
+
+  val PostResult_langastTruthTableRow: MOption[org.sireum.lang.ast.TruthTable.Row] = MNone()
+
+  val PreResult_langastTruthTableAssignment: PreResult[org.sireum.lang.ast.TruthTable.Assignment] = PreResult(T, MNone())
+
+  val PostResult_langastTruthTableAssignment: MOption[org.sireum.lang.ast.TruthTable.Assignment] = MNone()
+
+  val PreResult_langastTruthTableConclusionValidity: PreResult[org.sireum.lang.ast.TruthTable.Conclusion] = PreResult(T, MNone())
+
+  val PostResult_langastTruthTableConclusionValidity: MOption[org.sireum.lang.ast.TruthTable.Conclusion] = MNone()
+
+  val PreResult_langastTruthTableConclusionTautology: PreResult[org.sireum.lang.ast.TruthTable.Conclusion] = PreResult(T, MNone())
+
+  val PostResult_langastTruthTableConclusionTautology: MOption[org.sireum.lang.ast.TruthTable.Conclusion] = MNone()
+
+  val PreResult_langastTruthTableConclusionContradictory: PreResult[org.sireum.lang.ast.TruthTable.Conclusion] = PreResult(T, MNone())
+
+  val PostResult_langastTruthTableConclusionContradictory: MOption[org.sireum.lang.ast.TruthTable.Conclusion] = MNone()
+
+  val PreResult_langastTruthTableConclusionContingent: PreResult[org.sireum.lang.ast.TruthTable.Conclusion] = PreResult(T, MNone())
+
+  val PostResult_langastTruthTableConclusionContingent: MOption[org.sireum.lang.ast.TruthTable.Conclusion] = MNone()
 
   val PreResultSmfClause: PreResult[SmfClause] = PreResult(T, MNone())
 
@@ -253,6 +805,10 @@ object MTransformer {
 
   val PostResultAnnex: MOption[Annex] = MNone()
 
+  val PreResult_langastTypedName: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedName: MOption[org.sireum.lang.ast.Typed] = MNone()
+
   val PreResultOtherAnnex: PreResult[OtherAnnex] = PreResult(T, MNone())
 
   val PostResultOtherAnnex: MOption[OtherAnnex] = MNone()
@@ -260,6 +816,50 @@ object MTransformer {
   val PreResultOtherLib: PreResult[OtherLib] = PreResult(T, MNone())
 
   val PostResultOtherLib: MOption[OtherLib] = MNone()
+
+  val PreResult_langastTypedTuple: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedTuple: MOption[org.sireum.lang.ast.Typed] = MNone()
+
+  val PreResult_langastTypedFun: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedFun: MOption[org.sireum.lang.ast.Typed] = MNone()
+
+  val PreResult_langastTypedTypeVar: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedTypeVar: MOption[org.sireum.lang.ast.Typed] = MNone()
+
+  val PreResult_langastTypedPackage: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedPackage: MOption[org.sireum.lang.ast.Typed] = MNone()
+
+  val PreResult_langastTypedObject: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedObject: MOption[org.sireum.lang.ast.Typed] = MNone()
+
+  val PreResult_langastTypedEnum: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedEnum: MOption[org.sireum.lang.ast.Typed] = MNone()
+
+  val PreResult_langastTypedMethod: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedMethod: MOption[org.sireum.lang.ast.Typed] = MNone()
+
+  val PreResult_langastTypedMethods: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedMethods: MOption[org.sireum.lang.ast.Typed] = MNone()
+
+  val PreResult_langastTypedFact: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedFact: MOption[org.sireum.lang.ast.Typed] = MNone()
+
+  val PreResult_langastTypedTheorem: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedTheorem: MOption[org.sireum.lang.ast.Typed] = MNone()
+
+  val PreResult_langastTypedInv: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedInv: MOption[org.sireum.lang.ast.Typed] = MNone()
 
   val PreResultGclSubclause: PreResult[GclSubclause] = PreResult(T, MNone())
 
@@ -296,30 +896,6 @@ object MTransformer {
   val PreResultGclCompute: PreResult[GclCompute] = PreResult(T, MNone())
 
   val PostResultGclCompute: MOption[GclCompute] = MNone()
-
-  val PreResultGclUnaryExp: PreResult[GclUnaryExp] = PreResult(T, MNone())
-
-  val PostResultGclUnaryExp: MOption[GclUnaryExp] = MNone()
-
-  val PreResultGclBinaryExp: PreResult[GclBinaryExp] = PreResult(T, MNone())
-
-  val PostResultGclBinaryExp: MOption[GclBinaryExp] = MNone()
-
-  val PreResultGclNameExp: PreResult[GclNameExp] = PreResult(T, MNone())
-
-  val PostResultGclNameExp: MOption[GclNameExp] = MNone()
-
-  val PreResultGclAccessExp: PreResult[GclAccessExp] = PreResult(T, MNone())
-
-  val PostResultGclAccessExp: MOption[GclAccessExp] = MNone()
-
-  val PreResultGclLiteralExp: PreResult[GclLiteralExp] = PreResult(T, MNone())
-
-  val PostResultGclLiteralExp: MOption[GclLiteralExp] = MNone()
-
-  val PreResultGclEnumLitExp: PreResult[GclEnumLitExp] = PreResult(T, MNone())
-
-  val PostResultGclEnumLitExp: MOption[GclEnumLitExp] = MNone()
 
   val PreResultGclTODO: PreResult[GclTODO] = PreResult(T, MNone())
 
@@ -498,6 +1074,999 @@ object MTransformer {
 import MTransformer._
 
 @msig trait MTransformer {
+
+  def pre_langastTopUnit(o: org.sireum.lang.ast.TopUnit): PreResult[org.sireum.lang.ast.TopUnit] = {
+    o match {
+      case o: org.sireum.lang.ast.TopUnit.Program => return pre_langastTopUnitProgram(o)
+      case o: org.sireum.lang.ast.TopUnit.SequentUnit => return pre_langastTopUnitSequentUnit(o)
+      case o: org.sireum.lang.ast.TopUnit.TruthTableUnit => return pre_langastTopUnitTruthTableUnit(o)
+    }
+  }
+
+  def pre_langastTopUnitProgram(o: org.sireum.lang.ast.TopUnit.Program): PreResult[org.sireum.lang.ast.TopUnit] = {
+    return PreResult_langastTopUnitProgram
+  }
+
+  def pre_langastTopUnitSequentUnit(o: org.sireum.lang.ast.TopUnit.SequentUnit): PreResult[org.sireum.lang.ast.TopUnit] = {
+    return PreResult_langastTopUnitSequentUnit
+  }
+
+  def pre_langastTopUnitTruthTableUnit(o: org.sireum.lang.ast.TopUnit.TruthTableUnit): PreResult[org.sireum.lang.ast.TopUnit] = {
+    return PreResult_langastTopUnitTruthTableUnit
+  }
+
+  def pre_langastStmt(o: org.sireum.lang.ast.Stmt): PreResult[org.sireum.lang.ast.Stmt] = {
+    o match {
+      case o: org.sireum.lang.ast.Stmt.Import => return pre_langastStmtImport(o)
+      case o: org.sireum.lang.ast.Stmt.Var => return pre_langastStmtVar(o)
+      case o: org.sireum.lang.ast.Stmt.VarPattern => return pre_langastStmtVarPattern(o)
+      case o: org.sireum.lang.ast.Stmt.SpecVar => return pre_langastStmtSpecVar(o)
+      case o: org.sireum.lang.ast.Stmt.Method => return pre_langastStmtMethod(o)
+      case o: org.sireum.lang.ast.Stmt.ExtMethod => return pre_langastStmtExtMethod(o)
+      case o: org.sireum.lang.ast.Stmt.JustMethod => return pre_langastStmtJustMethod(o)
+      case o: org.sireum.lang.ast.Stmt.SpecMethod => return pre_langastStmtSpecMethod(o)
+      case o: org.sireum.lang.ast.Stmt.Enum => return pre_langastStmtEnum(o)
+      case o: org.sireum.lang.ast.Stmt.SubZ => return pre_langastStmtSubZ(o)
+      case o: org.sireum.lang.ast.Stmt.Object => return pre_langastStmtObject(o)
+      case o: org.sireum.lang.ast.Stmt.Sig => return pre_langastStmtSig(o)
+      case o: org.sireum.lang.ast.Stmt.Adt => return pre_langastStmtAdt(o)
+      case o: org.sireum.lang.ast.Stmt.TypeAlias => return pre_langastStmtTypeAlias(o)
+      case o: org.sireum.lang.ast.Stmt.Assign => return pre_langastStmtAssign(o)
+      case o: org.sireum.lang.ast.Stmt.Block => return pre_langastStmtBlock(o)
+      case o: org.sireum.lang.ast.Stmt.If => return pre_langastStmtIf(o)
+      case o: org.sireum.lang.ast.Stmt.Match => return pre_langastStmtMatch(o)
+      case o: org.sireum.lang.ast.Stmt.While => return pre_langastStmtWhile(o)
+      case o: org.sireum.lang.ast.Stmt.DoWhile => return pre_langastStmtDoWhile(o)
+      case o: org.sireum.lang.ast.Stmt.For => return pre_langastStmtFor(o)
+      case o: org.sireum.lang.ast.Stmt.Return => return pre_langastStmtReturn(o)
+      case o: org.sireum.lang.ast.Stmt.Expr => return pre_langastStmtExpr(o)
+      case o: org.sireum.lang.ast.Stmt.Fact =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtFact(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.Inv =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtInv(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.Theorem =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtTheorem(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.DataRefinement =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtDataRefinement(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.SpecLabel =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtSpecLabel(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.SpecBlock =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtSpecBlock(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.DeduceSequent =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtDeduceSequent(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.DeduceSteps =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtDeduceSteps(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.Havoc =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtHavoc(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
+    }
+  }
+
+  def pre_langastHasModifies(o: org.sireum.lang.ast.HasModifies): PreResult[org.sireum.lang.ast.HasModifies] = {
+    o match {
+      case o: org.sireum.lang.ast.LoopContract =>
+        val r: PreResult[org.sireum.lang.ast.HasModifies] = pre_langastLoopContract(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.HasModifies)) => PreResult(continu, MSome[org.sireum.lang.ast.HasModifies](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.HasModifies]())
+        }
+        return r
+      case o: org.sireum.lang.ast.MethodContract.Simple =>
+        val r: PreResult[org.sireum.lang.ast.HasModifies] = pre_langastMethodContractSimple(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.HasModifies)) => PreResult(continu, MSome[org.sireum.lang.ast.HasModifies](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.HasModifies]())
+        }
+        return r
+      case o: org.sireum.lang.ast.MethodContract.Cases =>
+        val r: PreResult[org.sireum.lang.ast.HasModifies] = pre_langastMethodContractCases(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.HasModifies)) => PreResult(continu, MSome[org.sireum.lang.ast.HasModifies](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.HasModifies]())
+        }
+        return r
+    }
+  }
+
+  def pre_langastLoopContract(o: org.sireum.lang.ast.LoopContract): PreResult[org.sireum.lang.ast.LoopContract] = {
+    return PreResult_langastLoopContract
+  }
+
+  def pre_langastStmtImport(o: org.sireum.lang.ast.Stmt.Import): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtImport
+  }
+
+  def pre_langastStmtImportImporter(o: org.sireum.lang.ast.Stmt.Import.Importer): PreResult[org.sireum.lang.ast.Stmt.Import.Importer] = {
+    return PreResult_langastStmtImportImporter
+  }
+
+  def pre_langastStmtImportSelector(o: org.sireum.lang.ast.Stmt.Import.Selector): PreResult[org.sireum.lang.ast.Stmt.Import.Selector] = {
+    o match {
+      case o: org.sireum.lang.ast.Stmt.Import.MultiSelector => return pre_langastStmtImportMultiSelector(o)
+      case o: org.sireum.lang.ast.Stmt.Import.WildcardSelector => return pre_langastStmtImportWildcardSelector(o)
+    }
+  }
+
+  def pre_langastStmtImportMultiSelector(o: org.sireum.lang.ast.Stmt.Import.MultiSelector): PreResult[org.sireum.lang.ast.Stmt.Import.Selector] = {
+    return PreResult_langastStmtImportMultiSelector
+  }
+
+  def pre_langastStmtImportWildcardSelector(o: org.sireum.lang.ast.Stmt.Import.WildcardSelector): PreResult[org.sireum.lang.ast.Stmt.Import.Selector] = {
+    return PreResult_langastStmtImportWildcardSelector
+  }
+
+  def pre_langastStmtImportNamedSelector(o: org.sireum.lang.ast.Stmt.Import.NamedSelector): PreResult[org.sireum.lang.ast.Stmt.Import.NamedSelector] = {
+    return PreResult_langastStmtImportNamedSelector
+  }
+
+  def pre_langastStmtVar(o: org.sireum.lang.ast.Stmt.Var): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtVar
+  }
+
+  def pre_langastStmtVarPattern(o: org.sireum.lang.ast.Stmt.VarPattern): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtVarPattern
+  }
+
+  def pre_langastStmtSpecVar(o: org.sireum.lang.ast.Stmt.SpecVar): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtSpecVar
+  }
+
+  def pre_langastStmtMethod(o: org.sireum.lang.ast.Stmt.Method): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtMethod
+  }
+
+  def pre_langastStmtExtMethod(o: org.sireum.lang.ast.Stmt.ExtMethod): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtExtMethod
+  }
+
+  def pre_langastStmtJustMethod(o: org.sireum.lang.ast.Stmt.JustMethod): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtJustMethod
+  }
+
+  def pre_langastStmtSpecMethod(o: org.sireum.lang.ast.Stmt.SpecMethod): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtSpecMethod
+  }
+
+  def pre_langastStmtEnum(o: org.sireum.lang.ast.Stmt.Enum): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtEnum
+  }
+
+  def pre_langastStmtSubZ(o: org.sireum.lang.ast.Stmt.SubZ): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtSubZ
+  }
+
+  def pre_langastStmtObject(o: org.sireum.lang.ast.Stmt.Object): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtObject
+  }
+
+  def pre_langastStmtSig(o: org.sireum.lang.ast.Stmt.Sig): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtSig
+  }
+
+  def pre_langastStmtAdt(o: org.sireum.lang.ast.Stmt.Adt): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtAdt
+  }
+
+  def pre_langastStmtTypeAlias(o: org.sireum.lang.ast.Stmt.TypeAlias): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtTypeAlias
+  }
+
+  def pre_langastStmtAssign(o: org.sireum.lang.ast.Stmt.Assign): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtAssign
+  }
+
+  def pre_langastStmtBlock(o: org.sireum.lang.ast.Stmt.Block): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtBlock
+  }
+
+  def pre_langastStmtIf(o: org.sireum.lang.ast.Stmt.If): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtIf
+  }
+
+  def pre_langastStmtMatch(o: org.sireum.lang.ast.Stmt.Match): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtMatch
+  }
+
+  def pre_langastStmtWhile(o: org.sireum.lang.ast.Stmt.While): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtWhile
+  }
+
+  def pre_langastStmtDoWhile(o: org.sireum.lang.ast.Stmt.DoWhile): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtDoWhile
+  }
+
+  def pre_langastStmtFor(o: org.sireum.lang.ast.Stmt.For): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtFor
+  }
+
+  def pre_langastStmtReturn(o: org.sireum.lang.ast.Stmt.Return): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtReturn
+  }
+
+  def pre_langastStmtExpr(o: org.sireum.lang.ast.Stmt.Expr): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtExpr
+  }
+
+  def pre_langastStmtSpec(o: org.sireum.lang.ast.Stmt.Spec): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
+    o match {
+      case o: org.sireum.lang.ast.Stmt.Fact => return pre_langastStmtFact(o)
+      case o: org.sireum.lang.ast.Stmt.Inv => return pre_langastStmtInv(o)
+      case o: org.sireum.lang.ast.Stmt.Theorem => return pre_langastStmtTheorem(o)
+      case o: org.sireum.lang.ast.Stmt.DataRefinement => return pre_langastStmtDataRefinement(o)
+      case o: org.sireum.lang.ast.Stmt.SpecLabel => return pre_langastStmtSpecLabel(o)
+      case o: org.sireum.lang.ast.Stmt.SpecBlock => return pre_langastStmtSpecBlock(o)
+      case o: org.sireum.lang.ast.Stmt.DeduceSequent => return pre_langastStmtDeduceSequent(o)
+      case o: org.sireum.lang.ast.Stmt.DeduceSteps => return pre_langastStmtDeduceSteps(o)
+      case o: org.sireum.lang.ast.Stmt.Havoc => return pre_langastStmtHavoc(o)
+    }
+  }
+
+  def pre_langastStmtFact(o: org.sireum.lang.ast.Stmt.Fact): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
+    return PreResult_langastStmtFact
+  }
+
+  def pre_langastStmtInv(o: org.sireum.lang.ast.Stmt.Inv): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
+    return PreResult_langastStmtInv
+  }
+
+  def pre_langastStmtTheorem(o: org.sireum.lang.ast.Stmt.Theorem): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
+    return PreResult_langastStmtTheorem
+  }
+
+  def pre_langastStmtDataRefinement(o: org.sireum.lang.ast.Stmt.DataRefinement): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
+    return PreResult_langastStmtDataRefinement
+  }
+
+  def pre_langastStmtSpecLabel(o: org.sireum.lang.ast.Stmt.SpecLabel): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
+    return PreResult_langastStmtSpecLabel
+  }
+
+  def pre_langastStmtSpecBlock(o: org.sireum.lang.ast.Stmt.SpecBlock): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
+    return PreResult_langastStmtSpecBlock
+  }
+
+  def pre_langastStmtDeduceSequent(o: org.sireum.lang.ast.Stmt.DeduceSequent): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
+    return PreResult_langastStmtDeduceSequent
+  }
+
+  def pre_langastStmtDeduceSteps(o: org.sireum.lang.ast.Stmt.DeduceSteps): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
+    return PreResult_langastStmtDeduceSteps
+  }
+
+  def pre_langastStmtHavoc(o: org.sireum.lang.ast.Stmt.Havoc): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
+    return PreResult_langastStmtHavoc
+  }
+
+  def pre_langastMethodContract(o: org.sireum.lang.ast.MethodContract): PreResult[org.sireum.lang.ast.MethodContract] = {
+    o match {
+      case o: org.sireum.lang.ast.MethodContract.Simple => return pre_langastMethodContractSimple(o)
+      case o: org.sireum.lang.ast.MethodContract.Cases => return pre_langastMethodContractCases(o)
+    }
+  }
+
+  def pre_langastMethodContractAccesses(o: org.sireum.lang.ast.MethodContract.Accesses): PreResult[org.sireum.lang.ast.MethodContract.Accesses] = {
+    return PreResult_langastMethodContractAccesses
+  }
+
+  def pre_langastMethodContractClaims(o: org.sireum.lang.ast.MethodContract.Claims): PreResult[org.sireum.lang.ast.MethodContract.Claims] = {
+    return PreResult_langastMethodContractClaims
+  }
+
+  def pre_langastMethodContractSimple(o: org.sireum.lang.ast.MethodContract.Simple): PreResult[org.sireum.lang.ast.MethodContract] = {
+    return PreResult_langastMethodContractSimple
+  }
+
+  def pre_langastMethodContractCases(o: org.sireum.lang.ast.MethodContract.Cases): PreResult[org.sireum.lang.ast.MethodContract] = {
+    return PreResult_langastMethodContractCases
+  }
+
+  def pre_langastMethodContractCase(o: org.sireum.lang.ast.MethodContract.Case): PreResult[org.sireum.lang.ast.MethodContract.Case] = {
+    return PreResult_langastMethodContractCase
+  }
+
+  def pre_langastSequent(o: org.sireum.lang.ast.Sequent): PreResult[org.sireum.lang.ast.Sequent] = {
+    return PreResult_langastSequent
+  }
+
+  def pre_langastProofAst(o: org.sireum.lang.ast.ProofAst): PreResult[org.sireum.lang.ast.ProofAst] = {
+    return PreResult_langastProofAst
+  }
+
+  def pre_langastProofAstStep(o: org.sireum.lang.ast.ProofAst.Step): PreResult[org.sireum.lang.ast.ProofAst.Step] = {
+    o match {
+      case o: org.sireum.lang.ast.ProofAst.Step.Regular => return pre_langastProofAstStepRegular(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.Assume => return pre_langastProofAstStepAssume(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.Assert => return pre_langastProofAstStepAssert(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.SubProof => return pre_langastProofAstStepSubProof(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.Let => return pre_langastProofAstStepLet(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.StructInduction => return pre_langastProofAstStepStructInduction(o)
+    }
+  }
+
+  def pre_langastProofAstStepId(o: org.sireum.lang.ast.ProofAst.StepId): PreResult[org.sireum.lang.ast.ProofAst.StepId] = {
+    o match {
+      case o: org.sireum.lang.ast.ProofAst.StepId.Num => return pre_langastProofAstStepIdNum(o)
+      case o: org.sireum.lang.ast.ProofAst.StepId.Str => return pre_langastProofAstStepIdStr(o)
+    }
+  }
+
+  def pre_langastProofAstStepIdNum(o: org.sireum.lang.ast.ProofAst.StepId.Num): PreResult[org.sireum.lang.ast.ProofAst.StepId] = {
+    return PreResult_langastProofAstStepIdNum
+  }
+
+  def pre_langastProofAstStepIdStr(o: org.sireum.lang.ast.ProofAst.StepId.Str): PreResult[org.sireum.lang.ast.ProofAst.StepId] = {
+    return PreResult_langastProofAstStepIdStr
+  }
+
+  def pre_langastProofAstStepRegular(o: org.sireum.lang.ast.ProofAst.Step.Regular): PreResult[org.sireum.lang.ast.ProofAst.Step] = {
+    return PreResult_langastProofAstStepRegular
+  }
+
+  def pre_langastProofAstStepAssume(o: org.sireum.lang.ast.ProofAst.Step.Assume): PreResult[org.sireum.lang.ast.ProofAst.Step] = {
+    return PreResult_langastProofAstStepAssume
+  }
+
+  def pre_langastProofAstStepAssert(o: org.sireum.lang.ast.ProofAst.Step.Assert): PreResult[org.sireum.lang.ast.ProofAst.Step] = {
+    return PreResult_langastProofAstStepAssert
+  }
+
+  def pre_langastProofAstStepSubProof(o: org.sireum.lang.ast.ProofAst.Step.SubProof): PreResult[org.sireum.lang.ast.ProofAst.Step] = {
+    return PreResult_langastProofAstStepSubProof
+  }
+
+  def pre_langastProofAstStepLet(o: org.sireum.lang.ast.ProofAst.Step.Let): PreResult[org.sireum.lang.ast.ProofAst.Step] = {
+    return PreResult_langastProofAstStepLet
+  }
+
+  def pre_langastProofAstStepLetParam(o: org.sireum.lang.ast.ProofAst.Step.Let.Param): PreResult[org.sireum.lang.ast.ProofAst.Step.Let.Param] = {
+    return PreResult_langastProofAstStepLetParam
+  }
+
+  def pre_langastProofAstStepStructInduction(o: org.sireum.lang.ast.ProofAst.Step.StructInduction): PreResult[org.sireum.lang.ast.ProofAst.Step] = {
+    return PreResult_langastProofAstStepStructInduction
+  }
+
+  def pre_langastProofAstStepStructInductionMatchCase(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase): PreResult[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = {
+    return PreResult_langastProofAstStepStructInductionMatchCase
+  }
+
+  def pre_langastProofAstStepStructInductionMatchDefault(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault): PreResult[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = {
+    return PreResult_langastProofAstStepStructInductionMatchDefault
+  }
+
+  def pre_langastProofAstStepJustification(o: org.sireum.lang.ast.ProofAst.Step.Justification): PreResult[org.sireum.lang.ast.ProofAst.Step.Justification] = {
+    o match {
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply => return pre_langastProofAstStepJustificationApply(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept =>
+        val r: PreResult[org.sireum.lang.ast.ProofAst.Step.Justification] = pre_langastProofAstStepJustificationIncept(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.ProofAst.Step.Justification)) => PreResult(continu, MSome[org.sireum.lang.ast.ProofAst.Step.Justification](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Justification")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.ProofAst.Step.Justification]())
+        }
+        return r
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed =>
+        val r: PreResult[org.sireum.lang.ast.ProofAst.Step.Justification] = pre_langastProofAstStepJustificationInceptNamed(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.ProofAst.Step.Justification)) => PreResult(continu, MSome[org.sireum.lang.ast.ProofAst.Step.Justification](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Justification")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.ProofAst.Step.Justification]())
+        }
+        return r
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta =>
+        val r: PreResult[org.sireum.lang.ast.ProofAst.Step.Justification] = pre_langastProofAstStepJustificationInceptEta(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.ProofAst.Step.Justification)) => PreResult(continu, MSome[org.sireum.lang.ast.ProofAst.Step.Justification](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Justification")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.ProofAst.Step.Justification]())
+        }
+        return r
+    }
+  }
+
+  def pre_langastProofAstStepInception(o: org.sireum.lang.ast.ProofAst.Step.Inception): PreResult[org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    o match {
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept => return pre_langastProofAstStepJustificationIncept(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed => return pre_langastProofAstStepJustificationInceptNamed(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta => return pre_langastProofAstStepJustificationInceptEta(o)
+    }
+  }
+
+  def pre_langastProofAstStepJustificationApply(o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply): PreResult[org.sireum.lang.ast.ProofAst.Step.Justification] = {
+    return PreResult_langastProofAstStepJustificationApply
+  }
+
+  def pre_langastProofAstStepJustificationIncept(o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept): PreResult[org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    return PreResult_langastProofAstStepJustificationIncept
+  }
+
+  def pre_langastProofAstStepJustificationInceptNamed(o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed): PreResult[org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    return PreResult_langastProofAstStepJustificationInceptNamed
+  }
+
+  def pre_langastProofAstStepJustificationInceptEta(o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta): PreResult[org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    return PreResult_langastProofAstStepJustificationInceptEta
+  }
+
+  def pre_langastAssignExp(o: org.sireum.lang.ast.AssignExp): PreResult[org.sireum.lang.ast.AssignExp] = {
+    o match {
+      case o: org.sireum.lang.ast.Stmt.Block =>
+        val r: PreResult[org.sireum.lang.ast.AssignExp] = pre_langastStmtBlock(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.AssignExp)) => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.AssignExp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.If =>
+        val r: PreResult[org.sireum.lang.ast.AssignExp] = pre_langastStmtIf(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.AssignExp)) => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.AssignExp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.Match =>
+        val r: PreResult[org.sireum.lang.ast.AssignExp] = pre_langastStmtMatch(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.AssignExp)) => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.AssignExp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.Return =>
+        val r: PreResult[org.sireum.lang.ast.AssignExp] = pre_langastStmtReturn(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.AssignExp)) => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.AssignExp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.Expr =>
+        val r: PreResult[org.sireum.lang.ast.AssignExp] = pre_langastStmtExpr(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.AssignExp)) => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.AssignExp]())
+        }
+        return r
+    }
+  }
+
+  def pre_langastCase(o: org.sireum.lang.ast.Case): PreResult[org.sireum.lang.ast.Case] = {
+    return PreResult_langastCase
+  }
+
+  def pre_langastEnumGenRange(o: org.sireum.lang.ast.EnumGen.Range): PreResult[org.sireum.lang.ast.EnumGen.Range] = {
+    o match {
+      case o: org.sireum.lang.ast.EnumGen.Range.Expr => return pre_langastEnumGenRangeExpr(o)
+      case o: org.sireum.lang.ast.EnumGen.Range.Step => return pre_langastEnumGenRangeStep(o)
+    }
+  }
+
+  def pre_langastEnumGenRangeExpr(o: org.sireum.lang.ast.EnumGen.Range.Expr): PreResult[org.sireum.lang.ast.EnumGen.Range] = {
+    return PreResult_langastEnumGenRangeExpr
+  }
+
+  def pre_langastEnumGenRangeStep(o: org.sireum.lang.ast.EnumGen.Range.Step): PreResult[org.sireum.lang.ast.EnumGen.Range] = {
+    return PreResult_langastEnumGenRangeStep
+  }
+
+  def pre_langastEnumGenFor(o: org.sireum.lang.ast.EnumGen.For): PreResult[org.sireum.lang.ast.EnumGen.For] = {
+    return PreResult_langastEnumGenFor
+  }
+
+  def pre_langastType(o: org.sireum.lang.ast.Type): PreResult[org.sireum.lang.ast.Type] = {
+    o match {
+      case o: org.sireum.lang.ast.Type.Named => return pre_langastTypeNamed(o)
+      case o: org.sireum.lang.ast.Type.Fun => return pre_langastTypeFun(o)
+      case o: org.sireum.lang.ast.Type.Tuple => return pre_langastTypeTuple(o)
+    }
+  }
+
+  def pre_langastTypeNamed(o: org.sireum.lang.ast.Type.Named): PreResult[org.sireum.lang.ast.Type] = {
+    return PreResult_langastTypeNamed
+  }
+
+  def pre_langastTypeFun(o: org.sireum.lang.ast.Type.Fun): PreResult[org.sireum.lang.ast.Type] = {
+    return PreResult_langastTypeFun
+  }
+
+  def pre_langastTypeTuple(o: org.sireum.lang.ast.Type.Tuple): PreResult[org.sireum.lang.ast.Type] = {
+    return PreResult_langastTypeTuple
+  }
+
+  def pre_langastPattern(o: org.sireum.lang.ast.Pattern): PreResult[org.sireum.lang.ast.Pattern] = {
+    o match {
+      case o: org.sireum.lang.ast.Pattern.Literal => return pre_langastPatternLiteral(o)
+      case o: org.sireum.lang.ast.Pattern.LitInterpolate => return pre_langastPatternLitInterpolate(o)
+      case o: org.sireum.lang.ast.Pattern.Ref => return pre_langastPatternRef(o)
+      case o: org.sireum.lang.ast.Pattern.VarBinding => return pre_langastPatternVarBinding(o)
+      case o: org.sireum.lang.ast.Pattern.Wildcard => return pre_langastPatternWildcard(o)
+      case o: org.sireum.lang.ast.Pattern.SeqWildcard => return pre_langastPatternSeqWildcard(o)
+      case o: org.sireum.lang.ast.Pattern.Structure => return pre_langastPatternStructure(o)
+    }
+  }
+
+  def pre_langastPatternLiteral(o: org.sireum.lang.ast.Pattern.Literal): PreResult[org.sireum.lang.ast.Pattern] = {
+    return PreResult_langastPatternLiteral
+  }
+
+  def pre_langastPatternLitInterpolate(o: org.sireum.lang.ast.Pattern.LitInterpolate): PreResult[org.sireum.lang.ast.Pattern] = {
+    return PreResult_langastPatternLitInterpolate
+  }
+
+  def pre_langastPatternRef(o: org.sireum.lang.ast.Pattern.Ref): PreResult[org.sireum.lang.ast.Pattern] = {
+    return PreResult_langastPatternRef
+  }
+
+  def pre_langastPatternVarBinding(o: org.sireum.lang.ast.Pattern.VarBinding): PreResult[org.sireum.lang.ast.Pattern] = {
+    return PreResult_langastPatternVarBinding
+  }
+
+  def pre_langastPatternWildcard(o: org.sireum.lang.ast.Pattern.Wildcard): PreResult[org.sireum.lang.ast.Pattern] = {
+    return PreResult_langastPatternWildcard
+  }
+
+  def pre_langastPatternSeqWildcard(o: org.sireum.lang.ast.Pattern.SeqWildcard): PreResult[org.sireum.lang.ast.Pattern] = {
+    return PreResult_langastPatternSeqWildcard
+  }
+
+  def pre_langastPatternStructure(o: org.sireum.lang.ast.Pattern.Structure): PreResult[org.sireum.lang.ast.Pattern] = {
+    return PreResult_langastPatternStructure
+  }
+
+  def pre_langastExp(o: org.sireum.lang.ast.Exp): PreResult[org.sireum.lang.ast.Exp] = {
+    o match {
+      case o: org.sireum.lang.ast.Exp.LitB => return pre_langastExpLitB(o)
+      case o: org.sireum.lang.ast.Exp.LitC => return pre_langastExpLitC(o)
+      case o: org.sireum.lang.ast.Exp.LitZ => return pre_langastExpLitZ(o)
+      case o: org.sireum.lang.ast.Exp.LitF32 => return pre_langastExpLitF32(o)
+      case o: org.sireum.lang.ast.Exp.LitF64 => return pre_langastExpLitF64(o)
+      case o: org.sireum.lang.ast.Exp.LitR => return pre_langastExpLitR(o)
+      case o: org.sireum.lang.ast.Exp.LitString => return pre_langastExpLitString(o)
+      case o: org.sireum.lang.ast.Exp.LitStepId => return pre_langastExpLitStepId(o)
+      case o: org.sireum.lang.ast.Exp.StringInterpolate => return pre_langastExpStringInterpolate(o)
+      case o: org.sireum.lang.ast.Exp.This => return pre_langastExpThis(o)
+      case o: org.sireum.lang.ast.Exp.Super => return pre_langastExpSuper(o)
+      case o: org.sireum.lang.ast.Exp.Unary => return pre_langastExpUnary(o)
+      case o: org.sireum.lang.ast.Exp.Binary => return pre_langastExpBinary(o)
+      case o: org.sireum.lang.ast.Exp.Ident => return pre_langastExpIdent(o)
+      case o: org.sireum.lang.ast.Exp.Eta => return pre_langastExpEta(o)
+      case o: org.sireum.lang.ast.Exp.Tuple => return pre_langastExpTuple(o)
+      case o: org.sireum.lang.ast.Exp.Select => return pre_langastExpSelect(o)
+      case o: org.sireum.lang.ast.Exp.Invoke => return pre_langastExpInvoke(o)
+      case o: org.sireum.lang.ast.Exp.InvokeNamed => return pre_langastExpInvokeNamed(o)
+      case o: org.sireum.lang.ast.Exp.If => return pre_langastExpIf(o)
+      case o: org.sireum.lang.ast.Exp.Fun => return pre_langastExpFun(o)
+      case o: org.sireum.lang.ast.Exp.ForYield => return pre_langastExpForYield(o)
+      case o: org.sireum.lang.ast.Exp.QuantType =>
+        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpQuantType(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.QuantRange =>
+        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpQuantRange(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.QuantEach =>
+        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpQuantEach(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.Input => return pre_langastExpInput(o)
+      case o: org.sireum.lang.ast.Exp.OldVal => return pre_langastExpOldVal(o)
+      case o: org.sireum.lang.ast.Exp.LoopIndex => return pre_langastExpLoopIndex(o)
+      case o: org.sireum.lang.ast.Exp.StateSeq => return pre_langastExpStateSeq(o)
+      case o: org.sireum.lang.ast.Exp.Result => return pre_langastExpResult(o)
+    }
+  }
+
+  def pre_langastLit(o: org.sireum.lang.ast.Lit): PreResult[org.sireum.lang.ast.Lit] = {
+    o match {
+      case o: org.sireum.lang.ast.Exp.LitB =>
+        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitB(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitC =>
+        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitC(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitZ =>
+        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitZ(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitF32 =>
+        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitF32(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitF64 =>
+        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitF64(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitR =>
+        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitR(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitString =>
+        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitString(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitStepId =>
+        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitStepId(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
+        }
+        return r
+    }
+  }
+
+  def pre_langastExpLitB(o: org.sireum.lang.ast.Exp.LitB): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpLitB
+  }
+
+  def pre_langastExpLitC(o: org.sireum.lang.ast.Exp.LitC): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpLitC
+  }
+
+  def pre_langastExpLitZ(o: org.sireum.lang.ast.Exp.LitZ): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpLitZ
+  }
+
+  def pre_langastExpLitF32(o: org.sireum.lang.ast.Exp.LitF32): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpLitF32
+  }
+
+  def pre_langastExpLitF64(o: org.sireum.lang.ast.Exp.LitF64): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpLitF64
+  }
+
+  def pre_langastExpLitR(o: org.sireum.lang.ast.Exp.LitR): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpLitR
+  }
+
+  def pre_langastExpLitString(o: org.sireum.lang.ast.Exp.LitString): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpLitString
+  }
+
+  def pre_langastExpLitStepId(o: org.sireum.lang.ast.Exp.LitStepId): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpLitStepId
+  }
+
+  def pre_langastExpStringInterpolate(o: org.sireum.lang.ast.Exp.StringInterpolate): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpStringInterpolate
+  }
+
+  def pre_langastExpThis(o: org.sireum.lang.ast.Exp.This): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpThis
+  }
+
+  def pre_langastExpSuper(o: org.sireum.lang.ast.Exp.Super): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpSuper
+  }
+
+  def pre_langastExpUnary(o: org.sireum.lang.ast.Exp.Unary): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpUnary
+  }
+
+  def pre_langastExpRef(o: org.sireum.lang.ast.Exp.Ref): PreResult[org.sireum.lang.ast.Exp.Ref] = {
+    o match {
+      case o: org.sireum.lang.ast.Exp.Ident =>
+        val r: PreResult[org.sireum.lang.ast.Exp.Ref] = pre_langastExpIdent(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.Ref)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Ref](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ref")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.Ref]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.Select =>
+        val r: PreResult[org.sireum.lang.ast.Exp.Ref] = pre_langastExpSelect(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.Ref)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Ref](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ref")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.Ref]())
+        }
+        return r
+    }
+  }
+
+  def pre_langastExpBinary(o: org.sireum.lang.ast.Exp.Binary): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpBinary
+  }
+
+  def pre_langastExpIdent(o: org.sireum.lang.ast.Exp.Ident): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpIdent
+  }
+
+  def pre_langastExpEta(o: org.sireum.lang.ast.Exp.Eta): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpEta
+  }
+
+  def pre_langastExpTuple(o: org.sireum.lang.ast.Exp.Tuple): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpTuple
+  }
+
+  def pre_langastExpSelect(o: org.sireum.lang.ast.Exp.Select): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpSelect
+  }
+
+  def pre_langastExpInvoke(o: org.sireum.lang.ast.Exp.Invoke): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpInvoke
+  }
+
+  def pre_langastExpInvokeNamed(o: org.sireum.lang.ast.Exp.InvokeNamed): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpInvokeNamed
+  }
+
+  def pre_langastExpIf(o: org.sireum.lang.ast.Exp.If): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpIf
+  }
+
+  def pre_langastExpFunParam(o: org.sireum.lang.ast.Exp.Fun.Param): PreResult[org.sireum.lang.ast.Exp.Fun.Param] = {
+    return PreResult_langastExpFunParam
+  }
+
+  def pre_langastExpFun(o: org.sireum.lang.ast.Exp.Fun): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpFun
+  }
+
+  def pre_langastExpForYield(o: org.sireum.lang.ast.Exp.ForYield): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpForYield
+  }
+
+  def pre_langastExpQuant(o: org.sireum.lang.ast.Exp.Quant): PreResult[org.sireum.lang.ast.Exp.Quant] = {
+    o match {
+      case o: org.sireum.lang.ast.Exp.QuantType => return pre_langastExpQuantType(o)
+      case o: org.sireum.lang.ast.Exp.QuantRange => return pre_langastExpQuantRange(o)
+      case o: org.sireum.lang.ast.Exp.QuantEach => return pre_langastExpQuantEach(o)
+    }
+  }
+
+  def pre_langastExpQuantType(o: org.sireum.lang.ast.Exp.QuantType): PreResult[org.sireum.lang.ast.Exp.Quant] = {
+    return PreResult_langastExpQuantType
+  }
+
+  def pre_langastExpQuantRange(o: org.sireum.lang.ast.Exp.QuantRange): PreResult[org.sireum.lang.ast.Exp.Quant] = {
+    return PreResult_langastExpQuantRange
+  }
+
+  def pre_langastExpQuantEach(o: org.sireum.lang.ast.Exp.QuantEach): PreResult[org.sireum.lang.ast.Exp.Quant] = {
+    return PreResult_langastExpQuantEach
+  }
+
+  def pre_langastExpInput(o: org.sireum.lang.ast.Exp.Input): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpInput
+  }
+
+  def pre_langastExpOldVal(o: org.sireum.lang.ast.Exp.OldVal): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpOldVal
+  }
+
+  def pre_langastExpLoopIndex(o: org.sireum.lang.ast.Exp.LoopIndex): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpLoopIndex
+  }
+
+  def pre_langastExpStateSeq(o: org.sireum.lang.ast.Exp.StateSeq): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpStateSeq
+  }
+
+  def pre_langastExpStateSeqFragment(o: org.sireum.lang.ast.Exp.StateSeq.Fragment): PreResult[org.sireum.lang.ast.Exp.StateSeq.Fragment] = {
+    return PreResult_langastExpStateSeqFragment
+  }
+
+  def pre_langastExpResult(o: org.sireum.lang.ast.Exp.Result): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpResult
+  }
+
+  def pre_langastNamedArg(o: org.sireum.lang.ast.NamedArg): PreResult[org.sireum.lang.ast.NamedArg] = {
+    return PreResult_langastNamedArg
+  }
+
+  def pre_langastId(o: org.sireum.lang.ast.Id): PreResult[org.sireum.lang.ast.Id] = {
+    return PreResult_langastId
+  }
+
+  def pre_langastName(o: org.sireum.lang.ast.Name): PreResult[org.sireum.lang.ast.Name] = {
+    return PreResult_langastName
+  }
+
+  def pre_langastBody(o: org.sireum.lang.ast.Body): PreResult[org.sireum.lang.ast.Body] = {
+    return PreResult_langastBody
+  }
+
+  def pre_langastAdtParam(o: org.sireum.lang.ast.AdtParam): PreResult[org.sireum.lang.ast.AdtParam] = {
+    return PreResult_langastAdtParam
+  }
+
+  def pre_langastMethodSig(o: org.sireum.lang.ast.MethodSig): PreResult[org.sireum.lang.ast.MethodSig] = {
+    return PreResult_langastMethodSig
+  }
+
+  def pre_langastParam(o: org.sireum.lang.ast.Param): PreResult[org.sireum.lang.ast.Param] = {
+    return PreResult_langastParam
+  }
+
+  def pre_langastTypeParam(o: org.sireum.lang.ast.TypeParam): PreResult[org.sireum.lang.ast.TypeParam] = {
+    return PreResult_langastTypeParam
+  }
+
+  def pre_langastAttr(o: org.sireum.lang.ast.Attr): PreResult[org.sireum.lang.ast.Attr] = {
+    return PreResult_langastAttr
+  }
+
+  def pre_langastTypedAttr(o: org.sireum.lang.ast.TypedAttr): PreResult[org.sireum.lang.ast.TypedAttr] = {
+    return PreResult_langastTypedAttr
+  }
+
+  def pre_langastResolvedAttr(o: org.sireum.lang.ast.ResolvedAttr): PreResult[org.sireum.lang.ast.ResolvedAttr] = {
+    return PreResult_langastResolvedAttr
+  }
+
+  def pre_langastResolvedInfo(o: org.sireum.lang.ast.ResolvedInfo): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    o match {
+      case o: org.sireum.lang.ast.ResolvedInfo.BuiltIn => return pre_langastResolvedInfoBuiltIn(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Package => return pre_langastResolvedInfoPackage(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Enum => return pre_langastResolvedInfoEnum(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.EnumElement => return pre_langastResolvedInfoEnumElement(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Object => return pre_langastResolvedInfoObject(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Var => return pre_langastResolvedInfoVar(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Method => return pre_langastResolvedInfoMethod(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Methods => return pre_langastResolvedInfoMethods(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Tuple => return pre_langastResolvedInfoTuple(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.LocalVar => return pre_langastResolvedInfoLocalVar(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Fact => return pre_langastResolvedInfoFact(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Theorem => return pre_langastResolvedInfoTheorem(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Inv => return pre_langastResolvedInfoInv(o)
+    }
+  }
+
+  def pre_langastResolvedInfoBuiltIn(o: org.sireum.lang.ast.ResolvedInfo.BuiltIn): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    return PreResult_langastResolvedInfoBuiltIn
+  }
+
+  def pre_langastResolvedInfoPackage(o: org.sireum.lang.ast.ResolvedInfo.Package): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    return PreResult_langastResolvedInfoPackage
+  }
+
+  def pre_langastResolvedInfoEnum(o: org.sireum.lang.ast.ResolvedInfo.Enum): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    return PreResult_langastResolvedInfoEnum
+  }
+
+  def pre_langastResolvedInfoEnumElement(o: org.sireum.lang.ast.ResolvedInfo.EnumElement): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    return PreResult_langastResolvedInfoEnumElement
+  }
+
+  def pre_langastResolvedInfoObject(o: org.sireum.lang.ast.ResolvedInfo.Object): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    return PreResult_langastResolvedInfoObject
+  }
+
+  def pre_langastResolvedInfoVar(o: org.sireum.lang.ast.ResolvedInfo.Var): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    return PreResult_langastResolvedInfoVar
+  }
+
+  def pre_langastResolvedInfoMethod(o: org.sireum.lang.ast.ResolvedInfo.Method): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    return PreResult_langastResolvedInfoMethod
+  }
+
+  def pre_langastResolvedInfoMethods(o: org.sireum.lang.ast.ResolvedInfo.Methods): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    return PreResult_langastResolvedInfoMethods
+  }
+
+  def pre_langastResolvedInfoTuple(o: org.sireum.lang.ast.ResolvedInfo.Tuple): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    return PreResult_langastResolvedInfoTuple
+  }
+
+  def pre_langastResolvedInfoLocalVar(o: org.sireum.lang.ast.ResolvedInfo.LocalVar): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    return PreResult_langastResolvedInfoLocalVar
+  }
+
+  def pre_langastResolvedInfoFact(o: org.sireum.lang.ast.ResolvedInfo.Fact): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    return PreResult_langastResolvedInfoFact
+  }
+
+  def pre_langastResolvedInfoTheorem(o: org.sireum.lang.ast.ResolvedInfo.Theorem): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    return PreResult_langastResolvedInfoTheorem
+  }
+
+  def pre_langastResolvedInfoInv(o: org.sireum.lang.ast.ResolvedInfo.Inv): PreResult[org.sireum.lang.ast.ResolvedInfo] = {
+    return PreResult_langastResolvedInfoInv
+  }
+
+  def pre_langastTruthTableRow(o: org.sireum.lang.ast.TruthTable.Row): PreResult[org.sireum.lang.ast.TruthTable.Row] = {
+    return PreResult_langastTruthTableRow
+  }
+
+  def pre_langastTruthTableAssignment(o: org.sireum.lang.ast.TruthTable.Assignment): PreResult[org.sireum.lang.ast.TruthTable.Assignment] = {
+    return PreResult_langastTruthTableAssignment
+  }
+
+  def pre_langastTruthTableConclusion(o: org.sireum.lang.ast.TruthTable.Conclusion): PreResult[org.sireum.lang.ast.TruthTable.Conclusion] = {
+    o match {
+      case o: org.sireum.lang.ast.TruthTable.Conclusion.Validity => return pre_langastTruthTableConclusionValidity(o)
+      case o: org.sireum.lang.ast.TruthTable.Conclusion.Tautology => return pre_langastTruthTableConclusionTautology(o)
+      case o: org.sireum.lang.ast.TruthTable.Conclusion.Contradictory => return pre_langastTruthTableConclusionContradictory(o)
+      case o: org.sireum.lang.ast.TruthTable.Conclusion.Contingent => return pre_langastTruthTableConclusionContingent(o)
+    }
+  }
+
+  def pre_langastTruthTableConclusionValidity(o: org.sireum.lang.ast.TruthTable.Conclusion.Validity): PreResult[org.sireum.lang.ast.TruthTable.Conclusion] = {
+    return PreResult_langastTruthTableConclusionValidity
+  }
+
+  def pre_langastTruthTableConclusionTautology(o: org.sireum.lang.ast.TruthTable.Conclusion.Tautology): PreResult[org.sireum.lang.ast.TruthTable.Conclusion] = {
+    return PreResult_langastTruthTableConclusionTautology
+  }
+
+  def pre_langastTruthTableConclusionContradictory(o: org.sireum.lang.ast.TruthTable.Conclusion.Contradictory): PreResult[org.sireum.lang.ast.TruthTable.Conclusion] = {
+    return PreResult_langastTruthTableConclusionContradictory
+  }
+
+  def pre_langastTruthTableConclusionContingent(o: org.sireum.lang.ast.TruthTable.Conclusion.Contingent): PreResult[org.sireum.lang.ast.TruthTable.Conclusion] = {
+    return PreResult_langastTruthTableConclusionContingent
+  }
 
   def preSmfAnnex(o: SmfAnnex): PreResult[SmfAnnex] = {
     o match {
@@ -772,6 +2341,23 @@ import MTransformer._
     return PreResultAadl
   }
 
+  def pre_langastTyped(o: org.sireum.lang.ast.Typed): PreResult[org.sireum.lang.ast.Typed] = {
+    o match {
+      case o: org.sireum.lang.ast.Typed.Name => return pre_langastTypedName(o)
+      case o: org.sireum.lang.ast.Typed.Tuple => return pre_langastTypedTuple(o)
+      case o: org.sireum.lang.ast.Typed.Fun => return pre_langastTypedFun(o)
+      case o: org.sireum.lang.ast.Typed.TypeVar => return pre_langastTypedTypeVar(o)
+      case o: org.sireum.lang.ast.Typed.Package => return pre_langastTypedPackage(o)
+      case o: org.sireum.lang.ast.Typed.Object => return pre_langastTypedObject(o)
+      case o: org.sireum.lang.ast.Typed.Enum => return pre_langastTypedEnum(o)
+      case o: org.sireum.lang.ast.Typed.Method => return pre_langastTypedMethod(o)
+      case o: org.sireum.lang.ast.Typed.Methods => return pre_langastTypedMethods(o)
+      case o: org.sireum.lang.ast.Typed.Fact => return pre_langastTypedFact(o)
+      case o: org.sireum.lang.ast.Typed.Theorem => return pre_langastTypedTheorem(o)
+      case o: org.sireum.lang.ast.Typed.Inv => return pre_langastTypedInv(o)
+    }
+  }
+
   def preEmv2ElementRef(o: Emv2ElementRef): PreResult[Emv2ElementRef] = {
     return PreResultEmv2ElementRef
   }
@@ -1039,6 +2625,10 @@ import MTransformer._
     return PreResultAnnex
   }
 
+  def pre_langastTypedName(o: org.sireum.lang.ast.Typed.Name): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedName
+  }
+
   def preAnnexClause(o: AnnexClause): PreResult[AnnexClause] = {
     o match {
       case o: SmfClause =>
@@ -1253,6 +2843,50 @@ import MTransformer._
     return PreResultOtherLib
   }
 
+  def pre_langastTypedTuple(o: org.sireum.lang.ast.Typed.Tuple): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedTuple
+  }
+
+  def pre_langastTypedFun(o: org.sireum.lang.ast.Typed.Fun): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedFun
+  }
+
+  def pre_langastTypedTypeVar(o: org.sireum.lang.ast.Typed.TypeVar): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedTypeVar
+  }
+
+  def pre_langastTypedPackage(o: org.sireum.lang.ast.Typed.Package): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedPackage
+  }
+
+  def pre_langastTypedObject(o: org.sireum.lang.ast.Typed.Object): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedObject
+  }
+
+  def pre_langastTypedEnum(o: org.sireum.lang.ast.Typed.Enum): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedEnum
+  }
+
+  def pre_langastTypedMethod(o: org.sireum.lang.ast.Typed.Method): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedMethod
+  }
+
+  def pre_langastTypedMethods(o: org.sireum.lang.ast.Typed.Methods): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedMethods
+  }
+
+  def pre_langastTypedFact(o: org.sireum.lang.ast.Typed.Fact): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedFact
+  }
+
+  def pre_langastTypedTheorem(o: org.sireum.lang.ast.Typed.Theorem): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedTheorem
+  }
+
+  def pre_langastTypedInv(o: org.sireum.lang.ast.Typed.Inv): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedInv
+  }
+
   def preGclAnnex(o: GclAnnex): PreResult[GclAnnex] = {
     o match {
       case o: GclSubclause =>
@@ -1330,77 +2964,6 @@ import MTransformer._
 
   def preGclCompute(o: GclCompute): PreResult[GclCompute] = {
     return PreResultGclCompute
-  }
-
-  def preGclExp(o: GclExp): PreResult[GclExp] = {
-    o match {
-      case o: GclUnaryExp =>
-        val r: PreResult[GclExp] = preGclUnaryExp(o) match {
-         case PreResult(continu, MSome(r: GclExp)) => PreResult(continu, MSome[GclExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclExp")
-         case PreResult(continu, _) => PreResult(continu, MNone[GclExp]())
-        }
-        return r
-      case o: GclBinaryExp =>
-        val r: PreResult[GclExp] = preGclBinaryExp(o) match {
-         case PreResult(continu, MSome(r: GclExp)) => PreResult(continu, MSome[GclExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclExp")
-         case PreResult(continu, _) => PreResult(continu, MNone[GclExp]())
-        }
-        return r
-      case o: GclNameExp =>
-        val r: PreResult[GclExp] = preGclNameExp(o) match {
-         case PreResult(continu, MSome(r: GclExp)) => PreResult(continu, MSome[GclExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclExp")
-         case PreResult(continu, _) => PreResult(continu, MNone[GclExp]())
-        }
-        return r
-      case o: GclAccessExp =>
-        val r: PreResult[GclExp] = preGclAccessExp(o) match {
-         case PreResult(continu, MSome(r: GclExp)) => PreResult(continu, MSome[GclExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclExp")
-         case PreResult(continu, _) => PreResult(continu, MNone[GclExp]())
-        }
-        return r
-      case o: GclLiteralExp =>
-        val r: PreResult[GclExp] = preGclLiteralExp(o) match {
-         case PreResult(continu, MSome(r: GclExp)) => PreResult(continu, MSome[GclExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclExp")
-         case PreResult(continu, _) => PreResult(continu, MNone[GclExp]())
-        }
-        return r
-      case o: GclEnumLitExp =>
-        val r: PreResult[GclExp] = preGclEnumLitExp(o) match {
-         case PreResult(continu, MSome(r: GclExp)) => PreResult(continu, MSome[GclExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclExp")
-         case PreResult(continu, _) => PreResult(continu, MNone[GclExp]())
-        }
-        return r
-    }
-  }
-
-  def preGclUnaryExp(o: GclUnaryExp): PreResult[GclUnaryExp] = {
-    return PreResultGclUnaryExp
-  }
-
-  def preGclBinaryExp(o: GclBinaryExp): PreResult[GclBinaryExp] = {
-    return PreResultGclBinaryExp
-  }
-
-  def preGclNameExp(o: GclNameExp): PreResult[GclNameExp] = {
-    return PreResultGclNameExp
-  }
-
-  def preGclAccessExp(o: GclAccessExp): PreResult[GclAccessExp] = {
-    return PreResultGclAccessExp
-  }
-
-  def preGclLiteralExp(o: GclLiteralExp): PreResult[GclLiteralExp] = {
-    return PreResultGclLiteralExp
-  }
-
-  def preGclEnumLitExp(o: GclEnumLitExp): PreResult[GclEnumLitExp] = {
-    return PreResultGclEnumLitExp
   }
 
   def preGclTODO(o: GclTODO): PreResult[GclTODO] = {
@@ -1933,6 +3496,999 @@ import MTransformer._
     return PreResultAttr
   }
 
+  def post_langastTopUnit(o: org.sireum.lang.ast.TopUnit): MOption[org.sireum.lang.ast.TopUnit] = {
+    o match {
+      case o: org.sireum.lang.ast.TopUnit.Program => return post_langastTopUnitProgram(o)
+      case o: org.sireum.lang.ast.TopUnit.SequentUnit => return post_langastTopUnitSequentUnit(o)
+      case o: org.sireum.lang.ast.TopUnit.TruthTableUnit => return post_langastTopUnitTruthTableUnit(o)
+    }
+  }
+
+  def post_langastTopUnitProgram(o: org.sireum.lang.ast.TopUnit.Program): MOption[org.sireum.lang.ast.TopUnit] = {
+    return PostResult_langastTopUnitProgram
+  }
+
+  def post_langastTopUnitSequentUnit(o: org.sireum.lang.ast.TopUnit.SequentUnit): MOption[org.sireum.lang.ast.TopUnit] = {
+    return PostResult_langastTopUnitSequentUnit
+  }
+
+  def post_langastTopUnitTruthTableUnit(o: org.sireum.lang.ast.TopUnit.TruthTableUnit): MOption[org.sireum.lang.ast.TopUnit] = {
+    return PostResult_langastTopUnitTruthTableUnit
+  }
+
+  def post_langastStmt(o: org.sireum.lang.ast.Stmt): MOption[org.sireum.lang.ast.Stmt] = {
+    o match {
+      case o: org.sireum.lang.ast.Stmt.Import => return post_langastStmtImport(o)
+      case o: org.sireum.lang.ast.Stmt.Var => return post_langastStmtVar(o)
+      case o: org.sireum.lang.ast.Stmt.VarPattern => return post_langastStmtVarPattern(o)
+      case o: org.sireum.lang.ast.Stmt.SpecVar => return post_langastStmtSpecVar(o)
+      case o: org.sireum.lang.ast.Stmt.Method => return post_langastStmtMethod(o)
+      case o: org.sireum.lang.ast.Stmt.ExtMethod => return post_langastStmtExtMethod(o)
+      case o: org.sireum.lang.ast.Stmt.JustMethod => return post_langastStmtJustMethod(o)
+      case o: org.sireum.lang.ast.Stmt.SpecMethod => return post_langastStmtSpecMethod(o)
+      case o: org.sireum.lang.ast.Stmt.Enum => return post_langastStmtEnum(o)
+      case o: org.sireum.lang.ast.Stmt.SubZ => return post_langastStmtSubZ(o)
+      case o: org.sireum.lang.ast.Stmt.Object => return post_langastStmtObject(o)
+      case o: org.sireum.lang.ast.Stmt.Sig => return post_langastStmtSig(o)
+      case o: org.sireum.lang.ast.Stmt.Adt => return post_langastStmtAdt(o)
+      case o: org.sireum.lang.ast.Stmt.TypeAlias => return post_langastStmtTypeAlias(o)
+      case o: org.sireum.lang.ast.Stmt.Assign => return post_langastStmtAssign(o)
+      case o: org.sireum.lang.ast.Stmt.Block => return post_langastStmtBlock(o)
+      case o: org.sireum.lang.ast.Stmt.If => return post_langastStmtIf(o)
+      case o: org.sireum.lang.ast.Stmt.Match => return post_langastStmtMatch(o)
+      case o: org.sireum.lang.ast.Stmt.While => return post_langastStmtWhile(o)
+      case o: org.sireum.lang.ast.Stmt.DoWhile => return post_langastStmtDoWhile(o)
+      case o: org.sireum.lang.ast.Stmt.For => return post_langastStmtFor(o)
+      case o: org.sireum.lang.ast.Stmt.Return => return post_langastStmtReturn(o)
+      case o: org.sireum.lang.ast.Stmt.Expr => return post_langastStmtExpr(o)
+      case o: org.sireum.lang.ast.Stmt.Fact =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtFact(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.Inv =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtInv(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.Theorem =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtTheorem(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.DataRefinement =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtDataRefinement(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.SpecLabel =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtSpecLabel(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.SpecBlock =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtSpecBlock(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.DeduceSequent =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtDeduceSequent(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.DeduceSteps =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtDeduceSteps(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.Havoc =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtHavoc(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
+    }
+  }
+
+  def post_langastHasModifies(o: org.sireum.lang.ast.HasModifies): MOption[org.sireum.lang.ast.HasModifies] = {
+    o match {
+      case o: org.sireum.lang.ast.LoopContract =>
+        val r: MOption[org.sireum.lang.ast.HasModifies] = post_langastLoopContract(o) match {
+         case MSome(result: org.sireum.lang.ast.HasModifies) => MSome[org.sireum.lang.ast.HasModifies](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+         case _ => MNone[org.sireum.lang.ast.HasModifies]()
+        }
+        return r
+      case o: org.sireum.lang.ast.MethodContract.Simple =>
+        val r: MOption[org.sireum.lang.ast.HasModifies] = post_langastMethodContractSimple(o) match {
+         case MSome(result: org.sireum.lang.ast.HasModifies) => MSome[org.sireum.lang.ast.HasModifies](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+         case _ => MNone[org.sireum.lang.ast.HasModifies]()
+        }
+        return r
+      case o: org.sireum.lang.ast.MethodContract.Cases =>
+        val r: MOption[org.sireum.lang.ast.HasModifies] = post_langastMethodContractCases(o) match {
+         case MSome(result: org.sireum.lang.ast.HasModifies) => MSome[org.sireum.lang.ast.HasModifies](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+         case _ => MNone[org.sireum.lang.ast.HasModifies]()
+        }
+        return r
+    }
+  }
+
+  def post_langastLoopContract(o: org.sireum.lang.ast.LoopContract): MOption[org.sireum.lang.ast.LoopContract] = {
+    return PostResult_langastLoopContract
+  }
+
+  def post_langastStmtImport(o: org.sireum.lang.ast.Stmt.Import): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtImport
+  }
+
+  def post_langastStmtImportImporter(o: org.sireum.lang.ast.Stmt.Import.Importer): MOption[org.sireum.lang.ast.Stmt.Import.Importer] = {
+    return PostResult_langastStmtImportImporter
+  }
+
+  def post_langastStmtImportSelector(o: org.sireum.lang.ast.Stmt.Import.Selector): MOption[org.sireum.lang.ast.Stmt.Import.Selector] = {
+    o match {
+      case o: org.sireum.lang.ast.Stmt.Import.MultiSelector => return post_langastStmtImportMultiSelector(o)
+      case o: org.sireum.lang.ast.Stmt.Import.WildcardSelector => return post_langastStmtImportWildcardSelector(o)
+    }
+  }
+
+  def post_langastStmtImportMultiSelector(o: org.sireum.lang.ast.Stmt.Import.MultiSelector): MOption[org.sireum.lang.ast.Stmt.Import.Selector] = {
+    return PostResult_langastStmtImportMultiSelector
+  }
+
+  def post_langastStmtImportWildcardSelector(o: org.sireum.lang.ast.Stmt.Import.WildcardSelector): MOption[org.sireum.lang.ast.Stmt.Import.Selector] = {
+    return PostResult_langastStmtImportWildcardSelector
+  }
+
+  def post_langastStmtImportNamedSelector(o: org.sireum.lang.ast.Stmt.Import.NamedSelector): MOption[org.sireum.lang.ast.Stmt.Import.NamedSelector] = {
+    return PostResult_langastStmtImportNamedSelector
+  }
+
+  def post_langastStmtVar(o: org.sireum.lang.ast.Stmt.Var): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtVar
+  }
+
+  def post_langastStmtVarPattern(o: org.sireum.lang.ast.Stmt.VarPattern): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtVarPattern
+  }
+
+  def post_langastStmtSpecVar(o: org.sireum.lang.ast.Stmt.SpecVar): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtSpecVar
+  }
+
+  def post_langastStmtMethod(o: org.sireum.lang.ast.Stmt.Method): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtMethod
+  }
+
+  def post_langastStmtExtMethod(o: org.sireum.lang.ast.Stmt.ExtMethod): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtExtMethod
+  }
+
+  def post_langastStmtJustMethod(o: org.sireum.lang.ast.Stmt.JustMethod): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtJustMethod
+  }
+
+  def post_langastStmtSpecMethod(o: org.sireum.lang.ast.Stmt.SpecMethod): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtSpecMethod
+  }
+
+  def post_langastStmtEnum(o: org.sireum.lang.ast.Stmt.Enum): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtEnum
+  }
+
+  def post_langastStmtSubZ(o: org.sireum.lang.ast.Stmt.SubZ): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtSubZ
+  }
+
+  def post_langastStmtObject(o: org.sireum.lang.ast.Stmt.Object): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtObject
+  }
+
+  def post_langastStmtSig(o: org.sireum.lang.ast.Stmt.Sig): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtSig
+  }
+
+  def post_langastStmtAdt(o: org.sireum.lang.ast.Stmt.Adt): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtAdt
+  }
+
+  def post_langastStmtTypeAlias(o: org.sireum.lang.ast.Stmt.TypeAlias): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtTypeAlias
+  }
+
+  def post_langastStmtAssign(o: org.sireum.lang.ast.Stmt.Assign): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtAssign
+  }
+
+  def post_langastStmtBlock(o: org.sireum.lang.ast.Stmt.Block): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtBlock
+  }
+
+  def post_langastStmtIf(o: org.sireum.lang.ast.Stmt.If): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtIf
+  }
+
+  def post_langastStmtMatch(o: org.sireum.lang.ast.Stmt.Match): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtMatch
+  }
+
+  def post_langastStmtWhile(o: org.sireum.lang.ast.Stmt.While): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtWhile
+  }
+
+  def post_langastStmtDoWhile(o: org.sireum.lang.ast.Stmt.DoWhile): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtDoWhile
+  }
+
+  def post_langastStmtFor(o: org.sireum.lang.ast.Stmt.For): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtFor
+  }
+
+  def post_langastStmtReturn(o: org.sireum.lang.ast.Stmt.Return): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtReturn
+  }
+
+  def post_langastStmtExpr(o: org.sireum.lang.ast.Stmt.Expr): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtExpr
+  }
+
+  def post_langastStmtSpec(o: org.sireum.lang.ast.Stmt.Spec): MOption[org.sireum.lang.ast.Stmt.Spec] = {
+    o match {
+      case o: org.sireum.lang.ast.Stmt.Fact => return post_langastStmtFact(o)
+      case o: org.sireum.lang.ast.Stmt.Inv => return post_langastStmtInv(o)
+      case o: org.sireum.lang.ast.Stmt.Theorem => return post_langastStmtTheorem(o)
+      case o: org.sireum.lang.ast.Stmt.DataRefinement => return post_langastStmtDataRefinement(o)
+      case o: org.sireum.lang.ast.Stmt.SpecLabel => return post_langastStmtSpecLabel(o)
+      case o: org.sireum.lang.ast.Stmt.SpecBlock => return post_langastStmtSpecBlock(o)
+      case o: org.sireum.lang.ast.Stmt.DeduceSequent => return post_langastStmtDeduceSequent(o)
+      case o: org.sireum.lang.ast.Stmt.DeduceSteps => return post_langastStmtDeduceSteps(o)
+      case o: org.sireum.lang.ast.Stmt.Havoc => return post_langastStmtHavoc(o)
+    }
+  }
+
+  def post_langastStmtFact(o: org.sireum.lang.ast.Stmt.Fact): MOption[org.sireum.lang.ast.Stmt.Spec] = {
+    return PostResult_langastStmtFact
+  }
+
+  def post_langastStmtInv(o: org.sireum.lang.ast.Stmt.Inv): MOption[org.sireum.lang.ast.Stmt.Spec] = {
+    return PostResult_langastStmtInv
+  }
+
+  def post_langastStmtTheorem(o: org.sireum.lang.ast.Stmt.Theorem): MOption[org.sireum.lang.ast.Stmt.Spec] = {
+    return PostResult_langastStmtTheorem
+  }
+
+  def post_langastStmtDataRefinement(o: org.sireum.lang.ast.Stmt.DataRefinement): MOption[org.sireum.lang.ast.Stmt.Spec] = {
+    return PostResult_langastStmtDataRefinement
+  }
+
+  def post_langastStmtSpecLabel(o: org.sireum.lang.ast.Stmt.SpecLabel): MOption[org.sireum.lang.ast.Stmt.Spec] = {
+    return PostResult_langastStmtSpecLabel
+  }
+
+  def post_langastStmtSpecBlock(o: org.sireum.lang.ast.Stmt.SpecBlock): MOption[org.sireum.lang.ast.Stmt.Spec] = {
+    return PostResult_langastStmtSpecBlock
+  }
+
+  def post_langastStmtDeduceSequent(o: org.sireum.lang.ast.Stmt.DeduceSequent): MOption[org.sireum.lang.ast.Stmt.Spec] = {
+    return PostResult_langastStmtDeduceSequent
+  }
+
+  def post_langastStmtDeduceSteps(o: org.sireum.lang.ast.Stmt.DeduceSteps): MOption[org.sireum.lang.ast.Stmt.Spec] = {
+    return PostResult_langastStmtDeduceSteps
+  }
+
+  def post_langastStmtHavoc(o: org.sireum.lang.ast.Stmt.Havoc): MOption[org.sireum.lang.ast.Stmt.Spec] = {
+    return PostResult_langastStmtHavoc
+  }
+
+  def post_langastMethodContract(o: org.sireum.lang.ast.MethodContract): MOption[org.sireum.lang.ast.MethodContract] = {
+    o match {
+      case o: org.sireum.lang.ast.MethodContract.Simple => return post_langastMethodContractSimple(o)
+      case o: org.sireum.lang.ast.MethodContract.Cases => return post_langastMethodContractCases(o)
+    }
+  }
+
+  def post_langastMethodContractAccesses(o: org.sireum.lang.ast.MethodContract.Accesses): MOption[org.sireum.lang.ast.MethodContract.Accesses] = {
+    return PostResult_langastMethodContractAccesses
+  }
+
+  def post_langastMethodContractClaims(o: org.sireum.lang.ast.MethodContract.Claims): MOption[org.sireum.lang.ast.MethodContract.Claims] = {
+    return PostResult_langastMethodContractClaims
+  }
+
+  def post_langastMethodContractSimple(o: org.sireum.lang.ast.MethodContract.Simple): MOption[org.sireum.lang.ast.MethodContract] = {
+    return PostResult_langastMethodContractSimple
+  }
+
+  def post_langastMethodContractCases(o: org.sireum.lang.ast.MethodContract.Cases): MOption[org.sireum.lang.ast.MethodContract] = {
+    return PostResult_langastMethodContractCases
+  }
+
+  def post_langastMethodContractCase(o: org.sireum.lang.ast.MethodContract.Case): MOption[org.sireum.lang.ast.MethodContract.Case] = {
+    return PostResult_langastMethodContractCase
+  }
+
+  def post_langastSequent(o: org.sireum.lang.ast.Sequent): MOption[org.sireum.lang.ast.Sequent] = {
+    return PostResult_langastSequent
+  }
+
+  def post_langastProofAst(o: org.sireum.lang.ast.ProofAst): MOption[org.sireum.lang.ast.ProofAst] = {
+    return PostResult_langastProofAst
+  }
+
+  def post_langastProofAstStep(o: org.sireum.lang.ast.ProofAst.Step): MOption[org.sireum.lang.ast.ProofAst.Step] = {
+    o match {
+      case o: org.sireum.lang.ast.ProofAst.Step.Regular => return post_langastProofAstStepRegular(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.Assume => return post_langastProofAstStepAssume(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.Assert => return post_langastProofAstStepAssert(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.SubProof => return post_langastProofAstStepSubProof(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.Let => return post_langastProofAstStepLet(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.StructInduction => return post_langastProofAstStepStructInduction(o)
+    }
+  }
+
+  def post_langastProofAstStepId(o: org.sireum.lang.ast.ProofAst.StepId): MOption[org.sireum.lang.ast.ProofAst.StepId] = {
+    o match {
+      case o: org.sireum.lang.ast.ProofAst.StepId.Num => return post_langastProofAstStepIdNum(o)
+      case o: org.sireum.lang.ast.ProofAst.StepId.Str => return post_langastProofAstStepIdStr(o)
+    }
+  }
+
+  def post_langastProofAstStepIdNum(o: org.sireum.lang.ast.ProofAst.StepId.Num): MOption[org.sireum.lang.ast.ProofAst.StepId] = {
+    return PostResult_langastProofAstStepIdNum
+  }
+
+  def post_langastProofAstStepIdStr(o: org.sireum.lang.ast.ProofAst.StepId.Str): MOption[org.sireum.lang.ast.ProofAst.StepId] = {
+    return PostResult_langastProofAstStepIdStr
+  }
+
+  def post_langastProofAstStepRegular(o: org.sireum.lang.ast.ProofAst.Step.Regular): MOption[org.sireum.lang.ast.ProofAst.Step] = {
+    return PostResult_langastProofAstStepRegular
+  }
+
+  def post_langastProofAstStepAssume(o: org.sireum.lang.ast.ProofAst.Step.Assume): MOption[org.sireum.lang.ast.ProofAst.Step] = {
+    return PostResult_langastProofAstStepAssume
+  }
+
+  def post_langastProofAstStepAssert(o: org.sireum.lang.ast.ProofAst.Step.Assert): MOption[org.sireum.lang.ast.ProofAst.Step] = {
+    return PostResult_langastProofAstStepAssert
+  }
+
+  def post_langastProofAstStepSubProof(o: org.sireum.lang.ast.ProofAst.Step.SubProof): MOption[org.sireum.lang.ast.ProofAst.Step] = {
+    return PostResult_langastProofAstStepSubProof
+  }
+
+  def post_langastProofAstStepLet(o: org.sireum.lang.ast.ProofAst.Step.Let): MOption[org.sireum.lang.ast.ProofAst.Step] = {
+    return PostResult_langastProofAstStepLet
+  }
+
+  def post_langastProofAstStepLetParam(o: org.sireum.lang.ast.ProofAst.Step.Let.Param): MOption[org.sireum.lang.ast.ProofAst.Step.Let.Param] = {
+    return PostResult_langastProofAstStepLetParam
+  }
+
+  def post_langastProofAstStepStructInduction(o: org.sireum.lang.ast.ProofAst.Step.StructInduction): MOption[org.sireum.lang.ast.ProofAst.Step] = {
+    return PostResult_langastProofAstStepStructInduction
+  }
+
+  def post_langastProofAstStepStructInductionMatchCase(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase): MOption[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = {
+    return PostResult_langastProofAstStepStructInductionMatchCase
+  }
+
+  def post_langastProofAstStepStructInductionMatchDefault(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault): MOption[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = {
+    return PostResult_langastProofAstStepStructInductionMatchDefault
+  }
+
+  def post_langastProofAstStepJustification(o: org.sireum.lang.ast.ProofAst.Step.Justification): MOption[org.sireum.lang.ast.ProofAst.Step.Justification] = {
+    o match {
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply => return post_langastProofAstStepJustificationApply(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept =>
+        val r: MOption[org.sireum.lang.ast.ProofAst.Step.Justification] = post_langastProofAstStepJustificationIncept(o) match {
+         case MSome(result: org.sireum.lang.ast.ProofAst.Step.Justification) => MSome[org.sireum.lang.ast.ProofAst.Step.Justification](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Justification")
+         case _ => MNone[org.sireum.lang.ast.ProofAst.Step.Justification]()
+        }
+        return r
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed =>
+        val r: MOption[org.sireum.lang.ast.ProofAst.Step.Justification] = post_langastProofAstStepJustificationInceptNamed(o) match {
+         case MSome(result: org.sireum.lang.ast.ProofAst.Step.Justification) => MSome[org.sireum.lang.ast.ProofAst.Step.Justification](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Justification")
+         case _ => MNone[org.sireum.lang.ast.ProofAst.Step.Justification]()
+        }
+        return r
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta =>
+        val r: MOption[org.sireum.lang.ast.ProofAst.Step.Justification] = post_langastProofAstStepJustificationInceptEta(o) match {
+         case MSome(result: org.sireum.lang.ast.ProofAst.Step.Justification) => MSome[org.sireum.lang.ast.ProofAst.Step.Justification](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Justification")
+         case _ => MNone[org.sireum.lang.ast.ProofAst.Step.Justification]()
+        }
+        return r
+    }
+  }
+
+  def post_langastProofAstStepInception(o: org.sireum.lang.ast.ProofAst.Step.Inception): MOption[org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    o match {
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept => return post_langastProofAstStepJustificationIncept(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed => return post_langastProofAstStepJustificationInceptNamed(o)
+      case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta => return post_langastProofAstStepJustificationInceptEta(o)
+    }
+  }
+
+  def post_langastProofAstStepJustificationApply(o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply): MOption[org.sireum.lang.ast.ProofAst.Step.Justification] = {
+    return PostResult_langastProofAstStepJustificationApply
+  }
+
+  def post_langastProofAstStepJustificationIncept(o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept): MOption[org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    return PostResult_langastProofAstStepJustificationIncept
+  }
+
+  def post_langastProofAstStepJustificationInceptNamed(o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed): MOption[org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    return PostResult_langastProofAstStepJustificationInceptNamed
+  }
+
+  def post_langastProofAstStepJustificationInceptEta(o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta): MOption[org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    return PostResult_langastProofAstStepJustificationInceptEta
+  }
+
+  def post_langastAssignExp(o: org.sireum.lang.ast.AssignExp): MOption[org.sireum.lang.ast.AssignExp] = {
+    o match {
+      case o: org.sireum.lang.ast.Stmt.Block =>
+        val r: MOption[org.sireum.lang.ast.AssignExp] = post_langastStmtBlock(o) match {
+         case MSome(result: org.sireum.lang.ast.AssignExp) => MSome[org.sireum.lang.ast.AssignExp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case _ => MNone[org.sireum.lang.ast.AssignExp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.If =>
+        val r: MOption[org.sireum.lang.ast.AssignExp] = post_langastStmtIf(o) match {
+         case MSome(result: org.sireum.lang.ast.AssignExp) => MSome[org.sireum.lang.ast.AssignExp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case _ => MNone[org.sireum.lang.ast.AssignExp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.Match =>
+        val r: MOption[org.sireum.lang.ast.AssignExp] = post_langastStmtMatch(o) match {
+         case MSome(result: org.sireum.lang.ast.AssignExp) => MSome[org.sireum.lang.ast.AssignExp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case _ => MNone[org.sireum.lang.ast.AssignExp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.Return =>
+        val r: MOption[org.sireum.lang.ast.AssignExp] = post_langastStmtReturn(o) match {
+         case MSome(result: org.sireum.lang.ast.AssignExp) => MSome[org.sireum.lang.ast.AssignExp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case _ => MNone[org.sireum.lang.ast.AssignExp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.Expr =>
+        val r: MOption[org.sireum.lang.ast.AssignExp] = post_langastStmtExpr(o) match {
+         case MSome(result: org.sireum.lang.ast.AssignExp) => MSome[org.sireum.lang.ast.AssignExp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case _ => MNone[org.sireum.lang.ast.AssignExp]()
+        }
+        return r
+    }
+  }
+
+  def post_langastCase(o: org.sireum.lang.ast.Case): MOption[org.sireum.lang.ast.Case] = {
+    return PostResult_langastCase
+  }
+
+  def post_langastEnumGenRange(o: org.sireum.lang.ast.EnumGen.Range): MOption[org.sireum.lang.ast.EnumGen.Range] = {
+    o match {
+      case o: org.sireum.lang.ast.EnumGen.Range.Expr => return post_langastEnumGenRangeExpr(o)
+      case o: org.sireum.lang.ast.EnumGen.Range.Step => return post_langastEnumGenRangeStep(o)
+    }
+  }
+
+  def post_langastEnumGenRangeExpr(o: org.sireum.lang.ast.EnumGen.Range.Expr): MOption[org.sireum.lang.ast.EnumGen.Range] = {
+    return PostResult_langastEnumGenRangeExpr
+  }
+
+  def post_langastEnumGenRangeStep(o: org.sireum.lang.ast.EnumGen.Range.Step): MOption[org.sireum.lang.ast.EnumGen.Range] = {
+    return PostResult_langastEnumGenRangeStep
+  }
+
+  def post_langastEnumGenFor(o: org.sireum.lang.ast.EnumGen.For): MOption[org.sireum.lang.ast.EnumGen.For] = {
+    return PostResult_langastEnumGenFor
+  }
+
+  def post_langastType(o: org.sireum.lang.ast.Type): MOption[org.sireum.lang.ast.Type] = {
+    o match {
+      case o: org.sireum.lang.ast.Type.Named => return post_langastTypeNamed(o)
+      case o: org.sireum.lang.ast.Type.Fun => return post_langastTypeFun(o)
+      case o: org.sireum.lang.ast.Type.Tuple => return post_langastTypeTuple(o)
+    }
+  }
+
+  def post_langastTypeNamed(o: org.sireum.lang.ast.Type.Named): MOption[org.sireum.lang.ast.Type] = {
+    return PostResult_langastTypeNamed
+  }
+
+  def post_langastTypeFun(o: org.sireum.lang.ast.Type.Fun): MOption[org.sireum.lang.ast.Type] = {
+    return PostResult_langastTypeFun
+  }
+
+  def post_langastTypeTuple(o: org.sireum.lang.ast.Type.Tuple): MOption[org.sireum.lang.ast.Type] = {
+    return PostResult_langastTypeTuple
+  }
+
+  def post_langastPattern(o: org.sireum.lang.ast.Pattern): MOption[org.sireum.lang.ast.Pattern] = {
+    o match {
+      case o: org.sireum.lang.ast.Pattern.Literal => return post_langastPatternLiteral(o)
+      case o: org.sireum.lang.ast.Pattern.LitInterpolate => return post_langastPatternLitInterpolate(o)
+      case o: org.sireum.lang.ast.Pattern.Ref => return post_langastPatternRef(o)
+      case o: org.sireum.lang.ast.Pattern.VarBinding => return post_langastPatternVarBinding(o)
+      case o: org.sireum.lang.ast.Pattern.Wildcard => return post_langastPatternWildcard(o)
+      case o: org.sireum.lang.ast.Pattern.SeqWildcard => return post_langastPatternSeqWildcard(o)
+      case o: org.sireum.lang.ast.Pattern.Structure => return post_langastPatternStructure(o)
+    }
+  }
+
+  def post_langastPatternLiteral(o: org.sireum.lang.ast.Pattern.Literal): MOption[org.sireum.lang.ast.Pattern] = {
+    return PostResult_langastPatternLiteral
+  }
+
+  def post_langastPatternLitInterpolate(o: org.sireum.lang.ast.Pattern.LitInterpolate): MOption[org.sireum.lang.ast.Pattern] = {
+    return PostResult_langastPatternLitInterpolate
+  }
+
+  def post_langastPatternRef(o: org.sireum.lang.ast.Pattern.Ref): MOption[org.sireum.lang.ast.Pattern] = {
+    return PostResult_langastPatternRef
+  }
+
+  def post_langastPatternVarBinding(o: org.sireum.lang.ast.Pattern.VarBinding): MOption[org.sireum.lang.ast.Pattern] = {
+    return PostResult_langastPatternVarBinding
+  }
+
+  def post_langastPatternWildcard(o: org.sireum.lang.ast.Pattern.Wildcard): MOption[org.sireum.lang.ast.Pattern] = {
+    return PostResult_langastPatternWildcard
+  }
+
+  def post_langastPatternSeqWildcard(o: org.sireum.lang.ast.Pattern.SeqWildcard): MOption[org.sireum.lang.ast.Pattern] = {
+    return PostResult_langastPatternSeqWildcard
+  }
+
+  def post_langastPatternStructure(o: org.sireum.lang.ast.Pattern.Structure): MOption[org.sireum.lang.ast.Pattern] = {
+    return PostResult_langastPatternStructure
+  }
+
+  def post_langastExp(o: org.sireum.lang.ast.Exp): MOption[org.sireum.lang.ast.Exp] = {
+    o match {
+      case o: org.sireum.lang.ast.Exp.LitB => return post_langastExpLitB(o)
+      case o: org.sireum.lang.ast.Exp.LitC => return post_langastExpLitC(o)
+      case o: org.sireum.lang.ast.Exp.LitZ => return post_langastExpLitZ(o)
+      case o: org.sireum.lang.ast.Exp.LitF32 => return post_langastExpLitF32(o)
+      case o: org.sireum.lang.ast.Exp.LitF64 => return post_langastExpLitF64(o)
+      case o: org.sireum.lang.ast.Exp.LitR => return post_langastExpLitR(o)
+      case o: org.sireum.lang.ast.Exp.LitString => return post_langastExpLitString(o)
+      case o: org.sireum.lang.ast.Exp.LitStepId => return post_langastExpLitStepId(o)
+      case o: org.sireum.lang.ast.Exp.StringInterpolate => return post_langastExpStringInterpolate(o)
+      case o: org.sireum.lang.ast.Exp.This => return post_langastExpThis(o)
+      case o: org.sireum.lang.ast.Exp.Super => return post_langastExpSuper(o)
+      case o: org.sireum.lang.ast.Exp.Unary => return post_langastExpUnary(o)
+      case o: org.sireum.lang.ast.Exp.Binary => return post_langastExpBinary(o)
+      case o: org.sireum.lang.ast.Exp.Ident => return post_langastExpIdent(o)
+      case o: org.sireum.lang.ast.Exp.Eta => return post_langastExpEta(o)
+      case o: org.sireum.lang.ast.Exp.Tuple => return post_langastExpTuple(o)
+      case o: org.sireum.lang.ast.Exp.Select => return post_langastExpSelect(o)
+      case o: org.sireum.lang.ast.Exp.Invoke => return post_langastExpInvoke(o)
+      case o: org.sireum.lang.ast.Exp.InvokeNamed => return post_langastExpInvokeNamed(o)
+      case o: org.sireum.lang.ast.Exp.If => return post_langastExpIf(o)
+      case o: org.sireum.lang.ast.Exp.Fun => return post_langastExpFun(o)
+      case o: org.sireum.lang.ast.Exp.ForYield => return post_langastExpForYield(o)
+      case o: org.sireum.lang.ast.Exp.QuantType =>
+        val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpQuantType(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case _ => MNone[org.sireum.lang.ast.Exp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.QuantRange =>
+        val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpQuantRange(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case _ => MNone[org.sireum.lang.ast.Exp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.QuantEach =>
+        val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpQuantEach(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case _ => MNone[org.sireum.lang.ast.Exp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.Input => return post_langastExpInput(o)
+      case o: org.sireum.lang.ast.Exp.OldVal => return post_langastExpOldVal(o)
+      case o: org.sireum.lang.ast.Exp.LoopIndex => return post_langastExpLoopIndex(o)
+      case o: org.sireum.lang.ast.Exp.StateSeq => return post_langastExpStateSeq(o)
+      case o: org.sireum.lang.ast.Exp.Result => return post_langastExpResult(o)
+    }
+  }
+
+  def post_langastLit(o: org.sireum.lang.ast.Lit): MOption[org.sireum.lang.ast.Lit] = {
+    o match {
+      case o: org.sireum.lang.ast.Exp.LitB =>
+        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitB(o) match {
+         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case _ => MNone[org.sireum.lang.ast.Lit]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitC =>
+        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitC(o) match {
+         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case _ => MNone[org.sireum.lang.ast.Lit]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitZ =>
+        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitZ(o) match {
+         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case _ => MNone[org.sireum.lang.ast.Lit]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitF32 =>
+        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitF32(o) match {
+         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case _ => MNone[org.sireum.lang.ast.Lit]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitF64 =>
+        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitF64(o) match {
+         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case _ => MNone[org.sireum.lang.ast.Lit]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitR =>
+        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitR(o) match {
+         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case _ => MNone[org.sireum.lang.ast.Lit]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitString =>
+        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitString(o) match {
+         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case _ => MNone[org.sireum.lang.ast.Lit]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitStepId =>
+        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitStepId(o) match {
+         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case _ => MNone[org.sireum.lang.ast.Lit]()
+        }
+        return r
+    }
+  }
+
+  def post_langastExpLitB(o: org.sireum.lang.ast.Exp.LitB): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpLitB
+  }
+
+  def post_langastExpLitC(o: org.sireum.lang.ast.Exp.LitC): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpLitC
+  }
+
+  def post_langastExpLitZ(o: org.sireum.lang.ast.Exp.LitZ): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpLitZ
+  }
+
+  def post_langastExpLitF32(o: org.sireum.lang.ast.Exp.LitF32): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpLitF32
+  }
+
+  def post_langastExpLitF64(o: org.sireum.lang.ast.Exp.LitF64): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpLitF64
+  }
+
+  def post_langastExpLitR(o: org.sireum.lang.ast.Exp.LitR): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpLitR
+  }
+
+  def post_langastExpLitString(o: org.sireum.lang.ast.Exp.LitString): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpLitString
+  }
+
+  def post_langastExpLitStepId(o: org.sireum.lang.ast.Exp.LitStepId): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpLitStepId
+  }
+
+  def post_langastExpStringInterpolate(o: org.sireum.lang.ast.Exp.StringInterpolate): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpStringInterpolate
+  }
+
+  def post_langastExpThis(o: org.sireum.lang.ast.Exp.This): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpThis
+  }
+
+  def post_langastExpSuper(o: org.sireum.lang.ast.Exp.Super): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpSuper
+  }
+
+  def post_langastExpUnary(o: org.sireum.lang.ast.Exp.Unary): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpUnary
+  }
+
+  def post_langastExpRef(o: org.sireum.lang.ast.Exp.Ref): MOption[org.sireum.lang.ast.Exp.Ref] = {
+    o match {
+      case o: org.sireum.lang.ast.Exp.Ident =>
+        val r: MOption[org.sireum.lang.ast.Exp.Ref] = post_langastExpIdent(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp.Ref) => MSome[org.sireum.lang.ast.Exp.Ref](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ref")
+         case _ => MNone[org.sireum.lang.ast.Exp.Ref]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.Select =>
+        val r: MOption[org.sireum.lang.ast.Exp.Ref] = post_langastExpSelect(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp.Ref) => MSome[org.sireum.lang.ast.Exp.Ref](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ref")
+         case _ => MNone[org.sireum.lang.ast.Exp.Ref]()
+        }
+        return r
+    }
+  }
+
+  def post_langastExpBinary(o: org.sireum.lang.ast.Exp.Binary): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpBinary
+  }
+
+  def post_langastExpIdent(o: org.sireum.lang.ast.Exp.Ident): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpIdent
+  }
+
+  def post_langastExpEta(o: org.sireum.lang.ast.Exp.Eta): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpEta
+  }
+
+  def post_langastExpTuple(o: org.sireum.lang.ast.Exp.Tuple): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpTuple
+  }
+
+  def post_langastExpSelect(o: org.sireum.lang.ast.Exp.Select): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpSelect
+  }
+
+  def post_langastExpInvoke(o: org.sireum.lang.ast.Exp.Invoke): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpInvoke
+  }
+
+  def post_langastExpInvokeNamed(o: org.sireum.lang.ast.Exp.InvokeNamed): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpInvokeNamed
+  }
+
+  def post_langastExpIf(o: org.sireum.lang.ast.Exp.If): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpIf
+  }
+
+  def post_langastExpFunParam(o: org.sireum.lang.ast.Exp.Fun.Param): MOption[org.sireum.lang.ast.Exp.Fun.Param] = {
+    return PostResult_langastExpFunParam
+  }
+
+  def post_langastExpFun(o: org.sireum.lang.ast.Exp.Fun): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpFun
+  }
+
+  def post_langastExpForYield(o: org.sireum.lang.ast.Exp.ForYield): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpForYield
+  }
+
+  def post_langastExpQuant(o: org.sireum.lang.ast.Exp.Quant): MOption[org.sireum.lang.ast.Exp.Quant] = {
+    o match {
+      case o: org.sireum.lang.ast.Exp.QuantType => return post_langastExpQuantType(o)
+      case o: org.sireum.lang.ast.Exp.QuantRange => return post_langastExpQuantRange(o)
+      case o: org.sireum.lang.ast.Exp.QuantEach => return post_langastExpQuantEach(o)
+    }
+  }
+
+  def post_langastExpQuantType(o: org.sireum.lang.ast.Exp.QuantType): MOption[org.sireum.lang.ast.Exp.Quant] = {
+    return PostResult_langastExpQuantType
+  }
+
+  def post_langastExpQuantRange(o: org.sireum.lang.ast.Exp.QuantRange): MOption[org.sireum.lang.ast.Exp.Quant] = {
+    return PostResult_langastExpQuantRange
+  }
+
+  def post_langastExpQuantEach(o: org.sireum.lang.ast.Exp.QuantEach): MOption[org.sireum.lang.ast.Exp.Quant] = {
+    return PostResult_langastExpQuantEach
+  }
+
+  def post_langastExpInput(o: org.sireum.lang.ast.Exp.Input): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpInput
+  }
+
+  def post_langastExpOldVal(o: org.sireum.lang.ast.Exp.OldVal): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpOldVal
+  }
+
+  def post_langastExpLoopIndex(o: org.sireum.lang.ast.Exp.LoopIndex): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpLoopIndex
+  }
+
+  def post_langastExpStateSeq(o: org.sireum.lang.ast.Exp.StateSeq): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpStateSeq
+  }
+
+  def post_langastExpStateSeqFragment(o: org.sireum.lang.ast.Exp.StateSeq.Fragment): MOption[org.sireum.lang.ast.Exp.StateSeq.Fragment] = {
+    return PostResult_langastExpStateSeqFragment
+  }
+
+  def post_langastExpResult(o: org.sireum.lang.ast.Exp.Result): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpResult
+  }
+
+  def post_langastNamedArg(o: org.sireum.lang.ast.NamedArg): MOption[org.sireum.lang.ast.NamedArg] = {
+    return PostResult_langastNamedArg
+  }
+
+  def post_langastId(o: org.sireum.lang.ast.Id): MOption[org.sireum.lang.ast.Id] = {
+    return PostResult_langastId
+  }
+
+  def post_langastName(o: org.sireum.lang.ast.Name): MOption[org.sireum.lang.ast.Name] = {
+    return PostResult_langastName
+  }
+
+  def post_langastBody(o: org.sireum.lang.ast.Body): MOption[org.sireum.lang.ast.Body] = {
+    return PostResult_langastBody
+  }
+
+  def post_langastAdtParam(o: org.sireum.lang.ast.AdtParam): MOption[org.sireum.lang.ast.AdtParam] = {
+    return PostResult_langastAdtParam
+  }
+
+  def post_langastMethodSig(o: org.sireum.lang.ast.MethodSig): MOption[org.sireum.lang.ast.MethodSig] = {
+    return PostResult_langastMethodSig
+  }
+
+  def post_langastParam(o: org.sireum.lang.ast.Param): MOption[org.sireum.lang.ast.Param] = {
+    return PostResult_langastParam
+  }
+
+  def post_langastTypeParam(o: org.sireum.lang.ast.TypeParam): MOption[org.sireum.lang.ast.TypeParam] = {
+    return PostResult_langastTypeParam
+  }
+
+  def post_langastAttr(o: org.sireum.lang.ast.Attr): MOption[org.sireum.lang.ast.Attr] = {
+    return PostResult_langastAttr
+  }
+
+  def post_langastTypedAttr(o: org.sireum.lang.ast.TypedAttr): MOption[org.sireum.lang.ast.TypedAttr] = {
+    return PostResult_langastTypedAttr
+  }
+
+  def post_langastResolvedAttr(o: org.sireum.lang.ast.ResolvedAttr): MOption[org.sireum.lang.ast.ResolvedAttr] = {
+    return PostResult_langastResolvedAttr
+  }
+
+  def post_langastResolvedInfo(o: org.sireum.lang.ast.ResolvedInfo): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    o match {
+      case o: org.sireum.lang.ast.ResolvedInfo.BuiltIn => return post_langastResolvedInfoBuiltIn(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Package => return post_langastResolvedInfoPackage(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Enum => return post_langastResolvedInfoEnum(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.EnumElement => return post_langastResolvedInfoEnumElement(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Object => return post_langastResolvedInfoObject(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Var => return post_langastResolvedInfoVar(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Method => return post_langastResolvedInfoMethod(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Methods => return post_langastResolvedInfoMethods(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Tuple => return post_langastResolvedInfoTuple(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.LocalVar => return post_langastResolvedInfoLocalVar(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Fact => return post_langastResolvedInfoFact(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Theorem => return post_langastResolvedInfoTheorem(o)
+      case o: org.sireum.lang.ast.ResolvedInfo.Inv => return post_langastResolvedInfoInv(o)
+    }
+  }
+
+  def post_langastResolvedInfoBuiltIn(o: org.sireum.lang.ast.ResolvedInfo.BuiltIn): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    return PostResult_langastResolvedInfoBuiltIn
+  }
+
+  def post_langastResolvedInfoPackage(o: org.sireum.lang.ast.ResolvedInfo.Package): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    return PostResult_langastResolvedInfoPackage
+  }
+
+  def post_langastResolvedInfoEnum(o: org.sireum.lang.ast.ResolvedInfo.Enum): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    return PostResult_langastResolvedInfoEnum
+  }
+
+  def post_langastResolvedInfoEnumElement(o: org.sireum.lang.ast.ResolvedInfo.EnumElement): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    return PostResult_langastResolvedInfoEnumElement
+  }
+
+  def post_langastResolvedInfoObject(o: org.sireum.lang.ast.ResolvedInfo.Object): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    return PostResult_langastResolvedInfoObject
+  }
+
+  def post_langastResolvedInfoVar(o: org.sireum.lang.ast.ResolvedInfo.Var): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    return PostResult_langastResolvedInfoVar
+  }
+
+  def post_langastResolvedInfoMethod(o: org.sireum.lang.ast.ResolvedInfo.Method): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    return PostResult_langastResolvedInfoMethod
+  }
+
+  def post_langastResolvedInfoMethods(o: org.sireum.lang.ast.ResolvedInfo.Methods): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    return PostResult_langastResolvedInfoMethods
+  }
+
+  def post_langastResolvedInfoTuple(o: org.sireum.lang.ast.ResolvedInfo.Tuple): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    return PostResult_langastResolvedInfoTuple
+  }
+
+  def post_langastResolvedInfoLocalVar(o: org.sireum.lang.ast.ResolvedInfo.LocalVar): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    return PostResult_langastResolvedInfoLocalVar
+  }
+
+  def post_langastResolvedInfoFact(o: org.sireum.lang.ast.ResolvedInfo.Fact): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    return PostResult_langastResolvedInfoFact
+  }
+
+  def post_langastResolvedInfoTheorem(o: org.sireum.lang.ast.ResolvedInfo.Theorem): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    return PostResult_langastResolvedInfoTheorem
+  }
+
+  def post_langastResolvedInfoInv(o: org.sireum.lang.ast.ResolvedInfo.Inv): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    return PostResult_langastResolvedInfoInv
+  }
+
+  def post_langastTruthTableRow(o: org.sireum.lang.ast.TruthTable.Row): MOption[org.sireum.lang.ast.TruthTable.Row] = {
+    return PostResult_langastTruthTableRow
+  }
+
+  def post_langastTruthTableAssignment(o: org.sireum.lang.ast.TruthTable.Assignment): MOption[org.sireum.lang.ast.TruthTable.Assignment] = {
+    return PostResult_langastTruthTableAssignment
+  }
+
+  def post_langastTruthTableConclusion(o: org.sireum.lang.ast.TruthTable.Conclusion): MOption[org.sireum.lang.ast.TruthTable.Conclusion] = {
+    o match {
+      case o: org.sireum.lang.ast.TruthTable.Conclusion.Validity => return post_langastTruthTableConclusionValidity(o)
+      case o: org.sireum.lang.ast.TruthTable.Conclusion.Tautology => return post_langastTruthTableConclusionTautology(o)
+      case o: org.sireum.lang.ast.TruthTable.Conclusion.Contradictory => return post_langastTruthTableConclusionContradictory(o)
+      case o: org.sireum.lang.ast.TruthTable.Conclusion.Contingent => return post_langastTruthTableConclusionContingent(o)
+    }
+  }
+
+  def post_langastTruthTableConclusionValidity(o: org.sireum.lang.ast.TruthTable.Conclusion.Validity): MOption[org.sireum.lang.ast.TruthTable.Conclusion] = {
+    return PostResult_langastTruthTableConclusionValidity
+  }
+
+  def post_langastTruthTableConclusionTautology(o: org.sireum.lang.ast.TruthTable.Conclusion.Tautology): MOption[org.sireum.lang.ast.TruthTable.Conclusion] = {
+    return PostResult_langastTruthTableConclusionTautology
+  }
+
+  def post_langastTruthTableConclusionContradictory(o: org.sireum.lang.ast.TruthTable.Conclusion.Contradictory): MOption[org.sireum.lang.ast.TruthTable.Conclusion] = {
+    return PostResult_langastTruthTableConclusionContradictory
+  }
+
+  def post_langastTruthTableConclusionContingent(o: org.sireum.lang.ast.TruthTable.Conclusion.Contingent): MOption[org.sireum.lang.ast.TruthTable.Conclusion] = {
+    return PostResult_langastTruthTableConclusionContingent
+  }
+
   def postSmfAnnex(o: SmfAnnex): MOption[SmfAnnex] = {
     o match {
       case o: SmfClause =>
@@ -2206,6 +4762,23 @@ import MTransformer._
     return PostResultAadl
   }
 
+  def post_langastTyped(o: org.sireum.lang.ast.Typed): MOption[org.sireum.lang.ast.Typed] = {
+    o match {
+      case o: org.sireum.lang.ast.Typed.Name => return post_langastTypedName(o)
+      case o: org.sireum.lang.ast.Typed.Tuple => return post_langastTypedTuple(o)
+      case o: org.sireum.lang.ast.Typed.Fun => return post_langastTypedFun(o)
+      case o: org.sireum.lang.ast.Typed.TypeVar => return post_langastTypedTypeVar(o)
+      case o: org.sireum.lang.ast.Typed.Package => return post_langastTypedPackage(o)
+      case o: org.sireum.lang.ast.Typed.Object => return post_langastTypedObject(o)
+      case o: org.sireum.lang.ast.Typed.Enum => return post_langastTypedEnum(o)
+      case o: org.sireum.lang.ast.Typed.Method => return post_langastTypedMethod(o)
+      case o: org.sireum.lang.ast.Typed.Methods => return post_langastTypedMethods(o)
+      case o: org.sireum.lang.ast.Typed.Fact => return post_langastTypedFact(o)
+      case o: org.sireum.lang.ast.Typed.Theorem => return post_langastTypedTheorem(o)
+      case o: org.sireum.lang.ast.Typed.Inv => return post_langastTypedInv(o)
+    }
+  }
+
   def postEmv2ElementRef(o: Emv2ElementRef): MOption[Emv2ElementRef] = {
     return PostResultEmv2ElementRef
   }
@@ -2473,6 +5046,10 @@ import MTransformer._
     return PostResultAnnex
   }
 
+  def post_langastTypedName(o: org.sireum.lang.ast.Typed.Name): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedName
+  }
+
   def postAnnexClause(o: AnnexClause): MOption[AnnexClause] = {
     o match {
       case o: SmfClause =>
@@ -2687,6 +5264,50 @@ import MTransformer._
     return PostResultOtherLib
   }
 
+  def post_langastTypedTuple(o: org.sireum.lang.ast.Typed.Tuple): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedTuple
+  }
+
+  def post_langastTypedFun(o: org.sireum.lang.ast.Typed.Fun): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedFun
+  }
+
+  def post_langastTypedTypeVar(o: org.sireum.lang.ast.Typed.TypeVar): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedTypeVar
+  }
+
+  def post_langastTypedPackage(o: org.sireum.lang.ast.Typed.Package): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedPackage
+  }
+
+  def post_langastTypedObject(o: org.sireum.lang.ast.Typed.Object): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedObject
+  }
+
+  def post_langastTypedEnum(o: org.sireum.lang.ast.Typed.Enum): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedEnum
+  }
+
+  def post_langastTypedMethod(o: org.sireum.lang.ast.Typed.Method): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedMethod
+  }
+
+  def post_langastTypedMethods(o: org.sireum.lang.ast.Typed.Methods): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedMethods
+  }
+
+  def post_langastTypedFact(o: org.sireum.lang.ast.Typed.Fact): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedFact
+  }
+
+  def post_langastTypedTheorem(o: org.sireum.lang.ast.Typed.Theorem): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedTheorem
+  }
+
+  def post_langastTypedInv(o: org.sireum.lang.ast.Typed.Inv): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedInv
+  }
+
   def postGclAnnex(o: GclAnnex): MOption[GclAnnex] = {
     o match {
       case o: GclSubclause =>
@@ -2764,77 +5385,6 @@ import MTransformer._
 
   def postGclCompute(o: GclCompute): MOption[GclCompute] = {
     return PostResultGclCompute
-  }
-
-  def postGclExp(o: GclExp): MOption[GclExp] = {
-    o match {
-      case o: GclUnaryExp =>
-        val r: MOption[GclExp] = postGclUnaryExp(o) match {
-         case MSome(result: GclExp) => MSome[GclExp](result)
-         case MSome(_) => halt("Can only produce object of type GclExp")
-         case _ => MNone[GclExp]()
-        }
-        return r
-      case o: GclBinaryExp =>
-        val r: MOption[GclExp] = postGclBinaryExp(o) match {
-         case MSome(result: GclExp) => MSome[GclExp](result)
-         case MSome(_) => halt("Can only produce object of type GclExp")
-         case _ => MNone[GclExp]()
-        }
-        return r
-      case o: GclNameExp =>
-        val r: MOption[GclExp] = postGclNameExp(o) match {
-         case MSome(result: GclExp) => MSome[GclExp](result)
-         case MSome(_) => halt("Can only produce object of type GclExp")
-         case _ => MNone[GclExp]()
-        }
-        return r
-      case o: GclAccessExp =>
-        val r: MOption[GclExp] = postGclAccessExp(o) match {
-         case MSome(result: GclExp) => MSome[GclExp](result)
-         case MSome(_) => halt("Can only produce object of type GclExp")
-         case _ => MNone[GclExp]()
-        }
-        return r
-      case o: GclLiteralExp =>
-        val r: MOption[GclExp] = postGclLiteralExp(o) match {
-         case MSome(result: GclExp) => MSome[GclExp](result)
-         case MSome(_) => halt("Can only produce object of type GclExp")
-         case _ => MNone[GclExp]()
-        }
-        return r
-      case o: GclEnumLitExp =>
-        val r: MOption[GclExp] = postGclEnumLitExp(o) match {
-         case MSome(result: GclExp) => MSome[GclExp](result)
-         case MSome(_) => halt("Can only produce object of type GclExp")
-         case _ => MNone[GclExp]()
-        }
-        return r
-    }
-  }
-
-  def postGclUnaryExp(o: GclUnaryExp): MOption[GclUnaryExp] = {
-    return PostResultGclUnaryExp
-  }
-
-  def postGclBinaryExp(o: GclBinaryExp): MOption[GclBinaryExp] = {
-    return PostResultGclBinaryExp
-  }
-
-  def postGclNameExp(o: GclNameExp): MOption[GclNameExp] = {
-    return PostResultGclNameExp
-  }
-
-  def postGclAccessExp(o: GclAccessExp): MOption[GclAccessExp] = {
-    return PostResultGclAccessExp
-  }
-
-  def postGclLiteralExp(o: GclLiteralExp): MOption[GclLiteralExp] = {
-    return PostResultGclLiteralExp
-  }
-
-  def postGclEnumLitExp(o: GclEnumLitExp): MOption[GclEnumLitExp] = {
-    return PostResultGclEnumLitExp
   }
 
   def postGclTODO(o: GclTODO): MOption[GclTODO] = {
@@ -3365,6 +5915,2348 @@ import MTransformer._
 
   def postAttr(o: Attr): MOption[Attr] = {
     return PostResultAttr
+  }
+
+  def transform_langastTopUnit(o: org.sireum.lang.ast.TopUnit): MOption[org.sireum.lang.ast.TopUnit] = {
+    val preR: PreResult[org.sireum.lang.ast.TopUnit] = pre_langastTopUnit(o)
+    val r: MOption[org.sireum.lang.ast.TopUnit] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.TopUnit = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.TopUnit] = o2 match {
+        case o2: org.sireum.lang.ast.TopUnit.Program =>
+          val r0: MOption[org.sireum.lang.ast.Name] = transform_langastName(o2.packageName)
+          val r1: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.body)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(packageName = r0.getOrElse(o2.packageName), body = r1.getOrElse(o2.body)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.TopUnit.SequentUnit =>
+          val r0: MOption[org.sireum.lang.ast.Sequent] = transform_langastSequent(o2.sequent)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(sequent = r0.getOrElse(o2.sequent)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.TopUnit.TruthTableUnit =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Id]] = transformISZ(o2.vars, transform_langastId _)
+          val r1: MOption[org.sireum.lang.ast.Sequent] = transform_langastSequent(o2.sequent)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.TruthTable.Row]] = transformISZ(o2.rows, transform_langastTruthTableRow _)
+          val r3: MOption[Option[org.sireum.lang.ast.TruthTable.Conclusion]] = transformOption(o2.conclusionOpt, transform_langastTruthTableConclusion _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(vars = r0.getOrElse(o2.vars), sequent = r1.getOrElse(o2.sequent), rows = r2.getOrElse(o2.rows), conclusionOpt = r3.getOrElse(o2.conclusionOpt)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.TopUnit = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.TopUnit] = post_langastTopUnit(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastStmt(o: org.sireum.lang.ast.Stmt): MOption[org.sireum.lang.ast.Stmt] = {
+    val preR: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmt(o)
+    val r: MOption[org.sireum.lang.ast.Stmt] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Stmt = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.Stmt] = o2 match {
+        case o2: org.sireum.lang.ast.Stmt.Import =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Stmt.Import.Importer]] = transformISZ(o2.importers, transform_langastStmtImportImporter _)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(importers = r0.getOrElse(o2.importers), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Var =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[Option[org.sireum.lang.ast.Type]] = transformOption(o2.tipeOpt, transform_langastType _)
+          val r2: MOption[Option[org.sireum.lang.ast.AssignExp]] = transformOption(o2.initOpt, transform_langastAssignExp _)
+          val r3: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), tipeOpt = r1.getOrElse(o2.tipeOpt), initOpt = r2.getOrElse(o2.initOpt), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.VarPattern =>
+          val r0: MOption[org.sireum.lang.ast.Pattern] = transform_langastPattern(o2.pattern)
+          val r1: MOption[Option[org.sireum.lang.ast.Type]] = transformOption(o2.tipeOpt, transform_langastType _)
+          val r2: MOption[org.sireum.lang.ast.AssignExp] = transform_langastAssignExp(o2.init)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(pattern = r0.getOrElse(o2.pattern), tipeOpt = r1.getOrElse(o2.tipeOpt), init = r2.getOrElse(o2.init), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.SpecVar =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[org.sireum.lang.ast.Type] = transform_langastType(o2.tipe)
+          val r2: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), tipe = r1.getOrElse(o2.tipe), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Method =>
+          val r0: MOption[org.sireum.lang.ast.MethodSig] = transform_langastMethodSig(o2.sig)
+          val r1: MOption[org.sireum.lang.ast.MethodContract] = transform_langastMethodContract(o2.mcontract)
+          val r2: MOption[Option[org.sireum.lang.ast.Body]] = transformOption(o2.bodyOpt, transform_langastBody _)
+          val r3: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(sig = r0.getOrElse(o2.sig), mcontract = r1.getOrElse(o2.mcontract), bodyOpt = r2.getOrElse(o2.bodyOpt), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.ExtMethod =>
+          val r0: MOption[org.sireum.lang.ast.MethodSig] = transform_langastMethodSig(o2.sig)
+          val r1: MOption[org.sireum.lang.ast.MethodContract] = transform_langastMethodContract(o2.contract)
+          val r2: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(sig = r0.getOrElse(o2.sig), contract = r1.getOrElse(o2.contract), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.JustMethod =>
+          val r0: MOption[Option[org.sireum.lang.ast.Exp.LitString]] = transformOption(o2.etaOpt, transform_langastExpLitString _)
+          val r1: MOption[org.sireum.lang.ast.MethodSig] = transform_langastMethodSig(o2.sig)
+          val r2: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(etaOpt = r0.getOrElse(o2.etaOpt), sig = r1.getOrElse(o2.sig), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.SpecMethod =>
+          val r0: MOption[org.sireum.lang.ast.MethodSig] = transform_langastMethodSig(o2.sig)
+          val r1: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(sig = r0.getOrElse(o2.sig), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Enum =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Id]] = transformISZ(o2.elements, transform_langastId _)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), elements = r1.getOrElse(o2.elements), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.SubZ =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Object =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Stmt]] = transformISZ(o2.stmts, transform_langastStmt _)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), stmts = r1.getOrElse(o2.stmts), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Sig =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Type.Named]] = transformISZ(o2.parents, transform_langastTypeNamed _)
+          val r3: MOption[IS[Z, org.sireum.lang.ast.Stmt]] = transformISZ(o2.stmts, transform_langastStmt _)
+          val r4: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), typeParams = r1.getOrElse(o2.typeParams), parents = r2.getOrElse(o2.parents), stmts = r3.getOrElse(o2.stmts), attr = r4.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Adt =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.AdtParam]] = transformISZ(o2.params, transform_langastAdtParam _)
+          val r3: MOption[IS[Z, org.sireum.lang.ast.Type.Named]] = transformISZ(o2.parents, transform_langastTypeNamed _)
+          val r4: MOption[IS[Z, org.sireum.lang.ast.Stmt]] = transformISZ(o2.stmts, transform_langastStmt _)
+          val r5: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), typeParams = r1.getOrElse(o2.typeParams), params = r2.getOrElse(o2.params), parents = r3.getOrElse(o2.parents), stmts = r4.getOrElse(o2.stmts), attr = r5.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.TypeAlias =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)
+          val r2: MOption[org.sireum.lang.ast.Type] = transform_langastType(o2.tipe)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), typeParams = r1.getOrElse(o2.typeParams), tipe = r2.getOrElse(o2.tipe), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Assign =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.lhs)
+          val r1: MOption[org.sireum.lang.ast.AssignExp] = transform_langastAssignExp(o2.rhs)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Block =>
+          val r0: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.body)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(body = r0.getOrElse(o2.body), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.If =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.cond)
+          val r1: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.thenBody)
+          val r2: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.elseBody)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(cond = r0.getOrElse(o2.cond), thenBody = r1.getOrElse(o2.thenBody), elseBody = r2.getOrElse(o2.elseBody), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Match =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Case]] = transformISZ(o2.cases, transform_langastCase _)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), cases = r1.getOrElse(o2.cases), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.While =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.cond)
+          val r1: MOption[org.sireum.lang.ast.LoopContract] = transform_langastLoopContract(o2.contract)
+          val r2: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.body)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(cond = r0.getOrElse(o2.cond), contract = r1.getOrElse(o2.contract), body = r2.getOrElse(o2.body), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.DoWhile =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.cond)
+          val r1: MOption[org.sireum.lang.ast.LoopContract] = transform_langastLoopContract(o2.contract)
+          val r2: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.body)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(cond = r0.getOrElse(o2.cond), contract = r1.getOrElse(o2.contract), body = r2.getOrElse(o2.body), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.For =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.EnumGen.For]] = transformISZ(o2.enumGens, transform_langastEnumGenFor _)
+          val r1: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.body)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(enumGens = r0.getOrElse(o2.enumGens), body = r1.getOrElse(o2.body), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Return =>
+          val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.expOpt, transform_langastExp _)
+          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(expOpt = r0.getOrElse(o2.expOpt), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Expr =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Fact =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)
+          val r2: MOption[Option[org.sireum.lang.ast.Exp.LitString]] = transformOption(o2.descOpt, transform_langastExpLitString _)
+          val r3: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.claims, transform_langastExp _)
+          val r4: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), typeParams = r1.getOrElse(o2.typeParams), descOpt = r2.getOrElse(o2.descOpt), claims = r3.getOrElse(o2.claims), attr = r4.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Inv =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.claims, transform_langastExp _)
+          val r2: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), claims = r1.getOrElse(o2.claims), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Theorem =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)
+          val r2: MOption[Option[org.sireum.lang.ast.Exp.LitString]] = transformOption(o2.descOpt, transform_langastExpLitString _)
+          val r3: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.claim)
+          val r4: MOption[org.sireum.lang.ast.ProofAst] = transform_langastProofAst(o2.proof)
+          val r5: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), typeParams = r1.getOrElse(o2.typeParams), descOpt = r2.getOrElse(o2.descOpt), claim = r3.getOrElse(o2.claim), proof = r4.getOrElse(o2.proof), attr = r5.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.DataRefinement =>
+          val r0: MOption[org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(o2.rep)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(o2.refs, transform_langastExpIdent _)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.claims, transform_langastExp _)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(rep = r0.getOrElse(o2.rep), refs = r1.getOrElse(o2.refs), claims = r2.getOrElse(o2.claims), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.SpecLabel =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.SpecBlock =>
+          val r0: MOption[org.sireum.lang.ast.Stmt.Block] = transform_langastStmtBlock(o2.block)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(block = r0.getOrElse(o2.block)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.DeduceSequent =>
+          val r0: MOption[Option[org.sireum.lang.ast.Exp.LitString]] = transformOption(o2.justOpt, transform_langastExpLitString _)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Sequent]] = transformISZ(o2.sequents, transform_langastSequent _)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(justOpt = r0.getOrElse(o2.justOpt), sequents = r1.getOrElse(o2.sequents), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.DeduceSteps =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(o2.steps, transform_langastProofAstStep _)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(steps = r0.getOrElse(o2.steps), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Havoc =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(o2.args, transform_langastExpIdent _)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(args = r0.getOrElse(o2.args), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Stmt = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Stmt] = post_langastStmt(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastHasModifies(o: org.sireum.lang.ast.HasModifies): MOption[org.sireum.lang.ast.HasModifies] = {
+    val preR: PreResult[org.sireum.lang.ast.HasModifies] = pre_langastHasModifies(o)
+    val r: MOption[org.sireum.lang.ast.HasModifies] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.HasModifies = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.HasModifies] = o2 match {
+        case o2: org.sireum.lang.ast.LoopContract =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.invariants, transform_langastExp _)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(o2.modifies, transform_langastExpIdent _)
+          val r2: MOption[Option[org.sireum.lang.ast.Exp.LitZ]] = transformOption(o2.maxItOpt, transform_langastExpLitZ _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(invariants = r0.getOrElse(o2.invariants), modifies = r1.getOrElse(o2.modifies), maxItOpt = r2.getOrElse(o2.maxItOpt)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.MethodContract.Simple =>
+          val r0: MOption[org.sireum.lang.ast.MethodContract.Accesses] = transform_langastMethodContractAccesses(o2.readsClause)
+          val r1: MOption[org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(o2.requiresClause)
+          val r2: MOption[org.sireum.lang.ast.MethodContract.Accesses] = transform_langastMethodContractAccesses(o2.modifiesClause)
+          val r3: MOption[org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(o2.ensuresClause)
+          val r4: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(readsClause = r0.getOrElse(o2.readsClause), requiresClause = r1.getOrElse(o2.requiresClause), modifiesClause = r2.getOrElse(o2.modifiesClause), ensuresClause = r3.getOrElse(o2.ensuresClause), attr = r4.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.MethodContract.Cases =>
+          val r0: MOption[org.sireum.lang.ast.MethodContract.Accesses] = transform_langastMethodContractAccesses(o2.readsClause)
+          val r1: MOption[org.sireum.lang.ast.MethodContract.Accesses] = transform_langastMethodContractAccesses(o2.modifiesClause)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.MethodContract.Case]] = transformISZ(o2.cases, transform_langastMethodContractCase _)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(readsClause = r0.getOrElse(o2.readsClause), modifiesClause = r1.getOrElse(o2.modifiesClause), cases = r2.getOrElse(o2.cases), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.HasModifies = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.HasModifies] = post_langastHasModifies(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastLoopContract(o: org.sireum.lang.ast.LoopContract): MOption[org.sireum.lang.ast.LoopContract] = {
+    val preR: PreResult[org.sireum.lang.ast.LoopContract] = pre_langastLoopContract(o)
+    val r: MOption[org.sireum.lang.ast.LoopContract] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.LoopContract = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.invariants, transform_langastExp _)
+      val r1: MOption[IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(o2.modifies, transform_langastExpIdent _)
+      val r2: MOption[Option[org.sireum.lang.ast.Exp.LitZ]] = transformOption(o2.maxItOpt, transform_langastExpLitZ _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(invariants = r0.getOrElse(o2.invariants), modifies = r1.getOrElse(o2.modifies), maxItOpt = r2.getOrElse(o2.maxItOpt)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.LoopContract = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.LoopContract] = post_langastLoopContract(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastStmtImportImporter(o: org.sireum.lang.ast.Stmt.Import.Importer): MOption[org.sireum.lang.ast.Stmt.Import.Importer] = {
+    val preR: PreResult[org.sireum.lang.ast.Stmt.Import.Importer] = pre_langastStmtImportImporter(o)
+    val r: MOption[org.sireum.lang.ast.Stmt.Import.Importer] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Stmt.Import.Importer = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Name] = transform_langastName(o2.name)
+      val r1: MOption[Option[org.sireum.lang.ast.Stmt.Import.Selector]] = transformOption(o2.selectorOpt, transform_langastStmtImportSelector _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), selectorOpt = r1.getOrElse(o2.selectorOpt)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Stmt.Import.Importer = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Stmt.Import.Importer] = post_langastStmtImportImporter(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastStmtImportSelector(o: org.sireum.lang.ast.Stmt.Import.Selector): MOption[org.sireum.lang.ast.Stmt.Import.Selector] = {
+    val preR: PreResult[org.sireum.lang.ast.Stmt.Import.Selector] = pre_langastStmtImportSelector(o)
+    val r: MOption[org.sireum.lang.ast.Stmt.Import.Selector] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Stmt.Import.Selector = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.Stmt.Import.Selector] = o2 match {
+        case o2: org.sireum.lang.ast.Stmt.Import.MultiSelector =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Stmt.Import.NamedSelector]] = transformISZ(o2.selectors, transform_langastStmtImportNamedSelector _)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(selectors = r0.getOrElse(o2.selectors)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Import.WildcardSelector =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Stmt.Import.Selector = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Stmt.Import.Selector] = post_langastStmtImportSelector(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastStmtImportNamedSelector(o: org.sireum.lang.ast.Stmt.Import.NamedSelector): MOption[org.sireum.lang.ast.Stmt.Import.NamedSelector] = {
+    val preR: PreResult[org.sireum.lang.ast.Stmt.Import.NamedSelector] = pre_langastStmtImportNamedSelector(o)
+    val r: MOption[org.sireum.lang.ast.Stmt.Import.NamedSelector] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Stmt.Import.NamedSelector = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.from)
+      val r1: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.to)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(from = r0.getOrElse(o2.from), to = r1.getOrElse(o2.to)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Stmt.Import.NamedSelector = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Stmt.Import.NamedSelector] = post_langastStmtImportNamedSelector(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastStmtSpec(o: org.sireum.lang.ast.Stmt.Spec): MOption[org.sireum.lang.ast.Stmt.Spec] = {
+    val preR: PreResult[org.sireum.lang.ast.Stmt.Spec] = pre_langastStmtSpec(o)
+    val r: MOption[org.sireum.lang.ast.Stmt.Spec] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Stmt.Spec = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.Stmt.Spec] = o2 match {
+        case o2: org.sireum.lang.ast.Stmt.Fact =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)
+          val r2: MOption[Option[org.sireum.lang.ast.Exp.LitString]] = transformOption(o2.descOpt, transform_langastExpLitString _)
+          val r3: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.claims, transform_langastExp _)
+          val r4: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), typeParams = r1.getOrElse(o2.typeParams), descOpt = r2.getOrElse(o2.descOpt), claims = r3.getOrElse(o2.claims), attr = r4.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Inv =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.claims, transform_langastExp _)
+          val r2: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), claims = r1.getOrElse(o2.claims), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Theorem =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)
+          val r2: MOption[Option[org.sireum.lang.ast.Exp.LitString]] = transformOption(o2.descOpt, transform_langastExpLitString _)
+          val r3: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.claim)
+          val r4: MOption[org.sireum.lang.ast.ProofAst] = transform_langastProofAst(o2.proof)
+          val r5: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), typeParams = r1.getOrElse(o2.typeParams), descOpt = r2.getOrElse(o2.descOpt), claim = r3.getOrElse(o2.claim), proof = r4.getOrElse(o2.proof), attr = r5.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.DataRefinement =>
+          val r0: MOption[org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(o2.rep)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(o2.refs, transform_langastExpIdent _)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.claims, transform_langastExp _)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(rep = r0.getOrElse(o2.rep), refs = r1.getOrElse(o2.refs), claims = r2.getOrElse(o2.claims), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.SpecLabel =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.SpecBlock =>
+          val r0: MOption[org.sireum.lang.ast.Stmt.Block] = transform_langastStmtBlock(o2.block)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(block = r0.getOrElse(o2.block)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.DeduceSequent =>
+          val r0: MOption[Option[org.sireum.lang.ast.Exp.LitString]] = transformOption(o2.justOpt, transform_langastExpLitString _)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Sequent]] = transformISZ(o2.sequents, transform_langastSequent _)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(justOpt = r0.getOrElse(o2.justOpt), sequents = r1.getOrElse(o2.sequents), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.DeduceSteps =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(o2.steps, transform_langastProofAstStep _)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(steps = r0.getOrElse(o2.steps), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Havoc =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(o2.args, transform_langastExpIdent _)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(args = r0.getOrElse(o2.args), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Stmt.Spec = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Stmt.Spec] = post_langastStmtSpec(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastMethodContract(o: org.sireum.lang.ast.MethodContract): MOption[org.sireum.lang.ast.MethodContract] = {
+    val preR: PreResult[org.sireum.lang.ast.MethodContract] = pre_langastMethodContract(o)
+    val r: MOption[org.sireum.lang.ast.MethodContract] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.MethodContract = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.MethodContract] = o2 match {
+        case o2: org.sireum.lang.ast.MethodContract.Simple =>
+          val r0: MOption[org.sireum.lang.ast.MethodContract.Accesses] = transform_langastMethodContractAccesses(o2.readsClause)
+          val r1: MOption[org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(o2.requiresClause)
+          val r2: MOption[org.sireum.lang.ast.MethodContract.Accesses] = transform_langastMethodContractAccesses(o2.modifiesClause)
+          val r3: MOption[org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(o2.ensuresClause)
+          val r4: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(readsClause = r0.getOrElse(o2.readsClause), requiresClause = r1.getOrElse(o2.requiresClause), modifiesClause = r2.getOrElse(o2.modifiesClause), ensuresClause = r3.getOrElse(o2.ensuresClause), attr = r4.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.MethodContract.Cases =>
+          val r0: MOption[org.sireum.lang.ast.MethodContract.Accesses] = transform_langastMethodContractAccesses(o2.readsClause)
+          val r1: MOption[org.sireum.lang.ast.MethodContract.Accesses] = transform_langastMethodContractAccesses(o2.modifiesClause)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.MethodContract.Case]] = transformISZ(o2.cases, transform_langastMethodContractCase _)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(readsClause = r0.getOrElse(o2.readsClause), modifiesClause = r1.getOrElse(o2.modifiesClause), cases = r2.getOrElse(o2.cases), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.MethodContract = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.MethodContract] = post_langastMethodContract(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastMethodContractAccesses(o: org.sireum.lang.ast.MethodContract.Accesses): MOption[org.sireum.lang.ast.MethodContract.Accesses] = {
+    val preR: PreResult[org.sireum.lang.ast.MethodContract.Accesses] = pre_langastMethodContractAccesses(o)
+    val r: MOption[org.sireum.lang.ast.MethodContract.Accesses] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.MethodContract.Accesses = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(o2.idents, transform_langastExpIdent _)
+      val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(idents = r0.getOrElse(o2.idents), attr = r1.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.MethodContract.Accesses = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.MethodContract.Accesses] = post_langastMethodContractAccesses(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastMethodContractClaims(o: org.sireum.lang.ast.MethodContract.Claims): MOption[org.sireum.lang.ast.MethodContract.Claims] = {
+    val preR: PreResult[org.sireum.lang.ast.MethodContract.Claims] = pre_langastMethodContractClaims(o)
+    val r: MOption[org.sireum.lang.ast.MethodContract.Claims] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.MethodContract.Claims = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.claims, transform_langastExp _)
+      val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(claims = r0.getOrElse(o2.claims), attr = r1.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.MethodContract.Claims = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.MethodContract.Claims] = post_langastMethodContractClaims(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastMethodContractCase(o: org.sireum.lang.ast.MethodContract.Case): MOption[org.sireum.lang.ast.MethodContract.Case] = {
+    val preR: PreResult[org.sireum.lang.ast.MethodContract.Case] = pre_langastMethodContractCase(o)
+    val r: MOption[org.sireum.lang.ast.MethodContract.Case] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.MethodContract.Case = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(o2.label)
+      val r1: MOption[org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(o2.requiresClause)
+      val r2: MOption[org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(o2.ensuresClause)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(label = r0.getOrElse(o2.label), requiresClause = r1.getOrElse(o2.requiresClause), ensuresClause = r2.getOrElse(o2.ensuresClause)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.MethodContract.Case = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.MethodContract.Case] = post_langastMethodContractCase(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastSequent(o: org.sireum.lang.ast.Sequent): MOption[org.sireum.lang.ast.Sequent] = {
+    val preR: PreResult[org.sireum.lang.ast.Sequent] = pre_langastSequent(o)
+    val r: MOption[org.sireum.lang.ast.Sequent] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Sequent = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.premises, transform_langastExp _)
+      val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.conclusion)
+      val r2: MOption[IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(o2.steps, transform_langastProofAstStep _)
+      val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(premises = r0.getOrElse(o2.premises), conclusion = r1.getOrElse(o2.conclusion), steps = r2.getOrElse(o2.steps), attr = r3.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Sequent = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Sequent] = post_langastSequent(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastProofAst(o: org.sireum.lang.ast.ProofAst): MOption[org.sireum.lang.ast.ProofAst] = {
+    val preR: PreResult[org.sireum.lang.ast.ProofAst] = pre_langastProofAst(o)
+    val r: MOption[org.sireum.lang.ast.ProofAst] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.ProofAst = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(o2.steps, transform_langastProofAstStep _)
+      val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(steps = r0.getOrElse(o2.steps), attr = r1.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.ProofAst = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.ProofAst] = post_langastProofAst(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastProofAstStep(o: org.sireum.lang.ast.ProofAst.Step): MOption[org.sireum.lang.ast.ProofAst.Step] = {
+    val preR: PreResult[org.sireum.lang.ast.ProofAst.Step] = pre_langastProofAstStep(o)
+    val r: MOption[org.sireum.lang.ast.ProofAst.Step] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.ProofAst.Step = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.ProofAst.Step] = o2 match {
+        case o2: org.sireum.lang.ast.ProofAst.Step.Regular =>
+          val r0: MOption[org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(o2.id)
+          val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.claim)
+          val r2: MOption[org.sireum.lang.ast.ProofAst.Step.Justification] = transform_langastProofAstStepJustification(o2.just)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), claim = r1.getOrElse(o2.claim), just = r2.getOrElse(o2.just)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ProofAst.Step.Assume =>
+          val r0: MOption[org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(o2.id)
+          val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.claim)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), claim = r1.getOrElse(o2.claim)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ProofAst.Step.Assert =>
+          val r0: MOption[org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(o2.id)
+          val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.claim)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(o2.steps, transform_langastProofAstStep _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), claim = r1.getOrElse(o2.claim), steps = r2.getOrElse(o2.steps)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ProofAst.Step.SubProof =>
+          val r0: MOption[org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(o2.steps, transform_langastProofAstStep _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), steps = r1.getOrElse(o2.steps)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ProofAst.Step.Let =>
+          val r0: MOption[org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.ProofAst.Step.Let.Param]] = transformISZ(o2.params, transform_langastProofAstStepLetParam _)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(o2.steps, transform_langastProofAstStep _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), params = r1.getOrElse(o2.params), steps = r2.getOrElse(o2.steps)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ProofAst.Step.StructInduction =>
+          val r0: MOption[org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(o2.id)
+          val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.claim)
+          val r2: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r3: MOption[IS[Z, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase]] = transformISZ(o2.cases, transform_langastProofAstStepStructInductionMatchCase _)
+          val r4: MOption[Option[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault]] = transformOption(o2.defaultOpt, transform_langastProofAstStepStructInductionMatchDefault _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), claim = r1.getOrElse(o2.claim), exp = r2.getOrElse(o2.exp), cases = r3.getOrElse(o2.cases), defaultOpt = r4.getOrElse(o2.defaultOpt)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.ProofAst.Step = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.ProofAst.Step] = post_langastProofAstStep(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastProofAstStepId(o: org.sireum.lang.ast.ProofAst.StepId): MOption[org.sireum.lang.ast.ProofAst.StepId] = {
+    val preR: PreResult[org.sireum.lang.ast.ProofAst.StepId] = pre_langastProofAstStepId(o)
+    val r: MOption[org.sireum.lang.ast.ProofAst.StepId] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.ProofAst.StepId = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.ProofAst.StepId] = o2 match {
+        case o2: org.sireum.lang.ast.ProofAst.StepId.Num =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ProofAst.StepId.Str =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.ProofAst.StepId = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.ProofAst.StepId] = post_langastProofAstStepId(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastProofAstStepLetParam(o: org.sireum.lang.ast.ProofAst.Step.Let.Param): MOption[org.sireum.lang.ast.ProofAst.Step.Let.Param] = {
+    val preR: PreResult[org.sireum.lang.ast.ProofAst.Step.Let.Param] = pre_langastProofAstStepLetParam(o)
+    val r: MOption[org.sireum.lang.ast.ProofAst.Step.Let.Param] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.ProofAst.Step.Let.Param = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+      val r1: MOption[Option[org.sireum.lang.ast.Type]] = transformOption(o2.tipeOpt, transform_langastType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), tipeOpt = r1.getOrElse(o2.tipeOpt)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.ProofAst.Step.Let.Param = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.ProofAst.Step.Let.Param] = post_langastProofAstStepLetParam(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastProofAstStepStructInductionMatchCase(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase): MOption[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = {
+    val preR: PreResult[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = pre_langastProofAstStepStructInductionMatchCase(o)
+    val r: MOption[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Pattern.Structure] = transform_langastPatternStructure(o2.pattern)
+      val r1: MOption[Option[org.sireum.lang.ast.ProofAst.Step.Assume]] = transformOption(o2.hypoOpt, transform_langastProofAstStepAssume _)
+      val r2: MOption[IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(o2.steps, transform_langastProofAstStep _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(pattern = r0.getOrElse(o2.pattern), hypoOpt = r1.getOrElse(o2.hypoOpt), steps = r2.getOrElse(o2.steps)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = post_langastProofAstStepStructInductionMatchCase(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastProofAstStepStructInductionMatchDefault(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault): MOption[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = {
+    val preR: PreResult[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = pre_langastProofAstStepStructInductionMatchDefault(o)
+    val r: MOption[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Option[org.sireum.lang.ast.ProofAst.Step.Assume]] = transformOption(o2.hypoOpt, transform_langastProofAstStepAssume _)
+      val r1: MOption[IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(o2.steps, transform_langastProofAstStep _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(hypoOpt = r0.getOrElse(o2.hypoOpt), steps = r1.getOrElse(o2.steps)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = post_langastProofAstStepStructInductionMatchDefault(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastProofAstStepJustification(o: org.sireum.lang.ast.ProofAst.Step.Justification): MOption[org.sireum.lang.ast.ProofAst.Step.Justification] = {
+    val preR: PreResult[org.sireum.lang.ast.ProofAst.Step.Justification] = pre_langastProofAstStepJustification(o)
+    val r: MOption[org.sireum.lang.ast.ProofAst.Step.Justification] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.ProofAst.Step.Justification = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.ProofAst.Step.Justification] = o2 match {
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.Apply =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.args, transform_langastExp _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), args = r1.getOrElse(o2.args)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.Incept =>
+          val r0: MOption[org.sireum.lang.ast.Exp.Invoke] = transform_langastExpInvoke(o2.invoke)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(o2.witnesses, transform_langastProofAstStepId _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(invoke = r0.getOrElse(o2.invoke), witnesses = r1.getOrElse(o2.witnesses)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed =>
+          val r0: MOption[org.sireum.lang.ast.Exp.InvokeNamed] = transform_langastExpInvokeNamed(o2.invoke)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(o2.witnesses, transform_langastProofAstStepId _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(invoke = r0.getOrElse(o2.invoke), witnesses = r1.getOrElse(o2.witnesses)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta =>
+          val r0: MOption[org.sireum.lang.ast.Exp.Eta] = transform_langastExpEta(o2.eta)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(o2.witnesses, transform_langastProofAstStepId _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(eta = r0.getOrElse(o2.eta), witnesses = r1.getOrElse(o2.witnesses)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.ProofAst.Step.Justification = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.ProofAst.Step.Justification] = post_langastProofAstStepJustification(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastProofAstStepInception(o: org.sireum.lang.ast.ProofAst.Step.Inception): MOption[org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    val preR: PreResult[org.sireum.lang.ast.ProofAst.Step.Inception] = pre_langastProofAstStepInception(o)
+    val r: MOption[org.sireum.lang.ast.ProofAst.Step.Inception] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.ProofAst.Step.Inception = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.ProofAst.Step.Inception] = o2 match {
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.Incept =>
+          val r0: MOption[org.sireum.lang.ast.Exp.Invoke] = transform_langastExpInvoke(o2.invoke)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(o2.witnesses, transform_langastProofAstStepId _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(invoke = r0.getOrElse(o2.invoke), witnesses = r1.getOrElse(o2.witnesses)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed =>
+          val r0: MOption[org.sireum.lang.ast.Exp.InvokeNamed] = transform_langastExpInvokeNamed(o2.invoke)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(o2.witnesses, transform_langastProofAstStepId _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(invoke = r0.getOrElse(o2.invoke), witnesses = r1.getOrElse(o2.witnesses)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta =>
+          val r0: MOption[org.sireum.lang.ast.Exp.Eta] = transform_langastExpEta(o2.eta)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(o2.witnesses, transform_langastProofAstStepId _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(eta = r0.getOrElse(o2.eta), witnesses = r1.getOrElse(o2.witnesses)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.ProofAst.Step.Inception = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.ProofAst.Step.Inception] = post_langastProofAstStepInception(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastAssignExp(o: org.sireum.lang.ast.AssignExp): MOption[org.sireum.lang.ast.AssignExp] = {
+    val preR: PreResult[org.sireum.lang.ast.AssignExp] = pre_langastAssignExp(o)
+    val r: MOption[org.sireum.lang.ast.AssignExp] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.AssignExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.AssignExp] = o2 match {
+        case o2: org.sireum.lang.ast.Stmt.Block =>
+          val r0: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.body)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(body = r0.getOrElse(o2.body), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.If =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.cond)
+          val r1: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.thenBody)
+          val r2: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.elseBody)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(cond = r0.getOrElse(o2.cond), thenBody = r1.getOrElse(o2.thenBody), elseBody = r2.getOrElse(o2.elseBody), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Match =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Case]] = transformISZ(o2.cases, transform_langastCase _)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), cases = r1.getOrElse(o2.cases), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Return =>
+          val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.expOpt, transform_langastExp _)
+          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(expOpt = r0.getOrElse(o2.expOpt), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Expr =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.AssignExp = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.AssignExp] = post_langastAssignExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastCase(o: org.sireum.lang.ast.Case): MOption[org.sireum.lang.ast.Case] = {
+    val preR: PreResult[org.sireum.lang.ast.Case] = pre_langastCase(o)
+    val r: MOption[org.sireum.lang.ast.Case] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Case = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Pattern] = transform_langastPattern(o2.pattern)
+      val r1: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.condOpt, transform_langastExp _)
+      val r2: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.body)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(pattern = r0.getOrElse(o2.pattern), condOpt = r1.getOrElse(o2.condOpt), body = r2.getOrElse(o2.body)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Case = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Case] = post_langastCase(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastEnumGenRange(o: org.sireum.lang.ast.EnumGen.Range): MOption[org.sireum.lang.ast.EnumGen.Range] = {
+    val preR: PreResult[org.sireum.lang.ast.EnumGen.Range] = pre_langastEnumGenRange(o)
+    val r: MOption[org.sireum.lang.ast.EnumGen.Range] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.EnumGen.Range = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.EnumGen.Range] = o2 match {
+        case o2: org.sireum.lang.ast.EnumGen.Range.Expr =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.EnumGen.Range.Step =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.start)
+          val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.end)
+          val r2: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.byOpt, transform_langastExp _)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(start = r0.getOrElse(o2.start), end = r1.getOrElse(o2.end), byOpt = r2.getOrElse(o2.byOpt), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.EnumGen.Range = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.EnumGen.Range] = post_langastEnumGenRange(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastEnumGenFor(o: org.sireum.lang.ast.EnumGen.For): MOption[org.sireum.lang.ast.EnumGen.For] = {
+    val preR: PreResult[org.sireum.lang.ast.EnumGen.For] = pre_langastEnumGenFor(o)
+    val r: MOption[org.sireum.lang.ast.EnumGen.For] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.EnumGen.For = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Option[org.sireum.lang.ast.Id]] = transformOption(o2.idOpt, transform_langastId _)
+      val r1: MOption[org.sireum.lang.ast.EnumGen.Range] = transform_langastEnumGenRange(o2.range)
+      val r2: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.condOpt, transform_langastExp _)
+      val r3: MOption[org.sireum.lang.ast.LoopContract] = transform_langastLoopContract(o2.contract)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(idOpt = r0.getOrElse(o2.idOpt), range = r1.getOrElse(o2.range), condOpt = r2.getOrElse(o2.condOpt), contract = r3.getOrElse(o2.contract)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.EnumGen.For = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.EnumGen.For] = post_langastEnumGenFor(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastType(o: org.sireum.lang.ast.Type): MOption[org.sireum.lang.ast.Type] = {
+    val preR: PreResult[org.sireum.lang.ast.Type] = pre_langastType(o)
+    val r: MOption[org.sireum.lang.ast.Type] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Type = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.Type] = o2 match {
+        case o2: org.sireum.lang.ast.Type.Named =>
+          val r0: MOption[org.sireum.lang.ast.Name] = transform_langastName(o2.name)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.typeArgs, transform_langastType _)
+          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), typeArgs = r1.getOrElse(o2.typeArgs), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Type.Fun =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.args, transform_langastType _)
+          val r1: MOption[org.sireum.lang.ast.Type] = transform_langastType(o2.ret)
+          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(args = r0.getOrElse(o2.args), ret = r1.getOrElse(o2.ret), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Type.Tuple =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.args, transform_langastType _)
+          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(args = r0.getOrElse(o2.args), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Type = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Type] = post_langastType(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastPattern(o: org.sireum.lang.ast.Pattern): MOption[org.sireum.lang.ast.Pattern] = {
+    val preR: PreResult[org.sireum.lang.ast.Pattern] = pre_langastPattern(o)
+    val r: MOption[org.sireum.lang.ast.Pattern] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Pattern = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.Pattern] = o2 match {
+        case o2: org.sireum.lang.ast.Pattern.Literal =>
+          val r0: MOption[org.sireum.lang.ast.Lit] = transform_langastLit(o2.lit)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(lit = r0.getOrElse(o2.lit)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Pattern.LitInterpolate =>
+          val r0: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Pattern.Ref =>
+          val r0: MOption[org.sireum.lang.ast.Name] = transform_langastName(o2.name)
+          val r1: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Pattern.VarBinding =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[Option[org.sireum.lang.ast.Type]] = transformOption(o2.tipeOpt, transform_langastType _)
+          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), tipeOpt = r1.getOrElse(o2.tipeOpt), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Pattern.Wildcard =>
+          val r0: MOption[Option[org.sireum.lang.ast.Type]] = transformOption(o2.typeOpt, transform_langastType _)
+          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(typeOpt = r0.getOrElse(o2.typeOpt), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Pattern.SeqWildcard =>
+          val r0: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Pattern.Structure =>
+          val r0: MOption[Option[org.sireum.lang.ast.Id]] = transformOption(o2.idOpt, transform_langastId _)
+          val r1: MOption[Option[org.sireum.lang.ast.Name]] = transformOption(o2.nameOpt, transform_langastName _)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Pattern]] = transformISZ(o2.patterns, transform_langastPattern _)
+          val r3: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(idOpt = r0.getOrElse(o2.idOpt), nameOpt = r1.getOrElse(o2.nameOpt), patterns = r2.getOrElse(o2.patterns), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Pattern = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Pattern] = post_langastPattern(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastExp(o: org.sireum.lang.ast.Exp): MOption[org.sireum.lang.ast.Exp] = {
+    val preR: PreResult[org.sireum.lang.ast.Exp] = pre_langastExp(o)
+    val r: MOption[org.sireum.lang.ast.Exp] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.Exp] = o2 match {
+        case o2: org.sireum.lang.ast.Exp.LitB =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitC =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitZ =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitF32 =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitF64 =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitR =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitString =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitStepId =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.StringInterpolate =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.LitString]] = transformISZ(o2.lits, transform_langastExpLitString _)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.args, transform_langastExp _)
+          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(lits = r0.getOrElse(o2.lits), args = r1.getOrElse(o2.args), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.This =>
+          val r0: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Super =>
+          val r0: MOption[Option[org.sireum.lang.ast.Id]] = transformOption(o2.idOpt, transform_langastId _)
+          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(idOpt = r0.getOrElse(o2.idOpt), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Unary =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r1: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Binary =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.left)
+          val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.right)
+          val r2: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(left = r0.getOrElse(o2.left), right = r1.getOrElse(o2.right), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Ident =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Eta =>
+          val r0: MOption[org.sireum.lang.ast.Exp.Ref] = transform_langastExpRef(o2.ref)
+          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(ref = r0.getOrElse(o2.ref), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Tuple =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.args, transform_langastExp _)
+          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(args = r0.getOrElse(o2.args), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Select =>
+          val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.receiverOpt, transform_langastExp _)
+          val r1: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
+          val r3: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), id = r1.getOrElse(o2.id), targs = r2.getOrElse(o2.targs), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Invoke =>
+          val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.receiverOpt, transform_langastExp _)
+          val r1: MOption[org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(o2.ident)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
+          val r3: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.args, transform_langastExp _)
+          val r4: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), ident = r1.getOrElse(o2.ident), targs = r2.getOrElse(o2.targs), args = r3.getOrElse(o2.args), attr = r4.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.InvokeNamed =>
+          val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.receiverOpt, transform_langastExp _)
+          val r1: MOption[org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(o2.ident)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
+          val r3: MOption[IS[Z, org.sireum.lang.ast.NamedArg]] = transformISZ(o2.args, transform_langastNamedArg _)
+          val r4: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), ident = r1.getOrElse(o2.ident), targs = r2.getOrElse(o2.targs), args = r3.getOrElse(o2.args), attr = r4.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.If =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.cond)
+          val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.thenExp)
+          val r2: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.elseExp)
+          val r3: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(cond = r0.getOrElse(o2.cond), thenExp = r1.getOrElse(o2.thenExp), elseExp = r2.getOrElse(o2.elseExp), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Fun =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.Fun.Param]] = transformISZ(o2.params, transform_langastExpFunParam _)
+          val r1: MOption[org.sireum.lang.ast.AssignExp] = transform_langastAssignExp(o2.exp)
+          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(params = r0.getOrElse(o2.params), exp = r1.getOrElse(o2.exp), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.ForYield =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.EnumGen.For]] = transformISZ(o2.enumGens, transform_langastEnumGenFor _)
+          val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(enumGens = r0.getOrElse(o2.enumGens), exp = r1.getOrElse(o2.exp), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.QuantType =>
+          val r0: MOption[org.sireum.lang.ast.Exp.Fun] = transform_langastExpFun(o2.fun)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(fun = r0.getOrElse(o2.fun), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.QuantRange =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.lo)
+          val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.hi)
+          val r2: MOption[org.sireum.lang.ast.Exp.Fun] = transform_langastExpFun(o2.fun)
+          val r3: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(lo = r0.getOrElse(o2.lo), hi = r1.getOrElse(o2.hi), fun = r2.getOrElse(o2.fun), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.QuantEach =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.seq)
+          val r1: MOption[org.sireum.lang.ast.Exp.Fun] = transform_langastExpFun(o2.fun)
+          val r2: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(seq = r0.getOrElse(o2.seq), fun = r1.getOrElse(o2.fun), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Input =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.OldVal =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LoopIndex =>
+          val r0: MOption[Option[org.sireum.lang.ast.Type]] = transformOption(o2.tipeOpt, transform_langastType _)
+          val r1: MOption[org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(o2.exp)
+          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(tipeOpt = r0.getOrElse(o2.tipeOpt), exp = r1.getOrElse(o2.exp), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.StateSeq =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Exp.StateSeq.Fragment]] = transformISZ(o2.fragments, transform_langastExpStateSeqFragment _)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), fragments = r1.getOrElse(o2.fragments), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Result =>
+          val r0: MOption[Option[org.sireum.lang.ast.Type]] = transformOption(o2.tipeOpt, transform_langastType _)
+          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(tipeOpt = r0.getOrElse(o2.tipeOpt), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Exp = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Exp] = post_langastExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastLit(o: org.sireum.lang.ast.Lit): MOption[org.sireum.lang.ast.Lit] = {
+    val preR: PreResult[org.sireum.lang.ast.Lit] = pre_langastLit(o)
+    val r: MOption[org.sireum.lang.ast.Lit] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Lit = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.Lit] = o2 match {
+        case o2: org.sireum.lang.ast.Exp.LitB =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitC =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitZ =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitF32 =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitF64 =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitR =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitString =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.LitStepId =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Lit = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Lit] = post_langastLit(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastExpRef(o: org.sireum.lang.ast.Exp.Ref): MOption[org.sireum.lang.ast.Exp.Ref] = {
+    val preR: PreResult[org.sireum.lang.ast.Exp.Ref] = pre_langastExpRef(o)
+    val r: MOption[org.sireum.lang.ast.Exp.Ref] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp.Ref = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.Exp.Ref] = o2 match {
+        case o2: org.sireum.lang.ast.Exp.Ident =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Select =>
+          val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.receiverOpt, transform_langastExp _)
+          val r1: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
+          val r3: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), id = r1.getOrElse(o2.id), targs = r2.getOrElse(o2.targs), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Exp.Ref = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Exp.Ref] = post_langastExpRef(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastExpFunParam(o: org.sireum.lang.ast.Exp.Fun.Param): MOption[org.sireum.lang.ast.Exp.Fun.Param] = {
+    val preR: PreResult[org.sireum.lang.ast.Exp.Fun.Param] = pre_langastExpFunParam(o)
+    val r: MOption[org.sireum.lang.ast.Exp.Fun.Param] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp.Fun.Param = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Option[org.sireum.lang.ast.Id]] = transformOption(o2.idOpt, transform_langastId _)
+      val r1: MOption[Option[org.sireum.lang.ast.Type]] = transformOption(o2.tipeOpt, transform_langastType _)
+      val r2: MOption[Option[org.sireum.lang.ast.Typed]] = transformOption(o2.typedOpt, transform_langastTyped _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(idOpt = r0.getOrElse(o2.idOpt), tipeOpt = r1.getOrElse(o2.tipeOpt), typedOpt = r2.getOrElse(o2.typedOpt)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Exp.Fun.Param = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Exp.Fun.Param] = post_langastExpFunParam(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastExpQuant(o: org.sireum.lang.ast.Exp.Quant): MOption[org.sireum.lang.ast.Exp.Quant] = {
+    val preR: PreResult[org.sireum.lang.ast.Exp.Quant] = pre_langastExpQuant(o)
+    val r: MOption[org.sireum.lang.ast.Exp.Quant] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp.Quant = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.Exp.Quant] = o2 match {
+        case o2: org.sireum.lang.ast.Exp.QuantType =>
+          val r0: MOption[org.sireum.lang.ast.Exp.Fun] = transform_langastExpFun(o2.fun)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(fun = r0.getOrElse(o2.fun), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.QuantRange =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.lo)
+          val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.hi)
+          val r2: MOption[org.sireum.lang.ast.Exp.Fun] = transform_langastExpFun(o2.fun)
+          val r3: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(lo = r0.getOrElse(o2.lo), hi = r1.getOrElse(o2.hi), fun = r2.getOrElse(o2.fun), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.QuantEach =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.seq)
+          val r1: MOption[org.sireum.lang.ast.Exp.Fun] = transform_langastExpFun(o2.fun)
+          val r2: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(seq = r0.getOrElse(o2.seq), fun = r1.getOrElse(o2.fun), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Exp.Quant = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Exp.Quant] = post_langastExpQuant(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastExpStateSeqFragment(o: org.sireum.lang.ast.Exp.StateSeq.Fragment): MOption[org.sireum.lang.ast.Exp.StateSeq.Fragment] = {
+    val preR: PreResult[org.sireum.lang.ast.Exp.StateSeq.Fragment] = pre_langastExpStateSeqFragment(o)
+    val r: MOption[org.sireum.lang.ast.Exp.StateSeq.Fragment] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp.StateSeq.Fragment = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+      val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), exp = r1.getOrElse(o2.exp)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Exp.StateSeq.Fragment = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Exp.StateSeq.Fragment] = post_langastExpStateSeqFragment(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastNamedArg(o: org.sireum.lang.ast.NamedArg): MOption[org.sireum.lang.ast.NamedArg] = {
+    val preR: PreResult[org.sireum.lang.ast.NamedArg] = pre_langastNamedArg(o)
+    val r: MOption[org.sireum.lang.ast.NamedArg] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.NamedArg = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+      val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.arg)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), arg = r1.getOrElse(o2.arg)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.NamedArg = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.NamedArg] = post_langastNamedArg(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastId(o: org.sireum.lang.ast.Id): MOption[org.sireum.lang.ast.Id] = {
+    val preR: PreResult[org.sireum.lang.ast.Id] = pre_langastId(o)
+    val r: MOption[org.sireum.lang.ast.Id] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Id = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(attr = r0.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Id = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Id] = post_langastId(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastName(o: org.sireum.lang.ast.Name): MOption[org.sireum.lang.ast.Name] = {
+    val preR: PreResult[org.sireum.lang.ast.Name] = pre_langastName(o)
+    val r: MOption[org.sireum.lang.ast.Name] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Name = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Id]] = transformISZ(o2.ids, transform_langastId _)
+      val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(ids = r0.getOrElse(o2.ids), attr = r1.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Name = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Name] = post_langastName(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastBody(o: org.sireum.lang.ast.Body): MOption[org.sireum.lang.ast.Body] = {
+    val preR: PreResult[org.sireum.lang.ast.Body] = pre_langastBody(o)
+    val r: MOption[org.sireum.lang.ast.Body] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Body = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Stmt]] = transformISZ(o2.stmts, transform_langastStmt _)
+      val r1: MOption[IS[Z, org.sireum.lang.ast.ResolvedInfo.LocalVar]] = transformISZ(o2.undecls, transform_langastResolvedInfoLocalVar _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(stmts = r0.getOrElse(o2.stmts), undecls = r1.getOrElse(o2.undecls)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Body = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Body] = post_langastBody(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastAdtParam(o: org.sireum.lang.ast.AdtParam): MOption[org.sireum.lang.ast.AdtParam] = {
+    val preR: PreResult[org.sireum.lang.ast.AdtParam] = pre_langastAdtParam(o)
+    val r: MOption[org.sireum.lang.ast.AdtParam] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.AdtParam = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+      val r1: MOption[org.sireum.lang.ast.Type] = transform_langastType(o2.tipe)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), tipe = r1.getOrElse(o2.tipe)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.AdtParam = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.AdtParam] = post_langastAdtParam(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastMethodSig(o: org.sireum.lang.ast.MethodSig): MOption[org.sireum.lang.ast.MethodSig] = {
+    val preR: PreResult[org.sireum.lang.ast.MethodSig] = pre_langastMethodSig(o)
+    val r: MOption[org.sireum.lang.ast.MethodSig] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.MethodSig = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+      val r1: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)
+      val r2: MOption[IS[Z, org.sireum.lang.ast.Param]] = transformISZ(o2.params, transform_langastParam _)
+      val r3: MOption[org.sireum.lang.ast.Type] = transform_langastType(o2.returnType)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), typeParams = r1.getOrElse(o2.typeParams), params = r2.getOrElse(o2.params), returnType = r3.getOrElse(o2.returnType)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.MethodSig = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.MethodSig] = post_langastMethodSig(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastParam(o: org.sireum.lang.ast.Param): MOption[org.sireum.lang.ast.Param] = {
+    val preR: PreResult[org.sireum.lang.ast.Param] = pre_langastParam(o)
+    val r: MOption[org.sireum.lang.ast.Param] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Param = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+      val r1: MOption[org.sireum.lang.ast.Type] = transform_langastType(o2.tipe)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), tipe = r1.getOrElse(o2.tipe)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Param = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Param] = post_langastParam(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastTypeParam(o: org.sireum.lang.ast.TypeParam): MOption[org.sireum.lang.ast.TypeParam] = {
+    val preR: PreResult[org.sireum.lang.ast.TypeParam] = pre_langastTypeParam(o)
+    val r: MOption[org.sireum.lang.ast.TypeParam] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.TypeParam = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.TypeParam = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.TypeParam] = post_langastTypeParam(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastAttr(o: org.sireum.lang.ast.Attr): MOption[org.sireum.lang.ast.Attr] = {
+    val preR: PreResult[org.sireum.lang.ast.Attr] = pre_langastAttr(o)
+    val r: MOption[org.sireum.lang.ast.Attr] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Attr = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Attr = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Attr] = post_langastAttr(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastTypedAttr(o: org.sireum.lang.ast.TypedAttr): MOption[org.sireum.lang.ast.TypedAttr] = {
+    val preR: PreResult[org.sireum.lang.ast.TypedAttr] = pre_langastTypedAttr(o)
+    val r: MOption[org.sireum.lang.ast.TypedAttr] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.TypedAttr = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Option[org.sireum.lang.ast.Typed]] = transformOption(o2.typedOpt, transform_langastTyped _)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(typedOpt = r0.getOrElse(o2.typedOpt)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.TypedAttr = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.TypedAttr] = post_langastTypedAttr(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastResolvedAttr(o: org.sireum.lang.ast.ResolvedAttr): MOption[org.sireum.lang.ast.ResolvedAttr] = {
+    val preR: PreResult[org.sireum.lang.ast.ResolvedAttr] = pre_langastResolvedAttr(o)
+    val r: MOption[org.sireum.lang.ast.ResolvedAttr] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.ResolvedAttr = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Option[org.sireum.lang.ast.ResolvedInfo]] = transformOption(o2.resOpt, transform_langastResolvedInfo _)
+      val r1: MOption[Option[org.sireum.lang.ast.Typed]] = transformOption(o2.typedOpt, transform_langastTyped _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(resOpt = r0.getOrElse(o2.resOpt), typedOpt = r1.getOrElse(o2.typedOpt)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.ResolvedAttr = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.ResolvedAttr] = post_langastResolvedAttr(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastResolvedInfo(o: org.sireum.lang.ast.ResolvedInfo): MOption[org.sireum.lang.ast.ResolvedInfo] = {
+    val preR: PreResult[org.sireum.lang.ast.ResolvedInfo] = pre_langastResolvedInfo(o)
+    val r: MOption[org.sireum.lang.ast.ResolvedInfo] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.ResolvedInfo = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.ResolvedInfo] = o2 match {
+        case o2: org.sireum.lang.ast.ResolvedInfo.BuiltIn =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ResolvedInfo.Package =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ResolvedInfo.Enum =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ResolvedInfo.EnumElement =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ResolvedInfo.Object =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ResolvedInfo.Var =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ResolvedInfo.Method =>
+          val r0: MOption[Option[org.sireum.lang.ast.Typed.Fun]] = transformOption(o2.tpeOpt, transform_langastTypedFun _)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.ResolvedInfo]] = transformISZ(o2.reads, transform_langastResolvedInfo _)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.ResolvedInfo]] = transformISZ(o2.writes, transform_langastResolvedInfo _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(tpeOpt = r0.getOrElse(o2.tpeOpt), reads = r1.getOrElse(o2.reads), writes = r2.getOrElse(o2.writes)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ResolvedInfo.Methods =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.ResolvedInfo.Method]] = transformISZ(o2.methods, transform_langastResolvedInfoMethod _)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(methods = r0.getOrElse(o2.methods)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ResolvedInfo.Tuple =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ResolvedInfo.LocalVar =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ResolvedInfo.Fact =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ResolvedInfo.Theorem =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ResolvedInfo.Inv =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.ResolvedInfo = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.ResolvedInfo] = post_langastResolvedInfo(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastTruthTableRow(o: org.sireum.lang.ast.TruthTable.Row): MOption[org.sireum.lang.ast.TruthTable.Row] = {
+    val preR: PreResult[org.sireum.lang.ast.TruthTable.Row] = pre_langastTruthTableRow(o)
+    val r: MOption[org.sireum.lang.ast.TruthTable.Row] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.TruthTable.Row = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.TruthTable.Assignment] = transform_langastTruthTableAssignment(o2.assignment)
+      val r1: MOption[org.sireum.lang.ast.TruthTable.Assignment] = transform_langastTruthTableAssignment(o2.values)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(assignment = r0.getOrElse(o2.assignment), values = r1.getOrElse(o2.values)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.TruthTable.Row = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.TruthTable.Row] = post_langastTruthTableRow(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastTruthTableAssignment(o: org.sireum.lang.ast.TruthTable.Assignment): MOption[org.sireum.lang.ast.TruthTable.Assignment] = {
+    val preR: PreResult[org.sireum.lang.ast.TruthTable.Assignment] = pre_langastTruthTableAssignment(o)
+    val r: MOption[org.sireum.lang.ast.TruthTable.Assignment] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.TruthTable.Assignment = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.LitB]] = transformISZ(o2.values, transform_langastExpLitB _)
+      val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(values = r0.getOrElse(o2.values), attr = r1.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.TruthTable.Assignment = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.TruthTable.Assignment] = post_langastTruthTableAssignment(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastTruthTableConclusion(o: org.sireum.lang.ast.TruthTable.Conclusion): MOption[org.sireum.lang.ast.TruthTable.Conclusion] = {
+    val preR: PreResult[org.sireum.lang.ast.TruthTable.Conclusion] = pre_langastTruthTableConclusion(o)
+    val r: MOption[org.sireum.lang.ast.TruthTable.Conclusion] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.TruthTable.Conclusion = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.TruthTable.Conclusion] = o2 match {
+        case o2: org.sireum.lang.ast.TruthTable.Conclusion.Validity =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.TruthTable.Assignment]] = transformISZ(o2.assignments, transform_langastTruthTableAssignment _)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(assignments = r0.getOrElse(o2.assignments), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.TruthTable.Conclusion.Tautology =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.TruthTable.Conclusion.Contradictory =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.TruthTable.Conclusion.Contingent =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.TruthTable.Assignment]] = transformISZ(o2.trueAssignments, transform_langastTruthTableAssignment _)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.TruthTable.Assignment]] = transformISZ(o2.falseAssignments, transform_langastTruthTableAssignment _)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(trueAssignments = r0.getOrElse(o2.trueAssignments), falseAssignments = r1.getOrElse(o2.falseAssignments), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.TruthTable.Conclusion = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.TruthTable.Conclusion] = post_langastTruthTableConclusion(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
   }
 
   def transformSmfAnnex(o: SmfAnnex): MOption[SmfAnnex] = {
@@ -3900,6 +8792,97 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: Aadl = r.getOrElse(o)
     val postR: MOption[Aadl] = postAadl(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastTyped(o: org.sireum.lang.ast.Typed): MOption[org.sireum.lang.ast.Typed] = {
+    val preR: PreResult[org.sireum.lang.ast.Typed] = pre_langastTyped(o)
+    val r: MOption[org.sireum.lang.ast.Typed] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Typed = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.Typed] = o2 match {
+        case o2: org.sireum.lang.ast.Typed.Name =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Typed]] = transformISZ(o2.args, transform_langastTyped _)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(args = r0.getOrElse(o2.args)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Typed.Tuple =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Typed]] = transformISZ(o2.args, transform_langastTyped _)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(args = r0.getOrElse(o2.args)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Typed.Fun =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Typed]] = transformISZ(o2.args, transform_langastTyped _)
+          val r1: MOption[org.sireum.lang.ast.Typed] = transform_langastTyped(o2.ret)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(args = r0.getOrElse(o2.args), ret = r1.getOrElse(o2.ret)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Typed.TypeVar =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Typed.Package =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Typed.Object =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Typed.Enum =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Typed.Method =>
+          val r0: MOption[org.sireum.lang.ast.Typed.Fun] = transform_langastTypedFun(o2.tpe)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(tpe = r0.getOrElse(o2.tpe)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Typed.Methods =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Typed.Method]] = transformISZ(o2.methods, transform_langastTypedMethod _)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(methods = r0.getOrElse(o2.methods)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Typed.Fact =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Typed.Theorem =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Typed.Inv =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Typed = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Typed] = post_langastTyped(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -5531,7 +10514,7 @@ import MTransformer._
     val r: MOption[GclStateVar] = if (preR.continu) {
       val o2: GclStateVar = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[GclExp] = transformGclExp(o2.exp)
+      val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
       if (hasChanged || r0.nonEmpty)
         MSome(o2(exp = r0.getOrElse(o2.exp)))
       else
@@ -5558,7 +10541,7 @@ import MTransformer._
     val r: MOption[GclInvariant] = if (preR.continu) {
       val o2: GclInvariant = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[GclExp] = transformGclExp(o2.exp)
+      val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
       if (hasChanged || r0.nonEmpty)
         MSome(o2(exp = r0.getOrElse(o2.exp)))
       else
@@ -5587,13 +10570,13 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: MOption[GclSpec] = o2 match {
         case o2: GclAssume =>
-          val r0: MOption[GclExp] = transformGclExp(o2.exp)
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
           if (hasChanged || r0.nonEmpty)
             MSome(o2(exp = r0.getOrElse(o2.exp)))
           else
             MNone()
         case o2: GclGuarantee =>
-          val r0: MOption[GclExp] = transformGclExp(o2.exp)
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
           if (hasChanged || r0.nonEmpty)
             MSome(o2(exp = r0.getOrElse(o2.exp)))
           else
@@ -5622,7 +10605,7 @@ import MTransformer._
     val r: MOption[GclAssume] = if (preR.continu) {
       val o2: GclAssume = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[GclExp] = transformGclExp(o2.exp)
+      val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
       if (hasChanged || r0.nonEmpty)
         MSome(o2(exp = r0.getOrElse(o2.exp)))
       else
@@ -5680,7 +10663,7 @@ import MTransformer._
     val r: MOption[GclGuarantee] = if (preR.continu) {
       val o2: GclGuarantee = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[GclExp] = transformGclExp(o2.exp)
+      val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
       if (hasChanged || r0.nonEmpty)
         MSome(o2(exp = r0.getOrElse(o2.exp)))
       else
@@ -5734,10 +10717,10 @@ import MTransformer._
     val r: MOption[GclCaseStatement] = if (preR.continu) {
       val o2: GclCaseStatement = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[GclExp] = transformGclExp(o2.assumes)
-      val r1: MOption[GclExp] = transformGclExp(o2.guarentees)
+      val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.assumes)
+      val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.guarantees)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(assumes = r0.getOrElse(o2.assumes), guarentees = r1.getOrElse(o2.guarentees)))
+        MSome(o2(assumes = r0.getOrElse(o2.assumes), guarantees = r1.getOrElse(o2.guarantees)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -5775,227 +10758,6 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: GclCompute = r.getOrElse(o)
     val postR: MOption[GclCompute] = postGclCompute(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformGclExp(o: GclExp): MOption[GclExp] = {
-    val preR: PreResult[GclExp] = preGclExp(o)
-    val r: MOption[GclExp] = if (preR.continu) {
-      val o2: GclExp = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val rOpt: MOption[GclExp] = o2 match {
-        case o2: GclUnaryExp =>
-          val r0: MOption[GclExp] = transformGclExp(o2.exp)
-          if (hasChanged || r0.nonEmpty)
-            MSome(o2(exp = r0.getOrElse(o2.exp)))
-          else
-            MNone()
-        case o2: GclBinaryExp =>
-          val r0: MOption[GclExp] = transformGclExp(o2.lhs)
-          val r1: MOption[GclExp] = transformGclExp(o2.rhs)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
-          else
-            MNone()
-        case o2: GclNameExp =>
-          val r0: MOption[Name] = transformName(o2.name)
-          if (hasChanged || r0.nonEmpty)
-            MSome(o2(name = r0.getOrElse(o2.name)))
-          else
-            MNone()
-        case o2: GclAccessExp =>
-          val r0: MOption[GclExp] = transformGclExp(o2.exp)
-          if (hasChanged || r0.nonEmpty)
-            MSome(o2(exp = r0.getOrElse(o2.exp)))
-          else
-            MNone()
-        case o2: GclLiteralExp =>
-          if (hasChanged)
-            MSome(o2)
-          else
-            MNone()
-        case o2: GclEnumLitExp =>
-          if (hasChanged)
-            MSome(o2)
-          else
-            MNone()
-      }
-      rOpt
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: GclExp = r.getOrElse(o)
-    val postR: MOption[GclExp] = postGclExp(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformGclUnaryExp(o: GclUnaryExp): MOption[GclUnaryExp] = {
-    val preR: PreResult[GclUnaryExp] = preGclUnaryExp(o)
-    val r: MOption[GclUnaryExp] = if (preR.continu) {
-      val o2: GclUnaryExp = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[GclExp] = transformGclExp(o2.exp)
-      if (hasChanged || r0.nonEmpty)
-        MSome(o2(exp = r0.getOrElse(o2.exp)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: GclUnaryExp = r.getOrElse(o)
-    val postR: MOption[GclUnaryExp] = postGclUnaryExp(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformGclBinaryExp(o: GclBinaryExp): MOption[GclBinaryExp] = {
-    val preR: PreResult[GclBinaryExp] = preGclBinaryExp(o)
-    val r: MOption[GclBinaryExp] = if (preR.continu) {
-      val o2: GclBinaryExp = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[GclExp] = transformGclExp(o2.lhs)
-      val r1: MOption[GclExp] = transformGclExp(o2.rhs)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: GclBinaryExp = r.getOrElse(o)
-    val postR: MOption[GclBinaryExp] = postGclBinaryExp(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformGclNameExp(o: GclNameExp): MOption[GclNameExp] = {
-    val preR: PreResult[GclNameExp] = preGclNameExp(o)
-    val r: MOption[GclNameExp] = if (preR.continu) {
-      val o2: GclNameExp = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[Name] = transformName(o2.name)
-      if (hasChanged || r0.nonEmpty)
-        MSome(o2(name = r0.getOrElse(o2.name)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: GclNameExp = r.getOrElse(o)
-    val postR: MOption[GclNameExp] = postGclNameExp(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformGclAccessExp(o: GclAccessExp): MOption[GclAccessExp] = {
-    val preR: PreResult[GclAccessExp] = preGclAccessExp(o)
-    val r: MOption[GclAccessExp] = if (preR.continu) {
-      val o2: GclAccessExp = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[GclExp] = transformGclExp(o2.exp)
-      if (hasChanged || r0.nonEmpty)
-        MSome(o2(exp = r0.getOrElse(o2.exp)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: GclAccessExp = r.getOrElse(o)
-    val postR: MOption[GclAccessExp] = postGclAccessExp(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformGclLiteralExp(o: GclLiteralExp): MOption[GclLiteralExp] = {
-    val preR: PreResult[GclLiteralExp] = preGclLiteralExp(o)
-    val r: MOption[GclLiteralExp] = if (preR.continu) {
-      val o2: GclLiteralExp = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: GclLiteralExp = r.getOrElse(o)
-    val postR: MOption[GclLiteralExp] = postGclLiteralExp(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformGclEnumLitExp(o: GclEnumLitExp): MOption[GclEnumLitExp] = {
-    val preR: PreResult[GclEnumLitExp] = preGclEnumLitExp(o)
-    val r: MOption[GclEnumLitExp] = if (preR.continu) {
-      val o2: GclEnumLitExp = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: GclEnumLitExp = r.getOrElse(o)
-    val postR: MOption[GclEnumLitExp] = postGclEnumLitExp(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -7712,6 +12474,587 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: Attr = r.getOrElse(o)
     val postR: MOption[Attr] = postAttr(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastExpLitString(o: org.sireum.lang.ast.Exp.LitString): MOption[org.sireum.lang.ast.Exp.LitString] = {
+    val preR: PreResult[org.sireum.lang.ast.Exp.LitString] = pre_langastExpLitString(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.LitString)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.LitString](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitString")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.LitString]())
+    }
+    val r: MOption[org.sireum.lang.ast.Exp.LitString] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp.LitString = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(attr = r0.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Exp.LitString = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Exp.LitString] = post_langastExpLitString(o2) match {
+     case MSome(result: org.sireum.lang.ast.Exp.LitString) => MSome[org.sireum.lang.ast.Exp.LitString](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitString")
+     case _ => MNone[org.sireum.lang.ast.Exp.LitString]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastTypeNamed(o: org.sireum.lang.ast.Type.Named): MOption[org.sireum.lang.ast.Type.Named] = {
+    val preR: PreResult[org.sireum.lang.ast.Type.Named] = pre_langastTypeNamed(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Type.Named)) => PreResult(continu, MSome[org.sireum.lang.ast.Type.Named](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Type.Named")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Type.Named]())
+    }
+    val r: MOption[org.sireum.lang.ast.Type.Named] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Type.Named = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Name] = transform_langastName(o2.name)
+      val r1: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.typeArgs, transform_langastType _)
+      val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), typeArgs = r1.getOrElse(o2.typeArgs), attr = r2.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Type.Named = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Type.Named] = post_langastTypeNamed(o2) match {
+     case MSome(result: org.sireum.lang.ast.Type.Named) => MSome[org.sireum.lang.ast.Type.Named](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Type.Named")
+     case _ => MNone[org.sireum.lang.ast.Type.Named]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastExpIdent(o: org.sireum.lang.ast.Exp.Ident): MOption[org.sireum.lang.ast.Exp.Ident] = {
+    val preR: PreResult[org.sireum.lang.ast.Exp.Ident] = pre_langastExpIdent(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.Ident)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Ident](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ident")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.Ident]())
+    }
+    val r: MOption[org.sireum.lang.ast.Exp.Ident] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp.Ident = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+      val r1: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), attr = r1.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Exp.Ident = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Exp.Ident] = post_langastExpIdent(o2) match {
+     case MSome(result: org.sireum.lang.ast.Exp.Ident) => MSome[org.sireum.lang.ast.Exp.Ident](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ident")
+     case _ => MNone[org.sireum.lang.ast.Exp.Ident]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastStmtBlock(o: org.sireum.lang.ast.Stmt.Block): MOption[org.sireum.lang.ast.Stmt.Block] = {
+    val preR: PreResult[org.sireum.lang.ast.Stmt.Block] = pre_langastStmtBlock(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt.Block)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt.Block](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Block")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt.Block]())
+    }
+    val r: MOption[org.sireum.lang.ast.Stmt.Block] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Stmt.Block = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.body)
+      val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(body = r0.getOrElse(o2.body), attr = r1.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Stmt.Block = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Stmt.Block] = post_langastStmtBlock(o2) match {
+     case MSome(result: org.sireum.lang.ast.Stmt.Block) => MSome[org.sireum.lang.ast.Stmt.Block](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Block")
+     case _ => MNone[org.sireum.lang.ast.Stmt.Block]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastExpLitZ(o: org.sireum.lang.ast.Exp.LitZ): MOption[org.sireum.lang.ast.Exp.LitZ] = {
+    val preR: PreResult[org.sireum.lang.ast.Exp.LitZ] = pre_langastExpLitZ(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.LitZ)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.LitZ](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitZ")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.LitZ]())
+    }
+    val r: MOption[org.sireum.lang.ast.Exp.LitZ] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp.LitZ = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(attr = r0.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Exp.LitZ = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Exp.LitZ] = post_langastExpLitZ(o2) match {
+     case MSome(result: org.sireum.lang.ast.Exp.LitZ) => MSome[org.sireum.lang.ast.Exp.LitZ](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitZ")
+     case _ => MNone[org.sireum.lang.ast.Exp.LitZ]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastPatternStructure(o: org.sireum.lang.ast.Pattern.Structure): MOption[org.sireum.lang.ast.Pattern.Structure] = {
+    val preR: PreResult[org.sireum.lang.ast.Pattern.Structure] = pre_langastPatternStructure(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Pattern.Structure)) => PreResult(continu, MSome[org.sireum.lang.ast.Pattern.Structure](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Pattern.Structure")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Pattern.Structure]())
+    }
+    val r: MOption[org.sireum.lang.ast.Pattern.Structure] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Pattern.Structure = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Option[org.sireum.lang.ast.Id]] = transformOption(o2.idOpt, transform_langastId _)
+      val r1: MOption[Option[org.sireum.lang.ast.Name]] = transformOption(o2.nameOpt, transform_langastName _)
+      val r2: MOption[IS[Z, org.sireum.lang.ast.Pattern]] = transformISZ(o2.patterns, transform_langastPattern _)
+      val r3: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(idOpt = r0.getOrElse(o2.idOpt), nameOpt = r1.getOrElse(o2.nameOpt), patterns = r2.getOrElse(o2.patterns), attr = r3.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Pattern.Structure = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Pattern.Structure] = post_langastPatternStructure(o2) match {
+     case MSome(result: org.sireum.lang.ast.Pattern.Structure) => MSome[org.sireum.lang.ast.Pattern.Structure](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Pattern.Structure")
+     case _ => MNone[org.sireum.lang.ast.Pattern.Structure]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastProofAstStepAssume(o: org.sireum.lang.ast.ProofAst.Step.Assume): MOption[org.sireum.lang.ast.ProofAst.Step.Assume] = {
+    val preR: PreResult[org.sireum.lang.ast.ProofAst.Step.Assume] = pre_langastProofAstStepAssume(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.ProofAst.Step.Assume)) => PreResult(continu, MSome[org.sireum.lang.ast.ProofAst.Step.Assume](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Assume")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.ProofAst.Step.Assume]())
+    }
+    val r: MOption[org.sireum.lang.ast.ProofAst.Step.Assume] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.ProofAst.Step.Assume = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(o2.id)
+      val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.claim)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id), claim = r1.getOrElse(o2.claim)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.ProofAst.Step.Assume = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.ProofAst.Step.Assume] = post_langastProofAstStepAssume(o2) match {
+     case MSome(result: org.sireum.lang.ast.ProofAst.Step.Assume) => MSome[org.sireum.lang.ast.ProofAst.Step.Assume](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Assume")
+     case _ => MNone[org.sireum.lang.ast.ProofAst.Step.Assume]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastExpInvoke(o: org.sireum.lang.ast.Exp.Invoke): MOption[org.sireum.lang.ast.Exp.Invoke] = {
+    val preR: PreResult[org.sireum.lang.ast.Exp.Invoke] = pre_langastExpInvoke(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.Invoke)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Invoke](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Invoke")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.Invoke]())
+    }
+    val r: MOption[org.sireum.lang.ast.Exp.Invoke] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp.Invoke = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.receiverOpt, transform_langastExp _)
+      val r1: MOption[org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(o2.ident)
+      val r2: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
+      val r3: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.args, transform_langastExp _)
+      val r4: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), ident = r1.getOrElse(o2.ident), targs = r2.getOrElse(o2.targs), args = r3.getOrElse(o2.args), attr = r4.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Exp.Invoke = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Exp.Invoke] = post_langastExpInvoke(o2) match {
+     case MSome(result: org.sireum.lang.ast.Exp.Invoke) => MSome[org.sireum.lang.ast.Exp.Invoke](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Invoke")
+     case _ => MNone[org.sireum.lang.ast.Exp.Invoke]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastExpInvokeNamed(o: org.sireum.lang.ast.Exp.InvokeNamed): MOption[org.sireum.lang.ast.Exp.InvokeNamed] = {
+    val preR: PreResult[org.sireum.lang.ast.Exp.InvokeNamed] = pre_langastExpInvokeNamed(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.InvokeNamed)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.InvokeNamed](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.InvokeNamed")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.InvokeNamed]())
+    }
+    val r: MOption[org.sireum.lang.ast.Exp.InvokeNamed] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp.InvokeNamed = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.receiverOpt, transform_langastExp _)
+      val r1: MOption[org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(o2.ident)
+      val r2: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
+      val r3: MOption[IS[Z, org.sireum.lang.ast.NamedArg]] = transformISZ(o2.args, transform_langastNamedArg _)
+      val r4: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), ident = r1.getOrElse(o2.ident), targs = r2.getOrElse(o2.targs), args = r3.getOrElse(o2.args), attr = r4.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Exp.InvokeNamed = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Exp.InvokeNamed] = post_langastExpInvokeNamed(o2) match {
+     case MSome(result: org.sireum.lang.ast.Exp.InvokeNamed) => MSome[org.sireum.lang.ast.Exp.InvokeNamed](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.InvokeNamed")
+     case _ => MNone[org.sireum.lang.ast.Exp.InvokeNamed]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastExpEta(o: org.sireum.lang.ast.Exp.Eta): MOption[org.sireum.lang.ast.Exp.Eta] = {
+    val preR: PreResult[org.sireum.lang.ast.Exp.Eta] = pre_langastExpEta(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.Eta)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Eta](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Eta")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.Eta]())
+    }
+    val r: MOption[org.sireum.lang.ast.Exp.Eta] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp.Eta = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Exp.Ref] = transform_langastExpRef(o2.ref)
+      val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(ref = r0.getOrElse(o2.ref), attr = r1.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Exp.Eta = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Exp.Eta] = post_langastExpEta(o2) match {
+     case MSome(result: org.sireum.lang.ast.Exp.Eta) => MSome[org.sireum.lang.ast.Exp.Eta](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Eta")
+     case _ => MNone[org.sireum.lang.ast.Exp.Eta]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastExpFun(o: org.sireum.lang.ast.Exp.Fun): MOption[org.sireum.lang.ast.Exp.Fun] = {
+    val preR: PreResult[org.sireum.lang.ast.Exp.Fun] = pre_langastExpFun(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.Fun)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Fun](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Fun")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.Fun]())
+    }
+    val r: MOption[org.sireum.lang.ast.Exp.Fun] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp.Fun = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.Fun.Param]] = transformISZ(o2.params, transform_langastExpFunParam _)
+      val r1: MOption[org.sireum.lang.ast.AssignExp] = transform_langastAssignExp(o2.exp)
+      val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(params = r0.getOrElse(o2.params), exp = r1.getOrElse(o2.exp), attr = r2.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Exp.Fun = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Exp.Fun] = post_langastExpFun(o2) match {
+     case MSome(result: org.sireum.lang.ast.Exp.Fun) => MSome[org.sireum.lang.ast.Exp.Fun](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Fun")
+     case _ => MNone[org.sireum.lang.ast.Exp.Fun]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastResolvedInfoLocalVar(o: org.sireum.lang.ast.ResolvedInfo.LocalVar): MOption[org.sireum.lang.ast.ResolvedInfo.LocalVar] = {
+    val preR: PreResult[org.sireum.lang.ast.ResolvedInfo.LocalVar] = pre_langastResolvedInfoLocalVar(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.ResolvedInfo.LocalVar)) => PreResult(continu, MSome[org.sireum.lang.ast.ResolvedInfo.LocalVar](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.ResolvedInfo.LocalVar")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.ResolvedInfo.LocalVar]())
+    }
+    val r: MOption[org.sireum.lang.ast.ResolvedInfo.LocalVar] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.ResolvedInfo.LocalVar = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.ResolvedInfo.LocalVar = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.ResolvedInfo.LocalVar] = post_langastResolvedInfoLocalVar(o2) match {
+     case MSome(result: org.sireum.lang.ast.ResolvedInfo.LocalVar) => MSome[org.sireum.lang.ast.ResolvedInfo.LocalVar](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.ResolvedInfo.LocalVar")
+     case _ => MNone[org.sireum.lang.ast.ResolvedInfo.LocalVar]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastTypedFun(o: org.sireum.lang.ast.Typed.Fun): MOption[org.sireum.lang.ast.Typed.Fun] = {
+    val preR: PreResult[org.sireum.lang.ast.Typed.Fun] = pre_langastTypedFun(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Typed.Fun)) => PreResult(continu, MSome[org.sireum.lang.ast.Typed.Fun](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Fun")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Typed.Fun]())
+    }
+    val r: MOption[org.sireum.lang.ast.Typed.Fun] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Typed.Fun = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Typed]] = transformISZ(o2.args, transform_langastTyped _)
+      val r1: MOption[org.sireum.lang.ast.Typed] = transform_langastTyped(o2.ret)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(args = r0.getOrElse(o2.args), ret = r1.getOrElse(o2.ret)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Typed.Fun = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Typed.Fun] = post_langastTypedFun(o2) match {
+     case MSome(result: org.sireum.lang.ast.Typed.Fun) => MSome[org.sireum.lang.ast.Typed.Fun](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Fun")
+     case _ => MNone[org.sireum.lang.ast.Typed.Fun]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastResolvedInfoMethod(o: org.sireum.lang.ast.ResolvedInfo.Method): MOption[org.sireum.lang.ast.ResolvedInfo.Method] = {
+    val preR: PreResult[org.sireum.lang.ast.ResolvedInfo.Method] = pre_langastResolvedInfoMethod(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.ResolvedInfo.Method)) => PreResult(continu, MSome[org.sireum.lang.ast.ResolvedInfo.Method](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.ResolvedInfo.Method")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.ResolvedInfo.Method]())
+    }
+    val r: MOption[org.sireum.lang.ast.ResolvedInfo.Method] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.ResolvedInfo.Method = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Option[org.sireum.lang.ast.Typed.Fun]] = transformOption(o2.tpeOpt, transform_langastTypedFun _)
+      val r1: MOption[IS[Z, org.sireum.lang.ast.ResolvedInfo]] = transformISZ(o2.reads, transform_langastResolvedInfo _)
+      val r2: MOption[IS[Z, org.sireum.lang.ast.ResolvedInfo]] = transformISZ(o2.writes, transform_langastResolvedInfo _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(tpeOpt = r0.getOrElse(o2.tpeOpt), reads = r1.getOrElse(o2.reads), writes = r2.getOrElse(o2.writes)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.ResolvedInfo.Method = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.ResolvedInfo.Method] = post_langastResolvedInfoMethod(o2) match {
+     case MSome(result: org.sireum.lang.ast.ResolvedInfo.Method) => MSome[org.sireum.lang.ast.ResolvedInfo.Method](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.ResolvedInfo.Method")
+     case _ => MNone[org.sireum.lang.ast.ResolvedInfo.Method]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastExpLitB(o: org.sireum.lang.ast.Exp.LitB): MOption[org.sireum.lang.ast.Exp.LitB] = {
+    val preR: PreResult[org.sireum.lang.ast.Exp.LitB] = pre_langastExpLitB(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.LitB)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.LitB](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitB")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.LitB]())
+    }
+    val r: MOption[org.sireum.lang.ast.Exp.LitB] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp.LitB = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(attr = r0.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Exp.LitB = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Exp.LitB] = post_langastExpLitB(o2) match {
+     case MSome(result: org.sireum.lang.ast.Exp.LitB) => MSome[org.sireum.lang.ast.Exp.LitB](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitB")
+     case _ => MNone[org.sireum.lang.ast.Exp.LitB]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastTypedMethod(o: org.sireum.lang.ast.Typed.Method): MOption[org.sireum.lang.ast.Typed.Method] = {
+    val preR: PreResult[org.sireum.lang.ast.Typed.Method] = pre_langastTypedMethod(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Typed.Method)) => PreResult(continu, MSome[org.sireum.lang.ast.Typed.Method](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Method")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Typed.Method]())
+    }
+    val r: MOption[org.sireum.lang.ast.Typed.Method] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Typed.Method = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Typed.Fun] = transform_langastTypedFun(o2.tpe)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(tpe = r0.getOrElse(o2.tpe)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Typed.Method = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Typed.Method] = post_langastTypedMethod(o2) match {
+     case MSome(result: org.sireum.lang.ast.Typed.Method) => MSome[org.sireum.lang.ast.Typed.Method](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Method")
+     case _ => MNone[org.sireum.lang.ast.Typed.Method]()
+    }
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

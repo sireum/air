@@ -26,7 +26,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// This file is auto-generated from AadlAST.scala, BlessAST.scala, Emv2AST.scala, GumboAST.scala, SmfAST.scala
+// This file is auto-generated from AadlAST.scala, BlessAST.scala, Emv2AST.scala, GumboAST.scala, SmfAST.scala, AST.scala, Typed.scala
 
 package org.sireum.hamr.ir
 
@@ -226,29 +226,317 @@ object MsgPack {
 
     val GclCompute: Z = 62
 
-    val GclUnaryExp: Z = 63
+    val GclTODO: Z = 63
 
-    val GclBinaryExp: Z = 64
+    val SmfClause: Z = 64
 
-    val GclNameExp: Z = 65
+    val SmfClassification: Z = 65
 
-    val GclAccessExp: Z = 66
+    val SmfDeclass: Z = 66
 
-    val GclLiteralExp: Z = 67
+    val SmfLibrary: Z = 67
 
-    val GclEnumLitExp: Z = 68
+    val SmfType: Z = 68
 
-    val GclTODO: Z = 69
+    val _langastTopUnitProgram: Z = 69
 
-    val SmfClause: Z = 70
+    val _langastTopUnitSequentUnit: Z = 70
 
-    val SmfClassification: Z = 71
+    val _langastTopUnitTruthTableUnit: Z = 71
 
-    val SmfDeclass: Z = 72
+    val _langastLoopContract: Z = 72
 
-    val SmfLibrary: Z = 73
+    val _langastStmtImport: Z = 73
 
-    val SmfType: Z = 74
+    val _langastStmtImportImporter: Z = 74
+
+    val _langastStmtImportMultiSelector: Z = 75
+
+    val _langastStmtImportWildcardSelector: Z = 76
+
+    val _langastStmtImportNamedSelector: Z = 77
+
+    val _langastStmtVar: Z = 78
+
+    val _langastStmtVarPattern: Z = 79
+
+    val _langastStmtSpecVar: Z = 80
+
+    val _langastStmtMethod: Z = 81
+
+    val _langastStmtExtMethod: Z = 82
+
+    val _langastStmtJustMethod: Z = 83
+
+    val _langastStmtSpecMethod: Z = 84
+
+    val _langastStmtEnum: Z = 85
+
+    val _langastStmtSubZ: Z = 86
+
+    val _langastStmtObject: Z = 87
+
+    val _langastStmtSig: Z = 88
+
+    val _langastStmtAdt: Z = 89
+
+    val _langastStmtTypeAlias: Z = 90
+
+    val _langastStmtAssign: Z = 91
+
+    val _langastStmtBlock: Z = 92
+
+    val _langastStmtIf: Z = 93
+
+    val _langastStmtMatch: Z = 94
+
+    val _langastStmtWhile: Z = 95
+
+    val _langastStmtDoWhile: Z = 96
+
+    val _langastStmtFor: Z = 97
+
+    val _langastStmtReturn: Z = 98
+
+    val _langastStmtExpr: Z = 99
+
+    val _langastStmtFact: Z = 100
+
+    val _langastStmtInv: Z = 101
+
+    val _langastStmtTheorem: Z = 102
+
+    val _langastStmtDataRefinement: Z = 103
+
+    val _langastStmtSpecLabel: Z = 104
+
+    val _langastStmtSpecBlock: Z = 105
+
+    val _langastStmtDeduceSequent: Z = 106
+
+    val _langastStmtDeduceSteps: Z = 107
+
+    val _langastStmtHavoc: Z = 108
+
+    val _langastMethodContractAccesses: Z = 109
+
+    val _langastMethodContractClaims: Z = 110
+
+    val _langastMethodContractSimple: Z = 111
+
+    val _langastMethodContractCases: Z = 112
+
+    val _langastMethodContractCase: Z = 113
+
+    val _langastSequent: Z = 114
+
+    val _langastProofAst: Z = 115
+
+    val _langastProofAstStepIdNum: Z = 116
+
+    val _langastProofAstStepIdStr: Z = 117
+
+    val _langastProofAstStepRegular: Z = 118
+
+    val _langastProofAstStepAssume: Z = 119
+
+    val _langastProofAstStepAssert: Z = 120
+
+    val _langastProofAstStepSubProof: Z = 121
+
+    val _langastProofAstStepLet: Z = 122
+
+    val _langastProofAstStepLetParam: Z = 123
+
+    val _langastProofAstStepStructInduction: Z = 124
+
+    val _langastProofAstStepStructInductionMatchCase: Z = 125
+
+    val _langastProofAstStepStructInductionMatchDefault: Z = 126
+
+    val _langastProofAstStepJustificationApply: Z = 127
+
+    val _langastProofAstStepJustificationIncept: Z = 128
+
+    val _langastProofAstStepJustificationInceptNamed: Z = 129
+
+    val _langastProofAstStepJustificationInceptEta: Z = 130
+
+    val _langastCase: Z = 131
+
+    val _langastEnumGenRangeExpr: Z = 132
+
+    val _langastEnumGenRangeStep: Z = 133
+
+    val _langastEnumGenFor: Z = 134
+
+    val _langastTypeNamed: Z = 135
+
+    val _langastTypeFun: Z = 136
+
+    val _langastTypeTuple: Z = 137
+
+    val _langastPatternLiteral: Z = 138
+
+    val _langastPatternLitInterpolate: Z = 139
+
+    val _langastPatternRef: Z = 140
+
+    val _langastPatternVarBinding: Z = 141
+
+    val _langastPatternWildcard: Z = 142
+
+    val _langastPatternSeqWildcard: Z = 143
+
+    val _langastPatternStructure: Z = 144
+
+    val _langastExpLitB: Z = 145
+
+    val _langastExpLitC: Z = 146
+
+    val _langastExpLitZ: Z = 147
+
+    val _langastExpLitF32: Z = 148
+
+    val _langastExpLitF64: Z = 149
+
+    val _langastExpLitR: Z = 150
+
+    val _langastExpLitString: Z = 151
+
+    val _langastExpLitStepId: Z = 152
+
+    val _langastExpStringInterpolate: Z = 153
+
+    val _langastExpThis: Z = 154
+
+    val _langastExpSuper: Z = 155
+
+    val _langastExpUnary: Z = 156
+
+    val _langastExpBinary: Z = 157
+
+    val _langastExpIdent: Z = 158
+
+    val _langastExpEta: Z = 159
+
+    val _langastExpTuple: Z = 160
+
+    val _langastExpSelect: Z = 161
+
+    val _langastExpInvoke: Z = 162
+
+    val _langastExpInvokeNamed: Z = 163
+
+    val _langastExpIf: Z = 164
+
+    val _langastExpFunParam: Z = 165
+
+    val _langastExpFun: Z = 166
+
+    val _langastExpForYield: Z = 167
+
+    val _langastExpQuantType: Z = 168
+
+    val _langastExpQuantRange: Z = 169
+
+    val _langastExpQuantEach: Z = 170
+
+    val _langastExpInput: Z = 171
+
+    val _langastExpOldVal: Z = 172
+
+    val _langastExpLoopIndex: Z = 173
+
+    val _langastExpStateSeq: Z = 174
+
+    val _langastExpStateSeqFragment: Z = 175
+
+    val _langastExpResult: Z = 176
+
+    val _langastNamedArg: Z = 177
+
+    val _langastId: Z = 178
+
+    val _langastName: Z = 179
+
+    val _langastBody: Z = 180
+
+    val _langastAdtParam: Z = 181
+
+    val _langastMethodSig: Z = 182
+
+    val _langastParam: Z = 183
+
+    val _langastTypeParam: Z = 184
+
+    val _langastAttr: Z = 185
+
+    val _langastTypedAttr: Z = 186
+
+    val _langastResolvedAttr: Z = 187
+
+    val _langastResolvedInfoBuiltIn: Z = 188
+
+    val _langastResolvedInfoPackage: Z = 189
+
+    val _langastResolvedInfoEnum: Z = 190
+
+    val _langastResolvedInfoEnumElement: Z = 191
+
+    val _langastResolvedInfoObject: Z = 192
+
+    val _langastResolvedInfoVar: Z = 193
+
+    val _langastResolvedInfoMethod: Z = 194
+
+    val _langastResolvedInfoMethods: Z = 195
+
+    val _langastResolvedInfoTuple: Z = 196
+
+    val _langastResolvedInfoLocalVar: Z = 197
+
+    val _langastResolvedInfoFact: Z = 198
+
+    val _langastResolvedInfoTheorem: Z = 199
+
+    val _langastResolvedInfoInv: Z = 200
+
+    val _langastTruthTableRow: Z = 201
+
+    val _langastTruthTableAssignment: Z = 202
+
+    val _langastTruthTableConclusionValidity: Z = 203
+
+    val _langastTruthTableConclusionTautology: Z = 204
+
+    val _langastTruthTableConclusionContradictory: Z = 205
+
+    val _langastTruthTableConclusionContingent: Z = 206
+
+    val _langastTypedName: Z = 207
+
+    val _langastTypedTuple: Z = 208
+
+    val _langastTypedFun: Z = 209
+
+    val _langastTypedTypeVar: Z = 210
+
+    val _langastTypedPackage: Z = 211
+
+    val _langastTypedObject: Z = 212
+
+    val _langastTypedEnum: Z = 213
+
+    val _langastTypedMethod: Z = 214
+
+    val _langastTypedMethods: Z = 215
+
+    val _langastTypedFact: Z = 216
+
+    val _langastTypedTheorem: Z = 217
+
+    val _langastTypedInv: Z = 218
 
   }
 
@@ -1136,14 +1424,13 @@ object MsgPack {
     def writeGclStateVar(o: GclStateVar): Unit = {
       writer.writeZ(Constants.GclStateVar)
       writer.writeString(o.name)
-      writeGclExp(o.exp)
+      write_langastExp(o.exp)
     }
 
     def writeGclInvariant(o: GclInvariant): Unit = {
       writer.writeZ(Constants.GclInvariant)
       writer.writeString(o.name)
-      writeGclExp(o.exp)
-      writer.writeString(o.slangExp)
+      write_langastExp(o.exp)
     }
 
     def writeGclSpec(o: GclSpec): Unit = {
@@ -1156,15 +1443,13 @@ object MsgPack {
     def writeGclAssume(o: GclAssume): Unit = {
       writer.writeZ(Constants.GclAssume)
       writer.writeString(o.name)
-      writeGclExp(o.exp)
-      writer.writeString(o.slangExp)
+      write_langastExp(o.exp)
     }
 
     def writeGclGuarantee(o: GclGuarantee): Unit = {
       writer.writeZ(Constants.GclGuarantee)
       writer.writeString(o.name)
-      writeGclExp(o.exp)
-      writer.writeString(o.slangExp)
+      write_langastExp(o.exp)
     }
 
     def writeGclIntegration(o: GclIntegration): Unit = {
@@ -1175,80 +1460,13 @@ object MsgPack {
     def writeGclCaseStatement(o: GclCaseStatement): Unit = {
       writer.writeZ(Constants.GclCaseStatement)
       writer.writeString(o.name)
-      writeGclExp(o.assumes)
-      writer.writeString(o.slangAssumes)
-      writeGclExp(o.guarentees)
-      writer.writeString(o.slangGuarentees)
+      write_langastExp(o.assumes)
+      write_langastExp(o.guarantees)
     }
 
     def writeGclCompute(o: GclCompute): Unit = {
       writer.writeZ(Constants.GclCompute)
       writer.writeISZ(o.cases, writeGclCaseStatement _)
-    }
-
-    def writeGclExp(o: GclExp): Unit = {
-      o match {
-        case o: GclUnaryExp => writeGclUnaryExp(o)
-        case o: GclBinaryExp => writeGclBinaryExp(o)
-        case o: GclNameExp => writeGclNameExp(o)
-        case o: GclAccessExp => writeGclAccessExp(o)
-        case o: GclLiteralExp => writeGclLiteralExp(o)
-        case o: GclEnumLitExp => writeGclEnumLitExp(o)
-      }
-    }
-
-    def writeGclUnaryOpType(o: GclUnaryOp.Type): Unit = {
-      writer.writeZ(o.ordinal)
-    }
-
-    def writeGclBinaryOpType(o: GclBinaryOp.Type): Unit = {
-      writer.writeZ(o.ordinal)
-    }
-
-    def writeGclLiteralTypeType(o: GclLiteralType.Type): Unit = {
-      writer.writeZ(o.ordinal)
-    }
-
-    def writeGclUnaryExp(o: GclUnaryExp): Unit = {
-      writer.writeZ(Constants.GclUnaryExp)
-      writeGclUnaryOpType(o.op)
-      writeGclExp(o.exp)
-      writer.writeOption(o.pos, writer.writePosition _)
-    }
-
-    def writeGclBinaryExp(o: GclBinaryExp): Unit = {
-      writer.writeZ(Constants.GclBinaryExp)
-      writeGclBinaryOpType(o.op)
-      writeGclExp(o.lhs)
-      writeGclExp(o.rhs)
-      writer.writeOption(o.pos, writer.writePosition _)
-    }
-
-    def writeGclNameExp(o: GclNameExp): Unit = {
-      writer.writeZ(Constants.GclNameExp)
-      writeName(o.name)
-      writer.writeOption(o.pos, writer.writePosition _)
-    }
-
-    def writeGclAccessExp(o: GclAccessExp): Unit = {
-      writer.writeZ(Constants.GclAccessExp)
-      writeGclExp(o.exp)
-      writer.writeString(o.attributeName)
-      writer.writeOption(o.pos, writer.writePosition _)
-    }
-
-    def writeGclLiteralExp(o: GclLiteralExp): Unit = {
-      writer.writeZ(Constants.GclLiteralExp)
-      writeGclLiteralTypeType(o.typ)
-      writer.writeString(o.exp)
-      writer.writeOption(o.pos, writer.writePosition _)
-    }
-
-    def writeGclEnumLitExp(o: GclEnumLitExp): Unit = {
-      writer.writeZ(Constants.GclEnumLitExp)
-      writer.writeString(o.classifier)
-      writer.writeString(o.value)
-      writer.writeOption(o.pos, writer.writePosition _)
     }
 
     def writeGclTODO(o: GclTODO): Unit = {
@@ -1298,6 +1516,1333 @@ object MsgPack {
       writer.writeZ(Constants.SmfType)
       writeName(o.typeName)
       writer.writeISZ(o.parentType, writeName _)
+    }
+
+    def write_langastTopUnit(o: org.sireum.lang.ast.TopUnit): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.TopUnit.Program => write_langastTopUnitProgram(o)
+        case o: org.sireum.lang.ast.TopUnit.SequentUnit => write_langastTopUnitSequentUnit(o)
+        case o: org.sireum.lang.ast.TopUnit.TruthTableUnit => write_langastTopUnitTruthTableUnit(o)
+      }
+    }
+
+    def write_langastTopUnitProgram(o: org.sireum.lang.ast.TopUnit.Program): Unit = {
+      writer.writeZ(Constants._langastTopUnitProgram)
+      writer.writeOption(o.fileUriOpt, writer.writeString _)
+      write_langastName(o.packageName)
+      write_langastBody(o.body)
+    }
+
+    def write_langastTopUnitSequentUnit(o: org.sireum.lang.ast.TopUnit.SequentUnit): Unit = {
+      writer.writeZ(Constants._langastTopUnitSequentUnit)
+      writer.writeOption(o.fileUriOpt, writer.writeString _)
+      write_langastSequent(o.sequent)
+    }
+
+    def write_langastTopUnitTruthTableUnit(o: org.sireum.lang.ast.TopUnit.TruthTableUnit): Unit = {
+      writer.writeZ(Constants._langastTopUnitTruthTableUnit)
+      writer.writeOption(o.fileUriOpt, writer.writeString _)
+      writer.writeISZ(o.stars, writer.writePosition _)
+      writer.writeISZ(o.vars, write_langastId _)
+      writer.writePosition(o.separator)
+      writer.writeB(o.isSequent)
+      write_langastSequent(o.sequent)
+      writer.writeISZ(o.rows, write_langastTruthTableRow _)
+      writer.writeOption(o.conclusionOpt, write_langastTruthTableConclusion _)
+    }
+
+    def write_langastStmt(o: org.sireum.lang.ast.Stmt): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.Stmt.Import => write_langastStmtImport(o)
+        case o: org.sireum.lang.ast.Stmt.Var => write_langastStmtVar(o)
+        case o: org.sireum.lang.ast.Stmt.VarPattern => write_langastStmtVarPattern(o)
+        case o: org.sireum.lang.ast.Stmt.SpecVar => write_langastStmtSpecVar(o)
+        case o: org.sireum.lang.ast.Stmt.Method => write_langastStmtMethod(o)
+        case o: org.sireum.lang.ast.Stmt.ExtMethod => write_langastStmtExtMethod(o)
+        case o: org.sireum.lang.ast.Stmt.JustMethod => write_langastStmtJustMethod(o)
+        case o: org.sireum.lang.ast.Stmt.SpecMethod => write_langastStmtSpecMethod(o)
+        case o: org.sireum.lang.ast.Stmt.Enum => write_langastStmtEnum(o)
+        case o: org.sireum.lang.ast.Stmt.SubZ => write_langastStmtSubZ(o)
+        case o: org.sireum.lang.ast.Stmt.Object => write_langastStmtObject(o)
+        case o: org.sireum.lang.ast.Stmt.Sig => write_langastStmtSig(o)
+        case o: org.sireum.lang.ast.Stmt.Adt => write_langastStmtAdt(o)
+        case o: org.sireum.lang.ast.Stmt.TypeAlias => write_langastStmtTypeAlias(o)
+        case o: org.sireum.lang.ast.Stmt.Assign => write_langastStmtAssign(o)
+        case o: org.sireum.lang.ast.Stmt.Block => write_langastStmtBlock(o)
+        case o: org.sireum.lang.ast.Stmt.If => write_langastStmtIf(o)
+        case o: org.sireum.lang.ast.Stmt.Match => write_langastStmtMatch(o)
+        case o: org.sireum.lang.ast.Stmt.While => write_langastStmtWhile(o)
+        case o: org.sireum.lang.ast.Stmt.DoWhile => write_langastStmtDoWhile(o)
+        case o: org.sireum.lang.ast.Stmt.For => write_langastStmtFor(o)
+        case o: org.sireum.lang.ast.Stmt.Return => write_langastStmtReturn(o)
+        case o: org.sireum.lang.ast.Stmt.Expr => write_langastStmtExpr(o)
+        case o: org.sireum.lang.ast.Stmt.Fact => write_langastStmtFact(o)
+        case o: org.sireum.lang.ast.Stmt.Inv => write_langastStmtInv(o)
+        case o: org.sireum.lang.ast.Stmt.Theorem => write_langastStmtTheorem(o)
+        case o: org.sireum.lang.ast.Stmt.DataRefinement => write_langastStmtDataRefinement(o)
+        case o: org.sireum.lang.ast.Stmt.SpecLabel => write_langastStmtSpecLabel(o)
+        case o: org.sireum.lang.ast.Stmt.SpecBlock => write_langastStmtSpecBlock(o)
+        case o: org.sireum.lang.ast.Stmt.DeduceSequent => write_langastStmtDeduceSequent(o)
+        case o: org.sireum.lang.ast.Stmt.DeduceSteps => write_langastStmtDeduceSteps(o)
+        case o: org.sireum.lang.ast.Stmt.Havoc => write_langastStmtHavoc(o)
+      }
+    }
+
+    def write_langastHasModifies(o: org.sireum.lang.ast.HasModifies): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.LoopContract => write_langastLoopContract(o)
+        case o: org.sireum.lang.ast.MethodContract.Simple => write_langastMethodContractSimple(o)
+        case o: org.sireum.lang.ast.MethodContract.Cases => write_langastMethodContractCases(o)
+      }
+    }
+
+    def write_langastLoopContract(o: org.sireum.lang.ast.LoopContract): Unit = {
+      writer.writeZ(Constants._langastLoopContract)
+      writer.writeISZ(o.invariants, write_langastExp _)
+      writer.writeISZ(o.modifies, write_langastExpIdent _)
+      writer.writeOption(o.maxItOpt, write_langastExpLitZ _)
+    }
+
+    def write_langastStmtImport(o: org.sireum.lang.ast.Stmt.Import): Unit = {
+      writer.writeZ(Constants._langastStmtImport)
+      writer.writeISZ(o.importers, write_langastStmtImportImporter _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtImportImporter(o: org.sireum.lang.ast.Stmt.Import.Importer): Unit = {
+      writer.writeZ(Constants._langastStmtImportImporter)
+      write_langastName(o.name)
+      writer.writeOption(o.selectorOpt, write_langastStmtImportSelector _)
+    }
+
+    def write_langastStmtImportSelector(o: org.sireum.lang.ast.Stmt.Import.Selector): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.Stmt.Import.MultiSelector => write_langastStmtImportMultiSelector(o)
+        case o: org.sireum.lang.ast.Stmt.Import.WildcardSelector => write_langastStmtImportWildcardSelector(o)
+      }
+    }
+
+    def write_langastStmtImportMultiSelector(o: org.sireum.lang.ast.Stmt.Import.MultiSelector): Unit = {
+      writer.writeZ(Constants._langastStmtImportMultiSelector)
+      writer.writeISZ(o.selectors, write_langastStmtImportNamedSelector _)
+    }
+
+    def write_langastStmtImportWildcardSelector(o: org.sireum.lang.ast.Stmt.Import.WildcardSelector): Unit = {
+      writer.writeZ(Constants._langastStmtImportWildcardSelector)
+    }
+
+    def write_langastStmtImportNamedSelector(o: org.sireum.lang.ast.Stmt.Import.NamedSelector): Unit = {
+      writer.writeZ(Constants._langastStmtImportNamedSelector)
+      write_langastId(o.from)
+      write_langastId(o.to)
+    }
+
+    def write_langastStmtVar(o: org.sireum.lang.ast.Stmt.Var): Unit = {
+      writer.writeZ(Constants._langastStmtVar)
+      writer.writeB(o.isSpec)
+      writer.writeB(o.isVal)
+      write_langastId(o.id)
+      writer.writeOption(o.tipeOpt, write_langastType _)
+      writer.writeOption(o.initOpt, write_langastAssignExp _)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastStmtVarPattern(o: org.sireum.lang.ast.Stmt.VarPattern): Unit = {
+      writer.writeZ(Constants._langastStmtVarPattern)
+      writer.writeB(o.isSpec)
+      writer.writeB(o.isVal)
+      write_langastPattern(o.pattern)
+      writer.writeOption(o.tipeOpt, write_langastType _)
+      write_langastAssignExp(o.init)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtSpecVar(o: org.sireum.lang.ast.Stmt.SpecVar): Unit = {
+      writer.writeZ(Constants._langastStmtSpecVar)
+      writer.writeB(o.isVal)
+      write_langastId(o.id)
+      write_langastType(o.tipe)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastStmtMethod(o: org.sireum.lang.ast.Stmt.Method): Unit = {
+      writer.writeZ(Constants._langastStmtMethod)
+      writer.writeB(o.typeChecked)
+      write_langastPurityType(o.purity)
+      writer.writeB(o.hasOverride)
+      writer.writeB(o.isHelper)
+      write_langastMethodSig(o.sig)
+      write_langastMethodContract(o.mcontract)
+      writer.writeOption(o.bodyOpt, write_langastBody _)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastStmtExtMethod(o: org.sireum.lang.ast.Stmt.ExtMethod): Unit = {
+      writer.writeZ(Constants._langastStmtExtMethod)
+      writer.writeB(o.isPure)
+      write_langastMethodSig(o.sig)
+      write_langastMethodContract(o.contract)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastStmtJustMethod(o: org.sireum.lang.ast.Stmt.JustMethod): Unit = {
+      writer.writeZ(Constants._langastStmtJustMethod)
+      writer.writeOption(o.etaOpt, write_langastExpLitString _)
+      write_langastMethodSig(o.sig)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastStmtSpecMethod(o: org.sireum.lang.ast.Stmt.SpecMethod): Unit = {
+      writer.writeZ(Constants._langastStmtSpecMethod)
+      write_langastMethodSig(o.sig)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastStmtEnum(o: org.sireum.lang.ast.Stmt.Enum): Unit = {
+      writer.writeZ(Constants._langastStmtEnum)
+      write_langastId(o.id)
+      writer.writeISZ(o.elements, write_langastId _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtSubZ(o: org.sireum.lang.ast.Stmt.SubZ): Unit = {
+      writer.writeZ(Constants._langastStmtSubZ)
+      write_langastId(o.id)
+      writer.writeB(o.isSigned)
+      writer.writeB(o.isBitVector)
+      writer.writeB(o.isWrapped)
+      writer.writeB(o.hasMin)
+      writer.writeB(o.hasMax)
+      writer.writeZ(o.bitWidth)
+      writer.writeZ(o.min)
+      writer.writeZ(o.max)
+      writer.writeB(o.isIndex)
+      writer.writeZ(o.index)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtObject(o: org.sireum.lang.ast.Stmt.Object): Unit = {
+      writer.writeZ(Constants._langastStmtObject)
+      writer.writeB(o.isApp)
+      writer.writeOption(o.extNameOpt, writer.writeString _)
+      write_langastId(o.id)
+      writer.writeISZ(o.stmts, write_langastStmt _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtSig(o: org.sireum.lang.ast.Stmt.Sig): Unit = {
+      writer.writeZ(Constants._langastStmtSig)
+      writer.writeB(o.isImmutable)
+      writer.writeB(o.isExt)
+      write_langastId(o.id)
+      writer.writeISZ(o.typeParams, write_langastTypeParam _)
+      writer.writeISZ(o.parents, write_langastTypeNamed _)
+      writer.writeISZ(o.stmts, write_langastStmt _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtAdt(o: org.sireum.lang.ast.Stmt.Adt): Unit = {
+      writer.writeZ(Constants._langastStmtAdt)
+      writer.writeB(o.isRoot)
+      writer.writeB(o.isDatatype)
+      write_langastId(o.id)
+      writer.writeISZ(o.typeParams, write_langastTypeParam _)
+      writer.writeISZ(o.params, write_langastAdtParam _)
+      writer.writeISZ(o.parents, write_langastTypeNamed _)
+      writer.writeISZ(o.stmts, write_langastStmt _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtTypeAlias(o: org.sireum.lang.ast.Stmt.TypeAlias): Unit = {
+      writer.writeZ(Constants._langastStmtTypeAlias)
+      write_langastId(o.id)
+      writer.writeISZ(o.typeParams, write_langastTypeParam _)
+      write_langastType(o.tipe)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtAssign(o: org.sireum.lang.ast.Stmt.Assign): Unit = {
+      writer.writeZ(Constants._langastStmtAssign)
+      write_langastExp(o.lhs)
+      write_langastAssignExp(o.rhs)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtBlock(o: org.sireum.lang.ast.Stmt.Block): Unit = {
+      writer.writeZ(Constants._langastStmtBlock)
+      write_langastBody(o.body)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtIf(o: org.sireum.lang.ast.Stmt.If): Unit = {
+      writer.writeZ(Constants._langastStmtIf)
+      write_langastExp(o.cond)
+      write_langastBody(o.thenBody)
+      write_langastBody(o.elseBody)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtMatch(o: org.sireum.lang.ast.Stmt.Match): Unit = {
+      writer.writeZ(Constants._langastStmtMatch)
+      write_langastExp(o.exp)
+      writer.writeISZ(o.cases, write_langastCase _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtWhile(o: org.sireum.lang.ast.Stmt.While): Unit = {
+      writer.writeZ(Constants._langastStmtWhile)
+      writer.writeISZ(o.context, writer.writeString _)
+      write_langastExp(o.cond)
+      write_langastLoopContract(o.contract)
+      write_langastBody(o.body)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtDoWhile(o: org.sireum.lang.ast.Stmt.DoWhile): Unit = {
+      writer.writeZ(Constants._langastStmtDoWhile)
+      writer.writeISZ(o.context, writer.writeString _)
+      write_langastExp(o.cond)
+      write_langastLoopContract(o.contract)
+      write_langastBody(o.body)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtFor(o: org.sireum.lang.ast.Stmt.For): Unit = {
+      writer.writeZ(Constants._langastStmtFor)
+      writer.writeISZ(o.context, writer.writeString _)
+      writer.writeISZ(o.enumGens, write_langastEnumGenFor _)
+      write_langastBody(o.body)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtReturn(o: org.sireum.lang.ast.Stmt.Return): Unit = {
+      writer.writeZ(Constants._langastStmtReturn)
+      writer.writeOption(o.expOpt, write_langastExp _)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastStmtExpr(o: org.sireum.lang.ast.Stmt.Expr): Unit = {
+      writer.writeZ(Constants._langastStmtExpr)
+      write_langastExp(o.exp)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastStmtSpec(o: org.sireum.lang.ast.Stmt.Spec): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.Stmt.Fact => write_langastStmtFact(o)
+        case o: org.sireum.lang.ast.Stmt.Inv => write_langastStmtInv(o)
+        case o: org.sireum.lang.ast.Stmt.Theorem => write_langastStmtTheorem(o)
+        case o: org.sireum.lang.ast.Stmt.DataRefinement => write_langastStmtDataRefinement(o)
+        case o: org.sireum.lang.ast.Stmt.SpecLabel => write_langastStmtSpecLabel(o)
+        case o: org.sireum.lang.ast.Stmt.SpecBlock => write_langastStmtSpecBlock(o)
+        case o: org.sireum.lang.ast.Stmt.DeduceSequent => write_langastStmtDeduceSequent(o)
+        case o: org.sireum.lang.ast.Stmt.DeduceSteps => write_langastStmtDeduceSteps(o)
+        case o: org.sireum.lang.ast.Stmt.Havoc => write_langastStmtHavoc(o)
+      }
+    }
+
+    def write_langastStmtFact(o: org.sireum.lang.ast.Stmt.Fact): Unit = {
+      writer.writeZ(Constants._langastStmtFact)
+      write_langastId(o.id)
+      writer.writeISZ(o.typeParams, write_langastTypeParam _)
+      writer.writeOption(o.descOpt, write_langastExpLitString _)
+      writer.writeISZ(o.claims, write_langastExp _)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastStmtInv(o: org.sireum.lang.ast.Stmt.Inv): Unit = {
+      writer.writeZ(Constants._langastStmtInv)
+      write_langastId(o.id)
+      writer.writeISZ(o.claims, write_langastExp _)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastStmtTheorem(o: org.sireum.lang.ast.Stmt.Theorem): Unit = {
+      writer.writeZ(Constants._langastStmtTheorem)
+      writer.writeB(o.isLemma)
+      write_langastId(o.id)
+      writer.writeISZ(o.typeParams, write_langastTypeParam _)
+      writer.writeOption(o.descOpt, write_langastExpLitString _)
+      write_langastExp(o.claim)
+      writer.writeB(o.isFun)
+      write_langastProofAst(o.proof)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastStmtDataRefinement(o: org.sireum.lang.ast.Stmt.DataRefinement): Unit = {
+      writer.writeZ(Constants._langastStmtDataRefinement)
+      write_langastExpIdent(o.rep)
+      writer.writeISZ(o.refs, write_langastExpIdent _)
+      writer.writeISZ(o.claims, write_langastExp _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtSpecLabel(o: org.sireum.lang.ast.Stmt.SpecLabel): Unit = {
+      writer.writeZ(Constants._langastStmtSpecLabel)
+      write_langastId(o.id)
+    }
+
+    def write_langastStmtSpecBlock(o: org.sireum.lang.ast.Stmt.SpecBlock): Unit = {
+      writer.writeZ(Constants._langastStmtSpecBlock)
+      write_langastStmtBlock(o.block)
+    }
+
+    def write_langastStmtDeduceSequent(o: org.sireum.lang.ast.Stmt.DeduceSequent): Unit = {
+      writer.writeZ(Constants._langastStmtDeduceSequent)
+      writer.writeOption(o.justOpt, write_langastExpLitString _)
+      writer.writeISZ(o.sequents, write_langastSequent _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtDeduceSteps(o: org.sireum.lang.ast.Stmt.DeduceSteps): Unit = {
+      writer.writeZ(Constants._langastStmtDeduceSteps)
+      writer.writeISZ(o.steps, write_langastProofAstStep _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastStmtHavoc(o: org.sireum.lang.ast.Stmt.Havoc): Unit = {
+      writer.writeZ(Constants._langastStmtHavoc)
+      writer.writeISZ(o.args, write_langastExpIdent _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastMethodContract(o: org.sireum.lang.ast.MethodContract): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.MethodContract.Simple => write_langastMethodContractSimple(o)
+        case o: org.sireum.lang.ast.MethodContract.Cases => write_langastMethodContractCases(o)
+      }
+    }
+
+    def write_langastMethodContractAccesses(o: org.sireum.lang.ast.MethodContract.Accesses): Unit = {
+      writer.writeZ(Constants._langastMethodContractAccesses)
+      writer.writeISZ(o.idents, write_langastExpIdent _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastMethodContractClaims(o: org.sireum.lang.ast.MethodContract.Claims): Unit = {
+      writer.writeZ(Constants._langastMethodContractClaims)
+      writer.writeISZ(o.claims, write_langastExp _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastMethodContractSimple(o: org.sireum.lang.ast.MethodContract.Simple): Unit = {
+      writer.writeZ(Constants._langastMethodContractSimple)
+      write_langastMethodContractAccesses(o.readsClause)
+      write_langastMethodContractClaims(o.requiresClause)
+      write_langastMethodContractAccesses(o.modifiesClause)
+      write_langastMethodContractClaims(o.ensuresClause)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastMethodContractCases(o: org.sireum.lang.ast.MethodContract.Cases): Unit = {
+      writer.writeZ(Constants._langastMethodContractCases)
+      write_langastMethodContractAccesses(o.readsClause)
+      write_langastMethodContractAccesses(o.modifiesClause)
+      writer.writeISZ(o.cases, write_langastMethodContractCase _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastMethodContractCase(o: org.sireum.lang.ast.MethodContract.Case): Unit = {
+      writer.writeZ(Constants._langastMethodContractCase)
+      write_langastExpLitString(o.label)
+      write_langastMethodContractClaims(o.requiresClause)
+      write_langastMethodContractClaims(o.ensuresClause)
+    }
+
+    def write_langastSequent(o: org.sireum.lang.ast.Sequent): Unit = {
+      writer.writeZ(Constants._langastSequent)
+      writer.writeISZ(o.premises, write_langastExp _)
+      write_langastExp(o.conclusion)
+      writer.writeISZ(o.steps, write_langastProofAstStep _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastProofAst(o: org.sireum.lang.ast.ProofAst): Unit = {
+      writer.writeZ(Constants._langastProofAst)
+      writer.writeISZ(o.steps, write_langastProofAstStep _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastProofAstStep(o: org.sireum.lang.ast.ProofAst.Step): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.ProofAst.Step.Regular => write_langastProofAstStepRegular(o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Assume => write_langastProofAstStepAssume(o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Assert => write_langastProofAstStepAssert(o)
+        case o: org.sireum.lang.ast.ProofAst.Step.SubProof => write_langastProofAstStepSubProof(o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Let => write_langastProofAstStepLet(o)
+        case o: org.sireum.lang.ast.ProofAst.Step.StructInduction => write_langastProofAstStepStructInduction(o)
+      }
+    }
+
+    def write_langastProofAstStepId(o: org.sireum.lang.ast.ProofAst.StepId): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.ProofAst.StepId.Num => write_langastProofAstStepIdNum(o)
+        case o: org.sireum.lang.ast.ProofAst.StepId.Str => write_langastProofAstStepIdStr(o)
+      }
+    }
+
+    def write_langastProofAstStepIdNum(o: org.sireum.lang.ast.ProofAst.StepId.Num): Unit = {
+      writer.writeZ(Constants._langastProofAstStepIdNum)
+      writer.writeZ(o.no)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastProofAstStepIdStr(o: org.sireum.lang.ast.ProofAst.StepId.Str): Unit = {
+      writer.writeZ(Constants._langastProofAstStepIdStr)
+      writer.writeString(o.value)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastProofAstStepRegular(o: org.sireum.lang.ast.ProofAst.Step.Regular): Unit = {
+      writer.writeZ(Constants._langastProofAstStepRegular)
+      write_langastProofAstStepId(o.id)
+      write_langastExp(o.claim)
+      write_langastProofAstStepJustification(o.just)
+    }
+
+    def write_langastProofAstStepAssume(o: org.sireum.lang.ast.ProofAst.Step.Assume): Unit = {
+      writer.writeZ(Constants._langastProofAstStepAssume)
+      write_langastProofAstStepId(o.id)
+      write_langastExp(o.claim)
+    }
+
+    def write_langastProofAstStepAssert(o: org.sireum.lang.ast.ProofAst.Step.Assert): Unit = {
+      writer.writeZ(Constants._langastProofAstStepAssert)
+      write_langastProofAstStepId(o.id)
+      write_langastExp(o.claim)
+      writer.writeISZ(o.steps, write_langastProofAstStep _)
+    }
+
+    def write_langastProofAstStepSubProof(o: org.sireum.lang.ast.ProofAst.Step.SubProof): Unit = {
+      writer.writeZ(Constants._langastProofAstStepSubProof)
+      write_langastProofAstStepId(o.id)
+      writer.writeISZ(o.steps, write_langastProofAstStep _)
+    }
+
+    def write_langastProofAstStepLet(o: org.sireum.lang.ast.ProofAst.Step.Let): Unit = {
+      writer.writeZ(Constants._langastProofAstStepLet)
+      write_langastProofAstStepId(o.id)
+      writer.writeISZ(o.params, write_langastProofAstStepLetParam _)
+      writer.writeISZ(o.steps, write_langastProofAstStep _)
+    }
+
+    def write_langastProofAstStepLetParam(o: org.sireum.lang.ast.ProofAst.Step.Let.Param): Unit = {
+      writer.writeZ(Constants._langastProofAstStepLetParam)
+      write_langastId(o.id)
+      writer.writeOption(o.tipeOpt, write_langastType _)
+    }
+
+    def write_langastProofAstStepStructInduction(o: org.sireum.lang.ast.ProofAst.Step.StructInduction): Unit = {
+      writer.writeZ(Constants._langastProofAstStepStructInduction)
+      write_langastProofAstStepId(o.id)
+      write_langastExp(o.claim)
+      write_langastExp(o.exp)
+      writer.writeISZ(o.cases, write_langastProofAstStepStructInductionMatchCase _)
+      writer.writeOption(o.defaultOpt, write_langastProofAstStepStructInductionMatchDefault _)
+    }
+
+    def write_langastProofAstStepStructInductionMatchCase(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase): Unit = {
+      writer.writeZ(Constants._langastProofAstStepStructInductionMatchCase)
+      write_langastPatternStructure(o.pattern)
+      writer.writeOption(o.hypoOpt, write_langastProofAstStepAssume _)
+      writer.writeISZ(o.steps, write_langastProofAstStep _)
+    }
+
+    def write_langastProofAstStepStructInductionMatchDefault(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault): Unit = {
+      writer.writeZ(Constants._langastProofAstStepStructInductionMatchDefault)
+      writer.writeOption(o.hypoOpt, write_langastProofAstStepAssume _)
+      writer.writeISZ(o.steps, write_langastProofAstStep _)
+    }
+
+    def write_langastProofAstStepJustification(o: org.sireum.lang.ast.ProofAst.Step.Justification): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply => write_langastProofAstStepJustificationApply(o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept => write_langastProofAstStepJustificationIncept(o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed => write_langastProofAstStepJustificationInceptNamed(o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta => write_langastProofAstStepJustificationInceptEta(o)
+      }
+    }
+
+    def write_langastProofAstStepInception(o: org.sireum.lang.ast.ProofAst.Step.Inception): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept => write_langastProofAstStepJustificationIncept(o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed => write_langastProofAstStepJustificationInceptNamed(o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta => write_langastProofAstStepJustificationInceptEta(o)
+      }
+    }
+
+    def write_langastProofAstStepJustificationApply(o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply): Unit = {
+      writer.writeZ(Constants._langastProofAstStepJustificationApply)
+      write_langastExp(o.id)
+      writer.writeISZ(o.args, write_langastExp _)
+    }
+
+    def write_langastProofAstStepJustificationIncept(o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept): Unit = {
+      writer.writeZ(Constants._langastProofAstStepJustificationIncept)
+      write_langastExpInvoke(o.invoke)
+      writer.writeISZ(o.witnesses, write_langastProofAstStepId _)
+    }
+
+    def write_langastProofAstStepJustificationInceptNamed(o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed): Unit = {
+      writer.writeZ(Constants._langastProofAstStepJustificationInceptNamed)
+      write_langastExpInvokeNamed(o.invoke)
+      writer.writeISZ(o.witnesses, write_langastProofAstStepId _)
+    }
+
+    def write_langastProofAstStepJustificationInceptEta(o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta): Unit = {
+      writer.writeZ(Constants._langastProofAstStepJustificationInceptEta)
+      write_langastExpEta(o.eta)
+      writer.writeISZ(o.witnesses, write_langastProofAstStepId _)
+    }
+
+    def write_langastAssignExp(o: org.sireum.lang.ast.AssignExp): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.Stmt.Block => write_langastStmtBlock(o)
+        case o: org.sireum.lang.ast.Stmt.If => write_langastStmtIf(o)
+        case o: org.sireum.lang.ast.Stmt.Match => write_langastStmtMatch(o)
+        case o: org.sireum.lang.ast.Stmt.Return => write_langastStmtReturn(o)
+        case o: org.sireum.lang.ast.Stmt.Expr => write_langastStmtExpr(o)
+      }
+    }
+
+    def write_langastPurityType(o: org.sireum.lang.ast.Purity.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def write_langastCase(o: org.sireum.lang.ast.Case): Unit = {
+      writer.writeZ(Constants._langastCase)
+      write_langastPattern(o.pattern)
+      writer.writeOption(o.condOpt, write_langastExp _)
+      write_langastBody(o.body)
+    }
+
+    def write_langastEnumGenRange(o: org.sireum.lang.ast.EnumGen.Range): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.EnumGen.Range.Expr => write_langastEnumGenRangeExpr(o)
+        case o: org.sireum.lang.ast.EnumGen.Range.Step => write_langastEnumGenRangeStep(o)
+      }
+    }
+
+    def write_langastEnumGenRangeExpr(o: org.sireum.lang.ast.EnumGen.Range.Expr): Unit = {
+      writer.writeZ(Constants._langastEnumGenRangeExpr)
+      write_langastExp(o.exp)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastEnumGenRangeStep(o: org.sireum.lang.ast.EnumGen.Range.Step): Unit = {
+      writer.writeZ(Constants._langastEnumGenRangeStep)
+      writer.writeB(o.isInclusive)
+      write_langastExp(o.start)
+      write_langastExp(o.end)
+      writer.writeOption(o.byOpt, write_langastExp _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastEnumGenFor(o: org.sireum.lang.ast.EnumGen.For): Unit = {
+      writer.writeZ(Constants._langastEnumGenFor)
+      writer.writeOption(o.idOpt, write_langastId _)
+      write_langastEnumGenRange(o.range)
+      writer.writeOption(o.condOpt, write_langastExp _)
+      write_langastLoopContract(o.contract)
+    }
+
+    def write_langastType(o: org.sireum.lang.ast.Type): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.Type.Named => write_langastTypeNamed(o)
+        case o: org.sireum.lang.ast.Type.Fun => write_langastTypeFun(o)
+        case o: org.sireum.lang.ast.Type.Tuple => write_langastTypeTuple(o)
+      }
+    }
+
+    def write_langastTypeNamed(o: org.sireum.lang.ast.Type.Named): Unit = {
+      writer.writeZ(Constants._langastTypeNamed)
+      write_langastName(o.name)
+      writer.writeISZ(o.typeArgs, write_langastType _)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastTypeFun(o: org.sireum.lang.ast.Type.Fun): Unit = {
+      writer.writeZ(Constants._langastTypeFun)
+      writer.writeB(o.isPure)
+      writer.writeB(o.isByName)
+      writer.writeISZ(o.args, write_langastType _)
+      write_langastType(o.ret)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastTypeTuple(o: org.sireum.lang.ast.Type.Tuple): Unit = {
+      writer.writeZ(Constants._langastTypeTuple)
+      writer.writeISZ(o.args, write_langastType _)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastPattern(o: org.sireum.lang.ast.Pattern): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.Pattern.Literal => write_langastPatternLiteral(o)
+        case o: org.sireum.lang.ast.Pattern.LitInterpolate => write_langastPatternLitInterpolate(o)
+        case o: org.sireum.lang.ast.Pattern.Ref => write_langastPatternRef(o)
+        case o: org.sireum.lang.ast.Pattern.VarBinding => write_langastPatternVarBinding(o)
+        case o: org.sireum.lang.ast.Pattern.Wildcard => write_langastPatternWildcard(o)
+        case o: org.sireum.lang.ast.Pattern.SeqWildcard => write_langastPatternSeqWildcard(o)
+        case o: org.sireum.lang.ast.Pattern.Structure => write_langastPatternStructure(o)
+      }
+    }
+
+    def write_langastPatternLiteral(o: org.sireum.lang.ast.Pattern.Literal): Unit = {
+      writer.writeZ(Constants._langastPatternLiteral)
+      write_langastLit(o.lit)
+    }
+
+    def write_langastPatternLitInterpolate(o: org.sireum.lang.ast.Pattern.LitInterpolate): Unit = {
+      writer.writeZ(Constants._langastPatternLitInterpolate)
+      writer.writeString(o.prefix)
+      writer.writeString(o.value)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastPatternRef(o: org.sireum.lang.ast.Pattern.Ref): Unit = {
+      writer.writeZ(Constants._langastPatternRef)
+      write_langastName(o.name)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastPatternVarBinding(o: org.sireum.lang.ast.Pattern.VarBinding): Unit = {
+      writer.writeZ(Constants._langastPatternVarBinding)
+      write_langastId(o.id)
+      writer.writeOption(o.tipeOpt, write_langastType _)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastPatternWildcard(o: org.sireum.lang.ast.Pattern.Wildcard): Unit = {
+      writer.writeZ(Constants._langastPatternWildcard)
+      writer.writeOption(o.typeOpt, write_langastType _)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastPatternSeqWildcard(o: org.sireum.lang.ast.Pattern.SeqWildcard): Unit = {
+      writer.writeZ(Constants._langastPatternSeqWildcard)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastPatternStructure(o: org.sireum.lang.ast.Pattern.Structure): Unit = {
+      writer.writeZ(Constants._langastPatternStructure)
+      writer.writeOption(o.idOpt, write_langastId _)
+      writer.writeOption(o.nameOpt, write_langastName _)
+      writer.writeISZ(o.patterns, write_langastPattern _)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastExp(o: org.sireum.lang.ast.Exp): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.Exp.LitB => write_langastExpLitB(o)
+        case o: org.sireum.lang.ast.Exp.LitC => write_langastExpLitC(o)
+        case o: org.sireum.lang.ast.Exp.LitZ => write_langastExpLitZ(o)
+        case o: org.sireum.lang.ast.Exp.LitF32 => write_langastExpLitF32(o)
+        case o: org.sireum.lang.ast.Exp.LitF64 => write_langastExpLitF64(o)
+        case o: org.sireum.lang.ast.Exp.LitR => write_langastExpLitR(o)
+        case o: org.sireum.lang.ast.Exp.LitString => write_langastExpLitString(o)
+        case o: org.sireum.lang.ast.Exp.LitStepId => write_langastExpLitStepId(o)
+        case o: org.sireum.lang.ast.Exp.StringInterpolate => write_langastExpStringInterpolate(o)
+        case o: org.sireum.lang.ast.Exp.This => write_langastExpThis(o)
+        case o: org.sireum.lang.ast.Exp.Super => write_langastExpSuper(o)
+        case o: org.sireum.lang.ast.Exp.Unary => write_langastExpUnary(o)
+        case o: org.sireum.lang.ast.Exp.Binary => write_langastExpBinary(o)
+        case o: org.sireum.lang.ast.Exp.Ident => write_langastExpIdent(o)
+        case o: org.sireum.lang.ast.Exp.Eta => write_langastExpEta(o)
+        case o: org.sireum.lang.ast.Exp.Tuple => write_langastExpTuple(o)
+        case o: org.sireum.lang.ast.Exp.Select => write_langastExpSelect(o)
+        case o: org.sireum.lang.ast.Exp.Invoke => write_langastExpInvoke(o)
+        case o: org.sireum.lang.ast.Exp.InvokeNamed => write_langastExpInvokeNamed(o)
+        case o: org.sireum.lang.ast.Exp.If => write_langastExpIf(o)
+        case o: org.sireum.lang.ast.Exp.Fun => write_langastExpFun(o)
+        case o: org.sireum.lang.ast.Exp.ForYield => write_langastExpForYield(o)
+        case o: org.sireum.lang.ast.Exp.QuantType => write_langastExpQuantType(o)
+        case o: org.sireum.lang.ast.Exp.QuantRange => write_langastExpQuantRange(o)
+        case o: org.sireum.lang.ast.Exp.QuantEach => write_langastExpQuantEach(o)
+        case o: org.sireum.lang.ast.Exp.Input => write_langastExpInput(o)
+        case o: org.sireum.lang.ast.Exp.OldVal => write_langastExpOldVal(o)
+        case o: org.sireum.lang.ast.Exp.LoopIndex => write_langastExpLoopIndex(o)
+        case o: org.sireum.lang.ast.Exp.StateSeq => write_langastExpStateSeq(o)
+        case o: org.sireum.lang.ast.Exp.Result => write_langastExpResult(o)
+      }
+    }
+
+    def write_langastLit(o: org.sireum.lang.ast.Lit): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.Exp.LitB => write_langastExpLitB(o)
+        case o: org.sireum.lang.ast.Exp.LitC => write_langastExpLitC(o)
+        case o: org.sireum.lang.ast.Exp.LitZ => write_langastExpLitZ(o)
+        case o: org.sireum.lang.ast.Exp.LitF32 => write_langastExpLitF32(o)
+        case o: org.sireum.lang.ast.Exp.LitF64 => write_langastExpLitF64(o)
+        case o: org.sireum.lang.ast.Exp.LitR => write_langastExpLitR(o)
+        case o: org.sireum.lang.ast.Exp.LitString => write_langastExpLitString(o)
+        case o: org.sireum.lang.ast.Exp.LitStepId => write_langastExpLitStepId(o)
+      }
+    }
+
+    def write_langastExpLitB(o: org.sireum.lang.ast.Exp.LitB): Unit = {
+      writer.writeZ(Constants._langastExpLitB)
+      writer.writeB(o.value)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpLitC(o: org.sireum.lang.ast.Exp.LitC): Unit = {
+      writer.writeZ(Constants._langastExpLitC)
+      writer.writeC(o.value)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpLitZ(o: org.sireum.lang.ast.Exp.LitZ): Unit = {
+      writer.writeZ(Constants._langastExpLitZ)
+      writer.writeZ(o.value)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpLitF32(o: org.sireum.lang.ast.Exp.LitF32): Unit = {
+      writer.writeZ(Constants._langastExpLitF32)
+      writer.writeF32(o.value)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpLitF64(o: org.sireum.lang.ast.Exp.LitF64): Unit = {
+      writer.writeZ(Constants._langastExpLitF64)
+      writer.writeF64(o.value)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpLitR(o: org.sireum.lang.ast.Exp.LitR): Unit = {
+      writer.writeZ(Constants._langastExpLitR)
+      writer.writeR(o.value)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpLitString(o: org.sireum.lang.ast.Exp.LitString): Unit = {
+      writer.writeZ(Constants._langastExpLitString)
+      writer.writeString(o.value)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpLitStepId(o: org.sireum.lang.ast.Exp.LitStepId): Unit = {
+      writer.writeZ(Constants._langastExpLitStepId)
+      writer.writeString(o.value)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpStringInterpolate(o: org.sireum.lang.ast.Exp.StringInterpolate): Unit = {
+      writer.writeZ(Constants._langastExpStringInterpolate)
+      writer.writeString(o.prefix)
+      writer.writeISZ(o.lits, write_langastExpLitString _)
+      writer.writeISZ(o.args, write_langastExp _)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastExpThis(o: org.sireum.lang.ast.Exp.This): Unit = {
+      writer.writeZ(Constants._langastExpThis)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastExpSuper(o: org.sireum.lang.ast.Exp.Super): Unit = {
+      writer.writeZ(Constants._langastExpSuper)
+      writer.writeOption(o.idOpt, write_langastId _)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastExpUnaryOpType(o: org.sireum.lang.ast.Exp.UnaryOp.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def write_langastExpUnary(o: org.sireum.lang.ast.Exp.Unary): Unit = {
+      writer.writeZ(Constants._langastExpUnary)
+      write_langastExpUnaryOpType(o.op)
+      write_langastExp(o.exp)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastExpRef(o: org.sireum.lang.ast.Exp.Ref): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.Exp.Ident => write_langastExpIdent(o)
+        case o: org.sireum.lang.ast.Exp.Select => write_langastExpSelect(o)
+      }
+    }
+
+    def write_langastExpBinary(o: org.sireum.lang.ast.Exp.Binary): Unit = {
+      writer.writeZ(Constants._langastExpBinary)
+      write_langastExp(o.left)
+      writer.writeString(o.op)
+      write_langastExp(o.right)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastExpIdent(o: org.sireum.lang.ast.Exp.Ident): Unit = {
+      writer.writeZ(Constants._langastExpIdent)
+      write_langastId(o.id)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastExpEta(o: org.sireum.lang.ast.Exp.Eta): Unit = {
+      writer.writeZ(Constants._langastExpEta)
+      write_langastExpRef(o.ref)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastExpTuple(o: org.sireum.lang.ast.Exp.Tuple): Unit = {
+      writer.writeZ(Constants._langastExpTuple)
+      writer.writeISZ(o.args, write_langastExp _)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastExpSelect(o: org.sireum.lang.ast.Exp.Select): Unit = {
+      writer.writeZ(Constants._langastExpSelect)
+      writer.writeOption(o.receiverOpt, write_langastExp _)
+      write_langastId(o.id)
+      writer.writeISZ(o.targs, write_langastType _)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastExpInvoke(o: org.sireum.lang.ast.Exp.Invoke): Unit = {
+      writer.writeZ(Constants._langastExpInvoke)
+      writer.writeOption(o.receiverOpt, write_langastExp _)
+      write_langastExpIdent(o.ident)
+      writer.writeISZ(o.targs, write_langastType _)
+      writer.writeISZ(o.args, write_langastExp _)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastExpInvokeNamed(o: org.sireum.lang.ast.Exp.InvokeNamed): Unit = {
+      writer.writeZ(Constants._langastExpInvokeNamed)
+      writer.writeOption(o.receiverOpt, write_langastExp _)
+      write_langastExpIdent(o.ident)
+      writer.writeISZ(o.targs, write_langastType _)
+      writer.writeISZ(o.args, write_langastNamedArg _)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastExpIf(o: org.sireum.lang.ast.Exp.If): Unit = {
+      writer.writeZ(Constants._langastExpIf)
+      write_langastExp(o.cond)
+      write_langastExp(o.thenExp)
+      write_langastExp(o.elseExp)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastExpFunParam(o: org.sireum.lang.ast.Exp.Fun.Param): Unit = {
+      writer.writeZ(Constants._langastExpFunParam)
+      writer.writeOption(o.idOpt, write_langastId _)
+      writer.writeOption(o.tipeOpt, write_langastType _)
+      writer.writeOption(o.typedOpt, write_langastTyped _)
+    }
+
+    def write_langastExpFun(o: org.sireum.lang.ast.Exp.Fun): Unit = {
+      writer.writeZ(Constants._langastExpFun)
+      writer.writeISZ(o.context, writer.writeString _)
+      writer.writeISZ(o.params, write_langastExpFunParam _)
+      write_langastAssignExp(o.exp)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastExpForYield(o: org.sireum.lang.ast.Exp.ForYield): Unit = {
+      writer.writeZ(Constants._langastExpForYield)
+      writer.writeISZ(o.enumGens, write_langastEnumGenFor _)
+      write_langastExp(o.exp)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastExpQuant(o: org.sireum.lang.ast.Exp.Quant): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.Exp.QuantType => write_langastExpQuantType(o)
+        case o: org.sireum.lang.ast.Exp.QuantRange => write_langastExpQuantRange(o)
+        case o: org.sireum.lang.ast.Exp.QuantEach => write_langastExpQuantEach(o)
+      }
+    }
+
+    def write_langastExpQuantType(o: org.sireum.lang.ast.Exp.QuantType): Unit = {
+      writer.writeZ(Constants._langastExpQuantType)
+      writer.writeB(o.isForall)
+      write_langastExpFun(o.fun)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpQuantRange(o: org.sireum.lang.ast.Exp.QuantRange): Unit = {
+      writer.writeZ(Constants._langastExpQuantRange)
+      writer.writeB(o.isForall)
+      write_langastExp(o.lo)
+      write_langastExp(o.hi)
+      writer.writeB(o.hiExact)
+      write_langastExpFun(o.fun)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastExpQuantEach(o: org.sireum.lang.ast.Exp.QuantEach): Unit = {
+      writer.writeZ(Constants._langastExpQuantEach)
+      writer.writeB(o.isForall)
+      write_langastExp(o.seq)
+      write_langastExpFun(o.fun)
+      write_langastResolvedAttr(o.attr)
+    }
+
+    def write_langastExpInput(o: org.sireum.lang.ast.Exp.Input): Unit = {
+      writer.writeZ(Constants._langastExpInput)
+      write_langastExp(o.exp)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpOldVal(o: org.sireum.lang.ast.Exp.OldVal): Unit = {
+      writer.writeZ(Constants._langastExpOldVal)
+      write_langastExp(o.exp)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpLoopIndex(o: org.sireum.lang.ast.Exp.LoopIndex): Unit = {
+      writer.writeZ(Constants._langastExpLoopIndex)
+      writer.writeOption(o.tipeOpt, write_langastType _)
+      write_langastExpIdent(o.exp)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastExpStateSeq(o: org.sireum.lang.ast.Exp.StateSeq): Unit = {
+      writer.writeZ(Constants._langastExpStateSeq)
+      write_langastId(o.id)
+      writer.writeISZ(o.fragments, write_langastExpStateSeqFragment _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpStateSeqFragment(o: org.sireum.lang.ast.Exp.StateSeq.Fragment): Unit = {
+      writer.writeZ(Constants._langastExpStateSeqFragment)
+      write_langastId(o.id)
+      write_langastExp(o.exp)
+    }
+
+    def write_langastExpResult(o: org.sireum.lang.ast.Exp.Result): Unit = {
+      writer.writeZ(Constants._langastExpResult)
+      writer.writeOption(o.tipeOpt, write_langastType _)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastNamedArg(o: org.sireum.lang.ast.NamedArg): Unit = {
+      writer.writeZ(Constants._langastNamedArg)
+      write_langastId(o.id)
+      write_langastExp(o.arg)
+      writer.writeZ(o.index)
+    }
+
+    def write_langastId(o: org.sireum.lang.ast.Id): Unit = {
+      writer.writeZ(Constants._langastId)
+      writer.writeString(o.value)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastName(o: org.sireum.lang.ast.Name): Unit = {
+      writer.writeZ(Constants._langastName)
+      writer.writeISZ(o.ids, write_langastId _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastBody(o: org.sireum.lang.ast.Body): Unit = {
+      writer.writeZ(Constants._langastBody)
+      writer.writeISZ(o.stmts, write_langastStmt _)
+      writer.writeISZ(o.undecls, write_langastResolvedInfoLocalVar _)
+    }
+
+    def write_langastAdtParam(o: org.sireum.lang.ast.AdtParam): Unit = {
+      writer.writeZ(Constants._langastAdtParam)
+      writer.writeB(o.isHidden)
+      writer.writeB(o.isVal)
+      write_langastId(o.id)
+      write_langastType(o.tipe)
+    }
+
+    def write_langastMethodSig(o: org.sireum.lang.ast.MethodSig): Unit = {
+      writer.writeZ(Constants._langastMethodSig)
+      writer.writeB(o.isPure)
+      write_langastId(o.id)
+      writer.writeISZ(o.typeParams, write_langastTypeParam _)
+      writer.writeB(o.hasParams)
+      writer.writeISZ(o.params, write_langastParam _)
+      write_langastType(o.returnType)
+    }
+
+    def write_langastParam(o: org.sireum.lang.ast.Param): Unit = {
+      writer.writeZ(Constants._langastParam)
+      writer.writeB(o.isHidden)
+      write_langastId(o.id)
+      write_langastType(o.tipe)
+    }
+
+    def write_langastTypeParam(o: org.sireum.lang.ast.TypeParam): Unit = {
+      writer.writeZ(Constants._langastTypeParam)
+      write_langastId(o.id)
+    }
+
+    def write_langastAttr(o: org.sireum.lang.ast.Attr): Unit = {
+      writer.writeZ(Constants._langastAttr)
+      writer.writeOption(o.posOpt, writer.writePosition _)
+    }
+
+    def write_langastTypedAttr(o: org.sireum.lang.ast.TypedAttr): Unit = {
+      writer.writeZ(Constants._langastTypedAttr)
+      writer.writeOption(o.posOpt, writer.writePosition _)
+      writer.writeOption(o.typedOpt, write_langastTyped _)
+    }
+
+    def write_langastResolvedAttr(o: org.sireum.lang.ast.ResolvedAttr): Unit = {
+      writer.writeZ(Constants._langastResolvedAttr)
+      writer.writeOption(o.posOpt, writer.writePosition _)
+      writer.writeOption(o.resOpt, write_langastResolvedInfo _)
+      writer.writeOption(o.typedOpt, write_langastTyped _)
+    }
+
+    def write_langastResolvedInfo(o: org.sireum.lang.ast.ResolvedInfo): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.ResolvedInfo.BuiltIn => write_langastResolvedInfoBuiltIn(o)
+        case o: org.sireum.lang.ast.ResolvedInfo.Package => write_langastResolvedInfoPackage(o)
+        case o: org.sireum.lang.ast.ResolvedInfo.Enum => write_langastResolvedInfoEnum(o)
+        case o: org.sireum.lang.ast.ResolvedInfo.EnumElement => write_langastResolvedInfoEnumElement(o)
+        case o: org.sireum.lang.ast.ResolvedInfo.Object => write_langastResolvedInfoObject(o)
+        case o: org.sireum.lang.ast.ResolvedInfo.Var => write_langastResolvedInfoVar(o)
+        case o: org.sireum.lang.ast.ResolvedInfo.Method => write_langastResolvedInfoMethod(o)
+        case o: org.sireum.lang.ast.ResolvedInfo.Methods => write_langastResolvedInfoMethods(o)
+        case o: org.sireum.lang.ast.ResolvedInfo.Tuple => write_langastResolvedInfoTuple(o)
+        case o: org.sireum.lang.ast.ResolvedInfo.LocalVar => write_langastResolvedInfoLocalVar(o)
+        case o: org.sireum.lang.ast.ResolvedInfo.Fact => write_langastResolvedInfoFact(o)
+        case o: org.sireum.lang.ast.ResolvedInfo.Theorem => write_langastResolvedInfoTheorem(o)
+        case o: org.sireum.lang.ast.ResolvedInfo.Inv => write_langastResolvedInfoInv(o)
+      }
+    }
+
+    def write_langastResolvedInfoBuiltInKindType(o: org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def write_langastResolvedInfoBuiltIn(o: org.sireum.lang.ast.ResolvedInfo.BuiltIn): Unit = {
+      writer.writeZ(Constants._langastResolvedInfoBuiltIn)
+      write_langastResolvedInfoBuiltInKindType(o.kind)
+    }
+
+    def write_langastResolvedInfoPackage(o: org.sireum.lang.ast.ResolvedInfo.Package): Unit = {
+      writer.writeZ(Constants._langastResolvedInfoPackage)
+      writer.writeISZ(o.name, writer.writeString _)
+    }
+
+    def write_langastResolvedInfoEnum(o: org.sireum.lang.ast.ResolvedInfo.Enum): Unit = {
+      writer.writeZ(Constants._langastResolvedInfoEnum)
+      writer.writeISZ(o.name, writer.writeString _)
+    }
+
+    def write_langastResolvedInfoEnumElement(o: org.sireum.lang.ast.ResolvedInfo.EnumElement): Unit = {
+      writer.writeZ(Constants._langastResolvedInfoEnumElement)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.name)
+      writer.writeZ(o.ordinal)
+    }
+
+    def write_langastResolvedInfoObject(o: org.sireum.lang.ast.ResolvedInfo.Object): Unit = {
+      writer.writeZ(Constants._langastResolvedInfoObject)
+      writer.writeISZ(o.name, writer.writeString _)
+    }
+
+    def write_langastResolvedInfoVar(o: org.sireum.lang.ast.ResolvedInfo.Var): Unit = {
+      writer.writeZ(Constants._langastResolvedInfoVar)
+      writer.writeB(o.isInObject)
+      writer.writeB(o.isSpec)
+      writer.writeB(o.isVal)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.id)
+    }
+
+    def write_langastResolvedInfoMethod(o: org.sireum.lang.ast.ResolvedInfo.Method): Unit = {
+      writer.writeZ(Constants._langastResolvedInfoMethod)
+      writer.writeB(o.isInObject)
+      write_langastMethodModeType(o.mode)
+      writer.writeISZ(o.typeParams, writer.writeString _)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.id)
+      writer.writeISZ(o.paramNames, writer.writeString _)
+      writer.writeOption(o.tpeOpt, write_langastTypedFun _)
+      writer.writeISZ(o.reads, write_langastResolvedInfo _)
+      writer.writeISZ(o.writes, write_langastResolvedInfo _)
+    }
+
+    def write_langastResolvedInfoMethods(o: org.sireum.lang.ast.ResolvedInfo.Methods): Unit = {
+      writer.writeZ(Constants._langastResolvedInfoMethods)
+      writer.writeISZ(o.methods, write_langastResolvedInfoMethod _)
+    }
+
+    def write_langastResolvedInfoTuple(o: org.sireum.lang.ast.ResolvedInfo.Tuple): Unit = {
+      writer.writeZ(Constants._langastResolvedInfoTuple)
+      writer.writeZ(o.size)
+      writer.writeZ(o.index)
+    }
+
+    def write_langastResolvedInfoLocalVarScopeType(o: org.sireum.lang.ast.ResolvedInfo.LocalVar.Scope.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def write_langastResolvedInfoLocalVar(o: org.sireum.lang.ast.ResolvedInfo.LocalVar): Unit = {
+      writer.writeZ(Constants._langastResolvedInfoLocalVar)
+      writer.writeISZ(o.context, writer.writeString _)
+      write_langastResolvedInfoLocalVarScopeType(o.scope)
+      writer.writeB(o.isSpec)
+      writer.writeB(o.isVal)
+      writer.writeString(o.id)
+    }
+
+    def write_langastResolvedInfoFact(o: org.sireum.lang.ast.ResolvedInfo.Fact): Unit = {
+      writer.writeZ(Constants._langastResolvedInfoFact)
+      writer.writeISZ(o.name, writer.writeString _)
+    }
+
+    def write_langastResolvedInfoTheorem(o: org.sireum.lang.ast.ResolvedInfo.Theorem): Unit = {
+      writer.writeZ(Constants._langastResolvedInfoTheorem)
+      writer.writeISZ(o.name, writer.writeString _)
+    }
+
+    def write_langastResolvedInfoInv(o: org.sireum.lang.ast.ResolvedInfo.Inv): Unit = {
+      writer.writeZ(Constants._langastResolvedInfoInv)
+      writer.writeB(o.isInObject)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.id)
+    }
+
+    def write_langastTruthTableRow(o: org.sireum.lang.ast.TruthTable.Row): Unit = {
+      writer.writeZ(Constants._langastTruthTableRow)
+      write_langastTruthTableAssignment(o.assignment)
+      writer.writePosition(o.separator)
+      write_langastTruthTableAssignment(o.values)
+    }
+
+    def write_langastTruthTableAssignment(o: org.sireum.lang.ast.TruthTable.Assignment): Unit = {
+      writer.writeZ(Constants._langastTruthTableAssignment)
+      writer.writeISZ(o.values, write_langastExpLitB _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastTruthTableConclusion(o: org.sireum.lang.ast.TruthTable.Conclusion): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.TruthTable.Conclusion.Validity => write_langastTruthTableConclusionValidity(o)
+        case o: org.sireum.lang.ast.TruthTable.Conclusion.Tautology => write_langastTruthTableConclusionTautology(o)
+        case o: org.sireum.lang.ast.TruthTable.Conclusion.Contradictory => write_langastTruthTableConclusionContradictory(o)
+        case o: org.sireum.lang.ast.TruthTable.Conclusion.Contingent => write_langastTruthTableConclusionContingent(o)
+      }
+    }
+
+    def write_langastTruthTableConclusionValidity(o: org.sireum.lang.ast.TruthTable.Conclusion.Validity): Unit = {
+      writer.writeZ(Constants._langastTruthTableConclusionValidity)
+      writer.writeB(o.isValid)
+      writer.writeISZ(o.assignments, write_langastTruthTableAssignment _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastTruthTableConclusionTautology(o: org.sireum.lang.ast.TruthTable.Conclusion.Tautology): Unit = {
+      writer.writeZ(Constants._langastTruthTableConclusionTautology)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastTruthTableConclusionContradictory(o: org.sireum.lang.ast.TruthTable.Conclusion.Contradictory): Unit = {
+      writer.writeZ(Constants._langastTruthTableConclusionContradictory)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastTruthTableConclusionContingent(o: org.sireum.lang.ast.TruthTable.Conclusion.Contingent): Unit = {
+      writer.writeZ(Constants._langastTruthTableConclusionContingent)
+      writer.writeISZ(o.trueAssignments, write_langastTruthTableAssignment _)
+      writer.writeISZ(o.falseAssignments, write_langastTruthTableAssignment _)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastMethodModeType(o: org.sireum.lang.ast.MethodMode.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def write_langastTyped(o: org.sireum.lang.ast.Typed): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.Typed.Name => write_langastTypedName(o)
+        case o: org.sireum.lang.ast.Typed.Tuple => write_langastTypedTuple(o)
+        case o: org.sireum.lang.ast.Typed.Fun => write_langastTypedFun(o)
+        case o: org.sireum.lang.ast.Typed.TypeVar => write_langastTypedTypeVar(o)
+        case o: org.sireum.lang.ast.Typed.Package => write_langastTypedPackage(o)
+        case o: org.sireum.lang.ast.Typed.Object => write_langastTypedObject(o)
+        case o: org.sireum.lang.ast.Typed.Enum => write_langastTypedEnum(o)
+        case o: org.sireum.lang.ast.Typed.Method => write_langastTypedMethod(o)
+        case o: org.sireum.lang.ast.Typed.Methods => write_langastTypedMethods(o)
+        case o: org.sireum.lang.ast.Typed.Fact => write_langastTypedFact(o)
+        case o: org.sireum.lang.ast.Typed.Theorem => write_langastTypedTheorem(o)
+        case o: org.sireum.lang.ast.Typed.Inv => write_langastTypedInv(o)
+      }
+    }
+
+    def write_langastTypedName(o: org.sireum.lang.ast.Typed.Name): Unit = {
+      writer.writeZ(Constants._langastTypedName)
+      writer.writeISZ(o.ids, writer.writeString _)
+      writer.writeISZ(o.args, write_langastTyped _)
+    }
+
+    def write_langastTypedTuple(o: org.sireum.lang.ast.Typed.Tuple): Unit = {
+      writer.writeZ(Constants._langastTypedTuple)
+      writer.writeISZ(o.args, write_langastTyped _)
+    }
+
+    def write_langastTypedFun(o: org.sireum.lang.ast.Typed.Fun): Unit = {
+      writer.writeZ(Constants._langastTypedFun)
+      writer.writeB(o.isPure)
+      writer.writeB(o.isByName)
+      writer.writeISZ(o.args, write_langastTyped _)
+      write_langastTyped(o.ret)
+    }
+
+    def write_langastTypedTypeVar(o: org.sireum.lang.ast.Typed.TypeVar): Unit = {
+      writer.writeZ(Constants._langastTypedTypeVar)
+      writer.writeString(o.id)
+    }
+
+    def write_langastTypedPackage(o: org.sireum.lang.ast.Typed.Package): Unit = {
+      writer.writeZ(Constants._langastTypedPackage)
+      writer.writeISZ(o.name, writer.writeString _)
+    }
+
+    def write_langastTypedObject(o: org.sireum.lang.ast.Typed.Object): Unit = {
+      writer.writeZ(Constants._langastTypedObject)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.id)
+    }
+
+    def write_langastTypedEnum(o: org.sireum.lang.ast.Typed.Enum): Unit = {
+      writer.writeZ(Constants._langastTypedEnum)
+      writer.writeISZ(o.name, writer.writeString _)
+    }
+
+    def write_langastTypedMethod(o: org.sireum.lang.ast.Typed.Method): Unit = {
+      writer.writeZ(Constants._langastTypedMethod)
+      writer.writeB(o.isInObject)
+      write_langastMethodModeType(o.mode)
+      writer.writeISZ(o.typeParams, writer.writeString _)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.name)
+      writer.writeISZ(o.paramNames, writer.writeString _)
+      write_langastTypedFun(o.tpe)
+    }
+
+    def write_langastTypedMethods(o: org.sireum.lang.ast.Typed.Methods): Unit = {
+      writer.writeZ(Constants._langastTypedMethods)
+      writer.writeISZ(o.methods, write_langastTypedMethod _)
+    }
+
+    def write_langastTypedFact(o: org.sireum.lang.ast.Typed.Fact): Unit = {
+      writer.writeZ(Constants._langastTypedFact)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.id)
+    }
+
+    def write_langastTypedTheorem(o: org.sireum.lang.ast.Typed.Theorem): Unit = {
+      writer.writeZ(Constants._langastTypedTheorem)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.id)
+    }
+
+    def write_langastTypedInv(o: org.sireum.lang.ast.Typed.Inv): Unit = {
+      writer.writeZ(Constants._langastTypedInv)
+      writer.writeB(o.isInObject)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.id)
     }
 
     def result: ISZ[U8] = {
@@ -3048,7 +4593,7 @@ object MsgPack {
         reader.expectZ(Constants.GclStateVar)
       }
       val name = reader.readString()
-      val exp = readGclExp()
+      val exp = read_langastExp()
       return GclStateVar(name, exp)
     }
 
@@ -3062,9 +4607,8 @@ object MsgPack {
         reader.expectZ(Constants.GclInvariant)
       }
       val name = reader.readString()
-      val exp = readGclExp()
-      val slangExp = reader.readString()
-      return GclInvariant(name, exp, slangExp)
+      val exp = read_langastExp()
+      return GclInvariant(name, exp)
     }
 
     def readGclSpec(): GclSpec = {
@@ -3090,9 +4634,8 @@ object MsgPack {
         reader.expectZ(Constants.GclAssume)
       }
       val name = reader.readString()
-      val exp = readGclExp()
-      val slangExp = reader.readString()
-      return GclAssume(name, exp, slangExp)
+      val exp = read_langastExp()
+      return GclAssume(name, exp)
     }
 
     def readGclGuarantee(): GclGuarantee = {
@@ -3105,9 +4648,8 @@ object MsgPack {
         reader.expectZ(Constants.GclGuarantee)
       }
       val name = reader.readString()
-      val exp = readGclExp()
-      val slangExp = reader.readString()
-      return GclGuarantee(name, exp, slangExp)
+      val exp = read_langastExp()
+      return GclGuarantee(name, exp)
     }
 
     def readGclIntegration(): GclIntegration = {
@@ -3133,11 +4675,9 @@ object MsgPack {
         reader.expectZ(Constants.GclCaseStatement)
       }
       val name = reader.readString()
-      val assumes = readGclExp()
-      val slangAssumes = reader.readString()
-      val guarentees = readGclExp()
-      val slangGuarentees = reader.readString()
-      return GclCaseStatement(name, assumes, slangAssumes, guarentees, slangGuarentees)
+      val assumes = read_langastExp()
+      val guarantees = read_langastExp()
+      return GclCaseStatement(name, assumes, guarantees)
     }
 
     def readGclCompute(): GclCompute = {
@@ -3151,128 +4691,6 @@ object MsgPack {
       }
       val cases = reader.readISZ(readGclCaseStatement _)
       return GclCompute(cases)
-    }
-
-    def readGclExp(): GclExp = {
-      val i = reader.curr
-      val t = reader.readZ()
-      t match {
-        case Constants.GclUnaryExp => val r = readGclUnaryExpT(T); return r
-        case Constants.GclBinaryExp => val r = readGclBinaryExpT(T); return r
-        case Constants.GclNameExp => val r = readGclNameExpT(T); return r
-        case Constants.GclAccessExp => val r = readGclAccessExpT(T); return r
-        case Constants.GclLiteralExp => val r = readGclLiteralExpT(T); return r
-        case Constants.GclEnumLitExp => val r = readGclEnumLitExpT(T); return r
-        case _ =>
-          reader.error(i, s"$t is not a valid type of GclExp.")
-          val r = readGclEnumLitExpT(T)
-          return r
-      }
-    }
-
-    def readGclUnaryOpType(): GclUnaryOp.Type = {
-      val r = reader.readZ()
-      return GclUnaryOp.byOrdinal(r).get
-    }
-
-    def readGclBinaryOpType(): GclBinaryOp.Type = {
-      val r = reader.readZ()
-      return GclBinaryOp.byOrdinal(r).get
-    }
-
-    def readGclLiteralTypeType(): GclLiteralType.Type = {
-      val r = reader.readZ()
-      return GclLiteralType.byOrdinal(r).get
-    }
-
-    def readGclUnaryExp(): GclUnaryExp = {
-      val r = readGclUnaryExpT(F)
-      return r
-    }
-
-    def readGclUnaryExpT(typeParsed: B): GclUnaryExp = {
-      if (!typeParsed) {
-        reader.expectZ(Constants.GclUnaryExp)
-      }
-      val op = readGclUnaryOpType()
-      val exp = readGclExp()
-      val pos = reader.readOption(reader.readPosition _)
-      return GclUnaryExp(op, exp, pos)
-    }
-
-    def readGclBinaryExp(): GclBinaryExp = {
-      val r = readGclBinaryExpT(F)
-      return r
-    }
-
-    def readGclBinaryExpT(typeParsed: B): GclBinaryExp = {
-      if (!typeParsed) {
-        reader.expectZ(Constants.GclBinaryExp)
-      }
-      val op = readGclBinaryOpType()
-      val lhs = readGclExp()
-      val rhs = readGclExp()
-      val pos = reader.readOption(reader.readPosition _)
-      return GclBinaryExp(op, lhs, rhs, pos)
-    }
-
-    def readGclNameExp(): GclNameExp = {
-      val r = readGclNameExpT(F)
-      return r
-    }
-
-    def readGclNameExpT(typeParsed: B): GclNameExp = {
-      if (!typeParsed) {
-        reader.expectZ(Constants.GclNameExp)
-      }
-      val name = readName()
-      val pos = reader.readOption(reader.readPosition _)
-      return GclNameExp(name, pos)
-    }
-
-    def readGclAccessExp(): GclAccessExp = {
-      val r = readGclAccessExpT(F)
-      return r
-    }
-
-    def readGclAccessExpT(typeParsed: B): GclAccessExp = {
-      if (!typeParsed) {
-        reader.expectZ(Constants.GclAccessExp)
-      }
-      val exp = readGclExp()
-      val attributeName = reader.readString()
-      val pos = reader.readOption(reader.readPosition _)
-      return GclAccessExp(exp, attributeName, pos)
-    }
-
-    def readGclLiteralExp(): GclLiteralExp = {
-      val r = readGclLiteralExpT(F)
-      return r
-    }
-
-    def readGclLiteralExpT(typeParsed: B): GclLiteralExp = {
-      if (!typeParsed) {
-        reader.expectZ(Constants.GclLiteralExp)
-      }
-      val typ = readGclLiteralTypeType()
-      val exp = reader.readString()
-      val pos = reader.readOption(reader.readPosition _)
-      return GclLiteralExp(typ, exp, pos)
-    }
-
-    def readGclEnumLitExp(): GclEnumLitExp = {
-      val r = readGclEnumLitExpT(F)
-      return r
-    }
-
-    def readGclEnumLitExpT(typeParsed: B): GclEnumLitExp = {
-      if (!typeParsed) {
-        reader.expectZ(Constants.GclEnumLitExp)
-      }
-      val classifier = reader.readString()
-      val value = reader.readString()
-      val pos = reader.readOption(reader.readPosition _)
-      return GclEnumLitExp(classifier, value, pos)
     }
 
     def readGclTODO(): GclTODO = {
@@ -3382,6 +4800,2664 @@ object MsgPack {
       val typeName = readName()
       val parentType = reader.readISZ(readName _)
       return SmfType(typeName, parentType)
+    }
+
+    def read_langastTopUnit(): org.sireum.lang.ast.TopUnit = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastTopUnitProgram => val r = read_langastTopUnitProgramT(T); return r
+        case Constants._langastTopUnitSequentUnit => val r = read_langastTopUnitSequentUnitT(T); return r
+        case Constants._langastTopUnitTruthTableUnit => val r = read_langastTopUnitTruthTableUnitT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.TopUnit.")
+          val r = read_langastTopUnitTruthTableUnitT(T)
+          return r
+      }
+    }
+
+    def read_langastTopUnitProgram(): org.sireum.lang.ast.TopUnit.Program = {
+      val r = read_langastTopUnitProgramT(F)
+      return r
+    }
+
+    def read_langastTopUnitProgramT(typeParsed: B): org.sireum.lang.ast.TopUnit.Program = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTopUnitProgram)
+      }
+      val fileUriOpt = reader.readOption(reader.readString _)
+      val packageName = read_langastName()
+      val body = read_langastBody()
+      return org.sireum.lang.ast.TopUnit.Program(fileUriOpt, packageName, body)
+    }
+
+    def read_langastTopUnitSequentUnit(): org.sireum.lang.ast.TopUnit.SequentUnit = {
+      val r = read_langastTopUnitSequentUnitT(F)
+      return r
+    }
+
+    def read_langastTopUnitSequentUnitT(typeParsed: B): org.sireum.lang.ast.TopUnit.SequentUnit = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTopUnitSequentUnit)
+      }
+      val fileUriOpt = reader.readOption(reader.readString _)
+      val sequent = read_langastSequent()
+      return org.sireum.lang.ast.TopUnit.SequentUnit(fileUriOpt, sequent)
+    }
+
+    def read_langastTopUnitTruthTableUnit(): org.sireum.lang.ast.TopUnit.TruthTableUnit = {
+      val r = read_langastTopUnitTruthTableUnitT(F)
+      return r
+    }
+
+    def read_langastTopUnitTruthTableUnitT(typeParsed: B): org.sireum.lang.ast.TopUnit.TruthTableUnit = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTopUnitTruthTableUnit)
+      }
+      val fileUriOpt = reader.readOption(reader.readString _)
+      val stars = reader.readISZ(reader.readPosition _)
+      val vars = reader.readISZ(read_langastId _)
+      val separator = reader.readPosition()
+      val isSequent = reader.readB()
+      val sequent = read_langastSequent()
+      val rows = reader.readISZ(read_langastTruthTableRow _)
+      val conclusionOpt = reader.readOption(read_langastTruthTableConclusion _)
+      return org.sireum.lang.ast.TopUnit.TruthTableUnit(fileUriOpt, stars, vars, separator, isSequent, sequent, rows, conclusionOpt)
+    }
+
+    def read_langastStmt(): org.sireum.lang.ast.Stmt = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastStmtImport => val r = read_langastStmtImportT(T); return r
+        case Constants._langastStmtVar => val r = read_langastStmtVarT(T); return r
+        case Constants._langastStmtVarPattern => val r = read_langastStmtVarPatternT(T); return r
+        case Constants._langastStmtSpecVar => val r = read_langastStmtSpecVarT(T); return r
+        case Constants._langastStmtMethod => val r = read_langastStmtMethodT(T); return r
+        case Constants._langastStmtExtMethod => val r = read_langastStmtExtMethodT(T); return r
+        case Constants._langastStmtJustMethod => val r = read_langastStmtJustMethodT(T); return r
+        case Constants._langastStmtSpecMethod => val r = read_langastStmtSpecMethodT(T); return r
+        case Constants._langastStmtEnum => val r = read_langastStmtEnumT(T); return r
+        case Constants._langastStmtSubZ => val r = read_langastStmtSubZT(T); return r
+        case Constants._langastStmtObject => val r = read_langastStmtObjectT(T); return r
+        case Constants._langastStmtSig => val r = read_langastStmtSigT(T); return r
+        case Constants._langastStmtAdt => val r = read_langastStmtAdtT(T); return r
+        case Constants._langastStmtTypeAlias => val r = read_langastStmtTypeAliasT(T); return r
+        case Constants._langastStmtAssign => val r = read_langastStmtAssignT(T); return r
+        case Constants._langastStmtBlock => val r = read_langastStmtBlockT(T); return r
+        case Constants._langastStmtIf => val r = read_langastStmtIfT(T); return r
+        case Constants._langastStmtMatch => val r = read_langastStmtMatchT(T); return r
+        case Constants._langastStmtWhile => val r = read_langastStmtWhileT(T); return r
+        case Constants._langastStmtDoWhile => val r = read_langastStmtDoWhileT(T); return r
+        case Constants._langastStmtFor => val r = read_langastStmtForT(T); return r
+        case Constants._langastStmtReturn => val r = read_langastStmtReturnT(T); return r
+        case Constants._langastStmtExpr => val r = read_langastStmtExprT(T); return r
+        case Constants._langastStmtFact => val r = read_langastStmtFactT(T); return r
+        case Constants._langastStmtInv => val r = read_langastStmtInvT(T); return r
+        case Constants._langastStmtTheorem => val r = read_langastStmtTheoremT(T); return r
+        case Constants._langastStmtDataRefinement => val r = read_langastStmtDataRefinementT(T); return r
+        case Constants._langastStmtSpecLabel => val r = read_langastStmtSpecLabelT(T); return r
+        case Constants._langastStmtSpecBlock => val r = read_langastStmtSpecBlockT(T); return r
+        case Constants._langastStmtDeduceSequent => val r = read_langastStmtDeduceSequentT(T); return r
+        case Constants._langastStmtDeduceSteps => val r = read_langastStmtDeduceStepsT(T); return r
+        case Constants._langastStmtHavoc => val r = read_langastStmtHavocT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.Stmt.")
+          val r = read_langastStmtHavocT(T)
+          return r
+      }
+    }
+
+    def read_langastHasModifies(): org.sireum.lang.ast.HasModifies = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastLoopContract => val r = read_langastLoopContractT(T); return r
+        case Constants._langastMethodContractSimple => val r = read_langastMethodContractSimpleT(T); return r
+        case Constants._langastMethodContractCases => val r = read_langastMethodContractCasesT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.HasModifies.")
+          val r = read_langastMethodContractCasesT(T)
+          return r
+      }
+    }
+
+    def read_langastLoopContract(): org.sireum.lang.ast.LoopContract = {
+      val r = read_langastLoopContractT(F)
+      return r
+    }
+
+    def read_langastLoopContractT(typeParsed: B): org.sireum.lang.ast.LoopContract = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastLoopContract)
+      }
+      val invariants = reader.readISZ(read_langastExp _)
+      val modifies = reader.readISZ(read_langastExpIdent _)
+      val maxItOpt = reader.readOption(read_langastExpLitZ _)
+      return org.sireum.lang.ast.LoopContract(invariants, modifies, maxItOpt)
+    }
+
+    def read_langastStmtImport(): org.sireum.lang.ast.Stmt.Import = {
+      val r = read_langastStmtImportT(F)
+      return r
+    }
+
+    def read_langastStmtImportT(typeParsed: B): org.sireum.lang.ast.Stmt.Import = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtImport)
+      }
+      val importers = reader.readISZ(read_langastStmtImportImporter _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.Import(importers, attr)
+    }
+
+    def read_langastStmtImportImporter(): org.sireum.lang.ast.Stmt.Import.Importer = {
+      val r = read_langastStmtImportImporterT(F)
+      return r
+    }
+
+    def read_langastStmtImportImporterT(typeParsed: B): org.sireum.lang.ast.Stmt.Import.Importer = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtImportImporter)
+      }
+      val name = read_langastName()
+      val selectorOpt = reader.readOption(read_langastStmtImportSelector _)
+      return org.sireum.lang.ast.Stmt.Import.Importer(name, selectorOpt)
+    }
+
+    def read_langastStmtImportSelector(): org.sireum.lang.ast.Stmt.Import.Selector = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastStmtImportMultiSelector => val r = read_langastStmtImportMultiSelectorT(T); return r
+        case Constants._langastStmtImportWildcardSelector => val r = read_langastStmtImportWildcardSelectorT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.Stmt.Import.Selector.")
+          val r = read_langastStmtImportWildcardSelectorT(T)
+          return r
+      }
+    }
+
+    def read_langastStmtImportMultiSelector(): org.sireum.lang.ast.Stmt.Import.MultiSelector = {
+      val r = read_langastStmtImportMultiSelectorT(F)
+      return r
+    }
+
+    def read_langastStmtImportMultiSelectorT(typeParsed: B): org.sireum.lang.ast.Stmt.Import.MultiSelector = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtImportMultiSelector)
+      }
+      val selectors = reader.readISZ(read_langastStmtImportNamedSelector _)
+      return org.sireum.lang.ast.Stmt.Import.MultiSelector(selectors)
+    }
+
+    def read_langastStmtImportWildcardSelector(): org.sireum.lang.ast.Stmt.Import.WildcardSelector = {
+      val r = read_langastStmtImportWildcardSelectorT(F)
+      return r
+    }
+
+    def read_langastStmtImportWildcardSelectorT(typeParsed: B): org.sireum.lang.ast.Stmt.Import.WildcardSelector = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtImportWildcardSelector)
+      }
+      return org.sireum.lang.ast.Stmt.Import.WildcardSelector()
+    }
+
+    def read_langastStmtImportNamedSelector(): org.sireum.lang.ast.Stmt.Import.NamedSelector = {
+      val r = read_langastStmtImportNamedSelectorT(F)
+      return r
+    }
+
+    def read_langastStmtImportNamedSelectorT(typeParsed: B): org.sireum.lang.ast.Stmt.Import.NamedSelector = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtImportNamedSelector)
+      }
+      val from = read_langastId()
+      val to = read_langastId()
+      return org.sireum.lang.ast.Stmt.Import.NamedSelector(from, to)
+    }
+
+    def read_langastStmtVar(): org.sireum.lang.ast.Stmt.Var = {
+      val r = read_langastStmtVarT(F)
+      return r
+    }
+
+    def read_langastStmtVarT(typeParsed: B): org.sireum.lang.ast.Stmt.Var = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtVar)
+      }
+      val isSpec = reader.readB()
+      val isVal = reader.readB()
+      val id = read_langastId()
+      val tipeOpt = reader.readOption(read_langastType _)
+      val initOpt = reader.readOption(read_langastAssignExp _)
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Stmt.Var(isSpec, isVal, id, tipeOpt, initOpt, attr)
+    }
+
+    def read_langastStmtVarPattern(): org.sireum.lang.ast.Stmt.VarPattern = {
+      val r = read_langastStmtVarPatternT(F)
+      return r
+    }
+
+    def read_langastStmtVarPatternT(typeParsed: B): org.sireum.lang.ast.Stmt.VarPattern = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtVarPattern)
+      }
+      val isSpec = reader.readB()
+      val isVal = reader.readB()
+      val pattern = read_langastPattern()
+      val tipeOpt = reader.readOption(read_langastType _)
+      val init = read_langastAssignExp()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.VarPattern(isSpec, isVal, pattern, tipeOpt, init, attr)
+    }
+
+    def read_langastStmtSpecVar(): org.sireum.lang.ast.Stmt.SpecVar = {
+      val r = read_langastStmtSpecVarT(F)
+      return r
+    }
+
+    def read_langastStmtSpecVarT(typeParsed: B): org.sireum.lang.ast.Stmt.SpecVar = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtSpecVar)
+      }
+      val isVal = reader.readB()
+      val id = read_langastId()
+      val tipe = read_langastType()
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Stmt.SpecVar(isVal, id, tipe, attr)
+    }
+
+    def read_langastStmtMethod(): org.sireum.lang.ast.Stmt.Method = {
+      val r = read_langastStmtMethodT(F)
+      return r
+    }
+
+    def read_langastStmtMethodT(typeParsed: B): org.sireum.lang.ast.Stmt.Method = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtMethod)
+      }
+      val typeChecked = reader.readB()
+      val purity = read_langastPurityType()
+      val hasOverride = reader.readB()
+      val isHelper = reader.readB()
+      val sig = read_langastMethodSig()
+      val mcontract = read_langastMethodContract()
+      val bodyOpt = reader.readOption(read_langastBody _)
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Stmt.Method(typeChecked, purity, hasOverride, isHelper, sig, mcontract, bodyOpt, attr)
+    }
+
+    def read_langastStmtExtMethod(): org.sireum.lang.ast.Stmt.ExtMethod = {
+      val r = read_langastStmtExtMethodT(F)
+      return r
+    }
+
+    def read_langastStmtExtMethodT(typeParsed: B): org.sireum.lang.ast.Stmt.ExtMethod = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtExtMethod)
+      }
+      val isPure = reader.readB()
+      val sig = read_langastMethodSig()
+      val contract = read_langastMethodContract()
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Stmt.ExtMethod(isPure, sig, contract, attr)
+    }
+
+    def read_langastStmtJustMethod(): org.sireum.lang.ast.Stmt.JustMethod = {
+      val r = read_langastStmtJustMethodT(F)
+      return r
+    }
+
+    def read_langastStmtJustMethodT(typeParsed: B): org.sireum.lang.ast.Stmt.JustMethod = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtJustMethod)
+      }
+      val etaOpt = reader.readOption(read_langastExpLitString _)
+      val sig = read_langastMethodSig()
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Stmt.JustMethod(etaOpt, sig, attr)
+    }
+
+    def read_langastStmtSpecMethod(): org.sireum.lang.ast.Stmt.SpecMethod = {
+      val r = read_langastStmtSpecMethodT(F)
+      return r
+    }
+
+    def read_langastStmtSpecMethodT(typeParsed: B): org.sireum.lang.ast.Stmt.SpecMethod = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtSpecMethod)
+      }
+      val sig = read_langastMethodSig()
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Stmt.SpecMethod(sig, attr)
+    }
+
+    def read_langastStmtEnum(): org.sireum.lang.ast.Stmt.Enum = {
+      val r = read_langastStmtEnumT(F)
+      return r
+    }
+
+    def read_langastStmtEnumT(typeParsed: B): org.sireum.lang.ast.Stmt.Enum = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtEnum)
+      }
+      val id = read_langastId()
+      val elements = reader.readISZ(read_langastId _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.Enum(id, elements, attr)
+    }
+
+    def read_langastStmtSubZ(): org.sireum.lang.ast.Stmt.SubZ = {
+      val r = read_langastStmtSubZT(F)
+      return r
+    }
+
+    def read_langastStmtSubZT(typeParsed: B): org.sireum.lang.ast.Stmt.SubZ = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtSubZ)
+      }
+      val id = read_langastId()
+      val isSigned = reader.readB()
+      val isBitVector = reader.readB()
+      val isWrapped = reader.readB()
+      val hasMin = reader.readB()
+      val hasMax = reader.readB()
+      val bitWidth = reader.readZ()
+      val min = reader.readZ()
+      val max = reader.readZ()
+      val isIndex = reader.readB()
+      val index = reader.readZ()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.SubZ(id, isSigned, isBitVector, isWrapped, hasMin, hasMax, bitWidth, min, max, isIndex, index, attr)
+    }
+
+    def read_langastStmtObject(): org.sireum.lang.ast.Stmt.Object = {
+      val r = read_langastStmtObjectT(F)
+      return r
+    }
+
+    def read_langastStmtObjectT(typeParsed: B): org.sireum.lang.ast.Stmt.Object = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtObject)
+      }
+      val isApp = reader.readB()
+      val extNameOpt = reader.readOption(reader.readString _)
+      val id = read_langastId()
+      val stmts = reader.readISZ(read_langastStmt _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.Object(isApp, extNameOpt, id, stmts, attr)
+    }
+
+    def read_langastStmtSig(): org.sireum.lang.ast.Stmt.Sig = {
+      val r = read_langastStmtSigT(F)
+      return r
+    }
+
+    def read_langastStmtSigT(typeParsed: B): org.sireum.lang.ast.Stmt.Sig = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtSig)
+      }
+      val isImmutable = reader.readB()
+      val isExt = reader.readB()
+      val id = read_langastId()
+      val typeParams = reader.readISZ(read_langastTypeParam _)
+      val parents = reader.readISZ(read_langastTypeNamed _)
+      val stmts = reader.readISZ(read_langastStmt _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.Sig(isImmutable, isExt, id, typeParams, parents, stmts, attr)
+    }
+
+    def read_langastStmtAdt(): org.sireum.lang.ast.Stmt.Adt = {
+      val r = read_langastStmtAdtT(F)
+      return r
+    }
+
+    def read_langastStmtAdtT(typeParsed: B): org.sireum.lang.ast.Stmt.Adt = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtAdt)
+      }
+      val isRoot = reader.readB()
+      val isDatatype = reader.readB()
+      val id = read_langastId()
+      val typeParams = reader.readISZ(read_langastTypeParam _)
+      val params = reader.readISZ(read_langastAdtParam _)
+      val parents = reader.readISZ(read_langastTypeNamed _)
+      val stmts = reader.readISZ(read_langastStmt _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.Adt(isRoot, isDatatype, id, typeParams, params, parents, stmts, attr)
+    }
+
+    def read_langastStmtTypeAlias(): org.sireum.lang.ast.Stmt.TypeAlias = {
+      val r = read_langastStmtTypeAliasT(F)
+      return r
+    }
+
+    def read_langastStmtTypeAliasT(typeParsed: B): org.sireum.lang.ast.Stmt.TypeAlias = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtTypeAlias)
+      }
+      val id = read_langastId()
+      val typeParams = reader.readISZ(read_langastTypeParam _)
+      val tipe = read_langastType()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.TypeAlias(id, typeParams, tipe, attr)
+    }
+
+    def read_langastStmtAssign(): org.sireum.lang.ast.Stmt.Assign = {
+      val r = read_langastStmtAssignT(F)
+      return r
+    }
+
+    def read_langastStmtAssignT(typeParsed: B): org.sireum.lang.ast.Stmt.Assign = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtAssign)
+      }
+      val lhs = read_langastExp()
+      val rhs = read_langastAssignExp()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.Assign(lhs, rhs, attr)
+    }
+
+    def read_langastStmtBlock(): org.sireum.lang.ast.Stmt.Block = {
+      val r = read_langastStmtBlockT(F)
+      return r
+    }
+
+    def read_langastStmtBlockT(typeParsed: B): org.sireum.lang.ast.Stmt.Block = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtBlock)
+      }
+      val body = read_langastBody()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.Block(body, attr)
+    }
+
+    def read_langastStmtIf(): org.sireum.lang.ast.Stmt.If = {
+      val r = read_langastStmtIfT(F)
+      return r
+    }
+
+    def read_langastStmtIfT(typeParsed: B): org.sireum.lang.ast.Stmt.If = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtIf)
+      }
+      val cond = read_langastExp()
+      val thenBody = read_langastBody()
+      val elseBody = read_langastBody()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.If(cond, thenBody, elseBody, attr)
+    }
+
+    def read_langastStmtMatch(): org.sireum.lang.ast.Stmt.Match = {
+      val r = read_langastStmtMatchT(F)
+      return r
+    }
+
+    def read_langastStmtMatchT(typeParsed: B): org.sireum.lang.ast.Stmt.Match = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtMatch)
+      }
+      val exp = read_langastExp()
+      val cases = reader.readISZ(read_langastCase _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.Match(exp, cases, attr)
+    }
+
+    def read_langastStmtWhile(): org.sireum.lang.ast.Stmt.While = {
+      val r = read_langastStmtWhileT(F)
+      return r
+    }
+
+    def read_langastStmtWhileT(typeParsed: B): org.sireum.lang.ast.Stmt.While = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtWhile)
+      }
+      val context = reader.readISZ(reader.readString _)
+      val cond = read_langastExp()
+      val contract = read_langastLoopContract()
+      val body = read_langastBody()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.While(context, cond, contract, body, attr)
+    }
+
+    def read_langastStmtDoWhile(): org.sireum.lang.ast.Stmt.DoWhile = {
+      val r = read_langastStmtDoWhileT(F)
+      return r
+    }
+
+    def read_langastStmtDoWhileT(typeParsed: B): org.sireum.lang.ast.Stmt.DoWhile = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtDoWhile)
+      }
+      val context = reader.readISZ(reader.readString _)
+      val cond = read_langastExp()
+      val contract = read_langastLoopContract()
+      val body = read_langastBody()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.DoWhile(context, cond, contract, body, attr)
+    }
+
+    def read_langastStmtFor(): org.sireum.lang.ast.Stmt.For = {
+      val r = read_langastStmtForT(F)
+      return r
+    }
+
+    def read_langastStmtForT(typeParsed: B): org.sireum.lang.ast.Stmt.For = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtFor)
+      }
+      val context = reader.readISZ(reader.readString _)
+      val enumGens = reader.readISZ(read_langastEnumGenFor _)
+      val body = read_langastBody()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.For(context, enumGens, body, attr)
+    }
+
+    def read_langastStmtReturn(): org.sireum.lang.ast.Stmt.Return = {
+      val r = read_langastStmtReturnT(F)
+      return r
+    }
+
+    def read_langastStmtReturnT(typeParsed: B): org.sireum.lang.ast.Stmt.Return = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtReturn)
+      }
+      val expOpt = reader.readOption(read_langastExp _)
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Stmt.Return(expOpt, attr)
+    }
+
+    def read_langastStmtExpr(): org.sireum.lang.ast.Stmt.Expr = {
+      val r = read_langastStmtExprT(F)
+      return r
+    }
+
+    def read_langastStmtExprT(typeParsed: B): org.sireum.lang.ast.Stmt.Expr = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtExpr)
+      }
+      val exp = read_langastExp()
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Stmt.Expr(exp, attr)
+    }
+
+    def read_langastStmtSpec(): org.sireum.lang.ast.Stmt.Spec = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastStmtFact => val r = read_langastStmtFactT(T); return r
+        case Constants._langastStmtInv => val r = read_langastStmtInvT(T); return r
+        case Constants._langastStmtTheorem => val r = read_langastStmtTheoremT(T); return r
+        case Constants._langastStmtDataRefinement => val r = read_langastStmtDataRefinementT(T); return r
+        case Constants._langastStmtSpecLabel => val r = read_langastStmtSpecLabelT(T); return r
+        case Constants._langastStmtSpecBlock => val r = read_langastStmtSpecBlockT(T); return r
+        case Constants._langastStmtDeduceSequent => val r = read_langastStmtDeduceSequentT(T); return r
+        case Constants._langastStmtDeduceSteps => val r = read_langastStmtDeduceStepsT(T); return r
+        case Constants._langastStmtHavoc => val r = read_langastStmtHavocT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.Stmt.Spec.")
+          val r = read_langastStmtHavocT(T)
+          return r
+      }
+    }
+
+    def read_langastStmtFact(): org.sireum.lang.ast.Stmt.Fact = {
+      val r = read_langastStmtFactT(F)
+      return r
+    }
+
+    def read_langastStmtFactT(typeParsed: B): org.sireum.lang.ast.Stmt.Fact = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtFact)
+      }
+      val id = read_langastId()
+      val typeParams = reader.readISZ(read_langastTypeParam _)
+      val descOpt = reader.readOption(read_langastExpLitString _)
+      val claims = reader.readISZ(read_langastExp _)
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Stmt.Fact(id, typeParams, descOpt, claims, attr)
+    }
+
+    def read_langastStmtInv(): org.sireum.lang.ast.Stmt.Inv = {
+      val r = read_langastStmtInvT(F)
+      return r
+    }
+
+    def read_langastStmtInvT(typeParsed: B): org.sireum.lang.ast.Stmt.Inv = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtInv)
+      }
+      val id = read_langastId()
+      val claims = reader.readISZ(read_langastExp _)
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Stmt.Inv(id, claims, attr)
+    }
+
+    def read_langastStmtTheorem(): org.sireum.lang.ast.Stmt.Theorem = {
+      val r = read_langastStmtTheoremT(F)
+      return r
+    }
+
+    def read_langastStmtTheoremT(typeParsed: B): org.sireum.lang.ast.Stmt.Theorem = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtTheorem)
+      }
+      val isLemma = reader.readB()
+      val id = read_langastId()
+      val typeParams = reader.readISZ(read_langastTypeParam _)
+      val descOpt = reader.readOption(read_langastExpLitString _)
+      val claim = read_langastExp()
+      val isFun = reader.readB()
+      val proof = read_langastProofAst()
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Stmt.Theorem(isLemma, id, typeParams, descOpt, claim, isFun, proof, attr)
+    }
+
+    def read_langastStmtDataRefinement(): org.sireum.lang.ast.Stmt.DataRefinement = {
+      val r = read_langastStmtDataRefinementT(F)
+      return r
+    }
+
+    def read_langastStmtDataRefinementT(typeParsed: B): org.sireum.lang.ast.Stmt.DataRefinement = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtDataRefinement)
+      }
+      val rep = read_langastExpIdent()
+      val refs = reader.readISZ(read_langastExpIdent _)
+      val claims = reader.readISZ(read_langastExp _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.DataRefinement(rep, refs, claims, attr)
+    }
+
+    def read_langastStmtSpecLabel(): org.sireum.lang.ast.Stmt.SpecLabel = {
+      val r = read_langastStmtSpecLabelT(F)
+      return r
+    }
+
+    def read_langastStmtSpecLabelT(typeParsed: B): org.sireum.lang.ast.Stmt.SpecLabel = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtSpecLabel)
+      }
+      val id = read_langastId()
+      return org.sireum.lang.ast.Stmt.SpecLabel(id)
+    }
+
+    def read_langastStmtSpecBlock(): org.sireum.lang.ast.Stmt.SpecBlock = {
+      val r = read_langastStmtSpecBlockT(F)
+      return r
+    }
+
+    def read_langastStmtSpecBlockT(typeParsed: B): org.sireum.lang.ast.Stmt.SpecBlock = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtSpecBlock)
+      }
+      val block = read_langastStmtBlock()
+      return org.sireum.lang.ast.Stmt.SpecBlock(block)
+    }
+
+    def read_langastStmtDeduceSequent(): org.sireum.lang.ast.Stmt.DeduceSequent = {
+      val r = read_langastStmtDeduceSequentT(F)
+      return r
+    }
+
+    def read_langastStmtDeduceSequentT(typeParsed: B): org.sireum.lang.ast.Stmt.DeduceSequent = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtDeduceSequent)
+      }
+      val justOpt = reader.readOption(read_langastExpLitString _)
+      val sequents = reader.readISZ(read_langastSequent _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.DeduceSequent(justOpt, sequents, attr)
+    }
+
+    def read_langastStmtDeduceSteps(): org.sireum.lang.ast.Stmt.DeduceSteps = {
+      val r = read_langastStmtDeduceStepsT(F)
+      return r
+    }
+
+    def read_langastStmtDeduceStepsT(typeParsed: B): org.sireum.lang.ast.Stmt.DeduceSteps = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtDeduceSteps)
+      }
+      val steps = reader.readISZ(read_langastProofAstStep _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.DeduceSteps(steps, attr)
+    }
+
+    def read_langastStmtHavoc(): org.sireum.lang.ast.Stmt.Havoc = {
+      val r = read_langastStmtHavocT(F)
+      return r
+    }
+
+    def read_langastStmtHavocT(typeParsed: B): org.sireum.lang.ast.Stmt.Havoc = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastStmtHavoc)
+      }
+      val args = reader.readISZ(read_langastExpIdent _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Stmt.Havoc(args, attr)
+    }
+
+    def read_langastMethodContract(): org.sireum.lang.ast.MethodContract = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastMethodContractSimple => val r = read_langastMethodContractSimpleT(T); return r
+        case Constants._langastMethodContractCases => val r = read_langastMethodContractCasesT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.MethodContract.")
+          val r = read_langastMethodContractCasesT(T)
+          return r
+      }
+    }
+
+    def read_langastMethodContractAccesses(): org.sireum.lang.ast.MethodContract.Accesses = {
+      val r = read_langastMethodContractAccessesT(F)
+      return r
+    }
+
+    def read_langastMethodContractAccessesT(typeParsed: B): org.sireum.lang.ast.MethodContract.Accesses = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastMethodContractAccesses)
+      }
+      val idents = reader.readISZ(read_langastExpIdent _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.MethodContract.Accesses(idents, attr)
+    }
+
+    def read_langastMethodContractClaims(): org.sireum.lang.ast.MethodContract.Claims = {
+      val r = read_langastMethodContractClaimsT(F)
+      return r
+    }
+
+    def read_langastMethodContractClaimsT(typeParsed: B): org.sireum.lang.ast.MethodContract.Claims = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastMethodContractClaims)
+      }
+      val claims = reader.readISZ(read_langastExp _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.MethodContract.Claims(claims, attr)
+    }
+
+    def read_langastMethodContractSimple(): org.sireum.lang.ast.MethodContract.Simple = {
+      val r = read_langastMethodContractSimpleT(F)
+      return r
+    }
+
+    def read_langastMethodContractSimpleT(typeParsed: B): org.sireum.lang.ast.MethodContract.Simple = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastMethodContractSimple)
+      }
+      val readsClause = read_langastMethodContractAccesses()
+      val requiresClause = read_langastMethodContractClaims()
+      val modifiesClause = read_langastMethodContractAccesses()
+      val ensuresClause = read_langastMethodContractClaims()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.MethodContract.Simple(readsClause, requiresClause, modifiesClause, ensuresClause, attr)
+    }
+
+    def read_langastMethodContractCases(): org.sireum.lang.ast.MethodContract.Cases = {
+      val r = read_langastMethodContractCasesT(F)
+      return r
+    }
+
+    def read_langastMethodContractCasesT(typeParsed: B): org.sireum.lang.ast.MethodContract.Cases = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastMethodContractCases)
+      }
+      val readsClause = read_langastMethodContractAccesses()
+      val modifiesClause = read_langastMethodContractAccesses()
+      val cases = reader.readISZ(read_langastMethodContractCase _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.MethodContract.Cases(readsClause, modifiesClause, cases, attr)
+    }
+
+    def read_langastMethodContractCase(): org.sireum.lang.ast.MethodContract.Case = {
+      val r = read_langastMethodContractCaseT(F)
+      return r
+    }
+
+    def read_langastMethodContractCaseT(typeParsed: B): org.sireum.lang.ast.MethodContract.Case = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastMethodContractCase)
+      }
+      val label = read_langastExpLitString()
+      val requiresClause = read_langastMethodContractClaims()
+      val ensuresClause = read_langastMethodContractClaims()
+      return org.sireum.lang.ast.MethodContract.Case(label, requiresClause, ensuresClause)
+    }
+
+    def read_langastSequent(): org.sireum.lang.ast.Sequent = {
+      val r = read_langastSequentT(F)
+      return r
+    }
+
+    def read_langastSequentT(typeParsed: B): org.sireum.lang.ast.Sequent = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastSequent)
+      }
+      val premises = reader.readISZ(read_langastExp _)
+      val conclusion = read_langastExp()
+      val steps = reader.readISZ(read_langastProofAstStep _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Sequent(premises, conclusion, steps, attr)
+    }
+
+    def read_langastProofAst(): org.sireum.lang.ast.ProofAst = {
+      val r = read_langastProofAstT(F)
+      return r
+    }
+
+    def read_langastProofAstT(typeParsed: B): org.sireum.lang.ast.ProofAst = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAst)
+      }
+      val steps = reader.readISZ(read_langastProofAstStep _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.ProofAst(steps, attr)
+    }
+
+    def read_langastProofAstStep(): org.sireum.lang.ast.ProofAst.Step = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastProofAstStepRegular => val r = read_langastProofAstStepRegularT(T); return r
+        case Constants._langastProofAstStepAssume => val r = read_langastProofAstStepAssumeT(T); return r
+        case Constants._langastProofAstStepAssert => val r = read_langastProofAstStepAssertT(T); return r
+        case Constants._langastProofAstStepSubProof => val r = read_langastProofAstStepSubProofT(T); return r
+        case Constants._langastProofAstStepLet => val r = read_langastProofAstStepLetT(T); return r
+        case Constants._langastProofAstStepStructInduction => val r = read_langastProofAstStepStructInductionT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.ProofAst.Step.")
+          val r = read_langastProofAstStepStructInductionT(T)
+          return r
+      }
+    }
+
+    def read_langastProofAstStepId(): org.sireum.lang.ast.ProofAst.StepId = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastProofAstStepIdNum => val r = read_langastProofAstStepIdNumT(T); return r
+        case Constants._langastProofAstStepIdStr => val r = read_langastProofAstStepIdStrT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.ProofAst.StepId.")
+          val r = read_langastProofAstStepIdStrT(T)
+          return r
+      }
+    }
+
+    def read_langastProofAstStepIdNum(): org.sireum.lang.ast.ProofAst.StepId.Num = {
+      val r = read_langastProofAstStepIdNumT(F)
+      return r
+    }
+
+    def read_langastProofAstStepIdNumT(typeParsed: B): org.sireum.lang.ast.ProofAst.StepId.Num = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepIdNum)
+      }
+      val no = reader.readZ()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.ProofAst.StepId.Num(no, attr)
+    }
+
+    def read_langastProofAstStepIdStr(): org.sireum.lang.ast.ProofAst.StepId.Str = {
+      val r = read_langastProofAstStepIdStrT(F)
+      return r
+    }
+
+    def read_langastProofAstStepIdStrT(typeParsed: B): org.sireum.lang.ast.ProofAst.StepId.Str = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepIdStr)
+      }
+      val value = reader.readString()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.ProofAst.StepId.Str(value, attr)
+    }
+
+    def read_langastProofAstStepRegular(): org.sireum.lang.ast.ProofAst.Step.Regular = {
+      val r = read_langastProofAstStepRegularT(F)
+      return r
+    }
+
+    def read_langastProofAstStepRegularT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.Regular = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepRegular)
+      }
+      val id = read_langastProofAstStepId()
+      val claim = read_langastExp()
+      val just = read_langastProofAstStepJustification()
+      return org.sireum.lang.ast.ProofAst.Step.Regular(id, claim, just)
+    }
+
+    def read_langastProofAstStepAssume(): org.sireum.lang.ast.ProofAst.Step.Assume = {
+      val r = read_langastProofAstStepAssumeT(F)
+      return r
+    }
+
+    def read_langastProofAstStepAssumeT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.Assume = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepAssume)
+      }
+      val id = read_langastProofAstStepId()
+      val claim = read_langastExp()
+      return org.sireum.lang.ast.ProofAst.Step.Assume(id, claim)
+    }
+
+    def read_langastProofAstStepAssert(): org.sireum.lang.ast.ProofAst.Step.Assert = {
+      val r = read_langastProofAstStepAssertT(F)
+      return r
+    }
+
+    def read_langastProofAstStepAssertT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.Assert = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepAssert)
+      }
+      val id = read_langastProofAstStepId()
+      val claim = read_langastExp()
+      val steps = reader.readISZ(read_langastProofAstStep _)
+      return org.sireum.lang.ast.ProofAst.Step.Assert(id, claim, steps)
+    }
+
+    def read_langastProofAstStepSubProof(): org.sireum.lang.ast.ProofAst.Step.SubProof = {
+      val r = read_langastProofAstStepSubProofT(F)
+      return r
+    }
+
+    def read_langastProofAstStepSubProofT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.SubProof = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepSubProof)
+      }
+      val id = read_langastProofAstStepId()
+      val steps = reader.readISZ(read_langastProofAstStep _)
+      return org.sireum.lang.ast.ProofAst.Step.SubProof(id, steps)
+    }
+
+    def read_langastProofAstStepLet(): org.sireum.lang.ast.ProofAst.Step.Let = {
+      val r = read_langastProofAstStepLetT(F)
+      return r
+    }
+
+    def read_langastProofAstStepLetT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.Let = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepLet)
+      }
+      val id = read_langastProofAstStepId()
+      val params = reader.readISZ(read_langastProofAstStepLetParam _)
+      val steps = reader.readISZ(read_langastProofAstStep _)
+      return org.sireum.lang.ast.ProofAst.Step.Let(id, params, steps)
+    }
+
+    def read_langastProofAstStepLetParam(): org.sireum.lang.ast.ProofAst.Step.Let.Param = {
+      val r = read_langastProofAstStepLetParamT(F)
+      return r
+    }
+
+    def read_langastProofAstStepLetParamT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.Let.Param = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepLetParam)
+      }
+      val id = read_langastId()
+      val tipeOpt = reader.readOption(read_langastType _)
+      return org.sireum.lang.ast.ProofAst.Step.Let.Param(id, tipeOpt)
+    }
+
+    def read_langastProofAstStepStructInduction(): org.sireum.lang.ast.ProofAst.Step.StructInduction = {
+      val r = read_langastProofAstStepStructInductionT(F)
+      return r
+    }
+
+    def read_langastProofAstStepStructInductionT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.StructInduction = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepStructInduction)
+      }
+      val id = read_langastProofAstStepId()
+      val claim = read_langastExp()
+      val exp = read_langastExp()
+      val cases = reader.readISZ(read_langastProofAstStepStructInductionMatchCase _)
+      val defaultOpt = reader.readOption(read_langastProofAstStepStructInductionMatchDefault _)
+      return org.sireum.lang.ast.ProofAst.Step.StructInduction(id, claim, exp, cases, defaultOpt)
+    }
+
+    def read_langastProofAstStepStructInductionMatchCase(): org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase = {
+      val r = read_langastProofAstStepStructInductionMatchCaseT(F)
+      return r
+    }
+
+    def read_langastProofAstStepStructInductionMatchCaseT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepStructInductionMatchCase)
+      }
+      val pattern = read_langastPatternStructure()
+      val hypoOpt = reader.readOption(read_langastProofAstStepAssume _)
+      val steps = reader.readISZ(read_langastProofAstStep _)
+      return org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase(pattern, hypoOpt, steps)
+    }
+
+    def read_langastProofAstStepStructInductionMatchDefault(): org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault = {
+      val r = read_langastProofAstStepStructInductionMatchDefaultT(F)
+      return r
+    }
+
+    def read_langastProofAstStepStructInductionMatchDefaultT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepStructInductionMatchDefault)
+      }
+      val hypoOpt = reader.readOption(read_langastProofAstStepAssume _)
+      val steps = reader.readISZ(read_langastProofAstStep _)
+      return org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault(hypoOpt, steps)
+    }
+
+    def read_langastProofAstStepJustification(): org.sireum.lang.ast.ProofAst.Step.Justification = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastProofAstStepJustificationApply => val r = read_langastProofAstStepJustificationApplyT(T); return r
+        case Constants._langastProofAstStepJustificationIncept => val r = read_langastProofAstStepJustificationInceptT(T); return r
+        case Constants._langastProofAstStepJustificationInceptNamed => val r = read_langastProofAstStepJustificationInceptNamedT(T); return r
+        case Constants._langastProofAstStepJustificationInceptEta => val r = read_langastProofAstStepJustificationInceptEtaT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.ProofAst.Step.Justification.")
+          val r = read_langastProofAstStepJustificationInceptEtaT(T)
+          return r
+      }
+    }
+
+    def read_langastProofAstStepInception(): org.sireum.lang.ast.ProofAst.Step.Inception = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastProofAstStepJustificationIncept => val r = read_langastProofAstStepJustificationInceptT(T); return r
+        case Constants._langastProofAstStepJustificationInceptNamed => val r = read_langastProofAstStepJustificationInceptNamedT(T); return r
+        case Constants._langastProofAstStepJustificationInceptEta => val r = read_langastProofAstStepJustificationInceptEtaT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.ProofAst.Step.Inception.")
+          val r = read_langastProofAstStepJustificationInceptEtaT(T)
+          return r
+      }
+    }
+
+    def read_langastProofAstStepJustificationApply(): org.sireum.lang.ast.ProofAst.Step.Justification.Apply = {
+      val r = read_langastProofAstStepJustificationApplyT(F)
+      return r
+    }
+
+    def read_langastProofAstStepJustificationApplyT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.Justification.Apply = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepJustificationApply)
+      }
+      val id = read_langastExp()
+      val args = reader.readISZ(read_langastExp _)
+      return org.sireum.lang.ast.ProofAst.Step.Justification.Apply(id, args)
+    }
+
+    def read_langastProofAstStepJustificationIncept(): org.sireum.lang.ast.ProofAst.Step.Justification.Incept = {
+      val r = read_langastProofAstStepJustificationInceptT(F)
+      return r
+    }
+
+    def read_langastProofAstStepJustificationInceptT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.Justification.Incept = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepJustificationIncept)
+      }
+      val invoke = read_langastExpInvoke()
+      val witnesses = reader.readISZ(read_langastProofAstStepId _)
+      return org.sireum.lang.ast.ProofAst.Step.Justification.Incept(invoke, witnesses)
+    }
+
+    def read_langastProofAstStepJustificationInceptNamed(): org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed = {
+      val r = read_langastProofAstStepJustificationInceptNamedT(F)
+      return r
+    }
+
+    def read_langastProofAstStepJustificationInceptNamedT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepJustificationInceptNamed)
+      }
+      val invoke = read_langastExpInvokeNamed()
+      val witnesses = reader.readISZ(read_langastProofAstStepId _)
+      return org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed(invoke, witnesses)
+    }
+
+    def read_langastProofAstStepJustificationInceptEta(): org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta = {
+      val r = read_langastProofAstStepJustificationInceptEtaT(F)
+      return r
+    }
+
+    def read_langastProofAstStepJustificationInceptEtaT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastProofAstStepJustificationInceptEta)
+      }
+      val eta = read_langastExpEta()
+      val witnesses = reader.readISZ(read_langastProofAstStepId _)
+      return org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta(eta, witnesses)
+    }
+
+    def read_langastAssignExp(): org.sireum.lang.ast.AssignExp = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastStmtBlock => val r = read_langastStmtBlockT(T); return r
+        case Constants._langastStmtIf => val r = read_langastStmtIfT(T); return r
+        case Constants._langastStmtMatch => val r = read_langastStmtMatchT(T); return r
+        case Constants._langastStmtReturn => val r = read_langastStmtReturnT(T); return r
+        case Constants._langastStmtExpr => val r = read_langastStmtExprT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.AssignExp.")
+          val r = read_langastStmtExprT(T)
+          return r
+      }
+    }
+
+    def read_langastPurityType(): org.sireum.lang.ast.Purity.Type = {
+      val r = reader.readZ()
+      return org.sireum.lang.ast.Purity.byOrdinal(r).get
+    }
+
+    def read_langastCase(): org.sireum.lang.ast.Case = {
+      val r = read_langastCaseT(F)
+      return r
+    }
+
+    def read_langastCaseT(typeParsed: B): org.sireum.lang.ast.Case = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastCase)
+      }
+      val pattern = read_langastPattern()
+      val condOpt = reader.readOption(read_langastExp _)
+      val body = read_langastBody()
+      return org.sireum.lang.ast.Case(pattern, condOpt, body)
+    }
+
+    def read_langastEnumGenRange(): org.sireum.lang.ast.EnumGen.Range = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastEnumGenRangeExpr => val r = read_langastEnumGenRangeExprT(T); return r
+        case Constants._langastEnumGenRangeStep => val r = read_langastEnumGenRangeStepT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.EnumGen.Range.")
+          val r = read_langastEnumGenRangeStepT(T)
+          return r
+      }
+    }
+
+    def read_langastEnumGenRangeExpr(): org.sireum.lang.ast.EnumGen.Range.Expr = {
+      val r = read_langastEnumGenRangeExprT(F)
+      return r
+    }
+
+    def read_langastEnumGenRangeExprT(typeParsed: B): org.sireum.lang.ast.EnumGen.Range.Expr = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastEnumGenRangeExpr)
+      }
+      val exp = read_langastExp()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.EnumGen.Range.Expr(exp, attr)
+    }
+
+    def read_langastEnumGenRangeStep(): org.sireum.lang.ast.EnumGen.Range.Step = {
+      val r = read_langastEnumGenRangeStepT(F)
+      return r
+    }
+
+    def read_langastEnumGenRangeStepT(typeParsed: B): org.sireum.lang.ast.EnumGen.Range.Step = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastEnumGenRangeStep)
+      }
+      val isInclusive = reader.readB()
+      val start = read_langastExp()
+      val end = read_langastExp()
+      val byOpt = reader.readOption(read_langastExp _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.EnumGen.Range.Step(isInclusive, start, end, byOpt, attr)
+    }
+
+    def read_langastEnumGenFor(): org.sireum.lang.ast.EnumGen.For = {
+      val r = read_langastEnumGenForT(F)
+      return r
+    }
+
+    def read_langastEnumGenForT(typeParsed: B): org.sireum.lang.ast.EnumGen.For = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastEnumGenFor)
+      }
+      val idOpt = reader.readOption(read_langastId _)
+      val range = read_langastEnumGenRange()
+      val condOpt = reader.readOption(read_langastExp _)
+      val contract = read_langastLoopContract()
+      return org.sireum.lang.ast.EnumGen.For(idOpt, range, condOpt, contract)
+    }
+
+    def read_langastType(): org.sireum.lang.ast.Type = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastTypeNamed => val r = read_langastTypeNamedT(T); return r
+        case Constants._langastTypeFun => val r = read_langastTypeFunT(T); return r
+        case Constants._langastTypeTuple => val r = read_langastTypeTupleT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.Type.")
+          val r = read_langastTypeTupleT(T)
+          return r
+      }
+    }
+
+    def read_langastTypeNamed(): org.sireum.lang.ast.Type.Named = {
+      val r = read_langastTypeNamedT(F)
+      return r
+    }
+
+    def read_langastTypeNamedT(typeParsed: B): org.sireum.lang.ast.Type.Named = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypeNamed)
+      }
+      val name = read_langastName()
+      val typeArgs = reader.readISZ(read_langastType _)
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Type.Named(name, typeArgs, attr)
+    }
+
+    def read_langastTypeFun(): org.sireum.lang.ast.Type.Fun = {
+      val r = read_langastTypeFunT(F)
+      return r
+    }
+
+    def read_langastTypeFunT(typeParsed: B): org.sireum.lang.ast.Type.Fun = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypeFun)
+      }
+      val isPure = reader.readB()
+      val isByName = reader.readB()
+      val args = reader.readISZ(read_langastType _)
+      val ret = read_langastType()
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Type.Fun(isPure, isByName, args, ret, attr)
+    }
+
+    def read_langastTypeTuple(): org.sireum.lang.ast.Type.Tuple = {
+      val r = read_langastTypeTupleT(F)
+      return r
+    }
+
+    def read_langastTypeTupleT(typeParsed: B): org.sireum.lang.ast.Type.Tuple = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypeTuple)
+      }
+      val args = reader.readISZ(read_langastType _)
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Type.Tuple(args, attr)
+    }
+
+    def read_langastPattern(): org.sireum.lang.ast.Pattern = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastPatternLiteral => val r = read_langastPatternLiteralT(T); return r
+        case Constants._langastPatternLitInterpolate => val r = read_langastPatternLitInterpolateT(T); return r
+        case Constants._langastPatternRef => val r = read_langastPatternRefT(T); return r
+        case Constants._langastPatternVarBinding => val r = read_langastPatternVarBindingT(T); return r
+        case Constants._langastPatternWildcard => val r = read_langastPatternWildcardT(T); return r
+        case Constants._langastPatternSeqWildcard => val r = read_langastPatternSeqWildcardT(T); return r
+        case Constants._langastPatternStructure => val r = read_langastPatternStructureT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.Pattern.")
+          val r = read_langastPatternStructureT(T)
+          return r
+      }
+    }
+
+    def read_langastPatternLiteral(): org.sireum.lang.ast.Pattern.Literal = {
+      val r = read_langastPatternLiteralT(F)
+      return r
+    }
+
+    def read_langastPatternLiteralT(typeParsed: B): org.sireum.lang.ast.Pattern.Literal = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastPatternLiteral)
+      }
+      val lit = read_langastLit()
+      return org.sireum.lang.ast.Pattern.Literal(lit)
+    }
+
+    def read_langastPatternLitInterpolate(): org.sireum.lang.ast.Pattern.LitInterpolate = {
+      val r = read_langastPatternLitInterpolateT(F)
+      return r
+    }
+
+    def read_langastPatternLitInterpolateT(typeParsed: B): org.sireum.lang.ast.Pattern.LitInterpolate = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastPatternLitInterpolate)
+      }
+      val prefix = reader.readString()
+      val value = reader.readString()
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Pattern.LitInterpolate(prefix, value, attr)
+    }
+
+    def read_langastPatternRef(): org.sireum.lang.ast.Pattern.Ref = {
+      val r = read_langastPatternRefT(F)
+      return r
+    }
+
+    def read_langastPatternRefT(typeParsed: B): org.sireum.lang.ast.Pattern.Ref = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastPatternRef)
+      }
+      val name = read_langastName()
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Pattern.Ref(name, attr)
+    }
+
+    def read_langastPatternVarBinding(): org.sireum.lang.ast.Pattern.VarBinding = {
+      val r = read_langastPatternVarBindingT(F)
+      return r
+    }
+
+    def read_langastPatternVarBindingT(typeParsed: B): org.sireum.lang.ast.Pattern.VarBinding = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastPatternVarBinding)
+      }
+      val id = read_langastId()
+      val tipeOpt = reader.readOption(read_langastType _)
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Pattern.VarBinding(id, tipeOpt, attr)
+    }
+
+    def read_langastPatternWildcard(): org.sireum.lang.ast.Pattern.Wildcard = {
+      val r = read_langastPatternWildcardT(F)
+      return r
+    }
+
+    def read_langastPatternWildcardT(typeParsed: B): org.sireum.lang.ast.Pattern.Wildcard = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastPatternWildcard)
+      }
+      val typeOpt = reader.readOption(read_langastType _)
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Pattern.Wildcard(typeOpt, attr)
+    }
+
+    def read_langastPatternSeqWildcard(): org.sireum.lang.ast.Pattern.SeqWildcard = {
+      val r = read_langastPatternSeqWildcardT(F)
+      return r
+    }
+
+    def read_langastPatternSeqWildcardT(typeParsed: B): org.sireum.lang.ast.Pattern.SeqWildcard = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastPatternSeqWildcard)
+      }
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Pattern.SeqWildcard(attr)
+    }
+
+    def read_langastPatternStructure(): org.sireum.lang.ast.Pattern.Structure = {
+      val r = read_langastPatternStructureT(F)
+      return r
+    }
+
+    def read_langastPatternStructureT(typeParsed: B): org.sireum.lang.ast.Pattern.Structure = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastPatternStructure)
+      }
+      val idOpt = reader.readOption(read_langastId _)
+      val nameOpt = reader.readOption(read_langastName _)
+      val patterns = reader.readISZ(read_langastPattern _)
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Pattern.Structure(idOpt, nameOpt, patterns, attr)
+    }
+
+    def read_langastExp(): org.sireum.lang.ast.Exp = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastExpLitB => val r = read_langastExpLitBT(T); return r
+        case Constants._langastExpLitC => val r = read_langastExpLitCT(T); return r
+        case Constants._langastExpLitZ => val r = read_langastExpLitZT(T); return r
+        case Constants._langastExpLitF32 => val r = read_langastExpLitF32T(T); return r
+        case Constants._langastExpLitF64 => val r = read_langastExpLitF64T(T); return r
+        case Constants._langastExpLitR => val r = read_langastExpLitRT(T); return r
+        case Constants._langastExpLitString => val r = read_langastExpLitStringT(T); return r
+        case Constants._langastExpLitStepId => val r = read_langastExpLitStepIdT(T); return r
+        case Constants._langastExpStringInterpolate => val r = read_langastExpStringInterpolateT(T); return r
+        case Constants._langastExpThis => val r = read_langastExpThisT(T); return r
+        case Constants._langastExpSuper => val r = read_langastExpSuperT(T); return r
+        case Constants._langastExpUnary => val r = read_langastExpUnaryT(T); return r
+        case Constants._langastExpBinary => val r = read_langastExpBinaryT(T); return r
+        case Constants._langastExpIdent => val r = read_langastExpIdentT(T); return r
+        case Constants._langastExpEta => val r = read_langastExpEtaT(T); return r
+        case Constants._langastExpTuple => val r = read_langastExpTupleT(T); return r
+        case Constants._langastExpSelect => val r = read_langastExpSelectT(T); return r
+        case Constants._langastExpInvoke => val r = read_langastExpInvokeT(T); return r
+        case Constants._langastExpInvokeNamed => val r = read_langastExpInvokeNamedT(T); return r
+        case Constants._langastExpIf => val r = read_langastExpIfT(T); return r
+        case Constants._langastExpFun => val r = read_langastExpFunT(T); return r
+        case Constants._langastExpForYield => val r = read_langastExpForYieldT(T); return r
+        case Constants._langastExpQuantType => val r = read_langastExpQuantTypeT(T); return r
+        case Constants._langastExpQuantRange => val r = read_langastExpQuantRangeT(T); return r
+        case Constants._langastExpQuantEach => val r = read_langastExpQuantEachT(T); return r
+        case Constants._langastExpInput => val r = read_langastExpInputT(T); return r
+        case Constants._langastExpOldVal => val r = read_langastExpOldValT(T); return r
+        case Constants._langastExpLoopIndex => val r = read_langastExpLoopIndexT(T); return r
+        case Constants._langastExpStateSeq => val r = read_langastExpStateSeqT(T); return r
+        case Constants._langastExpResult => val r = read_langastExpResultT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.Exp.")
+          val r = read_langastExpResultT(T)
+          return r
+      }
+    }
+
+    def read_langastLit(): org.sireum.lang.ast.Lit = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastExpLitB => val r = read_langastExpLitBT(T); return r
+        case Constants._langastExpLitC => val r = read_langastExpLitCT(T); return r
+        case Constants._langastExpLitZ => val r = read_langastExpLitZT(T); return r
+        case Constants._langastExpLitF32 => val r = read_langastExpLitF32T(T); return r
+        case Constants._langastExpLitF64 => val r = read_langastExpLitF64T(T); return r
+        case Constants._langastExpLitR => val r = read_langastExpLitRT(T); return r
+        case Constants._langastExpLitString => val r = read_langastExpLitStringT(T); return r
+        case Constants._langastExpLitStepId => val r = read_langastExpLitStepIdT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.Lit.")
+          val r = read_langastExpLitStepIdT(T)
+          return r
+      }
+    }
+
+    def read_langastExpLitB(): org.sireum.lang.ast.Exp.LitB = {
+      val r = read_langastExpLitBT(F)
+      return r
+    }
+
+    def read_langastExpLitBT(typeParsed: B): org.sireum.lang.ast.Exp.LitB = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpLitB)
+      }
+      val value = reader.readB()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.LitB(value, attr)
+    }
+
+    def read_langastExpLitC(): org.sireum.lang.ast.Exp.LitC = {
+      val r = read_langastExpLitCT(F)
+      return r
+    }
+
+    def read_langastExpLitCT(typeParsed: B): org.sireum.lang.ast.Exp.LitC = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpLitC)
+      }
+      val value = reader.readC()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.LitC(value, attr)
+    }
+
+    def read_langastExpLitZ(): org.sireum.lang.ast.Exp.LitZ = {
+      val r = read_langastExpLitZT(F)
+      return r
+    }
+
+    def read_langastExpLitZT(typeParsed: B): org.sireum.lang.ast.Exp.LitZ = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpLitZ)
+      }
+      val value = reader.readZ()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.LitZ(value, attr)
+    }
+
+    def read_langastExpLitF32(): org.sireum.lang.ast.Exp.LitF32 = {
+      val r = read_langastExpLitF32T(F)
+      return r
+    }
+
+    def read_langastExpLitF32T(typeParsed: B): org.sireum.lang.ast.Exp.LitF32 = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpLitF32)
+      }
+      val value = reader.readF32()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.LitF32(value, attr)
+    }
+
+    def read_langastExpLitF64(): org.sireum.lang.ast.Exp.LitF64 = {
+      val r = read_langastExpLitF64T(F)
+      return r
+    }
+
+    def read_langastExpLitF64T(typeParsed: B): org.sireum.lang.ast.Exp.LitF64 = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpLitF64)
+      }
+      val value = reader.readF64()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.LitF64(value, attr)
+    }
+
+    def read_langastExpLitR(): org.sireum.lang.ast.Exp.LitR = {
+      val r = read_langastExpLitRT(F)
+      return r
+    }
+
+    def read_langastExpLitRT(typeParsed: B): org.sireum.lang.ast.Exp.LitR = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpLitR)
+      }
+      val value = reader.readR()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.LitR(value, attr)
+    }
+
+    def read_langastExpLitString(): org.sireum.lang.ast.Exp.LitString = {
+      val r = read_langastExpLitStringT(F)
+      return r
+    }
+
+    def read_langastExpLitStringT(typeParsed: B): org.sireum.lang.ast.Exp.LitString = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpLitString)
+      }
+      val value = reader.readString()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.LitString(value, attr)
+    }
+
+    def read_langastExpLitStepId(): org.sireum.lang.ast.Exp.LitStepId = {
+      val r = read_langastExpLitStepIdT(F)
+      return r
+    }
+
+    def read_langastExpLitStepIdT(typeParsed: B): org.sireum.lang.ast.Exp.LitStepId = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpLitStepId)
+      }
+      val value = reader.readString()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.LitStepId(value, attr)
+    }
+
+    def read_langastExpStringInterpolate(): org.sireum.lang.ast.Exp.StringInterpolate = {
+      val r = read_langastExpStringInterpolateT(F)
+      return r
+    }
+
+    def read_langastExpStringInterpolateT(typeParsed: B): org.sireum.lang.ast.Exp.StringInterpolate = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpStringInterpolate)
+      }
+      val prefix = reader.readString()
+      val lits = reader.readISZ(read_langastExpLitString _)
+      val args = reader.readISZ(read_langastExp _)
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Exp.StringInterpolate(prefix, lits, args, attr)
+    }
+
+    def read_langastExpThis(): org.sireum.lang.ast.Exp.This = {
+      val r = read_langastExpThisT(F)
+      return r
+    }
+
+    def read_langastExpThisT(typeParsed: B): org.sireum.lang.ast.Exp.This = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpThis)
+      }
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Exp.This(attr)
+    }
+
+    def read_langastExpSuper(): org.sireum.lang.ast.Exp.Super = {
+      val r = read_langastExpSuperT(F)
+      return r
+    }
+
+    def read_langastExpSuperT(typeParsed: B): org.sireum.lang.ast.Exp.Super = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpSuper)
+      }
+      val idOpt = reader.readOption(read_langastId _)
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Exp.Super(idOpt, attr)
+    }
+
+    def read_langastExpUnaryOpType(): org.sireum.lang.ast.Exp.UnaryOp.Type = {
+      val r = reader.readZ()
+      return org.sireum.lang.ast.Exp.UnaryOp.byOrdinal(r).get
+    }
+
+    def read_langastExpUnary(): org.sireum.lang.ast.Exp.Unary = {
+      val r = read_langastExpUnaryT(F)
+      return r
+    }
+
+    def read_langastExpUnaryT(typeParsed: B): org.sireum.lang.ast.Exp.Unary = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpUnary)
+      }
+      val op = read_langastExpUnaryOpType()
+      val exp = read_langastExp()
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Exp.Unary(op, exp, attr)
+    }
+
+    def read_langastExpRef(): org.sireum.lang.ast.Exp.Ref = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastExpIdent => val r = read_langastExpIdentT(T); return r
+        case Constants._langastExpSelect => val r = read_langastExpSelectT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.Exp.Ref.")
+          val r = read_langastExpSelectT(T)
+          return r
+      }
+    }
+
+    def read_langastExpBinary(): org.sireum.lang.ast.Exp.Binary = {
+      val r = read_langastExpBinaryT(F)
+      return r
+    }
+
+    def read_langastExpBinaryT(typeParsed: B): org.sireum.lang.ast.Exp.Binary = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpBinary)
+      }
+      val left = read_langastExp()
+      val op = reader.readString()
+      val right = read_langastExp()
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Exp.Binary(left, op, right, attr)
+    }
+
+    def read_langastExpIdent(): org.sireum.lang.ast.Exp.Ident = {
+      val r = read_langastExpIdentT(F)
+      return r
+    }
+
+    def read_langastExpIdentT(typeParsed: B): org.sireum.lang.ast.Exp.Ident = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpIdent)
+      }
+      val id = read_langastId()
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Exp.Ident(id, attr)
+    }
+
+    def read_langastExpEta(): org.sireum.lang.ast.Exp.Eta = {
+      val r = read_langastExpEtaT(F)
+      return r
+    }
+
+    def read_langastExpEtaT(typeParsed: B): org.sireum.lang.ast.Exp.Eta = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpEta)
+      }
+      val ref = read_langastExpRef()
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Exp.Eta(ref, attr)
+    }
+
+    def read_langastExpTuple(): org.sireum.lang.ast.Exp.Tuple = {
+      val r = read_langastExpTupleT(F)
+      return r
+    }
+
+    def read_langastExpTupleT(typeParsed: B): org.sireum.lang.ast.Exp.Tuple = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpTuple)
+      }
+      val args = reader.readISZ(read_langastExp _)
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Exp.Tuple(args, attr)
+    }
+
+    def read_langastExpSelect(): org.sireum.lang.ast.Exp.Select = {
+      val r = read_langastExpSelectT(F)
+      return r
+    }
+
+    def read_langastExpSelectT(typeParsed: B): org.sireum.lang.ast.Exp.Select = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpSelect)
+      }
+      val receiverOpt = reader.readOption(read_langastExp _)
+      val id = read_langastId()
+      val targs = reader.readISZ(read_langastType _)
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Exp.Select(receiverOpt, id, targs, attr)
+    }
+
+    def read_langastExpInvoke(): org.sireum.lang.ast.Exp.Invoke = {
+      val r = read_langastExpInvokeT(F)
+      return r
+    }
+
+    def read_langastExpInvokeT(typeParsed: B): org.sireum.lang.ast.Exp.Invoke = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpInvoke)
+      }
+      val receiverOpt = reader.readOption(read_langastExp _)
+      val ident = read_langastExpIdent()
+      val targs = reader.readISZ(read_langastType _)
+      val args = reader.readISZ(read_langastExp _)
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Exp.Invoke(receiverOpt, ident, targs, args, attr)
+    }
+
+    def read_langastExpInvokeNamed(): org.sireum.lang.ast.Exp.InvokeNamed = {
+      val r = read_langastExpInvokeNamedT(F)
+      return r
+    }
+
+    def read_langastExpInvokeNamedT(typeParsed: B): org.sireum.lang.ast.Exp.InvokeNamed = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpInvokeNamed)
+      }
+      val receiverOpt = reader.readOption(read_langastExp _)
+      val ident = read_langastExpIdent()
+      val targs = reader.readISZ(read_langastType _)
+      val args = reader.readISZ(read_langastNamedArg _)
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Exp.InvokeNamed(receiverOpt, ident, targs, args, attr)
+    }
+
+    def read_langastExpIf(): org.sireum.lang.ast.Exp.If = {
+      val r = read_langastExpIfT(F)
+      return r
+    }
+
+    def read_langastExpIfT(typeParsed: B): org.sireum.lang.ast.Exp.If = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpIf)
+      }
+      val cond = read_langastExp()
+      val thenExp = read_langastExp()
+      val elseExp = read_langastExp()
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Exp.If(cond, thenExp, elseExp, attr)
+    }
+
+    def read_langastExpFunParam(): org.sireum.lang.ast.Exp.Fun.Param = {
+      val r = read_langastExpFunParamT(F)
+      return r
+    }
+
+    def read_langastExpFunParamT(typeParsed: B): org.sireum.lang.ast.Exp.Fun.Param = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpFunParam)
+      }
+      val idOpt = reader.readOption(read_langastId _)
+      val tipeOpt = reader.readOption(read_langastType _)
+      val typedOpt = reader.readOption(read_langastTyped _)
+      return org.sireum.lang.ast.Exp.Fun.Param(idOpt, tipeOpt, typedOpt)
+    }
+
+    def read_langastExpFun(): org.sireum.lang.ast.Exp.Fun = {
+      val r = read_langastExpFunT(F)
+      return r
+    }
+
+    def read_langastExpFunT(typeParsed: B): org.sireum.lang.ast.Exp.Fun = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpFun)
+      }
+      val context = reader.readISZ(reader.readString _)
+      val params = reader.readISZ(read_langastExpFunParam _)
+      val exp = read_langastAssignExp()
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Exp.Fun(context, params, exp, attr)
+    }
+
+    def read_langastExpForYield(): org.sireum.lang.ast.Exp.ForYield = {
+      val r = read_langastExpForYieldT(F)
+      return r
+    }
+
+    def read_langastExpForYieldT(typeParsed: B): org.sireum.lang.ast.Exp.ForYield = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpForYield)
+      }
+      val enumGens = reader.readISZ(read_langastEnumGenFor _)
+      val exp = read_langastExp()
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Exp.ForYield(enumGens, exp, attr)
+    }
+
+    def read_langastExpQuant(): org.sireum.lang.ast.Exp.Quant = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastExpQuantType => val r = read_langastExpQuantTypeT(T); return r
+        case Constants._langastExpQuantRange => val r = read_langastExpQuantRangeT(T); return r
+        case Constants._langastExpQuantEach => val r = read_langastExpQuantEachT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.Exp.Quant.")
+          val r = read_langastExpQuantEachT(T)
+          return r
+      }
+    }
+
+    def read_langastExpQuantType(): org.sireum.lang.ast.Exp.QuantType = {
+      val r = read_langastExpQuantTypeT(F)
+      return r
+    }
+
+    def read_langastExpQuantTypeT(typeParsed: B): org.sireum.lang.ast.Exp.QuantType = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpQuantType)
+      }
+      val isForall = reader.readB()
+      val fun = read_langastExpFun()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.QuantType(isForall, fun, attr)
+    }
+
+    def read_langastExpQuantRange(): org.sireum.lang.ast.Exp.QuantRange = {
+      val r = read_langastExpQuantRangeT(F)
+      return r
+    }
+
+    def read_langastExpQuantRangeT(typeParsed: B): org.sireum.lang.ast.Exp.QuantRange = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpQuantRange)
+      }
+      val isForall = reader.readB()
+      val lo = read_langastExp()
+      val hi = read_langastExp()
+      val hiExact = reader.readB()
+      val fun = read_langastExpFun()
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Exp.QuantRange(isForall, lo, hi, hiExact, fun, attr)
+    }
+
+    def read_langastExpQuantEach(): org.sireum.lang.ast.Exp.QuantEach = {
+      val r = read_langastExpQuantEachT(F)
+      return r
+    }
+
+    def read_langastExpQuantEachT(typeParsed: B): org.sireum.lang.ast.Exp.QuantEach = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpQuantEach)
+      }
+      val isForall = reader.readB()
+      val seq = read_langastExp()
+      val fun = read_langastExpFun()
+      val attr = read_langastResolvedAttr()
+      return org.sireum.lang.ast.Exp.QuantEach(isForall, seq, fun, attr)
+    }
+
+    def read_langastExpInput(): org.sireum.lang.ast.Exp.Input = {
+      val r = read_langastExpInputT(F)
+      return r
+    }
+
+    def read_langastExpInputT(typeParsed: B): org.sireum.lang.ast.Exp.Input = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpInput)
+      }
+      val exp = read_langastExp()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.Input(exp, attr)
+    }
+
+    def read_langastExpOldVal(): org.sireum.lang.ast.Exp.OldVal = {
+      val r = read_langastExpOldValT(F)
+      return r
+    }
+
+    def read_langastExpOldValT(typeParsed: B): org.sireum.lang.ast.Exp.OldVal = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpOldVal)
+      }
+      val exp = read_langastExp()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.OldVal(exp, attr)
+    }
+
+    def read_langastExpLoopIndex(): org.sireum.lang.ast.Exp.LoopIndex = {
+      val r = read_langastExpLoopIndexT(F)
+      return r
+    }
+
+    def read_langastExpLoopIndexT(typeParsed: B): org.sireum.lang.ast.Exp.LoopIndex = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpLoopIndex)
+      }
+      val tipeOpt = reader.readOption(read_langastType _)
+      val exp = read_langastExpIdent()
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Exp.LoopIndex(tipeOpt, exp, attr)
+    }
+
+    def read_langastExpStateSeq(): org.sireum.lang.ast.Exp.StateSeq = {
+      val r = read_langastExpStateSeqT(F)
+      return r
+    }
+
+    def read_langastExpStateSeqT(typeParsed: B): org.sireum.lang.ast.Exp.StateSeq = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpStateSeq)
+      }
+      val id = read_langastId()
+      val fragments = reader.readISZ(read_langastExpStateSeqFragment _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.StateSeq(id, fragments, attr)
+    }
+
+    def read_langastExpStateSeqFragment(): org.sireum.lang.ast.Exp.StateSeq.Fragment = {
+      val r = read_langastExpStateSeqFragmentT(F)
+      return r
+    }
+
+    def read_langastExpStateSeqFragmentT(typeParsed: B): org.sireum.lang.ast.Exp.StateSeq.Fragment = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpStateSeqFragment)
+      }
+      val id = read_langastId()
+      val exp = read_langastExp()
+      return org.sireum.lang.ast.Exp.StateSeq.Fragment(id, exp)
+    }
+
+    def read_langastExpResult(): org.sireum.lang.ast.Exp.Result = {
+      val r = read_langastExpResultT(F)
+      return r
+    }
+
+    def read_langastExpResultT(typeParsed: B): org.sireum.lang.ast.Exp.Result = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpResult)
+      }
+      val tipeOpt = reader.readOption(read_langastType _)
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Exp.Result(tipeOpt, attr)
+    }
+
+    def read_langastNamedArg(): org.sireum.lang.ast.NamedArg = {
+      val r = read_langastNamedArgT(F)
+      return r
+    }
+
+    def read_langastNamedArgT(typeParsed: B): org.sireum.lang.ast.NamedArg = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastNamedArg)
+      }
+      val id = read_langastId()
+      val arg = read_langastExp()
+      val index = reader.readZ()
+      return org.sireum.lang.ast.NamedArg(id, arg, index)
+    }
+
+    def read_langastId(): org.sireum.lang.ast.Id = {
+      val r = read_langastIdT(F)
+      return r
+    }
+
+    def read_langastIdT(typeParsed: B): org.sireum.lang.ast.Id = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastId)
+      }
+      val value = reader.readString()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Id(value, attr)
+    }
+
+    def read_langastName(): org.sireum.lang.ast.Name = {
+      val r = read_langastNameT(F)
+      return r
+    }
+
+    def read_langastNameT(typeParsed: B): org.sireum.lang.ast.Name = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastName)
+      }
+      val ids = reader.readISZ(read_langastId _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Name(ids, attr)
+    }
+
+    def read_langastBody(): org.sireum.lang.ast.Body = {
+      val r = read_langastBodyT(F)
+      return r
+    }
+
+    def read_langastBodyT(typeParsed: B): org.sireum.lang.ast.Body = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastBody)
+      }
+      val stmts = reader.readISZ(read_langastStmt _)
+      val undecls = reader.readISZ(read_langastResolvedInfoLocalVar _)
+      return org.sireum.lang.ast.Body(stmts, undecls)
+    }
+
+    def read_langastAdtParam(): org.sireum.lang.ast.AdtParam = {
+      val r = read_langastAdtParamT(F)
+      return r
+    }
+
+    def read_langastAdtParamT(typeParsed: B): org.sireum.lang.ast.AdtParam = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastAdtParam)
+      }
+      val isHidden = reader.readB()
+      val isVal = reader.readB()
+      val id = read_langastId()
+      val tipe = read_langastType()
+      return org.sireum.lang.ast.AdtParam(isHidden, isVal, id, tipe)
+    }
+
+    def read_langastMethodSig(): org.sireum.lang.ast.MethodSig = {
+      val r = read_langastMethodSigT(F)
+      return r
+    }
+
+    def read_langastMethodSigT(typeParsed: B): org.sireum.lang.ast.MethodSig = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastMethodSig)
+      }
+      val isPure = reader.readB()
+      val id = read_langastId()
+      val typeParams = reader.readISZ(read_langastTypeParam _)
+      val hasParams = reader.readB()
+      val params = reader.readISZ(read_langastParam _)
+      val returnType = read_langastType()
+      return org.sireum.lang.ast.MethodSig(isPure, id, typeParams, hasParams, params, returnType)
+    }
+
+    def read_langastParam(): org.sireum.lang.ast.Param = {
+      val r = read_langastParamT(F)
+      return r
+    }
+
+    def read_langastParamT(typeParsed: B): org.sireum.lang.ast.Param = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastParam)
+      }
+      val isHidden = reader.readB()
+      val id = read_langastId()
+      val tipe = read_langastType()
+      return org.sireum.lang.ast.Param(isHidden, id, tipe)
+    }
+
+    def read_langastTypeParam(): org.sireum.lang.ast.TypeParam = {
+      val r = read_langastTypeParamT(F)
+      return r
+    }
+
+    def read_langastTypeParamT(typeParsed: B): org.sireum.lang.ast.TypeParam = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypeParam)
+      }
+      val id = read_langastId()
+      return org.sireum.lang.ast.TypeParam(id)
+    }
+
+    def read_langastAttr(): org.sireum.lang.ast.Attr = {
+      val r = read_langastAttrT(F)
+      return r
+    }
+
+    def read_langastAttrT(typeParsed: B): org.sireum.lang.ast.Attr = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastAttr)
+      }
+      val posOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.Attr(posOpt)
+    }
+
+    def read_langastTypedAttr(): org.sireum.lang.ast.TypedAttr = {
+      val r = read_langastTypedAttrT(F)
+      return r
+    }
+
+    def read_langastTypedAttrT(typeParsed: B): org.sireum.lang.ast.TypedAttr = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypedAttr)
+      }
+      val posOpt = reader.readOption(reader.readPosition _)
+      val typedOpt = reader.readOption(read_langastTyped _)
+      return org.sireum.lang.ast.TypedAttr(posOpt, typedOpt)
+    }
+
+    def read_langastResolvedAttr(): org.sireum.lang.ast.ResolvedAttr = {
+      val r = read_langastResolvedAttrT(F)
+      return r
+    }
+
+    def read_langastResolvedAttrT(typeParsed: B): org.sireum.lang.ast.ResolvedAttr = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedAttr)
+      }
+      val posOpt = reader.readOption(reader.readPosition _)
+      val resOpt = reader.readOption(read_langastResolvedInfo _)
+      val typedOpt = reader.readOption(read_langastTyped _)
+      return org.sireum.lang.ast.ResolvedAttr(posOpt, resOpt, typedOpt)
+    }
+
+    def read_langastResolvedInfo(): org.sireum.lang.ast.ResolvedInfo = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastResolvedInfoBuiltIn => val r = read_langastResolvedInfoBuiltInT(T); return r
+        case Constants._langastResolvedInfoPackage => val r = read_langastResolvedInfoPackageT(T); return r
+        case Constants._langastResolvedInfoEnum => val r = read_langastResolvedInfoEnumT(T); return r
+        case Constants._langastResolvedInfoEnumElement => val r = read_langastResolvedInfoEnumElementT(T); return r
+        case Constants._langastResolvedInfoObject => val r = read_langastResolvedInfoObjectT(T); return r
+        case Constants._langastResolvedInfoVar => val r = read_langastResolvedInfoVarT(T); return r
+        case Constants._langastResolvedInfoMethod => val r = read_langastResolvedInfoMethodT(T); return r
+        case Constants._langastResolvedInfoMethods => val r = read_langastResolvedInfoMethodsT(T); return r
+        case Constants._langastResolvedInfoTuple => val r = read_langastResolvedInfoTupleT(T); return r
+        case Constants._langastResolvedInfoLocalVar => val r = read_langastResolvedInfoLocalVarT(T); return r
+        case Constants._langastResolvedInfoFact => val r = read_langastResolvedInfoFactT(T); return r
+        case Constants._langastResolvedInfoTheorem => val r = read_langastResolvedInfoTheoremT(T); return r
+        case Constants._langastResolvedInfoInv => val r = read_langastResolvedInfoInvT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.ResolvedInfo.")
+          val r = read_langastResolvedInfoInvT(T)
+          return r
+      }
+    }
+
+    def read_langastResolvedInfoBuiltInKindType(): org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.Type = {
+      val r = reader.readZ()
+      return org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.byOrdinal(r).get
+    }
+
+    def read_langastResolvedInfoBuiltIn(): org.sireum.lang.ast.ResolvedInfo.BuiltIn = {
+      val r = read_langastResolvedInfoBuiltInT(F)
+      return r
+    }
+
+    def read_langastResolvedInfoBuiltInT(typeParsed: B): org.sireum.lang.ast.ResolvedInfo.BuiltIn = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedInfoBuiltIn)
+      }
+      val kind = read_langastResolvedInfoBuiltInKindType()
+      return org.sireum.lang.ast.ResolvedInfo.BuiltIn(kind)
+    }
+
+    def read_langastResolvedInfoPackage(): org.sireum.lang.ast.ResolvedInfo.Package = {
+      val r = read_langastResolvedInfoPackageT(F)
+      return r
+    }
+
+    def read_langastResolvedInfoPackageT(typeParsed: B): org.sireum.lang.ast.ResolvedInfo.Package = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedInfoPackage)
+      }
+      val name = reader.readISZ(reader.readString _)
+      return org.sireum.lang.ast.ResolvedInfo.Package(name)
+    }
+
+    def read_langastResolvedInfoEnum(): org.sireum.lang.ast.ResolvedInfo.Enum = {
+      val r = read_langastResolvedInfoEnumT(F)
+      return r
+    }
+
+    def read_langastResolvedInfoEnumT(typeParsed: B): org.sireum.lang.ast.ResolvedInfo.Enum = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedInfoEnum)
+      }
+      val name = reader.readISZ(reader.readString _)
+      return org.sireum.lang.ast.ResolvedInfo.Enum(name)
+    }
+
+    def read_langastResolvedInfoEnumElement(): org.sireum.lang.ast.ResolvedInfo.EnumElement = {
+      val r = read_langastResolvedInfoEnumElementT(F)
+      return r
+    }
+
+    def read_langastResolvedInfoEnumElementT(typeParsed: B): org.sireum.lang.ast.ResolvedInfo.EnumElement = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedInfoEnumElement)
+      }
+      val owner = reader.readISZ(reader.readString _)
+      val name = reader.readString()
+      val ordinal = reader.readZ()
+      return org.sireum.lang.ast.ResolvedInfo.EnumElement(owner, name, ordinal)
+    }
+
+    def read_langastResolvedInfoObject(): org.sireum.lang.ast.ResolvedInfo.Object = {
+      val r = read_langastResolvedInfoObjectT(F)
+      return r
+    }
+
+    def read_langastResolvedInfoObjectT(typeParsed: B): org.sireum.lang.ast.ResolvedInfo.Object = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedInfoObject)
+      }
+      val name = reader.readISZ(reader.readString _)
+      return org.sireum.lang.ast.ResolvedInfo.Object(name)
+    }
+
+    def read_langastResolvedInfoVar(): org.sireum.lang.ast.ResolvedInfo.Var = {
+      val r = read_langastResolvedInfoVarT(F)
+      return r
+    }
+
+    def read_langastResolvedInfoVarT(typeParsed: B): org.sireum.lang.ast.ResolvedInfo.Var = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedInfoVar)
+      }
+      val isInObject = reader.readB()
+      val isSpec = reader.readB()
+      val isVal = reader.readB()
+      val owner = reader.readISZ(reader.readString _)
+      val id = reader.readString()
+      return org.sireum.lang.ast.ResolvedInfo.Var(isInObject, isSpec, isVal, owner, id)
+    }
+
+    def read_langastResolvedInfoMethod(): org.sireum.lang.ast.ResolvedInfo.Method = {
+      val r = read_langastResolvedInfoMethodT(F)
+      return r
+    }
+
+    def read_langastResolvedInfoMethodT(typeParsed: B): org.sireum.lang.ast.ResolvedInfo.Method = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedInfoMethod)
+      }
+      val isInObject = reader.readB()
+      val mode = read_langastMethodModeType()
+      val typeParams = reader.readISZ(reader.readString _)
+      val owner = reader.readISZ(reader.readString _)
+      val id = reader.readString()
+      val paramNames = reader.readISZ(reader.readString _)
+      val tpeOpt = reader.readOption(read_langastTypedFun _)
+      val reads = reader.readISZ(read_langastResolvedInfo _)
+      val writes = reader.readISZ(read_langastResolvedInfo _)
+      return org.sireum.lang.ast.ResolvedInfo.Method(isInObject, mode, typeParams, owner, id, paramNames, tpeOpt, reads, writes)
+    }
+
+    def read_langastResolvedInfoMethods(): org.sireum.lang.ast.ResolvedInfo.Methods = {
+      val r = read_langastResolvedInfoMethodsT(F)
+      return r
+    }
+
+    def read_langastResolvedInfoMethodsT(typeParsed: B): org.sireum.lang.ast.ResolvedInfo.Methods = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedInfoMethods)
+      }
+      val methods = reader.readISZ(read_langastResolvedInfoMethod _)
+      return org.sireum.lang.ast.ResolvedInfo.Methods(methods)
+    }
+
+    def read_langastResolvedInfoTuple(): org.sireum.lang.ast.ResolvedInfo.Tuple = {
+      val r = read_langastResolvedInfoTupleT(F)
+      return r
+    }
+
+    def read_langastResolvedInfoTupleT(typeParsed: B): org.sireum.lang.ast.ResolvedInfo.Tuple = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedInfoTuple)
+      }
+      val size = reader.readZ()
+      val index = reader.readZ()
+      return org.sireum.lang.ast.ResolvedInfo.Tuple(size, index)
+    }
+
+    def read_langastResolvedInfoLocalVarScopeType(): org.sireum.lang.ast.ResolvedInfo.LocalVar.Scope.Type = {
+      val r = reader.readZ()
+      return org.sireum.lang.ast.ResolvedInfo.LocalVar.Scope.byOrdinal(r).get
+    }
+
+    def read_langastResolvedInfoLocalVar(): org.sireum.lang.ast.ResolvedInfo.LocalVar = {
+      val r = read_langastResolvedInfoLocalVarT(F)
+      return r
+    }
+
+    def read_langastResolvedInfoLocalVarT(typeParsed: B): org.sireum.lang.ast.ResolvedInfo.LocalVar = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedInfoLocalVar)
+      }
+      val context = reader.readISZ(reader.readString _)
+      val scope = read_langastResolvedInfoLocalVarScopeType()
+      val isSpec = reader.readB()
+      val isVal = reader.readB()
+      val id = reader.readString()
+      return org.sireum.lang.ast.ResolvedInfo.LocalVar(context, scope, isSpec, isVal, id)
+    }
+
+    def read_langastResolvedInfoFact(): org.sireum.lang.ast.ResolvedInfo.Fact = {
+      val r = read_langastResolvedInfoFactT(F)
+      return r
+    }
+
+    def read_langastResolvedInfoFactT(typeParsed: B): org.sireum.lang.ast.ResolvedInfo.Fact = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedInfoFact)
+      }
+      val name = reader.readISZ(reader.readString _)
+      return org.sireum.lang.ast.ResolvedInfo.Fact(name)
+    }
+
+    def read_langastResolvedInfoTheorem(): org.sireum.lang.ast.ResolvedInfo.Theorem = {
+      val r = read_langastResolvedInfoTheoremT(F)
+      return r
+    }
+
+    def read_langastResolvedInfoTheoremT(typeParsed: B): org.sireum.lang.ast.ResolvedInfo.Theorem = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedInfoTheorem)
+      }
+      val name = reader.readISZ(reader.readString _)
+      return org.sireum.lang.ast.ResolvedInfo.Theorem(name)
+    }
+
+    def read_langastResolvedInfoInv(): org.sireum.lang.ast.ResolvedInfo.Inv = {
+      val r = read_langastResolvedInfoInvT(F)
+      return r
+    }
+
+    def read_langastResolvedInfoInvT(typeParsed: B): org.sireum.lang.ast.ResolvedInfo.Inv = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastResolvedInfoInv)
+      }
+      val isInObject = reader.readB()
+      val owner = reader.readISZ(reader.readString _)
+      val id = reader.readString()
+      return org.sireum.lang.ast.ResolvedInfo.Inv(isInObject, owner, id)
+    }
+
+    def read_langastTruthTableRow(): org.sireum.lang.ast.TruthTable.Row = {
+      val r = read_langastTruthTableRowT(F)
+      return r
+    }
+
+    def read_langastTruthTableRowT(typeParsed: B): org.sireum.lang.ast.TruthTable.Row = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTruthTableRow)
+      }
+      val assignment = read_langastTruthTableAssignment()
+      val separator = reader.readPosition()
+      val values = read_langastTruthTableAssignment()
+      return org.sireum.lang.ast.TruthTable.Row(assignment, separator, values)
+    }
+
+    def read_langastTruthTableAssignment(): org.sireum.lang.ast.TruthTable.Assignment = {
+      val r = read_langastTruthTableAssignmentT(F)
+      return r
+    }
+
+    def read_langastTruthTableAssignmentT(typeParsed: B): org.sireum.lang.ast.TruthTable.Assignment = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTruthTableAssignment)
+      }
+      val values = reader.readISZ(read_langastExpLitB _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.TruthTable.Assignment(values, attr)
+    }
+
+    def read_langastTruthTableConclusion(): org.sireum.lang.ast.TruthTable.Conclusion = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastTruthTableConclusionValidity => val r = read_langastTruthTableConclusionValidityT(T); return r
+        case Constants._langastTruthTableConclusionTautology => val r = read_langastTruthTableConclusionTautologyT(T); return r
+        case Constants._langastTruthTableConclusionContradictory => val r = read_langastTruthTableConclusionContradictoryT(T); return r
+        case Constants._langastTruthTableConclusionContingent => val r = read_langastTruthTableConclusionContingentT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.TruthTable.Conclusion.")
+          val r = read_langastTruthTableConclusionContingentT(T)
+          return r
+      }
+    }
+
+    def read_langastTruthTableConclusionValidity(): org.sireum.lang.ast.TruthTable.Conclusion.Validity = {
+      val r = read_langastTruthTableConclusionValidityT(F)
+      return r
+    }
+
+    def read_langastTruthTableConclusionValidityT(typeParsed: B): org.sireum.lang.ast.TruthTable.Conclusion.Validity = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTruthTableConclusionValidity)
+      }
+      val isValid = reader.readB()
+      val assignments = reader.readISZ(read_langastTruthTableAssignment _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.TruthTable.Conclusion.Validity(isValid, assignments, attr)
+    }
+
+    def read_langastTruthTableConclusionTautology(): org.sireum.lang.ast.TruthTable.Conclusion.Tautology = {
+      val r = read_langastTruthTableConclusionTautologyT(F)
+      return r
+    }
+
+    def read_langastTruthTableConclusionTautologyT(typeParsed: B): org.sireum.lang.ast.TruthTable.Conclusion.Tautology = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTruthTableConclusionTautology)
+      }
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.TruthTable.Conclusion.Tautology(attr)
+    }
+
+    def read_langastTruthTableConclusionContradictory(): org.sireum.lang.ast.TruthTable.Conclusion.Contradictory = {
+      val r = read_langastTruthTableConclusionContradictoryT(F)
+      return r
+    }
+
+    def read_langastTruthTableConclusionContradictoryT(typeParsed: B): org.sireum.lang.ast.TruthTable.Conclusion.Contradictory = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTruthTableConclusionContradictory)
+      }
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.TruthTable.Conclusion.Contradictory(attr)
+    }
+
+    def read_langastTruthTableConclusionContingent(): org.sireum.lang.ast.TruthTable.Conclusion.Contingent = {
+      val r = read_langastTruthTableConclusionContingentT(F)
+      return r
+    }
+
+    def read_langastTruthTableConclusionContingentT(typeParsed: B): org.sireum.lang.ast.TruthTable.Conclusion.Contingent = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTruthTableConclusionContingent)
+      }
+      val trueAssignments = reader.readISZ(read_langastTruthTableAssignment _)
+      val falseAssignments = reader.readISZ(read_langastTruthTableAssignment _)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.TruthTable.Conclusion.Contingent(trueAssignments, falseAssignments, attr)
+    }
+
+    def read_langastMethodModeType(): org.sireum.lang.ast.MethodMode.Type = {
+      val r = reader.readZ()
+      return org.sireum.lang.ast.MethodMode.byOrdinal(r).get
+    }
+
+    def read_langastTyped(): org.sireum.lang.ast.Typed = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastTypedName => val r = read_langastTypedNameT(T); return r
+        case Constants._langastTypedTuple => val r = read_langastTypedTupleT(T); return r
+        case Constants._langastTypedFun => val r = read_langastTypedFunT(T); return r
+        case Constants._langastTypedTypeVar => val r = read_langastTypedTypeVarT(T); return r
+        case Constants._langastTypedPackage => val r = read_langastTypedPackageT(T); return r
+        case Constants._langastTypedObject => val r = read_langastTypedObjectT(T); return r
+        case Constants._langastTypedEnum => val r = read_langastTypedEnumT(T); return r
+        case Constants._langastTypedMethod => val r = read_langastTypedMethodT(T); return r
+        case Constants._langastTypedMethods => val r = read_langastTypedMethodsT(T); return r
+        case Constants._langastTypedFact => val r = read_langastTypedFactT(T); return r
+        case Constants._langastTypedTheorem => val r = read_langastTypedTheoremT(T); return r
+        case Constants._langastTypedInv => val r = read_langastTypedInvT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.Typed.")
+          val r = read_langastTypedInvT(T)
+          return r
+      }
+    }
+
+    def read_langastTypedName(): org.sireum.lang.ast.Typed.Name = {
+      val r = read_langastTypedNameT(F)
+      return r
+    }
+
+    def read_langastTypedNameT(typeParsed: B): org.sireum.lang.ast.Typed.Name = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypedName)
+      }
+      val ids = reader.readISZ(reader.readString _)
+      val args = reader.readISZ(read_langastTyped _)
+      return org.sireum.lang.ast.Typed.Name(ids, args)
+    }
+
+    def read_langastTypedTuple(): org.sireum.lang.ast.Typed.Tuple = {
+      val r = read_langastTypedTupleT(F)
+      return r
+    }
+
+    def read_langastTypedTupleT(typeParsed: B): org.sireum.lang.ast.Typed.Tuple = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypedTuple)
+      }
+      val args = reader.readISZ(read_langastTyped _)
+      return org.sireum.lang.ast.Typed.Tuple(args)
+    }
+
+    def read_langastTypedFun(): org.sireum.lang.ast.Typed.Fun = {
+      val r = read_langastTypedFunT(F)
+      return r
+    }
+
+    def read_langastTypedFunT(typeParsed: B): org.sireum.lang.ast.Typed.Fun = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypedFun)
+      }
+      val isPure = reader.readB()
+      val isByName = reader.readB()
+      val args = reader.readISZ(read_langastTyped _)
+      val ret = read_langastTyped()
+      return org.sireum.lang.ast.Typed.Fun(isPure, isByName, args, ret)
+    }
+
+    def read_langastTypedTypeVar(): org.sireum.lang.ast.Typed.TypeVar = {
+      val r = read_langastTypedTypeVarT(F)
+      return r
+    }
+
+    def read_langastTypedTypeVarT(typeParsed: B): org.sireum.lang.ast.Typed.TypeVar = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypedTypeVar)
+      }
+      val id = reader.readString()
+      return org.sireum.lang.ast.Typed.TypeVar(id)
+    }
+
+    def read_langastTypedPackage(): org.sireum.lang.ast.Typed.Package = {
+      val r = read_langastTypedPackageT(F)
+      return r
+    }
+
+    def read_langastTypedPackageT(typeParsed: B): org.sireum.lang.ast.Typed.Package = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypedPackage)
+      }
+      val name = reader.readISZ(reader.readString _)
+      return org.sireum.lang.ast.Typed.Package(name)
+    }
+
+    def read_langastTypedObject(): org.sireum.lang.ast.Typed.Object = {
+      val r = read_langastTypedObjectT(F)
+      return r
+    }
+
+    def read_langastTypedObjectT(typeParsed: B): org.sireum.lang.ast.Typed.Object = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypedObject)
+      }
+      val owner = reader.readISZ(reader.readString _)
+      val id = reader.readString()
+      return org.sireum.lang.ast.Typed.Object(owner, id)
+    }
+
+    def read_langastTypedEnum(): org.sireum.lang.ast.Typed.Enum = {
+      val r = read_langastTypedEnumT(F)
+      return r
+    }
+
+    def read_langastTypedEnumT(typeParsed: B): org.sireum.lang.ast.Typed.Enum = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypedEnum)
+      }
+      val name = reader.readISZ(reader.readString _)
+      return org.sireum.lang.ast.Typed.Enum(name)
+    }
+
+    def read_langastTypedMethod(): org.sireum.lang.ast.Typed.Method = {
+      val r = read_langastTypedMethodT(F)
+      return r
+    }
+
+    def read_langastTypedMethodT(typeParsed: B): org.sireum.lang.ast.Typed.Method = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypedMethod)
+      }
+      val isInObject = reader.readB()
+      val mode = read_langastMethodModeType()
+      val typeParams = reader.readISZ(reader.readString _)
+      val owner = reader.readISZ(reader.readString _)
+      val name = reader.readString()
+      val paramNames = reader.readISZ(reader.readString _)
+      val tpe = read_langastTypedFun()
+      return org.sireum.lang.ast.Typed.Method(isInObject, mode, typeParams, owner, name, paramNames, tpe)
+    }
+
+    def read_langastTypedMethods(): org.sireum.lang.ast.Typed.Methods = {
+      val r = read_langastTypedMethodsT(F)
+      return r
+    }
+
+    def read_langastTypedMethodsT(typeParsed: B): org.sireum.lang.ast.Typed.Methods = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypedMethods)
+      }
+      val methods = reader.readISZ(read_langastTypedMethod _)
+      return org.sireum.lang.ast.Typed.Methods(methods)
+    }
+
+    def read_langastTypedFact(): org.sireum.lang.ast.Typed.Fact = {
+      val r = read_langastTypedFactT(F)
+      return r
+    }
+
+    def read_langastTypedFactT(typeParsed: B): org.sireum.lang.ast.Typed.Fact = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypedFact)
+      }
+      val owner = reader.readISZ(reader.readString _)
+      val id = reader.readString()
+      return org.sireum.lang.ast.Typed.Fact(owner, id)
+    }
+
+    def read_langastTypedTheorem(): org.sireum.lang.ast.Typed.Theorem = {
+      val r = read_langastTypedTheoremT(F)
+      return r
+    }
+
+    def read_langastTypedTheoremT(typeParsed: B): org.sireum.lang.ast.Typed.Theorem = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypedTheorem)
+      }
+      val owner = reader.readISZ(reader.readString _)
+      val id = reader.readString()
+      return org.sireum.lang.ast.Typed.Theorem(owner, id)
+    }
+
+    def read_langastTypedInv(): org.sireum.lang.ast.Typed.Inv = {
+      val r = read_langastTypedInvT(F)
+      return r
+    }
+
+    def read_langastTypedInvT(typeParsed: B): org.sireum.lang.ast.Typed.Inv = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastTypedInv)
+      }
+      val isInObject = reader.readB()
+      val owner = reader.readISZ(reader.readString _)
+      val id = reader.readString()
+      return org.sireum.lang.ast.Typed.Inv(isInObject, owner, id)
     }
 
   }
@@ -5151,111 +9227,6 @@ object MsgPack {
     return r
   }
 
-  def fromGclExp(o: GclExp, pooling: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeGclExp(o)
-    return w.result
-  }
-
-  def toGclExp(data: ISZ[U8]): Either[GclExp, MessagePack.ErrorMsg] = {
-    def fGclExp(reader: Reader): GclExp = {
-      val r = reader.readGclExp()
-      return r
-    }
-    val r = to(data, fGclExp _)
-    return r
-  }
-
-  def fromGclUnaryExp(o: GclUnaryExp, pooling: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeGclUnaryExp(o)
-    return w.result
-  }
-
-  def toGclUnaryExp(data: ISZ[U8]): Either[GclUnaryExp, MessagePack.ErrorMsg] = {
-    def fGclUnaryExp(reader: Reader): GclUnaryExp = {
-      val r = reader.readGclUnaryExp()
-      return r
-    }
-    val r = to(data, fGclUnaryExp _)
-    return r
-  }
-
-  def fromGclBinaryExp(o: GclBinaryExp, pooling: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeGclBinaryExp(o)
-    return w.result
-  }
-
-  def toGclBinaryExp(data: ISZ[U8]): Either[GclBinaryExp, MessagePack.ErrorMsg] = {
-    def fGclBinaryExp(reader: Reader): GclBinaryExp = {
-      val r = reader.readGclBinaryExp()
-      return r
-    }
-    val r = to(data, fGclBinaryExp _)
-    return r
-  }
-
-  def fromGclNameExp(o: GclNameExp, pooling: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeGclNameExp(o)
-    return w.result
-  }
-
-  def toGclNameExp(data: ISZ[U8]): Either[GclNameExp, MessagePack.ErrorMsg] = {
-    def fGclNameExp(reader: Reader): GclNameExp = {
-      val r = reader.readGclNameExp()
-      return r
-    }
-    val r = to(data, fGclNameExp _)
-    return r
-  }
-
-  def fromGclAccessExp(o: GclAccessExp, pooling: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeGclAccessExp(o)
-    return w.result
-  }
-
-  def toGclAccessExp(data: ISZ[U8]): Either[GclAccessExp, MessagePack.ErrorMsg] = {
-    def fGclAccessExp(reader: Reader): GclAccessExp = {
-      val r = reader.readGclAccessExp()
-      return r
-    }
-    val r = to(data, fGclAccessExp _)
-    return r
-  }
-
-  def fromGclLiteralExp(o: GclLiteralExp, pooling: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeGclLiteralExp(o)
-    return w.result
-  }
-
-  def toGclLiteralExp(data: ISZ[U8]): Either[GclLiteralExp, MessagePack.ErrorMsg] = {
-    def fGclLiteralExp(reader: Reader): GclLiteralExp = {
-      val r = reader.readGclLiteralExp()
-      return r
-    }
-    val r = to(data, fGclLiteralExp _)
-    return r
-  }
-
-  def fromGclEnumLitExp(o: GclEnumLitExp, pooling: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeGclEnumLitExp(o)
-    return w.result
-  }
-
-  def toGclEnumLitExp(data: ISZ[U8]): Either[GclEnumLitExp, MessagePack.ErrorMsg] = {
-    def fGclEnumLitExp(reader: Reader): GclEnumLitExp = {
-      val r = reader.readGclEnumLitExp()
-      return r
-    }
-    val r = to(data, fGclEnumLitExp _)
-    return r
-  }
-
   def fromGclTODO(o: GclTODO, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
     w.writeGclTODO(o)
@@ -5373,6 +9344,2571 @@ object MsgPack {
       return r
     }
     val r = to(data, fSmfType _)
+    return r
+  }
+
+  def from_langastTopUnit(o: org.sireum.lang.ast.TopUnit, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTopUnit(o)
+    return w.result
+  }
+
+  def to_langastTopUnit(data: ISZ[U8]): Either[org.sireum.lang.ast.TopUnit, MessagePack.ErrorMsg] = {
+    def f_langastTopUnit(reader: Reader): org.sireum.lang.ast.TopUnit = {
+      val r = reader.read_langastTopUnit()
+      return r
+    }
+    val r = to(data, f_langastTopUnit _)
+    return r
+  }
+
+  def from_langastTopUnitProgram(o: org.sireum.lang.ast.TopUnit.Program, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTopUnitProgram(o)
+    return w.result
+  }
+
+  def to_langastTopUnitProgram(data: ISZ[U8]): Either[org.sireum.lang.ast.TopUnit.Program, MessagePack.ErrorMsg] = {
+    def f_langastTopUnitProgram(reader: Reader): org.sireum.lang.ast.TopUnit.Program = {
+      val r = reader.read_langastTopUnitProgram()
+      return r
+    }
+    val r = to(data, f_langastTopUnitProgram _)
+    return r
+  }
+
+  def from_langastTopUnitSequentUnit(o: org.sireum.lang.ast.TopUnit.SequentUnit, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTopUnitSequentUnit(o)
+    return w.result
+  }
+
+  def to_langastTopUnitSequentUnit(data: ISZ[U8]): Either[org.sireum.lang.ast.TopUnit.SequentUnit, MessagePack.ErrorMsg] = {
+    def f_langastTopUnitSequentUnit(reader: Reader): org.sireum.lang.ast.TopUnit.SequentUnit = {
+      val r = reader.read_langastTopUnitSequentUnit()
+      return r
+    }
+    val r = to(data, f_langastTopUnitSequentUnit _)
+    return r
+  }
+
+  def from_langastTopUnitTruthTableUnit(o: org.sireum.lang.ast.TopUnit.TruthTableUnit, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTopUnitTruthTableUnit(o)
+    return w.result
+  }
+
+  def to_langastTopUnitTruthTableUnit(data: ISZ[U8]): Either[org.sireum.lang.ast.TopUnit.TruthTableUnit, MessagePack.ErrorMsg] = {
+    def f_langastTopUnitTruthTableUnit(reader: Reader): org.sireum.lang.ast.TopUnit.TruthTableUnit = {
+      val r = reader.read_langastTopUnitTruthTableUnit()
+      return r
+    }
+    val r = to(data, f_langastTopUnitTruthTableUnit _)
+    return r
+  }
+
+  def from_langastStmt(o: org.sireum.lang.ast.Stmt, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmt(o)
+    return w.result
+  }
+
+  def to_langastStmt(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt, MessagePack.ErrorMsg] = {
+    def f_langastStmt(reader: Reader): org.sireum.lang.ast.Stmt = {
+      val r = reader.read_langastStmt()
+      return r
+    }
+    val r = to(data, f_langastStmt _)
+    return r
+  }
+
+  def from_langastHasModifies(o: org.sireum.lang.ast.HasModifies, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastHasModifies(o)
+    return w.result
+  }
+
+  def to_langastHasModifies(data: ISZ[U8]): Either[org.sireum.lang.ast.HasModifies, MessagePack.ErrorMsg] = {
+    def f_langastHasModifies(reader: Reader): org.sireum.lang.ast.HasModifies = {
+      val r = reader.read_langastHasModifies()
+      return r
+    }
+    val r = to(data, f_langastHasModifies _)
+    return r
+  }
+
+  def from_langastLoopContract(o: org.sireum.lang.ast.LoopContract, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastLoopContract(o)
+    return w.result
+  }
+
+  def to_langastLoopContract(data: ISZ[U8]): Either[org.sireum.lang.ast.LoopContract, MessagePack.ErrorMsg] = {
+    def f_langastLoopContract(reader: Reader): org.sireum.lang.ast.LoopContract = {
+      val r = reader.read_langastLoopContract()
+      return r
+    }
+    val r = to(data, f_langastLoopContract _)
+    return r
+  }
+
+  def from_langastStmtImport(o: org.sireum.lang.ast.Stmt.Import, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtImport(o)
+    return w.result
+  }
+
+  def to_langastStmtImport(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Import, MessagePack.ErrorMsg] = {
+    def f_langastStmtImport(reader: Reader): org.sireum.lang.ast.Stmt.Import = {
+      val r = reader.read_langastStmtImport()
+      return r
+    }
+    val r = to(data, f_langastStmtImport _)
+    return r
+  }
+
+  def from_langastStmtImportImporter(o: org.sireum.lang.ast.Stmt.Import.Importer, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtImportImporter(o)
+    return w.result
+  }
+
+  def to_langastStmtImportImporter(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Import.Importer, MessagePack.ErrorMsg] = {
+    def f_langastStmtImportImporter(reader: Reader): org.sireum.lang.ast.Stmt.Import.Importer = {
+      val r = reader.read_langastStmtImportImporter()
+      return r
+    }
+    val r = to(data, f_langastStmtImportImporter _)
+    return r
+  }
+
+  def from_langastStmtImportSelector(o: org.sireum.lang.ast.Stmt.Import.Selector, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtImportSelector(o)
+    return w.result
+  }
+
+  def to_langastStmtImportSelector(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Import.Selector, MessagePack.ErrorMsg] = {
+    def f_langastStmtImportSelector(reader: Reader): org.sireum.lang.ast.Stmt.Import.Selector = {
+      val r = reader.read_langastStmtImportSelector()
+      return r
+    }
+    val r = to(data, f_langastStmtImportSelector _)
+    return r
+  }
+
+  def from_langastStmtImportMultiSelector(o: org.sireum.lang.ast.Stmt.Import.MultiSelector, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtImportMultiSelector(o)
+    return w.result
+  }
+
+  def to_langastStmtImportMultiSelector(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Import.MultiSelector, MessagePack.ErrorMsg] = {
+    def f_langastStmtImportMultiSelector(reader: Reader): org.sireum.lang.ast.Stmt.Import.MultiSelector = {
+      val r = reader.read_langastStmtImportMultiSelector()
+      return r
+    }
+    val r = to(data, f_langastStmtImportMultiSelector _)
+    return r
+  }
+
+  def from_langastStmtImportWildcardSelector(o: org.sireum.lang.ast.Stmt.Import.WildcardSelector, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtImportWildcardSelector(o)
+    return w.result
+  }
+
+  def to_langastStmtImportWildcardSelector(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Import.WildcardSelector, MessagePack.ErrorMsg] = {
+    def f_langastStmtImportWildcardSelector(reader: Reader): org.sireum.lang.ast.Stmt.Import.WildcardSelector = {
+      val r = reader.read_langastStmtImportWildcardSelector()
+      return r
+    }
+    val r = to(data, f_langastStmtImportWildcardSelector _)
+    return r
+  }
+
+  def from_langastStmtImportNamedSelector(o: org.sireum.lang.ast.Stmt.Import.NamedSelector, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtImportNamedSelector(o)
+    return w.result
+  }
+
+  def to_langastStmtImportNamedSelector(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Import.NamedSelector, MessagePack.ErrorMsg] = {
+    def f_langastStmtImportNamedSelector(reader: Reader): org.sireum.lang.ast.Stmt.Import.NamedSelector = {
+      val r = reader.read_langastStmtImportNamedSelector()
+      return r
+    }
+    val r = to(data, f_langastStmtImportNamedSelector _)
+    return r
+  }
+
+  def from_langastStmtVar(o: org.sireum.lang.ast.Stmt.Var, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtVar(o)
+    return w.result
+  }
+
+  def to_langastStmtVar(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Var, MessagePack.ErrorMsg] = {
+    def f_langastStmtVar(reader: Reader): org.sireum.lang.ast.Stmt.Var = {
+      val r = reader.read_langastStmtVar()
+      return r
+    }
+    val r = to(data, f_langastStmtVar _)
+    return r
+  }
+
+  def from_langastStmtVarPattern(o: org.sireum.lang.ast.Stmt.VarPattern, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtVarPattern(o)
+    return w.result
+  }
+
+  def to_langastStmtVarPattern(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.VarPattern, MessagePack.ErrorMsg] = {
+    def f_langastStmtVarPattern(reader: Reader): org.sireum.lang.ast.Stmt.VarPattern = {
+      val r = reader.read_langastStmtVarPattern()
+      return r
+    }
+    val r = to(data, f_langastStmtVarPattern _)
+    return r
+  }
+
+  def from_langastStmtSpecVar(o: org.sireum.lang.ast.Stmt.SpecVar, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtSpecVar(o)
+    return w.result
+  }
+
+  def to_langastStmtSpecVar(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.SpecVar, MessagePack.ErrorMsg] = {
+    def f_langastStmtSpecVar(reader: Reader): org.sireum.lang.ast.Stmt.SpecVar = {
+      val r = reader.read_langastStmtSpecVar()
+      return r
+    }
+    val r = to(data, f_langastStmtSpecVar _)
+    return r
+  }
+
+  def from_langastStmtMethod(o: org.sireum.lang.ast.Stmt.Method, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtMethod(o)
+    return w.result
+  }
+
+  def to_langastStmtMethod(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Method, MessagePack.ErrorMsg] = {
+    def f_langastStmtMethod(reader: Reader): org.sireum.lang.ast.Stmt.Method = {
+      val r = reader.read_langastStmtMethod()
+      return r
+    }
+    val r = to(data, f_langastStmtMethod _)
+    return r
+  }
+
+  def from_langastStmtExtMethod(o: org.sireum.lang.ast.Stmt.ExtMethod, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtExtMethod(o)
+    return w.result
+  }
+
+  def to_langastStmtExtMethod(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.ExtMethod, MessagePack.ErrorMsg] = {
+    def f_langastStmtExtMethod(reader: Reader): org.sireum.lang.ast.Stmt.ExtMethod = {
+      val r = reader.read_langastStmtExtMethod()
+      return r
+    }
+    val r = to(data, f_langastStmtExtMethod _)
+    return r
+  }
+
+  def from_langastStmtJustMethod(o: org.sireum.lang.ast.Stmt.JustMethod, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtJustMethod(o)
+    return w.result
+  }
+
+  def to_langastStmtJustMethod(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.JustMethod, MessagePack.ErrorMsg] = {
+    def f_langastStmtJustMethod(reader: Reader): org.sireum.lang.ast.Stmt.JustMethod = {
+      val r = reader.read_langastStmtJustMethod()
+      return r
+    }
+    val r = to(data, f_langastStmtJustMethod _)
+    return r
+  }
+
+  def from_langastStmtSpecMethod(o: org.sireum.lang.ast.Stmt.SpecMethod, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtSpecMethod(o)
+    return w.result
+  }
+
+  def to_langastStmtSpecMethod(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.SpecMethod, MessagePack.ErrorMsg] = {
+    def f_langastStmtSpecMethod(reader: Reader): org.sireum.lang.ast.Stmt.SpecMethod = {
+      val r = reader.read_langastStmtSpecMethod()
+      return r
+    }
+    val r = to(data, f_langastStmtSpecMethod _)
+    return r
+  }
+
+  def from_langastStmtEnum(o: org.sireum.lang.ast.Stmt.Enum, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtEnum(o)
+    return w.result
+  }
+
+  def to_langastStmtEnum(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Enum, MessagePack.ErrorMsg] = {
+    def f_langastStmtEnum(reader: Reader): org.sireum.lang.ast.Stmt.Enum = {
+      val r = reader.read_langastStmtEnum()
+      return r
+    }
+    val r = to(data, f_langastStmtEnum _)
+    return r
+  }
+
+  def from_langastStmtSubZ(o: org.sireum.lang.ast.Stmt.SubZ, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtSubZ(o)
+    return w.result
+  }
+
+  def to_langastStmtSubZ(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.SubZ, MessagePack.ErrorMsg] = {
+    def f_langastStmtSubZ(reader: Reader): org.sireum.lang.ast.Stmt.SubZ = {
+      val r = reader.read_langastStmtSubZ()
+      return r
+    }
+    val r = to(data, f_langastStmtSubZ _)
+    return r
+  }
+
+  def from_langastStmtObject(o: org.sireum.lang.ast.Stmt.Object, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtObject(o)
+    return w.result
+  }
+
+  def to_langastStmtObject(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Object, MessagePack.ErrorMsg] = {
+    def f_langastStmtObject(reader: Reader): org.sireum.lang.ast.Stmt.Object = {
+      val r = reader.read_langastStmtObject()
+      return r
+    }
+    val r = to(data, f_langastStmtObject _)
+    return r
+  }
+
+  def from_langastStmtSig(o: org.sireum.lang.ast.Stmt.Sig, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtSig(o)
+    return w.result
+  }
+
+  def to_langastStmtSig(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Sig, MessagePack.ErrorMsg] = {
+    def f_langastStmtSig(reader: Reader): org.sireum.lang.ast.Stmt.Sig = {
+      val r = reader.read_langastStmtSig()
+      return r
+    }
+    val r = to(data, f_langastStmtSig _)
+    return r
+  }
+
+  def from_langastStmtAdt(o: org.sireum.lang.ast.Stmt.Adt, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtAdt(o)
+    return w.result
+  }
+
+  def to_langastStmtAdt(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Adt, MessagePack.ErrorMsg] = {
+    def f_langastStmtAdt(reader: Reader): org.sireum.lang.ast.Stmt.Adt = {
+      val r = reader.read_langastStmtAdt()
+      return r
+    }
+    val r = to(data, f_langastStmtAdt _)
+    return r
+  }
+
+  def from_langastStmtTypeAlias(o: org.sireum.lang.ast.Stmt.TypeAlias, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtTypeAlias(o)
+    return w.result
+  }
+
+  def to_langastStmtTypeAlias(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.TypeAlias, MessagePack.ErrorMsg] = {
+    def f_langastStmtTypeAlias(reader: Reader): org.sireum.lang.ast.Stmt.TypeAlias = {
+      val r = reader.read_langastStmtTypeAlias()
+      return r
+    }
+    val r = to(data, f_langastStmtTypeAlias _)
+    return r
+  }
+
+  def from_langastStmtAssign(o: org.sireum.lang.ast.Stmt.Assign, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtAssign(o)
+    return w.result
+  }
+
+  def to_langastStmtAssign(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Assign, MessagePack.ErrorMsg] = {
+    def f_langastStmtAssign(reader: Reader): org.sireum.lang.ast.Stmt.Assign = {
+      val r = reader.read_langastStmtAssign()
+      return r
+    }
+    val r = to(data, f_langastStmtAssign _)
+    return r
+  }
+
+  def from_langastStmtBlock(o: org.sireum.lang.ast.Stmt.Block, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtBlock(o)
+    return w.result
+  }
+
+  def to_langastStmtBlock(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Block, MessagePack.ErrorMsg] = {
+    def f_langastStmtBlock(reader: Reader): org.sireum.lang.ast.Stmt.Block = {
+      val r = reader.read_langastStmtBlock()
+      return r
+    }
+    val r = to(data, f_langastStmtBlock _)
+    return r
+  }
+
+  def from_langastStmtIf(o: org.sireum.lang.ast.Stmt.If, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtIf(o)
+    return w.result
+  }
+
+  def to_langastStmtIf(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.If, MessagePack.ErrorMsg] = {
+    def f_langastStmtIf(reader: Reader): org.sireum.lang.ast.Stmt.If = {
+      val r = reader.read_langastStmtIf()
+      return r
+    }
+    val r = to(data, f_langastStmtIf _)
+    return r
+  }
+
+  def from_langastStmtMatch(o: org.sireum.lang.ast.Stmt.Match, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtMatch(o)
+    return w.result
+  }
+
+  def to_langastStmtMatch(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Match, MessagePack.ErrorMsg] = {
+    def f_langastStmtMatch(reader: Reader): org.sireum.lang.ast.Stmt.Match = {
+      val r = reader.read_langastStmtMatch()
+      return r
+    }
+    val r = to(data, f_langastStmtMatch _)
+    return r
+  }
+
+  def from_langastStmtWhile(o: org.sireum.lang.ast.Stmt.While, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtWhile(o)
+    return w.result
+  }
+
+  def to_langastStmtWhile(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.While, MessagePack.ErrorMsg] = {
+    def f_langastStmtWhile(reader: Reader): org.sireum.lang.ast.Stmt.While = {
+      val r = reader.read_langastStmtWhile()
+      return r
+    }
+    val r = to(data, f_langastStmtWhile _)
+    return r
+  }
+
+  def from_langastStmtDoWhile(o: org.sireum.lang.ast.Stmt.DoWhile, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtDoWhile(o)
+    return w.result
+  }
+
+  def to_langastStmtDoWhile(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.DoWhile, MessagePack.ErrorMsg] = {
+    def f_langastStmtDoWhile(reader: Reader): org.sireum.lang.ast.Stmt.DoWhile = {
+      val r = reader.read_langastStmtDoWhile()
+      return r
+    }
+    val r = to(data, f_langastStmtDoWhile _)
+    return r
+  }
+
+  def from_langastStmtFor(o: org.sireum.lang.ast.Stmt.For, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtFor(o)
+    return w.result
+  }
+
+  def to_langastStmtFor(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.For, MessagePack.ErrorMsg] = {
+    def f_langastStmtFor(reader: Reader): org.sireum.lang.ast.Stmt.For = {
+      val r = reader.read_langastStmtFor()
+      return r
+    }
+    val r = to(data, f_langastStmtFor _)
+    return r
+  }
+
+  def from_langastStmtReturn(o: org.sireum.lang.ast.Stmt.Return, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtReturn(o)
+    return w.result
+  }
+
+  def to_langastStmtReturn(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Return, MessagePack.ErrorMsg] = {
+    def f_langastStmtReturn(reader: Reader): org.sireum.lang.ast.Stmt.Return = {
+      val r = reader.read_langastStmtReturn()
+      return r
+    }
+    val r = to(data, f_langastStmtReturn _)
+    return r
+  }
+
+  def from_langastStmtExpr(o: org.sireum.lang.ast.Stmt.Expr, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtExpr(o)
+    return w.result
+  }
+
+  def to_langastStmtExpr(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Expr, MessagePack.ErrorMsg] = {
+    def f_langastStmtExpr(reader: Reader): org.sireum.lang.ast.Stmt.Expr = {
+      val r = reader.read_langastStmtExpr()
+      return r
+    }
+    val r = to(data, f_langastStmtExpr _)
+    return r
+  }
+
+  def from_langastStmtSpec(o: org.sireum.lang.ast.Stmt.Spec, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtSpec(o)
+    return w.result
+  }
+
+  def to_langastStmtSpec(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Spec, MessagePack.ErrorMsg] = {
+    def f_langastStmtSpec(reader: Reader): org.sireum.lang.ast.Stmt.Spec = {
+      val r = reader.read_langastStmtSpec()
+      return r
+    }
+    val r = to(data, f_langastStmtSpec _)
+    return r
+  }
+
+  def from_langastStmtFact(o: org.sireum.lang.ast.Stmt.Fact, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtFact(o)
+    return w.result
+  }
+
+  def to_langastStmtFact(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Fact, MessagePack.ErrorMsg] = {
+    def f_langastStmtFact(reader: Reader): org.sireum.lang.ast.Stmt.Fact = {
+      val r = reader.read_langastStmtFact()
+      return r
+    }
+    val r = to(data, f_langastStmtFact _)
+    return r
+  }
+
+  def from_langastStmtInv(o: org.sireum.lang.ast.Stmt.Inv, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtInv(o)
+    return w.result
+  }
+
+  def to_langastStmtInv(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Inv, MessagePack.ErrorMsg] = {
+    def f_langastStmtInv(reader: Reader): org.sireum.lang.ast.Stmt.Inv = {
+      val r = reader.read_langastStmtInv()
+      return r
+    }
+    val r = to(data, f_langastStmtInv _)
+    return r
+  }
+
+  def from_langastStmtTheorem(o: org.sireum.lang.ast.Stmt.Theorem, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtTheorem(o)
+    return w.result
+  }
+
+  def to_langastStmtTheorem(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Theorem, MessagePack.ErrorMsg] = {
+    def f_langastStmtTheorem(reader: Reader): org.sireum.lang.ast.Stmt.Theorem = {
+      val r = reader.read_langastStmtTheorem()
+      return r
+    }
+    val r = to(data, f_langastStmtTheorem _)
+    return r
+  }
+
+  def from_langastStmtDataRefinement(o: org.sireum.lang.ast.Stmt.DataRefinement, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtDataRefinement(o)
+    return w.result
+  }
+
+  def to_langastStmtDataRefinement(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.DataRefinement, MessagePack.ErrorMsg] = {
+    def f_langastStmtDataRefinement(reader: Reader): org.sireum.lang.ast.Stmt.DataRefinement = {
+      val r = reader.read_langastStmtDataRefinement()
+      return r
+    }
+    val r = to(data, f_langastStmtDataRefinement _)
+    return r
+  }
+
+  def from_langastStmtSpecLabel(o: org.sireum.lang.ast.Stmt.SpecLabel, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtSpecLabel(o)
+    return w.result
+  }
+
+  def to_langastStmtSpecLabel(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.SpecLabel, MessagePack.ErrorMsg] = {
+    def f_langastStmtSpecLabel(reader: Reader): org.sireum.lang.ast.Stmt.SpecLabel = {
+      val r = reader.read_langastStmtSpecLabel()
+      return r
+    }
+    val r = to(data, f_langastStmtSpecLabel _)
+    return r
+  }
+
+  def from_langastStmtSpecBlock(o: org.sireum.lang.ast.Stmt.SpecBlock, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtSpecBlock(o)
+    return w.result
+  }
+
+  def to_langastStmtSpecBlock(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.SpecBlock, MessagePack.ErrorMsg] = {
+    def f_langastStmtSpecBlock(reader: Reader): org.sireum.lang.ast.Stmt.SpecBlock = {
+      val r = reader.read_langastStmtSpecBlock()
+      return r
+    }
+    val r = to(data, f_langastStmtSpecBlock _)
+    return r
+  }
+
+  def from_langastStmtDeduceSequent(o: org.sireum.lang.ast.Stmt.DeduceSequent, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtDeduceSequent(o)
+    return w.result
+  }
+
+  def to_langastStmtDeduceSequent(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.DeduceSequent, MessagePack.ErrorMsg] = {
+    def f_langastStmtDeduceSequent(reader: Reader): org.sireum.lang.ast.Stmt.DeduceSequent = {
+      val r = reader.read_langastStmtDeduceSequent()
+      return r
+    }
+    val r = to(data, f_langastStmtDeduceSequent _)
+    return r
+  }
+
+  def from_langastStmtDeduceSteps(o: org.sireum.lang.ast.Stmt.DeduceSteps, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtDeduceSteps(o)
+    return w.result
+  }
+
+  def to_langastStmtDeduceSteps(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.DeduceSteps, MessagePack.ErrorMsg] = {
+    def f_langastStmtDeduceSteps(reader: Reader): org.sireum.lang.ast.Stmt.DeduceSteps = {
+      val r = reader.read_langastStmtDeduceSteps()
+      return r
+    }
+    val r = to(data, f_langastStmtDeduceSteps _)
+    return r
+  }
+
+  def from_langastStmtHavoc(o: org.sireum.lang.ast.Stmt.Havoc, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastStmtHavoc(o)
+    return w.result
+  }
+
+  def to_langastStmtHavoc(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.Havoc, MessagePack.ErrorMsg] = {
+    def f_langastStmtHavoc(reader: Reader): org.sireum.lang.ast.Stmt.Havoc = {
+      val r = reader.read_langastStmtHavoc()
+      return r
+    }
+    val r = to(data, f_langastStmtHavoc _)
+    return r
+  }
+
+  def from_langastMethodContract(o: org.sireum.lang.ast.MethodContract, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastMethodContract(o)
+    return w.result
+  }
+
+  def to_langastMethodContract(data: ISZ[U8]): Either[org.sireum.lang.ast.MethodContract, MessagePack.ErrorMsg] = {
+    def f_langastMethodContract(reader: Reader): org.sireum.lang.ast.MethodContract = {
+      val r = reader.read_langastMethodContract()
+      return r
+    }
+    val r = to(data, f_langastMethodContract _)
+    return r
+  }
+
+  def from_langastMethodContractAccesses(o: org.sireum.lang.ast.MethodContract.Accesses, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastMethodContractAccesses(o)
+    return w.result
+  }
+
+  def to_langastMethodContractAccesses(data: ISZ[U8]): Either[org.sireum.lang.ast.MethodContract.Accesses, MessagePack.ErrorMsg] = {
+    def f_langastMethodContractAccesses(reader: Reader): org.sireum.lang.ast.MethodContract.Accesses = {
+      val r = reader.read_langastMethodContractAccesses()
+      return r
+    }
+    val r = to(data, f_langastMethodContractAccesses _)
+    return r
+  }
+
+  def from_langastMethodContractClaims(o: org.sireum.lang.ast.MethodContract.Claims, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastMethodContractClaims(o)
+    return w.result
+  }
+
+  def to_langastMethodContractClaims(data: ISZ[U8]): Either[org.sireum.lang.ast.MethodContract.Claims, MessagePack.ErrorMsg] = {
+    def f_langastMethodContractClaims(reader: Reader): org.sireum.lang.ast.MethodContract.Claims = {
+      val r = reader.read_langastMethodContractClaims()
+      return r
+    }
+    val r = to(data, f_langastMethodContractClaims _)
+    return r
+  }
+
+  def from_langastMethodContractSimple(o: org.sireum.lang.ast.MethodContract.Simple, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastMethodContractSimple(o)
+    return w.result
+  }
+
+  def to_langastMethodContractSimple(data: ISZ[U8]): Either[org.sireum.lang.ast.MethodContract.Simple, MessagePack.ErrorMsg] = {
+    def f_langastMethodContractSimple(reader: Reader): org.sireum.lang.ast.MethodContract.Simple = {
+      val r = reader.read_langastMethodContractSimple()
+      return r
+    }
+    val r = to(data, f_langastMethodContractSimple _)
+    return r
+  }
+
+  def from_langastMethodContractCases(o: org.sireum.lang.ast.MethodContract.Cases, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastMethodContractCases(o)
+    return w.result
+  }
+
+  def to_langastMethodContractCases(data: ISZ[U8]): Either[org.sireum.lang.ast.MethodContract.Cases, MessagePack.ErrorMsg] = {
+    def f_langastMethodContractCases(reader: Reader): org.sireum.lang.ast.MethodContract.Cases = {
+      val r = reader.read_langastMethodContractCases()
+      return r
+    }
+    val r = to(data, f_langastMethodContractCases _)
+    return r
+  }
+
+  def from_langastMethodContractCase(o: org.sireum.lang.ast.MethodContract.Case, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastMethodContractCase(o)
+    return w.result
+  }
+
+  def to_langastMethodContractCase(data: ISZ[U8]): Either[org.sireum.lang.ast.MethodContract.Case, MessagePack.ErrorMsg] = {
+    def f_langastMethodContractCase(reader: Reader): org.sireum.lang.ast.MethodContract.Case = {
+      val r = reader.read_langastMethodContractCase()
+      return r
+    }
+    val r = to(data, f_langastMethodContractCase _)
+    return r
+  }
+
+  def from_langastSequent(o: org.sireum.lang.ast.Sequent, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastSequent(o)
+    return w.result
+  }
+
+  def to_langastSequent(data: ISZ[U8]): Either[org.sireum.lang.ast.Sequent, MessagePack.ErrorMsg] = {
+    def f_langastSequent(reader: Reader): org.sireum.lang.ast.Sequent = {
+      val r = reader.read_langastSequent()
+      return r
+    }
+    val r = to(data, f_langastSequent _)
+    return r
+  }
+
+  def from_langastProofAst(o: org.sireum.lang.ast.ProofAst, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAst(o)
+    return w.result
+  }
+
+  def to_langastProofAst(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst, MessagePack.ErrorMsg] = {
+    def f_langastProofAst(reader: Reader): org.sireum.lang.ast.ProofAst = {
+      val r = reader.read_langastProofAst()
+      return r
+    }
+    val r = to(data, f_langastProofAst _)
+    return r
+  }
+
+  def from_langastProofAstStep(o: org.sireum.lang.ast.ProofAst.Step, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStep(o)
+    return w.result
+  }
+
+  def to_langastProofAstStep(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStep(reader: Reader): org.sireum.lang.ast.ProofAst.Step = {
+      val r = reader.read_langastProofAstStep()
+      return r
+    }
+    val r = to(data, f_langastProofAstStep _)
+    return r
+  }
+
+  def from_langastProofAstStepId(o: org.sireum.lang.ast.ProofAst.StepId, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepId(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepId(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.StepId, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepId(reader: Reader): org.sireum.lang.ast.ProofAst.StepId = {
+      val r = reader.read_langastProofAstStepId()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepId _)
+    return r
+  }
+
+  def from_langastProofAstStepIdNum(o: org.sireum.lang.ast.ProofAst.StepId.Num, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepIdNum(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepIdNum(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.StepId.Num, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepIdNum(reader: Reader): org.sireum.lang.ast.ProofAst.StepId.Num = {
+      val r = reader.read_langastProofAstStepIdNum()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepIdNum _)
+    return r
+  }
+
+  def from_langastProofAstStepIdStr(o: org.sireum.lang.ast.ProofAst.StepId.Str, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepIdStr(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepIdStr(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.StepId.Str, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepIdStr(reader: Reader): org.sireum.lang.ast.ProofAst.StepId.Str = {
+      val r = reader.read_langastProofAstStepIdStr()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepIdStr _)
+    return r
+  }
+
+  def from_langastProofAstStepRegular(o: org.sireum.lang.ast.ProofAst.Step.Regular, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepRegular(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepRegular(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.Regular, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepRegular(reader: Reader): org.sireum.lang.ast.ProofAst.Step.Regular = {
+      val r = reader.read_langastProofAstStepRegular()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepRegular _)
+    return r
+  }
+
+  def from_langastProofAstStepAssume(o: org.sireum.lang.ast.ProofAst.Step.Assume, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepAssume(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepAssume(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.Assume, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepAssume(reader: Reader): org.sireum.lang.ast.ProofAst.Step.Assume = {
+      val r = reader.read_langastProofAstStepAssume()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepAssume _)
+    return r
+  }
+
+  def from_langastProofAstStepAssert(o: org.sireum.lang.ast.ProofAst.Step.Assert, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepAssert(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepAssert(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.Assert, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepAssert(reader: Reader): org.sireum.lang.ast.ProofAst.Step.Assert = {
+      val r = reader.read_langastProofAstStepAssert()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepAssert _)
+    return r
+  }
+
+  def from_langastProofAstStepSubProof(o: org.sireum.lang.ast.ProofAst.Step.SubProof, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepSubProof(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepSubProof(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.SubProof, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepSubProof(reader: Reader): org.sireum.lang.ast.ProofAst.Step.SubProof = {
+      val r = reader.read_langastProofAstStepSubProof()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepSubProof _)
+    return r
+  }
+
+  def from_langastProofAstStepLet(o: org.sireum.lang.ast.ProofAst.Step.Let, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepLet(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepLet(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.Let, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepLet(reader: Reader): org.sireum.lang.ast.ProofAst.Step.Let = {
+      val r = reader.read_langastProofAstStepLet()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepLet _)
+    return r
+  }
+
+  def from_langastProofAstStepLetParam(o: org.sireum.lang.ast.ProofAst.Step.Let.Param, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepLetParam(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepLetParam(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.Let.Param, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepLetParam(reader: Reader): org.sireum.lang.ast.ProofAst.Step.Let.Param = {
+      val r = reader.read_langastProofAstStepLetParam()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepLetParam _)
+    return r
+  }
+
+  def from_langastProofAstStepStructInduction(o: org.sireum.lang.ast.ProofAst.Step.StructInduction, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepStructInduction(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepStructInduction(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.StructInduction, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepStructInduction(reader: Reader): org.sireum.lang.ast.ProofAst.Step.StructInduction = {
+      val r = reader.read_langastProofAstStepStructInduction()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepStructInduction _)
+    return r
+  }
+
+  def from_langastProofAstStepStructInductionMatchCase(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepStructInductionMatchCase(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepStructInductionMatchCase(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepStructInductionMatchCase(reader: Reader): org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase = {
+      val r = reader.read_langastProofAstStepStructInductionMatchCase()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepStructInductionMatchCase _)
+    return r
+  }
+
+  def from_langastProofAstStepStructInductionMatchDefault(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepStructInductionMatchDefault(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepStructInductionMatchDefault(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepStructInductionMatchDefault(reader: Reader): org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault = {
+      val r = reader.read_langastProofAstStepStructInductionMatchDefault()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepStructInductionMatchDefault _)
+    return r
+  }
+
+  def from_langastProofAstStepJustification(o: org.sireum.lang.ast.ProofAst.Step.Justification, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepJustification(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepJustification(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.Justification, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepJustification(reader: Reader): org.sireum.lang.ast.ProofAst.Step.Justification = {
+      val r = reader.read_langastProofAstStepJustification()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepJustification _)
+    return r
+  }
+
+  def from_langastProofAstStepInception(o: org.sireum.lang.ast.ProofAst.Step.Inception, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepInception(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepInception(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.Inception, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepInception(reader: Reader): org.sireum.lang.ast.ProofAst.Step.Inception = {
+      val r = reader.read_langastProofAstStepInception()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepInception _)
+    return r
+  }
+
+  def from_langastProofAstStepJustificationApply(o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepJustificationApply(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepJustificationApply(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.Justification.Apply, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepJustificationApply(reader: Reader): org.sireum.lang.ast.ProofAst.Step.Justification.Apply = {
+      val r = reader.read_langastProofAstStepJustificationApply()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepJustificationApply _)
+    return r
+  }
+
+  def from_langastProofAstStepJustificationIncept(o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepJustificationIncept(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepJustificationIncept(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.Justification.Incept, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepJustificationIncept(reader: Reader): org.sireum.lang.ast.ProofAst.Step.Justification.Incept = {
+      val r = reader.read_langastProofAstStepJustificationIncept()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepJustificationIncept _)
+    return r
+  }
+
+  def from_langastProofAstStepJustificationInceptNamed(o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepJustificationInceptNamed(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepJustificationInceptNamed(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepJustificationInceptNamed(reader: Reader): org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed = {
+      val r = reader.read_langastProofAstStepJustificationInceptNamed()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepJustificationInceptNamed _)
+    return r
+  }
+
+  def from_langastProofAstStepJustificationInceptEta(o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastProofAstStepJustificationInceptEta(o)
+    return w.result
+  }
+
+  def to_langastProofAstStepJustificationInceptEta(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta, MessagePack.ErrorMsg] = {
+    def f_langastProofAstStepJustificationInceptEta(reader: Reader): org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta = {
+      val r = reader.read_langastProofAstStepJustificationInceptEta()
+      return r
+    }
+    val r = to(data, f_langastProofAstStepJustificationInceptEta _)
+    return r
+  }
+
+  def from_langastAssignExp(o: org.sireum.lang.ast.AssignExp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastAssignExp(o)
+    return w.result
+  }
+
+  def to_langastAssignExp(data: ISZ[U8]): Either[org.sireum.lang.ast.AssignExp, MessagePack.ErrorMsg] = {
+    def f_langastAssignExp(reader: Reader): org.sireum.lang.ast.AssignExp = {
+      val r = reader.read_langastAssignExp()
+      return r
+    }
+    val r = to(data, f_langastAssignExp _)
+    return r
+  }
+
+  def from_langastCase(o: org.sireum.lang.ast.Case, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastCase(o)
+    return w.result
+  }
+
+  def to_langastCase(data: ISZ[U8]): Either[org.sireum.lang.ast.Case, MessagePack.ErrorMsg] = {
+    def f_langastCase(reader: Reader): org.sireum.lang.ast.Case = {
+      val r = reader.read_langastCase()
+      return r
+    }
+    val r = to(data, f_langastCase _)
+    return r
+  }
+
+  def from_langastEnumGenRange(o: org.sireum.lang.ast.EnumGen.Range, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastEnumGenRange(o)
+    return w.result
+  }
+
+  def to_langastEnumGenRange(data: ISZ[U8]): Either[org.sireum.lang.ast.EnumGen.Range, MessagePack.ErrorMsg] = {
+    def f_langastEnumGenRange(reader: Reader): org.sireum.lang.ast.EnumGen.Range = {
+      val r = reader.read_langastEnumGenRange()
+      return r
+    }
+    val r = to(data, f_langastEnumGenRange _)
+    return r
+  }
+
+  def from_langastEnumGenRangeExpr(o: org.sireum.lang.ast.EnumGen.Range.Expr, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastEnumGenRangeExpr(o)
+    return w.result
+  }
+
+  def to_langastEnumGenRangeExpr(data: ISZ[U8]): Either[org.sireum.lang.ast.EnumGen.Range.Expr, MessagePack.ErrorMsg] = {
+    def f_langastEnumGenRangeExpr(reader: Reader): org.sireum.lang.ast.EnumGen.Range.Expr = {
+      val r = reader.read_langastEnumGenRangeExpr()
+      return r
+    }
+    val r = to(data, f_langastEnumGenRangeExpr _)
+    return r
+  }
+
+  def from_langastEnumGenRangeStep(o: org.sireum.lang.ast.EnumGen.Range.Step, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastEnumGenRangeStep(o)
+    return w.result
+  }
+
+  def to_langastEnumGenRangeStep(data: ISZ[U8]): Either[org.sireum.lang.ast.EnumGen.Range.Step, MessagePack.ErrorMsg] = {
+    def f_langastEnumGenRangeStep(reader: Reader): org.sireum.lang.ast.EnumGen.Range.Step = {
+      val r = reader.read_langastEnumGenRangeStep()
+      return r
+    }
+    val r = to(data, f_langastEnumGenRangeStep _)
+    return r
+  }
+
+  def from_langastEnumGenFor(o: org.sireum.lang.ast.EnumGen.For, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastEnumGenFor(o)
+    return w.result
+  }
+
+  def to_langastEnumGenFor(data: ISZ[U8]): Either[org.sireum.lang.ast.EnumGen.For, MessagePack.ErrorMsg] = {
+    def f_langastEnumGenFor(reader: Reader): org.sireum.lang.ast.EnumGen.For = {
+      val r = reader.read_langastEnumGenFor()
+      return r
+    }
+    val r = to(data, f_langastEnumGenFor _)
+    return r
+  }
+
+  def from_langastType(o: org.sireum.lang.ast.Type, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastType(o)
+    return w.result
+  }
+
+  def to_langastType(data: ISZ[U8]): Either[org.sireum.lang.ast.Type, MessagePack.ErrorMsg] = {
+    def f_langastType(reader: Reader): org.sireum.lang.ast.Type = {
+      val r = reader.read_langastType()
+      return r
+    }
+    val r = to(data, f_langastType _)
+    return r
+  }
+
+  def from_langastTypeNamed(o: org.sireum.lang.ast.Type.Named, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypeNamed(o)
+    return w.result
+  }
+
+  def to_langastTypeNamed(data: ISZ[U8]): Either[org.sireum.lang.ast.Type.Named, MessagePack.ErrorMsg] = {
+    def f_langastTypeNamed(reader: Reader): org.sireum.lang.ast.Type.Named = {
+      val r = reader.read_langastTypeNamed()
+      return r
+    }
+    val r = to(data, f_langastTypeNamed _)
+    return r
+  }
+
+  def from_langastTypeFun(o: org.sireum.lang.ast.Type.Fun, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypeFun(o)
+    return w.result
+  }
+
+  def to_langastTypeFun(data: ISZ[U8]): Either[org.sireum.lang.ast.Type.Fun, MessagePack.ErrorMsg] = {
+    def f_langastTypeFun(reader: Reader): org.sireum.lang.ast.Type.Fun = {
+      val r = reader.read_langastTypeFun()
+      return r
+    }
+    val r = to(data, f_langastTypeFun _)
+    return r
+  }
+
+  def from_langastTypeTuple(o: org.sireum.lang.ast.Type.Tuple, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypeTuple(o)
+    return w.result
+  }
+
+  def to_langastTypeTuple(data: ISZ[U8]): Either[org.sireum.lang.ast.Type.Tuple, MessagePack.ErrorMsg] = {
+    def f_langastTypeTuple(reader: Reader): org.sireum.lang.ast.Type.Tuple = {
+      val r = reader.read_langastTypeTuple()
+      return r
+    }
+    val r = to(data, f_langastTypeTuple _)
+    return r
+  }
+
+  def from_langastPattern(o: org.sireum.lang.ast.Pattern, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastPattern(o)
+    return w.result
+  }
+
+  def to_langastPattern(data: ISZ[U8]): Either[org.sireum.lang.ast.Pattern, MessagePack.ErrorMsg] = {
+    def f_langastPattern(reader: Reader): org.sireum.lang.ast.Pattern = {
+      val r = reader.read_langastPattern()
+      return r
+    }
+    val r = to(data, f_langastPattern _)
+    return r
+  }
+
+  def from_langastPatternLiteral(o: org.sireum.lang.ast.Pattern.Literal, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastPatternLiteral(o)
+    return w.result
+  }
+
+  def to_langastPatternLiteral(data: ISZ[U8]): Either[org.sireum.lang.ast.Pattern.Literal, MessagePack.ErrorMsg] = {
+    def f_langastPatternLiteral(reader: Reader): org.sireum.lang.ast.Pattern.Literal = {
+      val r = reader.read_langastPatternLiteral()
+      return r
+    }
+    val r = to(data, f_langastPatternLiteral _)
+    return r
+  }
+
+  def from_langastPatternLitInterpolate(o: org.sireum.lang.ast.Pattern.LitInterpolate, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastPatternLitInterpolate(o)
+    return w.result
+  }
+
+  def to_langastPatternLitInterpolate(data: ISZ[U8]): Either[org.sireum.lang.ast.Pattern.LitInterpolate, MessagePack.ErrorMsg] = {
+    def f_langastPatternLitInterpolate(reader: Reader): org.sireum.lang.ast.Pattern.LitInterpolate = {
+      val r = reader.read_langastPatternLitInterpolate()
+      return r
+    }
+    val r = to(data, f_langastPatternLitInterpolate _)
+    return r
+  }
+
+  def from_langastPatternRef(o: org.sireum.lang.ast.Pattern.Ref, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastPatternRef(o)
+    return w.result
+  }
+
+  def to_langastPatternRef(data: ISZ[U8]): Either[org.sireum.lang.ast.Pattern.Ref, MessagePack.ErrorMsg] = {
+    def f_langastPatternRef(reader: Reader): org.sireum.lang.ast.Pattern.Ref = {
+      val r = reader.read_langastPatternRef()
+      return r
+    }
+    val r = to(data, f_langastPatternRef _)
+    return r
+  }
+
+  def from_langastPatternVarBinding(o: org.sireum.lang.ast.Pattern.VarBinding, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastPatternVarBinding(o)
+    return w.result
+  }
+
+  def to_langastPatternVarBinding(data: ISZ[U8]): Either[org.sireum.lang.ast.Pattern.VarBinding, MessagePack.ErrorMsg] = {
+    def f_langastPatternVarBinding(reader: Reader): org.sireum.lang.ast.Pattern.VarBinding = {
+      val r = reader.read_langastPatternVarBinding()
+      return r
+    }
+    val r = to(data, f_langastPatternVarBinding _)
+    return r
+  }
+
+  def from_langastPatternWildcard(o: org.sireum.lang.ast.Pattern.Wildcard, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastPatternWildcard(o)
+    return w.result
+  }
+
+  def to_langastPatternWildcard(data: ISZ[U8]): Either[org.sireum.lang.ast.Pattern.Wildcard, MessagePack.ErrorMsg] = {
+    def f_langastPatternWildcard(reader: Reader): org.sireum.lang.ast.Pattern.Wildcard = {
+      val r = reader.read_langastPatternWildcard()
+      return r
+    }
+    val r = to(data, f_langastPatternWildcard _)
+    return r
+  }
+
+  def from_langastPatternSeqWildcard(o: org.sireum.lang.ast.Pattern.SeqWildcard, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastPatternSeqWildcard(o)
+    return w.result
+  }
+
+  def to_langastPatternSeqWildcard(data: ISZ[U8]): Either[org.sireum.lang.ast.Pattern.SeqWildcard, MessagePack.ErrorMsg] = {
+    def f_langastPatternSeqWildcard(reader: Reader): org.sireum.lang.ast.Pattern.SeqWildcard = {
+      val r = reader.read_langastPatternSeqWildcard()
+      return r
+    }
+    val r = to(data, f_langastPatternSeqWildcard _)
+    return r
+  }
+
+  def from_langastPatternStructure(o: org.sireum.lang.ast.Pattern.Structure, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastPatternStructure(o)
+    return w.result
+  }
+
+  def to_langastPatternStructure(data: ISZ[U8]): Either[org.sireum.lang.ast.Pattern.Structure, MessagePack.ErrorMsg] = {
+    def f_langastPatternStructure(reader: Reader): org.sireum.lang.ast.Pattern.Structure = {
+      val r = reader.read_langastPatternStructure()
+      return r
+    }
+    val r = to(data, f_langastPatternStructure _)
+    return r
+  }
+
+  def from_langastExp(o: org.sireum.lang.ast.Exp, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExp(o)
+    return w.result
+  }
+
+  def to_langastExp(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp, MessagePack.ErrorMsg] = {
+    def f_langastExp(reader: Reader): org.sireum.lang.ast.Exp = {
+      val r = reader.read_langastExp()
+      return r
+    }
+    val r = to(data, f_langastExp _)
+    return r
+  }
+
+  def from_langastLit(o: org.sireum.lang.ast.Lit, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastLit(o)
+    return w.result
+  }
+
+  def to_langastLit(data: ISZ[U8]): Either[org.sireum.lang.ast.Lit, MessagePack.ErrorMsg] = {
+    def f_langastLit(reader: Reader): org.sireum.lang.ast.Lit = {
+      val r = reader.read_langastLit()
+      return r
+    }
+    val r = to(data, f_langastLit _)
+    return r
+  }
+
+  def from_langastExpLitB(o: org.sireum.lang.ast.Exp.LitB, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpLitB(o)
+    return w.result
+  }
+
+  def to_langastExpLitB(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.LitB, MessagePack.ErrorMsg] = {
+    def f_langastExpLitB(reader: Reader): org.sireum.lang.ast.Exp.LitB = {
+      val r = reader.read_langastExpLitB()
+      return r
+    }
+    val r = to(data, f_langastExpLitB _)
+    return r
+  }
+
+  def from_langastExpLitC(o: org.sireum.lang.ast.Exp.LitC, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpLitC(o)
+    return w.result
+  }
+
+  def to_langastExpLitC(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.LitC, MessagePack.ErrorMsg] = {
+    def f_langastExpLitC(reader: Reader): org.sireum.lang.ast.Exp.LitC = {
+      val r = reader.read_langastExpLitC()
+      return r
+    }
+    val r = to(data, f_langastExpLitC _)
+    return r
+  }
+
+  def from_langastExpLitZ(o: org.sireum.lang.ast.Exp.LitZ, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpLitZ(o)
+    return w.result
+  }
+
+  def to_langastExpLitZ(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.LitZ, MessagePack.ErrorMsg] = {
+    def f_langastExpLitZ(reader: Reader): org.sireum.lang.ast.Exp.LitZ = {
+      val r = reader.read_langastExpLitZ()
+      return r
+    }
+    val r = to(data, f_langastExpLitZ _)
+    return r
+  }
+
+  def from_langastExpLitF32(o: org.sireum.lang.ast.Exp.LitF32, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpLitF32(o)
+    return w.result
+  }
+
+  def to_langastExpLitF32(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.LitF32, MessagePack.ErrorMsg] = {
+    def f_langastExpLitF32(reader: Reader): org.sireum.lang.ast.Exp.LitF32 = {
+      val r = reader.read_langastExpLitF32()
+      return r
+    }
+    val r = to(data, f_langastExpLitF32 _)
+    return r
+  }
+
+  def from_langastExpLitF64(o: org.sireum.lang.ast.Exp.LitF64, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpLitF64(o)
+    return w.result
+  }
+
+  def to_langastExpLitF64(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.LitF64, MessagePack.ErrorMsg] = {
+    def f_langastExpLitF64(reader: Reader): org.sireum.lang.ast.Exp.LitF64 = {
+      val r = reader.read_langastExpLitF64()
+      return r
+    }
+    val r = to(data, f_langastExpLitF64 _)
+    return r
+  }
+
+  def from_langastExpLitR(o: org.sireum.lang.ast.Exp.LitR, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpLitR(o)
+    return w.result
+  }
+
+  def to_langastExpLitR(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.LitR, MessagePack.ErrorMsg] = {
+    def f_langastExpLitR(reader: Reader): org.sireum.lang.ast.Exp.LitR = {
+      val r = reader.read_langastExpLitR()
+      return r
+    }
+    val r = to(data, f_langastExpLitR _)
+    return r
+  }
+
+  def from_langastExpLitString(o: org.sireum.lang.ast.Exp.LitString, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpLitString(o)
+    return w.result
+  }
+
+  def to_langastExpLitString(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.LitString, MessagePack.ErrorMsg] = {
+    def f_langastExpLitString(reader: Reader): org.sireum.lang.ast.Exp.LitString = {
+      val r = reader.read_langastExpLitString()
+      return r
+    }
+    val r = to(data, f_langastExpLitString _)
+    return r
+  }
+
+  def from_langastExpLitStepId(o: org.sireum.lang.ast.Exp.LitStepId, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpLitStepId(o)
+    return w.result
+  }
+
+  def to_langastExpLitStepId(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.LitStepId, MessagePack.ErrorMsg] = {
+    def f_langastExpLitStepId(reader: Reader): org.sireum.lang.ast.Exp.LitStepId = {
+      val r = reader.read_langastExpLitStepId()
+      return r
+    }
+    val r = to(data, f_langastExpLitStepId _)
+    return r
+  }
+
+  def from_langastExpStringInterpolate(o: org.sireum.lang.ast.Exp.StringInterpolate, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpStringInterpolate(o)
+    return w.result
+  }
+
+  def to_langastExpStringInterpolate(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.StringInterpolate, MessagePack.ErrorMsg] = {
+    def f_langastExpStringInterpolate(reader: Reader): org.sireum.lang.ast.Exp.StringInterpolate = {
+      val r = reader.read_langastExpStringInterpolate()
+      return r
+    }
+    val r = to(data, f_langastExpStringInterpolate _)
+    return r
+  }
+
+  def from_langastExpThis(o: org.sireum.lang.ast.Exp.This, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpThis(o)
+    return w.result
+  }
+
+  def to_langastExpThis(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.This, MessagePack.ErrorMsg] = {
+    def f_langastExpThis(reader: Reader): org.sireum.lang.ast.Exp.This = {
+      val r = reader.read_langastExpThis()
+      return r
+    }
+    val r = to(data, f_langastExpThis _)
+    return r
+  }
+
+  def from_langastExpSuper(o: org.sireum.lang.ast.Exp.Super, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpSuper(o)
+    return w.result
+  }
+
+  def to_langastExpSuper(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Super, MessagePack.ErrorMsg] = {
+    def f_langastExpSuper(reader: Reader): org.sireum.lang.ast.Exp.Super = {
+      val r = reader.read_langastExpSuper()
+      return r
+    }
+    val r = to(data, f_langastExpSuper _)
+    return r
+  }
+
+  def from_langastExpUnary(o: org.sireum.lang.ast.Exp.Unary, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpUnary(o)
+    return w.result
+  }
+
+  def to_langastExpUnary(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Unary, MessagePack.ErrorMsg] = {
+    def f_langastExpUnary(reader: Reader): org.sireum.lang.ast.Exp.Unary = {
+      val r = reader.read_langastExpUnary()
+      return r
+    }
+    val r = to(data, f_langastExpUnary _)
+    return r
+  }
+
+  def from_langastExpRef(o: org.sireum.lang.ast.Exp.Ref, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpRef(o)
+    return w.result
+  }
+
+  def to_langastExpRef(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Ref, MessagePack.ErrorMsg] = {
+    def f_langastExpRef(reader: Reader): org.sireum.lang.ast.Exp.Ref = {
+      val r = reader.read_langastExpRef()
+      return r
+    }
+    val r = to(data, f_langastExpRef _)
+    return r
+  }
+
+  def from_langastExpBinary(o: org.sireum.lang.ast.Exp.Binary, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpBinary(o)
+    return w.result
+  }
+
+  def to_langastExpBinary(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Binary, MessagePack.ErrorMsg] = {
+    def f_langastExpBinary(reader: Reader): org.sireum.lang.ast.Exp.Binary = {
+      val r = reader.read_langastExpBinary()
+      return r
+    }
+    val r = to(data, f_langastExpBinary _)
+    return r
+  }
+
+  def from_langastExpIdent(o: org.sireum.lang.ast.Exp.Ident, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpIdent(o)
+    return w.result
+  }
+
+  def to_langastExpIdent(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Ident, MessagePack.ErrorMsg] = {
+    def f_langastExpIdent(reader: Reader): org.sireum.lang.ast.Exp.Ident = {
+      val r = reader.read_langastExpIdent()
+      return r
+    }
+    val r = to(data, f_langastExpIdent _)
+    return r
+  }
+
+  def from_langastExpEta(o: org.sireum.lang.ast.Exp.Eta, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpEta(o)
+    return w.result
+  }
+
+  def to_langastExpEta(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Eta, MessagePack.ErrorMsg] = {
+    def f_langastExpEta(reader: Reader): org.sireum.lang.ast.Exp.Eta = {
+      val r = reader.read_langastExpEta()
+      return r
+    }
+    val r = to(data, f_langastExpEta _)
+    return r
+  }
+
+  def from_langastExpTuple(o: org.sireum.lang.ast.Exp.Tuple, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpTuple(o)
+    return w.result
+  }
+
+  def to_langastExpTuple(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Tuple, MessagePack.ErrorMsg] = {
+    def f_langastExpTuple(reader: Reader): org.sireum.lang.ast.Exp.Tuple = {
+      val r = reader.read_langastExpTuple()
+      return r
+    }
+    val r = to(data, f_langastExpTuple _)
+    return r
+  }
+
+  def from_langastExpSelect(o: org.sireum.lang.ast.Exp.Select, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpSelect(o)
+    return w.result
+  }
+
+  def to_langastExpSelect(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Select, MessagePack.ErrorMsg] = {
+    def f_langastExpSelect(reader: Reader): org.sireum.lang.ast.Exp.Select = {
+      val r = reader.read_langastExpSelect()
+      return r
+    }
+    val r = to(data, f_langastExpSelect _)
+    return r
+  }
+
+  def from_langastExpInvoke(o: org.sireum.lang.ast.Exp.Invoke, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpInvoke(o)
+    return w.result
+  }
+
+  def to_langastExpInvoke(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Invoke, MessagePack.ErrorMsg] = {
+    def f_langastExpInvoke(reader: Reader): org.sireum.lang.ast.Exp.Invoke = {
+      val r = reader.read_langastExpInvoke()
+      return r
+    }
+    val r = to(data, f_langastExpInvoke _)
+    return r
+  }
+
+  def from_langastExpInvokeNamed(o: org.sireum.lang.ast.Exp.InvokeNamed, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpInvokeNamed(o)
+    return w.result
+  }
+
+  def to_langastExpInvokeNamed(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.InvokeNamed, MessagePack.ErrorMsg] = {
+    def f_langastExpInvokeNamed(reader: Reader): org.sireum.lang.ast.Exp.InvokeNamed = {
+      val r = reader.read_langastExpInvokeNamed()
+      return r
+    }
+    val r = to(data, f_langastExpInvokeNamed _)
+    return r
+  }
+
+  def from_langastExpIf(o: org.sireum.lang.ast.Exp.If, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpIf(o)
+    return w.result
+  }
+
+  def to_langastExpIf(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.If, MessagePack.ErrorMsg] = {
+    def f_langastExpIf(reader: Reader): org.sireum.lang.ast.Exp.If = {
+      val r = reader.read_langastExpIf()
+      return r
+    }
+    val r = to(data, f_langastExpIf _)
+    return r
+  }
+
+  def from_langastExpFunParam(o: org.sireum.lang.ast.Exp.Fun.Param, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpFunParam(o)
+    return w.result
+  }
+
+  def to_langastExpFunParam(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Fun.Param, MessagePack.ErrorMsg] = {
+    def f_langastExpFunParam(reader: Reader): org.sireum.lang.ast.Exp.Fun.Param = {
+      val r = reader.read_langastExpFunParam()
+      return r
+    }
+    val r = to(data, f_langastExpFunParam _)
+    return r
+  }
+
+  def from_langastExpFun(o: org.sireum.lang.ast.Exp.Fun, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpFun(o)
+    return w.result
+  }
+
+  def to_langastExpFun(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Fun, MessagePack.ErrorMsg] = {
+    def f_langastExpFun(reader: Reader): org.sireum.lang.ast.Exp.Fun = {
+      val r = reader.read_langastExpFun()
+      return r
+    }
+    val r = to(data, f_langastExpFun _)
+    return r
+  }
+
+  def from_langastExpForYield(o: org.sireum.lang.ast.Exp.ForYield, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpForYield(o)
+    return w.result
+  }
+
+  def to_langastExpForYield(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.ForYield, MessagePack.ErrorMsg] = {
+    def f_langastExpForYield(reader: Reader): org.sireum.lang.ast.Exp.ForYield = {
+      val r = reader.read_langastExpForYield()
+      return r
+    }
+    val r = to(data, f_langastExpForYield _)
+    return r
+  }
+
+  def from_langastExpQuant(o: org.sireum.lang.ast.Exp.Quant, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpQuant(o)
+    return w.result
+  }
+
+  def to_langastExpQuant(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Quant, MessagePack.ErrorMsg] = {
+    def f_langastExpQuant(reader: Reader): org.sireum.lang.ast.Exp.Quant = {
+      val r = reader.read_langastExpQuant()
+      return r
+    }
+    val r = to(data, f_langastExpQuant _)
+    return r
+  }
+
+  def from_langastExpQuantType(o: org.sireum.lang.ast.Exp.QuantType, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpQuantType(o)
+    return w.result
+  }
+
+  def to_langastExpQuantType(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.QuantType, MessagePack.ErrorMsg] = {
+    def f_langastExpQuantType(reader: Reader): org.sireum.lang.ast.Exp.QuantType = {
+      val r = reader.read_langastExpQuantType()
+      return r
+    }
+    val r = to(data, f_langastExpQuantType _)
+    return r
+  }
+
+  def from_langastExpQuantRange(o: org.sireum.lang.ast.Exp.QuantRange, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpQuantRange(o)
+    return w.result
+  }
+
+  def to_langastExpQuantRange(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.QuantRange, MessagePack.ErrorMsg] = {
+    def f_langastExpQuantRange(reader: Reader): org.sireum.lang.ast.Exp.QuantRange = {
+      val r = reader.read_langastExpQuantRange()
+      return r
+    }
+    val r = to(data, f_langastExpQuantRange _)
+    return r
+  }
+
+  def from_langastExpQuantEach(o: org.sireum.lang.ast.Exp.QuantEach, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpQuantEach(o)
+    return w.result
+  }
+
+  def to_langastExpQuantEach(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.QuantEach, MessagePack.ErrorMsg] = {
+    def f_langastExpQuantEach(reader: Reader): org.sireum.lang.ast.Exp.QuantEach = {
+      val r = reader.read_langastExpQuantEach()
+      return r
+    }
+    val r = to(data, f_langastExpQuantEach _)
+    return r
+  }
+
+  def from_langastExpInput(o: org.sireum.lang.ast.Exp.Input, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpInput(o)
+    return w.result
+  }
+
+  def to_langastExpInput(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Input, MessagePack.ErrorMsg] = {
+    def f_langastExpInput(reader: Reader): org.sireum.lang.ast.Exp.Input = {
+      val r = reader.read_langastExpInput()
+      return r
+    }
+    val r = to(data, f_langastExpInput _)
+    return r
+  }
+
+  def from_langastExpOldVal(o: org.sireum.lang.ast.Exp.OldVal, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpOldVal(o)
+    return w.result
+  }
+
+  def to_langastExpOldVal(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.OldVal, MessagePack.ErrorMsg] = {
+    def f_langastExpOldVal(reader: Reader): org.sireum.lang.ast.Exp.OldVal = {
+      val r = reader.read_langastExpOldVal()
+      return r
+    }
+    val r = to(data, f_langastExpOldVal _)
+    return r
+  }
+
+  def from_langastExpLoopIndex(o: org.sireum.lang.ast.Exp.LoopIndex, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpLoopIndex(o)
+    return w.result
+  }
+
+  def to_langastExpLoopIndex(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.LoopIndex, MessagePack.ErrorMsg] = {
+    def f_langastExpLoopIndex(reader: Reader): org.sireum.lang.ast.Exp.LoopIndex = {
+      val r = reader.read_langastExpLoopIndex()
+      return r
+    }
+    val r = to(data, f_langastExpLoopIndex _)
+    return r
+  }
+
+  def from_langastExpStateSeq(o: org.sireum.lang.ast.Exp.StateSeq, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpStateSeq(o)
+    return w.result
+  }
+
+  def to_langastExpStateSeq(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.StateSeq, MessagePack.ErrorMsg] = {
+    def f_langastExpStateSeq(reader: Reader): org.sireum.lang.ast.Exp.StateSeq = {
+      val r = reader.read_langastExpStateSeq()
+      return r
+    }
+    val r = to(data, f_langastExpStateSeq _)
+    return r
+  }
+
+  def from_langastExpStateSeqFragment(o: org.sireum.lang.ast.Exp.StateSeq.Fragment, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpStateSeqFragment(o)
+    return w.result
+  }
+
+  def to_langastExpStateSeqFragment(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.StateSeq.Fragment, MessagePack.ErrorMsg] = {
+    def f_langastExpStateSeqFragment(reader: Reader): org.sireum.lang.ast.Exp.StateSeq.Fragment = {
+      val r = reader.read_langastExpStateSeqFragment()
+      return r
+    }
+    val r = to(data, f_langastExpStateSeqFragment _)
+    return r
+  }
+
+  def from_langastExpResult(o: org.sireum.lang.ast.Exp.Result, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpResult(o)
+    return w.result
+  }
+
+  def to_langastExpResult(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Result, MessagePack.ErrorMsg] = {
+    def f_langastExpResult(reader: Reader): org.sireum.lang.ast.Exp.Result = {
+      val r = reader.read_langastExpResult()
+      return r
+    }
+    val r = to(data, f_langastExpResult _)
+    return r
+  }
+
+  def from_langastNamedArg(o: org.sireum.lang.ast.NamedArg, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastNamedArg(o)
+    return w.result
+  }
+
+  def to_langastNamedArg(data: ISZ[U8]): Either[org.sireum.lang.ast.NamedArg, MessagePack.ErrorMsg] = {
+    def f_langastNamedArg(reader: Reader): org.sireum.lang.ast.NamedArg = {
+      val r = reader.read_langastNamedArg()
+      return r
+    }
+    val r = to(data, f_langastNamedArg _)
+    return r
+  }
+
+  def from_langastId(o: org.sireum.lang.ast.Id, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastId(o)
+    return w.result
+  }
+
+  def to_langastId(data: ISZ[U8]): Either[org.sireum.lang.ast.Id, MessagePack.ErrorMsg] = {
+    def f_langastId(reader: Reader): org.sireum.lang.ast.Id = {
+      val r = reader.read_langastId()
+      return r
+    }
+    val r = to(data, f_langastId _)
+    return r
+  }
+
+  def from_langastName(o: org.sireum.lang.ast.Name, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastName(o)
+    return w.result
+  }
+
+  def to_langastName(data: ISZ[U8]): Either[org.sireum.lang.ast.Name, MessagePack.ErrorMsg] = {
+    def f_langastName(reader: Reader): org.sireum.lang.ast.Name = {
+      val r = reader.read_langastName()
+      return r
+    }
+    val r = to(data, f_langastName _)
+    return r
+  }
+
+  def from_langastBody(o: org.sireum.lang.ast.Body, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastBody(o)
+    return w.result
+  }
+
+  def to_langastBody(data: ISZ[U8]): Either[org.sireum.lang.ast.Body, MessagePack.ErrorMsg] = {
+    def f_langastBody(reader: Reader): org.sireum.lang.ast.Body = {
+      val r = reader.read_langastBody()
+      return r
+    }
+    val r = to(data, f_langastBody _)
+    return r
+  }
+
+  def from_langastAdtParam(o: org.sireum.lang.ast.AdtParam, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastAdtParam(o)
+    return w.result
+  }
+
+  def to_langastAdtParam(data: ISZ[U8]): Either[org.sireum.lang.ast.AdtParam, MessagePack.ErrorMsg] = {
+    def f_langastAdtParam(reader: Reader): org.sireum.lang.ast.AdtParam = {
+      val r = reader.read_langastAdtParam()
+      return r
+    }
+    val r = to(data, f_langastAdtParam _)
+    return r
+  }
+
+  def from_langastMethodSig(o: org.sireum.lang.ast.MethodSig, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastMethodSig(o)
+    return w.result
+  }
+
+  def to_langastMethodSig(data: ISZ[U8]): Either[org.sireum.lang.ast.MethodSig, MessagePack.ErrorMsg] = {
+    def f_langastMethodSig(reader: Reader): org.sireum.lang.ast.MethodSig = {
+      val r = reader.read_langastMethodSig()
+      return r
+    }
+    val r = to(data, f_langastMethodSig _)
+    return r
+  }
+
+  def from_langastParam(o: org.sireum.lang.ast.Param, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastParam(o)
+    return w.result
+  }
+
+  def to_langastParam(data: ISZ[U8]): Either[org.sireum.lang.ast.Param, MessagePack.ErrorMsg] = {
+    def f_langastParam(reader: Reader): org.sireum.lang.ast.Param = {
+      val r = reader.read_langastParam()
+      return r
+    }
+    val r = to(data, f_langastParam _)
+    return r
+  }
+
+  def from_langastTypeParam(o: org.sireum.lang.ast.TypeParam, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypeParam(o)
+    return w.result
+  }
+
+  def to_langastTypeParam(data: ISZ[U8]): Either[org.sireum.lang.ast.TypeParam, MessagePack.ErrorMsg] = {
+    def f_langastTypeParam(reader: Reader): org.sireum.lang.ast.TypeParam = {
+      val r = reader.read_langastTypeParam()
+      return r
+    }
+    val r = to(data, f_langastTypeParam _)
+    return r
+  }
+
+  def from_langastAttr(o: org.sireum.lang.ast.Attr, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastAttr(o)
+    return w.result
+  }
+
+  def to_langastAttr(data: ISZ[U8]): Either[org.sireum.lang.ast.Attr, MessagePack.ErrorMsg] = {
+    def f_langastAttr(reader: Reader): org.sireum.lang.ast.Attr = {
+      val r = reader.read_langastAttr()
+      return r
+    }
+    val r = to(data, f_langastAttr _)
+    return r
+  }
+
+  def from_langastTypedAttr(o: org.sireum.lang.ast.TypedAttr, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypedAttr(o)
+    return w.result
+  }
+
+  def to_langastTypedAttr(data: ISZ[U8]): Either[org.sireum.lang.ast.TypedAttr, MessagePack.ErrorMsg] = {
+    def f_langastTypedAttr(reader: Reader): org.sireum.lang.ast.TypedAttr = {
+      val r = reader.read_langastTypedAttr()
+      return r
+    }
+    val r = to(data, f_langastTypedAttr _)
+    return r
+  }
+
+  def from_langastResolvedAttr(o: org.sireum.lang.ast.ResolvedAttr, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedAttr(o)
+    return w.result
+  }
+
+  def to_langastResolvedAttr(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedAttr, MessagePack.ErrorMsg] = {
+    def f_langastResolvedAttr(reader: Reader): org.sireum.lang.ast.ResolvedAttr = {
+      val r = reader.read_langastResolvedAttr()
+      return r
+    }
+    val r = to(data, f_langastResolvedAttr _)
+    return r
+  }
+
+  def from_langastResolvedInfo(o: org.sireum.lang.ast.ResolvedInfo, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfo(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfo(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfo(reader: Reader): org.sireum.lang.ast.ResolvedInfo = {
+      val r = reader.read_langastResolvedInfo()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfo _)
+    return r
+  }
+
+  def from_langastResolvedInfoBuiltIn(o: org.sireum.lang.ast.ResolvedInfo.BuiltIn, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfoBuiltIn(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfoBuiltIn(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo.BuiltIn, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfoBuiltIn(reader: Reader): org.sireum.lang.ast.ResolvedInfo.BuiltIn = {
+      val r = reader.read_langastResolvedInfoBuiltIn()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfoBuiltIn _)
+    return r
+  }
+
+  def from_langastResolvedInfoPackage(o: org.sireum.lang.ast.ResolvedInfo.Package, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfoPackage(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfoPackage(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo.Package, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfoPackage(reader: Reader): org.sireum.lang.ast.ResolvedInfo.Package = {
+      val r = reader.read_langastResolvedInfoPackage()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfoPackage _)
+    return r
+  }
+
+  def from_langastResolvedInfoEnum(o: org.sireum.lang.ast.ResolvedInfo.Enum, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfoEnum(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfoEnum(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo.Enum, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfoEnum(reader: Reader): org.sireum.lang.ast.ResolvedInfo.Enum = {
+      val r = reader.read_langastResolvedInfoEnum()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfoEnum _)
+    return r
+  }
+
+  def from_langastResolvedInfoEnumElement(o: org.sireum.lang.ast.ResolvedInfo.EnumElement, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfoEnumElement(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfoEnumElement(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo.EnumElement, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfoEnumElement(reader: Reader): org.sireum.lang.ast.ResolvedInfo.EnumElement = {
+      val r = reader.read_langastResolvedInfoEnumElement()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfoEnumElement _)
+    return r
+  }
+
+  def from_langastResolvedInfoObject(o: org.sireum.lang.ast.ResolvedInfo.Object, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfoObject(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfoObject(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo.Object, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfoObject(reader: Reader): org.sireum.lang.ast.ResolvedInfo.Object = {
+      val r = reader.read_langastResolvedInfoObject()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfoObject _)
+    return r
+  }
+
+  def from_langastResolvedInfoVar(o: org.sireum.lang.ast.ResolvedInfo.Var, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfoVar(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfoVar(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo.Var, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfoVar(reader: Reader): org.sireum.lang.ast.ResolvedInfo.Var = {
+      val r = reader.read_langastResolvedInfoVar()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfoVar _)
+    return r
+  }
+
+  def from_langastResolvedInfoMethod(o: org.sireum.lang.ast.ResolvedInfo.Method, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfoMethod(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfoMethod(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo.Method, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfoMethod(reader: Reader): org.sireum.lang.ast.ResolvedInfo.Method = {
+      val r = reader.read_langastResolvedInfoMethod()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfoMethod _)
+    return r
+  }
+
+  def from_langastResolvedInfoMethods(o: org.sireum.lang.ast.ResolvedInfo.Methods, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfoMethods(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfoMethods(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo.Methods, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfoMethods(reader: Reader): org.sireum.lang.ast.ResolvedInfo.Methods = {
+      val r = reader.read_langastResolvedInfoMethods()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfoMethods _)
+    return r
+  }
+
+  def from_langastResolvedInfoTuple(o: org.sireum.lang.ast.ResolvedInfo.Tuple, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfoTuple(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfoTuple(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo.Tuple, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfoTuple(reader: Reader): org.sireum.lang.ast.ResolvedInfo.Tuple = {
+      val r = reader.read_langastResolvedInfoTuple()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfoTuple _)
+    return r
+  }
+
+  def from_langastResolvedInfoLocalVar(o: org.sireum.lang.ast.ResolvedInfo.LocalVar, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfoLocalVar(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfoLocalVar(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo.LocalVar, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfoLocalVar(reader: Reader): org.sireum.lang.ast.ResolvedInfo.LocalVar = {
+      val r = reader.read_langastResolvedInfoLocalVar()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfoLocalVar _)
+    return r
+  }
+
+  def from_langastResolvedInfoFact(o: org.sireum.lang.ast.ResolvedInfo.Fact, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfoFact(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfoFact(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo.Fact, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfoFact(reader: Reader): org.sireum.lang.ast.ResolvedInfo.Fact = {
+      val r = reader.read_langastResolvedInfoFact()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfoFact _)
+    return r
+  }
+
+  def from_langastResolvedInfoTheorem(o: org.sireum.lang.ast.ResolvedInfo.Theorem, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfoTheorem(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfoTheorem(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo.Theorem, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfoTheorem(reader: Reader): org.sireum.lang.ast.ResolvedInfo.Theorem = {
+      val r = reader.read_langastResolvedInfoTheorem()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfoTheorem _)
+    return r
+  }
+
+  def from_langastResolvedInfoInv(o: org.sireum.lang.ast.ResolvedInfo.Inv, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastResolvedInfoInv(o)
+    return w.result
+  }
+
+  def to_langastResolvedInfoInv(data: ISZ[U8]): Either[org.sireum.lang.ast.ResolvedInfo.Inv, MessagePack.ErrorMsg] = {
+    def f_langastResolvedInfoInv(reader: Reader): org.sireum.lang.ast.ResolvedInfo.Inv = {
+      val r = reader.read_langastResolvedInfoInv()
+      return r
+    }
+    val r = to(data, f_langastResolvedInfoInv _)
+    return r
+  }
+
+  def from_langastTruthTableRow(o: org.sireum.lang.ast.TruthTable.Row, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTruthTableRow(o)
+    return w.result
+  }
+
+  def to_langastTruthTableRow(data: ISZ[U8]): Either[org.sireum.lang.ast.TruthTable.Row, MessagePack.ErrorMsg] = {
+    def f_langastTruthTableRow(reader: Reader): org.sireum.lang.ast.TruthTable.Row = {
+      val r = reader.read_langastTruthTableRow()
+      return r
+    }
+    val r = to(data, f_langastTruthTableRow _)
+    return r
+  }
+
+  def from_langastTruthTableAssignment(o: org.sireum.lang.ast.TruthTable.Assignment, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTruthTableAssignment(o)
+    return w.result
+  }
+
+  def to_langastTruthTableAssignment(data: ISZ[U8]): Either[org.sireum.lang.ast.TruthTable.Assignment, MessagePack.ErrorMsg] = {
+    def f_langastTruthTableAssignment(reader: Reader): org.sireum.lang.ast.TruthTable.Assignment = {
+      val r = reader.read_langastTruthTableAssignment()
+      return r
+    }
+    val r = to(data, f_langastTruthTableAssignment _)
+    return r
+  }
+
+  def from_langastTruthTableConclusion(o: org.sireum.lang.ast.TruthTable.Conclusion, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTruthTableConclusion(o)
+    return w.result
+  }
+
+  def to_langastTruthTableConclusion(data: ISZ[U8]): Either[org.sireum.lang.ast.TruthTable.Conclusion, MessagePack.ErrorMsg] = {
+    def f_langastTruthTableConclusion(reader: Reader): org.sireum.lang.ast.TruthTable.Conclusion = {
+      val r = reader.read_langastTruthTableConclusion()
+      return r
+    }
+    val r = to(data, f_langastTruthTableConclusion _)
+    return r
+  }
+
+  def from_langastTruthTableConclusionValidity(o: org.sireum.lang.ast.TruthTable.Conclusion.Validity, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTruthTableConclusionValidity(o)
+    return w.result
+  }
+
+  def to_langastTruthTableConclusionValidity(data: ISZ[U8]): Either[org.sireum.lang.ast.TruthTable.Conclusion.Validity, MessagePack.ErrorMsg] = {
+    def f_langastTruthTableConclusionValidity(reader: Reader): org.sireum.lang.ast.TruthTable.Conclusion.Validity = {
+      val r = reader.read_langastTruthTableConclusionValidity()
+      return r
+    }
+    val r = to(data, f_langastTruthTableConclusionValidity _)
+    return r
+  }
+
+  def from_langastTruthTableConclusionTautology(o: org.sireum.lang.ast.TruthTable.Conclusion.Tautology, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTruthTableConclusionTautology(o)
+    return w.result
+  }
+
+  def to_langastTruthTableConclusionTautology(data: ISZ[U8]): Either[org.sireum.lang.ast.TruthTable.Conclusion.Tautology, MessagePack.ErrorMsg] = {
+    def f_langastTruthTableConclusionTautology(reader: Reader): org.sireum.lang.ast.TruthTable.Conclusion.Tautology = {
+      val r = reader.read_langastTruthTableConclusionTautology()
+      return r
+    }
+    val r = to(data, f_langastTruthTableConclusionTautology _)
+    return r
+  }
+
+  def from_langastTruthTableConclusionContradictory(o: org.sireum.lang.ast.TruthTable.Conclusion.Contradictory, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTruthTableConclusionContradictory(o)
+    return w.result
+  }
+
+  def to_langastTruthTableConclusionContradictory(data: ISZ[U8]): Either[org.sireum.lang.ast.TruthTable.Conclusion.Contradictory, MessagePack.ErrorMsg] = {
+    def f_langastTruthTableConclusionContradictory(reader: Reader): org.sireum.lang.ast.TruthTable.Conclusion.Contradictory = {
+      val r = reader.read_langastTruthTableConclusionContradictory()
+      return r
+    }
+    val r = to(data, f_langastTruthTableConclusionContradictory _)
+    return r
+  }
+
+  def from_langastTruthTableConclusionContingent(o: org.sireum.lang.ast.TruthTable.Conclusion.Contingent, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTruthTableConclusionContingent(o)
+    return w.result
+  }
+
+  def to_langastTruthTableConclusionContingent(data: ISZ[U8]): Either[org.sireum.lang.ast.TruthTable.Conclusion.Contingent, MessagePack.ErrorMsg] = {
+    def f_langastTruthTableConclusionContingent(reader: Reader): org.sireum.lang.ast.TruthTable.Conclusion.Contingent = {
+      val r = reader.read_langastTruthTableConclusionContingent()
+      return r
+    }
+    val r = to(data, f_langastTruthTableConclusionContingent _)
+    return r
+  }
+
+  def from_langastTyped(o: org.sireum.lang.ast.Typed, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTyped(o)
+    return w.result
+  }
+
+  def to_langastTyped(data: ISZ[U8]): Either[org.sireum.lang.ast.Typed, MessagePack.ErrorMsg] = {
+    def f_langastTyped(reader: Reader): org.sireum.lang.ast.Typed = {
+      val r = reader.read_langastTyped()
+      return r
+    }
+    val r = to(data, f_langastTyped _)
+    return r
+  }
+
+  def from_langastTypedName(o: org.sireum.lang.ast.Typed.Name, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypedName(o)
+    return w.result
+  }
+
+  def to_langastTypedName(data: ISZ[U8]): Either[org.sireum.lang.ast.Typed.Name, MessagePack.ErrorMsg] = {
+    def f_langastTypedName(reader: Reader): org.sireum.lang.ast.Typed.Name = {
+      val r = reader.read_langastTypedName()
+      return r
+    }
+    val r = to(data, f_langastTypedName _)
+    return r
+  }
+
+  def from_langastTypedTuple(o: org.sireum.lang.ast.Typed.Tuple, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypedTuple(o)
+    return w.result
+  }
+
+  def to_langastTypedTuple(data: ISZ[U8]): Either[org.sireum.lang.ast.Typed.Tuple, MessagePack.ErrorMsg] = {
+    def f_langastTypedTuple(reader: Reader): org.sireum.lang.ast.Typed.Tuple = {
+      val r = reader.read_langastTypedTuple()
+      return r
+    }
+    val r = to(data, f_langastTypedTuple _)
+    return r
+  }
+
+  def from_langastTypedFun(o: org.sireum.lang.ast.Typed.Fun, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypedFun(o)
+    return w.result
+  }
+
+  def to_langastTypedFun(data: ISZ[U8]): Either[org.sireum.lang.ast.Typed.Fun, MessagePack.ErrorMsg] = {
+    def f_langastTypedFun(reader: Reader): org.sireum.lang.ast.Typed.Fun = {
+      val r = reader.read_langastTypedFun()
+      return r
+    }
+    val r = to(data, f_langastTypedFun _)
+    return r
+  }
+
+  def from_langastTypedTypeVar(o: org.sireum.lang.ast.Typed.TypeVar, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypedTypeVar(o)
+    return w.result
+  }
+
+  def to_langastTypedTypeVar(data: ISZ[U8]): Either[org.sireum.lang.ast.Typed.TypeVar, MessagePack.ErrorMsg] = {
+    def f_langastTypedTypeVar(reader: Reader): org.sireum.lang.ast.Typed.TypeVar = {
+      val r = reader.read_langastTypedTypeVar()
+      return r
+    }
+    val r = to(data, f_langastTypedTypeVar _)
+    return r
+  }
+
+  def from_langastTypedPackage(o: org.sireum.lang.ast.Typed.Package, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypedPackage(o)
+    return w.result
+  }
+
+  def to_langastTypedPackage(data: ISZ[U8]): Either[org.sireum.lang.ast.Typed.Package, MessagePack.ErrorMsg] = {
+    def f_langastTypedPackage(reader: Reader): org.sireum.lang.ast.Typed.Package = {
+      val r = reader.read_langastTypedPackage()
+      return r
+    }
+    val r = to(data, f_langastTypedPackage _)
+    return r
+  }
+
+  def from_langastTypedObject(o: org.sireum.lang.ast.Typed.Object, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypedObject(o)
+    return w.result
+  }
+
+  def to_langastTypedObject(data: ISZ[U8]): Either[org.sireum.lang.ast.Typed.Object, MessagePack.ErrorMsg] = {
+    def f_langastTypedObject(reader: Reader): org.sireum.lang.ast.Typed.Object = {
+      val r = reader.read_langastTypedObject()
+      return r
+    }
+    val r = to(data, f_langastTypedObject _)
+    return r
+  }
+
+  def from_langastTypedEnum(o: org.sireum.lang.ast.Typed.Enum, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypedEnum(o)
+    return w.result
+  }
+
+  def to_langastTypedEnum(data: ISZ[U8]): Either[org.sireum.lang.ast.Typed.Enum, MessagePack.ErrorMsg] = {
+    def f_langastTypedEnum(reader: Reader): org.sireum.lang.ast.Typed.Enum = {
+      val r = reader.read_langastTypedEnum()
+      return r
+    }
+    val r = to(data, f_langastTypedEnum _)
+    return r
+  }
+
+  def from_langastTypedMethod(o: org.sireum.lang.ast.Typed.Method, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypedMethod(o)
+    return w.result
+  }
+
+  def to_langastTypedMethod(data: ISZ[U8]): Either[org.sireum.lang.ast.Typed.Method, MessagePack.ErrorMsg] = {
+    def f_langastTypedMethod(reader: Reader): org.sireum.lang.ast.Typed.Method = {
+      val r = reader.read_langastTypedMethod()
+      return r
+    }
+    val r = to(data, f_langastTypedMethod _)
+    return r
+  }
+
+  def from_langastTypedMethods(o: org.sireum.lang.ast.Typed.Methods, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypedMethods(o)
+    return w.result
+  }
+
+  def to_langastTypedMethods(data: ISZ[U8]): Either[org.sireum.lang.ast.Typed.Methods, MessagePack.ErrorMsg] = {
+    def f_langastTypedMethods(reader: Reader): org.sireum.lang.ast.Typed.Methods = {
+      val r = reader.read_langastTypedMethods()
+      return r
+    }
+    val r = to(data, f_langastTypedMethods _)
+    return r
+  }
+
+  def from_langastTypedFact(o: org.sireum.lang.ast.Typed.Fact, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypedFact(o)
+    return w.result
+  }
+
+  def to_langastTypedFact(data: ISZ[U8]): Either[org.sireum.lang.ast.Typed.Fact, MessagePack.ErrorMsg] = {
+    def f_langastTypedFact(reader: Reader): org.sireum.lang.ast.Typed.Fact = {
+      val r = reader.read_langastTypedFact()
+      return r
+    }
+    val r = to(data, f_langastTypedFact _)
+    return r
+  }
+
+  def from_langastTypedTheorem(o: org.sireum.lang.ast.Typed.Theorem, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypedTheorem(o)
+    return w.result
+  }
+
+  def to_langastTypedTheorem(data: ISZ[U8]): Either[org.sireum.lang.ast.Typed.Theorem, MessagePack.ErrorMsg] = {
+    def f_langastTypedTheorem(reader: Reader): org.sireum.lang.ast.Typed.Theorem = {
+      val r = reader.read_langastTypedTheorem()
+      return r
+    }
+    val r = to(data, f_langastTypedTheorem _)
+    return r
+  }
+
+  def from_langastTypedInv(o: org.sireum.lang.ast.Typed.Inv, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastTypedInv(o)
+    return w.result
+  }
+
+  def to_langastTypedInv(data: ISZ[U8]): Either[org.sireum.lang.ast.Typed.Inv, MessagePack.ErrorMsg] = {
+    def f_langastTypedInv(reader: Reader): org.sireum.lang.ast.Typed.Inv = {
+      val r = reader.read_langastTypedInv()
+      return r
+    }
+    val r = to(data, f_langastTypedInv _)
     return r
   }
 

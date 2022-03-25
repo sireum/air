@@ -50,7 +50,8 @@ exit /B %errorlevel%
 
 import org.sireum._
 
-val sireum = Os.path(Os.env("SIREUM_HOME").get) / "bin" / (if(Os.isWin) "sireum.bat" else "sireum")
+val sireumHome = Os.path(Os.env("SIREUM_HOME").get)
+val sireum = sireumHome / "bin" / (if(Os.isWin) "sireum.bat" else "sireum")
 
 val home = Os.slashDir.up
 
@@ -64,12 +65,29 @@ def usage(): Unit = {
 def regenAir(): Unit = {
   val airRootPath = home
   val airPackagePath = airRootPath / "shared" / "src" / "main" / "scala" / "org" / "sireum" / "hamr" / "ir"
-  val asts: ISZ[String] = ISZ("AadlAST.scala", "BlessAST.scala", "Emv2AST.scala", "GumboAST.scala", "SmfAST.scala")
+  val airAsts = ISZ[String]("AadlAST.scala", "BlessAST.scala", "Emv2AST.scala", "GumboAST.scala", "SmfAST.scala").map((m: String) => (airPackagePath / m).value)
 
-  Os.proc(ISZ[String](sireum.value, "tools", "transgen", "-l", s"${airRootPath / "license.txt"}",
-    "-m", "immutable,mutable") ++ asts).at(airPackagePath).console.run()
-  Os.proc(ISZ[String](sireum.value, "tools", "sergen", "-p", "org.sireum.hamr.ir", "-l", s"${airRootPath / "license.txt"}",
-    "-m", "json,msgpack") ++ asts).at(airPackagePath).console.run()
+  val slangHome: Os.Path = {
+    var cand = airRootPath.up.up / "slang"
+    if(!cand.exists) {
+      proc"git clone https://github.com/sireum/slang.git".run()
+      cand = airRootPath / "slang"
+    }
+    if(!cand.exists) {
+      eprintln("Could not locate slang source directory")
+      Os.exit(-1)
+    }
+    cand
+  }
+
+  val sireumv = Os.home / "devel" / "sireum" / "kekinian" / "bin" / "sireum"
+  val slangPath = slangHome / "ast" / "shared" / "src" / "main" / "scala" / "org" / "sireum" / "lang" / "ast"
+  val slangAsts = ISZ[String]("AST.scala", "Typed.scala").map((m: String) => (slangPath / m).value)
+
+  Os.proc(ISZ[String](sireumv.value, "tools", "transgen", "-l", s"${airRootPath / "license.txt"}",
+    "-m", "immutable,mutable") ++ airAsts ++ slangAsts).at(airPackagePath).console.run()
+  Os.proc(ISZ[String](sireumv.value, "tools", "sergen", "-p", "org.sireum.hamr.ir", "-l", s"${airRootPath / "license.txt"}",
+    "-m", "json,msgpack") ++ airAsts ++ slangAsts).at(airPackagePath).console.run()
 }
 
 for(i <- 0 until Os.cliArgs.size) {

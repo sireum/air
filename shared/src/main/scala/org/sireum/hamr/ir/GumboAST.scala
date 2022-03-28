@@ -37,7 +37,7 @@ import org.sireum.message.Position
                              compute: Option[GclCompute]) extends GclAnnex
 
 @datatype class GclStateVar(name: String,
-                            exp: org.sireum.lang.ast.Exp)
+                            classifier: String)
 
 @datatype class GclInvariant(name: String,
                              exp: org.sireum.lang.ast.Exp)

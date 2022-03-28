@@ -1268,7 +1268,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""GclStateVar""""),
         ("name", printString(o.name)),
-        ("exp", print_langastExp(o.exp))
+        ("classifier", printString(o.classifier))
       ))
     }
 
@@ -5498,10 +5498,10 @@ object JSON {
       parser.parseObjectKey("name")
       val name = parser.parseString()
       parser.parseObjectNext()
-      parser.parseObjectKey("exp")
-      val exp = parse_langastExp()
+      parser.parseObjectKey("classifier")
+      val classifier = parser.parseString()
       parser.parseObjectNext()
-      return GclStateVar(name, exp)
+      return GclStateVar(name, classifier)
     }
 
     def parseGclInvariant(): GclInvariant = {

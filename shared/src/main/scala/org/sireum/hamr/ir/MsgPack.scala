@@ -1424,7 +1424,7 @@ object MsgPack {
     def writeGclStateVar(o: GclStateVar): Unit = {
       writer.writeZ(Constants.GclStateVar)
       writer.writeString(o.name)
-      write_langastExp(o.exp)
+      writer.writeString(o.classifier)
     }
 
     def writeGclInvariant(o: GclInvariant): Unit = {
@@ -4593,8 +4593,8 @@ object MsgPack {
         reader.expectZ(Constants.GclStateVar)
       }
       val name = reader.readString()
-      val exp = read_langastExp()
-      return GclStateVar(name, exp)
+      val classifier = reader.readString()
+      return GclStateVar(name, classifier)
     }
 
     def readGclInvariant(): GclInvariant = {

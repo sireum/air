@@ -893,6 +893,10 @@ object MTransformer {
 
   val PostResultGclCaseStatement: MOption[GclCaseStatement] = MNone()
 
+  val PreResultGclInitialize: PreResult[GclInitialize] = PreResult(T, MNone())
+
+  val PostResultGclInitialize: MOption[GclInitialize] = MNone()
+
   val PreResultGclCompute: PreResult[GclCompute] = PreResult(T, MNone())
 
   val PostResultGclCompute: MOption[GclCompute] = MNone()
@@ -2960,6 +2964,10 @@ import MTransformer._
 
   def preGclCaseStatement(o: GclCaseStatement): PreResult[GclCaseStatement] = {
     return PreResultGclCaseStatement
+  }
+
+  def preGclInitialize(o: GclInitialize): PreResult[GclInitialize] = {
+    return PreResultGclInitialize
   }
 
   def preGclCompute(o: GclCompute): PreResult[GclCompute] = {
@@ -5381,6 +5389,10 @@ import MTransformer._
 
   def postGclCaseStatement(o: GclCaseStatement): MOption[GclCaseStatement] = {
     return PostResultGclCaseStatement
+  }
+
+  def postGclInitialize(o: GclInitialize): MOption[GclInitialize] = {
+    return PostResultGclInitialize
   }
 
   def postGclCompute(o: GclCompute): MOption[GclCompute] = {
@@ -10274,7 +10286,7 @@ import MTransformer._
         case o2: GclSubclause =>
           val r0: MOption[IS[Z, GclStateVar]] = transformISZ(o2.state, transformGclStateVar _)
           val r1: MOption[IS[Z, GclInvariant]] = transformISZ(o2.invariants, transformGclInvariant _)
-          val r2: MOption[IS[Z, GclGuarantee]] = transformISZ(o2.initializes, transformGclGuarantee _)
+          val r2: MOption[Option[GclInitialize]] = transformOption(o2.initializes, transformGclInitialize _)
           val r3: MOption[Option[GclIntegration]] = transformOption(o2.integration, transformGclIntegration _)
           val r4: MOption[Option[GclCompute]] = transformOption(o2.compute, transformGclCompute _)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
@@ -10417,7 +10429,7 @@ import MTransformer._
         case o2: GclSubclause =>
           val r0: MOption[IS[Z, GclStateVar]] = transformISZ(o2.state, transformGclStateVar _)
           val r1: MOption[IS[Z, GclInvariant]] = transformISZ(o2.invariants, transformGclInvariant _)
-          val r2: MOption[IS[Z, GclGuarantee]] = transformISZ(o2.initializes, transformGclGuarantee _)
+          val r2: MOption[Option[GclInitialize]] = transformOption(o2.initializes, transformGclInitialize _)
           val r3: MOption[Option[GclIntegration]] = transformOption(o2.integration, transformGclIntegration _)
           val r4: MOption[Option[GclCompute]] = transformOption(o2.compute, transformGclCompute _)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
@@ -10450,7 +10462,7 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[IS[Z, GclStateVar]] = transformISZ(o2.state, transformGclStateVar _)
       val r1: MOption[IS[Z, GclInvariant]] = transformISZ(o2.invariants, transformGclInvariant _)
-      val r2: MOption[IS[Z, GclGuarantee]] = transformISZ(o2.initializes, transformGclGuarantee _)
+      val r2: MOption[Option[GclInitialize]] = transformOption(o2.initializes, transformGclInitialize _)
       val r3: MOption[Option[GclIntegration]] = transformOption(o2.integration, transformGclIntegration _)
       val r4: MOption[Option[GclCompute]] = transformOption(o2.compute, transformGclCompute _)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
@@ -10739,14 +10751,43 @@ import MTransformer._
     }
   }
 
+  def transformGclInitialize(o: GclInitialize): MOption[GclInitialize] = {
+    val preR: PreResult[GclInitialize] = preGclInitialize(o)
+    val r: MOption[GclInitialize] = if (preR.continu) {
+      val o2: GclInitialize = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.modifies, transform_langastExp _)
+      val r1: MOption[IS[Z, GclGuarantee]] = transformISZ(o2.guarantees, transformGclGuarantee _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(modifies = r0.getOrElse(o2.modifies), guarantees = r1.getOrElse(o2.guarantees)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: GclInitialize = r.getOrElse(o)
+    val postR: MOption[GclInitialize] = postGclInitialize(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformGclCompute(o: GclCompute): MOption[GclCompute] = {
     val preR: PreResult[GclCompute] = preGclCompute(o)
     val r: MOption[GclCompute] = if (preR.continu) {
       val o2: GclCompute = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, GclCaseStatement]] = transformISZ(o2.cases, transformGclCaseStatement _)
-      if (hasChanged || r0.nonEmpty)
-        MSome(o2(cases = r0.getOrElse(o2.cases)))
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.modifies, transform_langastExp _)
+      val r1: MOption[IS[Z, GclCaseStatement]] = transformISZ(o2.cases, transformGclCaseStatement _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(modifies = r0.getOrElse(o2.modifies), cases = r1.getOrElse(o2.cases)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {

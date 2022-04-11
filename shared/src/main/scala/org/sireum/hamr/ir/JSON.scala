@@ -1258,7 +1258,7 @@ object JSON {
         ("type", st""""GclSubclause""""),
         ("state", printISZ(F, o.state, printGclStateVar _)),
         ("invariants", printISZ(F, o.invariants, printGclInvariant _)),
-        ("initializes", printISZ(F, o.initializes, printGclGuarantee _)),
+        ("initializes", printOption(F, o.initializes, printGclInitialize _)),
         ("integration", printOption(F, o.integration, printGclIntegration _)),
         ("compute", printOption(F, o.compute, printGclCompute _))
       ))
@@ -1319,9 +1319,18 @@ object JSON {
       ))
     }
 
+    @pure def printGclInitialize(o: GclInitialize): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclInitialize""""),
+        ("modifies", printISZ(F, o.modifies, print_langastExp _)),
+        ("guarantees", printISZ(F, o.guarantees, printGclGuarantee _))
+      ))
+    }
+
     @pure def printGclCompute(o: GclCompute): ST = {
       return printObject(ISZ(
         ("type", st""""GclCompute""""),
+        ("modifies", printISZ(F, o.modifies, print_langastExp _)),
         ("cases", printISZ(F, o.cases, printGclCaseStatement _))
       ))
     }
@@ -5475,7 +5484,7 @@ object JSON {
       val invariants = parser.parseISZ(parseGclInvariant _)
       parser.parseObjectNext()
       parser.parseObjectKey("initializes")
-      val initializes = parser.parseISZ(parseGclGuarantee _)
+      val initializes = parser.parseOption(parseGclInitialize _)
       parser.parseObjectNext()
       parser.parseObjectKey("integration")
       val integration = parser.parseOption(parseGclIntegration _)
@@ -5603,6 +5612,24 @@ object JSON {
       return GclCaseStatement(name, assumes, guarantees)
     }
 
+    def parseGclInitialize(): GclInitialize = {
+      val r = parseGclInitializeT(F)
+      return r
+    }
+
+    def parseGclInitializeT(typeParsed: B): GclInitialize = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclInitialize")
+      }
+      parser.parseObjectKey("modifies")
+      val modifies = parser.parseISZ(parse_langastExp _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("guarantees")
+      val guarantees = parser.parseISZ(parseGclGuarantee _)
+      parser.parseObjectNext()
+      return GclInitialize(modifies, guarantees)
+    }
+
     def parseGclCompute(): GclCompute = {
       val r = parseGclComputeT(F)
       return r
@@ -5612,10 +5639,13 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("GclCompute")
       }
+      parser.parseObjectKey("modifies")
+      val modifies = parser.parseISZ(parse_langastExp _)
+      parser.parseObjectNext()
       parser.parseObjectKey("cases")
       val cases = parser.parseISZ(parseGclCaseStatement _)
       parser.parseObjectNext()
-      return GclCompute(cases)
+      return GclCompute(modifies, cases)
     }
 
     def parseGclTODO(): GclTODO = {
@@ -11389,6 +11419,24 @@ object JSON {
       return r
     }
     val r = to(s, fGclCaseStatement _)
+    return r
+  }
+
+  def fromGclInitialize(o: GclInitialize, isCompact: B): String = {
+    val st = Printer.printGclInitialize(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclInitialize(s: String): Either[GclInitialize, Json.ErrorMsg] = {
+    def fGclInitialize(parser: Parser): GclInitialize = {
+      val r = parser.parseGclInitialize()
+      return r
+    }
+    val r = to(s, fGclInitialize _)
     return r
   }
 

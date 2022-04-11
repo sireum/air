@@ -1942,6 +1942,10 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def preGclInitialize(ctx: Context, o: GclInitialize): PreResult[Context, GclInitialize] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def preGclCompute(ctx: Context, o: GclCompute): PreResult[Context, GclCompute] = {
       return PreResult(ctx, T, None())
     }
@@ -4360,6 +4364,10 @@ object Transformer {
     }
 
     @pure def postGclCaseStatement(ctx: Context, o: GclCaseStatement): TPostResult[Context, GclCaseStatement] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postGclInitialize(ctx: Context, o: GclInitialize): TPostResult[Context, GclInitialize] = {
       return TPostResult(ctx, None())
     }
 
@@ -9292,7 +9300,7 @@ import Transformer._
         case o2: GclSubclause =>
           val r0: TPostResult[Context, IS[Z, GclStateVar]] = transformISZ(preR.ctx, o2.state, transformGclStateVar _)
           val r1: TPostResult[Context, IS[Z, GclInvariant]] = transformISZ(r0.ctx, o2.invariants, transformGclInvariant _)
-          val r2: TPostResult[Context, IS[Z, GclGuarantee]] = transformISZ(r1.ctx, o2.initializes, transformGclGuarantee _)
+          val r2: TPostResult[Context, Option[GclInitialize]] = transformOption(r1.ctx, o2.initializes, transformGclInitialize _)
           val r3: TPostResult[Context, Option[GclIntegration]] = transformOption(r2.ctx, o2.integration, transformGclIntegration _)
           val r4: TPostResult[Context, Option[GclCompute]] = transformOption(r3.ctx, o2.compute, transformGclCompute _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
@@ -9435,7 +9443,7 @@ import Transformer._
         case o2: GclSubclause =>
           val r0: TPostResult[Context, IS[Z, GclStateVar]] = transformISZ(preR.ctx, o2.state, transformGclStateVar _)
           val r1: TPostResult[Context, IS[Z, GclInvariant]] = transformISZ(r0.ctx, o2.invariants, transformGclInvariant _)
-          val r2: TPostResult[Context, IS[Z, GclGuarantee]] = transformISZ(r1.ctx, o2.initializes, transformGclGuarantee _)
+          val r2: TPostResult[Context, Option[GclInitialize]] = transformOption(r1.ctx, o2.initializes, transformGclInitialize _)
           val r3: TPostResult[Context, Option[GclIntegration]] = transformOption(r2.ctx, o2.integration, transformGclIntegration _)
           val r4: TPostResult[Context, Option[GclCompute]] = transformOption(r3.ctx, o2.compute, transformGclCompute _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
@@ -9468,7 +9476,7 @@ import Transformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: TPostResult[Context, IS[Z, GclStateVar]] = transformISZ(preR.ctx, o2.state, transformGclStateVar _)
       val r1: TPostResult[Context, IS[Z, GclInvariant]] = transformISZ(r0.ctx, o2.invariants, transformGclInvariant _)
-      val r2: TPostResult[Context, IS[Z, GclGuarantee]] = transformISZ(r1.ctx, o2.initializes, transformGclGuarantee _)
+      val r2: TPostResult[Context, Option[GclInitialize]] = transformOption(r1.ctx, o2.initializes, transformGclInitialize _)
       val r3: TPostResult[Context, Option[GclIntegration]] = transformOption(r2.ctx, o2.integration, transformGclIntegration _)
       val r4: TPostResult[Context, Option[GclCompute]] = transformOption(r3.ctx, o2.compute, transformGclCompute _)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
@@ -9757,16 +9765,45 @@ import Transformer._
     }
   }
 
+  @pure def transformGclInitialize(ctx: Context, o: GclInitialize): TPostResult[Context, GclInitialize] = {
+    val preR: PreResult[Context, GclInitialize] = pp.preGclInitialize(ctx, o)
+    val r: TPostResult[Context, GclInitialize] = if (preR.continu) {
+      val o2: GclInitialize = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(preR.ctx, o2.modifies, transform_langastExp _)
+      val r1: TPostResult[Context, IS[Z, GclGuarantee]] = transformISZ(r0.ctx, o2.guarantees, transformGclGuarantee _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(modifies = r0.resultOpt.getOrElse(o2.modifies), guarantees = r1.resultOpt.getOrElse(o2.guarantees))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclInitialize = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclInitialize] = pp.postGclInitialize(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transformGclCompute(ctx: Context, o: GclCompute): TPostResult[Context, GclCompute] = {
     val preR: PreResult[Context, GclCompute] = pp.preGclCompute(ctx, o)
     val r: TPostResult[Context, GclCompute] = if (preR.continu) {
       val o2: GclCompute = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, IS[Z, GclCaseStatement]] = transformISZ(preR.ctx, o2.cases, transformGclCaseStatement _)
-      if (hasChanged || r0.resultOpt.nonEmpty)
-        TPostResult(r0.ctx, Some(o2(cases = r0.resultOpt.getOrElse(o2.cases))))
+      val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(preR.ctx, o2.modifies, transform_langastExp _)
+      val r1: TPostResult[Context, IS[Z, GclCaseStatement]] = transformISZ(r0.ctx, o2.cases, transformGclCaseStatement _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(modifies = r0.resultOpt.getOrElse(o2.modifies), cases = r1.resultOpt.getOrElse(o2.cases))))
       else
-        TPostResult(r0.ctx, None())
+        TPostResult(r1.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {

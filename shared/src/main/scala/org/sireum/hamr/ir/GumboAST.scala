@@ -32,7 +32,7 @@ import org.sireum.message.Position
 
 @datatype class GclSubclause(state: ISZ[GclStateVar],
                              invariants: ISZ[GclInvariant],
-                             initializes: ISZ[GclGuarantee],
+                             initializes: Option[GclInitialize],
                              integration: Option[GclIntegration],
                              compute: Option[GclCompute]) extends GclAnnex
 
@@ -59,6 +59,10 @@ import org.sireum.message.Position
                                  val assumes: org.sireum.lang.ast.Exp,
                                  val guarantees: org.sireum.lang.ast.Exp)
 
-@datatype class GclCompute(cases: ISZ[GclCaseStatement])
+@datatype class GclInitialize(val modifies: ISZ[org.sireum.lang.ast.Exp],
+                              val guarantees: ISZ[GclGuarantee])
+
+@datatype class GclCompute(val modifies: ISZ[org.sireum.lang.ast.Exp],
+                           val cases: ISZ[GclCaseStatement])
 
 @datatype class GclTODO

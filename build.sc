@@ -25,7 +25,7 @@
 
 import $file.runtime.Runtime
 import $file.Air
-import ammonite.ops._
+import $file.slang.Slang
 
 object runtime extends mill.Module {
 
@@ -35,30 +35,49 @@ object runtime extends mill.Module {
     final override def macrosObject = macros
   }
 
-  object library extends Runtime.Module.Library {
-    final override def macrosObject = macros
-    final override def testObject = test
+  trait testProvider extends Runtime.Module.TestProvider {
+    override def testObject = test
+  }
+
+  object library extends Runtime.Module.Library with testProvider {
+    override def macrosObject = macros
   }
 
 }
 
+object slang extends mill.Module {
+
+  object ast extends Slang.Module.Ast with runtime.testProvider {
+    final override def libraryObject = runtime.library
+  }
+
+  object parser extends Slang.Module.Parser with runtime.testProvider {
+    final override def astObject = ast
+  }
+
+  object tipe extends Slang.Module.Tipe with runtime.testProvider {
+    final override def astObject = ast
+    final override def testObject = runtime.test
+  }
+
+  object frontend extends Slang.Module.FrontEnd with runtime.testProvider {
+    final override def parserObject = parser
+    final override def tipeObject = tipe
+  }
+
+}
 
 object air extends Air.Module {
 
-  final override def millSourcePath = super.millSourcePath / up
+  final override def millSourcePath = super.millSourcePath / os.up
 
   final override def libraryObject = runtime.library
   
   final override def testObject = runtime.test
+
+  final override def slangTipeObject = slang.tipe
 }
 
-def regen() = T.command {
-  val path = pwd / 'shared / 'src / 'main / 'scala / 'org / 'sireum / 'hamr / 'ir
-  %(pwd / 'sireum, 'tools, 'transgen, "-l", pwd / "license.txt", "-m", "immutable,mutable",
-    path / "AadlAST.scala")(path)
-  %(pwd / 'sireum, 'tools, 'sergen, "-p", "org.sireum.hamr.ir", "-l", pwd / "license.txt",
-    "-m", "json,msgpack", path / "AAdlAST.scala")(path)
-}
 
 def jitPack(owner: String, repo: String, lib: String = "") = T.command {
   org.sireum.mill.SireumModule.jitPack(owner, repo, if ("" == lib) repo else lib)

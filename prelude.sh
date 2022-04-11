@@ -3,8 +3,7 @@ export SCRIPT_HOME=$( cd "$( dirname "$0" )" &> /dev/null && pwd )
 cd ${SCRIPT_HOME}
 CURL='curl -c /dev/null -JLo'
 if [ ! -e sireum ]; then
-  ${CURL} sireum http://files.sireum.org/sireum
-  chmod +x sireum
+  ${CURL} sireum.jar https://github.com/sireum/init/releases/download/latest/sireum.jar
 fi
 if [ ! -e mill-standalone ]; then
   ${CURL} mill-standalone https://github.com/sireum/rolling/releases/download/mill/standalone
@@ -15,3 +14,5 @@ if [ ! -e versions.properties ]; then
 fi
 rm -fR runtime
 git clone --depth=1 https://github.com/sireum/runtime
+rm -fR slang
+git clone --depth=1 https://github.com/sireum/slang

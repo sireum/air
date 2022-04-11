@@ -50,7 +50,9 @@ trait Module extends CrossJvmJsJitPack {
 
   final override def ivyDeps =
     if (isSourceDep) Agg.empty
-    else Agg(jpLatest(isCross = true, "sireum", "runtime", "library"))
+    else Agg(
+      jpLatest(isCross = true, "sireum", "runtime", "library"),
+      jpLatest(isCross = true, "sireum", "slang", "frontend"))
 
   final override def testIvyDeps =
     if (isSourceDep) Agg.empty
@@ -63,7 +65,7 @@ trait Module extends CrossJvmJsJitPack {
   final override def testScalacPluginIvyDeps = scalacPluginIvyDeps
 
   final override def deps =
-    if (isSourceDep) Seq(libraryObject) else Seq()
+    if (isSourceDep) Seq(libraryObject, slangTipeObject) else Seq()
 
   final override def testDeps =
     if (isSourceDep) Seq(testObject.shared) else Seq()
@@ -75,4 +77,6 @@ trait Module extends CrossJvmJsJitPack {
   def testObject: CrossJvmJsPublish
 
   def libraryObject: CrossJvmJsPublish
+
+  def slangTipeObject: CrossJvmJsPublish
 }

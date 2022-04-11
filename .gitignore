@@ -3,9 +3,10 @@ out
 /.idea
 /.idea_modules
 /mill-standalone
-/sireum
+/sireum.jar
 /versions.properties
 /runtime
+/slang
 *.cmd.jar
 *.cmd.com
 project.json

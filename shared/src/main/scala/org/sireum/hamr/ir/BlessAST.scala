@@ -127,10 +127,21 @@ Variable:
   'Final
 }
 
-// TODO: Complete type grammar
 //BRL  most types will be declared in typedef annex libraries, however they should be linked to usage
 @sig trait BTSType
 
+/* Xtext
+Type:
+	EnumerationType
+	| QuantityType
+	| ArrayType
+	| RecordType
+	| BooleanType
+	| StringType
+	| NullType
+//	| DataComponentReference
+;
+ */
 //BRL Data components cannot be used as BLESS types
 //@datatype class BTSClassifier (classifier: Classifier) extends BTSType
 
@@ -386,7 +397,7 @@ LogicalOperator:
 //BRL
 @datatype class BTSModeCondition (tle: BTSTriggerLogicalExpression) extends BTSTransitionCondition
 
-@datatype class BTSTriggerLogicalExpression(op: BTSBinaryOp,
+@datatype class BTSTriggerLogicalExpression(op: BTSBinaryOp.Type,
                                             trigger: ISZ[BTSEventTrigger])
 
 //Name must reach down to ports of subcomponent, and possibly one port in port array
@@ -623,7 +634,7 @@ TimedSubject:
   | invocation=Invocation ;
  */
 @datatype class BTSTimedExpression(subject: BTSExp,
-                                   tick: boolean,
+                                   tick: B,
                                    at: Option[BTSExp],
                                    caret: Option[BTSExp],
                                    val pos: Option[Position]) extends BTSExp

@@ -143,7 +143,7 @@ Type:
 ;
  */
 //BRL Data components cannot be used as BLESS types
-//@datatype class BTSClassifier (classifier: Classifier) extends BTSType
+@datatype class BTSClassifier (classifier: Classifier) extends BTSType
 
 //BRL
 /* Xtext
@@ -164,9 +164,9 @@ QuantityType:
 ;
  */
 @datatype class BTSQuantityType(unit: String, //may also be 'scalar' or 'whole'
-                                lb: Option[Number],
-                                ub: Option[Number],
-                                step: Option[Number],
+                                lb: Option[F32],
+                                ub: Option[F32],
+                                step: Option[F32],
                                 representation: Option[ValueProp]  //AADL property constant value
                                ) extends BTSType
 
@@ -187,8 +187,8 @@ ANumber:
 @datatype class BTSArrayType(range: ISZ[BTSArrayRange],
                              typ: BTSType) extends BTSType
 
-@datatype class BTSArrayRange(lb: Number,  //natural number: literal or property
-                              ub: Option[Number])
+@datatype class BTSArrayRange(lb: Z,  //natural number: literal or property
+                              ub: Option[Z])
 
 //BRL
 /* Xtext
@@ -856,7 +856,7 @@ BehaviorTime:
                                 val pos: Option[Position])
 
 //BRL
-@datatype class BTSQuantity(number : Number,
+@datatype class BTSQuantity(number : F32,
                             unit : Option[String])
 
 //BRL

@@ -152,461 +152,469 @@ object MsgPack {
 
     val BTSEnumerationPair: Z = 25
 
-    val BTSInvocation: Z = 26
+    val BTSNamelessAssertion: Z = 26
 
-    val BTSActualParameter: Z = 27
+    val BTSNamelessFunction: Z = 27
 
-    val BTSUniversalQuantification: Z = 28
+    val BTSNamelessEnumeration: Z = 28
 
-    val BTSExistentialQuantification: Z = 29
+    val BTSInvocation: Z = 29
 
-    val BTSSumQuantification: Z = 30
+    val BTSActualParameter: Z = 30
 
-    val BTSProductQuantification: Z = 31
+    val BTSUniversalQuantification: Z = 31
 
-    val BTSCountingQuantification: Z = 32
+    val BTSExistentialQuantification: Z = 32
 
-    val BTSRange: Z = 33
+    val BTSSumQuantification: Z = 33
 
-    val BTSTimedExpression: Z = 34
+    val BTSProductQuantification: Z = 34
 
-    val BTSConditionalExpression: Z = 35
+    val BTSCountingQuantification: Z = 35
 
-    val BTSCaseExpression: Z = 36
+    val BTSRange: Z = 36
 
-    val BTSCaseChoice: Z = 37
+    val BTSTimedExpression: Z = 37
 
-    val BTSRecordTerm: Z = 38
+    val BTSConditionalExpression: Z = 38
 
-    val BTSRecordValue: Z = 39
+    val BTSCaseExpression: Z = 39
 
-    val BTSBehaviorActions: Z = 40
+    val BTSCaseChoice: Z = 40
 
-    val BTSAssertedAction: Z = 41
+    val BTSRecordTerm: Z = 41
 
-    val BTSSkipAction: Z = 42
+    val BTSRecordValue: Z = 42
 
-    val BTSAssignmentAction: Z = 43
+    val BTSBehaviorActions: Z = 43
 
-    val BTSSubprogramCallAction: Z = 44
+    val BTSAssertedAction: Z = 44
 
-    val BTSPortOutAction: Z = 45
+    val BTSSkipAction: Z = 45
 
-    val BTSPortInAction: Z = 46
+    val BTSAssignmentAction: Z = 46
 
-    val BTSFrozenPortAction: Z = 47
+    val BTSSubprogramCallAction: Z = 47
 
-    val BTSIfBLESSAction: Z = 48
+    val BTSPortOutAction: Z = 48
 
-    val BTSGuardedAction: Z = 49
+    val BTSPortInAction: Z = 49
 
-    val BTSIfBAAction: Z = 50
+    val BTSFrozenPortAction: Z = 50
 
-    val BTSConditionalActions: Z = 51
+    val BTSIfBLESSAction: Z = 51
 
-    val BTSExistentialLatticeQuantification: Z = 52
+    val BTSGuardedAction: Z = 52
 
-    val BTSUniversalLatticeQuantification: Z = 53
+    val BTSIfBAAction: Z = 53
 
-    val BTSUnaryExp: Z = 54
+    val BTSConditionalActions: Z = 54
 
-    val BTSBinaryExp: Z = 55
+    val BTSExistentialLatticeQuantification: Z = 55
 
-    val BTSLiteralExp: Z = 56
+    val BTSUniversalLatticeQuantification: Z = 56
 
-    val BTSNameExp: Z = 57
+    val BTSExponentiation: Z = 57
 
-    val BTSIndexingExp: Z = 58
+    val BTSUnaryExp: Z = 58
 
-    val BTSAccessExp: Z = 59
+    val BTSBinaryExp: Z = 59
 
-    val BTSFunctionCall: Z = 60
+    val BTSLiteralExp: Z = 60
 
-    val BTSFormalExpPair: Z = 61
+    val BTSNameExp: Z = 61
 
-    val BTSBehaviorTime: Z = 62
+    val BTSIndexingExp: Z = 62
 
-    val BTSQuantity: Z = 63
+    val BTSAccessExp: Z = 63
 
-    val BTSValue: Z = 64
+    val BTSFunctionCall: Z = 64
 
-    val BTSIndexExpressionOrRange: Z = 65
+    val BTSFormalExpPair: Z = 65
 
-    val BTSPartialName: Z = 66
+    val BTSBehaviorTime: Z = 66
 
-    val TODO: Z = 67
+    val BTSQuantity: Z = 67
 
-    val Attr: Z = 68
+    val BTSValue: Z = 68
 
-    val Emv2ElementRef: Z = 69
+    val BTSIndexExpressionOrRange: Z = 69
 
-    val Emv2Library: Z = 70
+    val BTSPartialName: Z = 70
 
-    val ErrorTypeDef: Z = 71
+    val TODO: Z = 71
 
-    val ErrorAliasDef: Z = 72
+    val Attr: Z = 72
 
-    val ErrorTypeSetDef: Z = 73
+    val Emv2ElementRef: Z = 73
 
-    val BehaveStateMachine: Z = 74
+    val Emv2Library: Z = 74
 
-    val ErrorEvent: Z = 75
+    val ErrorTypeDef: Z = 75
 
-    val ErrorState: Z = 76
+    val ErrorAliasDef: Z = 76
 
-    val ErrorTransition: Z = 77
+    val ErrorTypeSetDef: Z = 77
 
-    val ConditionTrigger: Z = 78
+    val BehaveStateMachine: Z = 78
 
-    val AndCondition: Z = 79
+    val ErrorEvent: Z = 79
 
-    val OrCondition: Z = 80
+    val ErrorState: Z = 80
 
-    val AllCondition: Z = 81
+    val ErrorTransition: Z = 81
 
-    val OrMoreCondition: Z = 82
+    val ConditionTrigger: Z = 82
 
-    val OrLessCondition: Z = 83
+    val AndCondition: Z = 83
 
-    val Emv2Clause: Z = 84
+    val OrCondition: Z = 84
 
-    val Emv2Propagation: Z = 85
+    val AllCondition: Z = 85
 
-    val Emv2Flow: Z = 86
+    val OrMoreCondition: Z = 86
 
-    val Emv2BehaviorSection: Z = 87
+    val OrLessCondition: Z = 87
 
-    val ErrorPropagation: Z = 88
+    val Emv2Clause: Z = 88
 
-    val GclSubclause: Z = 89
+    val Emv2Propagation: Z = 89
 
-    val GclStateVar: Z = 90
+    val Emv2Flow: Z = 90
 
-    val GclInvariant: Z = 91
+    val Emv2BehaviorSection: Z = 91
 
-    val GclAssume: Z = 92
+    val ErrorPropagation: Z = 92
 
-    val GclGuarantee: Z = 93
+    val GclSubclause: Z = 93
 
-    val GclIntegration: Z = 94
+    val GclStateVar: Z = 94
 
-    val GclCaseStatement: Z = 95
+    val GclInvariant: Z = 95
 
-    val GclInitialize: Z = 96
+    val GclAssume: Z = 96
 
-    val GclCompute: Z = 97
+    val GclGuarantee: Z = 97
 
-    val GclTODO: Z = 98
+    val GclIntegration: Z = 98
 
-    val SmfClause: Z = 99
+    val GclCaseStatement: Z = 99
 
-    val SmfClassification: Z = 100
+    val GclInitialize: Z = 100
 
-    val SmfDeclass: Z = 101
+    val GclCompute: Z = 101
 
-    val SmfLibrary: Z = 102
+    val GclTODO: Z = 102
 
-    val SmfType: Z = 103
+    val SmfClause: Z = 103
 
-    val _langastTopUnitProgram: Z = 104
+    val SmfClassification: Z = 104
 
-    val _langastTopUnitSequentUnit: Z = 105
+    val SmfDeclass: Z = 105
 
-    val _langastTopUnitTruthTableUnit: Z = 106
+    val SmfLibrary: Z = 106
 
-    val _langastLoopContract: Z = 107
+    val SmfType: Z = 107
 
-    val _langastStmtImport: Z = 108
+    val _langastTopUnitProgram: Z = 108
 
-    val _langastStmtImportImporter: Z = 109
+    val _langastTopUnitSequentUnit: Z = 109
 
-    val _langastStmtImportMultiSelector: Z = 110
+    val _langastTopUnitTruthTableUnit: Z = 110
 
-    val _langastStmtImportWildcardSelector: Z = 111
+    val _langastLoopContract: Z = 111
 
-    val _langastStmtImportNamedSelector: Z = 112
+    val _langastStmtImport: Z = 112
 
-    val _langastStmtVar: Z = 113
+    val _langastStmtImportImporter: Z = 113
 
-    val _langastStmtVarPattern: Z = 114
+    val _langastStmtImportMultiSelector: Z = 114
 
-    val _langastStmtSpecVar: Z = 115
+    val _langastStmtImportWildcardSelector: Z = 115
 
-    val _langastStmtMethod: Z = 116
+    val _langastStmtImportNamedSelector: Z = 116
 
-    val _langastStmtExtMethod: Z = 117
+    val _langastStmtVar: Z = 117
 
-    val _langastStmtJustMethod: Z = 118
+    val _langastStmtVarPattern: Z = 118
 
-    val _langastStmtSpecMethod: Z = 119
+    val _langastStmtSpecVar: Z = 119
 
-    val _langastStmtEnum: Z = 120
+    val _langastStmtMethod: Z = 120
 
-    val _langastStmtSubZ: Z = 121
+    val _langastStmtExtMethod: Z = 121
 
-    val _langastStmtObject: Z = 122
+    val _langastStmtJustMethod: Z = 122
 
-    val _langastStmtSig: Z = 123
+    val _langastStmtSpecMethod: Z = 123
 
-    val _langastStmtAdt: Z = 124
+    val _langastStmtEnum: Z = 124
 
-    val _langastStmtTypeAlias: Z = 125
+    val _langastStmtSubZ: Z = 125
 
-    val _langastStmtAssign: Z = 126
+    val _langastStmtObject: Z = 126
 
-    val _langastStmtBlock: Z = 127
+    val _langastStmtSig: Z = 127
 
-    val _langastStmtIf: Z = 128
+    val _langastStmtAdt: Z = 128
 
-    val _langastStmtMatch: Z = 129
+    val _langastStmtTypeAlias: Z = 129
 
-    val _langastStmtWhile: Z = 130
+    val _langastStmtAssign: Z = 130
 
-    val _langastStmtDoWhile: Z = 131
+    val _langastStmtBlock: Z = 131
 
-    val _langastStmtFor: Z = 132
+    val _langastStmtIf: Z = 132
 
-    val _langastStmtReturn: Z = 133
+    val _langastStmtMatch: Z = 133
 
-    val _langastStmtExpr: Z = 134
+    val _langastStmtWhile: Z = 134
 
-    val _langastStmtFact: Z = 135
+    val _langastStmtDoWhile: Z = 135
 
-    val _langastStmtInv: Z = 136
+    val _langastStmtFor: Z = 136
 
-    val _langastStmtTheorem: Z = 137
+    val _langastStmtReturn: Z = 137
 
-    val _langastStmtDataRefinement: Z = 138
+    val _langastStmtExpr: Z = 138
 
-    val _langastStmtSpecLabel: Z = 139
+    val _langastStmtFact: Z = 139
 
-    val _langastStmtSpecBlock: Z = 140
+    val _langastStmtInv: Z = 140
 
-    val _langastStmtDeduceSequent: Z = 141
+    val _langastStmtTheorem: Z = 141
 
-    val _langastStmtDeduceSteps: Z = 142
+    val _langastStmtDataRefinement: Z = 142
 
-    val _langastStmtHavoc: Z = 143
+    val _langastStmtSpecLabel: Z = 143
 
-    val _langastMethodContractAccesses: Z = 144
+    val _langastStmtSpecBlock: Z = 144
 
-    val _langastMethodContractClaims: Z = 145
+    val _langastStmtDeduceSequent: Z = 145
 
-    val _langastMethodContractSimple: Z = 146
+    val _langastStmtDeduceSteps: Z = 146
 
-    val _langastMethodContractCases: Z = 147
+    val _langastStmtHavoc: Z = 147
 
-    val _langastMethodContractCase: Z = 148
+    val _langastMethodContractAccesses: Z = 148
 
-    val _langastSequent: Z = 149
+    val _langastMethodContractClaims: Z = 149
 
-    val _langastProofAst: Z = 150
+    val _langastMethodContractSimple: Z = 150
 
-    val _langastProofAstStepIdNum: Z = 151
+    val _langastMethodContractCases: Z = 151
 
-    val _langastProofAstStepIdStr: Z = 152
+    val _langastMethodContractCase: Z = 152
 
-    val _langastProofAstStepRegular: Z = 153
+    val _langastSequent: Z = 153
 
-    val _langastProofAstStepAssume: Z = 154
+    val _langastProofAst: Z = 154
 
-    val _langastProofAstStepAssert: Z = 155
+    val _langastProofAstStepIdNum: Z = 155
 
-    val _langastProofAstStepSubProof: Z = 156
+    val _langastProofAstStepIdStr: Z = 156
 
-    val _langastProofAstStepLet: Z = 157
+    val _langastProofAstStepRegular: Z = 157
 
-    val _langastProofAstStepLetParam: Z = 158
+    val _langastProofAstStepAssume: Z = 158
 
-    val _langastProofAstStepStructInduction: Z = 159
+    val _langastProofAstStepAssert: Z = 159
 
-    val _langastProofAstStepStructInductionMatchCase: Z = 160
+    val _langastProofAstStepSubProof: Z = 160
 
-    val _langastProofAstStepStructInductionMatchDefault: Z = 161
+    val _langastProofAstStepLet: Z = 161
 
-    val _langastProofAstStepJustificationApply: Z = 162
+    val _langastProofAstStepLetParam: Z = 162
 
-    val _langastProofAstStepJustificationIncept: Z = 163
+    val _langastProofAstStepStructInduction: Z = 163
 
-    val _langastProofAstStepJustificationInceptNamed: Z = 164
+    val _langastProofAstStepStructInductionMatchCase: Z = 164
 
-    val _langastProofAstStepJustificationInceptEta: Z = 165
+    val _langastProofAstStepStructInductionMatchDefault: Z = 165
 
-    val _langastCase: Z = 166
+    val _langastProofAstStepJustificationApply: Z = 166
 
-    val _langastEnumGenRangeExpr: Z = 167
+    val _langastProofAstStepJustificationIncept: Z = 167
 
-    val _langastEnumGenRangeStep: Z = 168
+    val _langastProofAstStepJustificationInceptNamed: Z = 168
 
-    val _langastEnumGenFor: Z = 169
+    val _langastProofAstStepJustificationInceptEta: Z = 169
 
-    val _langastTypeNamed: Z = 170
+    val _langastCase: Z = 170
 
-    val _langastTypeFun: Z = 171
+    val _langastEnumGenRangeExpr: Z = 171
 
-    val _langastTypeTuple: Z = 172
+    val _langastEnumGenRangeStep: Z = 172
 
-    val _langastPatternLiteral: Z = 173
+    val _langastEnumGenFor: Z = 173
 
-    val _langastPatternLitInterpolate: Z = 174
+    val _langastTypeNamed: Z = 174
 
-    val _langastPatternRef: Z = 175
+    val _langastTypeFun: Z = 175
 
-    val _langastPatternVarBinding: Z = 176
+    val _langastTypeTuple: Z = 176
 
-    val _langastPatternWildcard: Z = 177
+    val _langastPatternLiteral: Z = 177
 
-    val _langastPatternSeqWildcard: Z = 178
+    val _langastPatternLitInterpolate: Z = 178
 
-    val _langastPatternStructure: Z = 179
+    val _langastPatternRef: Z = 179
 
-    val _langastExpLitB: Z = 180
+    val _langastPatternVarBinding: Z = 180
 
-    val _langastExpLitC: Z = 181
+    val _langastPatternWildcard: Z = 181
 
-    val _langastExpLitZ: Z = 182
+    val _langastPatternSeqWildcard: Z = 182
 
-    val _langastExpLitF32: Z = 183
+    val _langastPatternStructure: Z = 183
 
-    val _langastExpLitF64: Z = 184
+    val _langastExpLitB: Z = 184
 
-    val _langastExpLitR: Z = 185
+    val _langastExpLitC: Z = 185
 
-    val _langastExpLitString: Z = 186
+    val _langastExpLitZ: Z = 186
 
-    val _langastExpLitStepId: Z = 187
+    val _langastExpLitF32: Z = 187
 
-    val _langastExpStringInterpolate: Z = 188
+    val _langastExpLitF64: Z = 188
 
-    val _langastExpThis: Z = 189
+    val _langastExpLitR: Z = 189
 
-    val _langastExpSuper: Z = 190
+    val _langastExpLitString: Z = 190
 
-    val _langastExpUnary: Z = 191
+    val _langastExpLitStepId: Z = 191
 
-    val _langastExpBinary: Z = 192
+    val _langastExpStringInterpolate: Z = 192
 
-    val _langastExpIdent: Z = 193
+    val _langastExpThis: Z = 193
 
-    val _langastExpEta: Z = 194
+    val _langastExpSuper: Z = 194
 
-    val _langastExpTuple: Z = 195
+    val _langastExpUnary: Z = 195
 
-    val _langastExpSelect: Z = 196
+    val _langastExpBinary: Z = 196
 
-    val _langastExpInvoke: Z = 197
+    val _langastExpIdent: Z = 197
 
-    val _langastExpInvokeNamed: Z = 198
+    val _langastExpEta: Z = 198
 
-    val _langastExpIf: Z = 199
+    val _langastExpTuple: Z = 199
 
-    val _langastExpFunParam: Z = 200
+    val _langastExpSelect: Z = 200
 
-    val _langastExpFun: Z = 201
+    val _langastExpInvoke: Z = 201
 
-    val _langastExpForYield: Z = 202
+    val _langastExpInvokeNamed: Z = 202
 
-    val _langastExpQuantType: Z = 203
+    val _langastExpIf: Z = 203
 
-    val _langastExpQuantRange: Z = 204
+    val _langastExpFunParam: Z = 204
 
-    val _langastExpQuantEach: Z = 205
+    val _langastExpFun: Z = 205
 
-    val _langastExpInput: Z = 206
+    val _langastExpForYield: Z = 206
 
-    val _langastExpOldVal: Z = 207
+    val _langastExpQuantType: Z = 207
 
-    val _langastExpLoopIndex: Z = 208
+    val _langastExpQuantRange: Z = 208
 
-    val _langastExpStateSeq: Z = 209
+    val _langastExpQuantEach: Z = 209
 
-    val _langastExpStateSeqFragment: Z = 210
+    val _langastExpInput: Z = 210
 
-    val _langastExpResult: Z = 211
+    val _langastExpOldVal: Z = 211
 
-    val _langastNamedArg: Z = 212
+    val _langastExpLoopIndex: Z = 212
 
-    val _langastId: Z = 213
+    val _langastExpStateSeq: Z = 213
 
-    val _langastName: Z = 214
+    val _langastExpStateSeqFragment: Z = 214
 
-    val _langastBody: Z = 215
+    val _langastExpResult: Z = 215
 
-    val _langastAdtParam: Z = 216
+    val _langastNamedArg: Z = 216
 
-    val _langastMethodSig: Z = 217
+    val _langastId: Z = 217
 
-    val _langastParam: Z = 218
+    val _langastName: Z = 218
 
-    val _langastTypeParam: Z = 219
+    val _langastBody: Z = 219
 
-    val _langastAttr: Z = 220
+    val _langastAdtParam: Z = 220
 
-    val _langastTypedAttr: Z = 221
+    val _langastMethodSig: Z = 221
 
-    val _langastResolvedAttr: Z = 222
+    val _langastParam: Z = 222
 
-    val _langastResolvedInfoBuiltIn: Z = 223
+    val _langastTypeParam: Z = 223
 
-    val _langastResolvedInfoPackage: Z = 224
+    val _langastAttr: Z = 224
 
-    val _langastResolvedInfoEnum: Z = 225
+    val _langastTypedAttr: Z = 225
 
-    val _langastResolvedInfoEnumElement: Z = 226
+    val _langastResolvedAttr: Z = 226
 
-    val _langastResolvedInfoObject: Z = 227
+    val _langastResolvedInfoBuiltIn: Z = 227
 
-    val _langastResolvedInfoVar: Z = 228
+    val _langastResolvedInfoPackage: Z = 228
 
-    val _langastResolvedInfoMethod: Z = 229
+    val _langastResolvedInfoEnum: Z = 229
 
-    val _langastResolvedInfoMethods: Z = 230
+    val _langastResolvedInfoEnumElement: Z = 230
 
-    val _langastResolvedInfoTuple: Z = 231
+    val _langastResolvedInfoObject: Z = 231
 
-    val _langastResolvedInfoLocalVar: Z = 232
+    val _langastResolvedInfoVar: Z = 232
 
-    val _langastResolvedInfoFact: Z = 233
+    val _langastResolvedInfoMethod: Z = 233
 
-    val _langastResolvedInfoTheorem: Z = 234
+    val _langastResolvedInfoMethods: Z = 234
 
-    val _langastResolvedInfoInv: Z = 235
+    val _langastResolvedInfoTuple: Z = 235
 
-    val _langastTruthTableRow: Z = 236
+    val _langastResolvedInfoLocalVar: Z = 236
 
-    val _langastTruthTableAssignment: Z = 237
+    val _langastResolvedInfoFact: Z = 237
 
-    val _langastTruthTableConclusionValidity: Z = 238
+    val _langastResolvedInfoTheorem: Z = 238
 
-    val _langastTruthTableConclusionTautology: Z = 239
+    val _langastResolvedInfoInv: Z = 239
 
-    val _langastTruthTableConclusionContradictory: Z = 240
+    val _langastTruthTableRow: Z = 240
 
-    val _langastTruthTableConclusionContingent: Z = 241
+    val _langastTruthTableAssignment: Z = 241
 
-    val _langastTypedName: Z = 242
+    val _langastTruthTableConclusionValidity: Z = 242
 
-    val _langastTypedTuple: Z = 243
+    val _langastTruthTableConclusionTautology: Z = 243
 
-    val _langastTypedFun: Z = 244
+    val _langastTruthTableConclusionContradictory: Z = 244
 
-    val _langastTypedTypeVar: Z = 245
+    val _langastTruthTableConclusionContingent: Z = 245
 
-    val _langastTypedPackage: Z = 246
+    val _langastTypedName: Z = 246
 
-    val _langastTypedObject: Z = 247
+    val _langastTypedTuple: Z = 247
 
-    val _langastTypedEnum: Z = 248
+    val _langastTypedFun: Z = 248
 
-    val _langastTypedMethod: Z = 249
+    val _langastTypedTypeVar: Z = 249
 
-    val _langastTypedMethods: Z = 250
+    val _langastTypedPackage: Z = 250
 
-    val _langastTypedFact: Z = 251
+    val _langastTypedObject: Z = 251
 
-    val _langastTypedTheorem: Z = 252
+    val _langastTypedEnum: Z = 252
 
-    val _langastTypedInv: Z = 253
+    val _langastTypedMethod: Z = 253
+
+    val _langastTypedMethods: Z = 254
+
+    val _langastTypedFact: Z = 255
+
+    val _langastTypedTheorem: Z = 256
+
+    val _langastTypedInv: Z = 257
 
   }
 
@@ -1129,6 +1137,9 @@ object MsgPack {
     def writeBTSAssertion(o: BTSAssertion): Unit = {
       o match {
         case o: BTSNamedAssertion => writeBTSNamedAssertion(o)
+        case o: BTSNamelessAssertion => writeBTSNamelessAssertion(o)
+        case o: BTSNamelessFunction => writeBTSNamelessFunction(o)
+        case o: BTSNamelessEnumeration => writeBTSNamelessEnumeration(o)
       }
     }
 
@@ -1180,11 +1191,30 @@ object MsgPack {
       writer.writeOption(o.pos, writer.writePosition _)
     }
 
+    def writeBTSNamelessAssertion(o: BTSNamelessAssertion): Unit = {
+      writer.writeZ(Constants.BTSNamelessAssertion)
+      writeBTSExp(o.predicate)
+      writer.writeOption(o.pos, writer.writePosition _)
+    }
+
+    def writeBTSNamelessFunction(o: BTSNamelessFunction): Unit = {
+      writer.writeZ(Constants.BTSNamelessFunction)
+      writeBTSType(o.tod)
+      writeBTSAssertionFunctionValue(o.functionvalue)
+      writer.writeOption(o.pos, writer.writePosition _)
+    }
+
+    def writeBTSNamelessEnumeration(o: BTSNamelessEnumeration): Unit = {
+      writer.writeZ(Constants.BTSNamelessEnumeration)
+      writeBTSInvocation(o.enumberation)
+      writer.writeOption(o.pos, writer.writePosition _)
+    }
+
     def writeBTSInvocation(o: BTSInvocation): Unit = {
       writer.writeZ(Constants.BTSInvocation)
       writeBTSNamedAssertion(o.label)
       writer.writeISZ(o.params, writeBTSActualParameter _)
-      writeBTSExp(o.actual_parameter)
+      writer.writeOption(o.actual_parameter, writeBTSExp _)
       writer.writeOption(o.pos, writer.writePosition _)
     }
 
@@ -1445,6 +1475,7 @@ object MsgPack {
         case o: BTSConditionalExpression => writeBTSConditionalExpression(o)
         case o: BTSCaseExpression => writeBTSCaseExpression(o)
         case o: BTSRecordTerm => writeBTSRecordTerm(o)
+        case o: BTSExponentiation => writeBTSExponentiation(o)
         case o: BTSUnaryExp => writeBTSUnaryExp(o)
         case o: BTSBinaryExp => writeBTSBinaryExp(o)
         case o: BTSLiteralExp => writeBTSLiteralExp(o)
@@ -1454,6 +1485,13 @@ object MsgPack {
         case o: BTSFunctionCall => writeBTSFunctionCall(o)
         case o: BTSValue => writeBTSValue(o)
       }
+    }
+
+    def writeBTSExponentiation(o: BTSExponentiation): Unit = {
+      writer.writeZ(Constants.BTSExponentiation)
+      writeBTSExp(o.l)
+      writer.writeOption(o.r, writeBTSExp _)
+      writer.writeOption(o.pos, writer.writePosition _)
     }
 
     def writeBTSUnaryExp(o: BTSUnaryExp): Unit = {
@@ -4232,9 +4270,12 @@ object MsgPack {
       val t = reader.readZ()
       t match {
         case Constants.BTSNamedAssertion => val r = readBTSNamedAssertionT(T); return r
+        case Constants.BTSNamelessAssertion => val r = readBTSNamelessAssertionT(T); return r
+        case Constants.BTSNamelessFunction => val r = readBTSNamelessFunctionT(T); return r
+        case Constants.BTSNamelessEnumeration => val r = readBTSNamelessEnumerationT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of BTSAssertion.")
-          val r = readBTSNamedAssertionT(T)
+          val r = readBTSNamelessEnumerationT(T)
           return r
       }
     }
@@ -4335,6 +4376,49 @@ object MsgPack {
       return BTSEnumerationPair(literal, predicate, pos)
     }
 
+    def readBTSNamelessAssertion(): BTSNamelessAssertion = {
+      val r = readBTSNamelessAssertionT(F)
+      return r
+    }
+
+    def readBTSNamelessAssertionT(typeParsed: B): BTSNamelessAssertion = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSNamelessAssertion)
+      }
+      val predicate = readBTSExp()
+      val pos = reader.readOption(reader.readPosition _)
+      return BTSNamelessAssertion(predicate, pos)
+    }
+
+    def readBTSNamelessFunction(): BTSNamelessFunction = {
+      val r = readBTSNamelessFunctionT(F)
+      return r
+    }
+
+    def readBTSNamelessFunctionT(typeParsed: B): BTSNamelessFunction = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSNamelessFunction)
+      }
+      val tod = readBTSType()
+      val functionvalue = readBTSAssertionFunctionValue()
+      val pos = reader.readOption(reader.readPosition _)
+      return BTSNamelessFunction(tod, functionvalue, pos)
+    }
+
+    def readBTSNamelessEnumeration(): BTSNamelessEnumeration = {
+      val r = readBTSNamelessEnumerationT(F)
+      return r
+    }
+
+    def readBTSNamelessEnumerationT(typeParsed: B): BTSNamelessEnumeration = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSNamelessEnumeration)
+      }
+      val enumberation = readBTSInvocation()
+      val pos = reader.readOption(reader.readPosition _)
+      return BTSNamelessEnumeration(enumberation, pos)
+    }
+
     def readBTSInvocation(): BTSInvocation = {
       val r = readBTSInvocationT(F)
       return r
@@ -4346,7 +4430,7 @@ object MsgPack {
       }
       val label = readBTSNamedAssertion()
       val params = reader.readISZ(readBTSActualParameter _)
-      val actual_parameter = readBTSExp()
+      val actual_parameter = reader.readOption(readBTSExp _)
       val pos = reader.readOption(reader.readPosition _)
       return BTSInvocation(label, params, actual_parameter, pos)
     }
@@ -4858,6 +4942,7 @@ object MsgPack {
         case Constants.BTSConditionalExpression => val r = readBTSConditionalExpressionT(T); return r
         case Constants.BTSCaseExpression => val r = readBTSCaseExpressionT(T); return r
         case Constants.BTSRecordTerm => val r = readBTSRecordTermT(T); return r
+        case Constants.BTSExponentiation => val r = readBTSExponentiationT(T); return r
         case Constants.BTSUnaryExp => val r = readBTSUnaryExpT(T); return r
         case Constants.BTSBinaryExp => val r = readBTSBinaryExpT(T); return r
         case Constants.BTSLiteralExp => val r = readBTSLiteralExpT(T); return r
@@ -4871,6 +4956,21 @@ object MsgPack {
           val r = readBTSValueT(T)
           return r
       }
+    }
+
+    def readBTSExponentiation(): BTSExponentiation = {
+      val r = readBTSExponentiationT(F)
+      return r
+    }
+
+    def readBTSExponentiationT(typeParsed: B): BTSExponentiation = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.BTSExponentiation)
+      }
+      val l = readBTSExp()
+      val r = reader.readOption(readBTSExp _)
+      val pos = reader.readOption(reader.readPosition _)
+      return BTSExponentiation(l, r, pos)
     }
 
     def readBTSUnaryExp(): BTSUnaryExp = {
@@ -9467,6 +9567,51 @@ object MsgPack {
     return r
   }
 
+  def fromBTSNamelessAssertion(o: BTSNamelessAssertion, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSNamelessAssertion(o)
+    return w.result
+  }
+
+  def toBTSNamelessAssertion(data: ISZ[U8]): Either[BTSNamelessAssertion, MessagePack.ErrorMsg] = {
+    def fBTSNamelessAssertion(reader: Reader): BTSNamelessAssertion = {
+      val r = reader.readBTSNamelessAssertion()
+      return r
+    }
+    val r = to(data, fBTSNamelessAssertion _)
+    return r
+  }
+
+  def fromBTSNamelessFunction(o: BTSNamelessFunction, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSNamelessFunction(o)
+    return w.result
+  }
+
+  def toBTSNamelessFunction(data: ISZ[U8]): Either[BTSNamelessFunction, MessagePack.ErrorMsg] = {
+    def fBTSNamelessFunction(reader: Reader): BTSNamelessFunction = {
+      val r = reader.readBTSNamelessFunction()
+      return r
+    }
+    val r = to(data, fBTSNamelessFunction _)
+    return r
+  }
+
+  def fromBTSNamelessEnumeration(o: BTSNamelessEnumeration, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSNamelessEnumeration(o)
+    return w.result
+  }
+
+  def toBTSNamelessEnumeration(data: ISZ[U8]): Either[BTSNamelessEnumeration, MessagePack.ErrorMsg] = {
+    def fBTSNamelessEnumeration(reader: Reader): BTSNamelessEnumeration = {
+      val r = reader.readBTSNamelessEnumeration()
+      return r
+    }
+    val r = to(data, fBTSNamelessEnumeration _)
+    return r
+  }
+
   def fromBTSInvocation(o: BTSInvocation, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
     w.writeBTSInvocation(o)
@@ -9974,6 +10119,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fBTSExp _)
+    return r
+  }
+
+  def fromBTSExponentiation(o: BTSExponentiation, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeBTSExponentiation(o)
+    return w.result
+  }
+
+  def toBTSExponentiation(data: ISZ[U8]): Either[BTSExponentiation, MessagePack.ErrorMsg] = {
+    def fBTSExponentiation(reader: Reader): BTSExponentiation = {
+      val r = reader.readBTSExponentiation()
+      return r
+    }
+    val r = to(data, fBTSExponentiation _)
     return r
   }
 

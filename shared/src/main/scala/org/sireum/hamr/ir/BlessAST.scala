@@ -517,6 +517,26 @@ EnumerationPair returns EnumerationPair:
 @datatype class BTSEnumerationPair(literal: String,
                                    predicate: BTSExp,
                                    val pos: Option[Position])
+
+/* Xtext
+NamelessAssertion:  '<<' predicate=Predicate '>>' ;
+ */
+@datatype class BTSNamelessAssertion(predicate: BTSExp,
+                                     val pos: Option[Position]) extends BTSAssertion
+
+/* Xtext
+NamelessFunction:  '<<' 'returns' tod=TypeOrReference func?=':=' functionvalue=AssertionFunctionValue '>>' ;
+ */
+@datatype class BTSNamelessFunction(tod: BTSType,
+                                    functionvalue: BTSAssertionFunctionValue,
+                                    val pos: Option[Position]) extends BTSAssertion
+
+/* Xtext
+NamelessEnumeration:  '<<' '+=>' enumeration=Invocation '>>';
+ */
+@datatype class BTSNamelessEnumeration(enumberation: BTSInvocation,
+                                    val pos: Option[Position]) extends BTSAssertion
+
 /* Xtext
 Invocation:
 	label=[NamedAssertion|ID]
@@ -529,7 +549,7 @@ Invocation:
  */
 @datatype class BTSInvocation(label: BTSNamedAssertion,
                               params: ISZ[BTSActualParameter],
-                              actual_parameter: BTSExp,
+                              actual_parameter: Option[BTSExp],
                               val pos: Option[Position]) extends BTSExp
 
 /* Xtext
@@ -770,6 +790,13 @@ RecordValue:
   @pure def pos: Option[Position]
 }
 
+/* Xtext
+Exp:
+	l=Subexpression ( sym='**' r=Subexpression )? ;
+ */
+@datatype class BTSExponentiation(l:BTSExp, r: Option[BTSExp],
+                                  val pos: Option[Position]) extends BTSExp
+
 @datatype class BTSUnaryExp(op: BTSUnaryOp.Type,
                             exp: BTSExp,
                             val pos: Option[Position]) extends BTSExp
@@ -806,6 +833,9 @@ RecordValue:
   'MOD
   'REM
   'EXP
+
+  'IFF
+  'IMPLIES
 }
 
 @enum object BTSLiteralType {

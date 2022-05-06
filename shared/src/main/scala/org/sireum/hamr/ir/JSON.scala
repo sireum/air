@@ -766,6 +766,9 @@ object JSON {
     @pure def printBTSAssertion(o: BTSAssertion): ST = {
       o match {
         case o: BTSNamedAssertion => return printBTSNamedAssertion(o)
+        case o: BTSNamelessAssertion => return printBTSNamelessAssertion(o)
+        case o: BTSNamelessFunction => return printBTSNamelessFunction(o)
+        case o: BTSNamelessEnumeration => return printBTSNamelessEnumeration(o)
       }
     }
 
@@ -829,12 +832,37 @@ object JSON {
       ))
     }
 
+    @pure def printBTSNamelessAssertion(o: BTSNamelessAssertion): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSNamelessAssertion""""),
+        ("predicate", printBTSExp(o.predicate)),
+        ("pos", printOption(F, o.pos, printPosition _))
+      ))
+    }
+
+    @pure def printBTSNamelessFunction(o: BTSNamelessFunction): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSNamelessFunction""""),
+        ("tod", printBTSType(o.tod)),
+        ("functionvalue", printBTSAssertionFunctionValue(o.functionvalue)),
+        ("pos", printOption(F, o.pos, printPosition _))
+      ))
+    }
+
+    @pure def printBTSNamelessEnumeration(o: BTSNamelessEnumeration): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSNamelessEnumeration""""),
+        ("enumberation", printBTSInvocation(o.enumberation)),
+        ("pos", printOption(F, o.pos, printPosition _))
+      ))
+    }
+
     @pure def printBTSInvocation(o: BTSInvocation): ST = {
       return printObject(ISZ(
         ("type", st""""BTSInvocation""""),
         ("label", printBTSNamedAssertion(o.label)),
         ("params", printISZ(F, o.params, printBTSActualParameter _)),
-        ("actual_parameter", printBTSExp(o.actual_parameter)),
+        ("actual_parameter", printOption(F, o.actual_parameter, printBTSExp _)),
         ("pos", printOption(F, o.pos, printPosition _))
       ))
     }
@@ -1166,6 +1194,7 @@ object JSON {
         case o: BTSConditionalExpression => return printBTSConditionalExpression(o)
         case o: BTSCaseExpression => return printBTSCaseExpression(o)
         case o: BTSRecordTerm => return printBTSRecordTerm(o)
+        case o: BTSExponentiation => return printBTSExponentiation(o)
         case o: BTSUnaryExp => return printBTSUnaryExp(o)
         case o: BTSBinaryExp => return printBTSBinaryExp(o)
         case o: BTSLiteralExp => return printBTSLiteralExp(o)
@@ -1175,6 +1204,15 @@ object JSON {
         case o: BTSFunctionCall => return printBTSFunctionCall(o)
         case o: BTSValue => return printBTSValue(o)
       }
+    }
+
+    @pure def printBTSExponentiation(o: BTSExponentiation): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSExponentiation""""),
+        ("l", printBTSExp(o.l)),
+        ("r", printOption(F, o.r, printBTSExp _)),
+        ("pos", printOption(F, o.pos, printPosition _))
+      ))
     }
 
     @pure def printBTSUnaryExp(o: BTSUnaryExp): ST = {
@@ -1228,6 +1266,8 @@ object JSON {
         case BTSBinaryOp.MOD => "MOD"
         case BTSBinaryOp.REM => "REM"
         case BTSBinaryOp.EXP => "EXP"
+        case BTSBinaryOp.IFF => "IFF"
+        case BTSBinaryOp.IMPLIES => "IMPLIES"
       }
       return printObject(ISZ(
         ("type", printString("BTSBinaryOp")),
@@ -4908,10 +4948,13 @@ object JSON {
     }
 
     def parseBTSAssertion(): BTSAssertion = {
-      val t = parser.parseObjectTypes(ISZ("BTSNamedAssertion"))
+      val t = parser.parseObjectTypes(ISZ("BTSNamedAssertion", "BTSNamelessAssertion", "BTSNamelessFunction", "BTSNamelessEnumeration"))
       t.native match {
         case "BTSNamedAssertion" => val r = parseBTSNamedAssertionT(T); return r
-        case _ => val r = parseBTSNamedAssertionT(T); return r
+        case "BTSNamelessAssertion" => val r = parseBTSNamelessAssertionT(T); return r
+        case "BTSNamelessFunction" => val r = parseBTSNamelessFunctionT(T); return r
+        case "BTSNamelessEnumeration" => val r = parseBTSNamelessEnumerationT(T); return r
+        case _ => val r = parseBTSNamelessEnumerationT(T); return r
       }
     }
 
@@ -5059,6 +5102,63 @@ object JSON {
       return BTSEnumerationPair(literal, predicate, pos)
     }
 
+    def parseBTSNamelessAssertion(): BTSNamelessAssertion = {
+      val r = parseBTSNamelessAssertionT(F)
+      return r
+    }
+
+    def parseBTSNamelessAssertionT(typeParsed: B): BTSNamelessAssertion = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSNamelessAssertion")
+      }
+      parser.parseObjectKey("predicate")
+      val predicate = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return BTSNamelessAssertion(predicate, pos)
+    }
+
+    def parseBTSNamelessFunction(): BTSNamelessFunction = {
+      val r = parseBTSNamelessFunctionT(F)
+      return r
+    }
+
+    def parseBTSNamelessFunctionT(typeParsed: B): BTSNamelessFunction = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSNamelessFunction")
+      }
+      parser.parseObjectKey("tod")
+      val tod = parseBTSType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("functionvalue")
+      val functionvalue = parseBTSAssertionFunctionValue()
+      parser.parseObjectNext()
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return BTSNamelessFunction(tod, functionvalue, pos)
+    }
+
+    def parseBTSNamelessEnumeration(): BTSNamelessEnumeration = {
+      val r = parseBTSNamelessEnumerationT(F)
+      return r
+    }
+
+    def parseBTSNamelessEnumerationT(typeParsed: B): BTSNamelessEnumeration = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSNamelessEnumeration")
+      }
+      parser.parseObjectKey("enumberation")
+      val enumberation = parseBTSInvocation()
+      parser.parseObjectNext()
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return BTSNamelessEnumeration(enumberation, pos)
+    }
+
     def parseBTSInvocation(): BTSInvocation = {
       val r = parseBTSInvocationT(F)
       return r
@@ -5075,7 +5175,7 @@ object JSON {
       val params = parser.parseISZ(parseBTSActualParameter _)
       parser.parseObjectNext()
       parser.parseObjectKey("actual_parameter")
-      val actual_parameter = parseBTSExp()
+      val actual_parameter = parser.parseOption(parseBTSExp _)
       parser.parseObjectNext()
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
@@ -5749,7 +5849,7 @@ object JSON {
     }
 
     def parseBTSExp(): BTSExp = {
-      val t = parser.parseObjectTypes(ISZ("BTSInvocation", "BTSUniversalQuantification", "BTSExistentialQuantification", "BTSSumQuantification", "BTSProductQuantification", "BTSCountingQuantification", "BTSTimedExpression", "BTSConditionalExpression", "BTSCaseExpression", "BTSRecordTerm", "BTSUnaryExp", "BTSBinaryExp", "BTSLiteralExp", "BTSNameExp", "BTSIndexingExp", "BTSAccessExp", "BTSFunctionCall", "BTSValue"))
+      val t = parser.parseObjectTypes(ISZ("BTSInvocation", "BTSUniversalQuantification", "BTSExistentialQuantification", "BTSSumQuantification", "BTSProductQuantification", "BTSCountingQuantification", "BTSTimedExpression", "BTSConditionalExpression", "BTSCaseExpression", "BTSRecordTerm", "BTSExponentiation", "BTSUnaryExp", "BTSBinaryExp", "BTSLiteralExp", "BTSNameExp", "BTSIndexingExp", "BTSAccessExp", "BTSFunctionCall", "BTSValue"))
       t.native match {
         case "BTSInvocation" => val r = parseBTSInvocationT(T); return r
         case "BTSUniversalQuantification" => val r = parseBTSUniversalQuantificationT(T); return r
@@ -5761,6 +5861,7 @@ object JSON {
         case "BTSConditionalExpression" => val r = parseBTSConditionalExpressionT(T); return r
         case "BTSCaseExpression" => val r = parseBTSCaseExpressionT(T); return r
         case "BTSRecordTerm" => val r = parseBTSRecordTermT(T); return r
+        case "BTSExponentiation" => val r = parseBTSExponentiationT(T); return r
         case "BTSUnaryExp" => val r = parseBTSUnaryExpT(T); return r
         case "BTSBinaryExp" => val r = parseBTSBinaryExpT(T); return r
         case "BTSLiteralExp" => val r = parseBTSLiteralExpT(T); return r
@@ -5771,6 +5872,27 @@ object JSON {
         case "BTSValue" => val r = parseBTSValueT(T); return r
         case _ => val r = parseBTSValueT(T); return r
       }
+    }
+
+    def parseBTSExponentiation(): BTSExponentiation = {
+      val r = parseBTSExponentiationT(F)
+      return r
+    }
+
+    def parseBTSExponentiationT(typeParsed: B): BTSExponentiation = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSExponentiation")
+      }
+      parser.parseObjectKey("l")
+      val l = parseBTSExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("r")
+      val r = parser.parseOption(parseBTSExp _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("pos")
+      val pos = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return BTSExponentiation(l, r, pos)
     }
 
     def parseBTSUnaryExp(): BTSUnaryExp = {
@@ -11814,6 +11936,60 @@ object JSON {
     return r
   }
 
+  def fromBTSNamelessAssertion(o: BTSNamelessAssertion, isCompact: B): String = {
+    val st = Printer.printBTSNamelessAssertion(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSNamelessAssertion(s: String): Either[BTSNamelessAssertion, Json.ErrorMsg] = {
+    def fBTSNamelessAssertion(parser: Parser): BTSNamelessAssertion = {
+      val r = parser.parseBTSNamelessAssertion()
+      return r
+    }
+    val r = to(s, fBTSNamelessAssertion _)
+    return r
+  }
+
+  def fromBTSNamelessFunction(o: BTSNamelessFunction, isCompact: B): String = {
+    val st = Printer.printBTSNamelessFunction(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSNamelessFunction(s: String): Either[BTSNamelessFunction, Json.ErrorMsg] = {
+    def fBTSNamelessFunction(parser: Parser): BTSNamelessFunction = {
+      val r = parser.parseBTSNamelessFunction()
+      return r
+    }
+    val r = to(s, fBTSNamelessFunction _)
+    return r
+  }
+
+  def fromBTSNamelessEnumeration(o: BTSNamelessEnumeration, isCompact: B): String = {
+    val st = Printer.printBTSNamelessEnumeration(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSNamelessEnumeration(s: String): Either[BTSNamelessEnumeration, Json.ErrorMsg] = {
+    def fBTSNamelessEnumeration(parser: Parser): BTSNamelessEnumeration = {
+      val r = parser.parseBTSNamelessEnumeration()
+      return r
+    }
+    val r = to(s, fBTSNamelessEnumeration _)
+    return r
+  }
+
   def fromBTSInvocation(o: BTSInvocation, isCompact: B): String = {
     val st = Printer.printBTSInvocation(o)
     if (isCompact) {
@@ -12423,6 +12599,24 @@ object JSON {
       return r
     }
     val r = to(s, fBTSExp _)
+    return r
+  }
+
+  def fromBTSExponentiation(o: BTSExponentiation, isCompact: B): String = {
+    val st = Printer.printBTSExponentiation(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSExponentiation(s: String): Either[BTSExponentiation, Json.ErrorMsg] = {
+    def fBTSExponentiation(parser: Parser): BTSExponentiation = {
+      val r = parser.parseBTSExponentiation()
+      return r
+    }
+    val r = to(s, fBTSExponentiation _)
     return r
   }
 

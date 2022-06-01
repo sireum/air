@@ -26,36 +26,40 @@
 package org.sireum.hamr.ir
 
 import org.sireum._
-import org.sireum.message.Position
 
 @sig trait GclAnnex extends AnnexClause
 
-@datatype class GclSubclause(state: ISZ[GclStateVar],
-                             invariants: ISZ[GclInvariant],
-                             initializes: Option[GclInitialize],
-                             integration: Option[GclIntegration],
-                             compute: Option[GclCompute]) extends GclAnnex
+@datatype class GclSubclause(val state: ISZ[GclStateVar],
+                             val invariants: ISZ[GclInvariant],
+                             val initializes: Option[GclInitialize],
+                             val integration: Option[GclIntegration],
+                             val compute: Option[GclCompute]) extends GclAnnex
 
-@datatype class GclStateVar(name: String,
-                            classifier: String)
-
-@datatype class GclInvariant(name: String,
-                             exp: org.sireum.lang.ast.Exp)
+@datatype class GclStateVar(val name: String,
+                            val classifier: String)
 
 @sig trait GclSpec {
-  def name: String
+  def id: String
+  def descriptor: Option[String]
   def exp: org.sireum.lang.ast.Exp
 }
 
-@datatype class GclAssume(val name: String,
+@datatype class GclInvariant(val id: String,
+                             val descriptor: Option[String],
+                             val exp: org.sireum.lang.ast.Exp) extends GclSpec
+
+@datatype class GclAssume(val id: String,
+                          val descriptor: Option[String],
                           val exp: org.sireum.lang.ast.Exp) extends GclSpec
 
-@datatype class GclGuarantee(val name: String,
+@datatype class GclGuarantee(val id: String,
+                             val descriptor: Option[String],
                              val exp: org.sireum.lang.ast.Exp) extends GclSpec
 
 @datatype class GclIntegration(val specs: ISZ[GclSpec])
 
-@datatype class GclCaseStatement(val name: String,
+@datatype class GclCaseStatement(val id: String,
+                                 val descriptor: Option[String],
                                  val assumes: org.sireum.lang.ast.Exp,
                                  val guarantees: org.sireum.lang.ast.Exp)
 
@@ -63,6 +67,11 @@ import org.sireum.message.Position
                               val guarantees: ISZ[GclGuarantee])
 
 @datatype class GclCompute(val modifies: ISZ[org.sireum.lang.ast.Exp],
-                           val cases: ISZ[GclCaseStatement])
+                           val cases: ISZ[GclCaseStatement],
+                           val handlers: ISZ[GclHandle])
+
+@datatype class GclHandle(val port: org.sireum.lang.ast.Exp,
+                          val modifies: ISZ[org.sireum.lang.ast.Exp],
+                          val guarantees: ISZ[GclGuarantee])
 
 @datatype class GclTODO

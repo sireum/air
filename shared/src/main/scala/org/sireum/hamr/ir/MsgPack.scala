@@ -1429,6 +1429,7 @@ object MsgPack {
       writer.writeZ(Constants.GclStateVar)
       writer.writeString(o.name)
       writer.writeString(o.classifier)
+      writer.writeOption(o.posOpt, writer.writePosition _)
     }
 
     def writeGclSpec(o: GclSpec): Unit = {
@@ -4618,7 +4619,8 @@ object MsgPack {
       }
       val name = reader.readString()
       val classifier = reader.readString()
-      return GclStateVar(name, classifier)
+      val posOpt = reader.readOption(reader.readPosition _)
+      return GclStateVar(name, classifier, posOpt)
     }
 
     def readGclSpec(): GclSpec = {

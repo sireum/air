@@ -26,6 +26,7 @@
 package org.sireum.hamr.ir
 
 import org.sireum._
+import org.sireum.message.Position
 
 @sig trait GclAnnex extends AnnexClause
 
@@ -36,7 +37,8 @@ import org.sireum._
                              val compute: Option[GclCompute]) extends GclAnnex
 
 @datatype class GclStateVar(val name: String,
-                            val classifier: String)
+                            val classifier: String,
+                            val posOpt: Option[Position])
 
 @sig trait GclSpec {
   def id: String

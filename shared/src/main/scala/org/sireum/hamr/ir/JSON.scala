@@ -1268,7 +1268,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""GclStateVar""""),
         ("name", printString(o.name)),
-        ("classifier", printString(o.classifier))
+        ("classifier", printString(o.classifier)),
+        ("posOpt", printOption(F, o.posOpt, printPosition _))
       ))
     }
 
@@ -5525,7 +5526,10 @@ object JSON {
       parser.parseObjectKey("classifier")
       val classifier = parser.parseString()
       parser.parseObjectNext()
-      return GclStateVar(name, classifier)
+      parser.parseObjectKey("posOpt")
+      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return GclStateVar(name, classifier, posOpt)
     }
 
     def parseGclSpec(): GclSpec = {

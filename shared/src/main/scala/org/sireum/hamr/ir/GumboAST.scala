@@ -44,26 +44,31 @@ import org.sireum.message.Position
   def id: String
   def descriptor: Option[String]
   def exp: org.sireum.lang.ast.Exp
+  def posOpt: Option[Position]
 }
 
 @datatype class GclInvariant(val id: String,
                              val descriptor: Option[String],
-                             val exp: org.sireum.lang.ast.Exp) extends GclSpec
+                             val exp: org.sireum.lang.ast.Exp,
+                             val posOpt: Option[Position]) extends GclSpec
 
 @datatype class GclAssume(val id: String,
                           val descriptor: Option[String],
-                          val exp: org.sireum.lang.ast.Exp) extends GclSpec
+                          val exp: org.sireum.lang.ast.Exp,
+                          val posOpt: Option[Position]) extends GclSpec
 
 @datatype class GclGuarantee(val id: String,
                              val descriptor: Option[String],
-                             val exp: org.sireum.lang.ast.Exp) extends GclSpec
+                             val exp: org.sireum.lang.ast.Exp,
+                             val posOpt: Option[Position]) extends GclSpec
 
 @datatype class GclIntegration(val specs: ISZ[GclSpec])
 
 @datatype class GclCaseStatement(val id: String,
                                  val descriptor: Option[String],
                                  val assumes: org.sireum.lang.ast.Exp,
-                                 val guarantees: org.sireum.lang.ast.Exp)
+                                 val guarantees: org.sireum.lang.ast.Exp,
+                                 val posOpt: Option[Position])
 
 @datatype class GclInitialize(val modifies: ISZ[org.sireum.lang.ast.Exp],
                               val guarantees: ISZ[GclGuarantee])

@@ -1445,6 +1445,7 @@ object MsgPack {
       writer.writeString(o.id)
       writer.writeOption(o.descriptor, writer.writeString _)
       write_langastExp(o.exp)
+      writer.writeOption(o.posOpt, writer.writePosition _)
     }
 
     def writeGclAssume(o: GclAssume): Unit = {
@@ -1452,6 +1453,7 @@ object MsgPack {
       writer.writeString(o.id)
       writer.writeOption(o.descriptor, writer.writeString _)
       write_langastExp(o.exp)
+      writer.writeOption(o.posOpt, writer.writePosition _)
     }
 
     def writeGclGuarantee(o: GclGuarantee): Unit = {
@@ -1459,6 +1461,7 @@ object MsgPack {
       writer.writeString(o.id)
       writer.writeOption(o.descriptor, writer.writeString _)
       write_langastExp(o.exp)
+      writer.writeOption(o.posOpt, writer.writePosition _)
     }
 
     def writeGclIntegration(o: GclIntegration): Unit = {
@@ -1472,6 +1475,7 @@ object MsgPack {
       writer.writeOption(o.descriptor, writer.writeString _)
       write_langastExp(o.assumes)
       write_langastExp(o.guarantees)
+      writer.writeOption(o.posOpt, writer.writePosition _)
     }
 
     def writeGclInitialize(o: GclInitialize): Unit = {
@@ -4649,7 +4653,8 @@ object MsgPack {
       val id = reader.readString()
       val descriptor = reader.readOption(reader.readString _)
       val exp = read_langastExp()
-      return GclInvariant(id, descriptor, exp)
+      val posOpt = reader.readOption(reader.readPosition _)
+      return GclInvariant(id, descriptor, exp, posOpt)
     }
 
     def readGclAssume(): GclAssume = {
@@ -4664,7 +4669,8 @@ object MsgPack {
       val id = reader.readString()
       val descriptor = reader.readOption(reader.readString _)
       val exp = read_langastExp()
-      return GclAssume(id, descriptor, exp)
+      val posOpt = reader.readOption(reader.readPosition _)
+      return GclAssume(id, descriptor, exp, posOpt)
     }
 
     def readGclGuarantee(): GclGuarantee = {
@@ -4679,7 +4685,8 @@ object MsgPack {
       val id = reader.readString()
       val descriptor = reader.readOption(reader.readString _)
       val exp = read_langastExp()
-      return GclGuarantee(id, descriptor, exp)
+      val posOpt = reader.readOption(reader.readPosition _)
+      return GclGuarantee(id, descriptor, exp, posOpt)
     }
 
     def readGclIntegration(): GclIntegration = {
@@ -4708,7 +4715,8 @@ object MsgPack {
       val descriptor = reader.readOption(reader.readString _)
       val assumes = read_langastExp()
       val guarantees = read_langastExp()
-      return GclCaseStatement(id, descriptor, assumes, guarantees)
+      val posOpt = reader.readOption(reader.readPosition _)
+      return GclCaseStatement(id, descriptor, assumes, guarantees, posOpt)
     }
 
     def readGclInitialize(): GclInitialize = {

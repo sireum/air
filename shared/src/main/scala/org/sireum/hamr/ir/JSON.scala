@@ -1286,7 +1286,8 @@ object JSON {
         ("type", st""""GclInvariant""""),
         ("id", printString(o.id)),
         ("descriptor", printOption(T, o.descriptor, printString _)),
-        ("exp", print_langastExp(o.exp))
+        ("exp", print_langastExp(o.exp)),
+        ("posOpt", printOption(F, o.posOpt, printPosition _))
       ))
     }
 
@@ -1295,7 +1296,8 @@ object JSON {
         ("type", st""""GclAssume""""),
         ("id", printString(o.id)),
         ("descriptor", printOption(T, o.descriptor, printString _)),
-        ("exp", print_langastExp(o.exp))
+        ("exp", print_langastExp(o.exp)),
+        ("posOpt", printOption(F, o.posOpt, printPosition _))
       ))
     }
 
@@ -1304,7 +1306,8 @@ object JSON {
         ("type", st""""GclGuarantee""""),
         ("id", printString(o.id)),
         ("descriptor", printOption(T, o.descriptor, printString _)),
-        ("exp", print_langastExp(o.exp))
+        ("exp", print_langastExp(o.exp)),
+        ("posOpt", printOption(F, o.posOpt, printPosition _))
       ))
     }
 
@@ -1321,7 +1324,8 @@ object JSON {
         ("id", printString(o.id)),
         ("descriptor", printOption(T, o.descriptor, printString _)),
         ("assumes", print_langastExp(o.assumes)),
-        ("guarantees", print_langastExp(o.guarantees))
+        ("guarantees", print_langastExp(o.guarantees)),
+        ("posOpt", printOption(F, o.posOpt, printPosition _))
       ))
     }
 
@@ -5560,7 +5564,10 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parse_langastExp()
       parser.parseObjectNext()
-      return GclInvariant(id, descriptor, exp)
+      parser.parseObjectKey("posOpt")
+      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return GclInvariant(id, descriptor, exp, posOpt)
     }
 
     def parseGclAssume(): GclAssume = {
@@ -5581,7 +5588,10 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parse_langastExp()
       parser.parseObjectNext()
-      return GclAssume(id, descriptor, exp)
+      parser.parseObjectKey("posOpt")
+      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return GclAssume(id, descriptor, exp, posOpt)
     }
 
     def parseGclGuarantee(): GclGuarantee = {
@@ -5602,7 +5612,10 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parse_langastExp()
       parser.parseObjectNext()
-      return GclGuarantee(id, descriptor, exp)
+      parser.parseObjectKey("posOpt")
+      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return GclGuarantee(id, descriptor, exp, posOpt)
     }
 
     def parseGclIntegration(): GclIntegration = {
@@ -5641,7 +5654,10 @@ object JSON {
       parser.parseObjectKey("guarantees")
       val guarantees = parse_langastExp()
       parser.parseObjectNext()
-      return GclCaseStatement(id, descriptor, assumes, guarantees)
+      parser.parseObjectKey("posOpt")
+      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return GclCaseStatement(id, descriptor, assumes, guarantees, posOpt)
     }
 
     def parseGclInitialize(): GclInitialize = {

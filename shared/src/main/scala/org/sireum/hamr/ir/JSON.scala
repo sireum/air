@@ -1291,6 +1291,13 @@ object JSON {
       ))
     }
 
+    @pure def printGclComputeSpec(o: GclComputeSpec): ST = {
+      o match {
+        case o: GclAssume => return printGclAssume(o)
+        case o: GclGuarantee => return printGclGuarantee(o)
+      }
+    }
+
     @pure def printGclAssume(o: GclAssume): ST = {
       return printObject(ISZ(
         ("type", st""""GclAssume""""),
@@ -1341,6 +1348,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""GclCompute""""),
         ("modifies", printISZ(F, o.modifies, print_langastExp _)),
+        ("specs", printISZ(F, o.specs, printGclComputeSpec _)),
         ("cases", printISZ(F, o.cases, printGclCaseStatement _)),
         ("handlers", printISZ(F, o.handlers, printGclHandle _))
       ))
@@ -5570,6 +5578,15 @@ object JSON {
       return GclInvariant(id, descriptor, exp, posOpt)
     }
 
+    def parseGclComputeSpec(): GclComputeSpec = {
+      val t = parser.parseObjectTypes(ISZ("GclAssume", "GclGuarantee"))
+      t.native match {
+        case "GclAssume" => val r = parseGclAssumeT(T); return r
+        case "GclGuarantee" => val r = parseGclGuaranteeT(T); return r
+        case _ => val r = parseGclGuaranteeT(T); return r
+      }
+    }
+
     def parseGclAssume(): GclAssume = {
       val r = parseGclAssumeT(F)
       return r
@@ -5690,13 +5707,16 @@ object JSON {
       parser.parseObjectKey("modifies")
       val modifies = parser.parseISZ(parse_langastExp _)
       parser.parseObjectNext()
+      parser.parseObjectKey("specs")
+      val specs = parser.parseISZ(parseGclComputeSpec _)
+      parser.parseObjectNext()
       parser.parseObjectKey("cases")
       val cases = parser.parseISZ(parseGclCaseStatement _)
       parser.parseObjectNext()
       parser.parseObjectKey("handlers")
       val handlers = parser.parseISZ(parseGclHandle _)
       parser.parseObjectNext()
-      return GclCompute(modifies, cases, handlers)
+      return GclCompute(modifies, specs, cases, handlers)
     }
 
     def parseGclHandle(): GclHandle = {
@@ -11419,6 +11439,24 @@ object JSON {
       return r
     }
     val r = to(s, fGclInvariant _)
+    return r
+  }
+
+  def fromGclComputeSpec(o: GclComputeSpec, isCompact: B): String = {
+    val st = Printer.printGclComputeSpec(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclComputeSpec(s: String): Either[GclComputeSpec, Json.ErrorMsg] = {
+    def fGclComputeSpec(parser: Parser): GclComputeSpec = {
+      val r = parser.parseGclComputeSpec()
+      return r
+    }
+    val r = to(s, fGclComputeSpec _)
     return r
   }
 

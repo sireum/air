@@ -52,15 +52,17 @@ import org.sireum.message.Position
                              val exp: org.sireum.lang.ast.Exp,
                              val posOpt: Option[Position]) extends GclSpec
 
+@sig trait GclComputeSpec extends GclSpec
+
 @datatype class GclAssume(val id: String,
                           val descriptor: Option[String],
                           val exp: org.sireum.lang.ast.Exp,
-                          val posOpt: Option[Position]) extends GclSpec
+                          val posOpt: Option[Position]) extends GclComputeSpec
 
 @datatype class GclGuarantee(val id: String,
                              val descriptor: Option[String],
                              val exp: org.sireum.lang.ast.Exp,
-                             val posOpt: Option[Position]) extends GclSpec
+                             val posOpt: Option[Position]) extends GclComputeSpec
 
 @datatype class GclIntegration(val specs: ISZ[GclSpec])
 
@@ -74,6 +76,7 @@ import org.sireum.message.Position
                               val guarantees: ISZ[GclGuarantee])
 
 @datatype class GclCompute(val modifies: ISZ[org.sireum.lang.ast.Exp],
+                           val specs: ISZ[GclComputeSpec],
                            val cases: ISZ[GclCaseStatement],
                            val handlers: ISZ[GclHandle])
 

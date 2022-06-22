@@ -1933,6 +1933,25 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def preGclComputeSpec(ctx: Context, o: GclComputeSpec): PreResult[Context, GclComputeSpec] = {
+      o match {
+        case o: GclAssume =>
+          val r: PreResult[Context, GclComputeSpec] = preGclAssume(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclComputeSpec)) => PreResult(preCtx, continu, Some[GclComputeSpec](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclComputeSpec")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclComputeSpec]())
+          }
+          return r
+        case o: GclGuarantee =>
+          val r: PreResult[Context, GclComputeSpec] = preGclGuarantee(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclComputeSpec)) => PreResult(preCtx, continu, Some[GclComputeSpec](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclComputeSpec")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclComputeSpec]())
+          }
+          return r
+      }
+    }
+
     @pure def preGclAssume(ctx: Context, o: GclAssume): PreResult[Context, GclAssume] = {
       return PreResult(ctx, T, None())
     }
@@ -4367,6 +4386,25 @@ object Transformer {
 
     @pure def postBTSBLESSAnnexClause(ctx: Context, o: BTSBLESSAnnexClause): TPostResult[Context, BTSBLESSAnnexClause] = {
       return TPostResult(ctx, None())
+    }
+
+    @pure def postGclComputeSpec(ctx: Context, o: GclComputeSpec): TPostResult[Context, GclComputeSpec] = {
+      o match {
+        case o: GclAssume =>
+          val r: TPostResult[Context, GclComputeSpec] = postGclAssume(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclComputeSpec)) => TPostResult(postCtx, Some[GclComputeSpec](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclComputeSpec")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclComputeSpec]())
+          }
+          return r
+        case o: GclGuarantee =>
+          val r: TPostResult[Context, GclComputeSpec] = postGclGuarantee(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclComputeSpec)) => TPostResult(postCtx, Some[GclComputeSpec](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclComputeSpec")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclComputeSpec]())
+          }
+          return r
+      }
     }
 
     @pure def postGclAssume(ctx: Context, o: GclAssume): TPostResult[Context, GclAssume] = {
@@ -9684,6 +9722,43 @@ import Transformer._
     }
   }
 
+  @pure def transformGclComputeSpec(ctx: Context, o: GclComputeSpec): TPostResult[Context, GclComputeSpec] = {
+    val preR: PreResult[Context, GclComputeSpec] = pp.preGclComputeSpec(ctx, o)
+    val r: TPostResult[Context, GclComputeSpec] = if (preR.continu) {
+      val o2: GclComputeSpec = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, GclComputeSpec] = o2 match {
+        case o2: GclAssume =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp))))
+          else
+            TPostResult(r0.ctx, None())
+        case o2: GclGuarantee =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp))))
+          else
+            TPostResult(r0.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclComputeSpec = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclComputeSpec] = pp.postGclComputeSpec(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transformGclAssume(ctx: Context, o: GclAssume): TPostResult[Context, GclAssume] = {
     val preR: PreResult[Context, GclAssume] = pp.preGclAssume(ctx, o)
     val r: TPostResult[Context, GclAssume] = if (preR.continu) {
@@ -9827,12 +9902,13 @@ import Transformer._
       val o2: GclCompute = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(preR.ctx, o2.modifies, transform_langastExp _)
-      val r1: TPostResult[Context, IS[Z, GclCaseStatement]] = transformISZ(r0.ctx, o2.cases, transformGclCaseStatement _)
-      val r2: TPostResult[Context, IS[Z, GclHandle]] = transformISZ(r1.ctx, o2.handlers, transformGclHandle _)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-        TPostResult(r2.ctx, Some(o2(modifies = r0.resultOpt.getOrElse(o2.modifies), cases = r1.resultOpt.getOrElse(o2.cases), handlers = r2.resultOpt.getOrElse(o2.handlers))))
+      val r1: TPostResult[Context, IS[Z, GclComputeSpec]] = transformISZ(r0.ctx, o2.specs, transformGclComputeSpec _)
+      val r2: TPostResult[Context, IS[Z, GclCaseStatement]] = transformISZ(r1.ctx, o2.cases, transformGclCaseStatement _)
+      val r3: TPostResult[Context, IS[Z, GclHandle]] = transformISZ(r2.ctx, o2.handlers, transformGclHandle _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+        TPostResult(r3.ctx, Some(o2(modifies = r0.resultOpt.getOrElse(o2.modifies), specs = r1.resultOpt.getOrElse(o2.specs), cases = r2.resultOpt.getOrElse(o2.cases), handlers = r3.resultOpt.getOrElse(o2.handlers))))
       else
-        TPostResult(r2.ctx, None())
+        TPostResult(r3.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {

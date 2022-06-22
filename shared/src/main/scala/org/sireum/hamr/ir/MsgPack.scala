@@ -1448,6 +1448,13 @@ object MsgPack {
       writer.writeOption(o.posOpt, writer.writePosition _)
     }
 
+    def writeGclComputeSpec(o: GclComputeSpec): Unit = {
+      o match {
+        case o: GclAssume => writeGclAssume(o)
+        case o: GclGuarantee => writeGclGuarantee(o)
+      }
+    }
+
     def writeGclAssume(o: GclAssume): Unit = {
       writer.writeZ(Constants.GclAssume)
       writer.writeString(o.id)
@@ -1487,6 +1494,7 @@ object MsgPack {
     def writeGclCompute(o: GclCompute): Unit = {
       writer.writeZ(Constants.GclCompute)
       writer.writeISZ(o.modifies, write_langastExp _)
+      writer.writeISZ(o.specs, writeGclComputeSpec _)
       writer.writeISZ(o.cases, writeGclCaseStatement _)
       writer.writeISZ(o.handlers, writeGclHandle _)
     }
@@ -4657,6 +4665,19 @@ object MsgPack {
       return GclInvariant(id, descriptor, exp, posOpt)
     }
 
+    def readGclComputeSpec(): GclComputeSpec = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.GclAssume => val r = readGclAssumeT(T); return r
+        case Constants.GclGuarantee => val r = readGclGuaranteeT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of GclComputeSpec.")
+          val r = readGclGuaranteeT(T)
+          return r
+      }
+    }
+
     def readGclAssume(): GclAssume = {
       val r = readGclAssumeT(F)
       return r
@@ -4743,9 +4764,10 @@ object MsgPack {
         reader.expectZ(Constants.GclCompute)
       }
       val modifies = reader.readISZ(read_langastExp _)
+      val specs = reader.readISZ(readGclComputeSpec _)
       val cases = reader.readISZ(readGclCaseStatement _)
       val handlers = reader.readISZ(readGclHandle _)
-      return GclCompute(modifies, cases, handlers)
+      return GclCompute(modifies, specs, cases, handlers)
     }
 
     def readGclHandle(): GclHandle = {
@@ -9219,6 +9241,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fGclInvariant _)
+    return r
+  }
+
+  def fromGclComputeSpec(o: GclComputeSpec, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclComputeSpec(o)
+    return w.result
+  }
+
+  def toGclComputeSpec(data: ISZ[U8]): Either[GclComputeSpec, MessagePack.ErrorMsg] = {
+    def fGclComputeSpec(reader: Reader): GclComputeSpec = {
+      val r = reader.readGclComputeSpec()
+      return r
+    }
+    val r = to(data, fGclComputeSpec _)
     return r
   }
 

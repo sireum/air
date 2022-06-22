@@ -2961,6 +2961,25 @@ import MTransformer._
     return PreResultBTSBLESSAnnexClause
   }
 
+  def preGclComputeSpec(o: GclComputeSpec): PreResult[GclComputeSpec] = {
+    o match {
+      case o: GclAssume =>
+        val r: PreResult[GclComputeSpec] = preGclAssume(o) match {
+         case PreResult(continu, MSome(r: GclComputeSpec)) => PreResult(continu, MSome[GclComputeSpec](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclComputeSpec")
+         case PreResult(continu, _) => PreResult(continu, MNone[GclComputeSpec]())
+        }
+        return r
+      case o: GclGuarantee =>
+        val r: PreResult[GclComputeSpec] = preGclGuarantee(o) match {
+         case PreResult(continu, MSome(r: GclComputeSpec)) => PreResult(continu, MSome[GclComputeSpec](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclComputeSpec")
+         case PreResult(continu, _) => PreResult(continu, MNone[GclComputeSpec]())
+        }
+        return r
+    }
+  }
+
   def preGclAssume(o: GclAssume): PreResult[GclAssume] = {
     return PreResultGclAssume
   }
@@ -5395,6 +5414,25 @@ import MTransformer._
 
   def postBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): MOption[BTSBLESSAnnexClause] = {
     return PostResultBTSBLESSAnnexClause
+  }
+
+  def postGclComputeSpec(o: GclComputeSpec): MOption[GclComputeSpec] = {
+    o match {
+      case o: GclAssume =>
+        val r: MOption[GclComputeSpec] = postGclAssume(o) match {
+         case MSome(result: GclComputeSpec) => MSome[GclComputeSpec](result)
+         case MSome(_) => halt("Can only produce object of type GclComputeSpec")
+         case _ => MNone[GclComputeSpec]()
+        }
+        return r
+      case o: GclGuarantee =>
+        val r: MOption[GclComputeSpec] = postGclGuarantee(o) match {
+         case MSome(result: GclComputeSpec) => MSome[GclComputeSpec](result)
+         case MSome(_) => halt("Can only produce object of type GclComputeSpec")
+         case _ => MNone[GclComputeSpec]()
+        }
+        return r
+    }
   }
 
   def postGclAssume(o: GclAssume): MOption[GclAssume] = {
@@ -10674,6 +10712,43 @@ import MTransformer._
     }
   }
 
+  def transformGclComputeSpec(o: GclComputeSpec): MOption[GclComputeSpec] = {
+    val preR: PreResult[GclComputeSpec] = preGclComputeSpec(o)
+    val r: MOption[GclComputeSpec] = if (preR.continu) {
+      val o2: GclComputeSpec = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[GclComputeSpec] = o2 match {
+        case o2: GclAssume =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp)))
+          else
+            MNone()
+        case o2: GclGuarantee =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: GclComputeSpec = r.getOrElse(o)
+    val postR: MOption[GclComputeSpec] = postGclComputeSpec(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformGclAssume(o: GclAssume): MOption[GclAssume] = {
     val preR: PreResult[GclAssume] = preGclAssume(o)
     val r: MOption[GclAssume] = if (preR.continu) {
@@ -10817,10 +10892,11 @@ import MTransformer._
       val o2: GclCompute = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.modifies, transform_langastExp _)
-      val r1: MOption[IS[Z, GclCaseStatement]] = transformISZ(o2.cases, transformGclCaseStatement _)
-      val r2: MOption[IS[Z, GclHandle]] = transformISZ(o2.handlers, transformGclHandle _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(modifies = r0.getOrElse(o2.modifies), cases = r1.getOrElse(o2.cases), handlers = r2.getOrElse(o2.handlers)))
+      val r1: MOption[IS[Z, GclComputeSpec]] = transformISZ(o2.specs, transformGclComputeSpec _)
+      val r2: MOption[IS[Z, GclCaseStatement]] = transformISZ(o2.cases, transformGclCaseStatement _)
+      val r3: MOption[IS[Z, GclHandle]] = transformISZ(o2.handlers, transformGclHandle _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(modifies = r0.getOrElse(o2.modifies), specs = r1.getOrElse(o2.specs), cases = r2.getOrElse(o2.cases), handlers = r3.getOrElse(o2.handlers)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {

@@ -1812,6 +1812,13 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexLib]())
           }
           return r
+        case o: GclLibrary =>
+          val r: PreResult[Context, AnnexLib] = preGclLibrary(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: AnnexLib)) => PreResult(preCtx, continu, Some[AnnexLib](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type AnnexLib")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[AnnexLib]())
+          }
+          return r
       }
     }
 
@@ -1981,6 +1988,10 @@ object Transformer {
     }
 
     @pure def preGclTODO(ctx: Context, o: GclTODO): PreResult[Context, GclTODO] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preGclLibrary(ctx: Context, o: GclLibrary): PreResult[Context, GclLibrary] = {
       return PreResult(ctx, T, None())
     }
 
@@ -4267,6 +4278,13 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[AnnexLib]())
           }
           return r
+        case o: GclLibrary =>
+          val r: TPostResult[Context, AnnexLib] = postGclLibrary(ctx, o) match {
+           case TPostResult(postCtx, Some(result: AnnexLib)) => TPostResult(postCtx, Some[AnnexLib](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type AnnexLib")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[AnnexLib]())
+          }
+          return r
       }
     }
 
@@ -4436,6 +4454,10 @@ object Transformer {
     }
 
     @pure def postGclTODO(ctx: Context, o: GclTODO): TPostResult[Context, GclTODO] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postGclLibrary(ctx: Context, o: GclLibrary): TPostResult[Context, GclLibrary] = {
       return TPostResult(ctx, None())
     }
 
@@ -9423,6 +9445,13 @@ import Transformer._
             TPostResult(preR.ctx, Some(o2))
           else
             TPostResult(preR.ctx, None())
+        case o2: GclLibrary =>
+          val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.containingPackage)
+          val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Stmt.Method]] = transformISZ(r0.ctx, o2.methods, transform_langastStmtMethod _)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(containingPackage = r0.resultOpt.getOrElse(o2.containingPackage), methods = r1.resultOpt.getOrElse(o2.methods))))
+          else
+            TPostResult(r1.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -9972,6 +10001,34 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: GclTODO = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, GclTODO] = pp.postGclTODO(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformGclLibrary(ctx: Context, o: GclLibrary): TPostResult[Context, GclLibrary] = {
+    val preR: PreResult[Context, GclLibrary] = pp.preGclLibrary(ctx, o)
+    val r: TPostResult[Context, GclLibrary] = if (preR.continu) {
+      val o2: GclLibrary = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.containingPackage)
+      val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Stmt.Method]] = transformISZ(r0.ctx, o2.methods, transform_langastStmtMethod _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(containingPackage = r0.resultOpt.getOrElse(o2.containingPackage), methods = r1.resultOpt.getOrElse(o2.methods))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclLibrary = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclLibrary] = pp.postGclLibrary(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -12276,6 +12333,44 @@ import Transformer._
      case TPostResult(postCtx, Some(result: UnitProp)) => TPostResult(postCtx, Some[UnitProp](result))
      case TPostResult(_, Some(_)) => halt("Can only produce object of type UnitProp")
      case TPostResult(postCtx, _) => TPostResult(postCtx, None[UnitProp]())
+    }
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transform_langastStmtMethod(ctx: Context, o: org.sireum.lang.ast.Stmt.Method): TPostResult[Context, org.sireum.lang.ast.Stmt.Method] = {
+    val preR: PreResult[Context, org.sireum.lang.ast.Stmt.Method] = pp.pre_langastStmtMethod(ctx, o) match {
+     case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.Stmt.Method)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.Stmt.Method](r))
+     case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Method")
+     case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.Stmt.Method]())
+    }
+    val r: TPostResult[Context, org.sireum.lang.ast.Stmt.Method] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Stmt.Method = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, org.sireum.lang.ast.MethodSig] = transform_langastMethodSig(preR.ctx, o2.sig)
+      val r1: TPostResult[Context, org.sireum.lang.ast.MethodContract] = transform_langastMethodContract(r0.ctx, o2.mcontract)
+      val r2: TPostResult[Context, Option[org.sireum.lang.ast.Body]] = transformOption(r1.ctx, o2.bodyOpt, transform_langastBody _)
+      val r3: TPostResult[Context, org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(r2.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+        TPostResult(r3.ctx, Some(o2(sig = r0.resultOpt.getOrElse(o2.sig), mcontract = r1.resultOpt.getOrElse(o2.mcontract), bodyOpt = r2.resultOpt.getOrElse(o2.bodyOpt), attr = r3.resultOpt.getOrElse(o2.attr))))
+      else
+        TPostResult(r3.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: org.sireum.lang.ast.Stmt.Method = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, org.sireum.lang.ast.Stmt.Method] = pp.post_langastStmtMethod(r.ctx, o2) match {
+     case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Stmt.Method)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Stmt.Method](result))
+     case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Method")
+     case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Stmt.Method]())
     }
     if (postR.resultOpt.nonEmpty) {
       return postR

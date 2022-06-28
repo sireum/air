@@ -85,3 +85,6 @@ import org.sireum.message.Position
                           val guarantees: ISZ[GclGuarantee])
 
 @datatype class GclTODO
+
+@datatype class GclLibrary(val containingPackage: Name,
+                           val methods: ISZ[org.sireum.lang.ast.Stmt.Method]) extends AnnexLib

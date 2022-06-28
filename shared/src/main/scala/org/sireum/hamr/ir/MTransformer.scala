@@ -909,6 +909,10 @@ object MTransformer {
 
   val PostResultGclTODO: MOption[GclTODO] = MNone()
 
+  val PreResultGclLibrary: PreResult[GclLibrary] = PreResult(T, MNone())
+
+  val PostResultGclLibrary: MOption[GclLibrary] = MNone()
+
   val PreResultBTSVariableDeclaration: PreResult[BTSVariableDeclaration] = PreResult(T, MNone())
 
   val PostResultBTSVariableDeclaration: MOption[BTSVariableDeclaration] = MNone()
@@ -2840,6 +2844,13 @@ import MTransformer._
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexLib]())
         }
         return r
+      case o: GclLibrary =>
+        val r: PreResult[AnnexLib] = preGclLibrary(o) match {
+         case PreResult(continu, MSome(r: AnnexLib)) => PreResult(continu, MSome[AnnexLib](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexLib")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexLib]())
+        }
+        return r
     }
   }
 
@@ -3010,6 +3021,10 @@ import MTransformer._
 
   def preGclTODO(o: GclTODO): PreResult[GclTODO] = {
     return PreResultGclTODO
+  }
+
+  def preGclLibrary(o: GclLibrary): PreResult[GclLibrary] = {
+    return PreResultGclLibrary
   }
 
   def preBTSVariableDeclaration(o: BTSVariableDeclaration): PreResult[BTSVariableDeclaration] = {
@@ -5295,6 +5310,13 @@ import MTransformer._
          case _ => MNone[AnnexLib]()
         }
         return r
+      case o: GclLibrary =>
+        val r: MOption[AnnexLib] = postGclLibrary(o) match {
+         case MSome(result: AnnexLib) => MSome[AnnexLib](result)
+         case MSome(_) => halt("Can only produce object of type AnnexLib")
+         case _ => MNone[AnnexLib]()
+        }
+        return r
     }
   }
 
@@ -5465,6 +5487,10 @@ import MTransformer._
 
   def postGclTODO(o: GclTODO): MOption[GclTODO] = {
     return PostResultGclTODO
+  }
+
+  def postGclLibrary(o: GclLibrary): MOption[GclLibrary] = {
+    return PostResultGclLibrary
   }
 
   def postBTSVariableDeclaration(o: BTSVariableDeclaration): MOption[BTSVariableDeclaration] = {
@@ -10413,6 +10439,13 @@ import MTransformer._
             MSome(o2)
           else
             MNone()
+        case o2: GclLibrary =>
+          val r0: MOption[Name] = transformName(o2.containingPackage)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Stmt.Method]] = transformISZ(o2.methods, transform_langastStmtMethod _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(containingPackage = r0.getOrElse(o2.containingPackage), methods = r1.getOrElse(o2.methods)))
+          else
+            MNone()
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -10962,6 +10995,34 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: GclTODO = r.getOrElse(o)
     val postR: MOption[GclTODO] = postGclTODO(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformGclLibrary(o: GclLibrary): MOption[GclLibrary] = {
+    val preR: PreResult[GclLibrary] = preGclLibrary(o)
+    val r: MOption[GclLibrary] = if (preR.continu) {
+      val o2: GclLibrary = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.containingPackage)
+      val r1: MOption[IS[Z, org.sireum.lang.ast.Stmt.Method]] = transformISZ(o2.methods, transform_langastStmtMethod _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(containingPackage = r0.getOrElse(o2.containingPackage), methods = r1.getOrElse(o2.methods)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: GclLibrary = r.getOrElse(o)
+    val postR: MOption[GclLibrary] = postGclLibrary(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -13266,6 +13327,44 @@ import MTransformer._
      case MSome(result: UnitProp) => MSome[UnitProp](result)
      case MSome(_) => halt("Can only produce object of type UnitProp")
      case _ => MNone[UnitProp]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastStmtMethod(o: org.sireum.lang.ast.Stmt.Method): MOption[org.sireum.lang.ast.Stmt.Method] = {
+    val preR: PreResult[org.sireum.lang.ast.Stmt.Method] = pre_langastStmtMethod(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt.Method)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt.Method](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Method")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt.Method]())
+    }
+    val r: MOption[org.sireum.lang.ast.Stmt.Method] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Stmt.Method = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.MethodSig] = transform_langastMethodSig(o2.sig)
+      val r1: MOption[org.sireum.lang.ast.MethodContract] = transform_langastMethodContract(o2.mcontract)
+      val r2: MOption[Option[org.sireum.lang.ast.Body]] = transformOption(o2.bodyOpt, transform_langastBody _)
+      val r3: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(sig = r0.getOrElse(o2.sig), mcontract = r1.getOrElse(o2.mcontract), bodyOpt = r2.getOrElse(o2.bodyOpt), attr = r3.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Stmt.Method = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Stmt.Method] = post_langastStmtMethod(o2) match {
+     case MSome(result: org.sireum.lang.ast.Stmt.Method) => MSome[org.sireum.lang.ast.Stmt.Method](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Method")
+     case _ => MNone[org.sireum.lang.ast.Stmt.Method]()
     }
     if (postR.nonEmpty) {
       return postR

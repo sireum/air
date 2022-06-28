@@ -441,6 +441,7 @@ object JSON {
         case o: SmfLibrary => return printSmfLibrary(o)
         case o: Emv2Library => return printEmv2Library(o)
         case o: OtherLib => return printOtherLib(o)
+        case o: GclLibrary => return printGclLibrary(o)
       }
     }
 
@@ -1366,6 +1367,14 @@ object JSON {
     @pure def printGclTODO(o: GclTODO): ST = {
       return printObject(ISZ(
         ("type", st""""GclTODO"""")
+      ))
+    }
+
+    @pure def printGclLibrary(o: GclLibrary): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclLibrary""""),
+        ("containingPackage", printName(o.containingPackage)),
+        ("methods", printISZ(F, o.methods, print_langastStmtMethod _))
       ))
     }
 
@@ -3907,12 +3916,13 @@ object JSON {
     }
 
     def parseAnnexLib(): AnnexLib = {
-      val t = parser.parseObjectTypes(ISZ("SmfLibrary", "Emv2Library", "OtherLib"))
+      val t = parser.parseObjectTypes(ISZ("SmfLibrary", "Emv2Library", "OtherLib", "GclLibrary"))
       t.native match {
         case "SmfLibrary" => val r = parseSmfLibraryT(T); return r
         case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
         case "OtherLib" => val r = parseOtherLibT(T); return r
-        case _ => val r = parseOtherLibT(T); return r
+        case "GclLibrary" => val r = parseGclLibraryT(T); return r
+        case _ => val r = parseGclLibraryT(T); return r
       }
     }
 
@@ -5750,6 +5760,24 @@ object JSON {
         parser.parseObjectType("GclTODO")
       }
       return GclTODO()
+    }
+
+    def parseGclLibrary(): GclLibrary = {
+      val r = parseGclLibraryT(F)
+      return r
+    }
+
+    def parseGclLibraryT(typeParsed: B): GclLibrary = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclLibrary")
+      }
+      parser.parseObjectKey("containingPackage")
+      val containingPackage = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("methods")
+      val methods = parser.parseISZ(parse_langastStmtMethod _)
+      parser.parseObjectNext()
+      return GclLibrary(containingPackage, methods)
     }
 
     def parseSmfAnnex(): SmfAnnex = {
@@ -11601,6 +11629,24 @@ object JSON {
       return r
     }
     val r = to(s, fGclTODO _)
+    return r
+  }
+
+  def fromGclLibrary(o: GclLibrary, isCompact: B): String = {
+    val st = Printer.printGclLibrary(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclLibrary(s: String): Either[GclLibrary, Json.ErrorMsg] = {
+    def fGclLibrary(parser: Parser): GclLibrary = {
+      val r = parser.parseGclLibrary()
+      return r
+    }
+    val r = to(s, fGclLibrary _)
     return r
   }
 

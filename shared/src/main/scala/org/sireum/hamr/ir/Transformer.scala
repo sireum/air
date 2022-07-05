@@ -1605,10 +1605,6 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def pre_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): PreResult[Context, org.sireum.lang.ast.Typed] = {
-      return PreResult(ctx, T, None())
-    }
-
     @pure def preAnnexClause(ctx: Context, o: AnnexClause): PreResult[Context, AnnexClause] = {
       o match {
         case o: SmfClause =>
@@ -1823,6 +1819,10 @@ object Transformer {
     }
 
     @pure def preOtherAnnex(ctx: Context, o: OtherAnnex): PreResult[Context, OtherAnnex] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def pre_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): PreResult[Context, org.sireum.lang.ast.Typed] = {
       return PreResult(ctx, T, None())
     }
 
@@ -4071,10 +4071,6 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def post_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): TPostResult[Context, org.sireum.lang.ast.Typed] = {
-      return TPostResult(ctx, None())
-    }
-
     @pure def postAnnexClause(ctx: Context, o: AnnexClause): TPostResult[Context, AnnexClause] = {
       o match {
         case o: SmfClause =>
@@ -4289,6 +4285,10 @@ object Transformer {
     }
 
     @pure def postOtherAnnex(ctx: Context, o: OtherAnnex): TPostResult[Context, OtherAnnex] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def post_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): TPostResult[Context, org.sireum.lang.ast.Typed] = {
       return TPostResult(ctx, None())
     }
 

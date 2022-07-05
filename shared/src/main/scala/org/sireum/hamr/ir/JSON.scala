@@ -1825,6 +1825,7 @@ object JSON {
         ("typeParams", printISZ(F, o.typeParams, print_langastTypeParam _)),
         ("descOpt", printOption(F, o.descOpt, print_langastExpLitString _)),
         ("claims", printISZ(F, o.claims, print_langastExp _)),
+        ("isFun", printB(o.isFun)),
         ("attr", print_langastResolvedAttr(o.attr))
       ))
     }
@@ -6741,10 +6742,13 @@ object JSON {
       parser.parseObjectKey("claims")
       val claims = parser.parseISZ(parse_langastExp _)
       parser.parseObjectNext()
+      parser.parseObjectKey("isFun")
+      val isFun = parser.parseB()
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastResolvedAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Stmt.Fact(id, typeParams, descOpt, claims, attr)
+      return org.sireum.lang.ast.Stmt.Fact(id, typeParams, descOpt, claims, isFun, attr)
     }
 
     def parse_langastStmtInv(): org.sireum.lang.ast.Stmt.Inv = {

@@ -805,13 +805,13 @@ object MTransformer {
 
   val PostResultAnnex: MOption[Annex] = MNone()
 
-  val PreResult_langastTypedName: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
-
-  val PostResult_langastTypedName: MOption[org.sireum.lang.ast.Typed] = MNone()
-
   val PreResultOtherAnnex: PreResult[OtherAnnex] = PreResult(T, MNone())
 
   val PostResultOtherAnnex: MOption[OtherAnnex] = MNone()
+
+  val PreResult_langastTypedName: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedName: MOption[org.sireum.lang.ast.Typed] = MNone()
 
   val PreResultOtherLib: PreResult[OtherLib] = PreResult(T, MNone())
 
@@ -2637,10 +2637,6 @@ import MTransformer._
     return PreResultAnnex
   }
 
-  def pre_langastTypedName(o: org.sireum.lang.ast.Typed.Name): PreResult[org.sireum.lang.ast.Typed] = {
-    return PreResult_langastTypedName
-  }
-
   def preAnnexClause(o: AnnexClause): PreResult[AnnexClause] = {
     o match {
       case o: SmfClause =>
@@ -2856,6 +2852,10 @@ import MTransformer._
 
   def preOtherAnnex(o: OtherAnnex): PreResult[OtherAnnex] = {
     return PreResultOtherAnnex
+  }
+
+  def pre_langastTypedName(o: org.sireum.lang.ast.Typed.Name): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedName
   }
 
   def preOtherLib(o: OtherLib): PreResult[OtherLib] = {
@@ -5103,10 +5103,6 @@ import MTransformer._
     return PostResultAnnex
   }
 
-  def post_langastTypedName(o: org.sireum.lang.ast.Typed.Name): MOption[org.sireum.lang.ast.Typed] = {
-    return PostResult_langastTypedName
-  }
-
   def postAnnexClause(o: AnnexClause): MOption[AnnexClause] = {
     o match {
       case o: SmfClause =>
@@ -5322,6 +5318,10 @@ import MTransformer._
 
   def postOtherAnnex(o: OtherAnnex): MOption[OtherAnnex] = {
     return PostResultOtherAnnex
+  }
+
+  def post_langastTypedName(o: org.sireum.lang.ast.Typed.Name): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedName
   }
 
   def postOtherLib(o: OtherLib): MOption[OtherLib] = {

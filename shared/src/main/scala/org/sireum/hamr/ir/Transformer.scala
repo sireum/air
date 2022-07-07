@@ -460,23 +460,23 @@ object Transformer {
 
     @pure def pre_langastProofAstStepJustification(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification): PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = {
       o match {
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply => return pre_langastProofAstStepJustificationApply(ctx, o)
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept =>
-          val r: PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = pre_langastProofAstStepJustificationIncept(ctx, o) match {
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Ref => return pre_langastProofAstStepJustificationRef(ctx, o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply =>
+          val r: PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = pre_langastProofAstStepJustificationApply(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.ProofAst.Step.Justification)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.ProofAst.Step.Justification](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Justification")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.ProofAst.Step.Justification]())
           }
           return r
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed =>
-          val r: PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = pre_langastProofAstStepJustificationInceptNamed(ctx, o) match {
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyNamed =>
+          val r: PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = pre_langastProofAstStepJustificationApplyNamed(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.ProofAst.Step.Justification)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.ProofAst.Step.Justification](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Justification")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.ProofAst.Step.Justification]())
           }
           return r
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta =>
-          val r: PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = pre_langastProofAstStepJustificationInceptEta(ctx, o) match {
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyEta =>
+          val r: PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = pre_langastProofAstStepJustificationApplyEta(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.ProofAst.Step.Justification)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.ProofAst.Step.Justification](r))
            case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Justification")
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.ProofAst.Step.Justification]())
@@ -487,25 +487,25 @@ object Transformer {
 
     @pure def pre_langastProofAstStepInception(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Inception): PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
       o match {
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept => return pre_langastProofAstStepJustificationIncept(ctx, o)
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed => return pre_langastProofAstStepJustificationInceptNamed(ctx, o)
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta => return pre_langastProofAstStepJustificationInceptEta(ctx, o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply => return pre_langastProofAstStepJustificationApply(ctx, o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyNamed => return pre_langastProofAstStepJustificationApplyNamed(ctx, o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyEta => return pre_langastProofAstStepJustificationApplyEta(ctx, o)
       }
     }
 
-    @pure def pre_langastProofAstStepJustificationApply(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply): PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = {
+    @pure def pre_langastProofAstStepJustificationRef(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.Ref): PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = {
       return PreResult(ctx, T, None())
     }
 
-    @pure def pre_langastProofAstStepJustificationIncept(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept): PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    @pure def pre_langastProofAstStepJustificationApply(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply): PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
       return PreResult(ctx, T, None())
     }
 
-    @pure def pre_langastProofAstStepJustificationInceptNamed(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed): PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    @pure def pre_langastProofAstStepJustificationApplyNamed(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyNamed): PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
       return PreResult(ctx, T, None())
     }
 
-    @pure def pre_langastProofAstStepJustificationInceptEta(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta): PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    @pure def pre_langastProofAstStepJustificationApplyEta(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyEta): PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
       return PreResult(ctx, T, None())
     }
 
@@ -2926,23 +2926,23 @@ object Transformer {
 
     @pure def post_langastProofAstStepJustification(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = {
       o match {
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply => return post_langastProofAstStepJustificationApply(ctx, o)
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept =>
-          val r: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = post_langastProofAstStepJustificationIncept(ctx, o) match {
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Ref => return post_langastProofAstStepJustificationRef(ctx, o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply =>
+          val r: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = post_langastProofAstStepJustificationApply(ctx, o) match {
            case TPostResult(postCtx, Some(result: org.sireum.lang.ast.ProofAst.Step.Justification)) => TPostResult(postCtx, Some[org.sireum.lang.ast.ProofAst.Step.Justification](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Justification")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.ProofAst.Step.Justification]())
           }
           return r
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed =>
-          val r: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = post_langastProofAstStepJustificationInceptNamed(ctx, o) match {
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyNamed =>
+          val r: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = post_langastProofAstStepJustificationApplyNamed(ctx, o) match {
            case TPostResult(postCtx, Some(result: org.sireum.lang.ast.ProofAst.Step.Justification)) => TPostResult(postCtx, Some[org.sireum.lang.ast.ProofAst.Step.Justification](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Justification")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.ProofAst.Step.Justification]())
           }
           return r
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta =>
-          val r: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = post_langastProofAstStepJustificationInceptEta(ctx, o) match {
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyEta =>
+          val r: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = post_langastProofAstStepJustificationApplyEta(ctx, o) match {
            case TPostResult(postCtx, Some(result: org.sireum.lang.ast.ProofAst.Step.Justification)) => TPostResult(postCtx, Some[org.sireum.lang.ast.ProofAst.Step.Justification](result))
            case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Justification")
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.ProofAst.Step.Justification]())
@@ -2953,25 +2953,25 @@ object Transformer {
 
     @pure def post_langastProofAstStepInception(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Inception): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
       o match {
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept => return post_langastProofAstStepJustificationIncept(ctx, o)
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed => return post_langastProofAstStepJustificationInceptNamed(ctx, o)
-        case o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta => return post_langastProofAstStepJustificationInceptEta(ctx, o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply => return post_langastProofAstStepJustificationApply(ctx, o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyNamed => return post_langastProofAstStepJustificationApplyNamed(ctx, o)
+        case o: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyEta => return post_langastProofAstStepJustificationApplyEta(ctx, o)
       }
     }
 
-    @pure def post_langastProofAstStepJustificationApply(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = {
+    @pure def post_langastProofAstStepJustificationRef(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.Ref): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = {
       return TPostResult(ctx, None())
     }
 
-    @pure def post_langastProofAstStepJustificationIncept(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.Incept): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    @pure def post_langastProofAstStepJustificationApply(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.Apply): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
       return TPostResult(ctx, None())
     }
 
-    @pure def post_langastProofAstStepJustificationInceptNamed(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    @pure def post_langastProofAstStepJustificationApplyNamed(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyNamed): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
       return TPostResult(ctx, None())
     }
 
-    @pure def post_langastProofAstStepJustificationInceptEta(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
+    @pure def post_langastProofAstStepJustificationApplyEta(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyEta): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = {
       return TPostResult(ctx, None())
     }
 
@@ -6017,28 +6017,27 @@ import Transformer._
       val o2: org.sireum.lang.ast.ProofAst.Step.Justification = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = o2 match {
-        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.Apply =>
-          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.id)
-          val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(r0.ctx, o2.args, transform_langastExp _)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), args = r1.resultOpt.getOrElse(o2.args))))
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.Ref =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.Ref] = transform_langastExpRef(preR.ctx, o2.id)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id))))
           else
-            TPostResult(r1.ctx, None())
-        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.Incept =>
+            TPostResult(r0.ctx, None())
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.Apply =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp.Invoke] = transform_langastExpInvoke(preR.ctx, o2.invoke)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(r0.ctx, o2.witnesses, transform_langastProofAstStepId _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(invoke = r0.resultOpt.getOrElse(o2.invoke), witnesses = r1.resultOpt.getOrElse(o2.witnesses))))
           else
             TPostResult(r1.ctx, None())
-        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed =>
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyNamed =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp.InvokeNamed] = transform_langastExpInvokeNamed(preR.ctx, o2.invoke)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(r0.ctx, o2.witnesses, transform_langastProofAstStepId _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(invoke = r0.resultOpt.getOrElse(o2.invoke), witnesses = r1.resultOpt.getOrElse(o2.witnesses))))
           else
             TPostResult(r1.ctx, None())
-        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta =>
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyEta =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp.Eta] = transform_langastExpEta(preR.ctx, o2.eta)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(r0.ctx, o2.witnesses, transform_langastProofAstStepId _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
@@ -6070,21 +6069,21 @@ import Transformer._
       val o2: org.sireum.lang.ast.ProofAst.Step.Inception = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Inception] = o2 match {
-        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.Incept =>
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.Apply =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp.Invoke] = transform_langastExpInvoke(preR.ctx, o2.invoke)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(r0.ctx, o2.witnesses, transform_langastProofAstStepId _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(invoke = r0.resultOpt.getOrElse(o2.invoke), witnesses = r1.resultOpt.getOrElse(o2.witnesses))))
           else
             TPostResult(r1.ctx, None())
-        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.InceptNamed =>
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyNamed =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp.InvokeNamed] = transform_langastExpInvokeNamed(preR.ctx, o2.invoke)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(r0.ctx, o2.witnesses, transform_langastProofAstStepId _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(invoke = r0.resultOpt.getOrElse(o2.invoke), witnesses = r1.resultOpt.getOrElse(o2.witnesses))))
           else
             TPostResult(r1.ctx, None())
-        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.InceptEta =>
+        case o2: org.sireum.lang.ast.ProofAst.Step.Justification.ApplyEta =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp.Eta] = transform_langastExpEta(preR.ctx, o2.eta)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(r0.ctx, o2.witnesses, transform_langastProofAstStepId _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)

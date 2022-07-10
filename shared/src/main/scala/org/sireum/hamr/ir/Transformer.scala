@@ -654,6 +654,8 @@ object Transformer {
         case o: org.sireum.lang.ast.Exp.Invoke => return pre_langastExpInvoke(ctx, o)
         case o: org.sireum.lang.ast.Exp.InvokeNamed => return pre_langastExpInvokeNamed(ctx, o)
         case o: org.sireum.lang.ast.Exp.If => return pre_langastExpIf(ctx, o)
+        case o: org.sireum.lang.ast.Exp.TypeCond => return pre_langastExpTypeCond(ctx, o)
+        case o: org.sireum.lang.ast.Exp.Sym => return pre_langastExpSym(ctx, o)
         case o: org.sireum.lang.ast.Exp.Fun => return pre_langastExpFun(ctx, o)
         case o: org.sireum.lang.ast.Exp.ForYield => return pre_langastExpForYield(ctx, o)
         case o: org.sireum.lang.ast.Exp.QuantType =>
@@ -842,6 +844,14 @@ object Transformer {
     }
 
     @pure def pre_langastExpIf(ctx: Context, o: org.sireum.lang.ast.Exp.If): PreResult[Context, org.sireum.lang.ast.Exp] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def pre_langastExpTypeCond(ctx: Context, o: org.sireum.lang.ast.Exp.TypeCond): PreResult[Context, org.sireum.lang.ast.Exp] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def pre_langastExpSym(ctx: Context, o: org.sireum.lang.ast.Exp.Sym): PreResult[Context, org.sireum.lang.ast.Exp] = {
       return PreResult(ctx, T, None())
     }
 
@@ -3120,6 +3130,8 @@ object Transformer {
         case o: org.sireum.lang.ast.Exp.Invoke => return post_langastExpInvoke(ctx, o)
         case o: org.sireum.lang.ast.Exp.InvokeNamed => return post_langastExpInvokeNamed(ctx, o)
         case o: org.sireum.lang.ast.Exp.If => return post_langastExpIf(ctx, o)
+        case o: org.sireum.lang.ast.Exp.TypeCond => return post_langastExpTypeCond(ctx, o)
+        case o: org.sireum.lang.ast.Exp.Sym => return post_langastExpSym(ctx, o)
         case o: org.sireum.lang.ast.Exp.Fun => return post_langastExpFun(ctx, o)
         case o: org.sireum.lang.ast.Exp.ForYield => return post_langastExpForYield(ctx, o)
         case o: org.sireum.lang.ast.Exp.QuantType =>
@@ -3308,6 +3320,14 @@ object Transformer {
     }
 
     @pure def post_langastExpIf(ctx: Context, o: org.sireum.lang.ast.Exp.If): TPostResult[Context, org.sireum.lang.ast.Exp] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def post_langastExpTypeCond(ctx: Context, o: org.sireum.lang.ast.Exp.TypeCond): TPostResult[Context, org.sireum.lang.ast.Exp] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def post_langastExpSym(ctx: Context, o: org.sireum.lang.ast.Exp.Sym): TPostResult[Context, org.sireum.lang.ast.Exp] = {
       return TPostResult(ctx, None())
     }
 
@@ -6543,6 +6563,20 @@ import Transformer._
             TPostResult(r3.ctx, Some(o2(cond = r0.resultOpt.getOrElse(o2.cond), thenExp = r1.resultOpt.getOrElse(o2.thenExp), elseExp = r2.resultOpt.getOrElse(o2.elseExp), attr = r3.resultOpt.getOrElse(o2.attr))))
           else
             TPostResult(r3.ctx, None())
+        case o2: org.sireum.lang.ast.Exp.TypeCond =>
+          val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(preR.ctx, o2.args, transform_langastExp _)
+          val r1: TPostResult[Context, org.sireum.lang.ast.Exp.Fun] = transform_langastExpFun(r0.ctx, o2.fun)
+          val r2: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(args = r0.resultOpt.getOrElse(o2.args), fun = r1.resultOpt.getOrElse(o2.fun), attr = r2.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: org.sireum.lang.ast.Exp.Sym =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(preR.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(attr = r0.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r0.ctx, None())
         case o2: org.sireum.lang.ast.Exp.Fun =>
           val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp.Fun.Param]] = transformISZ(preR.ctx, o2.params, transform_langastExpFunParam _)
           val r1: TPostResult[Context, org.sireum.lang.ast.AssignExp] = transform_langastAssignExp(r0.ctx, o2.exp)

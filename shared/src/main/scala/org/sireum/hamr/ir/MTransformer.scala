@@ -449,6 +449,14 @@ object MTransformer {
 
   val PostResult_langastExpIf: MOption[org.sireum.lang.ast.Exp] = MNone()
 
+  val PreResult_langastExpTypeCond: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpTypeCond: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpSym: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpSym: MOption[org.sireum.lang.ast.Exp] = MNone()
+
   val PreResult_langastExpFunParam: PreResult[org.sireum.lang.ast.Exp.Fun.Param] = PreResult(T, MNone())
 
   val PostResult_langastExpFunParam: MOption[org.sireum.lang.ast.Exp.Fun.Param] = MNone()
@@ -1686,6 +1694,8 @@ import MTransformer._
       case o: org.sireum.lang.ast.Exp.Invoke => return pre_langastExpInvoke(o)
       case o: org.sireum.lang.ast.Exp.InvokeNamed => return pre_langastExpInvokeNamed(o)
       case o: org.sireum.lang.ast.Exp.If => return pre_langastExpIf(o)
+      case o: org.sireum.lang.ast.Exp.TypeCond => return pre_langastExpTypeCond(o)
+      case o: org.sireum.lang.ast.Exp.Sym => return pre_langastExpSym(o)
       case o: org.sireum.lang.ast.Exp.Fun => return pre_langastExpFun(o)
       case o: org.sireum.lang.ast.Exp.ForYield => return pre_langastExpForYield(o)
       case o: org.sireum.lang.ast.Exp.QuantType =>
@@ -1875,6 +1885,14 @@ import MTransformer._
 
   def pre_langastExpIf(o: org.sireum.lang.ast.Exp.If): PreResult[org.sireum.lang.ast.Exp] = {
     return PreResult_langastExpIf
+  }
+
+  def pre_langastExpTypeCond(o: org.sireum.lang.ast.Exp.TypeCond): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpTypeCond
+  }
+
+  def pre_langastExpSym(o: org.sireum.lang.ast.Exp.Sym): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpSym
   }
 
   def pre_langastExpFunParam(o: org.sireum.lang.ast.Exp.Fun.Param): PreResult[org.sireum.lang.ast.Exp.Fun.Param] = {
@@ -4152,6 +4170,8 @@ import MTransformer._
       case o: org.sireum.lang.ast.Exp.Invoke => return post_langastExpInvoke(o)
       case o: org.sireum.lang.ast.Exp.InvokeNamed => return post_langastExpInvokeNamed(o)
       case o: org.sireum.lang.ast.Exp.If => return post_langastExpIf(o)
+      case o: org.sireum.lang.ast.Exp.TypeCond => return post_langastExpTypeCond(o)
+      case o: org.sireum.lang.ast.Exp.Sym => return post_langastExpSym(o)
       case o: org.sireum.lang.ast.Exp.Fun => return post_langastExpFun(o)
       case o: org.sireum.lang.ast.Exp.ForYield => return post_langastExpForYield(o)
       case o: org.sireum.lang.ast.Exp.QuantType =>
@@ -4341,6 +4361,14 @@ import MTransformer._
 
   def post_langastExpIf(o: org.sireum.lang.ast.Exp.If): MOption[org.sireum.lang.ast.Exp] = {
     return PostResult_langastExpIf
+  }
+
+  def post_langastExpTypeCond(o: org.sireum.lang.ast.Exp.TypeCond): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpTypeCond
+  }
+
+  def post_langastExpSym(o: org.sireum.lang.ast.Exp.Sym): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpSym
   }
 
   def post_langastExpFunParam(o: org.sireum.lang.ast.Exp.Fun.Param): MOption[org.sireum.lang.ast.Exp.Fun.Param] = {
@@ -7535,6 +7563,20 @@ import MTransformer._
           val r3: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
             MSome(o2(cond = r0.getOrElse(o2.cond), thenExp = r1.getOrElse(o2.thenExp), elseExp = r2.getOrElse(o2.elseExp), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.TypeCond =>
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.args, transform_langastExp _)
+          val r1: MOption[org.sireum.lang.ast.Exp.Fun] = transform_langastExpFun(o2.fun)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(args = r0.getOrElse(o2.args), fun = r1.getOrElse(o2.fun), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Sym =>
+          val r0: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.Fun =>

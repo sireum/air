@@ -436,113 +436,117 @@ object MsgPack {
 
     val _langastExpIf: Z = 167
 
-    val _langastExpFunParam: Z = 168
+    val _langastExpTypeCond: Z = 168
 
-    val _langastExpFun: Z = 169
+    val _langastExpSym: Z = 169
 
-    val _langastExpForYield: Z = 170
+    val _langastExpFunParam: Z = 170
 
-    val _langastExpQuantType: Z = 171
+    val _langastExpFun: Z = 171
 
-    val _langastExpQuantRange: Z = 172
+    val _langastExpForYield: Z = 172
 
-    val _langastExpQuantEach: Z = 173
+    val _langastExpQuantType: Z = 173
 
-    val _langastExpInput: Z = 174
+    val _langastExpQuantRange: Z = 174
 
-    val _langastExpOldVal: Z = 175
+    val _langastExpQuantEach: Z = 175
 
-    val _langastExpLoopIndex: Z = 176
+    val _langastExpInput: Z = 176
 
-    val _langastExpStateSeq: Z = 177
+    val _langastExpOldVal: Z = 177
 
-    val _langastExpStateSeqFragment: Z = 178
+    val _langastExpLoopIndex: Z = 178
 
-    val _langastExpResult: Z = 179
+    val _langastExpStateSeq: Z = 179
 
-    val _langastNamedArg: Z = 180
+    val _langastExpStateSeqFragment: Z = 180
 
-    val _langastId: Z = 181
+    val _langastExpResult: Z = 181
 
-    val _langastName: Z = 182
+    val _langastNamedArg: Z = 182
 
-    val _langastBody: Z = 183
+    val _langastId: Z = 183
 
-    val _langastAdtParam: Z = 184
+    val _langastName: Z = 184
 
-    val _langastMethodSig: Z = 185
+    val _langastBody: Z = 185
 
-    val _langastParam: Z = 186
+    val _langastAdtParam: Z = 186
 
-    val _langastTypeParam: Z = 187
+    val _langastMethodSig: Z = 187
 
-    val _langastAttr: Z = 188
+    val _langastParam: Z = 188
 
-    val _langastTypedAttr: Z = 189
+    val _langastTypeParam: Z = 189
 
-    val _langastResolvedAttr: Z = 190
+    val _langastAttr: Z = 190
 
-    val _langastResolvedInfoBuiltIn: Z = 191
+    val _langastTypedAttr: Z = 191
 
-    val _langastResolvedInfoPackage: Z = 192
+    val _langastResolvedAttr: Z = 192
 
-    val _langastResolvedInfoEnum: Z = 193
+    val _langastResolvedInfoBuiltIn: Z = 193
 
-    val _langastResolvedInfoEnumElement: Z = 194
+    val _langastResolvedInfoPackage: Z = 194
 
-    val _langastResolvedInfoObject: Z = 195
+    val _langastResolvedInfoEnum: Z = 195
 
-    val _langastResolvedInfoVar: Z = 196
+    val _langastResolvedInfoEnumElement: Z = 196
 
-    val _langastResolvedInfoMethod: Z = 197
+    val _langastResolvedInfoObject: Z = 197
 
-    val _langastResolvedInfoMethods: Z = 198
+    val _langastResolvedInfoVar: Z = 198
 
-    val _langastResolvedInfoTuple: Z = 199
+    val _langastResolvedInfoMethod: Z = 199
 
-    val _langastResolvedInfoLocalVar: Z = 200
+    val _langastResolvedInfoMethods: Z = 200
 
-    val _langastResolvedInfoFact: Z = 201
+    val _langastResolvedInfoTuple: Z = 201
 
-    val _langastResolvedInfoTheorem: Z = 202
+    val _langastResolvedInfoLocalVar: Z = 202
 
-    val _langastResolvedInfoInv: Z = 203
+    val _langastResolvedInfoFact: Z = 203
 
-    val _langastTruthTableRow: Z = 204
+    val _langastResolvedInfoTheorem: Z = 204
 
-    val _langastTruthTableAssignment: Z = 205
+    val _langastResolvedInfoInv: Z = 205
 
-    val _langastTruthTableConclusionValidity: Z = 206
+    val _langastTruthTableRow: Z = 206
 
-    val _langastTruthTableConclusionTautology: Z = 207
+    val _langastTruthTableAssignment: Z = 207
 
-    val _langastTruthTableConclusionContradictory: Z = 208
+    val _langastTruthTableConclusionValidity: Z = 208
 
-    val _langastTruthTableConclusionContingent: Z = 209
+    val _langastTruthTableConclusionTautology: Z = 209
 
-    val _langastTypedName: Z = 210
+    val _langastTruthTableConclusionContradictory: Z = 210
 
-    val _langastTypedTuple: Z = 211
+    val _langastTruthTableConclusionContingent: Z = 211
 
-    val _langastTypedFun: Z = 212
+    val _langastTypedName: Z = 212
 
-    val _langastTypedTypeVar: Z = 213
+    val _langastTypedTuple: Z = 213
 
-    val _langastTypedPackage: Z = 214
+    val _langastTypedFun: Z = 214
 
-    val _langastTypedObject: Z = 215
+    val _langastTypedTypeVar: Z = 215
 
-    val _langastTypedEnum: Z = 216
+    val _langastTypedPackage: Z = 216
 
-    val _langastTypedMethod: Z = 217
+    val _langastTypedObject: Z = 217
 
-    val _langastTypedMethods: Z = 218
+    val _langastTypedEnum: Z = 218
 
-    val _langastTypedFact: Z = 219
+    val _langastTypedMethod: Z = 219
 
-    val _langastTypedTheorem: Z = 220
+    val _langastTypedMethods: Z = 220
 
-    val _langastTypedInv: Z = 221
+    val _langastTypedFact: Z = 221
+
+    val _langastTypedTheorem: Z = 222
+
+    val _langastTypedInv: Z = 223
 
   }
 
@@ -2300,6 +2304,8 @@ object MsgPack {
         case o: org.sireum.lang.ast.Exp.Invoke => write_langastExpInvoke(o)
         case o: org.sireum.lang.ast.Exp.InvokeNamed => write_langastExpInvokeNamed(o)
         case o: org.sireum.lang.ast.Exp.If => write_langastExpIf(o)
+        case o: org.sireum.lang.ast.Exp.TypeCond => write_langastExpTypeCond(o)
+        case o: org.sireum.lang.ast.Exp.Sym => write_langastExpSym(o)
         case o: org.sireum.lang.ast.Exp.Fun => write_langastExpFun(o)
         case o: org.sireum.lang.ast.Exp.ForYield => write_langastExpForYield(o)
         case o: org.sireum.lang.ast.Exp.QuantType => write_langastExpQuantType(o)
@@ -2468,6 +2474,19 @@ object MsgPack {
       write_langastExp(o.cond)
       write_langastExp(o.thenExp)
       write_langastExp(o.elseExp)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastExpTypeCond(o: org.sireum.lang.ast.Exp.TypeCond): Unit = {
+      writer.writeZ(Constants._langastExpTypeCond)
+      writer.writeISZ(o.args, write_langastExp _)
+      write_langastExpFun(o.fun)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpSym(o: org.sireum.lang.ast.Exp.Sym): Unit = {
+      writer.writeZ(Constants._langastExpSym)
+      writer.writeZ(o.num)
       write_langastTypedAttr(o.attr)
     }
 
@@ -6349,6 +6368,8 @@ object MsgPack {
         case Constants._langastExpInvoke => val r = read_langastExpInvokeT(T); return r
         case Constants._langastExpInvokeNamed => val r = read_langastExpInvokeNamedT(T); return r
         case Constants._langastExpIf => val r = read_langastExpIfT(T); return r
+        case Constants._langastExpTypeCond => val r = read_langastExpTypeCondT(T); return r
+        case Constants._langastExpSym => val r = read_langastExpSymT(T); return r
         case Constants._langastExpFun => val r = read_langastExpFunT(T); return r
         case Constants._langastExpForYield => val r = read_langastExpForYieldT(T); return r
         case Constants._langastExpQuantType => val r = read_langastExpQuantTypeT(T); return r
@@ -6695,6 +6716,35 @@ object MsgPack {
       val elseExp = read_langastExp()
       val attr = read_langastTypedAttr()
       return org.sireum.lang.ast.Exp.If(cond, thenExp, elseExp, attr)
+    }
+
+    def read_langastExpTypeCond(): org.sireum.lang.ast.Exp.TypeCond = {
+      val r = read_langastExpTypeCondT(F)
+      return r
+    }
+
+    def read_langastExpTypeCondT(typeParsed: B): org.sireum.lang.ast.Exp.TypeCond = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpTypeCond)
+      }
+      val args = reader.readISZ(read_langastExp _)
+      val fun = read_langastExpFun()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.TypeCond(args, fun, attr)
+    }
+
+    def read_langastExpSym(): org.sireum.lang.ast.Exp.Sym = {
+      val r = read_langastExpSymT(F)
+      return r
+    }
+
+    def read_langastExpSymT(typeParsed: B): org.sireum.lang.ast.Exp.Sym = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpSym)
+      }
+      val num = reader.readZ()
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Exp.Sym(num, attr)
     }
 
     def read_langastExpFunParam(): org.sireum.lang.ast.Exp.Fun.Param = {
@@ -11215,6 +11265,36 @@ object MsgPack {
       return r
     }
     val r = to(data, f_langastExpIf _)
+    return r
+  }
+
+  def from_langastExpTypeCond(o: org.sireum.lang.ast.Exp.TypeCond, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpTypeCond(o)
+    return w.result
+  }
+
+  def to_langastExpTypeCond(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.TypeCond, MessagePack.ErrorMsg] = {
+    def f_langastExpTypeCond(reader: Reader): org.sireum.lang.ast.Exp.TypeCond = {
+      val r = reader.read_langastExpTypeCond()
+      return r
+    }
+    val r = to(data, f_langastExpTypeCond _)
+    return r
+  }
+
+  def from_langastExpSym(o: org.sireum.lang.ast.Exp.Sym, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpSym(o)
+    return w.result
+  }
+
+  def to_langastExpSym(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Sym, MessagePack.ErrorMsg] = {
+    def f_langastExpSym(reader: Reader): org.sireum.lang.ast.Exp.Sym = {
+      val r = reader.read_langastExpSym()
+      return r
+    }
+    val r = to(data, f_langastExpSym _)
     return r
   }
 

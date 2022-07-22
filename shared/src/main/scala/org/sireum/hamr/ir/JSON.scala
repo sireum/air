@@ -2814,6 +2814,8 @@ object JSON {
         case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.BinaryRem => "BinaryRem"
         case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.BinaryEq => "BinaryEq"
         case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.BinaryNe => "BinaryNe"
+        case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.BinaryFpEq => "BinaryFpEq"
+        case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.BinaryFpNe => "BinaryFpNe"
         case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.BinaryLt => "BinaryLt"
         case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.BinaryLe => "BinaryLe"
         case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.BinaryGt => "BinaryGt"

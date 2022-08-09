@@ -441,7 +441,7 @@ object JSON {
         case o: SmfLibrary => return printSmfLibrary(o)
         case o: Emv2Library => return printEmv2Library(o)
         case o: OtherLib => return printOtherLib(o)
-        case o: GclLibrary => return printGclLibrary(o)
+        case o: GclLib => return printGclLib(o)
       }
     }
 
@@ -1248,9 +1248,21 @@ object JSON {
       ))
     }
 
-    @pure def printGclAnnex(o: GclAnnex): ST = {
+    @pure def printGclSymbol(o: GclSymbol): ST = {
       o match {
         case o: GclSubclause => return printGclSubclause(o)
+        case o: GclMethod => return printGclMethod(o)
+        case o: GclStateVar => return printGclStateVar(o)
+        case o: GclInvariant => return printGclInvariant(o)
+        case o: GclAssume => return printGclAssume(o)
+        case o: GclGuarantee => return printGclGuarantee(o)
+        case o: GclIntegration => return printGclIntegration(o)
+        case o: GclCaseStatement => return printGclCaseStatement(o)
+        case o: GclInitialize => return printGclInitialize(o)
+        case o: GclCompute => return printGclCompute(o)
+        case o: GclHandle => return printGclHandle(o)
+        case o: GclTODO => return printGclTODO(o)
+        case o: GclLib => return printGclLib(o)
       }
     }
 
@@ -1258,10 +1270,18 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""GclSubclause""""),
         ("state", printISZ(F, o.state, printGclStateVar _)),
+        ("methods", printISZ(F, o.methods, printGclMethod _)),
         ("invariants", printISZ(F, o.invariants, printGclInvariant _)),
         ("initializes", printOption(F, o.initializes, printGclInitialize _)),
         ("integration", printOption(F, o.integration, printGclIntegration _)),
         ("compute", printOption(F, o.compute, printGclCompute _))
+      ))
+    }
+
+    @pure def printGclMethod(o: GclMethod): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclMethod""""),
+        ("method", print_langastStmtMethod(o.method))
       ))
     }
 
@@ -1370,11 +1390,11 @@ object JSON {
       ))
     }
 
-    @pure def printGclLibrary(o: GclLibrary): ST = {
+    @pure def printGclLib(o: GclLib): ST = {
       return printObject(ISZ(
-        ("type", st""""GclLibrary""""),
+        ("type", st""""GclLib""""),
         ("containingPackage", printName(o.containingPackage)),
-        ("methods", printISZ(F, o.methods, print_langastStmtMethod _))
+        ("methods", printISZ(F, o.methods, printGclMethod _))
       ))
     }
 
@@ -3937,13 +3957,13 @@ object JSON {
     }
 
     def parseAnnexLib(): AnnexLib = {
-      val t = parser.parseObjectTypes(ISZ("SmfLibrary", "Emv2Library", "OtherLib", "GclLibrary"))
+      val t = parser.parseObjectTypes(ISZ("SmfLibrary", "Emv2Library", "OtherLib", "GclLib"))
       t.native match {
         case "SmfLibrary" => val r = parseSmfLibraryT(T); return r
         case "Emv2Library" => val r = parseEmv2LibraryT(T); return r
         case "OtherLib" => val r = parseOtherLibT(T); return r
-        case "GclLibrary" => val r = parseGclLibraryT(T); return r
-        case _ => val r = parseGclLibraryT(T); return r
+        case "GclLib" => val r = parseGclLibT(T); return r
+        case _ => val r = parseGclLibT(T); return r
       }
     }
 
@@ -5519,11 +5539,23 @@ object JSON {
       return ErrorPropagation(id, source, condition, target)
     }
 
-    def parseGclAnnex(): GclAnnex = {
-      val t = parser.parseObjectTypes(ISZ("GclSubclause"))
+    def parseGclSymbol(): GclSymbol = {
+      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclHandle", "GclTODO", "GclLib"))
       t.native match {
         case "GclSubclause" => val r = parseGclSubclauseT(T); return r
-        case _ => val r = parseGclSubclauseT(T); return r
+        case "GclMethod" => val r = parseGclMethodT(T); return r
+        case "GclStateVar" => val r = parseGclStateVarT(T); return r
+        case "GclInvariant" => val r = parseGclInvariantT(T); return r
+        case "GclAssume" => val r = parseGclAssumeT(T); return r
+        case "GclGuarantee" => val r = parseGclGuaranteeT(T); return r
+        case "GclIntegration" => val r = parseGclIntegrationT(T); return r
+        case "GclCaseStatement" => val r = parseGclCaseStatementT(T); return r
+        case "GclInitialize" => val r = parseGclInitializeT(T); return r
+        case "GclCompute" => val r = parseGclComputeT(T); return r
+        case "GclHandle" => val r = parseGclHandleT(T); return r
+        case "GclTODO" => val r = parseGclTODOT(T); return r
+        case "GclLib" => val r = parseGclLibT(T); return r
+        case _ => val r = parseGclLibT(T); return r
       }
     }
 
@@ -5539,6 +5571,9 @@ object JSON {
       parser.parseObjectKey("state")
       val state = parser.parseISZ(parseGclStateVar _)
       parser.parseObjectNext()
+      parser.parseObjectKey("methods")
+      val methods = parser.parseISZ(parseGclMethod _)
+      parser.parseObjectNext()
       parser.parseObjectKey("invariants")
       val invariants = parser.parseISZ(parseGclInvariant _)
       parser.parseObjectNext()
@@ -5551,7 +5586,22 @@ object JSON {
       parser.parseObjectKey("compute")
       val compute = parser.parseOption(parseGclCompute _)
       parser.parseObjectNext()
-      return GclSubclause(state, invariants, initializes, integration, compute)
+      return GclSubclause(state, methods, invariants, initializes, integration, compute)
+    }
+
+    def parseGclMethod(): GclMethod = {
+      val r = parseGclMethodT(F)
+      return r
+    }
+
+    def parseGclMethodT(typeParsed: B): GclMethod = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclMethod")
+      }
+      parser.parseObjectKey("method")
+      val method = parse_langastStmtMethod()
+      parser.parseObjectNext()
+      return GclMethod(method)
     }
 
     def parseGclStateVar(): GclStateVar = {
@@ -5783,22 +5833,22 @@ object JSON {
       return GclTODO()
     }
 
-    def parseGclLibrary(): GclLibrary = {
-      val r = parseGclLibraryT(F)
+    def parseGclLib(): GclLib = {
+      val r = parseGclLibT(F)
       return r
     }
 
-    def parseGclLibraryT(typeParsed: B): GclLibrary = {
+    def parseGclLibT(typeParsed: B): GclLib = {
       if (!typeParsed) {
-        parser.parseObjectType("GclLibrary")
+        parser.parseObjectType("GclLib")
       }
       parser.parseObjectKey("containingPackage")
       val containingPackage = parseName()
       parser.parseObjectNext()
       parser.parseObjectKey("methods")
-      val methods = parser.parseISZ(parse_langastStmtMethod _)
+      val methods = parser.parseISZ(parseGclMethod _)
       parser.parseObjectNext()
-      return GclLibrary(containingPackage, methods)
+      return GclLib(containingPackage, methods)
     }
 
     def parseSmfAnnex(): SmfAnnex = {
@@ -11442,8 +11492,8 @@ object JSON {
     return r
   }
 
-  def fromGclAnnex(o: GclAnnex, isCompact: B): String = {
-    val st = Printer.printGclAnnex(o)
+  def fromGclSymbol(o: GclSymbol, isCompact: B): String = {
+    val st = Printer.printGclSymbol(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -11451,12 +11501,12 @@ object JSON {
     }
   }
 
-  def toGclAnnex(s: String): Either[GclAnnex, Json.ErrorMsg] = {
-    def fGclAnnex(parser: Parser): GclAnnex = {
-      val r = parser.parseGclAnnex()
+  def toGclSymbol(s: String): Either[GclSymbol, Json.ErrorMsg] = {
+    def fGclSymbol(parser: Parser): GclSymbol = {
+      val r = parser.parseGclSymbol()
       return r
     }
-    val r = to(s, fGclAnnex _)
+    val r = to(s, fGclSymbol _)
     return r
   }
 
@@ -11475,6 +11525,24 @@ object JSON {
       return r
     }
     val r = to(s, fGclSubclause _)
+    return r
+  }
+
+  def fromGclMethod(o: GclMethod, isCompact: B): String = {
+    val st = Printer.printGclMethod(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclMethod(s: String): Either[GclMethod, Json.ErrorMsg] = {
+    def fGclMethod(parser: Parser): GclMethod = {
+      val r = parser.parseGclMethod()
+      return r
+    }
+    val r = to(s, fGclMethod _)
     return r
   }
 
@@ -11694,8 +11762,8 @@ object JSON {
     return r
   }
 
-  def fromGclLibrary(o: GclLibrary, isCompact: B): String = {
-    val st = Printer.printGclLibrary(o)
+  def fromGclLib(o: GclLib, isCompact: B): String = {
+    val st = Printer.printGclLib(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -11703,12 +11771,12 @@ object JSON {
     }
   }
 
-  def toGclLibrary(s: String): Either[GclLibrary, Json.ErrorMsg] = {
-    def fGclLibrary(parser: Parser): GclLibrary = {
-      val r = parser.parseGclLibrary()
+  def toGclLib(s: String): Either[GclLib, Json.ErrorMsg] = {
+    def fGclLib(parser: Parser): GclLib = {
+      val r = parser.parseGclLib()
       return r
     }
-    val r = to(s, fGclLibrary _)
+    val r = to(s, fGclLib _)
     return r
   }
 

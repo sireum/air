@@ -28,22 +28,28 @@ package org.sireum.hamr.ir
 import org.sireum._
 import org.sireum.message.Position
 
-@sig trait GclAnnex extends AnnexClause
+@sig trait GclSymbol
 
 @datatype class GclSubclause(val state: ISZ[GclStateVar],
+                             val methods: ISZ[GclMethod],
                              val invariants: ISZ[GclInvariant],
                              val initializes: Option[GclInitialize],
                              val integration: Option[GclIntegration],
-                             val compute: Option[GclCompute]) extends GclAnnex
+                             val compute: Option[GclCompute]) extends AnnexClause with GclSymbol
+
+@datatype class GclMethod(val method: org.sireum.lang.ast.Stmt.Method) extends GclSymbol
 
 @datatype class GclStateVar(val name: String,
                             val classifier: String,
-                            val posOpt: Option[Position])
+                            val posOpt: Option[Position]) extends GclSymbol
 
-@sig trait GclSpec {
+@sig trait GclSpec extends GclSymbol {
   def id: String
+
   def descriptor: Option[String]
+
   def exp: org.sireum.lang.ast.Exp
+
   def posOpt: Option[Position]
 }
 
@@ -64,27 +70,27 @@ import org.sireum.message.Position
                              val exp: org.sireum.lang.ast.Exp,
                              val posOpt: Option[Position]) extends GclComputeSpec
 
-@datatype class GclIntegration(val specs: ISZ[GclSpec])
+@datatype class GclIntegration(val specs: ISZ[GclSpec]) extends GclSymbol
 
 @datatype class GclCaseStatement(val id: String,
                                  val descriptor: Option[String],
                                  val assumes: org.sireum.lang.ast.Exp,
                                  val guarantees: org.sireum.lang.ast.Exp,
-                                 val posOpt: Option[Position])
+                                 val posOpt: Option[Position]) extends GclSymbol
 
 @datatype class GclInitialize(val modifies: ISZ[org.sireum.lang.ast.Exp],
-                              val guarantees: ISZ[GclGuarantee])
+                              val guarantees: ISZ[GclGuarantee]) extends GclSymbol
 
 @datatype class GclCompute(val modifies: ISZ[org.sireum.lang.ast.Exp],
                            val specs: ISZ[GclComputeSpec],
                            val cases: ISZ[GclCaseStatement],
-                           val handlers: ISZ[GclHandle])
+                           val handlers: ISZ[GclHandle]) extends GclSymbol
 
 @datatype class GclHandle(val port: org.sireum.lang.ast.Exp,
                           val modifies: ISZ[org.sireum.lang.ast.Exp],
-                          val guarantees: ISZ[GclGuarantee])
+                          val guarantees: ISZ[GclGuarantee]) extends GclSymbol
 
-@datatype class GclTODO
+@datatype class GclTODO extends GclSymbol
 
-@datatype class GclLibrary(val containingPackage: Name,
-                           val methods: ISZ[org.sireum.lang.ast.Stmt.Method]) extends AnnexLib
+@datatype class GclLib(val containingPackage: Name,
+                       val methods: ISZ[GclMethod]) extends AnnexLib with GclSymbol

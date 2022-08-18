@@ -485,9 +485,9 @@ object MTransformer {
 
   val PostResult_langastExpInput: MOption[org.sireum.lang.ast.Exp] = MNone()
 
-  val PreResult_langastExpOldVal: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+  val PreResult_langastExpAt: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
 
-  val PostResult_langastExpOldVal: MOption[org.sireum.lang.ast.Exp] = MNone()
+  val PostResult_langastExpAt: MOption[org.sireum.lang.ast.Exp] = MNone()
 
   val PreResult_langastExpLoopIndex: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
 
@@ -1724,7 +1724,7 @@ import MTransformer._
         }
         return r
       case o: org.sireum.lang.ast.Exp.Input => return pre_langastExpInput(o)
-      case o: org.sireum.lang.ast.Exp.OldVal => return pre_langastExpOldVal(o)
+      case o: org.sireum.lang.ast.Exp.At => return pre_langastExpAt(o)
       case o: org.sireum.lang.ast.Exp.LoopIndex => return pre_langastExpLoopIndex(o)
       case o: org.sireum.lang.ast.Exp.StateSeq => return pre_langastExpStateSeq(o)
       case o: org.sireum.lang.ast.Exp.Result => return pre_langastExpResult(o)
@@ -1935,8 +1935,8 @@ import MTransformer._
     return PreResult_langastExpInput
   }
 
-  def pre_langastExpOldVal(o: org.sireum.lang.ast.Exp.OldVal): PreResult[org.sireum.lang.ast.Exp] = {
-    return PreResult_langastExpOldVal
+  def pre_langastExpAt(o: org.sireum.lang.ast.Exp.At): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpAt
   }
 
   def pre_langastExpLoopIndex(o: org.sireum.lang.ast.Exp.LoopIndex): PreResult[org.sireum.lang.ast.Exp] = {
@@ -4288,7 +4288,7 @@ import MTransformer._
         }
         return r
       case o: org.sireum.lang.ast.Exp.Input => return post_langastExpInput(o)
-      case o: org.sireum.lang.ast.Exp.OldVal => return post_langastExpOldVal(o)
+      case o: org.sireum.lang.ast.Exp.At => return post_langastExpAt(o)
       case o: org.sireum.lang.ast.Exp.LoopIndex => return post_langastExpLoopIndex(o)
       case o: org.sireum.lang.ast.Exp.StateSeq => return post_langastExpStateSeq(o)
       case o: org.sireum.lang.ast.Exp.Result => return post_langastExpResult(o)
@@ -4499,8 +4499,8 @@ import MTransformer._
     return PostResult_langastExpInput
   }
 
-  def post_langastExpOldVal(o: org.sireum.lang.ast.Exp.OldVal): MOption[org.sireum.lang.ast.Exp] = {
-    return PostResult_langastExpOldVal
+  def post_langastExpAt(o: org.sireum.lang.ast.Exp.At): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpAt
   }
 
   def post_langastExpLoopIndex(o: org.sireum.lang.ast.Exp.LoopIndex): MOption[org.sireum.lang.ast.Exp] = {
@@ -6536,7 +6536,7 @@ import MTransformer._
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Havoc =>
-          val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(o2.args, transform_langastExpIdent _)
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.Ref]] = transformISZ(o2.args, transform_langastExpRef _)
           val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
             MSome(o2(args = r0.getOrElse(o2.args), attr = r1.getOrElse(o2.attr)))
@@ -6569,7 +6569,7 @@ import MTransformer._
       val rOpt: MOption[org.sireum.lang.ast.HasModifies] = o2 match {
         case o2: org.sireum.lang.ast.LoopContract =>
           val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.invariants, transform_langastExp _)
-          val r1: MOption[IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(o2.modifies, transform_langastExpIdent _)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Exp.Ref]] = transformISZ(o2.modifies, transform_langastExpRef _)
           val r2: MOption[Option[org.sireum.lang.ast.Exp.LitZ]] = transformOption(o2.maxItOpt, transform_langastExpLitZ _)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
             MSome(o2(invariants = r0.getOrElse(o2.invariants), modifies = r1.getOrElse(o2.modifies), maxItOpt = r2.getOrElse(o2.maxItOpt)))
@@ -6619,7 +6619,7 @@ import MTransformer._
       val o2: org.sireum.lang.ast.LoopContract = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.invariants, transform_langastExp _)
-      val r1: MOption[IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(o2.modifies, transform_langastExpIdent _)
+      val r1: MOption[IS[Z, org.sireum.lang.ast.Exp.Ref]] = transformISZ(o2.modifies, transform_langastExpRef _)
       val r2: MOption[Option[org.sireum.lang.ast.Exp.LitZ]] = transformOption(o2.maxItOpt, transform_langastExpLitZ _)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
         MSome(o2(invariants = r0.getOrElse(o2.invariants), modifies = r1.getOrElse(o2.modifies), maxItOpt = r2.getOrElse(o2.maxItOpt)))
@@ -6806,7 +6806,7 @@ import MTransformer._
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Havoc =>
-          val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(o2.args, transform_langastExpIdent _)
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.Ref]] = transformISZ(o2.args, transform_langastExpRef _)
           val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
             MSome(o2(args = r0.getOrElse(o2.args), attr = r1.getOrElse(o2.attr)))
@@ -6880,10 +6880,10 @@ import MTransformer._
     val r: MOption[org.sireum.lang.ast.MethodContract.Accesses] = if (preR.continu) {
       val o2: org.sireum.lang.ast.MethodContract.Accesses = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(o2.idents, transform_langastExpIdent _)
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.Ref]] = transformISZ(o2.refs, transform_langastExpRef _)
       val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(idents = r0.getOrElse(o2.idents), attr = r1.getOrElse(o2.attr)))
+        MSome(o2(refs = r0.getOrElse(o2.refs), attr = r1.getOrElse(o2.attr)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -7800,17 +7800,18 @@ import MTransformer._
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.Input =>
-          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r0: MOption[org.sireum.lang.ast.Exp.Ref] = transform_langastExpRef(o2.ref)
           val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
+            MSome(o2(ref = r0.getOrElse(o2.ref), attr = r1.getOrElse(o2.attr)))
           else
             MNone()
-        case o2: org.sireum.lang.ast.Exp.OldVal =>
-          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
-          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
+        case o2: org.sireum.lang.ast.Exp.At =>
+          val r0: MOption[org.sireum.lang.ast.Exp.Ref] = transform_langastExpRef(o2.ref)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Exp.LitZ]] = transformISZ(o2.lines, transform_langastExpLitZ _)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(ref = r0.getOrElse(o2.ref), lines = r1.getOrElse(o2.lines), attr = r2.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.LoopIndex =>

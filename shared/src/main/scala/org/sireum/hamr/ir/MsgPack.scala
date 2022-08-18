@@ -456,7 +456,7 @@ object MsgPack {
 
     val _langastExpInput: Z = 177
 
-    val _langastExpOldVal: Z = 178
+    val _langastExpAt: Z = 178
 
     val _langastExpLoopIndex: Z = 179
 
@@ -1669,7 +1669,7 @@ object MsgPack {
     def write_langastLoopContract(o: org.sireum.lang.ast.LoopContract): Unit = {
       writer.writeZ(Constants._langastLoopContract)
       writer.writeISZ(o.invariants, write_langastExp _)
-      writer.writeISZ(o.modifies, write_langastExpIdent _)
+      writer.writeISZ(o.modifies, write_langastExpRef _)
       writer.writeOption(o.maxItOpt, write_langastExpLitZ _)
     }
 
@@ -1973,7 +1973,7 @@ object MsgPack {
 
     def write_langastStmtHavoc(o: org.sireum.lang.ast.Stmt.Havoc): Unit = {
       writer.writeZ(Constants._langastStmtHavoc)
-      writer.writeISZ(o.args, write_langastExpIdent _)
+      writer.writeISZ(o.args, write_langastExpRef _)
       write_langastAttr(o.attr)
     }
 
@@ -1986,7 +1986,7 @@ object MsgPack {
 
     def write_langastMethodContractAccesses(o: org.sireum.lang.ast.MethodContract.Accesses): Unit = {
       writer.writeZ(Constants._langastMethodContractAccesses)
-      writer.writeISZ(o.idents, write_langastExpIdent _)
+      writer.writeISZ(o.refs, write_langastExpRef _)
       write_langastAttr(o.attr)
     }
 
@@ -2332,7 +2332,7 @@ object MsgPack {
         case o: org.sireum.lang.ast.Exp.QuantRange => write_langastExpQuantRange(o)
         case o: org.sireum.lang.ast.Exp.QuantEach => write_langastExpQuantEach(o)
         case o: org.sireum.lang.ast.Exp.Input => write_langastExpInput(o)
-        case o: org.sireum.lang.ast.Exp.OldVal => write_langastExpOldVal(o)
+        case o: org.sireum.lang.ast.Exp.At => write_langastExpAt(o)
         case o: org.sireum.lang.ast.Exp.LoopIndex => write_langastExpLoopIndex(o)
         case o: org.sireum.lang.ast.Exp.StateSeq => write_langastExpStateSeq(o)
         case o: org.sireum.lang.ast.Exp.Result => write_langastExpResult(o)
@@ -2567,13 +2567,14 @@ object MsgPack {
 
     def write_langastExpInput(o: org.sireum.lang.ast.Exp.Input): Unit = {
       writer.writeZ(Constants._langastExpInput)
-      write_langastExp(o.exp)
+      write_langastExpRef(o.ref)
       write_langastAttr(o.attr)
     }
 
-    def write_langastExpOldVal(o: org.sireum.lang.ast.Exp.OldVal): Unit = {
-      writer.writeZ(Constants._langastExpOldVal)
-      write_langastExp(o.exp)
+    def write_langastExpAt(o: org.sireum.lang.ast.Exp.At): Unit = {
+      writer.writeZ(Constants._langastExpAt)
+      write_langastExpRef(o.ref)
+      writer.writeISZ(o.lines, write_langastExpLitZ _)
       write_langastAttr(o.attr)
     }
 
@@ -5115,7 +5116,7 @@ object MsgPack {
         reader.expectZ(Constants._langastLoopContract)
       }
       val invariants = reader.readISZ(read_langastExp _)
-      val modifies = reader.readISZ(read_langastExpIdent _)
+      val modifies = reader.readISZ(read_langastExpRef _)
       val maxItOpt = reader.readOption(read_langastExpLitZ _)
       return org.sireum.lang.ast.LoopContract(invariants, modifies, maxItOpt)
     }
@@ -5719,7 +5720,7 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastStmtHavoc)
       }
-      val args = reader.readISZ(read_langastExpIdent _)
+      val args = reader.readISZ(read_langastExpRef _)
       val attr = read_langastAttr()
       return org.sireum.lang.ast.Stmt.Havoc(args, attr)
     }
@@ -5746,9 +5747,9 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastMethodContractAccesses)
       }
-      val idents = reader.readISZ(read_langastExpIdent _)
+      val refs = reader.readISZ(read_langastExpRef _)
       val attr = read_langastAttr()
-      return org.sireum.lang.ast.MethodContract.Accesses(idents, attr)
+      return org.sireum.lang.ast.MethodContract.Accesses(refs, attr)
     }
 
     def read_langastMethodContractClaims(): org.sireum.lang.ast.MethodContract.Claims = {
@@ -6424,7 +6425,7 @@ object MsgPack {
         case Constants._langastExpQuantRange => val r = read_langastExpQuantRangeT(T); return r
         case Constants._langastExpQuantEach => val r = read_langastExpQuantEachT(T); return r
         case Constants._langastExpInput => val r = read_langastExpInputT(T); return r
-        case Constants._langastExpOldVal => val r = read_langastExpOldValT(T); return r
+        case Constants._langastExpAt => val r = read_langastExpAtT(T); return r
         case Constants._langastExpLoopIndex => val r = read_langastExpLoopIndexT(T); return r
         case Constants._langastExpStateSeq => val r = read_langastExpStateSeqT(T); return r
         case Constants._langastExpResult => val r = read_langastExpResultT(T); return r
@@ -6913,23 +6914,24 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastExpInput)
       }
-      val exp = read_langastExp()
+      val ref = read_langastExpRef()
       val attr = read_langastAttr()
-      return org.sireum.lang.ast.Exp.Input(exp, attr)
+      return org.sireum.lang.ast.Exp.Input(ref, attr)
     }
 
-    def read_langastExpOldVal(): org.sireum.lang.ast.Exp.OldVal = {
-      val r = read_langastExpOldValT(F)
+    def read_langastExpAt(): org.sireum.lang.ast.Exp.At = {
+      val r = read_langastExpAtT(F)
       return r
     }
 
-    def read_langastExpOldValT(typeParsed: B): org.sireum.lang.ast.Exp.OldVal = {
+    def read_langastExpAtT(typeParsed: B): org.sireum.lang.ast.Exp.At = {
       if (!typeParsed) {
-        reader.expectZ(Constants._langastExpOldVal)
+        reader.expectZ(Constants._langastExpAt)
       }
-      val exp = read_langastExp()
+      val ref = read_langastExpRef()
+      val lines = reader.readISZ(read_langastExpLitZ _)
       val attr = read_langastAttr()
-      return org.sireum.lang.ast.Exp.OldVal(exp, attr)
+      return org.sireum.lang.ast.Exp.At(ref, lines, attr)
     }
 
     def read_langastExpLoopIndex(): org.sireum.lang.ast.Exp.LoopIndex = {
@@ -11483,18 +11485,18 @@ object MsgPack {
     return r
   }
 
-  def from_langastExpOldVal(o: org.sireum.lang.ast.Exp.OldVal, pooling: B): ISZ[U8] = {
+  def from_langastExpAt(o: org.sireum.lang.ast.Exp.At, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.write_langastExpOldVal(o)
+    w.write_langastExpAt(o)
     return w.result
   }
 
-  def to_langastExpOldVal(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.OldVal, MessagePack.ErrorMsg] = {
-    def f_langastExpOldVal(reader: Reader): org.sireum.lang.ast.Exp.OldVal = {
-      val r = reader.read_langastExpOldVal()
+  def to_langastExpAt(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.At, MessagePack.ErrorMsg] = {
+    def f_langastExpAt(reader: Reader): org.sireum.lang.ast.Exp.At = {
+      val r = reader.read_langastExpAt()
       return r
     }
-    val r = to(data, f_langastExpOldVal _)
+    val r = to(data, f_langastExpAt _)
     return r
   }
 

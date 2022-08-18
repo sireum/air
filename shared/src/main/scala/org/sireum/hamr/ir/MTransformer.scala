@@ -7807,11 +7807,11 @@ import MTransformer._
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.At =>
-          val r0: MOption[org.sireum.lang.ast.Exp.Ref] = transform_langastExpRef(o2.ref)
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
           val r1: MOption[IS[Z, org.sireum.lang.ast.Exp.LitZ]] = transformISZ(o2.lines, transform_langastExpLitZ _)
           val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(ref = r0.getOrElse(o2.ref), lines = r1.getOrElse(o2.lines), attr = r2.getOrElse(o2.attr)))
+            MSome(o2(exp = r0.getOrElse(o2.exp), lines = r1.getOrElse(o2.lines), attr = r2.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.LoopIndex =>

@@ -7800,10 +7800,10 @@ import MTransformer._
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.Input =>
-          val r0: MOption[org.sireum.lang.ast.Exp.Ref] = transform_langastExpRef(o2.ref)
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
           val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(ref = r0.getOrElse(o2.ref), attr = r1.getOrElse(o2.attr)))
+            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.At =>

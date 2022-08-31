@@ -6803,11 +6803,12 @@ import Transformer._
         case o2: org.sireum.lang.ast.Exp.At =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp.LitZ]] = transformISZ(r0.ctx, o2.lines, transform_langastExpLitZ _)
-          val r2: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r1.ctx, o2.attr)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            TPostResult(r2.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), lines = r1.resultOpt.getOrElse(o2.lines), attr = r2.resultOpt.getOrElse(o2.attr))))
+          val r2: TPostResult[Context, Option[org.sireum.lang.ast.Type]] = transformOption(r1.ctx, o2.tipeOpt, transform_langastType _)
+          val r3: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r2.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), lines = r1.resultOpt.getOrElse(o2.lines), tipeOpt = r2.resultOpt.getOrElse(o2.tipeOpt), attr = r3.resultOpt.getOrElse(o2.attr))))
           else
-            TPostResult(r2.ctx, None())
+            TPostResult(r3.ctx, None())
         case o2: org.sireum.lang.ast.Exp.LoopIndex =>
           val r0: TPostResult[Context, Option[org.sireum.lang.ast.Type]] = transformOption(preR.ctx, o2.tipeOpt, transform_langastType _)
           val r1: TPostResult[Context, org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(r0.ctx, o2.exp)

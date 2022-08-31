@@ -2575,6 +2575,7 @@ object MsgPack {
       writer.writeZ(Constants._langastExpAt)
       write_langastExp(o.exp)
       writer.writeISZ(o.lines, write_langastExpLitZ _)
+      writer.writeOption(o.tipeOpt, write_langastType _)
       write_langastAttr(o.attr)
     }
 
@@ -6930,8 +6931,9 @@ object MsgPack {
       }
       val exp = read_langastExp()
       val lines = reader.readISZ(read_langastExpLitZ _)
+      val tipeOpt = reader.readOption(read_langastType _)
       val attr = read_langastAttr()
-      return org.sireum.lang.ast.Exp.At(exp, lines, attr)
+      return org.sireum.lang.ast.Exp.At(exp, lines, tipeOpt, attr)
     }
 
     def read_langastExpLoopIndex(): org.sireum.lang.ast.Exp.LoopIndex = {

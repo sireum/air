@@ -7807,12 +7807,13 @@ import MTransformer._
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.At =>
-          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
-          val r1: MOption[IS[Z, org.sireum.lang.ast.Exp.LitZ]] = transformISZ(o2.lines, transform_langastExpLitZ _)
-          val r2: MOption[Option[org.sireum.lang.ast.Type]] = transformOption(o2.tipeOpt, transform_langastType _)
-          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(o2(exp = r0.getOrElse(o2.exp), lines = r1.getOrElse(o2.lines), tipeOpt = r2.getOrElse(o2.tipeOpt), attr = r3.getOrElse(o2.attr)))
+          val r0: MOption[Option[org.sireum.lang.ast.Type]] = transformOption(o2.tipeOpt, transform_langastType _)
+          val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r2: MOption[org.sireum.lang.ast.Exp.LitZ] = transform_langastExpLitZ(o2.num)
+          val r3: MOption[IS[Z, org.sireum.lang.ast.Exp.LitZ]] = transformISZ(o2.linesFresh, transform_langastExpLitZ _)
+          val r4: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(tipeOpt = r0.getOrElse(o2.tipeOpt), exp = r1.getOrElse(o2.exp), num = r2.getOrElse(o2.num), linesFresh = r3.getOrElse(o2.linesFresh), attr = r4.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.LoopIndex =>

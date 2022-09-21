@@ -881,17 +881,29 @@ object MTransformer {
 
   val PostResultGclStateVar: MOption[GclStateVar] = MNone()
 
-  val PreResultBTSBLESSAnnexClause: PreResult[BTSBLESSAnnexClause] = PreResult(T, MNone())
+  val PreResultBTSSubclauseBehaviorProvider: PreResult[BTSSubclauseBehaviorProvider] = PreResult(T, MNone())
 
-  val PostResultBTSBLESSAnnexClause: MOption[BTSBLESSAnnexClause] = MNone()
+  val PostResultBTSSubclauseBehaviorProvider: MOption[BTSSubclauseBehaviorProvider] = MNone()
 
   val PreResultGclInvariant: PreResult[GclInvariant] = PreResult(T, MNone())
 
   val PostResultGclInvariant: MOption[GclInvariant] = MNone()
 
+  val PreResultBTSText: PreResult[BTSText] = PreResult(T, MNone())
+
+  val PostResultBTSText: MOption[BTSText] = MNone()
+
+  val PreResultBTSPath: PreResult[BTSPath] = PreResult(T, MNone())
+
+  val PostResultBTSPath: MOption[BTSPath] = MNone()
+
   val PreResultGclAssume: PreResult[GclAssume] = PreResult(T, MNone())
 
   val PostResultGclAssume: MOption[GclAssume] = MNone()
+
+  val PreResultBTSBLESSAnnexClause: PreResult[BTSBLESSAnnexClause] = PreResult(T, MNone())
+
+  val PostResultBTSBLESSAnnexClause: MOption[BTSBLESSAnnexClause] = MNone()
 
   val PreResultGclGuarantee: PreResult[GclGuarantee] = PreResult(T, MNone())
 
@@ -2829,6 +2841,13 @@ import MTransformer._
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
+      case o: BTSSubclauseBehaviorProvider =>
+        val r: PreResult[AnnexClause] = preBTSSubclauseBehaviorProvider(o) match {
+         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
+        }
+        return r
       case o: BTSBLESSAnnexClause =>
         val r: PreResult[AnnexClause] = preBTSBLESSAnnexClause(o) match {
          case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
@@ -3030,6 +3049,13 @@ import MTransformer._
 
   def preBLESSAnnex(o: BLESSAnnex): PreResult[BLESSAnnex] = {
     o match {
+      case o: BTSSubclauseBehaviorProvider =>
+        val r: PreResult[BLESSAnnex] = preBTSSubclauseBehaviorProvider(o) match {
+         case PreResult(continu, MSome(r: BLESSAnnex)) => PreResult(continu, MSome[BLESSAnnex](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BLESSAnnex")
+         case PreResult(continu, _) => PreResult(continu, MNone[BLESSAnnex]())
+        }
+        return r
       case o: BTSBLESSAnnexClause =>
         val r: PreResult[BLESSAnnex] = preBTSBLESSAnnexClause(o) match {
          case PreResult(continu, MSome(r: BLESSAnnex)) => PreResult(continu, MSome[BLESSAnnex](r))
@@ -3046,10 +3072,6 @@ import MTransformer._
 
   def preGclStateVar(o: GclStateVar): PreResult[GclStateVar] = {
     return PreResultGclStateVar
-  }
-
-  def preBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): PreResult[BTSBLESSAnnexClause] = {
-    return PreResultBTSBLESSAnnexClause
   }
 
   def preGclSpec(o: GclSpec): PreResult[GclSpec] = {
@@ -3078,8 +3100,39 @@ import MTransformer._
     }
   }
 
+  def preBTSSubclauseBehaviorProvider(o: BTSSubclauseBehaviorProvider): PreResult[BTSSubclauseBehaviorProvider] = {
+    return PreResultBTSSubclauseBehaviorProvider
+  }
+
+  def preBTSResource(o: BTSResource): PreResult[BTSResource] = {
+    o match {
+      case o: BTSText =>
+        val r: PreResult[BTSResource] = preBTSText(o) match {
+         case PreResult(continu, MSome(r: BTSResource)) => PreResult(continu, MSome[BTSResource](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSResource")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSResource]())
+        }
+        return r
+      case o: BTSPath =>
+        val r: PreResult[BTSResource] = preBTSPath(o) match {
+         case PreResult(continu, MSome(r: BTSResource)) => PreResult(continu, MSome[BTSResource](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSResource")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSResource]())
+        }
+        return r
+    }
+  }
+
   def preGclInvariant(o: GclInvariant): PreResult[GclInvariant] = {
     return PreResultGclInvariant
+  }
+
+  def preBTSText(o: BTSText): PreResult[BTSText] = {
+    return PreResultBTSText
+  }
+
+  def preBTSPath(o: BTSPath): PreResult[BTSPath] = {
+    return PreResultBTSPath
   }
 
   def preGclComputeSpec(o: GclComputeSpec): PreResult[GclComputeSpec] = {
@@ -3103,6 +3156,10 @@ import MTransformer._
 
   def preGclAssume(o: GclAssume): PreResult[GclAssume] = {
     return PreResultGclAssume
+  }
+
+  def preBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): PreResult[BTSBLESSAnnexClause] = {
+    return PreResultBTSBLESSAnnexClause
   }
 
   def preGclGuarantee(o: GclGuarantee): PreResult[GclGuarantee] = {
@@ -5393,6 +5450,13 @@ import MTransformer._
          case _ => MNone[AnnexClause]()
         }
         return r
+      case o: BTSSubclauseBehaviorProvider =>
+        val r: MOption[AnnexClause] = postBTSSubclauseBehaviorProvider(o) match {
+         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
+         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case _ => MNone[AnnexClause]()
+        }
+        return r
       case o: BTSBLESSAnnexClause =>
         val r: MOption[AnnexClause] = postBTSBLESSAnnexClause(o) match {
          case MSome(result: AnnexClause) => MSome[AnnexClause](result)
@@ -5594,6 +5658,13 @@ import MTransformer._
 
   def postBLESSAnnex(o: BLESSAnnex): MOption[BLESSAnnex] = {
     o match {
+      case o: BTSSubclauseBehaviorProvider =>
+        val r: MOption[BLESSAnnex] = postBTSSubclauseBehaviorProvider(o) match {
+         case MSome(result: BLESSAnnex) => MSome[BLESSAnnex](result)
+         case MSome(_) => halt("Can only produce object of type BLESSAnnex")
+         case _ => MNone[BLESSAnnex]()
+        }
+        return r
       case o: BTSBLESSAnnexClause =>
         val r: MOption[BLESSAnnex] = postBTSBLESSAnnexClause(o) match {
          case MSome(result: BLESSAnnex) => MSome[BLESSAnnex](result)
@@ -5610,10 +5681,6 @@ import MTransformer._
 
   def postGclStateVar(o: GclStateVar): MOption[GclStateVar] = {
     return PostResultGclStateVar
-  }
-
-  def postBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): MOption[BTSBLESSAnnexClause] = {
-    return PostResultBTSBLESSAnnexClause
   }
 
   def postGclSpec(o: GclSpec): MOption[GclSpec] = {
@@ -5642,8 +5709,39 @@ import MTransformer._
     }
   }
 
+  def postBTSSubclauseBehaviorProvider(o: BTSSubclauseBehaviorProvider): MOption[BTSSubclauseBehaviorProvider] = {
+    return PostResultBTSSubclauseBehaviorProvider
+  }
+
+  def postBTSResource(o: BTSResource): MOption[BTSResource] = {
+    o match {
+      case o: BTSText =>
+        val r: MOption[BTSResource] = postBTSText(o) match {
+         case MSome(result: BTSResource) => MSome[BTSResource](result)
+         case MSome(_) => halt("Can only produce object of type BTSResource")
+         case _ => MNone[BTSResource]()
+        }
+        return r
+      case o: BTSPath =>
+        val r: MOption[BTSResource] = postBTSPath(o) match {
+         case MSome(result: BTSResource) => MSome[BTSResource](result)
+         case MSome(_) => halt("Can only produce object of type BTSResource")
+         case _ => MNone[BTSResource]()
+        }
+        return r
+    }
+  }
+
   def postGclInvariant(o: GclInvariant): MOption[GclInvariant] = {
     return PostResultGclInvariant
+  }
+
+  def postBTSText(o: BTSText): MOption[BTSText] = {
+    return PostResultBTSText
+  }
+
+  def postBTSPath(o: BTSPath): MOption[BTSPath] = {
+    return PostResultBTSPath
   }
 
   def postGclComputeSpec(o: GclComputeSpec): MOption[GclComputeSpec] = {
@@ -5667,6 +5765,10 @@ import MTransformer._
 
   def postGclAssume(o: GclAssume): MOption[GclAssume] = {
     return PostResultGclAssume
+  }
+
+  def postBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): MOption[BTSBLESSAnnexClause] = {
+    return PostResultBTSBLESSAnnexClause
   }
 
   def postGclGuarantee(o: GclGuarantee): MOption[GclGuarantee] = {
@@ -10608,6 +10710,12 @@ import MTransformer._
             MSome(o2(state = r0.getOrElse(o2.state), methods = r1.getOrElse(o2.methods), invariants = r2.getOrElse(o2.invariants), initializes = r3.getOrElse(o2.initializes), integration = r4.getOrElse(o2.integration), compute = r5.getOrElse(o2.compute)))
           else
             MNone()
+        case o2: BTSSubclauseBehaviorProvider =>
+          val r0: MOption[IS[Z, BTSResource]] = transformISZ(o2.values, transformBTSResource _)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(values = r0.getOrElse(o2.values)))
+          else
+            MNone()
         case o2: BTSBLESSAnnexClause =>
           val r0: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.assertions, transformBTSAssertion _)
           val r1: MOption[Option[BTSAssertion]] = transformOption(o2.invariant, transformBTSAssertion _)
@@ -10894,6 +11002,12 @@ import MTransformer._
       val o2: BLESSAnnex = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: MOption[BLESSAnnex] = o2 match {
+        case o2: BTSSubclauseBehaviorProvider =>
+          val r0: MOption[IS[Z, BTSResource]] = transformISZ(o2.values, transformBTSResource _)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(values = r0.getOrElse(o2.values)))
+          else
+            MNone()
         case o2: BTSBLESSAnnexClause =>
           val r0: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.assertions, transformBTSAssertion _)
           val r1: MOption[Option[BTSAssertion]] = transformOption(o2.invariant, transformBTSAssertion _)
@@ -10976,37 +11090,6 @@ import MTransformer._
     }
   }
 
-  def transformBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): MOption[BTSBLESSAnnexClause] = {
-    val preR: PreResult[BTSBLESSAnnexClause] = preBTSBLESSAnnexClause(o)
-    val r: MOption[BTSBLESSAnnexClause] = if (preR.continu) {
-      val o2: BTSBLESSAnnexClause = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.assertions, transformBTSAssertion _)
-      val r1: MOption[Option[BTSAssertion]] = transformOption(o2.invariant, transformBTSAssertion _)
-      val r2: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.variables, transformBTSVariableDeclaration _)
-      val r3: MOption[IS[Z, BTSStateDeclaration]] = transformISZ(o2.states, transformBTSStateDeclaration _)
-      val r4: MOption[IS[Z, BTSTransition]] = transformISZ(o2.transitions, transformBTSTransition _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
-        MSome(o2(assertions = r0.getOrElse(o2.assertions), invariant = r1.getOrElse(o2.invariant), variables = r2.getOrElse(o2.variables), states = r3.getOrElse(o2.states), transitions = r4.getOrElse(o2.transitions)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: BTSBLESSAnnexClause = r.getOrElse(o)
-    val postR: MOption[BTSBLESSAnnexClause] = postBTSBLESSAnnexClause(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
   def transformGclSpec(o: GclSpec): MOption[GclSpec] = {
     val preR: PreResult[GclSpec] = preGclSpec(o)
     val r: MOption[GclSpec] = if (preR.continu) {
@@ -11050,6 +11133,68 @@ import MTransformer._
     }
   }
 
+  def transformBTSSubclauseBehaviorProvider(o: BTSSubclauseBehaviorProvider): MOption[BTSSubclauseBehaviorProvider] = {
+    val preR: PreResult[BTSSubclauseBehaviorProvider] = preBTSSubclauseBehaviorProvider(o)
+    val r: MOption[BTSSubclauseBehaviorProvider] = if (preR.continu) {
+      val o2: BTSSubclauseBehaviorProvider = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, BTSResource]] = transformISZ(o2.values, transformBTSResource _)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(values = r0.getOrElse(o2.values)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSSubclauseBehaviorProvider = r.getOrElse(o)
+    val postR: MOption[BTSSubclauseBehaviorProvider] = postBTSSubclauseBehaviorProvider(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSResource(o: BTSResource): MOption[BTSResource] = {
+    val preR: PreResult[BTSResource] = preBTSResource(o)
+    val r: MOption[BTSResource] = if (preR.continu) {
+      val o2: BTSResource = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[BTSResource] = o2 match {
+        case o2: BTSText =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+        case o2: BTSPath =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSResource = r.getOrElse(o)
+    val postR: MOption[BTSResource] = postBTSResource(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformGclInvariant(o: GclInvariant): MOption[GclInvariant] = {
     val preR: PreResult[GclInvariant] = preGclInvariant(o)
     val r: MOption[GclInvariant] = if (preR.continu) {
@@ -11068,6 +11213,58 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: GclInvariant = r.getOrElse(o)
     val postR: MOption[GclInvariant] = postGclInvariant(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSText(o: BTSText): MOption[BTSText] = {
+    val preR: PreResult[BTSText] = preBTSText(o)
+    val r: MOption[BTSText] = if (preR.continu) {
+      val o2: BTSText = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSText = r.getOrElse(o)
+    val postR: MOption[BTSText] = postBTSText(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSPath(o: BTSPath): MOption[BTSPath] = {
+    val preR: PreResult[BTSPath] = preBTSPath(o)
+    val r: MOption[BTSPath] = if (preR.continu) {
+      val o2: BTSPath = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSPath = r.getOrElse(o)
+    val postR: MOption[BTSPath] = postBTSPath(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -11132,6 +11329,37 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: GclAssume = r.getOrElse(o)
     val postR: MOption[GclAssume] = postGclAssume(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): MOption[BTSBLESSAnnexClause] = {
+    val preR: PreResult[BTSBLESSAnnexClause] = preBTSBLESSAnnexClause(o)
+    val r: MOption[BTSBLESSAnnexClause] = if (preR.continu) {
+      val o2: BTSBLESSAnnexClause = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, BTSAssertion]] = transformISZ(o2.assertions, transformBTSAssertion _)
+      val r1: MOption[Option[BTSAssertion]] = transformOption(o2.invariant, transformBTSAssertion _)
+      val r2: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.variables, transformBTSVariableDeclaration _)
+      val r3: MOption[IS[Z, BTSStateDeclaration]] = transformISZ(o2.states, transformBTSStateDeclaration _)
+      val r4: MOption[IS[Z, BTSTransition]] = transformISZ(o2.transitions, transformBTSTransition _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(assertions = r0.getOrElse(o2.assertions), invariant = r1.getOrElse(o2.invariant), variables = r2.getOrElse(o2.variables), states = r3.getOrElse(o2.states), transitions = r4.getOrElse(o2.transitions)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSBLESSAnnexClause = r.getOrElse(o)
+    val postR: MOption[BTSBLESSAnnexClause] = postBTSBLESSAnnexClause(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

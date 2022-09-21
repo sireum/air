@@ -432,6 +432,7 @@ object JSON {
         case o: ErrorPropagation => return printErrorPropagation(o)
         case o: OtherAnnex => return printOtherAnnex(o)
         case o: GclSubclause => return printGclSubclause(o)
+        case o: BTSSubclauseBehaviorProvider => return printBTSSubclauseBehaviorProvider(o)
         case o: BTSBLESSAnnexClause => return printBTSBLESSAnnexClause(o)
       }
     }
@@ -461,8 +462,40 @@ object JSON {
 
     @pure def printBLESSAnnex(o: BLESSAnnex): ST = {
       o match {
+        case o: BTSSubclauseBehaviorProvider => return printBTSSubclauseBehaviorProvider(o)
         case o: BTSBLESSAnnexClause => return printBTSBLESSAnnexClause(o)
       }
+    }
+
+    @pure def printBTSSubclauseBehaviorProvider(o: BTSSubclauseBehaviorProvider): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSSubclauseBehaviorProvider""""),
+        ("values", printISZ(F, o.values, printBTSResource _))
+      ))
+    }
+
+    @pure def printBTSResource(o: BTSResource): ST = {
+      o match {
+        case o: BTSText => return printBTSText(o)
+        case o: BTSPath => return printBTSPath(o)
+      }
+    }
+
+    @pure def printBTSText(o: BTSText): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSText""""),
+        ("source", printString(o.source)),
+        ("filename", printOption(T, o.filename, printString _)),
+        ("overwrite", printB(o.overwrite))
+      ))
+    }
+
+    @pure def printBTSPath(o: BTSPath): ST = {
+      return printObject(ISZ(
+        ("type", st""""BTSPath""""),
+        ("path", printString(o.path)),
+        ("overwrite", printB(o.overwrite))
+      ))
     }
 
     @pure def printBTSBLESSAnnexClause(o: BTSBLESSAnnexClause): ST = {
@@ -3931,7 +3964,7 @@ object JSON {
     }
 
     def parseAnnexClause(): AnnexClause = {
-      val t = parser.parseObjectTypes(ISZ("SmfClause", "SmfClassification", "SmfDeclass", "SmfType", "ErrorTypeDef", "ErrorAliasDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "AllCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation", "OtherAnnex", "GclSubclause", "BTSBLESSAnnexClause"))
+      val t = parser.parseObjectTypes(ISZ("SmfClause", "SmfClassification", "SmfDeclass", "SmfType", "ErrorTypeDef", "ErrorAliasDef", "ErrorTypeSetDef", "BehaveStateMachine", "ErrorEvent", "ErrorState", "ErrorTransition", "ConditionTrigger", "AndCondition", "OrCondition", "AllCondition", "OrMoreCondition", "OrLessCondition", "Emv2Clause", "Emv2Propagation", "Emv2Flow", "Emv2BehaviorSection", "ErrorPropagation", "OtherAnnex", "GclSubclause", "BTSSubclauseBehaviorProvider", "BTSBLESSAnnexClause"))
       t.native match {
         case "SmfClause" => val r = parseSmfClauseT(T); return r
         case "SmfClassification" => val r = parseSmfClassificationT(T); return r
@@ -3957,6 +3990,7 @@ object JSON {
         case "ErrorPropagation" => val r = parseErrorPropagationT(T); return r
         case "OtherAnnex" => val r = parseOtherAnnexT(T); return r
         case "GclSubclause" => val r = parseGclSubclauseT(T); return r
+        case "BTSSubclauseBehaviorProvider" => val r = parseBTSSubclauseBehaviorProviderT(T); return r
         case "BTSBLESSAnnexClause" => val r = parseBTSBLESSAnnexClauseT(T); return r
         case _ => val r = parseBTSBLESSAnnexClauseT(T); return r
       }
@@ -4004,11 +4038,75 @@ object JSON {
     }
 
     def parseBLESSAnnex(): BLESSAnnex = {
-      val t = parser.parseObjectTypes(ISZ("BTSBLESSAnnexClause"))
+      val t = parser.parseObjectTypes(ISZ("BTSSubclauseBehaviorProvider", "BTSBLESSAnnexClause"))
       t.native match {
+        case "BTSSubclauseBehaviorProvider" => val r = parseBTSSubclauseBehaviorProviderT(T); return r
         case "BTSBLESSAnnexClause" => val r = parseBTSBLESSAnnexClauseT(T); return r
         case _ => val r = parseBTSBLESSAnnexClauseT(T); return r
       }
+    }
+
+    def parseBTSSubclauseBehaviorProvider(): BTSSubclauseBehaviorProvider = {
+      val r = parseBTSSubclauseBehaviorProviderT(F)
+      return r
+    }
+
+    def parseBTSSubclauseBehaviorProviderT(typeParsed: B): BTSSubclauseBehaviorProvider = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSSubclauseBehaviorProvider")
+      }
+      parser.parseObjectKey("values")
+      val values = parser.parseISZ(parseBTSResource _)
+      parser.parseObjectNext()
+      return BTSSubclauseBehaviorProvider(values)
+    }
+
+    def parseBTSResource(): BTSResource = {
+      val t = parser.parseObjectTypes(ISZ("BTSText", "BTSPath"))
+      t.native match {
+        case "BTSText" => val r = parseBTSTextT(T); return r
+        case "BTSPath" => val r = parseBTSPathT(T); return r
+        case _ => val r = parseBTSPathT(T); return r
+      }
+    }
+
+    def parseBTSText(): BTSText = {
+      val r = parseBTSTextT(F)
+      return r
+    }
+
+    def parseBTSTextT(typeParsed: B): BTSText = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSText")
+      }
+      parser.parseObjectKey("source")
+      val source = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("filename")
+      val filename = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("overwrite")
+      val overwrite = parser.parseB()
+      parser.parseObjectNext()
+      return BTSText(source, filename, overwrite)
+    }
+
+    def parseBTSPath(): BTSPath = {
+      val r = parseBTSPathT(F)
+      return r
+    }
+
+    def parseBTSPathT(typeParsed: B): BTSPath = {
+      if (!typeParsed) {
+        parser.parseObjectType("BTSPath")
+      }
+      parser.parseObjectKey("path")
+      val path = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("overwrite")
+      val overwrite = parser.parseB()
+      parser.parseObjectNext()
+      return BTSPath(path, overwrite)
     }
 
     def parseBTSBLESSAnnexClause(): BTSBLESSAnnexClause = {
@@ -10142,6 +10240,78 @@ object JSON {
       return r
     }
     val r = to(s, fBLESSAnnex _)
+    return r
+  }
+
+  def fromBTSSubclauseBehaviorProvider(o: BTSSubclauseBehaviorProvider, isCompact: B): String = {
+    val st = Printer.printBTSSubclauseBehaviorProvider(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSSubclauseBehaviorProvider(s: String): Either[BTSSubclauseBehaviorProvider, Json.ErrorMsg] = {
+    def fBTSSubclauseBehaviorProvider(parser: Parser): BTSSubclauseBehaviorProvider = {
+      val r = parser.parseBTSSubclauseBehaviorProvider()
+      return r
+    }
+    val r = to(s, fBTSSubclauseBehaviorProvider _)
+    return r
+  }
+
+  def fromBTSResource(o: BTSResource, isCompact: B): String = {
+    val st = Printer.printBTSResource(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSResource(s: String): Either[BTSResource, Json.ErrorMsg] = {
+    def fBTSResource(parser: Parser): BTSResource = {
+      val r = parser.parseBTSResource()
+      return r
+    }
+    val r = to(s, fBTSResource _)
+    return r
+  }
+
+  def fromBTSText(o: BTSText, isCompact: B): String = {
+    val st = Printer.printBTSText(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSText(s: String): Either[BTSText, Json.ErrorMsg] = {
+    def fBTSText(parser: Parser): BTSText = {
+      val r = parser.parseBTSText()
+      return r
+    }
+    val r = to(s, fBTSText _)
+    return r
+  }
+
+  def fromBTSPath(o: BTSPath, isCompact: B): String = {
+    val st = Printer.printBTSPath(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toBTSPath(s: String): Either[BTSPath, Json.ErrorMsg] = {
+    def fBTSPath(parser: Parser): BTSPath = {
+      val r = parser.parseBTSPath()
+      return r
+    }
+    val r = to(s, fBTSPath _)
     return r
   }
 

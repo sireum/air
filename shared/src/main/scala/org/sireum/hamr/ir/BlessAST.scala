@@ -51,6 +51,21 @@ transitions=Transitions?
 ;
 */
 
+// Alternative top-level where the behavior code for a thread is provided via an external library.
+@datatype class BTSSubclauseBehaviorProvider (values: ISZ[BTSResource]) extends BLESSAnnex
+
+@sig trait BTSResource {
+  def overwrite: B
+}
+
+@datatype class BTSText (val source: String,
+                         val filename: Option[String],
+                         val overwrite: B) extends BTSResource
+
+@datatype class BTSPath (val path: String,
+                         val overwrite: B ) extends BTSResource
+
+
 // Top-level structure of a BLESS transition system
 @datatype class BTSBLESSAnnexClause (
                                       // boolean setting indicating if proof is intended or not
@@ -67,7 +82,6 @@ transitions=Transitions?
                                       // transitions of the transition system
                                       transitions: ISZ[BTSTransition]
                                     ) extends BLESSAnnex
-
 
 /*
 InvariantClause returns InvariantClause:

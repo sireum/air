@@ -13415,8 +13415,9 @@ import MTransformer._
       val r0: MOption[BTSNamedAssertion] = transformBTSNamedAssertion(o2.label)
       val r1: MOption[IS[Z, BTSActualParameter]] = transformISZ(o2.params, transformBTSActualParameter _)
       val r2: MOption[Option[BTSExp]] = transformOption(o2.actual_parameter, transformBTSExp _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(label = r0.getOrElse(o2.label), params = r1.getOrElse(o2.params), actual_parameter = r2.getOrElse(o2.actual_parameter)))
+      val r3: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(label = r0.getOrElse(o2.label), params = r1.getOrElse(o2.params), actual_parameter = r2.getOrElse(o2.actual_parameter), typed = r3.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -13472,8 +13473,9 @@ import MTransformer._
       val r1: MOption[Option[BTSRange]] = transformOption(o2.range, transformBTSRange _)
       val r2: MOption[Option[BTSExp]] = transformOption(o2.which, transformBTSExp _)
       val r3: MOption[BTSExp] = transformBTSExp(o2.predicate)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-        MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), predicate = r3.getOrElse(o2.predicate)))
+      val r4: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), predicate = r3.getOrElse(o2.predicate), typed = r4.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -13502,8 +13504,9 @@ import MTransformer._
       val r1: MOption[Option[BTSRange]] = transformOption(o2.range, transformBTSRange _)
       val r2: MOption[Option[BTSExp]] = transformOption(o2.which, transformBTSExp _)
       val r3: MOption[BTSExp] = transformBTSExp(o2.predicate)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-        MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), predicate = r3.getOrElse(o2.predicate)))
+      val r4: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), predicate = r3.getOrElse(o2.predicate), typed = r4.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -13532,8 +13535,9 @@ import MTransformer._
       val r1: MOption[Option[BTSRange]] = transformOption(o2.range, transformBTSRange _)
       val r2: MOption[Option[BTSExp]] = transformOption(o2.which, transformBTSExp _)
       val r3: MOption[BTSExp] = transformBTSExp(o2.numeric_expression)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-        MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), numeric_expression = r3.getOrElse(o2.numeric_expression)))
+      val r4: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), numeric_expression = r3.getOrElse(o2.numeric_expression), typed = r4.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -13562,8 +13566,9 @@ import MTransformer._
       val r1: MOption[Option[BTSRange]] = transformOption(o2.range, transformBTSRange _)
       val r2: MOption[Option[BTSExp]] = transformOption(o2.which, transformBTSExp _)
       val r3: MOption[BTSExp] = transformBTSExp(o2.numeric_expression)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-        MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), numeric_expression = r3.getOrElse(o2.numeric_expression)))
+      val r4: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), numeric_expression = r3.getOrElse(o2.numeric_expression), typed = r4.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -13592,8 +13597,9 @@ import MTransformer._
       val r1: MOption[Option[BTSRange]] = transformOption(o2.range, transformBTSRange _)
       val r2: MOption[Option[BTSExp]] = transformOption(o2.which, transformBTSExp _)
       val r3: MOption[BTSExp] = transformBTSExp(o2.counted)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-        MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), counted = r3.getOrElse(o2.counted)))
+      val r4: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), counted = r3.getOrElse(o2.counted), typed = r4.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -13649,8 +13655,9 @@ import MTransformer._
       val r0: MOption[BTSExp] = transformBTSExp(o2.subject)
       val r1: MOption[Option[BTSExp]] = transformOption(o2.at, transformBTSExp _)
       val r2: MOption[Option[BTSExp]] = transformOption(o2.caret, transformBTSExp _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(subject = r0.getOrElse(o2.subject), at = r1.getOrElse(o2.at), caret = r2.getOrElse(o2.caret)))
+      val r3: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(subject = r0.getOrElse(o2.subject), at = r1.getOrElse(o2.at), caret = r2.getOrElse(o2.caret), typed = r3.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -13678,8 +13685,9 @@ import MTransformer._
       val r0: MOption[BTSExp] = transformBTSExp(o2.pred)
       val r1: MOption[BTSExp] = transformBTSExp(o2.t)
       val r2: MOption[BTSExp] = transformBTSExp(o2.f)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(pred = r0.getOrElse(o2.pred), t = r1.getOrElse(o2.t), f = r2.getOrElse(o2.f)))
+      val r3: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(pred = r0.getOrElse(o2.pred), t = r1.getOrElse(o2.t), f = r2.getOrElse(o2.f), typed = r3.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -13705,8 +13713,9 @@ import MTransformer._
       val o2: BTSCaseExpression = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[IS[Z, BTSCaseChoice]] = transformISZ(o2.cc, transformBTSCaseChoice _)
-      if (hasChanged || r0.nonEmpty)
-        MSome(o2(cc = r0.getOrElse(o2.cc)))
+      val r1: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(cc = r0.getOrElse(o2.cc), typed = r1.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -13761,8 +13770,9 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[BTSType] = transformBTSType(o2.record_type)
       val r1: MOption[IS[Z, BTSRecordValue]] = transformISZ(o2.record_value, transformBTSRecordValue _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(record_type = r0.getOrElse(o2.record_type), record_value = r1.getOrElse(o2.record_value)))
+      val r2: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(record_type = r0.getOrElse(o2.record_type), record_value = r1.getOrElse(o2.record_value), typed = r2.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -14506,8 +14516,9 @@ import MTransformer._
           val r0: MOption[BTSNamedAssertion] = transformBTSNamedAssertion(o2.label)
           val r1: MOption[IS[Z, BTSActualParameter]] = transformISZ(o2.params, transformBTSActualParameter _)
           val r2: MOption[Option[BTSExp]] = transformOption(o2.actual_parameter, transformBTSExp _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(label = r0.getOrElse(o2.label), params = r1.getOrElse(o2.params), actual_parameter = r2.getOrElse(o2.actual_parameter)))
+          val r3: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(label = r0.getOrElse(o2.label), params = r1.getOrElse(o2.params), actual_parameter = r2.getOrElse(o2.actual_parameter), typed = r3.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSUniversalQuantification =>
@@ -14515,8 +14526,9 @@ import MTransformer._
           val r1: MOption[Option[BTSRange]] = transformOption(o2.range, transformBTSRange _)
           val r2: MOption[Option[BTSExp]] = transformOption(o2.which, transformBTSExp _)
           val r3: MOption[BTSExp] = transformBTSExp(o2.predicate)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), predicate = r3.getOrElse(o2.predicate)))
+          val r4: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), predicate = r3.getOrElse(o2.predicate), typed = r4.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSExistentialQuantification =>
@@ -14524,8 +14536,9 @@ import MTransformer._
           val r1: MOption[Option[BTSRange]] = transformOption(o2.range, transformBTSRange _)
           val r2: MOption[Option[BTSExp]] = transformOption(o2.which, transformBTSExp _)
           val r3: MOption[BTSExp] = transformBTSExp(o2.predicate)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), predicate = r3.getOrElse(o2.predicate)))
+          val r4: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), predicate = r3.getOrElse(o2.predicate), typed = r4.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSSumQuantification =>
@@ -14533,8 +14546,9 @@ import MTransformer._
           val r1: MOption[Option[BTSRange]] = transformOption(o2.range, transformBTSRange _)
           val r2: MOption[Option[BTSExp]] = transformOption(o2.which, transformBTSExp _)
           val r3: MOption[BTSExp] = transformBTSExp(o2.numeric_expression)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), numeric_expression = r3.getOrElse(o2.numeric_expression)))
+          val r4: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), numeric_expression = r3.getOrElse(o2.numeric_expression), typed = r4.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSProductQuantification =>
@@ -14542,8 +14556,9 @@ import MTransformer._
           val r1: MOption[Option[BTSRange]] = transformOption(o2.range, transformBTSRange _)
           val r2: MOption[Option[BTSExp]] = transformOption(o2.which, transformBTSExp _)
           val r3: MOption[BTSExp] = transformBTSExp(o2.numeric_expression)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), numeric_expression = r3.getOrElse(o2.numeric_expression)))
+          val r4: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), numeric_expression = r3.getOrElse(o2.numeric_expression), typed = r4.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSCountingQuantification =>
@@ -14551,96 +14566,110 @@ import MTransformer._
           val r1: MOption[Option[BTSRange]] = transformOption(o2.range, transformBTSRange _)
           val r2: MOption[Option[BTSExp]] = transformOption(o2.which, transformBTSExp _)
           val r3: MOption[BTSExp] = transformBTSExp(o2.counted)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), counted = r3.getOrElse(o2.counted)))
+          val r4: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(variables = r0.getOrElse(o2.variables), range = r1.getOrElse(o2.range), which = r2.getOrElse(o2.which), counted = r3.getOrElse(o2.counted), typed = r4.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSTimedExpression =>
           val r0: MOption[BTSExp] = transformBTSExp(o2.subject)
           val r1: MOption[Option[BTSExp]] = transformOption(o2.at, transformBTSExp _)
           val r2: MOption[Option[BTSExp]] = transformOption(o2.caret, transformBTSExp _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(subject = r0.getOrElse(o2.subject), at = r1.getOrElse(o2.at), caret = r2.getOrElse(o2.caret)))
+          val r3: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(subject = r0.getOrElse(o2.subject), at = r1.getOrElse(o2.at), caret = r2.getOrElse(o2.caret), typed = r3.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSConditionalExpression =>
           val r0: MOption[BTSExp] = transformBTSExp(o2.pred)
           val r1: MOption[BTSExp] = transformBTSExp(o2.t)
           val r2: MOption[BTSExp] = transformBTSExp(o2.f)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(pred = r0.getOrElse(o2.pred), t = r1.getOrElse(o2.t), f = r2.getOrElse(o2.f)))
+          val r3: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(pred = r0.getOrElse(o2.pred), t = r1.getOrElse(o2.t), f = r2.getOrElse(o2.f), typed = r3.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSCaseExpression =>
           val r0: MOption[IS[Z, BTSCaseChoice]] = transformISZ(o2.cc, transformBTSCaseChoice _)
-          if (hasChanged || r0.nonEmpty)
-            MSome(o2(cc = r0.getOrElse(o2.cc)))
+          val r1: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(cc = r0.getOrElse(o2.cc), typed = r1.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSRecordTerm =>
           val r0: MOption[BTSType] = transformBTSType(o2.record_type)
           val r1: MOption[IS[Z, BTSRecordValue]] = transformISZ(o2.record_value, transformBTSRecordValue _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(record_type = r0.getOrElse(o2.record_type), record_value = r1.getOrElse(o2.record_value)))
+          val r2: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(record_type = r0.getOrElse(o2.record_type), record_value = r1.getOrElse(o2.record_value), typed = r2.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSExponentiation =>
           val r0: MOption[BTSExp] = transformBTSExp(o2.l)
           val r1: MOption[Option[BTSExp]] = transformOption(o2.r, transformBTSExp _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(l = r0.getOrElse(o2.l), r = r1.getOrElse(o2.r)))
+          val r2: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(l = r0.getOrElse(o2.l), r = r1.getOrElse(o2.r), typed = r2.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSUnaryExp =>
           val r0: MOption[BTSExp] = transformBTSExp(o2.exp)
-          if (hasChanged || r0.nonEmpty)
-            MSome(o2(exp = r0.getOrElse(o2.exp)))
+          val r1: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), typed = r1.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSBinaryExp =>
           val r0: MOption[BTSExp] = transformBTSExp(o2.lhs)
           val r1: MOption[BTSExp] = transformBTSExp(o2.rhs)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+          val r2: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs), typed = r2.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSLiteralExp =>
-          if (hasChanged)
-            MSome(o2)
+          val r0: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(typed = r0.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSNameExp =>
           val r0: MOption[Name] = transformName(o2.name)
-          if (hasChanged || r0.nonEmpty)
-            MSome(o2(name = r0.getOrElse(o2.name)))
+          val r1: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), typed = r1.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSIndexingExp =>
           val r0: MOption[BTSExp] = transformBTSExp(o2.exp)
           val r1: MOption[IS[Z, BTSExp]] = transformISZ(o2.indices, transformBTSExp _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(exp = r0.getOrElse(o2.exp), indices = r1.getOrElse(o2.indices)))
+          val r2: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), indices = r1.getOrElse(o2.indices), typed = r2.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSAccessExp =>
           val r0: MOption[BTSExp] = transformBTSExp(o2.exp)
-          if (hasChanged || r0.nonEmpty)
-            MSome(o2(exp = r0.getOrElse(o2.exp)))
+          val r1: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), typed = r1.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSFunctionCall =>
           val r0: MOption[Name] = transformName(o2.name)
           val r1: MOption[IS[Z, BTSFormalExpPair]] = transformISZ(o2.args, transformBTSFormalExpPair _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(name = r0.getOrElse(o2.name), args = r1.getOrElse(o2.args)))
+          val r2: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), args = r1.getOrElse(o2.args), typed = r2.getOrElse(o2.typed)))
           else
             MNone()
         case o2: BTSValue =>
           val r0: MOption[IS[Z, BTSFormalExpPair]] = transformISZ(o2.function_parameters, transformBTSFormalExpPair _)
           val r1: MOption[IS[Z, BTSIndexExpressionOrRange]] = transformISZ(o2.array_index, transformBTSIndexExpressionOrRange _)
           val r2: MOption[IS[Z, BTSPartialName]] = transformISZ(o2.pn, transformBTSPartialName _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(function_parameters = r0.getOrElse(o2.function_parameters), array_index = r1.getOrElse(o2.array_index), pn = r2.getOrElse(o2.pn)))
+          val r3: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(function_parameters = r0.getOrElse(o2.function_parameters), array_index = r1.getOrElse(o2.array_index), pn = r2.getOrElse(o2.pn), typed = r3.getOrElse(o2.typed)))
           else
             MNone()
       }
@@ -14669,8 +14698,9 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[BTSExp] = transformBTSExp(o2.l)
       val r1: MOption[Option[BTSExp]] = transformOption(o2.r, transformBTSExp _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(l = r0.getOrElse(o2.l), r = r1.getOrElse(o2.r)))
+      val r2: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(l = r0.getOrElse(o2.l), r = r1.getOrElse(o2.r), typed = r2.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -14696,8 +14726,9 @@ import MTransformer._
       val o2: BTSUnaryExp = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[BTSExp] = transformBTSExp(o2.exp)
-      if (hasChanged || r0.nonEmpty)
-        MSome(o2(exp = r0.getOrElse(o2.exp)))
+      val r1: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(exp = r0.getOrElse(o2.exp), typed = r1.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -14724,8 +14755,9 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[BTSExp] = transformBTSExp(o2.lhs)
       val r1: MOption[BTSExp] = transformBTSExp(o2.rhs)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
+      val r2: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs), typed = r2.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -14750,8 +14782,9 @@ import MTransformer._
     val r: MOption[BTSLiteralExp] = if (preR.continu) {
       val o2: BTSLiteralExp = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
+      val r0: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(typed = r0.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -14777,8 +14810,9 @@ import MTransformer._
       val o2: BTSNameExp = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[Name] = transformName(o2.name)
-      if (hasChanged || r0.nonEmpty)
-        MSome(o2(name = r0.getOrElse(o2.name)))
+      val r1: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), typed = r1.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -14805,8 +14839,9 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[BTSExp] = transformBTSExp(o2.exp)
       val r1: MOption[IS[Z, BTSExp]] = transformISZ(o2.indices, transformBTSExp _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(exp = r0.getOrElse(o2.exp), indices = r1.getOrElse(o2.indices)))
+      val r2: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(exp = r0.getOrElse(o2.exp), indices = r1.getOrElse(o2.indices), typed = r2.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -14832,8 +14867,9 @@ import MTransformer._
       val o2: BTSAccessExp = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[BTSExp] = transformBTSExp(o2.exp)
-      if (hasChanged || r0.nonEmpty)
-        MSome(o2(exp = r0.getOrElse(o2.exp)))
+      val r1: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(exp = r0.getOrElse(o2.exp), typed = r1.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -14860,8 +14896,9 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[Name] = transformName(o2.name)
       val r1: MOption[IS[Z, BTSFormalExpPair]] = transformISZ(o2.args, transformBTSFormalExpPair _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(name = r0.getOrElse(o2.name), args = r1.getOrElse(o2.args)))
+      val r2: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), args = r1.getOrElse(o2.args), typed = r2.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -14972,8 +15009,9 @@ import MTransformer._
       val r0: MOption[IS[Z, BTSFormalExpPair]] = transformISZ(o2.function_parameters, transformBTSFormalExpPair _)
       val r1: MOption[IS[Z, BTSIndexExpressionOrRange]] = transformISZ(o2.array_index, transformBTSIndexExpressionOrRange _)
       val r2: MOption[IS[Z, BTSPartialName]] = transformISZ(o2.pn, transformBTSPartialName _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(function_parameters = r0.getOrElse(o2.function_parameters), array_index = r1.getOrElse(o2.array_index), pn = r2.getOrElse(o2.pn)))
+      val r3: MOption[Option[BTSType]] = transformOption(o2.typed, transformBTSType _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(function_parameters = r0.getOrElse(o2.function_parameters), array_index = r1.getOrElse(o2.array_index), pn = r2.getOrElse(o2.pn), typed = r3.getOrElse(o2.typed)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {

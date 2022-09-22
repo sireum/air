@@ -207,7 +207,7 @@ RecordField :
 @enum object BTSRecordVariantUnion {
   'RECORD
   'VARIANT
-  'UNION
+//  'UNION
 }
 
 @datatype class BTSRecordField(label: String,
@@ -550,7 +550,8 @@ Invocation:
 @datatype class BTSInvocation(label: BTSNamedAssertion,
                               params: ISZ[BTSActualParameter],
                               actual_parameter: Option[BTSExp],
-                              val pos: Option[Position]) extends BTSExp
+                              val pos: Option[Position],
+                              val typed : Option[BTSType]) extends BTSExp
 
 /* Xtext
 ActualParameter:
@@ -574,7 +575,8 @@ UniversalQuantification:
                                            range: Option[BTSRange],
                                            which: Option[BTSExp],
                                            predicate: BTSExp,
-                                           val pos: Option[Position]) extends BTSExp
+                                           val pos: Option[Position],
+                                           val typed: Option[BTSType]) extends BTSExp
 
 /* Xtext
 ExistentialQuantification:
@@ -586,7 +588,8 @@ ExistentialQuantification:
                                              range: Option[BTSRange],
                                              which: Option[BTSExp],
                                              predicate: BTSExp,
-                                             val pos: Option[Position]) extends BTSExp
+                                             val pos: Option[Position],
+                                             val typed: Option[BTSType]) extends BTSExp
 
 /* Xtext
 SumQuantification:
@@ -598,7 +601,8 @@ SumQuantification:
                                      range: Option[BTSRange],
                                      which: Option[BTSExp],
                                      numeric_expression: BTSExp,
-                                     val pos: Option[Position]) extends BTSExp
+                                     val pos: Option[Position],
+                                     val typed: Option[BTSType]) extends BTSExp
 /* Xtext
 ProductQuantification:
   'product' variables=LogicVariables
@@ -609,7 +613,8 @@ ProductQuantification:
                                          range: Option[BTSRange],
                                          which: Option[BTSExp],
                                          numeric_expression: BTSExp,
-                                         val pos: Option[Position]) extends BTSExp
+                                         val pos: Option[Position],
+                                         val typed: Option[BTSType]) extends BTSExp
 
 /* Xtext
 CountingQuantification:
@@ -621,7 +626,8 @@ CountingQuantification:
                                           range: Option[BTSRange],
                                           which: Option[BTSExp],
                                           counted: BTSExp,
-                                          val pos: Option[Position]) extends BTSExp
+                                          val pos: Option[Position],
+                                          val typed: Option[BTSType]) extends BTSExp
 /* Xtext
 Range:
 	lower_bound=Subexpression sym=RangeSymbol upper_bound=Subexpression
@@ -657,7 +663,8 @@ TimedSubject:
                                    tick: B,
                                    at: Option[BTSExp],
                                    caret: Option[BTSExp],
-                                   val pos: Option[Position]) extends BTSExp
+                                   val pos: Option[Position],
+                                   val typed: Option[BTSType]) extends BTSExp
 /* Xtext
 ConditionalExpression:
 	'(' 'if' pred=Expression 'then' t=Expression 'else' f=Expression ')' ;
@@ -665,7 +672,8 @@ ConditionalExpression:
 @datatype class BTSConditionalExpression(pred: BTSExp,
                                          t: BTSExp,
                                          f: BTSExp,
-                                         val pos: Option[Position]) extends BTSExp
+                                         val pos: Option[Position],
+                                         val typed: Option[BTSType]) extends BTSExp
 
 /*  Xtext
 ParenthesizedSubexpression:
@@ -683,7 +691,8 @@ CaseChoice returns CaseChoice:
 	'(' be=BooleanExpression '->' exp=Expression ')'  ;
  */
 @datatype class BTSCaseExpression(cc: ISZ[BTSCaseChoice],
-                                         val pos: Option[Position]) extends BTSExp
+                                         val pos: Option[Position],
+                                  val typed: Option[BTSType]) extends BTSExp
 
 @datatype class BTSCaseChoice(be: BTSExp, exp: BTSExp)
 
@@ -693,7 +702,8 @@ RecordTerm:
  */
 @datatype class BTSRecordTerm(record_type: BTSType,
                               record_value: ISZ[BTSRecordValue],
-                              val pos: Option[Position]) extends BTSExp
+                              val pos: Option[Position],
+                              val typed: Option[BTSType]) extends BTSExp
 
 /* Xtext
 RecordValue:
@@ -788,6 +798,8 @@ RecordValue:
   // adding pos because 1) because it will eventually be useful, and
   //                    2) a quick way to ensure hash values are unique -- assuming pos is populated
   @pure def pos: Option[Position]
+
+  @pure def typed: Option[BTSType]
 }
 
 /* Xtext
@@ -795,11 +807,13 @@ Exp:
 	l=Subexpression ( sym='**' r=Subexpression )? ;
  */
 @datatype class BTSExponentiation(l:BTSExp, r: Option[BTSExp],
-                                  val pos: Option[Position]) extends BTSExp
+                                  val pos: Option[Position],
+                                  val typed: Option[BTSType]) extends BTSExp
 
 @datatype class BTSUnaryExp(op: BTSUnaryOp.Type,
                             exp: BTSExp,
-                            val pos: Option[Position]) extends BTSExp
+                            val pos: Option[Position],
+                            val typed: Option[BTSType]) extends BTSExp
 
 @enum object BTSUnaryOp {
   'ABS
@@ -810,7 +824,8 @@ Exp:
 @datatype class BTSBinaryExp(op: BTSBinaryOp.Type,
                              lhs: BTSExp,
                              rhs: BTSExp,
-                             val pos: Option[Position]) extends BTSExp
+                             val pos: Option[Position],
+                             val typed: Option[BTSType]) extends BTSExp
 
 @enum object BTSBinaryOp {
   'AND
@@ -848,22 +863,27 @@ Exp:
 
 @datatype class BTSLiteralExp(typ: BTSLiteralType.Type,
                               exp: String,
-                              val pos: Option[Position]) extends BTSExp
+                              val pos: Option[Position],
+                              val typed: Option[BTSType]) extends BTSExp
 
 @datatype class BTSNameExp(name: Name,
-                           val pos: Option[Position]) extends BTSExp
+                           val pos: Option[Position],
+                           val typed: Option[BTSType]) extends BTSExp
 
 @datatype class BTSIndexingExp(exp: BTSExp,
                                indices: ISZ[BTSExp],
-                               val pos: Option[Position]) extends BTSExp
+                               val pos: Option[Position],
+                               val typed: Option[BTSType]) extends BTSExp
 
 @datatype class BTSAccessExp(exp: BTSExp,
                              attributeName: String,
-                             val pos: Option[Position]) extends BTSExp
+                             val pos: Option[Position],
+                             val typed: Option[BTSType]) extends BTSExp
 
 @datatype class BTSFunctionCall(name: Name,
                                 args: ISZ[BTSFormalExpPair],
-                                val pos: Option[Position]) extends BTSExp
+                                val pos: Option[Position],
+                                val typed: Option[BTSType]) extends BTSExp
 
 @datatype class BTSFormalExpPair(paramName: Option[Name],
                                  exp: Option[BTSExp],
@@ -910,7 +930,8 @@ ValueName:
   function_parameters: ISZ[BTSFormalExpPair],
   array_index: ISZ[BTSIndexExpressionOrRange],
   pn: ISZ[BTSPartialName],
-  val pos: Option[Position]) extends BTSExp
+  val pos: Option[Position],
+  val typed: Option[BTSType]) extends BTSExp
 
 //BRL
 @datatype class BTSIndexExpressionOrRange(lhs: BTSExp,

@@ -569,7 +569,6 @@ object JSON {
       val value: String = o match {
         case BTSRecordVariantUnion.RECORD => "RECORD"
         case BTSRecordVariantUnion.VARIANT => "VARIANT"
-        case BTSRecordVariantUnion.UNION => "UNION"
       }
       return printObject(ISZ(
         ("type", printString("BTSRecordVariantUnion")),
@@ -864,7 +863,8 @@ object JSON {
         ("label", printBTSNamedAssertion(o.label)),
         ("params", printISZ(F, o.params, printBTSActualParameter _)),
         ("actual_parameter", printOption(F, o.actual_parameter, printBTSExp _)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -884,7 +884,8 @@ object JSON {
         ("range", printOption(F, o.range, printBTSRange _)),
         ("which", printOption(F, o.which, printBTSExp _)),
         ("predicate", printBTSExp(o.predicate)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -895,7 +896,8 @@ object JSON {
         ("range", printOption(F, o.range, printBTSRange _)),
         ("which", printOption(F, o.which, printBTSExp _)),
         ("predicate", printBTSExp(o.predicate)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -906,7 +908,8 @@ object JSON {
         ("range", printOption(F, o.range, printBTSRange _)),
         ("which", printOption(F, o.which, printBTSExp _)),
         ("numeric_expression", printBTSExp(o.numeric_expression)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -917,7 +920,8 @@ object JSON {
         ("range", printOption(F, o.range, printBTSRange _)),
         ("which", printOption(F, o.which, printBTSExp _)),
         ("numeric_expression", printBTSExp(o.numeric_expression)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -928,7 +932,8 @@ object JSON {
         ("range", printOption(F, o.range, printBTSRange _)),
         ("which", printOption(F, o.which, printBTSExp _)),
         ("counted", printBTSExp(o.counted)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -962,7 +967,8 @@ object JSON {
         ("tick", printB(o.tick)),
         ("at", printOption(F, o.at, printBTSExp _)),
         ("caret", printOption(F, o.caret, printBTSExp _)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -972,7 +978,8 @@ object JSON {
         ("pred", printBTSExp(o.pred)),
         ("t", printBTSExp(o.t)),
         ("f", printBTSExp(o.f)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -980,7 +987,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""BTSCaseExpression""""),
         ("cc", printISZ(F, o.cc, printBTSCaseChoice _)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -997,7 +1005,8 @@ object JSON {
         ("type", st""""BTSRecordTerm""""),
         ("record_type", printBTSType(o.record_type)),
         ("record_value", printISZ(F, o.record_value, printBTSRecordValue _)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -1212,7 +1221,8 @@ object JSON {
         ("type", st""""BTSExponentiation""""),
         ("l", printBTSExp(o.l)),
         ("r", printOption(F, o.r, printBTSExp _)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -1221,7 +1231,8 @@ object JSON {
         ("type", st""""BTSUnaryExp""""),
         ("op", printBTSUnaryOpType(o.op)),
         ("exp", printBTSExp(o.exp)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -1243,7 +1254,8 @@ object JSON {
         ("op", printBTSBinaryOpType(o.op)),
         ("lhs", printBTSExp(o.lhs)),
         ("rhs", printBTSExp(o.rhs)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -1294,7 +1306,8 @@ object JSON {
         ("type", st""""BTSLiteralExp""""),
         ("typ", printBTSLiteralTypeType(o.typ)),
         ("exp", printString(o.exp)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -1302,7 +1315,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""BTSNameExp""""),
         ("name", printName(o.name)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -1311,7 +1325,8 @@ object JSON {
         ("type", st""""BTSIndexingExp""""),
         ("exp", printBTSExp(o.exp)),
         ("indices", printISZ(F, o.indices, printBTSExp _)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -1320,7 +1335,8 @@ object JSON {
         ("type", st""""BTSAccessExp""""),
         ("exp", printBTSExp(o.exp)),
         ("attributeName", printString(o.attributeName)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -1329,7 +1345,8 @@ object JSON {
         ("type", st""""BTSFunctionCall""""),
         ("name", printName(o.name)),
         ("args", printISZ(F, o.args, printBTSFormalExpPair _)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -1367,7 +1384,8 @@ object JSON {
         ("function_parameters", printISZ(F, o.function_parameters, printBTSFormalExpPair _)),
         ("array_index", printISZ(F, o.array_index, printBTSIndexExpressionOrRange _)),
         ("pn", printISZ(F, o.pn, printBTSPartialName _)),
-        ("pos", printOption(F, o.pos, printPosition _))
+        ("pos", printOption(F, o.pos, printPosition _)),
+        ("typed", printOption(F, o.typed, printBTSType _))
       ))
     }
 
@@ -5265,7 +5283,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSInvocation(label, params, actual_parameter, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSInvocation(label, params, actual_parameter, pos, typed)
     }
 
     def parseBTSActualParameter(): BTSActualParameter = {
@@ -5313,7 +5334,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSUniversalQuantification(variables, range, which, predicate, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSUniversalQuantification(variables, range, which, predicate, pos, typed)
     }
 
     def parseBTSExistentialQuantification(): BTSExistentialQuantification = {
@@ -5340,7 +5364,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSExistentialQuantification(variables, range, which, predicate, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSExistentialQuantification(variables, range, which, predicate, pos, typed)
     }
 
     def parseBTSSumQuantification(): BTSSumQuantification = {
@@ -5367,7 +5394,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSSumQuantification(variables, range, which, numeric_expression, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSSumQuantification(variables, range, which, numeric_expression, pos, typed)
     }
 
     def parseBTSProductQuantification(): BTSProductQuantification = {
@@ -5394,7 +5424,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSProductQuantification(variables, range, which, numeric_expression, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSProductQuantification(variables, range, which, numeric_expression, pos, typed)
     }
 
     def parseBTSCountingQuantification(): BTSCountingQuantification = {
@@ -5421,7 +5454,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSCountingQuantification(variables, range, which, counted, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSCountingQuantification(variables, range, which, counted, pos, typed)
     }
 
     def parseBTSRange(): BTSRange = {
@@ -5493,7 +5529,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSTimedExpression(subject, tick, at, caret, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSTimedExpression(subject, tick, at, caret, pos, typed)
     }
 
     def parseBTSConditionalExpression(): BTSConditionalExpression = {
@@ -5517,7 +5556,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSConditionalExpression(pred, t, f, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSConditionalExpression(pred, t, f, pos, typed)
     }
 
     def parseBTSCaseExpression(): BTSCaseExpression = {
@@ -5535,7 +5577,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSCaseExpression(cc, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSCaseExpression(cc, pos, typed)
     }
 
     def parseBTSCaseChoice(): BTSCaseChoice = {
@@ -5574,7 +5619,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSRecordTerm(record_type, record_value, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSRecordTerm(record_type, record_value, pos, typed)
     }
 
     def parseBTSRecordValue(): BTSRecordValue = {
@@ -5977,7 +6025,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSExponentiation(l, r, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSExponentiation(l, r, pos, typed)
     }
 
     def parseBTSUnaryExp(): BTSUnaryExp = {
@@ -5998,7 +6049,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSUnaryExp(op, exp, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSUnaryExp(op, exp, pos, typed)
     }
 
     def parseBTSUnaryOpType(): BTSUnaryOp.Type = {
@@ -6043,7 +6097,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSBinaryExp(op, lhs, rhs, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSBinaryExp(op, lhs, rhs, pos, typed)
     }
 
     def parseBTSBinaryOpType(): BTSBinaryOp.Type = {
@@ -6106,7 +6163,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSLiteralExp(typ, exp, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSLiteralExp(typ, exp, pos, typed)
     }
 
     def parseBTSNameExp(): BTSNameExp = {
@@ -6124,7 +6184,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSNameExp(name, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSNameExp(name, pos, typed)
     }
 
     def parseBTSIndexingExp(): BTSIndexingExp = {
@@ -6145,7 +6208,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSIndexingExp(exp, indices, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSIndexingExp(exp, indices, pos, typed)
     }
 
     def parseBTSAccessExp(): BTSAccessExp = {
@@ -6166,7 +6232,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSAccessExp(exp, attributeName, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSAccessExp(exp, attributeName, pos, typed)
     }
 
     def parseBTSFunctionCall(): BTSFunctionCall = {
@@ -6187,7 +6256,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSFunctionCall(name, args, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSFunctionCall(name, args, pos, typed)
     }
 
     def parseBTSFormalExpPair(): BTSFormalExpPair = {
@@ -6277,7 +6349,10 @@ object JSON {
       parser.parseObjectKey("pos")
       val pos = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return BTSValue(identifier, function_parameters, array_index, pn, pos)
+      parser.parseObjectKey("typed")
+      val typed = parser.parseOption(parseBTSType _)
+      parser.parseObjectNext()
+      return BTSValue(identifier, function_parameters, array_index, pn, pos, typed)
     }
 
     def parseBTSIndexExpressionOrRange(): BTSIndexExpressionOrRange = {

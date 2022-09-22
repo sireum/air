@@ -1227,6 +1227,7 @@ object MsgPack {
       writer.writeISZ(o.params, writeBTSActualParameter _)
       writer.writeOption(o.actual_parameter, writeBTSExp _)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSActualParameter(o: BTSActualParameter): Unit = {
@@ -1243,6 +1244,7 @@ object MsgPack {
       writer.writeOption(o.which, writeBTSExp _)
       writeBTSExp(o.predicate)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSExistentialQuantification(o: BTSExistentialQuantification): Unit = {
@@ -1252,6 +1254,7 @@ object MsgPack {
       writer.writeOption(o.which, writeBTSExp _)
       writeBTSExp(o.predicate)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSSumQuantification(o: BTSSumQuantification): Unit = {
@@ -1261,6 +1264,7 @@ object MsgPack {
       writer.writeOption(o.which, writeBTSExp _)
       writeBTSExp(o.numeric_expression)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSProductQuantification(o: BTSProductQuantification): Unit = {
@@ -1270,6 +1274,7 @@ object MsgPack {
       writer.writeOption(o.which, writeBTSExp _)
       writeBTSExp(o.numeric_expression)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSCountingQuantification(o: BTSCountingQuantification): Unit = {
@@ -1279,6 +1284,7 @@ object MsgPack {
       writer.writeOption(o.which, writeBTSExp _)
       writeBTSExp(o.counted)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSRange(o: BTSRange): Unit = {
@@ -1300,6 +1306,7 @@ object MsgPack {
       writer.writeOption(o.at, writeBTSExp _)
       writer.writeOption(o.caret, writeBTSExp _)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSConditionalExpression(o: BTSConditionalExpression): Unit = {
@@ -1308,12 +1315,14 @@ object MsgPack {
       writeBTSExp(o.t)
       writeBTSExp(o.f)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSCaseExpression(o: BTSCaseExpression): Unit = {
       writer.writeZ(Constants.BTSCaseExpression)
       writer.writeISZ(o.cc, writeBTSCaseChoice _)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSCaseChoice(o: BTSCaseChoice): Unit = {
@@ -1327,6 +1336,7 @@ object MsgPack {
       writeBTSType(o.record_type)
       writer.writeISZ(o.record_value, writeBTSRecordValue _)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSRecordValue(o: BTSRecordValue): Unit = {
@@ -1503,6 +1513,7 @@ object MsgPack {
       writeBTSExp(o.l)
       writer.writeOption(o.r, writeBTSExp _)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSUnaryExp(o: BTSUnaryExp): Unit = {
@@ -1510,6 +1521,7 @@ object MsgPack {
       writeBTSUnaryOpType(o.op)
       writeBTSExp(o.exp)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSUnaryOpType(o: BTSUnaryOp.Type): Unit = {
@@ -1522,6 +1534,7 @@ object MsgPack {
       writeBTSExp(o.lhs)
       writeBTSExp(o.rhs)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSBinaryOpType(o: BTSBinaryOp.Type): Unit = {
@@ -1537,12 +1550,14 @@ object MsgPack {
       writeBTSLiteralTypeType(o.typ)
       writer.writeString(o.exp)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSNameExp(o: BTSNameExp): Unit = {
       writer.writeZ(Constants.BTSNameExp)
       writeName(o.name)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSIndexingExp(o: BTSIndexingExp): Unit = {
@@ -1550,6 +1565,7 @@ object MsgPack {
       writeBTSExp(o.exp)
       writer.writeISZ(o.indices, writeBTSExp _)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSAccessExp(o: BTSAccessExp): Unit = {
@@ -1557,6 +1573,7 @@ object MsgPack {
       writeBTSExp(o.exp)
       writer.writeString(o.attributeName)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSFunctionCall(o: BTSFunctionCall): Unit = {
@@ -1564,6 +1581,7 @@ object MsgPack {
       writeName(o.name)
       writer.writeISZ(o.args, writeBTSFormalExpPair _)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSFormalExpPair(o: BTSFormalExpPair): Unit = {
@@ -1594,6 +1612,7 @@ object MsgPack {
       writer.writeISZ(o.array_index, writeBTSIndexExpressionOrRange _)
       writer.writeISZ(o.pn, writeBTSPartialName _)
       writer.writeOption(o.pos, writer.writePosition _)
+      writer.writeOption(o.typed, writeBTSType _)
     }
 
     def writeBTSIndexExpressionOrRange(o: BTSIndexExpressionOrRange): Unit = {
@@ -4514,7 +4533,8 @@ object MsgPack {
       val params = reader.readISZ(readBTSActualParameter _)
       val actual_parameter = reader.readOption(readBTSExp _)
       val pos = reader.readOption(reader.readPosition _)
-      return BTSInvocation(label, params, actual_parameter, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSInvocation(label, params, actual_parameter, pos, typed)
     }
 
     def readBTSActualParameter(): BTSActualParameter = {
@@ -4546,7 +4566,8 @@ object MsgPack {
       val which = reader.readOption(readBTSExp _)
       val predicate = readBTSExp()
       val pos = reader.readOption(reader.readPosition _)
-      return BTSUniversalQuantification(variables, range, which, predicate, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSUniversalQuantification(variables, range, which, predicate, pos, typed)
     }
 
     def readBTSExistentialQuantification(): BTSExistentialQuantification = {
@@ -4563,7 +4584,8 @@ object MsgPack {
       val which = reader.readOption(readBTSExp _)
       val predicate = readBTSExp()
       val pos = reader.readOption(reader.readPosition _)
-      return BTSExistentialQuantification(variables, range, which, predicate, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSExistentialQuantification(variables, range, which, predicate, pos, typed)
     }
 
     def readBTSSumQuantification(): BTSSumQuantification = {
@@ -4580,7 +4602,8 @@ object MsgPack {
       val which = reader.readOption(readBTSExp _)
       val numeric_expression = readBTSExp()
       val pos = reader.readOption(reader.readPosition _)
-      return BTSSumQuantification(variables, range, which, numeric_expression, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSSumQuantification(variables, range, which, numeric_expression, pos, typed)
     }
 
     def readBTSProductQuantification(): BTSProductQuantification = {
@@ -4597,7 +4620,8 @@ object MsgPack {
       val which = reader.readOption(readBTSExp _)
       val numeric_expression = readBTSExp()
       val pos = reader.readOption(reader.readPosition _)
-      return BTSProductQuantification(variables, range, which, numeric_expression, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSProductQuantification(variables, range, which, numeric_expression, pos, typed)
     }
 
     def readBTSCountingQuantification(): BTSCountingQuantification = {
@@ -4614,7 +4638,8 @@ object MsgPack {
       val which = reader.readOption(readBTSExp _)
       val counted = readBTSExp()
       val pos = reader.readOption(reader.readPosition _)
-      return BTSCountingQuantification(variables, range, which, counted, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSCountingQuantification(variables, range, which, counted, pos, typed)
     }
 
     def readBTSRange(): BTSRange = {
@@ -4652,7 +4677,8 @@ object MsgPack {
       val at = reader.readOption(readBTSExp _)
       val caret = reader.readOption(readBTSExp _)
       val pos = reader.readOption(reader.readPosition _)
-      return BTSTimedExpression(subject, tick, at, caret, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSTimedExpression(subject, tick, at, caret, pos, typed)
     }
 
     def readBTSConditionalExpression(): BTSConditionalExpression = {
@@ -4668,7 +4694,8 @@ object MsgPack {
       val t = readBTSExp()
       val f = readBTSExp()
       val pos = reader.readOption(reader.readPosition _)
-      return BTSConditionalExpression(pred, t, f, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSConditionalExpression(pred, t, f, pos, typed)
     }
 
     def readBTSCaseExpression(): BTSCaseExpression = {
@@ -4682,7 +4709,8 @@ object MsgPack {
       }
       val cc = reader.readISZ(readBTSCaseChoice _)
       val pos = reader.readOption(reader.readPosition _)
-      return BTSCaseExpression(cc, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSCaseExpression(cc, pos, typed)
     }
 
     def readBTSCaseChoice(): BTSCaseChoice = {
@@ -4711,7 +4739,8 @@ object MsgPack {
       val record_type = readBTSType()
       val record_value = reader.readISZ(readBTSRecordValue _)
       val pos = reader.readOption(reader.readPosition _)
-      return BTSRecordTerm(record_type, record_value, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSRecordTerm(record_type, record_value, pos, typed)
     }
 
     def readBTSRecordValue(): BTSRecordValue = {
@@ -5052,7 +5081,8 @@ object MsgPack {
       val l = readBTSExp()
       val r = reader.readOption(readBTSExp _)
       val pos = reader.readOption(reader.readPosition _)
-      return BTSExponentiation(l, r, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSExponentiation(l, r, pos, typed)
     }
 
     def readBTSUnaryExp(): BTSUnaryExp = {
@@ -5067,7 +5097,8 @@ object MsgPack {
       val op = readBTSUnaryOpType()
       val exp = readBTSExp()
       val pos = reader.readOption(reader.readPosition _)
-      return BTSUnaryExp(op, exp, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSUnaryExp(op, exp, pos, typed)
     }
 
     def readBTSUnaryOpType(): BTSUnaryOp.Type = {
@@ -5088,7 +5119,8 @@ object MsgPack {
       val lhs = readBTSExp()
       val rhs = readBTSExp()
       val pos = reader.readOption(reader.readPosition _)
-      return BTSBinaryExp(op, lhs, rhs, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSBinaryExp(op, lhs, rhs, pos, typed)
     }
 
     def readBTSBinaryOpType(): BTSBinaryOp.Type = {
@@ -5113,7 +5145,8 @@ object MsgPack {
       val typ = readBTSLiteralTypeType()
       val exp = reader.readString()
       val pos = reader.readOption(reader.readPosition _)
-      return BTSLiteralExp(typ, exp, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSLiteralExp(typ, exp, pos, typed)
     }
 
     def readBTSNameExp(): BTSNameExp = {
@@ -5127,7 +5160,8 @@ object MsgPack {
       }
       val name = readName()
       val pos = reader.readOption(reader.readPosition _)
-      return BTSNameExp(name, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSNameExp(name, pos, typed)
     }
 
     def readBTSIndexingExp(): BTSIndexingExp = {
@@ -5142,7 +5176,8 @@ object MsgPack {
       val exp = readBTSExp()
       val indices = reader.readISZ(readBTSExp _)
       val pos = reader.readOption(reader.readPosition _)
-      return BTSIndexingExp(exp, indices, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSIndexingExp(exp, indices, pos, typed)
     }
 
     def readBTSAccessExp(): BTSAccessExp = {
@@ -5157,7 +5192,8 @@ object MsgPack {
       val exp = readBTSExp()
       val attributeName = reader.readString()
       val pos = reader.readOption(reader.readPosition _)
-      return BTSAccessExp(exp, attributeName, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSAccessExp(exp, attributeName, pos, typed)
     }
 
     def readBTSFunctionCall(): BTSFunctionCall = {
@@ -5172,7 +5208,8 @@ object MsgPack {
       val name = readName()
       val args = reader.readISZ(readBTSFormalExpPair _)
       val pos = reader.readOption(reader.readPosition _)
-      return BTSFunctionCall(name, args, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSFunctionCall(name, args, pos, typed)
     }
 
     def readBTSFormalExpPair(): BTSFormalExpPair = {
@@ -5234,7 +5271,8 @@ object MsgPack {
       val array_index = reader.readISZ(readBTSIndexExpressionOrRange _)
       val pn = reader.readISZ(readBTSPartialName _)
       val pos = reader.readOption(reader.readPosition _)
-      return BTSValue(identifier, function_parameters, array_index, pn, pos)
+      val typed = reader.readOption(readBTSType _)
+      return BTSValue(identifier, function_parameters, array_index, pn, pos, typed)
     }
 
     def readBTSIndexExpressionOrRange(): BTSIndexExpressionOrRange = {

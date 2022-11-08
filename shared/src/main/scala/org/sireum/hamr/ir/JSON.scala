@@ -2021,6 +2021,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.MethodContract.InfoFlow""""),
         ("label", print_langastExpLitString(o.label)),
+        ("requiresClause", print_langastMethodContractClaims(o.requiresClause)),
         ("inAgreeClause", print_langastMethodContractClaims(o.inAgreeClause)),
         ("outAgreeClause", print_langastMethodContractClaims(o.outAgreeClause))
       ))
@@ -7280,13 +7281,16 @@ object JSON {
       parser.parseObjectKey("label")
       val label = parse_langastExpLitString()
       parser.parseObjectNext()
+      parser.parseObjectKey("requiresClause")
+      val requiresClause = parse_langastMethodContractClaims()
+      parser.parseObjectNext()
       parser.parseObjectKey("inAgreeClause")
       val inAgreeClause = parse_langastMethodContractClaims()
       parser.parseObjectNext()
       parser.parseObjectKey("outAgreeClause")
       val outAgreeClause = parse_langastMethodContractClaims()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.MethodContract.InfoFlow(label, inAgreeClause, outAgreeClause)
+      return org.sireum.lang.ast.MethodContract.InfoFlow(label, requiresClause, inAgreeClause, outAgreeClause)
     }
 
     def parse_langastSequent(): org.sireum.lang.ast.Sequent = {

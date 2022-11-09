@@ -7020,12 +7020,13 @@ import Transformer._
           else
             TPostResult(r1.ctx, None())
         case o2: org.sireum.lang.ast.Exp.InlineAgree =>
-          val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp.LitString]] = transformISZ(preR.ctx, o2.partitions, transform_langastExpLitString _)
-          val r1: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r0.ctx, o2.attr)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(partitions = r0.resultOpt.getOrElse(o2.partitions), attr = r1.resultOpt.getOrElse(o2.attr))))
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(preR.ctx, o2.channel)
+          val r1: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r0.ctx, o2.outAgreeClause)
+          val r2: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(channel = r0.resultOpt.getOrElse(o2.channel), outAgreeClause = r1.resultOpt.getOrElse(o2.outAgreeClause), attr = r2.resultOpt.getOrElse(o2.attr))))
           else
-            TPostResult(r1.ctx, None())
+            TPostResult(r2.ctx, None())
         case o2: org.sireum.lang.ast.Exp.InfoFlowInvariant =>
           val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.MethodContract.InfoFlow]] = transformISZ(preR.ctx, o2.flowInvariants, transform_langastMethodContractInfoFlow _)
           val r1: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r0.ctx, o2.attr)

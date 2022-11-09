@@ -8054,10 +8054,11 @@ import MTransformer._
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.InlineAgree =>
-          val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.LitString]] = transformISZ(o2.partitions, transform_langastExpLitString _)
-          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(partitions = r0.getOrElse(o2.partitions), attr = r1.getOrElse(o2.attr)))
+          val r0: MOption[org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(o2.channel)
+          val r1: MOption[org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(o2.outAgreeClause)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(channel = r0.getOrElse(o2.channel), outAgreeClause = r1.getOrElse(o2.outAgreeClause), attr = r2.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.InfoFlowInvariant =>

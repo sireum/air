@@ -2766,7 +2766,8 @@ object JSON {
     @pure def print_langastExpInlineAgree(o: org.sireum.lang.ast.Exp.InlineAgree): ST = {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.Exp.InlineAgree""""),
-        ("partitions", printISZ(F, o.partitions, print_langastExpLitString _)),
+        ("channel", print_langastExpLitString(o.channel)),
+        ("outAgreeClause", print_langastMethodContractClaims(o.outAgreeClause)),
         ("attr", print_langastAttr(o.attr))
       ))
     }
@@ -8830,13 +8831,16 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("org.sireum.lang.ast.Exp.InlineAgree")
       }
-      parser.parseObjectKey("partitions")
-      val partitions = parser.parseISZ(parse_langastExpLitString _)
+      parser.parseObjectKey("channel")
+      val channel = parse_langastExpLitString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("outAgreeClause")
+      val outAgreeClause = parse_langastMethodContractClaims()
       parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Exp.InlineAgree(partitions, attr)
+      return org.sireum.lang.ast.Exp.InlineAgree(channel, outAgreeClause, attr)
     }
 
     def parse_langastExpInfoFlowInvariant(): org.sireum.lang.ast.Exp.InfoFlowInvariant = {

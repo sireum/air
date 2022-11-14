@@ -513,9 +513,13 @@ object MTransformer {
 
   val PostResult_langastExpResult: MOption[org.sireum.lang.ast.Exp] = MNone()
 
-  val PreResult_langastExpInlineAgree: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+  val PreResult_langastExpAssumeAgree: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
 
-  val PostResult_langastExpInlineAgree: MOption[org.sireum.lang.ast.Exp] = MNone()
+  val PostResult_langastExpAssumeAgree: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpAssertAgree: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpAssertAgree: MOption[org.sireum.lang.ast.Exp] = MNone()
 
   val PreResult_langastExpInfoFlowInvariant: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
 
@@ -1764,7 +1768,8 @@ import MTransformer._
       case o: org.sireum.lang.ast.Exp.LoopIndex => return pre_langastExpLoopIndex(o)
       case o: org.sireum.lang.ast.Exp.StateSeq => return pre_langastExpStateSeq(o)
       case o: org.sireum.lang.ast.Exp.Result => return pre_langastExpResult(o)
-      case o: org.sireum.lang.ast.Exp.InlineAgree => return pre_langastExpInlineAgree(o)
+      case o: org.sireum.lang.ast.Exp.AssumeAgree => return pre_langastExpAssumeAgree(o)
+      case o: org.sireum.lang.ast.Exp.AssertAgree => return pre_langastExpAssertAgree(o)
       case o: org.sireum.lang.ast.Exp.InfoFlowInvariant => return pre_langastExpInfoFlowInvariant(o)
     }
   }
@@ -1993,8 +1998,12 @@ import MTransformer._
     return PreResult_langastExpResult
   }
 
-  def pre_langastExpInlineAgree(o: org.sireum.lang.ast.Exp.InlineAgree): PreResult[org.sireum.lang.ast.Exp] = {
-    return PreResult_langastExpInlineAgree
+  def pre_langastExpAssumeAgree(o: org.sireum.lang.ast.Exp.AssumeAgree): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpAssumeAgree
+  }
+
+  def pre_langastExpAssertAgree(o: org.sireum.lang.ast.Exp.AssertAgree): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpAssertAgree
   }
 
   def pre_langastExpInfoFlowInvariant(o: org.sireum.lang.ast.Exp.InfoFlowInvariant): PreResult[org.sireum.lang.ast.Exp] = {
@@ -4391,7 +4400,8 @@ import MTransformer._
       case o: org.sireum.lang.ast.Exp.LoopIndex => return post_langastExpLoopIndex(o)
       case o: org.sireum.lang.ast.Exp.StateSeq => return post_langastExpStateSeq(o)
       case o: org.sireum.lang.ast.Exp.Result => return post_langastExpResult(o)
-      case o: org.sireum.lang.ast.Exp.InlineAgree => return post_langastExpInlineAgree(o)
+      case o: org.sireum.lang.ast.Exp.AssumeAgree => return post_langastExpAssumeAgree(o)
+      case o: org.sireum.lang.ast.Exp.AssertAgree => return post_langastExpAssertAgree(o)
       case o: org.sireum.lang.ast.Exp.InfoFlowInvariant => return post_langastExpInfoFlowInvariant(o)
     }
   }
@@ -4620,8 +4630,12 @@ import MTransformer._
     return PostResult_langastExpResult
   }
 
-  def post_langastExpInlineAgree(o: org.sireum.lang.ast.Exp.InlineAgree): MOption[org.sireum.lang.ast.Exp] = {
-    return PostResult_langastExpInlineAgree
+  def post_langastExpAssumeAgree(o: org.sireum.lang.ast.Exp.AssumeAgree): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpAssumeAgree
+  }
+
+  def post_langastExpAssertAgree(o: org.sireum.lang.ast.Exp.AssertAgree): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpAssertAgree
   }
 
   def post_langastExpInfoFlowInvariant(o: org.sireum.lang.ast.Exp.InfoFlowInvariant): MOption[org.sireum.lang.ast.Exp] = {
@@ -8053,7 +8067,16 @@ import MTransformer._
             MSome(o2(tipeOpt = r0.getOrElse(o2.tipeOpt), attr = r1.getOrElse(o2.attr)))
           else
             MNone()
-        case o2: org.sireum.lang.ast.Exp.InlineAgree =>
+        case o2: org.sireum.lang.ast.Exp.AssumeAgree =>
+          val r0: MOption[org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(o2.channel)
+          val r1: MOption[org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(o2.requiresClause)
+          val r2: MOption[org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(o2.inAgreeClause)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(channel = r0.getOrElse(o2.channel), requiresClause = r1.getOrElse(o2.requiresClause), inAgreeClause = r2.getOrElse(o2.inAgreeClause), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.AssertAgree =>
           val r0: MOption[org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(o2.channel)
           val r1: MOption[org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(o2.outAgreeClause)
           val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)

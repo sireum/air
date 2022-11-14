@@ -692,7 +692,8 @@ object Transformer {
         case o: org.sireum.lang.ast.Exp.LoopIndex => return pre_langastExpLoopIndex(ctx, o)
         case o: org.sireum.lang.ast.Exp.StateSeq => return pre_langastExpStateSeq(ctx, o)
         case o: org.sireum.lang.ast.Exp.Result => return pre_langastExpResult(ctx, o)
-        case o: org.sireum.lang.ast.Exp.InlineAgree => return pre_langastExpInlineAgree(ctx, o)
+        case o: org.sireum.lang.ast.Exp.AssumeAgree => return pre_langastExpAssumeAgree(ctx, o)
+        case o: org.sireum.lang.ast.Exp.AssertAgree => return pre_langastExpAssertAgree(ctx, o)
         case o: org.sireum.lang.ast.Exp.InfoFlowInvariant => return pre_langastExpInfoFlowInvariant(ctx, o)
       }
     }
@@ -921,7 +922,11 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def pre_langastExpInlineAgree(ctx: Context, o: org.sireum.lang.ast.Exp.InlineAgree): PreResult[Context, org.sireum.lang.ast.Exp] = {
+    @pure def pre_langastExpAssumeAgree(ctx: Context, o: org.sireum.lang.ast.Exp.AssumeAgree): PreResult[Context, org.sireum.lang.ast.Exp] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def pre_langastExpAssertAgree(ctx: Context, o: org.sireum.lang.ast.Exp.AssertAgree): PreResult[Context, org.sireum.lang.ast.Exp] = {
       return PreResult(ctx, T, None())
     }
 
@@ -3319,7 +3324,8 @@ object Transformer {
         case o: org.sireum.lang.ast.Exp.LoopIndex => return post_langastExpLoopIndex(ctx, o)
         case o: org.sireum.lang.ast.Exp.StateSeq => return post_langastExpStateSeq(ctx, o)
         case o: org.sireum.lang.ast.Exp.Result => return post_langastExpResult(ctx, o)
-        case o: org.sireum.lang.ast.Exp.InlineAgree => return post_langastExpInlineAgree(ctx, o)
+        case o: org.sireum.lang.ast.Exp.AssumeAgree => return post_langastExpAssumeAgree(ctx, o)
+        case o: org.sireum.lang.ast.Exp.AssertAgree => return post_langastExpAssertAgree(ctx, o)
         case o: org.sireum.lang.ast.Exp.InfoFlowInvariant => return post_langastExpInfoFlowInvariant(ctx, o)
       }
     }
@@ -3548,7 +3554,11 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def post_langastExpInlineAgree(ctx: Context, o: org.sireum.lang.ast.Exp.InlineAgree): TPostResult[Context, org.sireum.lang.ast.Exp] = {
+    @pure def post_langastExpAssumeAgree(ctx: Context, o: org.sireum.lang.ast.Exp.AssumeAgree): TPostResult[Context, org.sireum.lang.ast.Exp] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def post_langastExpAssertAgree(ctx: Context, o: org.sireum.lang.ast.Exp.AssertAgree): TPostResult[Context, org.sireum.lang.ast.Exp] = {
       return TPostResult(ctx, None())
     }
 
@@ -7019,7 +7029,16 @@ import Transformer._
             TPostResult(r1.ctx, Some(o2(tipeOpt = r0.resultOpt.getOrElse(o2.tipeOpt), attr = r1.resultOpt.getOrElse(o2.attr))))
           else
             TPostResult(r1.ctx, None())
-        case o2: org.sireum.lang.ast.Exp.InlineAgree =>
+        case o2: org.sireum.lang.ast.Exp.AssumeAgree =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(preR.ctx, o2.channel)
+          val r1: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r0.ctx, o2.requiresClause)
+          val r2: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r1.ctx, o2.inAgreeClause)
+          val r3: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r2.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(channel = r0.resultOpt.getOrElse(o2.channel), requiresClause = r1.resultOpt.getOrElse(o2.requiresClause), inAgreeClause = r2.resultOpt.getOrElse(o2.inAgreeClause), attr = r3.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r3.ctx, None())
+        case o2: org.sireum.lang.ast.Exp.AssertAgree =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(preR.ctx, o2.channel)
           val r1: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r0.ctx, o2.outAgreeClause)
           val r2: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r1.ctx, o2.attr)

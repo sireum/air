@@ -1862,11 +1862,11 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def pre_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): PreResult[Context, org.sireum.lang.ast.Typed] = {
+    @pure def preOtherLib(ctx: Context, o: OtherLib): PreResult[Context, OtherLib] = {
       return PreResult(ctx, T, None())
     }
 
-    @pure def preOtherLib(ctx: Context, o: OtherLib): PreResult[Context, OtherLib] = {
+    @pure def pre_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): PreResult[Context, org.sireum.lang.ast.Typed] = {
       return PreResult(ctx, T, None())
     }
 
@@ -4494,11 +4494,11 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def post_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): TPostResult[Context, org.sireum.lang.ast.Typed] = {
+    @pure def postOtherLib(ctx: Context, o: OtherLib): TPostResult[Context, OtherLib] = {
       return TPostResult(ctx, None())
     }
 
-    @pure def postOtherLib(ctx: Context, o: OtherLib): TPostResult[Context, OtherLib] = {
+    @pure def post_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): TPostResult[Context, org.sireum.lang.ast.Typed] = {
       return TPostResult(ctx, None())
     }
 

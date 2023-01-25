@@ -837,13 +837,13 @@ object MTransformer {
 
   val PostResultOtherAnnex: MOption[OtherAnnex] = MNone()
 
-  val PreResult_langastTypedName: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
-
-  val PostResult_langastTypedName: MOption[org.sireum.lang.ast.Typed] = MNone()
-
   val PreResultOtherLib: PreResult[OtherLib] = PreResult(T, MNone())
 
   val PostResultOtherLib: MOption[OtherLib] = MNone()
+
+  val PreResult_langastTypedName: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedName: MOption[org.sireum.lang.ast.Typed] = MNone()
 
   val PreResult_langastTypedTuple: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
 
@@ -2938,12 +2938,12 @@ import MTransformer._
     return PreResultOtherAnnex
   }
 
-  def pre_langastTypedName(o: org.sireum.lang.ast.Typed.Name): PreResult[org.sireum.lang.ast.Typed] = {
-    return PreResult_langastTypedName
-  }
-
   def preOtherLib(o: OtherLib): PreResult[OtherLib] = {
     return PreResultOtherLib
+  }
+
+  def pre_langastTypedName(o: org.sireum.lang.ast.Typed.Name): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedName
   }
 
   def pre_langastTypedTuple(o: org.sireum.lang.ast.Typed.Tuple): PreResult[org.sireum.lang.ast.Typed] = {
@@ -5570,12 +5570,12 @@ import MTransformer._
     return PostResultOtherAnnex
   }
 
-  def post_langastTypedName(o: org.sireum.lang.ast.Typed.Name): MOption[org.sireum.lang.ast.Typed] = {
-    return PostResult_langastTypedName
-  }
-
   def postOtherLib(o: OtherLib): MOption[OtherLib] = {
     return PostResultOtherLib
+  }
+
+  def post_langastTypedName(o: org.sireum.lang.ast.Typed.Name): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedName
   }
 
   def post_langastTypedTuple(o: org.sireum.lang.ast.Typed.Tuple): MOption[org.sireum.lang.ast.Typed] = {

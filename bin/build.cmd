@@ -84,7 +84,7 @@ def regenAir(): Unit = {
   val slangPath = slangHome / "ast" / "shared" / "src" / "main" / "scala" / "org" / "sireum" / "lang" / "ast"
   val slangAsts = ISZ[String]("AST.scala", "Typed.scala").map((m: String) => (slangPath / m).value)
 
-  Os.proc(ISZ[String](sireumv.value, "tools", "transgen", "-l", s"${airRootPath / "license.txt"}",
+  Os.proc(ISZ[String](sireumv.value, "tools", "trafo", "-l", s"${airRootPath / "license.txt"}",
     "-m", "immutable,mutable") ++ airAsts ++ slangAsts).at(airPackagePath).console.run()
   Os.proc(ISZ[String](sireumv.value, "tools", "sergen", "-p", "org.sireum.hamr.ir", "-l", s"${airRootPath / "license.txt"}",
     "-m", "json,msgpack") ++ airAsts ++ slangAsts).at(airPackagePath).console.run()

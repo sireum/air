@@ -388,11 +388,27 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def pre_langastMethodContractInfoFlowElement(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlowElement): PreResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowElement] = {
+      o match {
+        case o: org.sireum.lang.ast.MethodContract.InfoFlowGroup => return pre_langastMethodContractInfoFlowGroup(ctx, o)
+        case o: org.sireum.lang.ast.MethodContract.InfoFlowFlow => return pre_langastMethodContractInfoFlowFlow(ctx, o)
+        case o: org.sireum.lang.ast.MethodContract.InfoFlowCase => return pre_langastMethodContractInfoFlowCase(ctx, o)
+      }
+    }
+
     @pure def pre_langastMethodContractInfoFlows(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlows): PreResult[Context, org.sireum.lang.ast.MethodContract.InfoFlows] = {
       return PreResult(ctx, T, None())
     }
 
-    @pure def pre_langastMethodContractInfoFlow(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlow): PreResult[Context, org.sireum.lang.ast.MethodContract.InfoFlow] = {
+    @pure def pre_langastMethodContractInfoFlowGroup(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlowGroup): PreResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowElement] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def pre_langastMethodContractInfoFlowFlow(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlowFlow): PreResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowElement] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def pre_langastMethodContractInfoFlowCase(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlowCase): PreResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowElement] = {
       return PreResult(ctx, T, None())
     }
 
@@ -1634,6 +1650,10 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def pre_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): PreResult[Context, org.sireum.lang.ast.Typed] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def preAnnex(ctx: Context, o: Annex): PreResult[Context, Annex] = {
       return PreResult(ctx, T, None())
     }
@@ -1863,10 +1883,6 @@ object Transformer {
     }
 
     @pure def preOtherLib(ctx: Context, o: OtherLib): PreResult[Context, OtherLib] = {
-      return PreResult(ctx, T, None())
-    }
-
-    @pure def pre_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): PreResult[Context, org.sireum.lang.ast.Typed] = {
       return PreResult(ctx, T, None())
     }
 
@@ -3020,11 +3036,27 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
+    @pure def post_langastMethodContractInfoFlowElement(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlowElement): TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowElement] = {
+      o match {
+        case o: org.sireum.lang.ast.MethodContract.InfoFlowGroup => return post_langastMethodContractInfoFlowGroup(ctx, o)
+        case o: org.sireum.lang.ast.MethodContract.InfoFlowFlow => return post_langastMethodContractInfoFlowFlow(ctx, o)
+        case o: org.sireum.lang.ast.MethodContract.InfoFlowCase => return post_langastMethodContractInfoFlowCase(ctx, o)
+      }
+    }
+
     @pure def post_langastMethodContractInfoFlows(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlows): TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlows] = {
       return TPostResult(ctx, None())
     }
 
-    @pure def post_langastMethodContractInfoFlow(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlow): TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlow] = {
+    @pure def post_langastMethodContractInfoFlowGroup(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlowGroup): TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowElement] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def post_langastMethodContractInfoFlowFlow(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlowFlow): TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowElement] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def post_langastMethodContractInfoFlowCase(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlowCase): TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowElement] = {
       return TPostResult(ctx, None())
     }
 
@@ -4266,6 +4298,10 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
+    @pure def post_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): TPostResult[Context, org.sireum.lang.ast.Typed] = {
+      return TPostResult(ctx, None())
+    }
+
     @pure def postAnnex(ctx: Context, o: Annex): TPostResult[Context, Annex] = {
       return TPostResult(ctx, None())
     }
@@ -4495,10 +4531,6 @@ object Transformer {
     }
 
     @pure def postOtherLib(ctx: Context, o: OtherLib): TPostResult[Context, OtherLib] = {
-      return TPostResult(ctx, None())
-    }
-
-    @pure def post_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): TPostResult[Context, org.sireum.lang.ast.Typed] = {
       return TPostResult(ctx, None())
     }
 
@@ -6092,12 +6124,61 @@ import Transformer._
     }
   }
 
+  @pure def transform_langastMethodContractInfoFlowElement(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlowElement): TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowElement] = {
+    val preR: PreResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowElement] = pp.pre_langastMethodContractInfoFlowElement(ctx, o)
+    val r: TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowElement] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.MethodContract.InfoFlowElement = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowElement] = o2 match {
+        case o2: org.sireum.lang.ast.MethodContract.InfoFlowGroup =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(preR.ctx, o2.label)
+          val r1: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r0.ctx, o2.membersClause)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), membersClause = r1.resultOpt.getOrElse(o2.membersClause))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: org.sireum.lang.ast.MethodContract.InfoFlowFlow =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(preR.ctx, o2.label)
+          val r1: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r0.ctx, o2.fromClause)
+          val r2: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r1.ctx, o2.toClause)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), fromClause = r1.resultOpt.getOrElse(o2.fromClause), toClause = r2.resultOpt.getOrElse(o2.toClause))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: org.sireum.lang.ast.MethodContract.InfoFlowCase =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(preR.ctx, o2.label)
+          val r1: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r0.ctx, o2.requiresClause)
+          val r2: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r1.ctx, o2.inAgreeClause)
+          val r3: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r2.ctx, o2.outAgreeClause)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), requiresClause = r1.resultOpt.getOrElse(o2.requiresClause), inAgreeClause = r2.resultOpt.getOrElse(o2.inAgreeClause), outAgreeClause = r3.resultOpt.getOrElse(o2.outAgreeClause))))
+          else
+            TPostResult(r3.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: org.sireum.lang.ast.MethodContract.InfoFlowElement = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowElement] = pp.post_langastMethodContractInfoFlowElement(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transform_langastMethodContractInfoFlows(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlows): TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlows] = {
     val preR: PreResult[Context, org.sireum.lang.ast.MethodContract.InfoFlows] = pp.pre_langastMethodContractInfoFlows(ctx, o)
     val r: TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlows] = if (preR.continu) {
       val o2: org.sireum.lang.ast.MethodContract.InfoFlows = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.MethodContract.InfoFlow]] = transformISZ(preR.ctx, o2.flows, transform_langastMethodContractInfoFlow _)
+      val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.MethodContract.InfoFlowElement]] = transformISZ(preR.ctx, o2.flows, transform_langastMethodContractInfoFlowElement _)
       val r1: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r0.ctx, o2.attr)
       if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
         TPostResult(r1.ctx, Some(o2(flows = r0.resultOpt.getOrElse(o2.flows), attr = r1.resultOpt.getOrElse(o2.attr))))
@@ -6111,36 +6192,6 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: org.sireum.lang.ast.MethodContract.InfoFlows = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlows] = pp.post_langastMethodContractInfoFlows(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
-  @pure def transform_langastMethodContractInfoFlow(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlow): TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlow] = {
-    val preR: PreResult[Context, org.sireum.lang.ast.MethodContract.InfoFlow] = pp.pre_langastMethodContractInfoFlow(ctx, o)
-    val r: TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlow] = if (preR.continu) {
-      val o2: org.sireum.lang.ast.MethodContract.InfoFlow = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(preR.ctx, o2.label)
-      val r1: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r0.ctx, o2.requiresClause)
-      val r2: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r1.ctx, o2.inAgreeClause)
-      val r3: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r2.ctx, o2.outAgreeClause)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
-        TPostResult(r3.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), requiresClause = r1.resultOpt.getOrElse(o2.requiresClause), inAgreeClause = r2.resultOpt.getOrElse(o2.inAgreeClause), outAgreeClause = r3.resultOpt.getOrElse(o2.outAgreeClause))))
-      else
-        TPostResult(r3.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: org.sireum.lang.ast.MethodContract.InfoFlow = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlow] = pp.post_langastMethodContractInfoFlow(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -7047,7 +7098,7 @@ import Transformer._
           else
             TPostResult(r2.ctx, None())
         case o2: org.sireum.lang.ast.Exp.InfoFlowInvariant =>
-          val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.MethodContract.InfoFlow]] = transformISZ(preR.ctx, o2.flowInvariants, transform_langastMethodContractInfoFlow _)
+          val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.MethodContract.InfoFlowCase]] = transformISZ(preR.ctx, o2.flowInvariants, transform_langastMethodContractInfoFlowCase _)
           val r1: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r0.ctx, o2.attr)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(flowInvariants = r0.resultOpt.getOrElse(o2.flowInvariants), attr = r1.resultOpt.getOrElse(o2.attr))))
@@ -12788,6 +12839,44 @@ import Transformer._
      case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Exp.Fun)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Exp.Fun](result))
      case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Fun")
      case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Exp.Fun]())
+    }
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transform_langastMethodContractInfoFlowCase(ctx: Context, o: org.sireum.lang.ast.MethodContract.InfoFlowCase): TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowCase] = {
+    val preR: PreResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowCase] = pp.pre_langastMethodContractInfoFlowCase(ctx, o) match {
+     case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.MethodContract.InfoFlowCase)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.MethodContract.InfoFlowCase](r))
+     case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.MethodContract.InfoFlowCase")
+     case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.MethodContract.InfoFlowCase]())
+    }
+    val r: TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowCase] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.MethodContract.InfoFlowCase = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(preR.ctx, o2.label)
+      val r1: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r0.ctx, o2.requiresClause)
+      val r2: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r1.ctx, o2.inAgreeClause)
+      val r3: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r2.ctx, o2.outAgreeClause)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+        TPostResult(r3.ctx, Some(o2(label = r0.resultOpt.getOrElse(o2.label), requiresClause = r1.resultOpt.getOrElse(o2.requiresClause), inAgreeClause = r2.resultOpt.getOrElse(o2.inAgreeClause), outAgreeClause = r3.resultOpt.getOrElse(o2.outAgreeClause))))
+      else
+        TPostResult(r3.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: org.sireum.lang.ast.MethodContract.InfoFlowCase = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, org.sireum.lang.ast.MethodContract.InfoFlowCase] = pp.post_langastMethodContractInfoFlowCase(r.ctx, o2) match {
+     case TPostResult(postCtx, Some(result: org.sireum.lang.ast.MethodContract.InfoFlowCase)) => TPostResult(postCtx, Some[org.sireum.lang.ast.MethodContract.InfoFlowCase](result))
+     case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.MethodContract.InfoFlowCase")
+     case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.MethodContract.InfoFlowCase]())
     }
     if (postR.resultOpt.nonEmpty) {
       return postR

@@ -31,6 +31,140 @@
 package org.sireum.hamr.ir
 
 import org.sireum._
+import org.sireum.hamr.ir.AadlInstInfo
+import org.sireum.hamr.ir.Aadl
+import org.sireum.hamr.ir.Name
+import org.sireum.hamr.ir.Component
+import org.sireum.hamr.ir.Classifier
+import org.sireum.hamr.ir.Feature
+import org.sireum.hamr.ir.FeatureEnd
+import org.sireum.hamr.ir.FeatureGroup
+import org.sireum.hamr.ir.FeatureAccess
+import org.sireum.hamr.ir.Connection
+import org.sireum.hamr.ir.ConnectionInstance
+import org.sireum.hamr.ir.ConnectionReference
+import org.sireum.hamr.ir.EndPoint
+import org.sireum.hamr.ir.Property
+import org.sireum.hamr.ir.ElementRef
+import org.sireum.hamr.ir.AadlElementRef
+import org.sireum.hamr.ir.PropertyValue
+import org.sireum.hamr.ir.ClassifierProp
+import org.sireum.hamr.ir.RangeProp
+import org.sireum.hamr.ir.RecordProp
+import org.sireum.hamr.ir.ReferenceProp
+import org.sireum.hamr.ir.UnitProp
+import org.sireum.hamr.ir.ValueProp
+import org.sireum.hamr.ir.Mode
+import org.sireum.hamr.ir.Flow
+import org.sireum.hamr.ir.Annex
+import org.sireum.hamr.ir.AnnexClause
+import org.sireum.hamr.ir.AnnexLib
+import org.sireum.hamr.ir.OtherAnnex
+import org.sireum.hamr.ir.OtherLib
+import org.sireum.hamr.ir.BLESSAnnex
+import org.sireum.hamr.ir.BTSSubclauseBehaviorProvider
+import org.sireum.hamr.ir.BTSResource
+import org.sireum.hamr.ir.BTSText
+import org.sireum.hamr.ir.BTSPath
+import org.sireum.hamr.ir.BTSBLESSAnnexClause
+import org.sireum.hamr.ir.BTSVariableDeclaration
+import org.sireum.hamr.ir.BTSType
+import org.sireum.hamr.ir.BTSClassifier
+import org.sireum.hamr.ir.BLESSIntConst
+import org.sireum.hamr.ir.BTSStateDeclaration
+import org.sireum.hamr.ir.BTSTransition
+import org.sireum.hamr.ir.BTSTransitionLabel
+import org.sireum.hamr.ir.BTSTransitionCondition
+import org.sireum.hamr.ir.BTSDispatchCondition
+import org.sireum.hamr.ir.BTSDispatchConjunction
+import org.sireum.hamr.ir.BTSDispatchTrigger
+import org.sireum.hamr.ir.BTSDispatchTriggerStop
+import org.sireum.hamr.ir.BTSDispatchTriggerPort
+import org.sireum.hamr.ir.BTSDispatchTriggerTimeout
+import org.sireum.hamr.ir.BTSExecuteCondition
+import org.sireum.hamr.ir.BTSExecuteConditionExp
+import org.sireum.hamr.ir.BTSExecuteConditionTimeout
+import org.sireum.hamr.ir.BTSExecuteConditionOtherwise
+import org.sireum.hamr.ir.BTSModeCondition
+import org.sireum.hamr.ir.BTSInternalCondition
+import org.sireum.hamr.ir.BTSAssertion
+import org.sireum.hamr.ir.BTSBehaviorActions
+import org.sireum.hamr.ir.BTSAssertedAction
+import org.sireum.hamr.ir.BTSAction
+import org.sireum.hamr.ir.BTSBasicAction
+import org.sireum.hamr.ir.BTSSkipAction
+import org.sireum.hamr.ir.BTSAssignmentAction
+import org.sireum.hamr.ir.BTSCommunicationAction
+import org.sireum.hamr.ir.BTSSubprogramCallAction
+import org.sireum.hamr.ir.BTSPortOutAction
+import org.sireum.hamr.ir.BTSPortInAction
+import org.sireum.hamr.ir.BTSFrozenPortAction
+import org.sireum.hamr.ir.BTSControlAction
+import org.sireum.hamr.ir.BTSIfBLESSAction
+import org.sireum.hamr.ir.BTSGuardedAction
+import org.sireum.hamr.ir.BTSIfBAAction
+import org.sireum.hamr.ir.BTSConditionalActions
+import org.sireum.hamr.ir.BTSQuantificationActions
+import org.sireum.hamr.ir.BTSExistentialLatticeQuantification
+import org.sireum.hamr.ir.BTSUniversalLatticeQuantification
+import org.sireum.hamr.ir.BTSExp
+import org.sireum.hamr.ir.BTSUnaryExp
+import org.sireum.hamr.ir.BTSBinaryExp
+import org.sireum.hamr.ir.BTSLiteralExp
+import org.sireum.hamr.ir.BTSNameExp
+import org.sireum.hamr.ir.BTSIndexingExp
+import org.sireum.hamr.ir.BTSAccessExp
+import org.sireum.hamr.ir.BTSFunctionCall
+import org.sireum.hamr.ir.BTSFormalExpPair
+import org.sireum.hamr.ir.BTSBehaviorTime
+import org.sireum.hamr.ir.TODO
+import org.sireum.hamr.ir.Attr
+import org.sireum.hamr.ir.Emv2Annex
+import org.sireum.hamr.ir.Emv2Lib
+import org.sireum.hamr.ir.Emv2ElementRef
+import org.sireum.hamr.ir.Emv2Library
+import org.sireum.hamr.ir.ErrorTypeDef
+import org.sireum.hamr.ir.ErrorAliasDef
+import org.sireum.hamr.ir.ErrorTypeSetDef
+import org.sireum.hamr.ir.BehaveStateMachine
+import org.sireum.hamr.ir.ErrorEvent
+import org.sireum.hamr.ir.ErrorState
+import org.sireum.hamr.ir.ErrorTransition
+import org.sireum.hamr.ir.ErrorCondition
+import org.sireum.hamr.ir.ConditionTrigger
+import org.sireum.hamr.ir.AndCondition
+import org.sireum.hamr.ir.OrCondition
+import org.sireum.hamr.ir.AllCondition
+import org.sireum.hamr.ir.OrMoreCondition
+import org.sireum.hamr.ir.OrLessCondition
+import org.sireum.hamr.ir.Emv2Clause
+import org.sireum.hamr.ir.Emv2Propagation
+import org.sireum.hamr.ir.Emv2Flow
+import org.sireum.hamr.ir.Emv2BehaviorSection
+import org.sireum.hamr.ir.ErrorPropagation
+import org.sireum.hamr.ir.GclSymbol
+import org.sireum.hamr.ir.GclSubclause
+import org.sireum.hamr.ir.GclMethod
+import org.sireum.hamr.ir.GclStateVar
+import org.sireum.hamr.ir.GclSpec
+import org.sireum.hamr.ir.GclInvariant
+import org.sireum.hamr.ir.GclComputeSpec
+import org.sireum.hamr.ir.GclAssume
+import org.sireum.hamr.ir.GclGuarantee
+import org.sireum.hamr.ir.GclIntegration
+import org.sireum.hamr.ir.GclCaseStatement
+import org.sireum.hamr.ir.GclInitialize
+import org.sireum.hamr.ir.GclCompute
+import org.sireum.hamr.ir.GclHandle
+import org.sireum.hamr.ir.GclTODO
+import org.sireum.hamr.ir.GclLib
+import org.sireum.hamr.ir.SmfAnnex
+import org.sireum.hamr.ir.SmfLib
+import org.sireum.hamr.ir.SmfClause
+import org.sireum.hamr.ir.SmfClassification
+import org.sireum.hamr.ir.SmfDeclass
+import org.sireum.hamr.ir.SmfLibrary
+import org.sireum.hamr.ir.SmfType
 
 object MsgPack {
 
@@ -344,227 +478,231 @@ object MsgPack {
 
     val _langastMethodContractInfoFlows: Z = 121
 
-    val _langastMethodContractInfoFlow: Z = 122
+    val _langastMethodContractInfoFlowGroup: Z = 122
 
-    val _langastSequent: Z = 123
+    val _langastMethodContractInfoFlowFlow: Z = 123
 
-    val _langastProofAst: Z = 124
+    val _langastMethodContractInfoFlowCase: Z = 124
 
-    val _langastProofAstStepIdNum: Z = 125
+    val _langastSequent: Z = 125
 
-    val _langastProofAstStepIdStr: Z = 126
+    val _langastProofAst: Z = 126
 
-    val _langastProofAstStepRegular: Z = 127
+    val _langastProofAstStepIdNum: Z = 127
 
-    val _langastProofAstStepAssume: Z = 128
+    val _langastProofAstStepIdStr: Z = 128
 
-    val _langastProofAstStepAssert: Z = 129
+    val _langastProofAstStepRegular: Z = 129
 
-    val _langastProofAstStepSubProof: Z = 130
+    val _langastProofAstStepAssume: Z = 130
 
-    val _langastProofAstStepLet: Z = 131
+    val _langastProofAstStepAssert: Z = 131
 
-    val _langastProofAstStepLetParam: Z = 132
+    val _langastProofAstStepSubProof: Z = 132
 
-    val _langastProofAstStepStructInduction: Z = 133
+    val _langastProofAstStepLet: Z = 133
 
-    val _langastProofAstStepStructInductionMatchCase: Z = 134
+    val _langastProofAstStepLetParam: Z = 134
 
-    val _langastProofAstStepStructInductionMatchDefault: Z = 135
+    val _langastProofAstStepStructInduction: Z = 135
 
-    val _langastProofAstStepJustificationRef: Z = 136
+    val _langastProofAstStepStructInductionMatchCase: Z = 136
 
-    val _langastProofAstStepJustificationApply: Z = 137
+    val _langastProofAstStepStructInductionMatchDefault: Z = 137
 
-    val _langastProofAstStepJustificationApplyNamed: Z = 138
+    val _langastProofAstStepJustificationRef: Z = 138
 
-    val _langastProofAstStepJustificationApplyEta: Z = 139
+    val _langastProofAstStepJustificationApply: Z = 139
 
-    val _langastCase: Z = 140
+    val _langastProofAstStepJustificationApplyNamed: Z = 140
 
-    val _langastEnumGenRangeExpr: Z = 141
+    val _langastProofAstStepJustificationApplyEta: Z = 141
 
-    val _langastEnumGenRangeStep: Z = 142
+    val _langastCase: Z = 142
 
-    val _langastEnumGenFor: Z = 143
+    val _langastEnumGenRangeExpr: Z = 143
 
-    val _langastTypeNamed: Z = 144
+    val _langastEnumGenRangeStep: Z = 144
 
-    val _langastTypeFun: Z = 145
+    val _langastEnumGenFor: Z = 145
 
-    val _langastTypeTuple: Z = 146
+    val _langastTypeNamed: Z = 146
 
-    val _langastPatternLiteral: Z = 147
+    val _langastTypeFun: Z = 147
 
-    val _langastPatternLitInterpolate: Z = 148
+    val _langastTypeTuple: Z = 148
 
-    val _langastPatternRef: Z = 149
+    val _langastPatternLiteral: Z = 149
 
-    val _langastPatternVarBinding: Z = 150
+    val _langastPatternLitInterpolate: Z = 150
 
-    val _langastPatternWildcard: Z = 151
+    val _langastPatternRef: Z = 151
 
-    val _langastPatternSeqWildcard: Z = 152
+    val _langastPatternVarBinding: Z = 152
 
-    val _langastPatternStructure: Z = 153
+    val _langastPatternWildcard: Z = 153
 
-    val _langastExpLitB: Z = 154
+    val _langastPatternSeqWildcard: Z = 154
 
-    val _langastExpLitC: Z = 155
+    val _langastPatternStructure: Z = 155
 
-    val _langastExpLitZ: Z = 156
+    val _langastExpLitB: Z = 156
 
-    val _langastExpLitF32: Z = 157
+    val _langastExpLitC: Z = 157
 
-    val _langastExpLitF64: Z = 158
+    val _langastExpLitZ: Z = 158
 
-    val _langastExpLitR: Z = 159
+    val _langastExpLitF32: Z = 159
 
-    val _langastExpLitString: Z = 160
+    val _langastExpLitF64: Z = 160
 
-    val _langastExpLitStepId: Z = 161
+    val _langastExpLitR: Z = 161
 
-    val _langastExpStringInterpolate: Z = 162
+    val _langastExpLitString: Z = 162
 
-    val _langastExpThis: Z = 163
+    val _langastExpLitStepId: Z = 163
 
-    val _langastExpSuper: Z = 164
+    val _langastExpStringInterpolate: Z = 164
 
-    val _langastExpUnary: Z = 165
+    val _langastExpThis: Z = 165
 
-    val _langastExpBinary: Z = 166
+    val _langastExpSuper: Z = 166
 
-    val _langastExpIdent: Z = 167
+    val _langastExpUnary: Z = 167
 
-    val _langastExpEta: Z = 168
+    val _langastExpBinary: Z = 168
 
-    val _langastExpTuple: Z = 169
+    val _langastExpIdent: Z = 169
 
-    val _langastExpSelect: Z = 170
+    val _langastExpEta: Z = 170
 
-    val _langastExpInvoke: Z = 171
+    val _langastExpTuple: Z = 171
 
-    val _langastExpInvokeNamed: Z = 172
+    val _langastExpSelect: Z = 172
 
-    val _langastExpIf: Z = 173
+    val _langastExpInvoke: Z = 173
 
-    val _langastExpTypeCond: Z = 174
+    val _langastExpInvokeNamed: Z = 174
 
-    val _langastExpSym: Z = 175
+    val _langastExpIf: Z = 175
 
-    val _langastExpFunParam: Z = 176
+    val _langastExpTypeCond: Z = 176
 
-    val _langastExpFun: Z = 177
+    val _langastExpSym: Z = 177
 
-    val _langastExpForYield: Z = 178
+    val _langastExpFunParam: Z = 178
 
-    val _langastExpQuantType: Z = 179
+    val _langastExpFun: Z = 179
 
-    val _langastExpQuantRange: Z = 180
+    val _langastExpForYield: Z = 180
 
-    val _langastExpQuantEach: Z = 181
+    val _langastExpQuantType: Z = 181
 
-    val _langastExpInput: Z = 182
+    val _langastExpQuantRange: Z = 182
 
-    val _langastExpAt: Z = 183
+    val _langastExpQuantEach: Z = 183
 
-    val _langastExpLoopIndex: Z = 184
+    val _langastExpInput: Z = 184
 
-    val _langastExpStateSeq: Z = 185
+    val _langastExpAt: Z = 185
 
-    val _langastExpStateSeqFragment: Z = 186
+    val _langastExpLoopIndex: Z = 186
 
-    val _langastExpResult: Z = 187
+    val _langastExpStateSeq: Z = 187
 
-    val _langastExpAssumeAgree: Z = 188
+    val _langastExpStateSeqFragment: Z = 188
 
-    val _langastExpAssertAgree: Z = 189
+    val _langastExpResult: Z = 189
 
-    val _langastExpInfoFlowInvariant: Z = 190
+    val _langastExpAssumeAgree: Z = 190
 
-    val _langastNamedArg: Z = 191
+    val _langastExpAssertAgree: Z = 191
 
-    val _langastId: Z = 192
+    val _langastExpInfoFlowInvariant: Z = 192
 
-    val _langastName: Z = 193
+    val _langastNamedArg: Z = 193
 
-    val _langastBody: Z = 194
+    val _langastId: Z = 194
 
-    val _langastAdtParam: Z = 195
+    val _langastName: Z = 195
 
-    val _langastMethodSig: Z = 196
+    val _langastBody: Z = 196
 
-    val _langastParam: Z = 197
+    val _langastAdtParam: Z = 197
 
-    val _langastTypeParam: Z = 198
+    val _langastMethodSig: Z = 198
 
-    val _langastAttr: Z = 199
+    val _langastParam: Z = 199
 
-    val _langastTypedAttr: Z = 200
+    val _langastTypeParam: Z = 200
 
-    val _langastResolvedAttr: Z = 201
+    val _langastAttr: Z = 201
 
-    val _langastResolvedInfoBuiltIn: Z = 202
+    val _langastTypedAttr: Z = 202
 
-    val _langastResolvedInfoPackage: Z = 203
+    val _langastResolvedAttr: Z = 203
 
-    val _langastResolvedInfoEnum: Z = 204
+    val _langastResolvedInfoBuiltIn: Z = 204
 
-    val _langastResolvedInfoEnumElement: Z = 205
+    val _langastResolvedInfoPackage: Z = 205
 
-    val _langastResolvedInfoObject: Z = 206
+    val _langastResolvedInfoEnum: Z = 206
 
-    val _langastResolvedInfoVar: Z = 207
+    val _langastResolvedInfoEnumElement: Z = 207
 
-    val _langastResolvedInfoMethod: Z = 208
+    val _langastResolvedInfoObject: Z = 208
 
-    val _langastResolvedInfoMethods: Z = 209
+    val _langastResolvedInfoVar: Z = 209
 
-    val _langastResolvedInfoTuple: Z = 210
+    val _langastResolvedInfoMethod: Z = 210
 
-    val _langastResolvedInfoLocalVar: Z = 211
+    val _langastResolvedInfoMethods: Z = 211
 
-    val _langastResolvedInfoFact: Z = 212
+    val _langastResolvedInfoTuple: Z = 212
 
-    val _langastResolvedInfoTheorem: Z = 213
+    val _langastResolvedInfoLocalVar: Z = 213
 
-    val _langastResolvedInfoInv: Z = 214
+    val _langastResolvedInfoFact: Z = 214
 
-    val _langastTruthTableRow: Z = 215
+    val _langastResolvedInfoTheorem: Z = 215
 
-    val _langastTruthTableAssignment: Z = 216
+    val _langastResolvedInfoInv: Z = 216
 
-    val _langastTruthTableConclusionValidity: Z = 217
+    val _langastTruthTableRow: Z = 217
 
-    val _langastTruthTableConclusionTautology: Z = 218
+    val _langastTruthTableAssignment: Z = 218
 
-    val _langastTruthTableConclusionContradictory: Z = 219
+    val _langastTruthTableConclusionValidity: Z = 219
 
-    val _langastTruthTableConclusionContingent: Z = 220
+    val _langastTruthTableConclusionTautology: Z = 220
 
-    val _langastTypedName: Z = 221
+    val _langastTruthTableConclusionContradictory: Z = 221
 
-    val _langastTypedTuple: Z = 222
+    val _langastTruthTableConclusionContingent: Z = 222
 
-    val _langastTypedFun: Z = 223
+    val _langastTypedName: Z = 223
 
-    val _langastTypedTypeVar: Z = 224
+    val _langastTypedTuple: Z = 224
 
-    val _langastTypedPackage: Z = 225
+    val _langastTypedFun: Z = 225
 
-    val _langastTypedObject: Z = 226
+    val _langastTypedTypeVar: Z = 226
 
-    val _langastTypedEnum: Z = 227
+    val _langastTypedPackage: Z = 227
 
-    val _langastTypedMethod: Z = 228
+    val _langastTypedObject: Z = 228
 
-    val _langastTypedMethods: Z = 229
+    val _langastTypedEnum: Z = 229
 
-    val _langastTypedFact: Z = 230
+    val _langastTypedMethod: Z = 230
 
-    val _langastTypedTheorem: Z = 231
+    val _langastTypedMethods: Z = 231
 
-    val _langastTypedInv: Z = 232
+    val _langastTypedFact: Z = 232
+
+    val _langastTypedTheorem: Z = 233
+
+    val _langastTypedInv: Z = 234
 
   }
 
@@ -2064,14 +2202,35 @@ object MsgPack {
       write_langastMethodContractClaims(o.ensuresClause)
     }
 
+    def write_langastMethodContractInfoFlowElement(o: org.sireum.lang.ast.MethodContract.InfoFlowElement): Unit = {
+      o match {
+        case o: org.sireum.lang.ast.MethodContract.InfoFlowGroup => write_langastMethodContractInfoFlowGroup(o)
+        case o: org.sireum.lang.ast.MethodContract.InfoFlowFlow => write_langastMethodContractInfoFlowFlow(o)
+        case o: org.sireum.lang.ast.MethodContract.InfoFlowCase => write_langastMethodContractInfoFlowCase(o)
+      }
+    }
+
     def write_langastMethodContractInfoFlows(o: org.sireum.lang.ast.MethodContract.InfoFlows): Unit = {
       writer.writeZ(Constants._langastMethodContractInfoFlows)
-      writer.writeISZ(o.flows, write_langastMethodContractInfoFlow _)
+      writer.writeISZ(o.flows, write_langastMethodContractInfoFlowElement _)
       write_langastAttr(o.attr)
     }
 
-    def write_langastMethodContractInfoFlow(o: org.sireum.lang.ast.MethodContract.InfoFlow): Unit = {
-      writer.writeZ(Constants._langastMethodContractInfoFlow)
+    def write_langastMethodContractInfoFlowGroup(o: org.sireum.lang.ast.MethodContract.InfoFlowGroup): Unit = {
+      writer.writeZ(Constants._langastMethodContractInfoFlowGroup)
+      write_langastExpLitString(o.label)
+      write_langastMethodContractClaims(o.membersClause)
+    }
+
+    def write_langastMethodContractInfoFlowFlow(o: org.sireum.lang.ast.MethodContract.InfoFlowFlow): Unit = {
+      writer.writeZ(Constants._langastMethodContractInfoFlowFlow)
+      write_langastExpLitString(o.label)
+      write_langastMethodContractClaims(o.fromClause)
+      write_langastMethodContractClaims(o.toClause)
+    }
+
+    def write_langastMethodContractInfoFlowCase(o: org.sireum.lang.ast.MethodContract.InfoFlowCase): Unit = {
+      writer.writeZ(Constants._langastMethodContractInfoFlowCase)
       write_langastExpLitString(o.label)
       write_langastMethodContractClaims(o.requiresClause)
       write_langastMethodContractClaims(o.inAgreeClause)
@@ -2684,7 +2843,7 @@ object MsgPack {
 
     def write_langastExpInfoFlowInvariant(o: org.sireum.lang.ast.Exp.InfoFlowInvariant): Unit = {
       writer.writeZ(Constants._langastExpInfoFlowInvariant)
-      writer.writeISZ(o.flowInvariants, write_langastMethodContractInfoFlow _)
+      writer.writeISZ(o.flowInvariants, write_langastMethodContractInfoFlowCase _)
       write_langastAttr(o.attr)
     }
 
@@ -5960,6 +6119,20 @@ object MsgPack {
       return org.sireum.lang.ast.MethodContract.Case(label, requiresClause, ensuresClause)
     }
 
+    def read_langastMethodContractInfoFlowElement(): org.sireum.lang.ast.MethodContract.InfoFlowElement = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants._langastMethodContractInfoFlowGroup => val r = read_langastMethodContractInfoFlowGroupT(T); return r
+        case Constants._langastMethodContractInfoFlowFlow => val r = read_langastMethodContractInfoFlowFlowT(T); return r
+        case Constants._langastMethodContractInfoFlowCase => val r = read_langastMethodContractInfoFlowCaseT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.MethodContract.InfoFlowElement.")
+          val r = read_langastMethodContractInfoFlowCaseT(T)
+          return r
+      }
+    }
+
     def read_langastMethodContractInfoFlows(): org.sireum.lang.ast.MethodContract.InfoFlows = {
       val r = read_langastMethodContractInfoFlowsT(F)
       return r
@@ -5969,25 +6142,54 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastMethodContractInfoFlows)
       }
-      val flows = reader.readISZ(read_langastMethodContractInfoFlow _)
+      val flows = reader.readISZ(read_langastMethodContractInfoFlowElement _)
       val attr = read_langastAttr()
       return org.sireum.lang.ast.MethodContract.InfoFlows(flows, attr)
     }
 
-    def read_langastMethodContractInfoFlow(): org.sireum.lang.ast.MethodContract.InfoFlow = {
-      val r = read_langastMethodContractInfoFlowT(F)
+    def read_langastMethodContractInfoFlowGroup(): org.sireum.lang.ast.MethodContract.InfoFlowGroup = {
+      val r = read_langastMethodContractInfoFlowGroupT(F)
       return r
     }
 
-    def read_langastMethodContractInfoFlowT(typeParsed: B): org.sireum.lang.ast.MethodContract.InfoFlow = {
+    def read_langastMethodContractInfoFlowGroupT(typeParsed: B): org.sireum.lang.ast.MethodContract.InfoFlowGroup = {
       if (!typeParsed) {
-        reader.expectZ(Constants._langastMethodContractInfoFlow)
+        reader.expectZ(Constants._langastMethodContractInfoFlowGroup)
+      }
+      val label = read_langastExpLitString()
+      val membersClause = read_langastMethodContractClaims()
+      return org.sireum.lang.ast.MethodContract.InfoFlowGroup(label, membersClause)
+    }
+
+    def read_langastMethodContractInfoFlowFlow(): org.sireum.lang.ast.MethodContract.InfoFlowFlow = {
+      val r = read_langastMethodContractInfoFlowFlowT(F)
+      return r
+    }
+
+    def read_langastMethodContractInfoFlowFlowT(typeParsed: B): org.sireum.lang.ast.MethodContract.InfoFlowFlow = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastMethodContractInfoFlowFlow)
+      }
+      val label = read_langastExpLitString()
+      val fromClause = read_langastMethodContractClaims()
+      val toClause = read_langastMethodContractClaims()
+      return org.sireum.lang.ast.MethodContract.InfoFlowFlow(label, fromClause, toClause)
+    }
+
+    def read_langastMethodContractInfoFlowCase(): org.sireum.lang.ast.MethodContract.InfoFlowCase = {
+      val r = read_langastMethodContractInfoFlowCaseT(F)
+      return r
+    }
+
+    def read_langastMethodContractInfoFlowCaseT(typeParsed: B): org.sireum.lang.ast.MethodContract.InfoFlowCase = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastMethodContractInfoFlowCase)
       }
       val label = read_langastExpLitString()
       val requiresClause = read_langastMethodContractClaims()
       val inAgreeClause = read_langastMethodContractClaims()
       val outAgreeClause = read_langastMethodContractClaims()
-      return org.sireum.lang.ast.MethodContract.InfoFlow(label, requiresClause, inAgreeClause, outAgreeClause)
+      return org.sireum.lang.ast.MethodContract.InfoFlowCase(label, requiresClause, inAgreeClause, outAgreeClause)
     }
 
     def read_langastSequent(): org.sireum.lang.ast.Sequent = {
@@ -7213,7 +7415,7 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastExpInfoFlowInvariant)
       }
-      val flowInvariants = reader.readISZ(read_langastMethodContractInfoFlow _)
+      val flowInvariants = reader.readISZ(read_langastMethodContractInfoFlowCase _)
       val attr = read_langastAttr()
       return org.sireum.lang.ast.Exp.InfoFlowInvariant(flowInvariants, attr)
     }
@@ -10696,6 +10898,21 @@ object MsgPack {
     return r
   }
 
+  def from_langastMethodContractInfoFlowElement(o: org.sireum.lang.ast.MethodContract.InfoFlowElement, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastMethodContractInfoFlowElement(o)
+    return w.result
+  }
+
+  def to_langastMethodContractInfoFlowElement(data: ISZ[U8]): Either[org.sireum.lang.ast.MethodContract.InfoFlowElement, MessagePack.ErrorMsg] = {
+    def f_langastMethodContractInfoFlowElement(reader: Reader): org.sireum.lang.ast.MethodContract.InfoFlowElement = {
+      val r = reader.read_langastMethodContractInfoFlowElement()
+      return r
+    }
+    val r = to(data, f_langastMethodContractInfoFlowElement _)
+    return r
+  }
+
   def from_langastMethodContractInfoFlows(o: org.sireum.lang.ast.MethodContract.InfoFlows, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
     w.write_langastMethodContractInfoFlows(o)
@@ -10711,18 +10928,48 @@ object MsgPack {
     return r
   }
 
-  def from_langastMethodContractInfoFlow(o: org.sireum.lang.ast.MethodContract.InfoFlow, pooling: B): ISZ[U8] = {
+  def from_langastMethodContractInfoFlowGroup(o: org.sireum.lang.ast.MethodContract.InfoFlowGroup, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.write_langastMethodContractInfoFlow(o)
+    w.write_langastMethodContractInfoFlowGroup(o)
     return w.result
   }
 
-  def to_langastMethodContractInfoFlow(data: ISZ[U8]): Either[org.sireum.lang.ast.MethodContract.InfoFlow, MessagePack.ErrorMsg] = {
-    def f_langastMethodContractInfoFlow(reader: Reader): org.sireum.lang.ast.MethodContract.InfoFlow = {
-      val r = reader.read_langastMethodContractInfoFlow()
+  def to_langastMethodContractInfoFlowGroup(data: ISZ[U8]): Either[org.sireum.lang.ast.MethodContract.InfoFlowGroup, MessagePack.ErrorMsg] = {
+    def f_langastMethodContractInfoFlowGroup(reader: Reader): org.sireum.lang.ast.MethodContract.InfoFlowGroup = {
+      val r = reader.read_langastMethodContractInfoFlowGroup()
       return r
     }
-    val r = to(data, f_langastMethodContractInfoFlow _)
+    val r = to(data, f_langastMethodContractInfoFlowGroup _)
+    return r
+  }
+
+  def from_langastMethodContractInfoFlowFlow(o: org.sireum.lang.ast.MethodContract.InfoFlowFlow, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastMethodContractInfoFlowFlow(o)
+    return w.result
+  }
+
+  def to_langastMethodContractInfoFlowFlow(data: ISZ[U8]): Either[org.sireum.lang.ast.MethodContract.InfoFlowFlow, MessagePack.ErrorMsg] = {
+    def f_langastMethodContractInfoFlowFlow(reader: Reader): org.sireum.lang.ast.MethodContract.InfoFlowFlow = {
+      val r = reader.read_langastMethodContractInfoFlowFlow()
+      return r
+    }
+    val r = to(data, f_langastMethodContractInfoFlowFlow _)
+    return r
+  }
+
+  def from_langastMethodContractInfoFlowCase(o: org.sireum.lang.ast.MethodContract.InfoFlowCase, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastMethodContractInfoFlowCase(o)
+    return w.result
+  }
+
+  def to_langastMethodContractInfoFlowCase(data: ISZ[U8]): Either[org.sireum.lang.ast.MethodContract.InfoFlowCase, MessagePack.ErrorMsg] = {
+    def f_langastMethodContractInfoFlowCase(reader: Reader): org.sireum.lang.ast.MethodContract.InfoFlowCase = {
+      val r = reader.read_langastMethodContractInfoFlowCase()
+      return r
+    }
+    val r = to(data, f_langastMethodContractInfoFlowCase _)
     return r
   }
 

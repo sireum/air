@@ -52,7 +52,7 @@ transitions=Transitions?
 */
 
 // Alternative top-level where the behavior code for a thread is provided via an external library.
-@datatype class BTSSubclauseBehaviorProvider (values: ISZ[BTSResource]) extends BLESSAnnex
+@datatype class BTSSubclauseBehaviorProvider (val values: ISZ[BTSResource]) extends BLESSAnnex
 
 @sig trait BTSResource {
   def overwrite: B
@@ -69,18 +69,18 @@ transitions=Transitions?
 // Top-level structure of a BLESS transition system
 @datatype class BTSBLESSAnnexClause (
                                       // boolean setting indicating if proof is intended or not
-                                      doNotProve: B,  // TRUE means no proof is expected
+                                      val doNotProve: B,  // TRUE means no proof is expected
                                       // assert definitions in scope of the AADL thread
-                                      assertions: ISZ[BTSAssertion],
+                                      val assertions: ISZ[BTSAssertion],
                                       // invariants that apply to the AADL thread
                                       // note: invariants are "assertion" grammar clauses
-                                      invariant: Option[BTSAssertion],
+                                      val invariant: Option[BTSAssertion],
                                       // declaration of local variables to be used in the transition system
-                                      variables: ISZ[BTSVariableDeclaration],
+                                      val variables: ISZ[BTSVariableDeclaration],
                                       // declaration of states of the transition system
-                                      states: ISZ[BTSStateDeclaration],
+                                      val states: ISZ[BTSStateDeclaration],
                                       // transitions of the transition system
-                                      transitions: ISZ[BTSTransition]
+                                      val transitions: ISZ[BTSTransition]
                                     ) extends BLESSAnnex
 
 /*
@@ -127,12 +127,12 @@ Declarator:
 // generate on BTSVariableDeclaration per variable.
 
 @datatype class BTSVariableDeclaration (
-                                         name: Name,
-                                         category: Option[BTSVariableCategory.Type],
-                                         varType: BTSType,
-                                         assignExpression: Option[BTSExp],
-                                         arraySize: Option[BLESSIntConst],
-                                         variableAssertion: Option[BTSAssertion]) //extends BTSBLESSAnnexClause
+                                         val name: Name,
+                                         val category: Option[BTSVariableCategory.Type],
+                                         val varType: BTSType,
+                                         val assignExpression: Option[BTSExp],
+                                         val arraySize: Option[BLESSIntConst],
+                                         val variableAssertion: Option[BTSAssertion]) //extends BTSBLESSAnnexClause
 
 // Categories of behavior variables in BA/BLESS
 @enum object BTSVariableCategory {
@@ -146,7 +146,7 @@ Declarator:
 // TODO: Complete type grammar
 @sig trait BTSType
 
-@datatype class BTSClassifier (classifier: Classifier) extends BTSType
+@datatype class BTSClassifier (val classifier: Classifier) extends BTSType
 
 // TODO: Complete constant grammar --  used for array size above
 @datatype class BLESSIntConst () //extends BLESSExpression
@@ -166,9 +166,9 @@ final?='final'?
 
 // BTS states are declared
 @datatype class BTSStateDeclaration (
-                                      id : Name,
-                                      categories: ISZ[BTSStateCategory.Type],
-                                      assertion: Option[BTSAssertion],
+                                      val id : Name,
+                                      val categories: ISZ[BTSStateCategory.Type],
+                                      val assertion: Option[BTSAssertion],
                                     )
 
 
@@ -197,17 +197,17 @@ id=ID ( '[' priority=INTEGER_LIT ']' )?
  */
 
 @datatype class BTSTransition (
-                                label: BTSTransitionLabel, // declare label for current transition
-                                sourceStates: ISZ[Name],   // 1+ names referencing source states
-                                destState: Name, // reference name of destination state
-                                transitionCondition: Option[BTSTransitionCondition], // transition condition (guard)
-                                actions: Option[BTSBehaviorActions], // 0+ actions to take when a transition is executed
-                                assertion: Option[BTSAssertion] // 0-1 assertions for transition
+                                val label: BTSTransitionLabel, // declare label for current transition
+                                val sourceStates: ISZ[Name],   // 1+ names referencing source states
+                                val destState: Name, // reference name of destination state
+                                val transitionCondition: Option[BTSTransitionCondition], // transition condition (guard)
+                                val actions: Option[BTSBehaviorActions], // 0+ actions to take when a transition is executed
+                                val assertion: Option[BTSAssertion] // 0-1 assertions for transition
                               )// extends BTSBLESSAnnexClause
 
 @datatype class BTSTransitionLabel (
-                                     id: Name,     // name of transition
-                                     priority: Option[Z]   // priority of transition
+                                     val id: Name,     // name of transition
+                                     val priority: Option[Z]   // priority of transition
                                    )
 // **** stopped here *****
 
@@ -244,19 +244,19 @@ DispatchTrigger returns DispatchTrigger:
 @sig trait BTSTransitionCondition
 
 // TODO: Complete grammar for dispatch conditions
-@datatype class BTSDispatchCondition (dispatchTriggers : ISZ[BTSDispatchConjunction], // disjunction of conjunctions
-                                      frozenPorts: ISZ[Name]) extends BTSTransitionCondition
+@datatype class BTSDispatchCondition (val dispatchTriggers : ISZ[BTSDispatchConjunction], // disjunction of conjunctions
+                                      val frozenPorts: ISZ[Name]) extends BTSTransitionCondition
 
-@datatype class BTSDispatchConjunction(conjunction: ISZ[BTSDispatchTrigger])
+@datatype class BTSDispatchConjunction(val conjunction: ISZ[BTSDispatchTrigger])
 
 @sig trait BTSDispatchTrigger
 
 @datatype class BTSDispatchTriggerStop extends BTSDispatchTrigger
 
-@datatype class BTSDispatchTriggerPort(port: Name) extends BTSDispatchTrigger
+@datatype class BTSDispatchTriggerPort(val port: Name) extends BTSDispatchTrigger
 
-@datatype class BTSDispatchTriggerTimeout(ports: ISZ[Name],
-                                          time: Option[BTSBehaviorTime]) extends BTSDispatchTrigger
+@datatype class BTSDispatchTriggerTimeout(val ports: ISZ[Name],
+                                          val time: Option[BTSBehaviorTime]) extends BTSDispatchTrigger
 
 // Execute conditions are needed to leave execution states
 /* Xtext
@@ -271,7 +271,7 @@ ExecuteCondition:
 // TODO: Complete grammar for execute conditions
 @sig trait BTSExecuteCondition extends BTSTransitionCondition
 
-@datatype class BTSExecuteConditionExp (exp: BTSExp) extends BTSExecuteCondition // TODO can be a relation
+@datatype class BTSExecuteConditionExp (val exp: BTSExp) extends BTSExecuteCondition // TODO can be a relation
 
 @datatype class BTSExecuteConditionTimeout () extends BTSExecuteCondition
 
@@ -338,17 +338,17 @@ InternalCondition:
 // TODO: Complete expression grammar
 
 // TODO: Complete transition action grammar
-@datatype class BTSBehaviorActions (executionOrder: BTSExecutionOrder.Type,
-                                    actions: ISZ[BTSAssertedAction])
+@datatype class BTSBehaviorActions (val executionOrder: BTSExecutionOrder.Type,
+                                    val actions: ISZ[BTSAssertedAction])
 
 @enum object BTSExecutionOrder {
   'Sequential
   'Concurrent
 }
 
-@datatype class BTSAssertedAction(precondition: Option[BTSAssertion],
-                                  action: BTSAction,
-                                  postcondition: Option[BTSAssertion])
+@datatype class BTSAssertedAction(val precondition: Option[BTSAssertion],
+                                  val action: BTSAction,
+                                  val postcondition: Option[BTSAssertion])
 
 
 
@@ -359,52 +359,52 @@ InternalCondition:
 
 @datatype class BTSSkipAction extends BTSBasicAction
 
-@datatype class BTSAssignmentAction(lhs : BTSExp,
-                                    rhs : BTSExp) extends  BTSBasicAction
+@datatype class BTSAssignmentAction(val lhs : BTSExp,
+                                    val rhs : BTSExp) extends  BTSBasicAction
 
 @sig trait BTSCommunicationAction extends BTSBasicAction
 
-@datatype class BTSSubprogramCallAction(name: Name,
-                                        params: ISZ[BTSFormalExpPair]) extends BTSCommunicationAction
+@datatype class BTSSubprogramCallAction(val name: Name,
+                                        val params: ISZ[BTSFormalExpPair]) extends BTSCommunicationAction
 
-@datatype class BTSPortOutAction(name: Name,
-                                 exp: Option[BTSExp]) extends BTSCommunicationAction
+@datatype class BTSPortOutAction(val name: Name,
+                                 val exp: Option[BTSExp]) extends BTSCommunicationAction
 
-@datatype class BTSPortInAction(name: Name,
-                                variable: BTSExp) extends BTSCommunicationAction
+@datatype class BTSPortInAction(val name: Name,
+                                val variable: BTSExp) extends BTSCommunicationAction
 
-@datatype class BTSFrozenPortAction(portName: Name) extends BTSCommunicationAction
+@datatype class BTSFrozenPortAction(val portName: Name) extends BTSCommunicationAction
 
 
 
 @sig trait BTSControlAction extends BTSAction
 
-@datatype class BTSIfBLESSAction (availability: Option[TODO], // TODO
-                                  alternatives: ISZ[BTSGuardedAction]) extends BTSControlAction
+@datatype class BTSIfBLESSAction (val availability: Option[TODO], // TODO
+                                  val alternatives: ISZ[BTSGuardedAction]) extends BTSControlAction
 
-@datatype class BTSGuardedAction (guard: BTSExp,
-                                  action: BTSAssertedAction)
+@datatype class BTSGuardedAction (val guard: BTSExp,
+                                  val action: BTSAssertedAction)
 
-@datatype class BTSIfBAAction (ifBranch: BTSConditionalActions,
-                               elseIfBranches: ISZ[BTSConditionalActions],
-                               elseBranch: Option[BTSBehaviorActions]) extends BTSControlAction
+@datatype class BTSIfBAAction (val ifBranch: BTSConditionalActions,
+                               val elseIfBranches: ISZ[BTSConditionalActions],
+                               val elseBranch: Option[BTSBehaviorActions]) extends BTSControlAction
 
-@datatype class BTSConditionalActions (cond: BTSExp,
-                                       actions: BTSBehaviorActions)
+@datatype class BTSConditionalActions (val cond: BTSExp,
+                                       val actions: BTSBehaviorActions)
 
 
 
 @sig trait BTSQuantificationActions extends BTSAction
 
-@datatype class BTSExistentialLatticeQuantification (quantifiedVariables: ISZ[BTSVariableDeclaration],
-                                                     actions: BTSBehaviorActions,
-                                                     timeout: Option[BTSBehaviorTime],
-                                                     catchClause: Option[TODO] // TODO
+@datatype class BTSExistentialLatticeQuantification (val quantifiedVariables: ISZ[BTSVariableDeclaration],
+                                                     val actions: BTSBehaviorActions,
+                                                     val timeout: Option[BTSBehaviorTime],
+                                                     val catchClause: Option[TODO] // TODO
                                                     ) extends BTSQuantificationActions
 
-@datatype class BTSUniversalLatticeQuantification (latticeVariables: ISZ[Name],
-                                                   range: Option[TODO], // TODO
-                                                   elq: BTSExistentialLatticeQuantification
+@datatype class BTSUniversalLatticeQuantification (val latticeVariables: ISZ[Name],
+                                                   val range: Option[TODO], // TODO
+                                                   val elq: BTSExistentialLatticeQuantification
                                                   ) extends BTSQuantificationActions
 
 
@@ -420,8 +420,8 @@ InternalCondition:
   @pure def pos: Option[Position]
 }
 
-@datatype class BTSUnaryExp(op: BTSUnaryOp.Type,
-                            exp: BTSExp,
+@datatype class BTSUnaryExp(val op: BTSUnaryOp.Type,
+                            val exp: BTSExp,
                             val pos: Option[Position]) extends BTSExp
 
 @enum object BTSUnaryOp {
@@ -430,9 +430,9 @@ InternalCondition:
   'NOT
 }
 
-@datatype class BTSBinaryExp(op: BTSBinaryOp.Type,
-                             lhs: BTSExp,
-                             rhs: BTSExp,
+@datatype class BTSBinaryExp(val op: BTSBinaryOp.Type,
+                             val lhs: BTSExp,
+                             val rhs: BTSExp,
                              val pos: Option[Position]) extends BTSExp
 
 @enum object BTSBinaryOp {
@@ -466,27 +466,27 @@ InternalCondition:
   // NULL, INT, LONG, CHAR, DOUBLE, RATIONAL
 }
 
-@datatype class BTSLiteralExp(typ: BTSLiteralType.Type,
-                              exp: String,
+@datatype class BTSLiteralExp(val typ: BTSLiteralType.Type,
+                              val exp: String,
                               val pos: Option[Position]) extends BTSExp
 
-@datatype class BTSNameExp(name: Name,
+@datatype class BTSNameExp(val name: Name,
                            val pos: Option[Position]) extends BTSExp
 
-@datatype class BTSIndexingExp(exp: BTSExp,
-                               indices: ISZ[BTSExp],
+@datatype class BTSIndexingExp(val exp: BTSExp,
+                               val indices: ISZ[BTSExp],
                                val pos: Option[Position]) extends BTSExp
 
-@datatype class BTSAccessExp(exp: BTSExp,
-                             attributeName: String,
+@datatype class BTSAccessExp(val exp: BTSExp,
+                             val attributeName: String,
                              val pos: Option[Position]) extends BTSExp
 
-@datatype class BTSFunctionCall(name: Name,
-                                args: ISZ[BTSFormalExpPair],
+@datatype class BTSFunctionCall(val name: Name,
+                                val args: ISZ[BTSFormalExpPair],
                                 val pos: Option[Position]) extends BTSExp
 
-@datatype class BTSFormalExpPair(paramName: Option[Name],
-                                 exp: Option[BTSExp],
+@datatype class BTSFormalExpPair(val paramName: Option[Name],
+                                 val exp: Option[BTSExp],
                                  val pos: Option[Position])
 
 
@@ -497,4 +497,4 @@ InternalCondition:
 @datatype class TODO
 
 
-@datatype class Attr(posOpt: Option[Position])
+@datatype class Attr(val posOpt: Option[Position])

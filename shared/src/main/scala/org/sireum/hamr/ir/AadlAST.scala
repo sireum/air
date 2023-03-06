@@ -34,27 +34,27 @@ trait AadlInstInfo {
   def uriFrag: String
 }
 
-@datatype class Aadl(components: ISZ[Component],
-                     annexLib: ISZ[AnnexLib],
-                     dataComponents: ISZ[Component])
+@datatype class Aadl(val components: ISZ[Component],
+                     val annexLib: ISZ[AnnexLib],
+                     val dataComponents: ISZ[Component])
 
-@datatype class Name(name: ISZ[String], pos: Option[Position])
+@datatype class Name(val name: ISZ[String], val pos: Option[Position])
 
-@datatype class Component(identifier: Name,
-                          category: ComponentCategory.Type,
-                          classifier: Option[Classifier],
-                          features: ISZ[Feature],
-                          subComponents: ISZ[Component],
-                          connections: ISZ[Connection],
-                          connectionInstances: ISZ[ConnectionInstance],
-                          properties: ISZ[Property],
-                          flows: ISZ[Flow],
-                          modes: ISZ[Mode],
-                          annexes: ISZ[Annex],
+@datatype class Component(val identifier: Name,
+                          val category: ComponentCategory.Type,
+                          val classifier: Option[Classifier],
+                          val features: ISZ[Feature],
+                          val subComponents: ISZ[Component],
+                          val connections: ISZ[Connection],
+                          val connectionInstances: ISZ[ConnectionInstance],
+                          val properties: ISZ[Property],
+                          val flows: ISZ[Flow],
+                          val modes: ISZ[Mode],
+                          val annexes: ISZ[Annex],
                           val uriFrag: String)
     extends AadlInstInfo
 
-@datatype class Classifier(name: String)
+@datatype class Classifier(val name: String)
 
 @enum object ComponentCategory {
   'Abstract
@@ -84,7 +84,7 @@ trait AadlInstInfo {
 }
 
 @datatype class FeatureEnd(val identifier: Name,
-                           direction: Direction.Type,
+                           val direction: Direction.Type,
                            val category: FeatureCategory.Type,
                            val classifier: Option[Classifier],
                            val properties: ISZ[Property],
@@ -93,8 +93,8 @@ trait AadlInstInfo {
     with AadlInstInfo
 
 @datatype class FeatureGroup(val identifier: Name,
-                             features: ISZ[Feature],
-                             isInverse: B,
+                             val features: ISZ[Feature],
+                             val isInverse: B,
                              val category: FeatureCategory.Type,
                              // val classifier: Option[Classifier],
                              val properties: ISZ[Property],
@@ -145,24 +145,24 @@ trait AadlInstInfo {
   'SubprogramAccessGroup
 }
 
-@datatype class Connection(name: Name,
-                           src: ISZ[EndPoint],
-                           dst: ISZ[EndPoint],
-                           kind: ConnectionKind.Type,
-                           isBiDirectional: B,
-                           connectionInstances: ISZ[Name],
-                           properties: ISZ[Property],
+@datatype class Connection(val name: Name,
+                           val src: ISZ[EndPoint],
+                           val dst: ISZ[EndPoint],
+                           val kind: ConnectionKind.Type,
+                           val isBiDirectional: B,
+                           val connectionInstances: ISZ[Name],
+                           val properties: ISZ[Property],
                            val uriFrag: String)
     extends AadlInstInfo
 
-@datatype class ConnectionInstance(name: Name,
-                                   src: EndPoint,
-                                   dst: EndPoint,
-                                   kind: ConnectionKind.Type,
-                                   connectionRefs: ISZ[ConnectionReference],
-                                   properties: ISZ[Property])
+@datatype class ConnectionInstance(val name: Name,
+                                   val src: EndPoint,
+                                   val dst: EndPoint,
+                                   val kind: ConnectionKind.Type,
+                                   val connectionRefs: ISZ[ConnectionReference],
+                                   val properties: ISZ[Property])
 
-@datatype class ConnectionReference(name: Name, context: Name, isParent: B)
+@datatype class ConnectionReference(val name: Name, val context: Name, val isParent: B)
 
 @enum object ConnectionKind {
   'Feature
@@ -173,13 +173,13 @@ trait AadlInstInfo {
   'FeatureGroup
 }
 
-@datatype class EndPoint(component: Name,
-                         feature: Option[Name],
-                         direction: Option[Direction.Type])
+@datatype class EndPoint(val component: Name,
+                         val feature: Option[Name],
+                         val direction: Option[Direction.Type])
 
-@datatype class Property(name: Name,
-                         propertyValues: ISZ[PropertyValue],
-                         appliesTo: ISZ[ElementRef])
+@datatype class Property(val name: Name,
+                         val propertyValues: ISZ[PropertyValue],
+                         val appliesTo: ISZ[ElementRef])
 
 @sig trait ElementRef
 
@@ -190,25 +190,25 @@ trait AadlInstInfo {
   'Flow
 }
 
-@datatype class AadlElementRef(elementKind: ElementKind.Type, name: Name)
+@datatype class AadlElementRef(val elementKind: ElementKind.Type, val name: Name)
     extends ElementRef
 
 @datatype trait PropertyValue
 
-@datatype class ClassifierProp(name: String) extends PropertyValue
+@datatype class ClassifierProp(val name: String) extends PropertyValue
 
-@datatype class RangeProp(low: UnitProp, high: UnitProp) extends PropertyValue
+@datatype class RangeProp(val low: UnitProp, val high: UnitProp) extends PropertyValue
 
-@datatype class RecordProp(properties: ISZ[Property]) extends PropertyValue
+@datatype class RecordProp(val properties: ISZ[Property]) extends PropertyValue
 
-@datatype class ReferenceProp(value: Name) extends PropertyValue
+@datatype class ReferenceProp(val value: Name) extends PropertyValue
 
-@datatype class UnitProp(value: String, unit: Option[String])
+@datatype class UnitProp(val value: String, val unit: Option[String])
     extends PropertyValue
 
-@datatype class ValueProp(value: String) extends PropertyValue
+@datatype class ValueProp(val value: String) extends PropertyValue
 
-@datatype class Mode(name: Name)
+@datatype class Mode(val name: Name)
 
 @enum object FlowKind {
   'Source
@@ -216,19 +216,19 @@ trait AadlInstInfo {
   'Path
 }
 
-@datatype class Flow(name: Name,
-                     kind: FlowKind.Type,
-                     source: Option[Name],
-                     sink: Option[Name],
+@datatype class Flow(val name: Name,
+                     val kind: FlowKind.Type,
+                     val source: Option[Name],
+                     val sink: Option[Name],
                      val uriFrag: String)
     extends AadlInstInfo
 
-@datatype class Annex(name: String, clause: AnnexClause)
+@datatype class Annex(val name: String, val clause: AnnexClause)
 
 @sig trait AnnexClause
 
 @sig trait AnnexLib
 
-@datatype class OtherAnnex(clause: String) extends AnnexClause
+@datatype class OtherAnnex(val clause: String) extends AnnexClause
 
-@datatype class OtherLib(lib: String) extends AnnexLib
+@datatype class OtherLib(val lib: String) extends AnnexLib

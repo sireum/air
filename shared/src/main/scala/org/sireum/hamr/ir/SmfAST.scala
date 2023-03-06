@@ -34,19 +34,19 @@ import org.sireum._
 
 @sig trait SmfLib extends AnnexLib
 
-@datatype class SmfClause(classification: ISZ[SmfClassification],
-                          declass: ISZ[SmfDeclass])
+@datatype class SmfClause(val classification: ISZ[SmfClassification],
+                          val declass: ISZ[SmfDeclass])
   extends SmfAnnex
 
-@datatype class SmfClassification(portName: Name, typeName: Name)
+@datatype class SmfClassification(val portName: Name, val typeName: Name)
   extends SmfAnnex
 
-@datatype class SmfDeclass(flowName: Name, srcType: Option[Name], snkType: Name)
+@datatype class SmfDeclass(val flowName: Name, val srcType: Option[Name], val snkType: Name)
   extends SmfAnnex
 
-@datatype class SmfLibrary(types: ISZ[SmfType]) extends SmfLib
+@datatype class SmfLibrary(val types: ISZ[SmfType]) extends SmfLib
 
-@datatype class SmfType(typeName: Name, parentType: ISZ[Name])
+@datatype class SmfType(val typeName: Name, val parentType: ISZ[Name])
   extends SmfAnnex
 
 /**

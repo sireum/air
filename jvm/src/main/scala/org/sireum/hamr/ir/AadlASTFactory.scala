@@ -29,6 +29,7 @@ import java.util.{List => JList}
 
 import org.sireum._
 import org.sireum.message.{FlatPos, Position}
+import org.sireum.hamr.ir.Flow
 
 class AadlASTFactory {
 

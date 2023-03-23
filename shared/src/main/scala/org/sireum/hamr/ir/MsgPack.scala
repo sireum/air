@@ -146,6 +146,7 @@ import org.sireum.hamr.ir.GclSymbol
 import org.sireum.hamr.ir.GclSubclause
 import org.sireum.hamr.ir.GclMethod
 import org.sireum.hamr.ir.GclStateVar
+import org.sireum.hamr.ir.GclClause
 import org.sireum.hamr.ir.GclSpec
 import org.sireum.hamr.ir.GclInvariant
 import org.sireum.hamr.ir.GclComputeSpec
@@ -158,6 +159,7 @@ import org.sireum.hamr.ir.GclCompute
 import org.sireum.hamr.ir.GclHandle
 import org.sireum.hamr.ir.GclTODO
 import org.sireum.hamr.ir.GclLib
+import org.sireum.hamr.ir.InfoFlowClause
 import org.sireum.hamr.ir.SmfAnnex
 import org.sireum.hamr.ir.SmfLib
 import org.sireum.hamr.ir.SmfClause
@@ -376,333 +378,335 @@ object MsgPack {
 
     val GclLib: Z = 70
 
-    val SmfClause: Z = 71
+    val InfoFlowClause: Z = 71
 
-    val SmfClassification: Z = 72
+    val SmfClause: Z = 72
 
-    val SmfDeclass: Z = 73
+    val SmfClassification: Z = 73
 
-    val SmfLibrary: Z = 74
+    val SmfDeclass: Z = 74
 
-    val SmfType: Z = 75
+    val SmfLibrary: Z = 75
 
-    val _langastTopUnitProgram: Z = 76
+    val SmfType: Z = 76
 
-    val _langastTopUnitSequentUnit: Z = 77
+    val _langastTopUnitProgram: Z = 77
 
-    val _langastTopUnitTruthTableUnit: Z = 78
+    val _langastTopUnitSequentUnit: Z = 78
 
-    val _langastLoopContract: Z = 79
+    val _langastTopUnitTruthTableUnit: Z = 79
 
-    val _langastStmtImport: Z = 80
+    val _langastLoopContract: Z = 80
 
-    val _langastStmtImportImporter: Z = 81
+    val _langastStmtImport: Z = 81
 
-    val _langastStmtImportMultiSelector: Z = 82
+    val _langastStmtImportImporter: Z = 82
 
-    val _langastStmtImportWildcardSelector: Z = 83
+    val _langastStmtImportMultiSelector: Z = 83
 
-    val _langastStmtImportNamedSelector: Z = 84
+    val _langastStmtImportWildcardSelector: Z = 84
 
-    val _langastStmtVar: Z = 85
+    val _langastStmtImportNamedSelector: Z = 85
 
-    val _langastStmtVarPattern: Z = 86
+    val _langastStmtVar: Z = 86
 
-    val _langastStmtSpecVar: Z = 87
+    val _langastStmtVarPattern: Z = 87
 
-    val _langastStmtMethod: Z = 88
+    val _langastStmtSpecVar: Z = 88
 
-    val _langastStmtExtMethod: Z = 89
+    val _langastStmtMethod: Z = 89
 
-    val _langastStmtJustMethod: Z = 90
+    val _langastStmtExtMethod: Z = 90
 
-    val _langastStmtSpecMethod: Z = 91
+    val _langastStmtJustMethod: Z = 91
 
-    val _langastStmtEnum: Z = 92
+    val _langastStmtSpecMethod: Z = 92
 
-    val _langastStmtSubZ: Z = 93
+    val _langastStmtEnum: Z = 93
 
-    val _langastStmtObject: Z = 94
+    val _langastStmtSubZ: Z = 94
 
-    val _langastStmtSig: Z = 95
+    val _langastStmtObject: Z = 95
 
-    val _langastStmtAdt: Z = 96
+    val _langastStmtSig: Z = 96
 
-    val _langastStmtTypeAlias: Z = 97
+    val _langastStmtAdt: Z = 97
 
-    val _langastStmtAssign: Z = 98
+    val _langastStmtTypeAlias: Z = 98
 
-    val _langastStmtBlock: Z = 99
+    val _langastStmtAssign: Z = 99
 
-    val _langastStmtIf: Z = 100
+    val _langastStmtBlock: Z = 100
 
-    val _langastStmtMatch: Z = 101
+    val _langastStmtIf: Z = 101
 
-    val _langastStmtWhile: Z = 102
+    val _langastStmtMatch: Z = 102
 
-    val _langastStmtDoWhile: Z = 103
+    val _langastStmtWhile: Z = 103
 
-    val _langastStmtFor: Z = 104
+    val _langastStmtDoWhile: Z = 104
 
-    val _langastStmtReturn: Z = 105
+    val _langastStmtFor: Z = 105
 
-    val _langastStmtExpr: Z = 106
+    val _langastStmtReturn: Z = 106
 
-    val _langastStmtFact: Z = 107
+    val _langastStmtExpr: Z = 107
 
-    val _langastStmtInv: Z = 108
+    val _langastStmtFact: Z = 108
 
-    val _langastStmtTheorem: Z = 109
+    val _langastStmtInv: Z = 109
 
-    val _langastStmtDataRefinement: Z = 110
+    val _langastStmtTheorem: Z = 110
 
-    val _langastStmtSpecLabel: Z = 111
+    val _langastStmtDataRefinement: Z = 111
 
-    val _langastStmtSpecBlock: Z = 112
+    val _langastStmtSpecLabel: Z = 112
 
-    val _langastStmtDeduceSequent: Z = 113
+    val _langastStmtSpecBlock: Z = 113
 
-    val _langastStmtDeduceSteps: Z = 114
+    val _langastStmtDeduceSequent: Z = 114
 
-    val _langastStmtHavoc: Z = 115
+    val _langastStmtDeduceSteps: Z = 115
 
-    val _langastMethodContractAccesses: Z = 116
+    val _langastStmtHavoc: Z = 116
 
-    val _langastMethodContractClaims: Z = 117
+    val _langastMethodContractAccesses: Z = 117
 
-    val _langastMethodContractSimple: Z = 118
+    val _langastMethodContractClaims: Z = 118
 
-    val _langastMethodContractCases: Z = 119
+    val _langastMethodContractSimple: Z = 119
 
-    val _langastMethodContractCase: Z = 120
+    val _langastMethodContractCases: Z = 120
 
-    val _langastMethodContractInfoFlows: Z = 121
+    val _langastMethodContractCase: Z = 121
 
-    val _langastMethodContractInfoFlowGroup: Z = 122
+    val _langastMethodContractInfoFlows: Z = 122
 
-    val _langastMethodContractInfoFlowFlow: Z = 123
+    val _langastMethodContractInfoFlowGroup: Z = 123
 
-    val _langastMethodContractInfoFlowCase: Z = 124
+    val _langastMethodContractInfoFlowFlow: Z = 124
 
-    val _langastSequent: Z = 125
+    val _langastMethodContractInfoFlowCase: Z = 125
 
-    val _langastProofAst: Z = 126
+    val _langastSequent: Z = 126
 
-    val _langastProofAstStepIdNum: Z = 127
+    val _langastProofAst: Z = 127
 
-    val _langastProofAstStepIdStr: Z = 128
+    val _langastProofAstStepIdNum: Z = 128
 
-    val _langastProofAstStepRegular: Z = 129
+    val _langastProofAstStepIdStr: Z = 129
 
-    val _langastProofAstStepAssume: Z = 130
+    val _langastProofAstStepRegular: Z = 130
 
-    val _langastProofAstStepAssert: Z = 131
+    val _langastProofAstStepAssume: Z = 131
 
-    val _langastProofAstStepSubProof: Z = 132
+    val _langastProofAstStepAssert: Z = 132
 
-    val _langastProofAstStepLet: Z = 133
+    val _langastProofAstStepSubProof: Z = 133
 
-    val _langastProofAstStepLetParam: Z = 134
+    val _langastProofAstStepLet: Z = 134
 
-    val _langastProofAstStepStructInduction: Z = 135
+    val _langastProofAstStepLetParam: Z = 135
 
-    val _langastProofAstStepStructInductionMatchCase: Z = 136
+    val _langastProofAstStepStructInduction: Z = 136
 
-    val _langastProofAstStepStructInductionMatchDefault: Z = 137
+    val _langastProofAstStepStructInductionMatchCase: Z = 137
 
-    val _langastProofAstStepJustificationRef: Z = 138
+    val _langastProofAstStepStructInductionMatchDefault: Z = 138
 
-    val _langastProofAstStepJustificationApply: Z = 139
+    val _langastProofAstStepJustificationRef: Z = 139
 
-    val _langastProofAstStepJustificationApplyNamed: Z = 140
+    val _langastProofAstStepJustificationApply: Z = 140
 
-    val _langastProofAstStepJustificationApplyEta: Z = 141
+    val _langastProofAstStepJustificationApplyNamed: Z = 141
 
-    val _langastCase: Z = 142
+    val _langastProofAstStepJustificationApplyEta: Z = 142
 
-    val _langastEnumGenRangeExpr: Z = 143
+    val _langastCase: Z = 143
 
-    val _langastEnumGenRangeStep: Z = 144
+    val _langastEnumGenRangeExpr: Z = 144
 
-    val _langastEnumGenFor: Z = 145
+    val _langastEnumGenRangeStep: Z = 145
 
-    val _langastTypeNamed: Z = 146
+    val _langastEnumGenFor: Z = 146
 
-    val _langastTypeFun: Z = 147
+    val _langastTypeNamed: Z = 147
 
-    val _langastTypeTuple: Z = 148
+    val _langastTypeFun: Z = 148
 
-    val _langastPatternLiteral: Z = 149
+    val _langastTypeTuple: Z = 149
 
-    val _langastPatternLitInterpolate: Z = 150
+    val _langastPatternLiteral: Z = 150
 
-    val _langastPatternRef: Z = 151
+    val _langastPatternLitInterpolate: Z = 151
 
-    val _langastPatternVarBinding: Z = 152
+    val _langastPatternRef: Z = 152
 
-    val _langastPatternWildcard: Z = 153
+    val _langastPatternVarBinding: Z = 153
 
-    val _langastPatternSeqWildcard: Z = 154
+    val _langastPatternWildcard: Z = 154
 
-    val _langastPatternStructure: Z = 155
+    val _langastPatternSeqWildcard: Z = 155
 
-    val _langastExpLitB: Z = 156
+    val _langastPatternStructure: Z = 156
 
-    val _langastExpLitC: Z = 157
+    val _langastExpLitB: Z = 157
 
-    val _langastExpLitZ: Z = 158
+    val _langastExpLitC: Z = 158
 
-    val _langastExpLitF32: Z = 159
+    val _langastExpLitZ: Z = 159
 
-    val _langastExpLitF64: Z = 160
+    val _langastExpLitF32: Z = 160
 
-    val _langastExpLitR: Z = 161
+    val _langastExpLitF64: Z = 161
 
-    val _langastExpLitString: Z = 162
+    val _langastExpLitR: Z = 162
 
-    val _langastExpLitStepId: Z = 163
+    val _langastExpLitString: Z = 163
 
-    val _langastExpStringInterpolate: Z = 164
+    val _langastExpLitStepId: Z = 164
 
-    val _langastExpThis: Z = 165
+    val _langastExpStringInterpolate: Z = 165
 
-    val _langastExpSuper: Z = 166
+    val _langastExpThis: Z = 166
 
-    val _langastExpUnary: Z = 167
+    val _langastExpSuper: Z = 167
 
-    val _langastExpBinary: Z = 168
+    val _langastExpUnary: Z = 168
 
-    val _langastExpIdent: Z = 169
+    val _langastExpBinary: Z = 169
 
-    val _langastExpEta: Z = 170
+    val _langastExpIdent: Z = 170
 
-    val _langastExpTuple: Z = 171
+    val _langastExpEta: Z = 171
 
-    val _langastExpSelect: Z = 172
+    val _langastExpTuple: Z = 172
 
-    val _langastExpInvoke: Z = 173
+    val _langastExpSelect: Z = 173
 
-    val _langastExpInvokeNamed: Z = 174
+    val _langastExpInvoke: Z = 174
 
-    val _langastExpIf: Z = 175
+    val _langastExpInvokeNamed: Z = 175
 
-    val _langastExpTypeCond: Z = 176
+    val _langastExpIf: Z = 176
 
-    val _langastExpSym: Z = 177
+    val _langastExpTypeCond: Z = 177
 
-    val _langastExpFunParam: Z = 178
+    val _langastExpSym: Z = 178
 
-    val _langastExpFun: Z = 179
+    val _langastExpFunParam: Z = 179
 
-    val _langastExpForYield: Z = 180
+    val _langastExpFun: Z = 180
 
-    val _langastExpQuantType: Z = 181
+    val _langastExpForYield: Z = 181
 
-    val _langastExpQuantRange: Z = 182
+    val _langastExpQuantType: Z = 182
 
-    val _langastExpQuantEach: Z = 183
+    val _langastExpQuantRange: Z = 183
 
-    val _langastExpInput: Z = 184
+    val _langastExpQuantEach: Z = 184
 
-    val _langastExpAt: Z = 185
+    val _langastExpInput: Z = 185
 
-    val _langastExpLoopIndex: Z = 186
+    val _langastExpAt: Z = 186
 
-    val _langastExpStateSeq: Z = 187
+    val _langastExpLoopIndex: Z = 187
 
-    val _langastExpStateSeqFragment: Z = 188
+    val _langastExpStateSeq: Z = 188
 
-    val _langastExpResult: Z = 189
+    val _langastExpStateSeqFragment: Z = 189
 
-    val _langastExpAssumeAgree: Z = 190
+    val _langastExpResult: Z = 190
 
-    val _langastExpAssertAgree: Z = 191
+    val _langastExpAssumeAgree: Z = 191
 
-    val _langastExpInfoFlowInvariant: Z = 192
+    val _langastExpAssertAgree: Z = 192
 
-    val _langastNamedArg: Z = 193
+    val _langastExpInfoFlowInvariant: Z = 193
 
-    val _langastId: Z = 194
+    val _langastNamedArg: Z = 194
 
-    val _langastName: Z = 195
+    val _langastId: Z = 195
 
-    val _langastBody: Z = 196
+    val _langastName: Z = 196
 
-    val _langastAdtParam: Z = 197
+    val _langastBody: Z = 197
 
-    val _langastMethodSig: Z = 198
+    val _langastAdtParam: Z = 198
 
-    val _langastParam: Z = 199
+    val _langastMethodSig: Z = 199
 
-    val _langastTypeParam: Z = 200
+    val _langastParam: Z = 200
 
-    val _langastAttr: Z = 201
+    val _langastTypeParam: Z = 201
 
-    val _langastTypedAttr: Z = 202
+    val _langastAttr: Z = 202
 
-    val _langastResolvedAttr: Z = 203
+    val _langastTypedAttr: Z = 203
 
-    val _langastResolvedInfoBuiltIn: Z = 204
+    val _langastResolvedAttr: Z = 204
 
-    val _langastResolvedInfoPackage: Z = 205
+    val _langastResolvedInfoBuiltIn: Z = 205
 
-    val _langastResolvedInfoEnum: Z = 206
+    val _langastResolvedInfoPackage: Z = 206
 
-    val _langastResolvedInfoEnumElement: Z = 207
+    val _langastResolvedInfoEnum: Z = 207
 
-    val _langastResolvedInfoObject: Z = 208
+    val _langastResolvedInfoEnumElement: Z = 208
 
-    val _langastResolvedInfoVar: Z = 209
+    val _langastResolvedInfoObject: Z = 209
 
-    val _langastResolvedInfoMethod: Z = 210
+    val _langastResolvedInfoVar: Z = 210
 
-    val _langastResolvedInfoMethods: Z = 211
+    val _langastResolvedInfoMethod: Z = 211
 
-    val _langastResolvedInfoTuple: Z = 212
+    val _langastResolvedInfoMethods: Z = 212
 
-    val _langastResolvedInfoLocalVar: Z = 213
+    val _langastResolvedInfoTuple: Z = 213
 
-    val _langastResolvedInfoFact: Z = 214
+    val _langastResolvedInfoLocalVar: Z = 214
 
-    val _langastResolvedInfoTheorem: Z = 215
+    val _langastResolvedInfoFact: Z = 215
 
-    val _langastResolvedInfoInv: Z = 216
+    val _langastResolvedInfoTheorem: Z = 216
 
-    val _langastTruthTableRow: Z = 217
+    val _langastResolvedInfoInv: Z = 217
 
-    val _langastTruthTableAssignment: Z = 218
+    val _langastTruthTableRow: Z = 218
 
-    val _langastTruthTableConclusionValidity: Z = 219
+    val _langastTruthTableAssignment: Z = 219
 
-    val _langastTruthTableConclusionTautology: Z = 220
+    val _langastTruthTableConclusionValidity: Z = 220
 
-    val _langastTruthTableConclusionContradictory: Z = 221
+    val _langastTruthTableConclusionTautology: Z = 221
 
-    val _langastTruthTableConclusionContingent: Z = 222
+    val _langastTruthTableConclusionContradictory: Z = 222
 
-    val _langastTypedName: Z = 223
+    val _langastTruthTableConclusionContingent: Z = 223
 
-    val _langastTypedTuple: Z = 224
+    val _langastTypedName: Z = 224
 
-    val _langastTypedFun: Z = 225
+    val _langastTypedTuple: Z = 225
 
-    val _langastTypedTypeVar: Z = 226
+    val _langastTypedFun: Z = 226
 
-    val _langastTypedPackage: Z = 227
+    val _langastTypedTypeVar: Z = 227
 
-    val _langastTypedObject: Z = 228
+    val _langastTypedPackage: Z = 228
 
-    val _langastTypedEnum: Z = 229
+    val _langastTypedObject: Z = 229
 
-    val _langastTypedMethod: Z = 230
+    val _langastTypedEnum: Z = 230
 
-    val _langastTypedMethods: Z = 231
+    val _langastTypedMethod: Z = 231
 
-    val _langastTypedFact: Z = 232
+    val _langastTypedMethods: Z = 232
 
-    val _langastTypedTheorem: Z = 233
+    val _langastTypedFact: Z = 233
 
-    val _langastTypedInv: Z = 234
+    val _langastTypedTheorem: Z = 234
+
+    val _langastTypedInv: Z = 235
 
   }
 
@@ -1615,6 +1619,7 @@ object MsgPack {
         case o: GclHandle => writeGclHandle(o)
         case o: GclTODO => writeGclTODO(o)
         case o: GclLib => writeGclLib(o)
+        case o: InfoFlowClause => writeInfoFlowClause(o)
       }
     }
 
@@ -1638,6 +1643,15 @@ object MsgPack {
       writer.writeString(o.name)
       writer.writeString(o.classifier)
       writer.writeOption(o.posOpt, writer.writePosition _)
+    }
+
+    def writeGclClause(o: GclClause): Unit = {
+      o match {
+        case o: GclInvariant => writeGclInvariant(o)
+        case o: GclAssume => writeGclAssume(o)
+        case o: GclGuarantee => writeGclGuarantee(o)
+        case o: InfoFlowClause => writeInfoFlowClause(o)
+      }
     }
 
     def writeGclSpec(o: GclSpec): Unit = {
@@ -1697,6 +1711,7 @@ object MsgPack {
       writer.writeZ(Constants.GclInitialize)
       writer.writeISZ(o.modifies, write_langastExp _)
       writer.writeISZ(o.guarantees, writeGclGuarantee _)
+      writer.writeISZ(o.flows, writeInfoFlowClause _)
     }
 
     def writeGclCompute(o: GclCompute): Unit = {
@@ -1705,6 +1720,7 @@ object MsgPack {
       writer.writeISZ(o.specs, writeGclComputeSpec _)
       writer.writeISZ(o.cases, writeGclCaseStatement _)
       writer.writeISZ(o.handlers, writeGclHandle _)
+      writer.writeISZ(o.flows, writeInfoFlowClause _)
     }
 
     def writeGclHandle(o: GclHandle): Unit = {
@@ -1722,6 +1738,15 @@ object MsgPack {
       writer.writeZ(Constants.GclLib)
       writeName(o.containingPackage)
       writer.writeISZ(o.methods, writeGclMethod _)
+    }
+
+    def writeInfoFlowClause(o: InfoFlowClause): Unit = {
+      writer.writeZ(Constants.InfoFlowClause)
+      writer.writeString(o.id)
+      writer.writeOption(o.descriptor, writer.writeString _)
+      writer.writeISZ(o.from, write_langastExp _)
+      writer.writeISZ(o.to, write_langastExp _)
+      writer.writeOption(o.posOpt, writer.writePosition _)
     }
 
     def writeSmfAnnex(o: SmfAnnex): Unit = {
@@ -4964,9 +4989,10 @@ object MsgPack {
         case Constants.GclHandle => val r = readGclHandleT(T); return r
         case Constants.GclTODO => val r = readGclTODOT(T); return r
         case Constants.GclLib => val r = readGclLibT(T); return r
+        case Constants.InfoFlowClause => val r = readInfoFlowClauseT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of GclSymbol.")
-          val r = readGclLibT(T)
+          val r = readInfoFlowClauseT(T)
           return r
       }
     }
@@ -5015,6 +5041,21 @@ object MsgPack {
       val classifier = reader.readString()
       val posOpt = reader.readOption(reader.readPosition _)
       return GclStateVar(name, classifier, posOpt)
+    }
+
+    def readGclClause(): GclClause = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.GclInvariant => val r = readGclInvariantT(T); return r
+        case Constants.GclAssume => val r = readGclAssumeT(T); return r
+        case Constants.GclGuarantee => val r = readGclGuaranteeT(T); return r
+        case Constants.InfoFlowClause => val r = readInfoFlowClauseT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of GclClause.")
+          val r = readInfoFlowClauseT(T)
+          return r
+      }
     }
 
     def readGclSpec(): GclSpec = {
@@ -5133,7 +5174,8 @@ object MsgPack {
       }
       val modifies = reader.readISZ(read_langastExp _)
       val guarantees = reader.readISZ(readGclGuarantee _)
-      return GclInitialize(modifies, guarantees)
+      val flows = reader.readISZ(readInfoFlowClause _)
+      return GclInitialize(modifies, guarantees, flows)
     }
 
     def readGclCompute(): GclCompute = {
@@ -5149,7 +5191,8 @@ object MsgPack {
       val specs = reader.readISZ(readGclComputeSpec _)
       val cases = reader.readISZ(readGclCaseStatement _)
       val handlers = reader.readISZ(readGclHandle _)
-      return GclCompute(modifies, specs, cases, handlers)
+      val flows = reader.readISZ(readInfoFlowClause _)
+      return GclCompute(modifies, specs, cases, handlers, flows)
     }
 
     def readGclHandle(): GclHandle = {
@@ -5191,6 +5234,23 @@ object MsgPack {
       val containingPackage = readName()
       val methods = reader.readISZ(readGclMethod _)
       return GclLib(containingPackage, methods)
+    }
+
+    def readInfoFlowClause(): InfoFlowClause = {
+      val r = readInfoFlowClauseT(F)
+      return r
+    }
+
+    def readInfoFlowClauseT(typeParsed: B): InfoFlowClause = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.InfoFlowClause)
+      }
+      val id = reader.readString()
+      val descriptor = reader.readOption(reader.readString _)
+      val from = reader.readISZ(read_langastExp _)
+      val to = reader.readISZ(read_langastExp _)
+      val posOpt = reader.readOption(reader.readPosition _)
+      return InfoFlowClause(id, descriptor, from, to, posOpt)
     }
 
     def readSmfAnnex(): SmfAnnex = {
@@ -9848,6 +9908,21 @@ object MsgPack {
     return r
   }
 
+  def fromGclClause(o: GclClause, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeGclClause(o)
+    return w.result
+  }
+
+  def toGclClause(data: ISZ[U8]): Either[GclClause, MessagePack.ErrorMsg] = {
+    def fGclClause(reader: Reader): GclClause = {
+      val r = reader.readGclClause()
+      return r
+    }
+    val r = to(data, fGclClause _)
+    return r
+  }
+
   def fromGclSpec(o: GclSpec, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
     w.writeGclSpec(o)
@@ -10025,6 +10100,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fGclLib _)
+    return r
+  }
+
+  def fromInfoFlowClause(o: InfoFlowClause, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeInfoFlowClause(o)
+    return w.result
+  }
+
+  def toInfoFlowClause(data: ISZ[U8]): Either[InfoFlowClause, MessagePack.ErrorMsg] = {
+    def fInfoFlowClause(reader: Reader): InfoFlowClause = {
+      val r = reader.readInfoFlowClause()
+      return r
+    }
+    val r = to(data, fInfoFlowClause _)
     return r
   }
 

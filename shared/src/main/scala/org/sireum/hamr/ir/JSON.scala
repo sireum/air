@@ -147,6 +147,7 @@ import org.sireum.hamr.ir.GclSymbol
 import org.sireum.hamr.ir.GclSubclause
 import org.sireum.hamr.ir.GclMethod
 import org.sireum.hamr.ir.GclStateVar
+import org.sireum.hamr.ir.GclClause
 import org.sireum.hamr.ir.GclSpec
 import org.sireum.hamr.ir.GclInvariant
 import org.sireum.hamr.ir.GclComputeSpec
@@ -159,6 +160,7 @@ import org.sireum.hamr.ir.GclCompute
 import org.sireum.hamr.ir.GclHandle
 import org.sireum.hamr.ir.GclTODO
 import org.sireum.hamr.ir.GclLib
+import org.sireum.hamr.ir.InfoFlowClause
 import org.sireum.hamr.ir.SmfAnnex
 import org.sireum.hamr.ir.SmfLib
 import org.sireum.hamr.ir.SmfClause
@@ -1430,6 +1432,7 @@ object JSON {
         case o: GclHandle => return printGclHandle(o)
         case o: GclTODO => return printGclTODO(o)
         case o: GclLib => return printGclLib(o)
+        case o: InfoFlowClause => return printInfoFlowClause(o)
       }
     }
 
@@ -1459,6 +1462,15 @@ object JSON {
         ("classifier", printString(o.classifier)),
         ("posOpt", printOption(F, o.posOpt, printPosition _))
       ))
+    }
+
+    @pure def printGclClause(o: GclClause): ST = {
+      o match {
+        case o: GclInvariant => return printGclInvariant(o)
+        case o: GclAssume => return printGclAssume(o)
+        case o: GclGuarantee => return printGclGuarantee(o)
+        case o: InfoFlowClause => return printInfoFlowClause(o)
+      }
     }
 
     @pure def printGclSpec(o: GclSpec): ST = {
@@ -1528,7 +1540,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""GclInitialize""""),
         ("modifies", printISZ(F, o.modifies, print_langastExp _)),
-        ("guarantees", printISZ(F, o.guarantees, printGclGuarantee _))
+        ("guarantees", printISZ(F, o.guarantees, printGclGuarantee _)),
+        ("flows", printISZ(F, o.flows, printInfoFlowClause _))
       ))
     }
 
@@ -1538,7 +1551,8 @@ object JSON {
         ("modifies", printISZ(F, o.modifies, print_langastExp _)),
         ("specs", printISZ(F, o.specs, printGclComputeSpec _)),
         ("cases", printISZ(F, o.cases, printGclCaseStatement _)),
-        ("handlers", printISZ(F, o.handlers, printGclHandle _))
+        ("handlers", printISZ(F, o.handlers, printGclHandle _)),
+        ("flows", printISZ(F, o.flows, printInfoFlowClause _))
       ))
     }
 
@@ -1562,6 +1576,17 @@ object JSON {
         ("type", st""""GclLib""""),
         ("containingPackage", printName(o.containingPackage)),
         ("methods", printISZ(F, o.methods, printGclMethod _))
+      ))
+    }
+
+    @pure def printInfoFlowClause(o: InfoFlowClause): ST = {
+      return printObject(ISZ(
+        ("type", st""""InfoFlowClause""""),
+        ("id", printString(o.id)),
+        ("descriptor", printOption(T, o.descriptor, printString _)),
+        ("from", printISZ(F, o.from, print_langastExp _)),
+        ("to", printISZ(F, o.to, print_langastExp _)),
+        ("posOpt", printOption(F, o.posOpt, printPosition _))
       ))
     }
 
@@ -5858,7 +5883,7 @@ object JSON {
     }
 
     def parseGclSymbol(): GclSymbol = {
-      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclHandle", "GclTODO", "GclLib"))
+      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclHandle", "GclTODO", "GclLib", "InfoFlowClause"))
       t.native match {
         case "GclSubclause" => val r = parseGclSubclauseT(T); return r
         case "GclMethod" => val r = parseGclMethodT(T); return r
@@ -5873,7 +5898,8 @@ object JSON {
         case "GclHandle" => val r = parseGclHandleT(T); return r
         case "GclTODO" => val r = parseGclTODOT(T); return r
         case "GclLib" => val r = parseGclLibT(T); return r
-        case _ => val r = parseGclLibT(T); return r
+        case "InfoFlowClause" => val r = parseInfoFlowClauseT(T); return r
+        case _ => val r = parseInfoFlowClauseT(T); return r
       }
     }
 
@@ -5941,6 +5967,17 @@ object JSON {
       val posOpt = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
       return GclStateVar(name, classifier, posOpt)
+    }
+
+    def parseGclClause(): GclClause = {
+      val t = parser.parseObjectTypes(ISZ("GclInvariant", "GclAssume", "GclGuarantee", "InfoFlowClause"))
+      t.native match {
+        case "GclInvariant" => val r = parseGclInvariantT(T); return r
+        case "GclAssume" => val r = parseGclAssumeT(T); return r
+        case "GclGuarantee" => val r = parseGclGuaranteeT(T); return r
+        case "InfoFlowClause" => val r = parseInfoFlowClauseT(T); return r
+        case _ => val r = parseInfoFlowClauseT(T); return r
+      }
     }
 
     def parseGclSpec(): GclSpec = {
@@ -6091,7 +6128,10 @@ object JSON {
       parser.parseObjectKey("guarantees")
       val guarantees = parser.parseISZ(parseGclGuarantee _)
       parser.parseObjectNext()
-      return GclInitialize(modifies, guarantees)
+      parser.parseObjectKey("flows")
+      val flows = parser.parseISZ(parseInfoFlowClause _)
+      parser.parseObjectNext()
+      return GclInitialize(modifies, guarantees, flows)
     }
 
     def parseGclCompute(): GclCompute = {
@@ -6115,7 +6155,10 @@ object JSON {
       parser.parseObjectKey("handlers")
       val handlers = parser.parseISZ(parseGclHandle _)
       parser.parseObjectNext()
-      return GclCompute(modifies, specs, cases, handlers)
+      parser.parseObjectKey("flows")
+      val flows = parser.parseISZ(parseInfoFlowClause _)
+      parser.parseObjectNext()
+      return GclCompute(modifies, specs, cases, handlers, flows)
     }
 
     def parseGclHandle(): GclHandle = {
@@ -6167,6 +6210,33 @@ object JSON {
       val methods = parser.parseISZ(parseGclMethod _)
       parser.parseObjectNext()
       return GclLib(containingPackage, methods)
+    }
+
+    def parseInfoFlowClause(): InfoFlowClause = {
+      val r = parseInfoFlowClauseT(F)
+      return r
+    }
+
+    def parseInfoFlowClauseT(typeParsed: B): InfoFlowClause = {
+      if (!typeParsed) {
+        parser.parseObjectType("InfoFlowClause")
+      }
+      parser.parseObjectKey("id")
+      val id = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("descriptor")
+      val descriptor = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("from")
+      val from = parser.parseISZ(parse_langastExp _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("to")
+      val to = parser.parseISZ(parse_langastExp _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("posOpt")
+      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return InfoFlowClause(id, descriptor, from, to, posOpt)
     }
 
     def parseSmfAnnex(): SmfAnnex = {
@@ -12150,6 +12220,24 @@ object JSON {
     return r
   }
 
+  def fromGclClause(o: GclClause, isCompact: B): String = {
+    val st = Printer.printGclClause(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclClause(s: String): Either[GclClause, Json.ErrorMsg] = {
+    def fGclClause(parser: Parser): GclClause = {
+      val r = parser.parseGclClause()
+      return r
+    }
+    val r = to(s, fGclClause _)
+    return r
+  }
+
   def fromGclSpec(o: GclSpec, isCompact: B): String = {
     val st = Printer.printGclSpec(o)
     if (isCompact) {
@@ -12363,6 +12451,24 @@ object JSON {
       return r
     }
     val r = to(s, fGclLib _)
+    return r
+  }
+
+  def fromInfoFlowClause(o: InfoFlowClause, isCompact: B): String = {
+    val st = Printer.printInfoFlowClause(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toInfoFlowClause(s: String): Either[InfoFlowClause, Json.ErrorMsg] = {
+    def fInfoFlowClause(parser: Parser): InfoFlowClause = {
+      val r = parser.parseInfoFlowClause()
+      return r
+    }
+    val r = to(s, fInfoFlowClause _)
     return r
   }
 

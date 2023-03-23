@@ -43,14 +43,18 @@ import org.sireum.message.Position
                             val classifier: String,
                             val posOpt: Option[Position]) extends GclSymbol
 
-@sig trait GclSpec extends GclSymbol {
+@sig trait GclClause extends GclSymbol {
   def id: String
 
   def descriptor: Option[String]
 
+  def posOpt: Option[Position]
+}
+
+@sig trait GclSpec extends GclClause {
+
   def exp: org.sireum.lang.ast.Exp
 
-  def posOpt: Option[Position]
 }
 
 @datatype class GclInvariant(val id: String,
@@ -79,12 +83,14 @@ import org.sireum.message.Position
                                  val posOpt: Option[Position]) extends GclSymbol
 
 @datatype class GclInitialize(val modifies: ISZ[org.sireum.lang.ast.Exp],
-                              val guarantees: ISZ[GclGuarantee]) extends GclSymbol
+                              val guarantees: ISZ[GclGuarantee],
+                              val flows: ISZ[InfoFlowClause]) extends GclSymbol
 
 @datatype class GclCompute(val modifies: ISZ[org.sireum.lang.ast.Exp],
                            val specs: ISZ[GclComputeSpec],
                            val cases: ISZ[GclCaseStatement],
-                           val handlers: ISZ[GclHandle]) extends GclSymbol
+                           val handlers: ISZ[GclHandle],
+                           val flows: ISZ[InfoFlowClause]) extends GclSymbol
 
 @datatype class GclHandle(val port: org.sireum.lang.ast.Exp,
                           val modifies: ISZ[org.sireum.lang.ast.Exp],
@@ -94,3 +100,9 @@ import org.sireum.message.Position
 
 @datatype class GclLib(val containingPackage: Name,
                        val methods: ISZ[GclMethod]) extends AnnexLib with GclSymbol
+
+@datatype class InfoFlowClause(val id: String,
+                               val descriptor: Option[String],
+                               val from: ISZ[org.sireum.lang.ast.Exp],
+                               val to: ISZ[org.sireum.lang.ast.Exp],
+                               val posOpt: Option[Position]) extends GclClause

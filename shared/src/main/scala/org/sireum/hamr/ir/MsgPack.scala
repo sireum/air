@@ -618,95 +618,97 @@ object MsgPack {
 
     val _langastExpResult: Z = 190
 
-    val _langastExpAssumeAgree: Z = 191
+    val _langastExpStrictPureBlock: Z = 191
 
-    val _langastExpAssertAgree: Z = 192
+    val _langastExpAssumeAgree: Z = 192
 
-    val _langastExpInfoFlowInvariant: Z = 193
+    val _langastExpAssertAgree: Z = 193
 
-    val _langastNamedArg: Z = 194
+    val _langastExpInfoFlowInvariant: Z = 194
 
-    val _langastId: Z = 195
+    val _langastNamedArg: Z = 195
 
-    val _langastName: Z = 196
+    val _langastId: Z = 196
 
-    val _langastBody: Z = 197
+    val _langastName: Z = 197
 
-    val _langastAdtParam: Z = 198
+    val _langastBody: Z = 198
 
-    val _langastMethodSig: Z = 199
+    val _langastAdtParam: Z = 199
 
-    val _langastParam: Z = 200
+    val _langastMethodSig: Z = 200
 
-    val _langastTypeParam: Z = 201
+    val _langastParam: Z = 201
 
-    val _langastAttr: Z = 202
+    val _langastTypeParam: Z = 202
 
-    val _langastTypedAttr: Z = 203
+    val _langastAttr: Z = 203
 
-    val _langastResolvedAttr: Z = 204
+    val _langastTypedAttr: Z = 204
 
-    val _langastResolvedInfoBuiltIn: Z = 205
+    val _langastResolvedAttr: Z = 205
 
-    val _langastResolvedInfoPackage: Z = 206
+    val _langastResolvedInfoBuiltIn: Z = 206
 
-    val _langastResolvedInfoEnum: Z = 207
+    val _langastResolvedInfoPackage: Z = 207
 
-    val _langastResolvedInfoEnumElement: Z = 208
+    val _langastResolvedInfoEnum: Z = 208
 
-    val _langastResolvedInfoObject: Z = 209
+    val _langastResolvedInfoEnumElement: Z = 209
 
-    val _langastResolvedInfoVar: Z = 210
+    val _langastResolvedInfoObject: Z = 210
 
-    val _langastResolvedInfoMethod: Z = 211
+    val _langastResolvedInfoVar: Z = 211
 
-    val _langastResolvedInfoMethods: Z = 212
+    val _langastResolvedInfoMethod: Z = 212
 
-    val _langastResolvedInfoTuple: Z = 213
+    val _langastResolvedInfoMethods: Z = 213
 
-    val _langastResolvedInfoLocalVar: Z = 214
+    val _langastResolvedInfoTuple: Z = 214
 
-    val _langastResolvedInfoFact: Z = 215
+    val _langastResolvedInfoLocalVar: Z = 215
 
-    val _langastResolvedInfoTheorem: Z = 216
+    val _langastResolvedInfoFact: Z = 216
 
-    val _langastResolvedInfoInv: Z = 217
+    val _langastResolvedInfoTheorem: Z = 217
 
-    val _langastTruthTableRow: Z = 218
+    val _langastResolvedInfoInv: Z = 218
 
-    val _langastTruthTableAssignment: Z = 219
+    val _langastTruthTableRow: Z = 219
 
-    val _langastTruthTableConclusionValidity: Z = 220
+    val _langastTruthTableAssignment: Z = 220
 
-    val _langastTruthTableConclusionTautology: Z = 221
+    val _langastTruthTableConclusionValidity: Z = 221
 
-    val _langastTruthTableConclusionContradictory: Z = 222
+    val _langastTruthTableConclusionTautology: Z = 222
 
-    val _langastTruthTableConclusionContingent: Z = 223
+    val _langastTruthTableConclusionContradictory: Z = 223
 
-    val _langastTypedName: Z = 224
+    val _langastTruthTableConclusionContingent: Z = 224
 
-    val _langastTypedTuple: Z = 225
+    val _langastTypedName: Z = 225
 
-    val _langastTypedFun: Z = 226
+    val _langastTypedTuple: Z = 226
 
-    val _langastTypedTypeVar: Z = 227
+    val _langastTypedFun: Z = 227
 
-    val _langastTypedPackage: Z = 228
+    val _langastTypedTypeVar: Z = 228
 
-    val _langastTypedObject: Z = 229
+    val _langastTypedPackage: Z = 229
 
-    val _langastTypedEnum: Z = 230
+    val _langastTypedObject: Z = 230
 
-    val _langastTypedMethod: Z = 231
+    val _langastTypedEnum: Z = 231
 
-    val _langastTypedMethods: Z = 232
+    val _langastTypedMethod: Z = 232
 
-    val _langastTypedFact: Z = 233
+    val _langastTypedMethods: Z = 233
 
-    val _langastTypedTheorem: Z = 234
+    val _langastTypedFact: Z = 234
 
-    val _langastTypedInv: Z = 235
+    val _langastTypedTheorem: Z = 235
+
+    val _langastTypedInv: Z = 236
 
   }
 
@@ -2302,6 +2304,7 @@ object MsgPack {
 
     def write_langastProofAstStepIdStr(o: org.sireum.lang.ast.ProofAst.StepId.Str): Unit = {
       writer.writeZ(Constants._langastProofAstStepIdStr)
+      writer.writeB(o.isSynthetic)
       writer.writeString(o.value)
       write_langastAttr(o.attr)
     }
@@ -2514,6 +2517,7 @@ object MsgPack {
 
     def write_langastPatternRef(o: org.sireum.lang.ast.Pattern.Ref): Unit = {
       writer.writeZ(Constants._langastPatternRef)
+      writer.writeB(o.isAccess)
       write_langastName(o.name)
       write_langastResolvedAttr(o.attr)
     }
@@ -2578,6 +2582,7 @@ object MsgPack {
         case o: org.sireum.lang.ast.Exp.LoopIndex => write_langastExpLoopIndex(o)
         case o: org.sireum.lang.ast.Exp.StateSeq => write_langastExpStateSeq(o)
         case o: org.sireum.lang.ast.Exp.Result => write_langastExpResult(o)
+        case o: org.sireum.lang.ast.Exp.StrictPureBlock => write_langastExpStrictPureBlock(o)
         case o: org.sireum.lang.ast.Exp.AssumeAgree => write_langastExpAssumeAgree(o)
         case o: org.sireum.lang.ast.Exp.AssertAgree => write_langastExpAssertAgree(o)
         case o: org.sireum.lang.ast.Exp.InfoFlowInvariant => write_langastExpInfoFlowInvariant(o)
@@ -2848,6 +2853,12 @@ object MsgPack {
     def write_langastExpResult(o: org.sireum.lang.ast.Exp.Result): Unit = {
       writer.writeZ(Constants._langastExpResult)
       writer.writeOption(o.tipeOpt, write_langastType _)
+      write_langastTypedAttr(o.attr)
+    }
+
+    def write_langastExpStrictPureBlock(o: org.sireum.lang.ast.Exp.StrictPureBlock): Unit = {
+      writer.writeZ(Constants._langastExpStrictPureBlock)
+      write_langastStmtBlock(o.block)
       write_langastTypedAttr(o.attr)
     }
 
@@ -6335,9 +6346,10 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastProofAstStepIdStr)
       }
+      val isSynthetic = reader.readB()
       val value = reader.readString()
       val attr = read_langastAttr()
-      return org.sireum.lang.ast.ProofAst.StepId.Str(value, attr)
+      return org.sireum.lang.ast.ProofAst.StepId.Str(isSynthetic, value, attr)
     }
 
     def read_langastProofAstStepRegular(): org.sireum.lang.ast.ProofAst.Step.Regular = {
@@ -6768,9 +6780,10 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastPatternRef)
       }
+      val isAccess = reader.readB()
       val name = read_langastName()
       val attr = read_langastResolvedAttr()
-      return org.sireum.lang.ast.Pattern.Ref(name, attr)
+      return org.sireum.lang.ast.Pattern.Ref(isAccess, name, attr)
     }
 
     def read_langastPatternVarBinding(): org.sireum.lang.ast.Pattern.VarBinding = {
@@ -6867,6 +6880,7 @@ object MsgPack {
         case Constants._langastExpLoopIndex => val r = read_langastExpLoopIndexT(T); return r
         case Constants._langastExpStateSeq => val r = read_langastExpStateSeqT(T); return r
         case Constants._langastExpResult => val r = read_langastExpResultT(T); return r
+        case Constants._langastExpStrictPureBlock => val r = read_langastExpStrictPureBlockT(T); return r
         case Constants._langastExpAssumeAgree => val r = read_langastExpAssumeAgreeT(T); return r
         case Constants._langastExpAssertAgree => val r = read_langastExpAssertAgreeT(T); return r
         case Constants._langastExpInfoFlowInvariant => val r = read_langastExpInfoFlowInvariantT(T); return r
@@ -7433,6 +7447,20 @@ object MsgPack {
       val tipeOpt = reader.readOption(read_langastType _)
       val attr = read_langastTypedAttr()
       return org.sireum.lang.ast.Exp.Result(tipeOpt, attr)
+    }
+
+    def read_langastExpStrictPureBlock(): org.sireum.lang.ast.Exp.StrictPureBlock = {
+      val r = read_langastExpStrictPureBlockT(F)
+      return r
+    }
+
+    def read_langastExpStrictPureBlockT(typeParsed: B): org.sireum.lang.ast.Exp.StrictPureBlock = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpStrictPureBlock)
+      }
+      val block = read_langastStmtBlock()
+      val attr = read_langastTypedAttr()
+      return org.sireum.lang.ast.Exp.StrictPureBlock(block, attr)
     }
 
     def read_langastExpAssumeAgree(): org.sireum.lang.ast.Exp.AssumeAgree = {
@@ -12215,6 +12243,21 @@ object MsgPack {
       return r
     }
     val r = to(data, f_langastExpResult _)
+    return r
+  }
+
+  def from_langastExpStrictPureBlock(o: org.sireum.lang.ast.Exp.StrictPureBlock, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpStrictPureBlock(o)
+    return w.result
+  }
+
+  def to_langastExpStrictPureBlock(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.StrictPureBlock, MessagePack.ErrorMsg] = {
+    def f_langastExpStrictPureBlock(reader: Reader): org.sireum.lang.ast.Exp.StrictPureBlock = {
+      val r = reader.read_langastExpStrictPureBlock()
+      return r
+    }
+    val r = to(data, f_langastExpStrictPureBlock _)
     return r
   }
 

@@ -385,37 +385,37 @@ object MTransformer {
 
   val PostResult_langastPatternStructure: MOption[org.sireum.lang.ast.Pattern] = MNone()
 
-  val PreResult_langastExpLitB: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+  val PreResult_langastExpLitB: PreResult[org.sireum.lang.ast.Lit] = PreResult(T, MNone())
 
-  val PostResult_langastExpLitB: MOption[org.sireum.lang.ast.Exp] = MNone()
+  val PostResult_langastExpLitB: MOption[org.sireum.lang.ast.Lit] = MNone()
 
-  val PreResult_langastExpLitC: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+  val PreResult_langastExpLitC: PreResult[org.sireum.lang.ast.Lit] = PreResult(T, MNone())
 
-  val PostResult_langastExpLitC: MOption[org.sireum.lang.ast.Exp] = MNone()
+  val PostResult_langastExpLitC: MOption[org.sireum.lang.ast.Lit] = MNone()
 
-  val PreResult_langastExpLitZ: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+  val PreResult_langastExpLitZ: PreResult[org.sireum.lang.ast.Lit] = PreResult(T, MNone())
 
-  val PostResult_langastExpLitZ: MOption[org.sireum.lang.ast.Exp] = MNone()
+  val PostResult_langastExpLitZ: MOption[org.sireum.lang.ast.Lit] = MNone()
 
-  val PreResult_langastExpLitF32: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+  val PreResult_langastExpLitF32: PreResult[org.sireum.lang.ast.Lit] = PreResult(T, MNone())
 
-  val PostResult_langastExpLitF32: MOption[org.sireum.lang.ast.Exp] = MNone()
+  val PostResult_langastExpLitF32: MOption[org.sireum.lang.ast.Lit] = MNone()
 
-  val PreResult_langastExpLitF64: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+  val PreResult_langastExpLitF64: PreResult[org.sireum.lang.ast.Lit] = PreResult(T, MNone())
 
-  val PostResult_langastExpLitF64: MOption[org.sireum.lang.ast.Exp] = MNone()
+  val PostResult_langastExpLitF64: MOption[org.sireum.lang.ast.Lit] = MNone()
 
-  val PreResult_langastExpLitR: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+  val PreResult_langastExpLitR: PreResult[org.sireum.lang.ast.Lit] = PreResult(T, MNone())
 
-  val PostResult_langastExpLitR: MOption[org.sireum.lang.ast.Exp] = MNone()
+  val PostResult_langastExpLitR: MOption[org.sireum.lang.ast.Lit] = MNone()
 
-  val PreResult_langastExpLitString: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+  val PreResult_langastExpLitString: PreResult[org.sireum.lang.ast.Lit] = PreResult(T, MNone())
 
-  val PostResult_langastExpLitString: MOption[org.sireum.lang.ast.Exp] = MNone()
+  val PostResult_langastExpLitString: MOption[org.sireum.lang.ast.Lit] = MNone()
 
-  val PreResult_langastExpLitStepId: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+  val PreResult_langastExpLitStepId: PreResult[org.sireum.lang.ast.Lit] = PreResult(T, MNone())
 
-  val PostResult_langastExpLitStepId: MOption[org.sireum.lang.ast.Exp] = MNone()
+  val PostResult_langastExpLitStepId: MOption[org.sireum.lang.ast.Lit] = MNone()
 
   val PreResult_langastExpStringInterpolate: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
 
@@ -520,6 +520,10 @@ object MTransformer {
   val PreResult_langastExpResult: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
 
   val PostResult_langastExpResult: MOption[org.sireum.lang.ast.Exp] = MNone()
+
+  val PreResult_langastExpStrictPureBlock: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpStrictPureBlock: MOption[org.sireum.lang.ast.Exp] = MNone()
 
   val PreResult_langastExpAssumeAgree: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
 
@@ -1746,14 +1750,62 @@ import MTransformer._
 
   def pre_langastExp(o: org.sireum.lang.ast.Exp): PreResult[org.sireum.lang.ast.Exp] = {
     o match {
-      case o: org.sireum.lang.ast.Exp.LitB => return pre_langastExpLitB(o)
-      case o: org.sireum.lang.ast.Exp.LitC => return pre_langastExpLitC(o)
-      case o: org.sireum.lang.ast.Exp.LitZ => return pre_langastExpLitZ(o)
-      case o: org.sireum.lang.ast.Exp.LitF32 => return pre_langastExpLitF32(o)
-      case o: org.sireum.lang.ast.Exp.LitF64 => return pre_langastExpLitF64(o)
-      case o: org.sireum.lang.ast.Exp.LitR => return pre_langastExpLitR(o)
-      case o: org.sireum.lang.ast.Exp.LitString => return pre_langastExpLitString(o)
-      case o: org.sireum.lang.ast.Exp.LitStepId => return pre_langastExpLitStepId(o)
+      case o: org.sireum.lang.ast.Exp.LitB =>
+        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitB(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitC =>
+        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitC(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitZ =>
+        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitZ(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitF32 =>
+        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitF32(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitF64 =>
+        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitF64(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitR =>
+        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitR(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitString =>
+        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitString(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitStepId =>
+        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitStepId(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
+        }
+        return r
       case o: org.sireum.lang.ast.Exp.StringInterpolate => return pre_langastExpStringInterpolate(o)
       case o: org.sireum.lang.ast.Exp.This => return pre_langastExpThis(o)
       case o: org.sireum.lang.ast.Exp.Super => return pre_langastExpSuper(o)
@@ -1796,6 +1848,7 @@ import MTransformer._
       case o: org.sireum.lang.ast.Exp.LoopIndex => return pre_langastExpLoopIndex(o)
       case o: org.sireum.lang.ast.Exp.StateSeq => return pre_langastExpStateSeq(o)
       case o: org.sireum.lang.ast.Exp.Result => return pre_langastExpResult(o)
+      case o: org.sireum.lang.ast.Exp.StrictPureBlock => return pre_langastExpStrictPureBlock(o)
       case o: org.sireum.lang.ast.Exp.AssumeAgree => return pre_langastExpAssumeAgree(o)
       case o: org.sireum.lang.ast.Exp.AssertAgree => return pre_langastExpAssertAgree(o)
       case o: org.sireum.lang.ast.Exp.InfoFlowInvariant => return pre_langastExpInfoFlowInvariant(o)
@@ -1804,94 +1857,46 @@ import MTransformer._
 
   def pre_langastLit(o: org.sireum.lang.ast.Lit): PreResult[org.sireum.lang.ast.Lit] = {
     o match {
-      case o: org.sireum.lang.ast.Exp.LitB =>
-        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitB(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitC =>
-        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitC(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitZ =>
-        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitZ(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitF32 =>
-        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitF32(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitF64 =>
-        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitF64(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitR =>
-        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitR(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitString =>
-        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitString(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitStepId =>
-        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastExpLitStepId(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
-        }
-        return r
+      case o: org.sireum.lang.ast.Exp.LitB => return pre_langastExpLitB(o)
+      case o: org.sireum.lang.ast.Exp.LitC => return pre_langastExpLitC(o)
+      case o: org.sireum.lang.ast.Exp.LitZ => return pre_langastExpLitZ(o)
+      case o: org.sireum.lang.ast.Exp.LitF32 => return pre_langastExpLitF32(o)
+      case o: org.sireum.lang.ast.Exp.LitF64 => return pre_langastExpLitF64(o)
+      case o: org.sireum.lang.ast.Exp.LitR => return pre_langastExpLitR(o)
+      case o: org.sireum.lang.ast.Exp.LitString => return pre_langastExpLitString(o)
+      case o: org.sireum.lang.ast.Exp.LitStepId => return pre_langastExpLitStepId(o)
     }
   }
 
-  def pre_langastExpLitB(o: org.sireum.lang.ast.Exp.LitB): PreResult[org.sireum.lang.ast.Exp] = {
+  def pre_langastExpLitB(o: org.sireum.lang.ast.Exp.LitB): PreResult[org.sireum.lang.ast.Lit] = {
     return PreResult_langastExpLitB
   }
 
-  def pre_langastExpLitC(o: org.sireum.lang.ast.Exp.LitC): PreResult[org.sireum.lang.ast.Exp] = {
+  def pre_langastExpLitC(o: org.sireum.lang.ast.Exp.LitC): PreResult[org.sireum.lang.ast.Lit] = {
     return PreResult_langastExpLitC
   }
 
-  def pre_langastExpLitZ(o: org.sireum.lang.ast.Exp.LitZ): PreResult[org.sireum.lang.ast.Exp] = {
+  def pre_langastExpLitZ(o: org.sireum.lang.ast.Exp.LitZ): PreResult[org.sireum.lang.ast.Lit] = {
     return PreResult_langastExpLitZ
   }
 
-  def pre_langastExpLitF32(o: org.sireum.lang.ast.Exp.LitF32): PreResult[org.sireum.lang.ast.Exp] = {
+  def pre_langastExpLitF32(o: org.sireum.lang.ast.Exp.LitF32): PreResult[org.sireum.lang.ast.Lit] = {
     return PreResult_langastExpLitF32
   }
 
-  def pre_langastExpLitF64(o: org.sireum.lang.ast.Exp.LitF64): PreResult[org.sireum.lang.ast.Exp] = {
+  def pre_langastExpLitF64(o: org.sireum.lang.ast.Exp.LitF64): PreResult[org.sireum.lang.ast.Lit] = {
     return PreResult_langastExpLitF64
   }
 
-  def pre_langastExpLitR(o: org.sireum.lang.ast.Exp.LitR): PreResult[org.sireum.lang.ast.Exp] = {
+  def pre_langastExpLitR(o: org.sireum.lang.ast.Exp.LitR): PreResult[org.sireum.lang.ast.Lit] = {
     return PreResult_langastExpLitR
   }
 
-  def pre_langastExpLitString(o: org.sireum.lang.ast.Exp.LitString): PreResult[org.sireum.lang.ast.Exp] = {
+  def pre_langastExpLitString(o: org.sireum.lang.ast.Exp.LitString): PreResult[org.sireum.lang.ast.Lit] = {
     return PreResult_langastExpLitString
   }
 
-  def pre_langastExpLitStepId(o: org.sireum.lang.ast.Exp.LitStepId): PreResult[org.sireum.lang.ast.Exp] = {
+  def pre_langastExpLitStepId(o: org.sireum.lang.ast.Exp.LitStepId): PreResult[org.sireum.lang.ast.Lit] = {
     return PreResult_langastExpLitStepId
   }
 
@@ -2024,6 +2029,10 @@ import MTransformer._
 
   def pre_langastExpResult(o: org.sireum.lang.ast.Exp.Result): PreResult[org.sireum.lang.ast.Exp] = {
     return PreResult_langastExpResult
+  }
+
+  def pre_langastExpStrictPureBlock(o: org.sireum.lang.ast.Exp.StrictPureBlock): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpStrictPureBlock
   }
 
   def pre_langastExpAssumeAgree(o: org.sireum.lang.ast.Exp.AssumeAgree): PreResult[org.sireum.lang.ast.Exp] = {
@@ -4438,14 +4447,62 @@ import MTransformer._
 
   def post_langastExp(o: org.sireum.lang.ast.Exp): MOption[org.sireum.lang.ast.Exp] = {
     o match {
-      case o: org.sireum.lang.ast.Exp.LitB => return post_langastExpLitB(o)
-      case o: org.sireum.lang.ast.Exp.LitC => return post_langastExpLitC(o)
-      case o: org.sireum.lang.ast.Exp.LitZ => return post_langastExpLitZ(o)
-      case o: org.sireum.lang.ast.Exp.LitF32 => return post_langastExpLitF32(o)
-      case o: org.sireum.lang.ast.Exp.LitF64 => return post_langastExpLitF64(o)
-      case o: org.sireum.lang.ast.Exp.LitR => return post_langastExpLitR(o)
-      case o: org.sireum.lang.ast.Exp.LitString => return post_langastExpLitString(o)
-      case o: org.sireum.lang.ast.Exp.LitStepId => return post_langastExpLitStepId(o)
+      case o: org.sireum.lang.ast.Exp.LitB =>
+        val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitB(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case _ => MNone[org.sireum.lang.ast.Exp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitC =>
+        val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitC(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case _ => MNone[org.sireum.lang.ast.Exp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitZ =>
+        val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitZ(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case _ => MNone[org.sireum.lang.ast.Exp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitF32 =>
+        val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitF32(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case _ => MNone[org.sireum.lang.ast.Exp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitF64 =>
+        val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitF64(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case _ => MNone[org.sireum.lang.ast.Exp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitR =>
+        val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitR(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case _ => MNone[org.sireum.lang.ast.Exp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitString =>
+        val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitString(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case _ => MNone[org.sireum.lang.ast.Exp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Exp.LitStepId =>
+        val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitStepId(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case _ => MNone[org.sireum.lang.ast.Exp]()
+        }
+        return r
       case o: org.sireum.lang.ast.Exp.StringInterpolate => return post_langastExpStringInterpolate(o)
       case o: org.sireum.lang.ast.Exp.This => return post_langastExpThis(o)
       case o: org.sireum.lang.ast.Exp.Super => return post_langastExpSuper(o)
@@ -4488,6 +4545,7 @@ import MTransformer._
       case o: org.sireum.lang.ast.Exp.LoopIndex => return post_langastExpLoopIndex(o)
       case o: org.sireum.lang.ast.Exp.StateSeq => return post_langastExpStateSeq(o)
       case o: org.sireum.lang.ast.Exp.Result => return post_langastExpResult(o)
+      case o: org.sireum.lang.ast.Exp.StrictPureBlock => return post_langastExpStrictPureBlock(o)
       case o: org.sireum.lang.ast.Exp.AssumeAgree => return post_langastExpAssumeAgree(o)
       case o: org.sireum.lang.ast.Exp.AssertAgree => return post_langastExpAssertAgree(o)
       case o: org.sireum.lang.ast.Exp.InfoFlowInvariant => return post_langastExpInfoFlowInvariant(o)
@@ -4496,94 +4554,46 @@ import MTransformer._
 
   def post_langastLit(o: org.sireum.lang.ast.Lit): MOption[org.sireum.lang.ast.Lit] = {
     o match {
-      case o: org.sireum.lang.ast.Exp.LitB =>
-        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitB(o) match {
-         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case _ => MNone[org.sireum.lang.ast.Lit]()
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitC =>
-        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitC(o) match {
-         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case _ => MNone[org.sireum.lang.ast.Lit]()
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitZ =>
-        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitZ(o) match {
-         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case _ => MNone[org.sireum.lang.ast.Lit]()
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitF32 =>
-        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitF32(o) match {
-         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case _ => MNone[org.sireum.lang.ast.Lit]()
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitF64 =>
-        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitF64(o) match {
-         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case _ => MNone[org.sireum.lang.ast.Lit]()
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitR =>
-        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitR(o) match {
-         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case _ => MNone[org.sireum.lang.ast.Lit]()
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitString =>
-        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitString(o) match {
-         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case _ => MNone[org.sireum.lang.ast.Lit]()
-        }
-        return r
-      case o: org.sireum.lang.ast.Exp.LitStepId =>
-        val r: MOption[org.sireum.lang.ast.Lit] = post_langastExpLitStepId(o) match {
-         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
-         case _ => MNone[org.sireum.lang.ast.Lit]()
-        }
-        return r
+      case o: org.sireum.lang.ast.Exp.LitB => return post_langastExpLitB(o)
+      case o: org.sireum.lang.ast.Exp.LitC => return post_langastExpLitC(o)
+      case o: org.sireum.lang.ast.Exp.LitZ => return post_langastExpLitZ(o)
+      case o: org.sireum.lang.ast.Exp.LitF32 => return post_langastExpLitF32(o)
+      case o: org.sireum.lang.ast.Exp.LitF64 => return post_langastExpLitF64(o)
+      case o: org.sireum.lang.ast.Exp.LitR => return post_langastExpLitR(o)
+      case o: org.sireum.lang.ast.Exp.LitString => return post_langastExpLitString(o)
+      case o: org.sireum.lang.ast.Exp.LitStepId => return post_langastExpLitStepId(o)
     }
   }
 
-  def post_langastExpLitB(o: org.sireum.lang.ast.Exp.LitB): MOption[org.sireum.lang.ast.Exp] = {
+  def post_langastExpLitB(o: org.sireum.lang.ast.Exp.LitB): MOption[org.sireum.lang.ast.Lit] = {
     return PostResult_langastExpLitB
   }
 
-  def post_langastExpLitC(o: org.sireum.lang.ast.Exp.LitC): MOption[org.sireum.lang.ast.Exp] = {
+  def post_langastExpLitC(o: org.sireum.lang.ast.Exp.LitC): MOption[org.sireum.lang.ast.Lit] = {
     return PostResult_langastExpLitC
   }
 
-  def post_langastExpLitZ(o: org.sireum.lang.ast.Exp.LitZ): MOption[org.sireum.lang.ast.Exp] = {
+  def post_langastExpLitZ(o: org.sireum.lang.ast.Exp.LitZ): MOption[org.sireum.lang.ast.Lit] = {
     return PostResult_langastExpLitZ
   }
 
-  def post_langastExpLitF32(o: org.sireum.lang.ast.Exp.LitF32): MOption[org.sireum.lang.ast.Exp] = {
+  def post_langastExpLitF32(o: org.sireum.lang.ast.Exp.LitF32): MOption[org.sireum.lang.ast.Lit] = {
     return PostResult_langastExpLitF32
   }
 
-  def post_langastExpLitF64(o: org.sireum.lang.ast.Exp.LitF64): MOption[org.sireum.lang.ast.Exp] = {
+  def post_langastExpLitF64(o: org.sireum.lang.ast.Exp.LitF64): MOption[org.sireum.lang.ast.Lit] = {
     return PostResult_langastExpLitF64
   }
 
-  def post_langastExpLitR(o: org.sireum.lang.ast.Exp.LitR): MOption[org.sireum.lang.ast.Exp] = {
+  def post_langastExpLitR(o: org.sireum.lang.ast.Exp.LitR): MOption[org.sireum.lang.ast.Lit] = {
     return PostResult_langastExpLitR
   }
 
-  def post_langastExpLitString(o: org.sireum.lang.ast.Exp.LitString): MOption[org.sireum.lang.ast.Exp] = {
+  def post_langastExpLitString(o: org.sireum.lang.ast.Exp.LitString): MOption[org.sireum.lang.ast.Lit] = {
     return PostResult_langastExpLitString
   }
 
-  def post_langastExpLitStepId(o: org.sireum.lang.ast.Exp.LitStepId): MOption[org.sireum.lang.ast.Exp] = {
+  def post_langastExpLitStepId(o: org.sireum.lang.ast.Exp.LitStepId): MOption[org.sireum.lang.ast.Lit] = {
     return PostResult_langastExpLitStepId
   }
 
@@ -4716,6 +4726,10 @@ import MTransformer._
 
   def post_langastExpResult(o: org.sireum.lang.ast.Exp.Result): MOption[org.sireum.lang.ast.Exp] = {
     return PostResult_langastExpResult
+  }
+
+  def post_langastExpStrictPureBlock(o: org.sireum.lang.ast.Exp.StrictPureBlock): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpStrictPureBlock
   }
 
   def post_langastExpAssumeAgree(o: org.sireum.lang.ast.Exp.AssumeAgree): MOption[org.sireum.lang.ast.Exp] = {
@@ -8216,6 +8230,13 @@ import MTransformer._
           val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
             MSome(o2(tipeOpt = r0.getOrElse(o2.tipeOpt), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.StrictPureBlock =>
+          val r0: MOption[org.sireum.lang.ast.Stmt.Block] = transform_langastStmtBlock(o2.block)
+          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(block = r0.getOrElse(o2.block), attr = r1.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.AssumeAgree =>

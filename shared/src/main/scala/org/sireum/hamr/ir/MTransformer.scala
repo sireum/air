@@ -525,6 +525,10 @@ object MTransformer {
 
   val PostResult_langastExpStrictPureBlock: MOption[org.sireum.lang.ast.Exp] = MNone()
 
+  val PreResult_langastExpLabeled: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpLabeled: MOption[org.sireum.lang.ast.Exp] = MNone()
+
   val PreResult_langastExpAssumeAgree: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
 
   val PostResult_langastExpAssumeAgree: MOption[org.sireum.lang.ast.Exp] = MNone()
@@ -1849,6 +1853,7 @@ import MTransformer._
       case o: org.sireum.lang.ast.Exp.StateSeq => return pre_langastExpStateSeq(o)
       case o: org.sireum.lang.ast.Exp.Result => return pre_langastExpResult(o)
       case o: org.sireum.lang.ast.Exp.StrictPureBlock => return pre_langastExpStrictPureBlock(o)
+      case o: org.sireum.lang.ast.Exp.Labeled => return pre_langastExpLabeled(o)
       case o: org.sireum.lang.ast.Exp.AssumeAgree => return pre_langastExpAssumeAgree(o)
       case o: org.sireum.lang.ast.Exp.AssertAgree => return pre_langastExpAssertAgree(o)
       case o: org.sireum.lang.ast.Exp.InfoFlowInvariant => return pre_langastExpInfoFlowInvariant(o)
@@ -2033,6 +2038,10 @@ import MTransformer._
 
   def pre_langastExpStrictPureBlock(o: org.sireum.lang.ast.Exp.StrictPureBlock): PreResult[org.sireum.lang.ast.Exp] = {
     return PreResult_langastExpStrictPureBlock
+  }
+
+  def pre_langastExpLabeled(o: org.sireum.lang.ast.Exp.Labeled): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpLabeled
   }
 
   def pre_langastExpAssumeAgree(o: org.sireum.lang.ast.Exp.AssumeAgree): PreResult[org.sireum.lang.ast.Exp] = {
@@ -4546,6 +4555,7 @@ import MTransformer._
       case o: org.sireum.lang.ast.Exp.StateSeq => return post_langastExpStateSeq(o)
       case o: org.sireum.lang.ast.Exp.Result => return post_langastExpResult(o)
       case o: org.sireum.lang.ast.Exp.StrictPureBlock => return post_langastExpStrictPureBlock(o)
+      case o: org.sireum.lang.ast.Exp.Labeled => return post_langastExpLabeled(o)
       case o: org.sireum.lang.ast.Exp.AssumeAgree => return post_langastExpAssumeAgree(o)
       case o: org.sireum.lang.ast.Exp.AssertAgree => return post_langastExpAssertAgree(o)
       case o: org.sireum.lang.ast.Exp.InfoFlowInvariant => return post_langastExpInfoFlowInvariant(o)
@@ -4730,6 +4740,10 @@ import MTransformer._
 
   def post_langastExpStrictPureBlock(o: org.sireum.lang.ast.Exp.StrictPureBlock): MOption[org.sireum.lang.ast.Exp] = {
     return PostResult_langastExpStrictPureBlock
+  }
+
+  def post_langastExpLabeled(o: org.sireum.lang.ast.Exp.Labeled): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpLabeled
   }
 
   def post_langastExpAssumeAgree(o: org.sireum.lang.ast.Exp.AssumeAgree): MOption[org.sireum.lang.ast.Exp] = {
@@ -8237,6 +8251,14 @@ import MTransformer._
           val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
             MSome(o2(block = r0.getOrElse(o2.block), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Labeled =>
+          val r0: MOption[org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(o2.name)
+          val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), exp = r1.getOrElse(o2.exp), attr = r2.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.AssumeAgree =>

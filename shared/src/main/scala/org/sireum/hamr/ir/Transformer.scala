@@ -757,6 +757,7 @@ object Transformer {
         case o: org.sireum.lang.ast.Exp.StateSeq => return pre_langastExpStateSeq(ctx, o)
         case o: org.sireum.lang.ast.Exp.Result => return pre_langastExpResult(ctx, o)
         case o: org.sireum.lang.ast.Exp.StrictPureBlock => return pre_langastExpStrictPureBlock(ctx, o)
+        case o: org.sireum.lang.ast.Exp.Labeled => return pre_langastExpLabeled(ctx, o)
         case o: org.sireum.lang.ast.Exp.AssumeAgree => return pre_langastExpAssumeAgree(ctx, o)
         case o: org.sireum.lang.ast.Exp.AssertAgree => return pre_langastExpAssertAgree(ctx, o)
         case o: org.sireum.lang.ast.Exp.InfoFlowInvariant => return pre_langastExpInfoFlowInvariant(ctx, o)
@@ -940,6 +941,10 @@ object Transformer {
     }
 
     @pure def pre_langastExpStrictPureBlock(ctx: Context, o: org.sireum.lang.ast.Exp.StrictPureBlock): PreResult[Context, org.sireum.lang.ast.Exp] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def pre_langastExpLabeled(ctx: Context, o: org.sireum.lang.ast.Exp.Labeled): PreResult[Context, org.sireum.lang.ast.Exp] = {
       return PreResult(ctx, T, None())
     }
 
@@ -3454,6 +3459,7 @@ object Transformer {
         case o: org.sireum.lang.ast.Exp.StateSeq => return post_langastExpStateSeq(ctx, o)
         case o: org.sireum.lang.ast.Exp.Result => return post_langastExpResult(ctx, o)
         case o: org.sireum.lang.ast.Exp.StrictPureBlock => return post_langastExpStrictPureBlock(ctx, o)
+        case o: org.sireum.lang.ast.Exp.Labeled => return post_langastExpLabeled(ctx, o)
         case o: org.sireum.lang.ast.Exp.AssumeAgree => return post_langastExpAssumeAgree(ctx, o)
         case o: org.sireum.lang.ast.Exp.AssertAgree => return post_langastExpAssertAgree(ctx, o)
         case o: org.sireum.lang.ast.Exp.InfoFlowInvariant => return post_langastExpInfoFlowInvariant(ctx, o)
@@ -3637,6 +3643,10 @@ object Transformer {
     }
 
     @pure def post_langastExpStrictPureBlock(ctx: Context, o: org.sireum.lang.ast.Exp.StrictPureBlock): TPostResult[Context, org.sireum.lang.ast.Exp] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def post_langastExpLabeled(ctx: Context, o: org.sireum.lang.ast.Exp.Labeled): TPostResult[Context, org.sireum.lang.ast.Exp] = {
       return TPostResult(ctx, None())
     }
 
@@ -7185,6 +7195,14 @@ import Transformer._
             TPostResult(r1.ctx, Some(o2(block = r0.resultOpt.getOrElse(o2.block), attr = r1.resultOpt.getOrElse(o2.attr))))
           else
             TPostResult(r1.ctx, None())
+        case o2: org.sireum.lang.ast.Exp.Labeled =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(preR.ctx, o2.name)
+          val r1: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(r0.ctx, o2.exp)
+          val r2: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), exp = r1.resultOpt.getOrElse(o2.exp), attr = r2.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r2.ctx, None())
         case o2: org.sireum.lang.ast.Exp.AssumeAgree =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(preR.ctx, o2.channel)
           val r1: TPostResult[Context, org.sireum.lang.ast.MethodContract.Claims] = transform_langastMethodContractClaims(r0.ctx, o2.requiresClause)

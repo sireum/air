@@ -2867,7 +2867,7 @@ object MsgPack {
 
     def write_langastExpLabeled(o: org.sireum.lang.ast.Exp.Labeled): Unit = {
       writer.writeZ(Constants._langastExpLabeled)
-      write_langastExpLitString(o.name)
+      writer.writeOption(o.numOpt, write_langastExpLitZ _)
       write_langastExp(o.exp)
       write_langastAttr(o.attr)
     }
@@ -7483,10 +7483,10 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastExpLabeled)
       }
-      val name = read_langastExpLitString()
+      val numOpt = reader.readOption(read_langastExpLitZ _)
       val exp = read_langastExp()
       val attr = read_langastAttr()
-      return org.sireum.lang.ast.Exp.Labeled(name, exp, attr)
+      return org.sireum.lang.ast.Exp.Labeled(numOpt, exp, attr)
     }
 
     def read_langastExpAssumeAgree(): org.sireum.lang.ast.Exp.AssumeAgree = {

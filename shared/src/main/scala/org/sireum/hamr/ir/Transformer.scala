@@ -7196,11 +7196,11 @@ import Transformer._
           else
             TPostResult(r1.ctx, None())
         case o2: org.sireum.lang.ast.Exp.Labeled =>
-          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(preR.ctx, o2.name)
+          val r0: TPostResult[Context, Option[org.sireum.lang.ast.Exp.LitZ]] = transformOption(preR.ctx, o2.numOpt, transform_langastExpLitZ _)
           val r1: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(r0.ctx, o2.exp)
           val r2: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r1.ctx, o2.attr)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            TPostResult(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), exp = r1.resultOpt.getOrElse(o2.exp), attr = r2.resultOpt.getOrElse(o2.attr))))
+            TPostResult(r2.ctx, Some(o2(numOpt = r0.resultOpt.getOrElse(o2.numOpt), exp = r1.resultOpt.getOrElse(o2.exp), attr = r2.resultOpt.getOrElse(o2.attr))))
           else
             TPostResult(r2.ctx, None())
         case o2: org.sireum.lang.ast.Exp.AssumeAgree =>

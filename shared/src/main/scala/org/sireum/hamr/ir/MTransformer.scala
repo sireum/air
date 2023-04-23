@@ -8254,11 +8254,11 @@ import MTransformer._
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.Labeled =>
-          val r0: MOption[org.sireum.lang.ast.Exp.LitString] = transform_langastExpLitString(o2.name)
+          val r0: MOption[Option[org.sireum.lang.ast.Exp.LitZ]] = transformOption(o2.numOpt, transform_langastExpLitZ _)
           val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
           val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(name = r0.getOrElse(o2.name), exp = r1.getOrElse(o2.exp), attr = r2.getOrElse(o2.attr)))
+            MSome(o2(numOpt = r0.getOrElse(o2.numOpt), exp = r1.getOrElse(o2.exp), attr = r2.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.AssumeAgree =>

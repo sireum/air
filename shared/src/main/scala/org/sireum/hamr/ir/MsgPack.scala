@@ -2013,6 +2013,7 @@ object MsgPack {
     def write_langastStmtSig(o: org.sireum.lang.ast.Stmt.Sig): Unit = {
       writer.writeZ(Constants._langastStmtSig)
       writer.writeB(o.isImmutable)
+      writer.writeB(o.isSealed)
       writer.writeB(o.isExt)
       write_langastId(o.id)
       writer.writeISZ(o.typeParams, write_langastTypeParam _)
@@ -5769,13 +5770,14 @@ object MsgPack {
         reader.expectZ(Constants._langastStmtSig)
       }
       val isImmutable = reader.readB()
+      val isSealed = reader.readB()
       val isExt = reader.readB()
       val id = read_langastId()
       val typeParams = reader.readISZ(read_langastTypeParam _)
       val parents = reader.readISZ(read_langastTypeNamed _)
       val stmts = reader.readISZ(read_langastStmt _)
       val attr = read_langastAttr()
-      return org.sireum.lang.ast.Stmt.Sig(isImmutable, isExt, id, typeParams, parents, stmts, attr)
+      return org.sireum.lang.ast.Stmt.Sig(isImmutable, isSealed, isExt, id, typeParams, parents, stmts, attr)
     }
 
     def read_langastStmtAdt(): org.sireum.lang.ast.Stmt.Adt = {

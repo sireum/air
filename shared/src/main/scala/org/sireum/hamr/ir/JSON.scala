@@ -2538,6 +2538,7 @@ object JSON {
         ("type", st""""org.sireum.lang.ast.Pattern.VarBinding""""),
         ("id", print_langastId(o.id)),
         ("tipeOpt", printOption(F, o.tipeOpt, print_langastType _)),
+        ("idContext", printISZ(T, o.idContext, printString _)),
         ("attr", print_langastTypedAttr(o.attr))
       ))
     }
@@ -2563,6 +2564,7 @@ object JSON {
         ("idOpt", printOption(F, o.idOpt, print_langastId _)),
         ("nameOpt", printOption(F, o.nameOpt, print_langastName _)),
         ("patterns", printISZ(F, o.patterns, print_langastPattern _)),
+        ("idContext", printISZ(T, o.idContext, printString _)),
         ("attr", print_langastResolvedAttr(o.attr))
       ))
     }
@@ -8283,10 +8285,13 @@ object JSON {
       parser.parseObjectKey("tipeOpt")
       val tipeOpt = parser.parseOption(parse_langastType _)
       parser.parseObjectNext()
+      parser.parseObjectKey("idContext")
+      val idContext = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastTypedAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Pattern.VarBinding(id, tipeOpt, attr)
+      return org.sireum.lang.ast.Pattern.VarBinding(id, tipeOpt, idContext, attr)
     }
 
     def parse_langastPatternWildcard(): org.sireum.lang.ast.Pattern.Wildcard = {
@@ -8340,10 +8345,13 @@ object JSON {
       parser.parseObjectKey("patterns")
       val patterns = parser.parseISZ(parse_langastPattern _)
       parser.parseObjectNext()
+      parser.parseObjectKey("idContext")
+      val idContext = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastResolvedAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Pattern.Structure(idOpt, nameOpt, patterns, attr)
+      return org.sireum.lang.ast.Pattern.Structure(idOpt, nameOpt, patterns, idContext, attr)
     }
 
     def parse_langastExp(): org.sireum.lang.ast.Exp = {

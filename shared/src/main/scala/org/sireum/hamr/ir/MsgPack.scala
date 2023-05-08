@@ -2529,6 +2529,7 @@ object MsgPack {
       writer.writeZ(Constants._langastPatternVarBinding)
       write_langastId(o.id)
       writer.writeOption(o.tipeOpt, write_langastType _)
+      writer.writeISZ(o.idContext, writer.writeString _)
       write_langastTypedAttr(o.attr)
     }
 
@@ -2548,6 +2549,7 @@ object MsgPack {
       writer.writeOption(o.idOpt, write_langastId _)
       writer.writeOption(o.nameOpt, write_langastName _)
       writer.writeISZ(o.patterns, write_langastPattern _)
+      writer.writeISZ(o.idContext, writer.writeString _)
       write_langastResolvedAttr(o.attr)
     }
 
@@ -6809,8 +6811,9 @@ object MsgPack {
       }
       val id = read_langastId()
       val tipeOpt = reader.readOption(read_langastType _)
+      val idContext = reader.readISZ(reader.readString _)
       val attr = read_langastTypedAttr()
-      return org.sireum.lang.ast.Pattern.VarBinding(id, tipeOpt, attr)
+      return org.sireum.lang.ast.Pattern.VarBinding(id, tipeOpt, idContext, attr)
     }
 
     def read_langastPatternWildcard(): org.sireum.lang.ast.Pattern.Wildcard = {
@@ -6852,8 +6855,9 @@ object MsgPack {
       val idOpt = reader.readOption(read_langastId _)
       val nameOpt = reader.readOption(read_langastName _)
       val patterns = reader.readISZ(read_langastPattern _)
+      val idContext = reader.readISZ(reader.readString _)
       val attr = read_langastResolvedAttr()
-      return org.sireum.lang.ast.Pattern.Structure(idOpt, nameOpt, patterns, attr)
+      return org.sireum.lang.ast.Pattern.Structure(idOpt, nameOpt, patterns, idContext, attr)
     }
 
     def read_langastExp(): org.sireum.lang.ast.Exp = {

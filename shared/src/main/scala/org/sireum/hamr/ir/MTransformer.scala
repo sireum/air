@@ -413,10 +413,6 @@ object MTransformer {
 
   val PostResult_langastExpLitString: MOption[org.sireum.lang.ast.Lit] = MNone()
 
-  val PreResult_langastExpLitStepId: PreResult[org.sireum.lang.ast.Lit] = PreResult(T, MNone())
-
-  val PostResult_langastExpLitStepId: MOption[org.sireum.lang.ast.Lit] = MNone()
-
   val PreResult_langastExpStringInterpolate: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
 
   val PostResult_langastExpStringInterpolate: MOption[org.sireum.lang.ast.Exp] = MNone()
@@ -1803,13 +1799,6 @@ import MTransformer._
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
         }
         return r
-      case o: org.sireum.lang.ast.Exp.LitStepId =>
-        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitStepId(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
-         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
-        }
-        return r
       case o: org.sireum.lang.ast.Exp.StringInterpolate => return pre_langastExpStringInterpolate(o)
       case o: org.sireum.lang.ast.Exp.This => return pre_langastExpThis(o)
       case o: org.sireum.lang.ast.Exp.Super => return pre_langastExpSuper(o)
@@ -1869,7 +1858,6 @@ import MTransformer._
       case o: org.sireum.lang.ast.Exp.LitF64 => return pre_langastExpLitF64(o)
       case o: org.sireum.lang.ast.Exp.LitR => return pre_langastExpLitR(o)
       case o: org.sireum.lang.ast.Exp.LitString => return pre_langastExpLitString(o)
-      case o: org.sireum.lang.ast.Exp.LitStepId => return pre_langastExpLitStepId(o)
     }
   }
 
@@ -1899,10 +1887,6 @@ import MTransformer._
 
   def pre_langastExpLitString(o: org.sireum.lang.ast.Exp.LitString): PreResult[org.sireum.lang.ast.Lit] = {
     return PreResult_langastExpLitString
-  }
-
-  def pre_langastExpLitStepId(o: org.sireum.lang.ast.Exp.LitStepId): PreResult[org.sireum.lang.ast.Lit] = {
-    return PreResult_langastExpLitStepId
   }
 
   def pre_langastExpStringInterpolate(o: org.sireum.lang.ast.Exp.StringInterpolate): PreResult[org.sireum.lang.ast.Exp] = {
@@ -4505,13 +4489,6 @@ import MTransformer._
          case _ => MNone[org.sireum.lang.ast.Exp]()
         }
         return r
-      case o: org.sireum.lang.ast.Exp.LitStepId =>
-        val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitStepId(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
-         case _ => MNone[org.sireum.lang.ast.Exp]()
-        }
-        return r
       case o: org.sireum.lang.ast.Exp.StringInterpolate => return post_langastExpStringInterpolate(o)
       case o: org.sireum.lang.ast.Exp.This => return post_langastExpThis(o)
       case o: org.sireum.lang.ast.Exp.Super => return post_langastExpSuper(o)
@@ -4571,7 +4548,6 @@ import MTransformer._
       case o: org.sireum.lang.ast.Exp.LitF64 => return post_langastExpLitF64(o)
       case o: org.sireum.lang.ast.Exp.LitR => return post_langastExpLitR(o)
       case o: org.sireum.lang.ast.Exp.LitString => return post_langastExpLitString(o)
-      case o: org.sireum.lang.ast.Exp.LitStepId => return post_langastExpLitStepId(o)
     }
   }
 
@@ -4601,10 +4577,6 @@ import MTransformer._
 
   def post_langastExpLitString(o: org.sireum.lang.ast.Exp.LitString): MOption[org.sireum.lang.ast.Lit] = {
     return PostResult_langastExpLitString
-  }
-
-  def post_langastExpLitStepId(o: org.sireum.lang.ast.Exp.LitStepId): MOption[org.sireum.lang.ast.Lit] = {
-    return PostResult_langastExpLitStepId
   }
 
   def post_langastExpStringInterpolate(o: org.sireum.lang.ast.Exp.StringInterpolate): MOption[org.sireum.lang.ast.Exp] = {
@@ -8051,12 +8023,6 @@ import MTransformer._
             MSome(o2(attr = r0.getOrElse(o2.attr)))
           else
             MNone()
-        case o2: org.sireum.lang.ast.Exp.LitStepId =>
-          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty)
-            MSome(o2(attr = r0.getOrElse(o2.attr)))
-          else
-            MNone()
         case o2: org.sireum.lang.ast.Exp.StringInterpolate =>
           val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.LitString]] = transformISZ(o2.lits, transform_langastExpLitString _)
           val r1: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.args, transform_langastExp _)
@@ -8347,12 +8313,6 @@ import MTransformer._
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.LitString =>
-          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty)
-            MSome(o2(attr = r0.getOrElse(o2.attr)))
-          else
-            MNone()
-        case o2: org.sireum.lang.ast.Exp.LitStepId =>
           val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
           if (hasChanged || r0.nonEmpty)
             MSome(o2(attr = r0.getOrElse(o2.attr)))

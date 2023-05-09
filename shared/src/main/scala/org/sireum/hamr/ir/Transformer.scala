@@ -707,13 +707,6 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.Exp]())
           }
           return r
-        case o: org.sireum.lang.ast.Exp.LitStepId =>
-          val r: PreResult[Context, org.sireum.lang.ast.Exp] = pre_langastExpLitStepId(ctx, o) match {
-           case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.Exp)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.Exp](r))
-           case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
-           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.Exp]())
-          }
-          return r
         case o: org.sireum.lang.ast.Exp.StringInterpolate => return pre_langastExpStringInterpolate(ctx, o)
         case o: org.sireum.lang.ast.Exp.This => return pre_langastExpThis(ctx, o)
         case o: org.sireum.lang.ast.Exp.Super => return pre_langastExpSuper(ctx, o)
@@ -773,7 +766,6 @@ object Transformer {
         case o: org.sireum.lang.ast.Exp.LitF64 => return pre_langastExpLitF64(ctx, o)
         case o: org.sireum.lang.ast.Exp.LitR => return pre_langastExpLitR(ctx, o)
         case o: org.sireum.lang.ast.Exp.LitString => return pre_langastExpLitString(ctx, o)
-        case o: org.sireum.lang.ast.Exp.LitStepId => return pre_langastExpLitStepId(ctx, o)
       }
     }
 
@@ -802,10 +794,6 @@ object Transformer {
     }
 
     @pure def pre_langastExpLitString(ctx: Context, o: org.sireum.lang.ast.Exp.LitString): PreResult[Context, org.sireum.lang.ast.Lit] = {
-      return PreResult(ctx, T, None())
-    }
-
-    @pure def pre_langastExpLitStepId(ctx: Context, o: org.sireum.lang.ast.Exp.LitStepId): PreResult[Context, org.sireum.lang.ast.Lit] = {
       return PreResult(ctx, T, None())
     }
 
@@ -3409,13 +3397,6 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Exp]())
           }
           return r
-        case o: org.sireum.lang.ast.Exp.LitStepId =>
-          val r: TPostResult[Context, org.sireum.lang.ast.Exp] = post_langastExpLitStepId(ctx, o) match {
-           case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Exp)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Exp](result))
-           case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
-           case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Exp]())
-          }
-          return r
         case o: org.sireum.lang.ast.Exp.StringInterpolate => return post_langastExpStringInterpolate(ctx, o)
         case o: org.sireum.lang.ast.Exp.This => return post_langastExpThis(ctx, o)
         case o: org.sireum.lang.ast.Exp.Super => return post_langastExpSuper(ctx, o)
@@ -3475,7 +3456,6 @@ object Transformer {
         case o: org.sireum.lang.ast.Exp.LitF64 => return post_langastExpLitF64(ctx, o)
         case o: org.sireum.lang.ast.Exp.LitR => return post_langastExpLitR(ctx, o)
         case o: org.sireum.lang.ast.Exp.LitString => return post_langastExpLitString(ctx, o)
-        case o: org.sireum.lang.ast.Exp.LitStepId => return post_langastExpLitStepId(ctx, o)
       }
     }
 
@@ -3504,10 +3484,6 @@ object Transformer {
     }
 
     @pure def post_langastExpLitString(ctx: Context, o: org.sireum.lang.ast.Exp.LitString): TPostResult[Context, org.sireum.lang.ast.Lit] = {
-      return TPostResult(ctx, None())
-    }
-
-    @pure def post_langastExpLitStepId(ctx: Context, o: org.sireum.lang.ast.Exp.LitStepId): TPostResult[Context, org.sireum.lang.ast.Lit] = {
       return TPostResult(ctx, None())
     }
 
@@ -6993,12 +6969,6 @@ import Transformer._
             TPostResult(r0.ctx, Some(o2(attr = r0.resultOpt.getOrElse(o2.attr))))
           else
             TPostResult(r0.ctx, None())
-        case o2: org.sireum.lang.ast.Exp.LitStepId =>
-          val r0: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(preR.ctx, o2.attr)
-          if (hasChanged || r0.resultOpt.nonEmpty)
-            TPostResult(r0.ctx, Some(o2(attr = r0.resultOpt.getOrElse(o2.attr))))
-          else
-            TPostResult(r0.ctx, None())
         case o2: org.sireum.lang.ast.Exp.StringInterpolate =>
           val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp.LitString]] = transformISZ(preR.ctx, o2.lits, transform_langastExpLitString _)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(r0.ctx, o2.args, transform_langastExp _)
@@ -7289,12 +7259,6 @@ import Transformer._
           else
             TPostResult(r0.ctx, None())
         case o2: org.sireum.lang.ast.Exp.LitString =>
-          val r0: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(preR.ctx, o2.attr)
-          if (hasChanged || r0.resultOpt.nonEmpty)
-            TPostResult(r0.ctx, Some(o2(attr = r0.resultOpt.getOrElse(o2.attr))))
-          else
-            TPostResult(r0.ctx, None())
-        case o2: org.sireum.lang.ast.Exp.LitStepId =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(preR.ctx, o2.attr)
           if (hasChanged || r0.resultOpt.nonEmpty)
             TPostResult(r0.ctx, Some(o2(attr = r0.resultOpt.getOrElse(o2.attr))))

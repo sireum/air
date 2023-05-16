@@ -2069,8 +2069,8 @@ object JSON {
     @pure def print_langastStmtDataRefinement(o: org.sireum.lang.ast.Stmt.DataRefinement): ST = {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.Stmt.DataRefinement""""),
-        ("rep", print_langastExpIdent(o.rep)),
-        ("refs", printISZ(F, o.refs, print_langastExpIdent _)),
+        ("rep", print_langastExpRef(o.rep)),
+        ("refs", printISZ(F, o.refs, print_langastExpRef _)),
         ("claims", printISZ(F, o.claims, print_langastExp _)),
         ("attr", print_langastAttr(o.attr))
       ))
@@ -7294,10 +7294,10 @@ object JSON {
         parser.parseObjectType("org.sireum.lang.ast.Stmt.DataRefinement")
       }
       parser.parseObjectKey("rep")
-      val rep = parse_langastExpIdent()
+      val rep = parse_langastExpRef()
       parser.parseObjectNext()
       parser.parseObjectKey("refs")
-      val refs = parser.parseISZ(parse_langastExpIdent _)
+      val refs = parser.parseISZ(parse_langastExpRef _)
       parser.parseObjectNext()
       parser.parseObjectKey("claims")
       val claims = parser.parseISZ(parse_langastExp _)

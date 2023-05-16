@@ -2151,8 +2151,8 @@ object MsgPack {
 
     def write_langastStmtDataRefinement(o: org.sireum.lang.ast.Stmt.DataRefinement): Unit = {
       writer.writeZ(Constants._langastStmtDataRefinement)
-      write_langastExpIdent(o.rep)
-      writer.writeISZ(o.refs, write_langastExpIdent _)
+      write_langastExpRef(o.rep)
+      writer.writeISZ(o.refs, write_langastExpRef _)
       writer.writeISZ(o.claims, write_langastExp _)
       write_langastAttr(o.attr)
     }
@@ -6028,8 +6028,8 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastStmtDataRefinement)
       }
-      val rep = read_langastExpIdent()
-      val refs = reader.readISZ(read_langastExpIdent _)
+      val rep = read_langastExpRef()
+      val refs = reader.readISZ(read_langastExpRef _)
       val claims = reader.readISZ(read_langastExp _)
       val attr = read_langastAttr()
       return org.sireum.lang.ast.Stmt.DataRefinement(rep, refs, claims, attr)

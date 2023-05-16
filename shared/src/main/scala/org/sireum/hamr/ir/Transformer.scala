@@ -5746,8 +5746,8 @@ import Transformer._
           else
             TPostResult(r5.ctx, None())
         case o2: org.sireum.lang.ast.Stmt.DataRefinement =>
-          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(preR.ctx, o2.rep)
-          val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(r0.ctx, o2.refs, transform_langastExpIdent _)
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.Ref] = transform_langastExpRef(preR.ctx, o2.rep)
+          val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp.Ref]] = transformISZ(r0.ctx, o2.refs, transform_langastExpRef _)
           val r2: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(r1.ctx, o2.claims, transform_langastExp _)
           val r3: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r2.ctx, o2.attr)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
@@ -6017,8 +6017,8 @@ import Transformer._
           else
             TPostResult(r5.ctx, None())
         case o2: org.sireum.lang.ast.Stmt.DataRefinement =>
-          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(preR.ctx, o2.rep)
-          val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp.Ident]] = transformISZ(r0.ctx, o2.refs, transform_langastExpIdent _)
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.Ref] = transform_langastExpRef(preR.ctx, o2.rep)
+          val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp.Ref]] = transformISZ(r0.ctx, o2.refs, transform_langastExpRef _)
           val r2: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(r1.ctx, o2.claims, transform_langastExp _)
           val r3: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r2.ctx, o2.attr)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
@@ -12693,42 +12693,6 @@ import Transformer._
     }
   }
 
-  @pure def transform_langastExpIdent(ctx: Context, o: org.sireum.lang.ast.Exp.Ident): TPostResult[Context, org.sireum.lang.ast.Exp.Ident] = {
-    val preR: PreResult[Context, org.sireum.lang.ast.Exp.Ident] = pp.pre_langastExpIdent(ctx, o) match {
-     case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.Exp.Ident)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.Exp.Ident](r))
-     case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ident")
-     case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.Exp.Ident]())
-    }
-    val r: TPostResult[Context, org.sireum.lang.ast.Exp.Ident] = if (preR.continu) {
-      val o2: org.sireum.lang.ast.Exp.Ident = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, org.sireum.lang.ast.Id] = transform_langastId(preR.ctx, o2.id)
-      val r1: TPostResult[Context, org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(r0.ctx, o2.attr)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        TPostResult(r1.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), attr = r1.resultOpt.getOrElse(o2.attr))))
-      else
-        TPostResult(r1.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: org.sireum.lang.ast.Exp.Ident = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, org.sireum.lang.ast.Exp.Ident] = pp.post_langastExpIdent(r.ctx, o2) match {
-     case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Exp.Ident)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Exp.Ident](result))
-     case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ident")
-     case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Exp.Ident]())
-    }
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
   @pure def transform_langastStmtBlock(ctx: Context, o: org.sireum.lang.ast.Stmt.Block): TPostResult[Context, org.sireum.lang.ast.Stmt.Block] = {
     val preR: PreResult[Context, org.sireum.lang.ast.Stmt.Block] = pp.pre_langastStmtBlock(ctx, o) match {
      case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.Stmt.Block)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.Stmt.Block](r))
@@ -12864,6 +12828,42 @@ import Transformer._
      case TPostResult(postCtx, Some(result: org.sireum.lang.ast.ProofAst.Step.Assume)) => TPostResult(postCtx, Some[org.sireum.lang.ast.ProofAst.Step.Assume](result))
      case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Assume")
      case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.ProofAst.Step.Assume]())
+    }
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transform_langastExpIdent(ctx: Context, o: org.sireum.lang.ast.Exp.Ident): TPostResult[Context, org.sireum.lang.ast.Exp.Ident] = {
+    val preR: PreResult[Context, org.sireum.lang.ast.Exp.Ident] = pp.pre_langastExpIdent(ctx, o) match {
+     case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.Exp.Ident)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.Exp.Ident](r))
+     case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ident")
+     case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.Exp.Ident]())
+    }
+    val r: TPostResult[Context, org.sireum.lang.ast.Exp.Ident] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Exp.Ident = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, org.sireum.lang.ast.Id] = transform_langastId(preR.ctx, o2.id)
+      val r1: TPostResult[Context, org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(r0.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), attr = r1.resultOpt.getOrElse(o2.attr))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: org.sireum.lang.ast.Exp.Ident = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, org.sireum.lang.ast.Exp.Ident] = pp.post_langastExpIdent(r.ctx, o2) match {
+     case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Exp.Ident)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Exp.Ident](result))
+     case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ident")
+     case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Exp.Ident]())
     }
     if (postR.resultOpt.nonEmpty) {
       return postR

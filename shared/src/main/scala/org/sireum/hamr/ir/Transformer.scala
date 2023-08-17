@@ -58,16 +58,11 @@ object Transformer {
     @pure def pre_langastTopUnit(ctx: Context, o: org.sireum.lang.ast.TopUnit): PreResult[Context, org.sireum.lang.ast.TopUnit] = {
       o match {
         case o: org.sireum.lang.ast.TopUnit.Program => return pre_langastTopUnitProgram(ctx, o)
-        case o: org.sireum.lang.ast.TopUnit.SequentUnit => return pre_langastTopUnitSequentUnit(ctx, o)
         case o: org.sireum.lang.ast.TopUnit.TruthTableUnit => return pre_langastTopUnitTruthTableUnit(ctx, o)
       }
     }
 
     @pure def pre_langastTopUnitProgram(ctx: Context, o: org.sireum.lang.ast.TopUnit.Program): PreResult[Context, org.sireum.lang.ast.TopUnit] = {
-      return PreResult(ctx, T, None())
-    }
-
-    @pure def pre_langastTopUnitSequentUnit(ctx: Context, o: org.sireum.lang.ast.TopUnit.SequentUnit): PreResult[Context, org.sireum.lang.ast.TopUnit] = {
       return PreResult(ctx, T, None())
     }
 
@@ -2722,16 +2717,11 @@ object Transformer {
     @pure def post_langastTopUnit(ctx: Context, o: org.sireum.lang.ast.TopUnit): TPostResult[Context, org.sireum.lang.ast.TopUnit] = {
       o match {
         case o: org.sireum.lang.ast.TopUnit.Program => return post_langastTopUnitProgram(ctx, o)
-        case o: org.sireum.lang.ast.TopUnit.SequentUnit => return post_langastTopUnitSequentUnit(ctx, o)
         case o: org.sireum.lang.ast.TopUnit.TruthTableUnit => return post_langastTopUnitTruthTableUnit(ctx, o)
       }
     }
 
     @pure def post_langastTopUnitProgram(ctx: Context, o: org.sireum.lang.ast.TopUnit.Program): TPostResult[Context, org.sireum.lang.ast.TopUnit] = {
-      return TPostResult(ctx, None())
-    }
-
-    @pure def post_langastTopUnitSequentUnit(ctx: Context, o: org.sireum.lang.ast.TopUnit.SequentUnit): TPostResult[Context, org.sireum.lang.ast.TopUnit] = {
       return TPostResult(ctx, None())
     }
 
@@ -5434,12 +5424,6 @@ import Transformer._
             TPostResult(r1.ctx, Some(o2(packageName = r0.resultOpt.getOrElse(o2.packageName), body = r1.resultOpt.getOrElse(o2.body))))
           else
             TPostResult(r1.ctx, None())
-        case o2: org.sireum.lang.ast.TopUnit.SequentUnit =>
-          val r0: TPostResult[Context, org.sireum.lang.ast.Sequent] = transform_langastSequent(preR.ctx, o2.sequent)
-          if (hasChanged || r0.resultOpt.nonEmpty)
-            TPostResult(r0.ctx, Some(o2(sequent = r0.resultOpt.getOrElse(o2.sequent))))
-          else
-            TPostResult(r0.ctx, None())
         case o2: org.sireum.lang.ast.TopUnit.TruthTableUnit =>
           val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Id]] = transformISZ(preR.ctx, o2.vars, transform_langastId _)
           val r1: TPostResult[Context, org.sireum.lang.ast.Sequent] = transform_langastSequent(r0.ctx, o2.sequent)

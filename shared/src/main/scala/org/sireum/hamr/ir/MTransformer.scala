@@ -69,10 +69,6 @@ object MTransformer {
 
   val PostResult_langastTopUnitProgram: MOption[org.sireum.lang.ast.TopUnit] = MNone()
 
-  val PreResult_langastTopUnitSequentUnit: PreResult[org.sireum.lang.ast.TopUnit] = PreResult(T, MNone())
-
-  val PostResult_langastTopUnitSequentUnit: MOption[org.sireum.lang.ast.TopUnit] = MNone()
-
   val PreResult_langastTopUnitTruthTableUnit: PreResult[org.sireum.lang.ast.TopUnit] = PreResult(T, MNone())
 
   val PostResult_langastTopUnitTruthTableUnit: MOption[org.sireum.lang.ast.TopUnit] = MNone()
@@ -1150,17 +1146,12 @@ import MTransformer._
   def pre_langastTopUnit(o: org.sireum.lang.ast.TopUnit): PreResult[org.sireum.lang.ast.TopUnit] = {
     o match {
       case o: org.sireum.lang.ast.TopUnit.Program => return pre_langastTopUnitProgram(o)
-      case o: org.sireum.lang.ast.TopUnit.SequentUnit => return pre_langastTopUnitSequentUnit(o)
       case o: org.sireum.lang.ast.TopUnit.TruthTableUnit => return pre_langastTopUnitTruthTableUnit(o)
     }
   }
 
   def pre_langastTopUnitProgram(o: org.sireum.lang.ast.TopUnit.Program): PreResult[org.sireum.lang.ast.TopUnit] = {
     return PreResult_langastTopUnitProgram
-  }
-
-  def pre_langastTopUnitSequentUnit(o: org.sireum.lang.ast.TopUnit.SequentUnit): PreResult[org.sireum.lang.ast.TopUnit] = {
-    return PreResult_langastTopUnitSequentUnit
   }
 
   def pre_langastTopUnitTruthTableUnit(o: org.sireum.lang.ast.TopUnit.TruthTableUnit): PreResult[org.sireum.lang.ast.TopUnit] = {
@@ -3814,17 +3805,12 @@ import MTransformer._
   def post_langastTopUnit(o: org.sireum.lang.ast.TopUnit): MOption[org.sireum.lang.ast.TopUnit] = {
     o match {
       case o: org.sireum.lang.ast.TopUnit.Program => return post_langastTopUnitProgram(o)
-      case o: org.sireum.lang.ast.TopUnit.SequentUnit => return post_langastTopUnitSequentUnit(o)
       case o: org.sireum.lang.ast.TopUnit.TruthTableUnit => return post_langastTopUnitTruthTableUnit(o)
     }
   }
 
   def post_langastTopUnitProgram(o: org.sireum.lang.ast.TopUnit.Program): MOption[org.sireum.lang.ast.TopUnit] = {
     return PostResult_langastTopUnitProgram
-  }
-
-  def post_langastTopUnitSequentUnit(o: org.sireum.lang.ast.TopUnit.SequentUnit): MOption[org.sireum.lang.ast.TopUnit] = {
-    return PostResult_langastTopUnitSequentUnit
   }
 
   def post_langastTopUnitTruthTableUnit(o: org.sireum.lang.ast.TopUnit.TruthTableUnit): MOption[org.sireum.lang.ast.TopUnit] = {
@@ -6486,12 +6472,6 @@ import MTransformer._
           val r1: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.body)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
             MSome(o2(packageName = r0.getOrElse(o2.packageName), body = r1.getOrElse(o2.body)))
-          else
-            MNone()
-        case o2: org.sireum.lang.ast.TopUnit.SequentUnit =>
-          val r0: MOption[org.sireum.lang.ast.Sequent] = transform_langastSequent(o2.sequent)
-          if (hasChanged || r0.nonEmpty)
-            MSome(o2(sequent = r0.getOrElse(o2.sequent)))
           else
             MNone()
         case o2: org.sireum.lang.ast.TopUnit.TruthTableUnit =>

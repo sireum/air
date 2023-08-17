@@ -1648,7 +1648,6 @@ object JSON {
     @pure def print_langastTopUnit(o: org.sireum.lang.ast.TopUnit): ST = {
       o match {
         case o: org.sireum.lang.ast.TopUnit.Program => return print_langastTopUnitProgram(o)
-        case o: org.sireum.lang.ast.TopUnit.SequentUnit => return print_langastTopUnitSequentUnit(o)
         case o: org.sireum.lang.ast.TopUnit.TruthTableUnit => return print_langastTopUnitTruthTableUnit(o)
       }
     }
@@ -1659,14 +1658,6 @@ object JSON {
         ("fileUriOpt", printOption(T, o.fileUriOpt, printString _)),
         ("packageName", print_langastName(o.packageName)),
         ("body", print_langastBody(o.body))
-      ))
-    }
-
-    @pure def print_langastTopUnitSequentUnit(o: org.sireum.lang.ast.TopUnit.SequentUnit): ST = {
-      return printObject(ISZ(
-        ("type", st""""org.sireum.lang.ast.TopUnit.SequentUnit""""),
-        ("fileUriOpt", printOption(T, o.fileUriOpt, printString _)),
-        ("sequent", print_langastSequent(o.sequent))
       ))
     }
 
@@ -6361,10 +6352,9 @@ object JSON {
     }
 
     def parse_langastTopUnit(): org.sireum.lang.ast.TopUnit = {
-      val t = parser.parseObjectTypes(ISZ("org.sireum.lang.ast.TopUnit.Program", "org.sireum.lang.ast.TopUnit.SequentUnit", "org.sireum.lang.ast.TopUnit.TruthTableUnit"))
+      val t = parser.parseObjectTypes(ISZ("org.sireum.lang.ast.TopUnit.Program", "org.sireum.lang.ast.TopUnit.TruthTableUnit"))
       t.native match {
         case "org.sireum.lang.ast.TopUnit.Program" => val r = parse_langastTopUnitProgramT(T); return r
-        case "org.sireum.lang.ast.TopUnit.SequentUnit" => val r = parse_langastTopUnitSequentUnitT(T); return r
         case "org.sireum.lang.ast.TopUnit.TruthTableUnit" => val r = parse_langastTopUnitTruthTableUnitT(T); return r
         case _ => val r = parse_langastTopUnitTruthTableUnitT(T); return r
       }
@@ -6389,24 +6379,6 @@ object JSON {
       val body = parse_langastBody()
       parser.parseObjectNext()
       return org.sireum.lang.ast.TopUnit.Program(fileUriOpt, packageName, body)
-    }
-
-    def parse_langastTopUnitSequentUnit(): org.sireum.lang.ast.TopUnit.SequentUnit = {
-      val r = parse_langastTopUnitSequentUnitT(F)
-      return r
-    }
-
-    def parse_langastTopUnitSequentUnitT(typeParsed: B): org.sireum.lang.ast.TopUnit.SequentUnit = {
-      if (!typeParsed) {
-        parser.parseObjectType("org.sireum.lang.ast.TopUnit.SequentUnit")
-      }
-      parser.parseObjectKey("fileUriOpt")
-      val fileUriOpt = parser.parseOption(parser.parseString _)
-      parser.parseObjectNext()
-      parser.parseObjectKey("sequent")
-      val sequent = parse_langastSequent()
-      parser.parseObjectNext()
-      return org.sireum.lang.ast.TopUnit.SequentUnit(fileUriOpt, sequent)
     }
 
     def parse_langastTopUnitTruthTableUnit(): org.sireum.lang.ast.TopUnit.TruthTableUnit = {
@@ -12684,24 +12656,6 @@ object JSON {
       return r
     }
     val r = to(s, f_langastTopUnitProgram _)
-    return r
-  }
-
-  def from_langastTopUnitSequentUnit(o: org.sireum.lang.ast.TopUnit.SequentUnit, isCompact: B): String = {
-    val st = Printer.print_langastTopUnitSequentUnit(o)
-    if (isCompact) {
-      return st.renderCompact
-    } else {
-      return st.render
-    }
-  }
-
-  def to_langastTopUnitSequentUnit(s: String): Either[org.sireum.lang.ast.TopUnit.SequentUnit, Json.ErrorMsg] = {
-    def f_langastTopUnitSequentUnit(parser: Parser): org.sireum.lang.ast.TopUnit.SequentUnit = {
-      val r = parser.parse_langastTopUnitSequentUnit()
-      return r
-    }
-    val r = to(s, f_langastTopUnitSequentUnit _)
     return r
   }
 

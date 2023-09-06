@@ -493,6 +493,10 @@ object MTransformer {
 
   val PostResult_langastExpInput: MOption[org.sireum.lang.ast.Exp] = MNone()
 
+  val PreResult_langastExpOld: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
+
+  val PostResult_langastExpOld: MOption[org.sireum.lang.ast.Exp] = MNone()
+
   val PreResult_langastExpAt: PreResult[org.sireum.lang.ast.Exp] = PreResult(T, MNone())
 
   val PostResult_langastExpAt: MOption[org.sireum.lang.ast.Exp] = MNone()
@@ -1802,6 +1806,7 @@ import MTransformer._
         }
         return r
       case o: org.sireum.lang.ast.Exp.Input => return pre_langastExpInput(o)
+      case o: org.sireum.lang.ast.Exp.Old => return pre_langastExpOld(o)
       case o: org.sireum.lang.ast.Exp.At => return pre_langastExpAt(o)
       case o: org.sireum.lang.ast.Exp.LoopIndex => return pre_langastExpLoopIndex(o)
       case o: org.sireum.lang.ast.Exp.StateSeq => return pre_langastExpStateSeq(o)
@@ -1963,6 +1968,10 @@ import MTransformer._
 
   def pre_langastExpInput(o: org.sireum.lang.ast.Exp.Input): PreResult[org.sireum.lang.ast.Exp] = {
     return PreResult_langastExpInput
+  }
+
+  def pre_langastExpOld(o: org.sireum.lang.ast.Exp.Old): PreResult[org.sireum.lang.ast.Exp] = {
+    return PreResult_langastExpOld
   }
 
   def pre_langastExpAt(o: org.sireum.lang.ast.Exp.At): PreResult[org.sireum.lang.ast.Exp] = {
@@ -4461,6 +4470,7 @@ import MTransformer._
         }
         return r
       case o: org.sireum.lang.ast.Exp.Input => return post_langastExpInput(o)
+      case o: org.sireum.lang.ast.Exp.Old => return post_langastExpOld(o)
       case o: org.sireum.lang.ast.Exp.At => return post_langastExpAt(o)
       case o: org.sireum.lang.ast.Exp.LoopIndex => return post_langastExpLoopIndex(o)
       case o: org.sireum.lang.ast.Exp.StateSeq => return post_langastExpStateSeq(o)
@@ -4622,6 +4632,10 @@ import MTransformer._
 
   def post_langastExpInput(o: org.sireum.lang.ast.Exp.Input): MOption[org.sireum.lang.ast.Exp] = {
     return PostResult_langastExpInput
+  }
+
+  def post_langastExpOld(o: org.sireum.lang.ast.Exp.Old): MOption[org.sireum.lang.ast.Exp] = {
+    return PostResult_langastExpOld
   }
 
   def post_langastExpAt(o: org.sireum.lang.ast.Exp.At): MOption[org.sireum.lang.ast.Exp] = {
@@ -6629,9 +6643,10 @@ import MTransformer._
         case o2: org.sireum.lang.ast.Stmt.Assign =>
           val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.lhs)
           val r1: MOption[org.sireum.lang.ast.AssignExp] = transform_langastAssignExp(o2.rhs)
-          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs), attr = r2.getOrElse(o2.attr)))
+          val r2: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.prevAssignLhsOpt, transform_langastExp _)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs), prevAssignLhsOpt = r2.getOrElse(o2.prevAssignLhsOpt), attr = r3.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Block =>
@@ -8056,6 +8071,13 @@ import MTransformer._
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.Input =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Exp.Old =>
           val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
           val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)

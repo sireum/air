@@ -604,109 +604,111 @@ object MsgPack {
 
     val _langastExpInput: Z = 183
 
-    val _langastExpAt: Z = 184
+    val _langastExpOld: Z = 184
 
-    val _langastExpLoopIndex: Z = 185
+    val _langastExpAt: Z = 185
 
-    val _langastExpStateSeq: Z = 186
+    val _langastExpLoopIndex: Z = 186
 
-    val _langastExpStateSeqFragment: Z = 187
+    val _langastExpStateSeq: Z = 187
 
-    val _langastExpResult: Z = 188
+    val _langastExpStateSeqFragment: Z = 188
 
-    val _langastExpStrictPureBlock: Z = 189
+    val _langastExpResult: Z = 189
 
-    val _langastExpLabeled: Z = 190
+    val _langastExpStrictPureBlock: Z = 190
 
-    val _langastExpAssumeAgree: Z = 191
+    val _langastExpLabeled: Z = 191
 
-    val _langastExpAssertAgree: Z = 192
+    val _langastExpAssumeAgree: Z = 192
 
-    val _langastExpInfoFlowInvariant: Z = 193
+    val _langastExpAssertAgree: Z = 193
 
-    val _langastNamedArg: Z = 194
+    val _langastExpInfoFlowInvariant: Z = 194
 
-    val _langastId: Z = 195
+    val _langastNamedArg: Z = 195
 
-    val _langastName: Z = 196
+    val _langastId: Z = 196
 
-    val _langastBody: Z = 197
+    val _langastName: Z = 197
 
-    val _langastAdtParam: Z = 198
+    val _langastBody: Z = 198
 
-    val _langastMethodSig: Z = 199
+    val _langastAdtParam: Z = 199
 
-    val _langastParam: Z = 200
+    val _langastMethodSig: Z = 200
 
-    val _langastTypeParam: Z = 201
+    val _langastParam: Z = 201
 
-    val _langastAttr: Z = 202
+    val _langastTypeParam: Z = 202
 
-    val _langastTypedAttr: Z = 203
+    val _langastAttr: Z = 203
 
-    val _langastResolvedAttr: Z = 204
+    val _langastTypedAttr: Z = 204
 
-    val _langastResolvedInfoBuiltIn: Z = 205
+    val _langastResolvedAttr: Z = 205
 
-    val _langastResolvedInfoPackage: Z = 206
+    val _langastResolvedInfoBuiltIn: Z = 206
 
-    val _langastResolvedInfoEnum: Z = 207
+    val _langastResolvedInfoPackage: Z = 207
 
-    val _langastResolvedInfoEnumElement: Z = 208
+    val _langastResolvedInfoEnum: Z = 208
 
-    val _langastResolvedInfoObject: Z = 209
+    val _langastResolvedInfoEnumElement: Z = 209
 
-    val _langastResolvedInfoVar: Z = 210
+    val _langastResolvedInfoObject: Z = 210
 
-    val _langastResolvedInfoMethod: Z = 211
+    val _langastResolvedInfoVar: Z = 211
 
-    val _langastResolvedInfoMethods: Z = 212
+    val _langastResolvedInfoMethod: Z = 212
 
-    val _langastResolvedInfoTuple: Z = 213
+    val _langastResolvedInfoMethods: Z = 213
 
-    val _langastResolvedInfoLocalVar: Z = 214
+    val _langastResolvedInfoTuple: Z = 214
 
-    val _langastResolvedInfoFact: Z = 215
+    val _langastResolvedInfoLocalVar: Z = 215
 
-    val _langastResolvedInfoTheorem: Z = 216
+    val _langastResolvedInfoFact: Z = 216
 
-    val _langastResolvedInfoInv: Z = 217
+    val _langastResolvedInfoTheorem: Z = 217
 
-    val _langastTruthTableRow: Z = 218
+    val _langastResolvedInfoInv: Z = 218
 
-    val _langastTruthTableAssignment: Z = 219
+    val _langastTruthTableRow: Z = 219
 
-    val _langastTruthTableConclusionValidity: Z = 220
+    val _langastTruthTableAssignment: Z = 220
 
-    val _langastTruthTableConclusionTautology: Z = 221
+    val _langastTruthTableConclusionValidity: Z = 221
 
-    val _langastTruthTableConclusionContradictory: Z = 222
+    val _langastTruthTableConclusionTautology: Z = 222
 
-    val _langastTruthTableConclusionContingent: Z = 223
+    val _langastTruthTableConclusionContradictory: Z = 223
 
-    val _langastTypedName: Z = 224
+    val _langastTruthTableConclusionContingent: Z = 224
 
-    val _langastTypedTuple: Z = 225
+    val _langastTypedName: Z = 225
 
-    val _langastTypedFun: Z = 226
+    val _langastTypedTuple: Z = 226
 
-    val _langastTypedTypeVar: Z = 227
+    val _langastTypedFun: Z = 227
 
-    val _langastTypedPackage: Z = 228
+    val _langastTypedTypeVar: Z = 228
 
-    val _langastTypedObject: Z = 229
+    val _langastTypedPackage: Z = 229
 
-    val _langastTypedEnum: Z = 230
+    val _langastTypedObject: Z = 230
 
-    val _langastTypedMethod: Z = 231
+    val _langastTypedEnum: Z = 231
 
-    val _langastTypedMethods: Z = 232
+    val _langastTypedMethod: Z = 232
 
-    val _langastTypedFact: Z = 233
+    val _langastTypedMethods: Z = 233
 
-    val _langastTypedTheorem: Z = 234
+    val _langastTypedFact: Z = 234
 
-    val _langastTypedInv: Z = 235
+    val _langastTypedTheorem: Z = 235
+
+    val _langastTypedInv: Z = 236
 
   }
 
@@ -2035,6 +2037,7 @@ object MsgPack {
       writer.writeZ(Constants._langastStmtAssign)
       write_langastExp(o.lhs)
       write_langastAssignExp(o.rhs)
+      writer.writeOption(o.prevAssignLhsOpt, write_langastExp _)
       write_langastAttr(o.attr)
     }
 
@@ -2568,6 +2571,7 @@ object MsgPack {
         case o: org.sireum.lang.ast.Exp.QuantRange => write_langastExpQuantRange(o)
         case o: org.sireum.lang.ast.Exp.QuantEach => write_langastExpQuantEach(o)
         case o: org.sireum.lang.ast.Exp.Input => write_langastExpInput(o)
+        case o: org.sireum.lang.ast.Exp.Old => write_langastExpOld(o)
         case o: org.sireum.lang.ast.Exp.At => write_langastExpAt(o)
         case o: org.sireum.lang.ast.Exp.LoopIndex => write_langastExpLoopIndex(o)
         case o: org.sireum.lang.ast.Exp.StateSeq => write_langastExpStateSeq(o)
@@ -2801,6 +2805,12 @@ object MsgPack {
 
     def write_langastExpInput(o: org.sireum.lang.ast.Exp.Input): Unit = {
       writer.writeZ(Constants._langastExpInput)
+      write_langastExp(o.exp)
+      write_langastAttr(o.attr)
+    }
+
+    def write_langastExpOld(o: org.sireum.lang.ast.Exp.Old): Unit = {
+      writer.writeZ(Constants._langastExpOld)
       write_langastExp(o.exp)
       write_langastAttr(o.attr)
     }
@@ -5792,8 +5802,9 @@ object MsgPack {
       }
       val lhs = read_langastExp()
       val rhs = read_langastAssignExp()
+      val prevAssignLhsOpt = reader.readOption(read_langastExp _)
       val attr = read_langastAttr()
-      return org.sireum.lang.ast.Stmt.Assign(lhs, rhs, attr)
+      return org.sireum.lang.ast.Stmt.Assign(lhs, rhs, prevAssignLhsOpt, attr)
     }
 
     def read_langastStmtBlock(): org.sireum.lang.ast.Stmt.Block = {
@@ -6845,6 +6856,7 @@ object MsgPack {
         case Constants._langastExpQuantRange => val r = read_langastExpQuantRangeT(T); return r
         case Constants._langastExpQuantEach => val r = read_langastExpQuantEachT(T); return r
         case Constants._langastExpInput => val r = read_langastExpInputT(T); return r
+        case Constants._langastExpOld => val r = read_langastExpOldT(T); return r
         case Constants._langastExpAt => val r = read_langastExpAtT(T); return r
         case Constants._langastExpLoopIndex => val r = read_langastExpLoopIndexT(T); return r
         case Constants._langastExpStateSeq => val r = read_langastExpStateSeqT(T); return r
@@ -7327,6 +7339,20 @@ object MsgPack {
       val exp = read_langastExp()
       val attr = read_langastAttr()
       return org.sireum.lang.ast.Exp.Input(exp, attr)
+    }
+
+    def read_langastExpOld(): org.sireum.lang.ast.Exp.Old = {
+      val r = read_langastExpOldT(F)
+      return r
+    }
+
+    def read_langastExpOldT(typeParsed: B): org.sireum.lang.ast.Exp.Old = {
+      if (!typeParsed) {
+        reader.expectZ(Constants._langastExpOld)
+      }
+      val exp = read_langastExp()
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.Exp.Old(exp, attr)
     }
 
     def read_langastExpAt(): org.sireum.lang.ast.Exp.At = {
@@ -12093,6 +12119,21 @@ object MsgPack {
       return r
     }
     val r = to(data, f_langastExpInput _)
+    return r
+  }
+
+  def from_langastExpOld(o: org.sireum.lang.ast.Exp.Old, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.write_langastExpOld(o)
+    return w.result
+  }
+
+  def to_langastExpOld(data: ISZ[U8]): Either[org.sireum.lang.ast.Exp.Old, MessagePack.ErrorMsg] = {
+    def f_langastExpOld(reader: Reader): org.sireum.lang.ast.Exp.Old = {
+      val r = reader.read_langastExpOld()
+      return r
+    }
+    val r = to(data, f_langastExpOld _)
     return r
   }
 

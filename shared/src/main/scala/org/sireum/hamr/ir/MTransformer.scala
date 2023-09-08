@@ -6643,10 +6643,10 @@ import MTransformer._
         case o2: org.sireum.lang.ast.Stmt.Assign =>
           val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.lhs)
           val r1: MOption[org.sireum.lang.ast.AssignExp] = transform_langastAssignExp(o2.rhs)
-          val r2: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.prevAssignLhsOpt, transform_langastExp _)
+          val r2: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.deduceOldLhsOpt, transform_langastExp _)
           val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs), prevAssignLhsOpt = r2.getOrElse(o2.prevAssignLhsOpt), attr = r3.getOrElse(o2.attr)))
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs), deduceOldLhsOpt = r2.getOrElse(o2.deduceOldLhsOpt), attr = r3.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Block =>

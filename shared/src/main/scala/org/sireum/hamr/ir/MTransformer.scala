@@ -7542,10 +7542,10 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: MOption[org.sireum.lang.ast.ProofAst.Step.Justification] = o2 match {
         case o2: org.sireum.lang.ast.ProofAst.Step.Justification.Ref =>
-          val r0: MOption[org.sireum.lang.ast.Exp.Ref] = transform_langastExpRef(o2.id)
+          val r0: MOption[org.sireum.lang.ast.Exp.Ref] = transform_langastExpRef(o2.ref)
           val r1: MOption[IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(o2.witnesses, transform_langastProofAstStepId _)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(id = r0.getOrElse(o2.id), witnesses = r1.getOrElse(o2.witnesses)))
+            MSome(o2(ref = r0.getOrElse(o2.ref), witnesses = r1.getOrElse(o2.witnesses)))
           else
             MNone()
         case o2: org.sireum.lang.ast.ProofAst.Step.Justification.Apply =>

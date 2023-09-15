@@ -2376,7 +2376,7 @@ object MsgPack {
 
     def write_langastProofAstStepJustificationRef(o: org.sireum.lang.ast.ProofAst.Step.Justification.Ref): Unit = {
       writer.writeZ(Constants._langastProofAstStepJustificationRef)
-      write_langastExpRef(o.id)
+      write_langastExpRef(o.ref)
       writer.writeB(o.hasWitness)
       writer.writeISZ(o.witnesses, write_langastProofAstStepId _)
     }
@@ -6497,10 +6497,10 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastProofAstStepJustificationRef)
       }
-      val id = read_langastExpRef()
+      val ref = read_langastExpRef()
       val hasWitness = reader.readB()
       val witnesses = reader.readISZ(read_langastProofAstStepId _)
-      return org.sireum.lang.ast.ProofAst.Step.Justification.Ref(id, hasWitness, witnesses)
+      return org.sireum.lang.ast.ProofAst.Step.Justification.Ref(ref, hasWitness, witnesses)
     }
 
     def read_langastProofAstStepJustificationApply(): org.sireum.lang.ast.ProofAst.Step.Justification.Apply = {

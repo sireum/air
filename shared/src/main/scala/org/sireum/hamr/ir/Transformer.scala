@@ -6488,10 +6488,10 @@ import Transformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = o2 match {
         case o2: org.sireum.lang.ast.ProofAst.Step.Justification.Ref =>
-          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.Ref] = transform_langastExpRef(preR.ctx, o2.id)
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp.Ref] = transform_langastExpRef(preR.ctx, o2.ref)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.StepId]] = transformISZ(r0.ctx, o2.witnesses, transform_langastProofAstStepId _)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), witnesses = r1.resultOpt.getOrElse(o2.witnesses))))
+            TPostResult(r1.ctx, Some(o2(ref = r0.resultOpt.getOrElse(o2.ref), witnesses = r1.resultOpt.getOrElse(o2.witnesses))))
           else
             TPostResult(r1.ctx, None())
         case o2: org.sireum.lang.ast.ProofAst.Step.Justification.Apply =>

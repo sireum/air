@@ -2348,7 +2348,7 @@ object JSON {
     @pure def print_langastProofAstStepJustificationRef(o: org.sireum.lang.ast.ProofAst.Step.Justification.Ref): ST = {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.ProofAst.Step.Justification.Ref""""),
-        ("id", print_langastExpRef(o.id)),
+        ("ref", print_langastExpRef(o.ref)),
         ("hasWitness", printB(o.hasWitness)),
         ("witnesses", printISZ(F, o.witnesses, print_langastProofAstStepId _))
       ))
@@ -7894,8 +7894,8 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("org.sireum.lang.ast.ProofAst.Step.Justification.Ref")
       }
-      parser.parseObjectKey("id")
-      val id = parse_langastExpRef()
+      parser.parseObjectKey("ref")
+      val ref = parse_langastExpRef()
       parser.parseObjectNext()
       parser.parseObjectKey("hasWitness")
       val hasWitness = parser.parseB()
@@ -7903,7 +7903,7 @@ object JSON {
       parser.parseObjectKey("witnesses")
       val witnesses = parser.parseISZ(parse_langastProofAstStepId _)
       parser.parseObjectNext()
-      return org.sireum.lang.ast.ProofAst.Step.Justification.Ref(id, hasWitness, witnesses)
+      return org.sireum.lang.ast.ProofAst.Step.Justification.Ref(ref, hasWitness, witnesses)
     }
 
     def parse_langastProofAstStepJustificationApply(): org.sireum.lang.ast.ProofAst.Step.Justification.Apply = {

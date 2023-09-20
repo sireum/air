@@ -5589,12 +5589,11 @@ import Transformer._
         case o2: org.sireum.lang.ast.Stmt.Assign =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.lhs)
           val r1: TPostResult[Context, org.sireum.lang.ast.AssignExp] = transform_langastAssignExp(r0.ctx, o2.rhs)
-          val r2: TPostResult[Context, Option[org.sireum.lang.ast.Exp]] = transformOption(r1.ctx, o2.deduceOldLhsOpt, transform_langastExp _)
-          val r3: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r2.ctx, o2.attr)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
-            TPostResult(r3.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs), deduceOldLhsOpt = r2.resultOpt.getOrElse(o2.deduceOldLhsOpt), attr = r3.resultOpt.getOrElse(o2.attr))))
+          val r2: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(lhs = r0.resultOpt.getOrElse(o2.lhs), rhs = r1.resultOpt.getOrElse(o2.rhs), attr = r2.resultOpt.getOrElse(o2.attr))))
           else
-            TPostResult(r3.ctx, None())
+            TPostResult(r2.ctx, None())
         case o2: org.sireum.lang.ast.Stmt.Block =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Body] = transform_langastBody(preR.ctx, o2.body)
           val r1: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r0.ctx, o2.attr)

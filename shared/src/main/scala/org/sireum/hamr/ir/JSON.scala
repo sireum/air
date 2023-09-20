@@ -1929,7 +1929,6 @@ object JSON {
         ("type", st""""org.sireum.lang.ast.Stmt.Assign""""),
         ("lhs", print_langastExp(o.lhs)),
         ("rhs", print_langastAssignExp(o.rhs)),
-        ("deduceOldLhsOpt", printOption(F, o.deduceOldLhsOpt, print_langastExp _)),
         ("attr", print_langastAttr(o.attr))
       ))
     }
@@ -6977,13 +6976,10 @@ object JSON {
       parser.parseObjectKey("rhs")
       val rhs = parse_langastAssignExp()
       parser.parseObjectNext()
-      parser.parseObjectKey("deduceOldLhsOpt")
-      val deduceOldLhsOpt = parser.parseOption(parse_langastExp _)
-      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Stmt.Assign(lhs, rhs, deduceOldLhsOpt, attr)
+      return org.sireum.lang.ast.Stmt.Assign(lhs, rhs, attr)
     }
 
     def parse_langastStmtBlock(): org.sireum.lang.ast.Stmt.Block = {

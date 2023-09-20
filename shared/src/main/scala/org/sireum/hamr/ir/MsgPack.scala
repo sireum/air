@@ -2037,7 +2037,6 @@ object MsgPack {
       writer.writeZ(Constants._langastStmtAssign)
       write_langastExp(o.lhs)
       write_langastAssignExp(o.rhs)
-      writer.writeOption(o.deduceOldLhsOpt, write_langastExp _)
       write_langastAttr(o.attr)
     }
 
@@ -5802,9 +5801,8 @@ object MsgPack {
       }
       val lhs = read_langastExp()
       val rhs = read_langastAssignExp()
-      val deduceOldLhsOpt = reader.readOption(read_langastExp _)
       val attr = read_langastAttr()
-      return org.sireum.lang.ast.Stmt.Assign(lhs, rhs, deduceOldLhsOpt, attr)
+      return org.sireum.lang.ast.Stmt.Assign(lhs, rhs, attr)
     }
 
     def read_langastStmtBlock(): org.sireum.lang.ast.Stmt.Block = {

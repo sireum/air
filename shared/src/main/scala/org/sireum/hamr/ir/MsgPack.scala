@@ -2542,6 +2542,8 @@ object MsgPack {
 
     def write_langastExp(o: org.sireum.lang.ast.Exp): Unit = {
       o match {
+        case o: org.sireum.lang.ast.ProofAst.StepId.Num => write_langastProofAstStepIdNum(o)
+        case o: org.sireum.lang.ast.ProofAst.StepId.Str => write_langastProofAstStepIdStr(o)
         case o: org.sireum.lang.ast.Exp.LitB => write_langastExpLitB(o)
         case o: org.sireum.lang.ast.Exp.LitC => write_langastExpLitC(o)
         case o: org.sireum.lang.ast.Exp.LitZ => write_langastExpLitZ(o)
@@ -2584,6 +2586,8 @@ object MsgPack {
 
     def write_langastLit(o: org.sireum.lang.ast.Lit): Unit = {
       o match {
+        case o: org.sireum.lang.ast.ProofAst.StepId.Num => write_langastProofAstStepIdNum(o)
+        case o: org.sireum.lang.ast.ProofAst.StepId.Str => write_langastProofAstStepIdStr(o)
         case o: org.sireum.lang.ast.Exp.LitB => write_langastExpLitB(o)
         case o: org.sireum.lang.ast.Exp.LitC => write_langastExpLitC(o)
         case o: org.sireum.lang.ast.Exp.LitZ => write_langastExpLitZ(o)
@@ -6825,6 +6829,8 @@ object MsgPack {
       val i = reader.curr
       val t = reader.readZ()
       t match {
+        case Constants._langastProofAstStepIdNum => val r = read_langastProofAstStepIdNumT(T); return r
+        case Constants._langastProofAstStepIdStr => val r = read_langastProofAstStepIdStrT(T); return r
         case Constants._langastExpLitB => val r = read_langastExpLitBT(T); return r
         case Constants._langastExpLitC => val r = read_langastExpLitCT(T); return r
         case Constants._langastExpLitZ => val r = read_langastExpLitZT(T); return r
@@ -6873,6 +6879,8 @@ object MsgPack {
       val i = reader.curr
       val t = reader.readZ()
       t match {
+        case Constants._langastProofAstStepIdNum => val r = read_langastProofAstStepIdNumT(T); return r
+        case Constants._langastProofAstStepIdStr => val r = read_langastProofAstStepIdStrT(T); return r
         case Constants._langastExpLitB => val r = read_langastExpLitBT(T); return r
         case Constants._langastExpLitC => val r = read_langastExpLitCT(T); return r
         case Constants._langastExpLitZ => val r = read_langastExpLitZT(T); return r

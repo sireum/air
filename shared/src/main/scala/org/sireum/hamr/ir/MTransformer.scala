@@ -1719,6 +1719,20 @@ import MTransformer._
 
   def pre_langastExp(o: org.sireum.lang.ast.Exp): PreResult[org.sireum.lang.ast.Exp] = {
     o match {
+      case o: org.sireum.lang.ast.ProofAst.StepId.Num =>
+        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastProofAstStepIdNum(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
+        }
+        return r
+      case o: org.sireum.lang.ast.ProofAst.StepId.Str =>
+        val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastProofAstStepIdStr(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
+        }
+        return r
       case o: org.sireum.lang.ast.Exp.LitB =>
         val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitB(o) match {
          case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
@@ -1821,6 +1835,20 @@ import MTransformer._
 
   def pre_langastLit(o: org.sireum.lang.ast.Lit): PreResult[org.sireum.lang.ast.Lit] = {
     o match {
+      case o: org.sireum.lang.ast.ProofAst.StepId.Num =>
+        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastProofAstStepIdNum(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
+        }
+        return r
+      case o: org.sireum.lang.ast.ProofAst.StepId.Str =>
+        val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastProofAstStepIdStr(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
+        }
+        return r
       case o: org.sireum.lang.ast.Exp.LitB => return pre_langastExpLitB(o)
       case o: org.sireum.lang.ast.Exp.LitC => return pre_langastExpLitC(o)
       case o: org.sireum.lang.ast.Exp.LitZ => return pre_langastExpLitZ(o)
@@ -4383,6 +4411,20 @@ import MTransformer._
 
   def post_langastExp(o: org.sireum.lang.ast.Exp): MOption[org.sireum.lang.ast.Exp] = {
     o match {
+      case o: org.sireum.lang.ast.ProofAst.StepId.Num =>
+        val r: MOption[org.sireum.lang.ast.Exp] = post_langastProofAstStepIdNum(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case _ => MNone[org.sireum.lang.ast.Exp]()
+        }
+        return r
+      case o: org.sireum.lang.ast.ProofAst.StepId.Str =>
+        val r: MOption[org.sireum.lang.ast.Exp] = post_langastProofAstStepIdStr(o) match {
+         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case _ => MNone[org.sireum.lang.ast.Exp]()
+        }
+        return r
       case o: org.sireum.lang.ast.Exp.LitB =>
         val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitB(o) match {
          case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
@@ -4485,6 +4527,20 @@ import MTransformer._
 
   def post_langastLit(o: org.sireum.lang.ast.Lit): MOption[org.sireum.lang.ast.Lit] = {
     o match {
+      case o: org.sireum.lang.ast.ProofAst.StepId.Num =>
+        val r: MOption[org.sireum.lang.ast.Lit] = post_langastProofAstStepIdNum(o) match {
+         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case _ => MNone[org.sireum.lang.ast.Lit]()
+        }
+        return r
+      case o: org.sireum.lang.ast.ProofAst.StepId.Str =>
+        val r: MOption[org.sireum.lang.ast.Lit] = post_langastProofAstStepIdStr(o) match {
+         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case _ => MNone[org.sireum.lang.ast.Lit]()
+        }
+        return r
       case o: org.sireum.lang.ast.Exp.LitB => return post_langastExpLitB(o)
       case o: org.sireum.lang.ast.Exp.LitC => return post_langastExpLitC(o)
       case o: org.sireum.lang.ast.Exp.LitZ => return post_langastExpLitZ(o)
@@ -7878,6 +7934,18 @@ import MTransformer._
       val o2: org.sireum.lang.ast.Exp = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: MOption[org.sireum.lang.ast.Exp] = o2 match {
+        case o2: org.sireum.lang.ast.ProofAst.StepId.Num =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ProofAst.StepId.Str =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
         case o2: org.sireum.lang.ast.Exp.LitB =>
           val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
           if (hasChanged || r0.nonEmpty)
@@ -8180,6 +8248,18 @@ import MTransformer._
       val o2: org.sireum.lang.ast.Lit = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: MOption[org.sireum.lang.ast.Lit] = o2 match {
+        case o2: org.sireum.lang.ast.ProofAst.StepId.Num =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.ProofAst.StepId.Str =>
+          val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(attr = r0.getOrElse(o2.attr)))
+          else
+            MNone()
         case o2: org.sireum.lang.ast.Exp.LitB =>
           val r0: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
           if (hasChanged || r0.nonEmpty)

@@ -1,0 +1,55 @@
+package Ex1
+public
+	
+	system s
+		
+	end s;
+	
+	-- example of thread connections between systems
+	
+	system implementation s.i
+		subcomponents
+			p: process p.i;
+			q: process q.i;
+		connections
+			c1: port p.pout -> q.qin; 
+	end s.i;
+	
+	------------------------------------------------------
+	
+	process p
+		features
+			pout: out event port;
+	end p;
+	
+	process implementation p.i
+		subcomponents
+			pt: thread pt;
+		connections
+			c2: port pt.ptout -> pout;
+	end p.i;
+	
+	thread pt
+		features
+			ptout: out event port;
+	end pt;
+	
+	------------------------------------------------------
+	process q
+		features
+			qin: in event port;
+	end q;
+	
+	process implementation q.i
+		subcomponents
+			qt: thread qt;
+		connections
+			c3: port qin -> qt.qtin;
+	end q.i;
+	
+	thread qt
+		features
+			qtin: in event port;
+	end qt;
+	
+end Ex1;

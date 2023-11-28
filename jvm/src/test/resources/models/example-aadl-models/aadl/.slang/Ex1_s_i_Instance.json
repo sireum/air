@@ -1,0 +1,1266 @@
+{
+  "type" : "Aadl",
+  "components" : [
+    {
+      "type" : "Component",
+      "identifier" : {
+        "type" : "Name",
+        "name" : ["s_i_Instance"],
+        "pos" : {
+          "type" : "Some",
+          "value" : {
+            "type" : "Position",
+            "uriOpt" : {
+              "type" : "Some",
+              "value" : "\/example-aadl-systems\/Ex1.aadl"
+            },
+            "beginLine" : 10,
+            "beginColumn" : 2,
+            "endLine" : 16,
+            "endColumn" : 10,
+            "offset" : 97,
+            "length" : 133
+          }
+        }
+      },
+      "category" : {
+        "type" : "ComponentCategory",
+        "value" : "System"
+      },
+      "classifier" : {
+        "type" : "Some",
+        "value" : {
+          "type" : "Classifier",
+          "name" : "Ex1::s.i"
+        }
+      },
+      "features" : [
+      ],
+      "subComponents" : [
+        {
+          "type" : "Component",
+          "identifier" : {
+            "type" : "Name",
+            "name" : ["s_i_Instance", "p"],
+            "pos" : {
+              "type" : "Some",
+              "value" : {
+                "type" : "Position",
+                "uriOpt" : {
+                  "type" : "Some",
+                  "value" : "\/example-aadl-systems\/Ex1.aadl"
+                },
+                "beginLine" : 12,
+                "beginColumn" : 4,
+                "endLine" : 12,
+                "endColumn" : 19,
+                "offset" : 142,
+                "length" : 15
+              }
+            }
+          },
+          "category" : {
+            "type" : "ComponentCategory",
+            "value" : "Process"
+          },
+          "classifier" : {
+            "type" : "Some",
+            "value" : {
+              "type" : "Classifier",
+              "name" : "Ex1::p.i"
+            }
+          },
+          "features" : [
+            {
+              "type" : "FeatureEnd",
+              "identifier" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "p", "pout"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 22,
+                    "beginColumn" : 4,
+                    "endLine" : 22,
+                    "endColumn" : 25,
+                    "offset" : 316,
+                    "length" : 21
+                  }
+                }
+              },
+              "direction" : {
+                "type" : "Direction",
+                "value" : "Out"
+              },
+              "category" : {
+                "type" : "FeatureCategory",
+                "value" : "EventPort"
+              },
+              "classifier" : {
+                "type" : "None"
+              },
+              "properties" : [
+              ],
+              "uriFrag" : "platform:\/resource\/example-aadl-systems\/instances\/Ex1_s_i_Instance.aaxl2#\/\/@componentInstance.0\/@featureInstance.0"
+            }
+          ],
+          "subComponents" : [
+            {
+              "type" : "Component",
+              "identifier" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "p", "pt"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 27,
+                    "beginColumn" : 4,
+                    "endLine" : 27,
+                    "endColumn" : 18,
+                    "offset" : 395,
+                    "length" : 14
+                  }
+                }
+              },
+              "category" : {
+                "type" : "ComponentCategory",
+                "value" : "Thread"
+              },
+              "classifier" : {
+                "type" : "Some",
+                "value" : {
+                  "type" : "Classifier",
+                  "name" : "Ex1::pt"
+                }
+              },
+              "features" : [
+                {
+                  "type" : "FeatureEnd",
+                  "identifier" : {
+                    "type" : "Name",
+                    "name" : ["s_i_Instance", "p", "pt", "ptout"],
+                    "pos" : {
+                      "type" : "Some",
+                      "value" : {
+                        "type" : "Position",
+                        "uriOpt" : {
+                          "type" : "Some",
+                          "value" : "\/example-aadl-systems\/Ex1.aadl"
+                        },
+                        "beginLine" : 34,
+                        "beginColumn" : 4,
+                        "endLine" : 34,
+                        "endColumn" : 26,
+                        "offset" : 491,
+                        "length" : 22
+                      }
+                    }
+                  },
+                  "direction" : {
+                    "type" : "Direction",
+                    "value" : "Out"
+                  },
+                  "category" : {
+                    "type" : "FeatureCategory",
+                    "value" : "EventPort"
+                  },
+                  "classifier" : {
+                    "type" : "None"
+                  },
+                  "properties" : [
+                  ],
+                  "uriFrag" : "platform:\/resource\/example-aadl-systems\/instances\/Ex1_s_i_Instance.aaxl2#\/\/@componentInstance.0\/@componentInstance.0\/@featureInstance.0"
+                }
+              ],
+              "subComponents" : [
+              ],
+              "connections" : [
+              ],
+              "connectionInstances" : [
+              ],
+              "properties" : [
+              ],
+              "flows" : [
+              ],
+              "modes" : [
+              ],
+              "annexes" : [
+                {
+                  "type" : "Annex",
+                  "name" : "Emv2",
+                  "clause" : {
+                    "type" : "Emv2Clause",
+                    "libraries" : [
+                    ],
+                    "propagations" : [
+                    ],
+                    "flows" : [
+                    ],
+                    "componentBehavior" : {
+                      "type" : "Some",
+                      "value" : {
+                        "type" : "Emv2BehaviorSection",
+                        "events" : [
+                        ],
+                        "transitions" : [
+                        ],
+                        "propagations" : [
+                        ]
+                      }
+                    },
+                    "properties" : [
+                    ]
+                  }
+                }
+              ],
+              "uriFrag" : "platform:\/resource\/example-aadl-systems\/instances\/Ex1_s_i_Instance.aaxl2#\/\/@componentInstance.0\/@componentInstance.0"
+            }
+          ],
+          "connections" : [
+            {
+              "type" : "Connection",
+              "name" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "p", "c2"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 29,
+                    "beginColumn" : 4,
+                    "endLine" : 29,
+                    "endColumn" : 30,
+                    "offset" : 427,
+                    "length" : 26
+                  }
+                }
+              },
+              "src" : [
+                {
+                  "type" : "EndPoint",
+                  "component" : {
+                    "type" : "Name",
+                    "name" : ["s_i_Instance", "p", "pt"],
+                    "pos" : {
+                      "type" : "Some",
+                      "value" : {
+                        "type" : "Position",
+                        "uriOpt" : {
+                          "type" : "Some",
+                          "value" : "\/example-aadl-systems\/Ex1.aadl"
+                        },
+                        "beginLine" : 27,
+                        "beginColumn" : 4,
+                        "endLine" : 27,
+                        "endColumn" : 18,
+                        "offset" : 395,
+                        "length" : 14
+                      }
+                    }
+                  },
+                  "feature" : {
+                    "type" : "Some",
+                    "value" : {
+                      "type" : "Name",
+                      "name" : ["s_i_Instance", "p", "pt", "ptout"],
+                      "pos" : {
+                        "type" : "Some",
+                        "value" : {
+                          "type" : "Position",
+                          "uriOpt" : {
+                            "type" : "Some",
+                            "value" : "\/example-aadl-systems\/Ex1.aadl"
+                          },
+                          "beginLine" : 34,
+                          "beginColumn" : 4,
+                          "endLine" : 34,
+                          "endColumn" : 26,
+                          "offset" : 491,
+                          "length" : 22
+                        }
+                      }
+                    }
+                  },
+                  "direction" : {
+                    "type" : "Some",
+                    "value" : {
+                      "type" : "Direction",
+                      "value" : "Out"
+                    }
+                  }
+                }
+              ],
+              "dst" : [
+                {
+                  "type" : "EndPoint",
+                  "component" : {
+                    "type" : "Name",
+                    "name" : ["s_i_Instance", "p"],
+                    "pos" : {
+                      "type" : "Some",
+                      "value" : {
+                        "type" : "Position",
+                        "uriOpt" : {
+                          "type" : "Some",
+                          "value" : "\/example-aadl-systems\/Ex1.aadl"
+                        },
+                        "beginLine" : 12,
+                        "beginColumn" : 4,
+                        "endLine" : 12,
+                        "endColumn" : 19,
+                        "offset" : 142,
+                        "length" : 15
+                      }
+                    }
+                  },
+                  "feature" : {
+                    "type" : "Some",
+                    "value" : {
+                      "type" : "Name",
+                      "name" : ["s_i_Instance", "p", "pout"],
+                      "pos" : {
+                        "type" : "Some",
+                        "value" : {
+                          "type" : "Position",
+                          "uriOpt" : {
+                            "type" : "Some",
+                            "value" : "\/example-aadl-systems\/Ex1.aadl"
+                          },
+                          "beginLine" : 22,
+                          "beginColumn" : 4,
+                          "endLine" : 22,
+                          "endColumn" : 25,
+                          "offset" : 316,
+                          "length" : 21
+                        }
+                      }
+                    }
+                  },
+                  "direction" : {
+                    "type" : "Some",
+                    "value" : {
+                      "type" : "Direction",
+                      "value" : "Out"
+                    }
+                  }
+                }
+              ],
+              "kind" : {
+                "type" : "ConnectionKind",
+                "value" : "Port"
+              },
+              "isBiDirectional" : false,
+              "connectionInstances" : [
+                {
+                  "type" : "Name",
+                  "name" : ["s_i_Instance", "p", "pt", "ptout -> q", "qt", "qtin"],
+                  "pos" : {
+                    "type" : "None"
+                  }
+                }
+              ],
+              "properties" : [
+              ],
+              "uriFrag" : "platform:\/resource\/example-aadl-systems\/instances\/Ex1_s_i_Instance.aaxl2#\/\/@connectionInstance.0\/@connectionReference.0"
+            }
+          ],
+          "connectionInstances" : [
+          ],
+          "properties" : [
+          ],
+          "flows" : [
+          ],
+          "modes" : [
+          ],
+          "annexes" : [
+            {
+              "type" : "Annex",
+              "name" : "Emv2",
+              "clause" : {
+                "type" : "Emv2Clause",
+                "libraries" : [
+                ],
+                "propagations" : [
+                ],
+                "flows" : [
+                ],
+                "componentBehavior" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Emv2BehaviorSection",
+                    "events" : [
+                    ],
+                    "transitions" : [
+                    ],
+                    "propagations" : [
+                    ]
+                  }
+                },
+                "properties" : [
+                ]
+              }
+            }
+          ],
+          "uriFrag" : "platform:\/resource\/example-aadl-systems\/instances\/Ex1_s_i_Instance.aaxl2#\/\/@componentInstance.0"
+        },
+        {
+          "type" : "Component",
+          "identifier" : {
+            "type" : "Name",
+            "name" : ["s_i_Instance", "q"],
+            "pos" : {
+              "type" : "Some",
+              "value" : {
+                "type" : "Position",
+                "uriOpt" : {
+                  "type" : "Some",
+                  "value" : "\/example-aadl-systems\/Ex1.aadl"
+                },
+                "beginLine" : 13,
+                "beginColumn" : 4,
+                "endLine" : 13,
+                "endColumn" : 19,
+                "offset" : 161,
+                "length" : 15
+              }
+            }
+          },
+          "category" : {
+            "type" : "ComponentCategory",
+            "value" : "Process"
+          },
+          "classifier" : {
+            "type" : "Some",
+            "value" : {
+              "type" : "Classifier",
+              "name" : "Ex1::q.i"
+            }
+          },
+          "features" : [
+            {
+              "type" : "FeatureEnd",
+              "identifier" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "q", "qin"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 40,
+                    "beginColumn" : 4,
+                    "endLine" : 40,
+                    "endColumn" : 23,
+                    "offset" : 606,
+                    "length" : 19
+                  }
+                }
+              },
+              "direction" : {
+                "type" : "Direction",
+                "value" : "In"
+              },
+              "category" : {
+                "type" : "FeatureCategory",
+                "value" : "EventPort"
+              },
+              "classifier" : {
+                "type" : "None"
+              },
+              "properties" : [
+              ],
+              "uriFrag" : "platform:\/resource\/example-aadl-systems\/instances\/Ex1_s_i_Instance.aaxl2#\/\/@componentInstance.1\/@featureInstance.0"
+            }
+          ],
+          "subComponents" : [
+            {
+              "type" : "Component",
+              "identifier" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "q", "qt"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 45,
+                    "beginColumn" : 4,
+                    "endLine" : 45,
+                    "endColumn" : 18,
+                    "offset" : 683,
+                    "length" : 14
+                  }
+                }
+              },
+              "category" : {
+                "type" : "ComponentCategory",
+                "value" : "Thread"
+              },
+              "classifier" : {
+                "type" : "Some",
+                "value" : {
+                  "type" : "Classifier",
+                  "name" : "Ex1::qt"
+                }
+              },
+              "features" : [
+                {
+                  "type" : "FeatureEnd",
+                  "identifier" : {
+                    "type" : "Name",
+                    "name" : ["s_i_Instance", "q", "qt", "qtin"],
+                    "pos" : {
+                      "type" : "Some",
+                      "value" : {
+                        "type" : "Position",
+                        "uriOpt" : {
+                          "type" : "Some",
+                          "value" : "\/example-aadl-systems\/Ex1.aadl"
+                        },
+                        "beginLine" : 52,
+                        "beginColumn" : 4,
+                        "endLine" : 52,
+                        "endColumn" : 24,
+                        "offset" : 777,
+                        "length" : 20
+                      }
+                    }
+                  },
+                  "direction" : {
+                    "type" : "Direction",
+                    "value" : "In"
+                  },
+                  "category" : {
+                    "type" : "FeatureCategory",
+                    "value" : "EventPort"
+                  },
+                  "classifier" : {
+                    "type" : "None"
+                  },
+                  "properties" : [
+                  ],
+                  "uriFrag" : "platform:\/resource\/example-aadl-systems\/instances\/Ex1_s_i_Instance.aaxl2#\/\/@componentInstance.1\/@componentInstance.0\/@featureInstance.0"
+                }
+              ],
+              "subComponents" : [
+              ],
+              "connections" : [
+              ],
+              "connectionInstances" : [
+              ],
+              "properties" : [
+              ],
+              "flows" : [
+              ],
+              "modes" : [
+              ],
+              "annexes" : [
+                {
+                  "type" : "Annex",
+                  "name" : "Emv2",
+                  "clause" : {
+                    "type" : "Emv2Clause",
+                    "libraries" : [
+                    ],
+                    "propagations" : [
+                    ],
+                    "flows" : [
+                    ],
+                    "componentBehavior" : {
+                      "type" : "Some",
+                      "value" : {
+                        "type" : "Emv2BehaviorSection",
+                        "events" : [
+                        ],
+                        "transitions" : [
+                        ],
+                        "propagations" : [
+                        ]
+                      }
+                    },
+                    "properties" : [
+                    ]
+                  }
+                }
+              ],
+              "uriFrag" : "platform:\/resource\/example-aadl-systems\/instances\/Ex1_s_i_Instance.aaxl2#\/\/@componentInstance.1\/@componentInstance.0"
+            }
+          ],
+          "connections" : [
+            {
+              "type" : "Connection",
+              "name" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "q", "c3"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 47,
+                    "beginColumn" : 4,
+                    "endLine" : 47,
+                    "endColumn" : 28,
+                    "offset" : 715,
+                    "length" : 24
+                  }
+                }
+              },
+              "src" : [
+                {
+                  "type" : "EndPoint",
+                  "component" : {
+                    "type" : "Name",
+                    "name" : ["s_i_Instance", "q"],
+                    "pos" : {
+                      "type" : "Some",
+                      "value" : {
+                        "type" : "Position",
+                        "uriOpt" : {
+                          "type" : "Some",
+                          "value" : "\/example-aadl-systems\/Ex1.aadl"
+                        },
+                        "beginLine" : 13,
+                        "beginColumn" : 4,
+                        "endLine" : 13,
+                        "endColumn" : 19,
+                        "offset" : 161,
+                        "length" : 15
+                      }
+                    }
+                  },
+                  "feature" : {
+                    "type" : "Some",
+                    "value" : {
+                      "type" : "Name",
+                      "name" : ["s_i_Instance", "q", "qin"],
+                      "pos" : {
+                        "type" : "Some",
+                        "value" : {
+                          "type" : "Position",
+                          "uriOpt" : {
+                            "type" : "Some",
+                            "value" : "\/example-aadl-systems\/Ex1.aadl"
+                          },
+                          "beginLine" : 40,
+                          "beginColumn" : 4,
+                          "endLine" : 40,
+                          "endColumn" : 23,
+                          "offset" : 606,
+                          "length" : 19
+                        }
+                      }
+                    }
+                  },
+                  "direction" : {
+                    "type" : "Some",
+                    "value" : {
+                      "type" : "Direction",
+                      "value" : "In"
+                    }
+                  }
+                }
+              ],
+              "dst" : [
+                {
+                  "type" : "EndPoint",
+                  "component" : {
+                    "type" : "Name",
+                    "name" : ["s_i_Instance", "q", "qt"],
+                    "pos" : {
+                      "type" : "Some",
+                      "value" : {
+                        "type" : "Position",
+                        "uriOpt" : {
+                          "type" : "Some",
+                          "value" : "\/example-aadl-systems\/Ex1.aadl"
+                        },
+                        "beginLine" : 45,
+                        "beginColumn" : 4,
+                        "endLine" : 45,
+                        "endColumn" : 18,
+                        "offset" : 683,
+                        "length" : 14
+                      }
+                    }
+                  },
+                  "feature" : {
+                    "type" : "Some",
+                    "value" : {
+                      "type" : "Name",
+                      "name" : ["s_i_Instance", "q", "qt", "qtin"],
+                      "pos" : {
+                        "type" : "Some",
+                        "value" : {
+                          "type" : "Position",
+                          "uriOpt" : {
+                            "type" : "Some",
+                            "value" : "\/example-aadl-systems\/Ex1.aadl"
+                          },
+                          "beginLine" : 52,
+                          "beginColumn" : 4,
+                          "endLine" : 52,
+                          "endColumn" : 24,
+                          "offset" : 777,
+                          "length" : 20
+                        }
+                      }
+                    }
+                  },
+                  "direction" : {
+                    "type" : "Some",
+                    "value" : {
+                      "type" : "Direction",
+                      "value" : "In"
+                    }
+                  }
+                }
+              ],
+              "kind" : {
+                "type" : "ConnectionKind",
+                "value" : "Port"
+              },
+              "isBiDirectional" : false,
+              "connectionInstances" : [
+                {
+                  "type" : "Name",
+                  "name" : ["s_i_Instance", "p", "pt", "ptout -> q", "qt", "qtin"],
+                  "pos" : {
+                    "type" : "None"
+                  }
+                }
+              ],
+              "properties" : [
+              ],
+              "uriFrag" : "platform:\/resource\/example-aadl-systems\/instances\/Ex1_s_i_Instance.aaxl2#\/\/@connectionInstance.0\/@connectionReference.2"
+            }
+          ],
+          "connectionInstances" : [
+          ],
+          "properties" : [
+          ],
+          "flows" : [
+          ],
+          "modes" : [
+          ],
+          "annexes" : [
+            {
+              "type" : "Annex",
+              "name" : "Emv2",
+              "clause" : {
+                "type" : "Emv2Clause",
+                "libraries" : [
+                ],
+                "propagations" : [
+                ],
+                "flows" : [
+                ],
+                "componentBehavior" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Emv2BehaviorSection",
+                    "events" : [
+                    ],
+                    "transitions" : [
+                    ],
+                    "propagations" : [
+                    ]
+                  }
+                },
+                "properties" : [
+                ]
+              }
+            }
+          ],
+          "uriFrag" : "platform:\/resource\/example-aadl-systems\/instances\/Ex1_s_i_Instance.aaxl2#\/\/@componentInstance.1"
+        }
+      ],
+      "connections" : [
+        {
+          "type" : "Connection",
+          "name" : {
+            "type" : "Name",
+            "name" : ["s_i_Instance", "c1"],
+            "pos" : {
+              "type" : "Some",
+              "value" : {
+                "type" : "Position",
+                "uriOpt" : {
+                  "type" : "Some",
+                  "value" : "\/example-aadl-systems\/Ex1.aadl"
+                },
+                "beginLine" : 15,
+                "beginColumn" : 4,
+                "endLine" : 15,
+                "endColumn" : 29,
+                "offset" : 194,
+                "length" : 25
+              }
+            }
+          },
+          "src" : [
+            {
+              "type" : "EndPoint",
+              "component" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "p"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 12,
+                    "beginColumn" : 4,
+                    "endLine" : 12,
+                    "endColumn" : 19,
+                    "offset" : 142,
+                    "length" : 15
+                  }
+                }
+              },
+              "feature" : {
+                "type" : "Some",
+                "value" : {
+                  "type" : "Name",
+                  "name" : ["s_i_Instance", "p", "pout"],
+                  "pos" : {
+                    "type" : "Some",
+                    "value" : {
+                      "type" : "Position",
+                      "uriOpt" : {
+                        "type" : "Some",
+                        "value" : "\/example-aadl-systems\/Ex1.aadl"
+                      },
+                      "beginLine" : 22,
+                      "beginColumn" : 4,
+                      "endLine" : 22,
+                      "endColumn" : 25,
+                      "offset" : 316,
+                      "length" : 21
+                    }
+                  }
+                }
+              },
+              "direction" : {
+                "type" : "Some",
+                "value" : {
+                  "type" : "Direction",
+                  "value" : "Out"
+                }
+              }
+            }
+          ],
+          "dst" : [
+            {
+              "type" : "EndPoint",
+              "component" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "q"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 13,
+                    "beginColumn" : 4,
+                    "endLine" : 13,
+                    "endColumn" : 19,
+                    "offset" : 161,
+                    "length" : 15
+                  }
+                }
+              },
+              "feature" : {
+                "type" : "Some",
+                "value" : {
+                  "type" : "Name",
+                  "name" : ["s_i_Instance", "q", "qin"],
+                  "pos" : {
+                    "type" : "Some",
+                    "value" : {
+                      "type" : "Position",
+                      "uriOpt" : {
+                        "type" : "Some",
+                        "value" : "\/example-aadl-systems\/Ex1.aadl"
+                      },
+                      "beginLine" : 40,
+                      "beginColumn" : 4,
+                      "endLine" : 40,
+                      "endColumn" : 23,
+                      "offset" : 606,
+                      "length" : 19
+                    }
+                  }
+                }
+              },
+              "direction" : {
+                "type" : "Some",
+                "value" : {
+                  "type" : "Direction",
+                  "value" : "In"
+                }
+              }
+            }
+          ],
+          "kind" : {
+            "type" : "ConnectionKind",
+            "value" : "Port"
+          },
+          "isBiDirectional" : false,
+          "connectionInstances" : [
+            {
+              "type" : "Name",
+              "name" : ["s_i_Instance", "p", "pt", "ptout -> q", "qt", "qtin"],
+              "pos" : {
+                "type" : "None"
+              }
+            }
+          ],
+          "properties" : [
+          ],
+          "uriFrag" : "platform:\/resource\/example-aadl-systems\/instances\/Ex1_s_i_Instance.aaxl2#\/\/@connectionInstance.0\/@connectionReference.1"
+        }
+      ],
+      "connectionInstances" : [
+        {
+          "type" : "ConnectionInstance",
+          "name" : {
+            "type" : "Name",
+            "name" : ["s_i_Instance", "p.pt.ptout -> q.qt.qtin"],
+            "pos" : {
+              "type" : "Some",
+              "value" : {
+                "type" : "Position",
+                "uriOpt" : {
+                  "type" : "Some",
+                  "value" : "\/example-aadl-systems\/Ex1.aadl"
+                },
+                "beginLine" : 29,
+                "beginColumn" : 4,
+                "endLine" : 29,
+                "endColumn" : 30,
+                "offset" : 427,
+                "length" : 26
+              }
+            }
+          },
+          "src" : {
+            "type" : "EndPoint",
+            "component" : {
+              "type" : "Name",
+              "name" : ["s_i_Instance", "p", "pt"],
+              "pos" : {
+                "type" : "Some",
+                "value" : {
+                  "type" : "Position",
+                  "uriOpt" : {
+                    "type" : "Some",
+                    "value" : "\/example-aadl-systems\/Ex1.aadl"
+                  },
+                  "beginLine" : 27,
+                  "beginColumn" : 4,
+                  "endLine" : 27,
+                  "endColumn" : 18,
+                  "offset" : 395,
+                  "length" : 14
+                }
+              }
+            },
+            "feature" : {
+              "type" : "Some",
+              "value" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "p", "pt", "ptout"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 34,
+                    "beginColumn" : 4,
+                    "endLine" : 34,
+                    "endColumn" : 26,
+                    "offset" : 491,
+                    "length" : 22
+                  }
+                }
+              }
+            },
+            "direction" : {
+              "type" : "Some",
+              "value" : {
+                "type" : "Direction",
+                "value" : "Out"
+              }
+            }
+          },
+          "dst" : {
+            "type" : "EndPoint",
+            "component" : {
+              "type" : "Name",
+              "name" : ["s_i_Instance", "q", "qt"],
+              "pos" : {
+                "type" : "Some",
+                "value" : {
+                  "type" : "Position",
+                  "uriOpt" : {
+                    "type" : "Some",
+                    "value" : "\/example-aadl-systems\/Ex1.aadl"
+                  },
+                  "beginLine" : 45,
+                  "beginColumn" : 4,
+                  "endLine" : 45,
+                  "endColumn" : 18,
+                  "offset" : 683,
+                  "length" : 14
+                }
+              }
+            },
+            "feature" : {
+              "type" : "Some",
+              "value" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "q", "qt", "qtin"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 52,
+                    "beginColumn" : 4,
+                    "endLine" : 52,
+                    "endColumn" : 24,
+                    "offset" : 777,
+                    "length" : 20
+                  }
+                }
+              }
+            },
+            "direction" : {
+              "type" : "Some",
+              "value" : {
+                "type" : "Direction",
+                "value" : "In"
+              }
+            }
+          },
+          "kind" : {
+            "type" : "ConnectionKind",
+            "value" : "Port"
+          },
+          "connectionRefs" : [
+            {
+              "type" : "ConnectionReference",
+              "name" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "p", "c2"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 29,
+                    "beginColumn" : 4,
+                    "endLine" : 29,
+                    "endColumn" : 30,
+                    "offset" : 427,
+                    "length" : 26
+                  }
+                }
+              },
+              "context" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "p"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 12,
+                    "beginColumn" : 4,
+                    "endLine" : 12,
+                    "endColumn" : 19,
+                    "offset" : 142,
+                    "length" : 15
+                  }
+                }
+              },
+              "isParent" : false
+            },
+            {
+              "type" : "ConnectionReference",
+              "name" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "c1"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 15,
+                    "beginColumn" : 4,
+                    "endLine" : 15,
+                    "endColumn" : 29,
+                    "offset" : 194,
+                    "length" : 25
+                  }
+                }
+              },
+              "context" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 10,
+                    "beginColumn" : 2,
+                    "endLine" : 16,
+                    "endColumn" : 10,
+                    "offset" : 97,
+                    "length" : 133
+                  }
+                }
+              },
+              "isParent" : true
+            },
+            {
+              "type" : "ConnectionReference",
+              "name" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "q", "c3"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 47,
+                    "beginColumn" : 4,
+                    "endLine" : 47,
+                    "endColumn" : 28,
+                    "offset" : 715,
+                    "length" : 24
+                  }
+                }
+              },
+              "context" : {
+                "type" : "Name",
+                "name" : ["s_i_Instance", "q"],
+                "pos" : {
+                  "type" : "Some",
+                  "value" : {
+                    "type" : "Position",
+                    "uriOpt" : {
+                      "type" : "Some",
+                      "value" : "\/example-aadl-systems\/Ex1.aadl"
+                    },
+                    "beginLine" : 13,
+                    "beginColumn" : 4,
+                    "endLine" : 13,
+                    "endColumn" : 19,
+                    "offset" : 161,
+                    "length" : 15
+                  }
+                }
+              },
+              "isParent" : false
+            }
+          ],
+          "properties" : [
+          ]
+        }
+      ],
+      "properties" : [
+      ],
+      "flows" : [
+      ],
+      "modes" : [
+      ],
+      "annexes" : [
+        {
+          "type" : "Annex",
+          "name" : "Emv2",
+          "clause" : {
+            "type" : "Emv2Clause",
+            "libraries" : [
+            ],
+            "propagations" : [
+            ],
+            "flows" : [
+            ],
+            "componentBehavior" : {
+              "type" : "Some",
+              "value" : {
+                "type" : "Emv2BehaviorSection",
+                "events" : [
+                ],
+                "transitions" : [
+                ],
+                "propagations" : [
+                ]
+              }
+            },
+            "properties" : [
+            ]
+          }
+        }
+      ],
+      "uriFrag" : "platform:\/resource\/example-aadl-systems\/instances\/Ex1_s_i_Instance.aaxl2#\/"
+    }
+  ],
+  "annexLib" : [
+  ],
+  "dataComponents" : [
+  ]
+}

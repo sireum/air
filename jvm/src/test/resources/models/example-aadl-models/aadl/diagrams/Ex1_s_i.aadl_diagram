@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="7">
+  <element uuid="fb8081b7-bd24-4062-a566-17b463ea929c" manual="true">
+    <element uuid="8a4ae906-bb4a-4b76-b801-8a79a8e7f23d" manual="true">
+      <element uuid="b1150a88-6d81-4310-9ef5-bc81d3ae2f7a" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>c1</seg>
+      </bo>
+    </element>
+    <element uuid="626a6ce2-d798-445b-a5c0-9ed1017dca4f" manual="true">
+      <element uuid="252949bd-ec19-47db-847c-256ec9dae260" manual="true">
+        <element uuid="ea17f6f9-f5b5-4d92-b5cd-609d8aad87fe" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>c2</seg>
+        </bo>
+      </element>
+      <element uuid="d55745a2-6d66-4983-9772-136d9cf28905" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>pout</seg>
+        </bo>
+        <position x="251.51952171325684" y="69.0"/>
+      </element>
+      <element uuid="26c8a5cb-c1f6-4c39-9d0a-508b5178e7d5" manual="true">
+        <element uuid="2b09aa1f-d77e-4a73-adfd-78be99a0559b" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>ptout</seg>
+          </bo>
+          <position x="109.96354103088379" y="10.0"/>
+        </element>
+        <bo>
+          <seg>subcomponent</seg>
+          <seg>pt</seg>
+        </bo>
+        <position x="49.95052146911621" y="59.0"/>
+        <size width="151.61848831176758" height="60.0"/>
+      </element>
+      <element uuid="f37b6fe8-d03f-44ad-b8d4-7d6db6ac3a4d" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>p</seg>
+      </bo>
+      <position x="12.0" y="38.0"/>
+      <size width="289.47004318237305" height="131.0"/>
+    </element>
+    <element uuid="b20343b3-461d-4139-b303-01ec6cf9f9d8" manual="true">
+      <element uuid="2a035dd5-3799-4d27-90c5-af36f7ef9e1c" manual="true">
+        <element uuid="0bd689db-39e9-483a-a468-774ae1478655" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>c3</seg>
+        </bo>
+      </element>
+      <element uuid="def8cc36-5776-4d91-a0ae-0ee4f7f26bbb" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>qin</seg>
+        </bo>
+        <position y="69.0"/>
+      </element>
+      <element uuid="42245e83-4bd8-4877-9f29-60476b7cdf1a" manual="true">
+        <element uuid="552c37d2-3aea-4680-b5d9-13dfe050b4c3" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>qtin</seg>
+          </bo>
+          <position y="10.0"/>
+        </element>
+        <bo>
+          <seg>subcomponent</seg>
+          <seg>qt</seg>
+        </bo>
+        <position x="91.37890625" y="59.0"/>
+        <size width="135.30338287353516" height="60.0"/>
+      </element>
+      <element uuid="caf29604-0890-4ea2-9f4f-d1501aa196b4" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>q</seg>
+      </bo>
+      <position x="321.47003173828125" y="38.0"/>
+      <size width="268.4752502441406" height="131.0"/>
+    </element>
+    <bo>
+      <seg>classifier</seg>
+      <seg>s.i</seg>
+    </bo>
+    <position/>
+    <size width="601.9453125" height="181.0"/>
+  </element>
+  <config type="structure">
+    <enabledAadlProperties/>
+    <context>
+      <seg>classifier</seg>
+      <seg>Ex1::s.i</seg>
+    </context>
+  </config>
+</diagram:Diagram>

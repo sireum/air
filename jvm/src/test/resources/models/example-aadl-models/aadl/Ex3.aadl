@@ -1,0 +1,75 @@
+package Ex3
+public
+	
+	system wrapper
+		
+	end wrapper;
+	
+	system implementation wrapper.i
+		subcomponents
+			as: system as.i;
+			bs: system bs.i;
+		connections
+			c: port as.asout -> bs.bsin;
+			
+	end wrapper.i;
+	
+	------------------------------------------------------------
+	system as
+		features
+			asout: out event port;
+	end as;
+	
+	system implementation as.i
+		subcomponents
+			ap: process ap.i;
+		connections
+			c: port ap.apout -> asout; 
+	end as.i;
+	
+	process ap
+		features
+			apout: out event port;
+	end ap;
+	
+	process implementation ap.i
+		subcomponents
+			at: thread at;
+		connections
+			c: port at.atout -> apout;
+	end ap.i;
+	
+	thread at
+		features
+			atout: out event port;
+	end at;
+	------------------------------------------------------------
+	system bs
+		features
+			bsin: in event port;
+	end bs;
+	
+	system implementation bs.i
+		subcomponents
+			bp: process bp.i;
+		connections
+			c: port bsin -> bp.bpin;
+	end bs.i;
+	
+	process bp
+		features
+			bpin: in event port;
+	end bp;
+	
+	process implementation bp.i
+		subcomponents
+			bt: thread bt;
+		connections
+			c: port bpin -> bt.btin;
+	end bp.i;
+	
+	thread bt
+		features
+			btin: in event port;		 
+	end bt;
+end Ex3;

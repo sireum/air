@@ -16,3 +16,5 @@ bin/win/
 bin/scala/
 bin/sireum*
 lib
+**/.aadlbin-gen/
+**/results/

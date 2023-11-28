@@ -1,0 +1,147 @@
+package Ex2
+public
+	
+	-- example of fan out connections
+	
+	system wrapper
+	end wrapper;
+	
+	system implementation wrapper.i
+		subcomponents
+			s: system s.i;
+			t: system t;
+		connections
+			w1: port s.sout2 -> t.tin;
+	end wrapper.i;
+	
+	----------------------------------------------------
+	system t
+		features
+			tin: in event port;
+	end t;
+	----------------------------------------------------
+	system s
+		features
+			sin1: in event port;
+			sin2: in event port;
+			
+			sout: out event port;
+			sout2: out event port;
+	end s;
+	
+	system implementation s.i
+		subcomponents
+			p: process p.i;
+			q: process q.i;
+			r: process r.i;
+		connections
+			-- fan out at the system level
+			sc1: port p.pout -> q.qin;
+			sc2: port p.pout -> r.rin;
+			sc3: port p.pout2 -> r.rin2;
+			sc4: port q.qout -> r.rin;
+			sc5: port r.rout -> sout;
+			
+			sc6: port sin1 -> q.qin;
+			sc7: port sin2 -> q.qin2;
+			sc8: port r.rout2 -> sout;
+			
+			sc9: port p.pout3 -> r.rin3;
+			sc10: port q.qout2 -> r.rin4;
+	end s.i;
+	
+	------------------------------------------------------
+	
+	process p
+		features
+			pin: in event port;
+			pout: out event port;
+			pout2: out event port;
+			unconnectedOut: out event port;
+			pout3: out event port;
+	end p;
+	
+	process implementation p.i
+		subcomponents
+			ptout: thread ptout;
+
+			ptin: thread ptin;
+		connections
+			-- fan out at the process level
+			sc1: port ptout.ptoutout -> pout;
+			sc2: port ptin.ptinout -> pout2;
+			
+			sc3: port ptout.ptoutout -> unconnectedOut;	
+			
+			sc4: port ptout.ptoutout -> ptin.ptinin;
+			sc5: port ptin.ptinout -> ptout.ptoutin;
+			
+			sc6: port pin -> ptin.ptinin;
+			sc7: port ptin.ptinout2 -> pout3;
+	end p.i;
+		
+	thread ptout
+		features
+			ptoutin: in event port;
+			ptoutout: out event port;
+	end ptout;
+	
+	thread ptin
+		features
+			ptinin: in event port;
+			ptinout: out event port;
+			ptinout2: out event port;
+	end ptin;
+	
+	
+	------------------------------------------------------
+	process q
+		features
+			qin: in event port;
+			qin2: in event port;
+			qout: out event port;
+			qout2: out event port;
+	end q;
+	
+	process implementation q.i
+		subcomponents
+			qt: thread qt;
+		connections
+			qc1: port qin -> qt.qtin;
+			gc2: port qt.qtout -> qout;
+	end q.i;
+	
+	thread qt
+		features
+			qtin: in event port;
+			qtout: out event port;
+	end qt;
+	
+	------------------------------------------------------
+	process r
+		features
+			rin: in event port;
+			rin2: in event port;
+			rin3: in event port;
+			rin4: in event port;
+			rout: out event port;
+			rout2: out event port;
+	end r;
+	
+	process implementation r.i
+		subcomponents
+			rt: thread rt;
+		connections
+			-- fan in
+			c3: port rin -> rt.rtin;
+			c4: port rin2 -> rt.rtin;
+			c5: port rt.rtout -> rout;
+	end r.i;
+	
+	thread rt
+		features
+			rtin: in event port;
+			rtout: out event port;
+	end rt;
+	
+end Ex2;

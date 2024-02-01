@@ -6715,7 +6715,7 @@ import MTransformer._
           val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.cond)
           val r1: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.thenBody)
           val r2: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.elseBody)
-          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          val r3: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
             MSome(o2(cond = r0.getOrElse(o2.cond), thenBody = r1.getOrElse(o2.thenBody), elseBody = r2.getOrElse(o2.elseBody), attr = r3.getOrElse(o2.attr)))
           else
@@ -6723,7 +6723,7 @@ import MTransformer._
         case o2: org.sireum.lang.ast.Stmt.Match =>
           val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
           val r1: MOption[IS[Z, org.sireum.lang.ast.Case]] = transformISZ(o2.cases, transform_langastCase _)
-          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
             MSome(o2(exp = r0.getOrElse(o2.exp), cases = r1.getOrElse(o2.cases), attr = r2.getOrElse(o2.attr)))
           else
@@ -7660,7 +7660,7 @@ import MTransformer._
           val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.cond)
           val r1: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.thenBody)
           val r2: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.elseBody)
-          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          val r3: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
             MSome(o2(cond = r0.getOrElse(o2.cond), thenBody = r1.getOrElse(o2.thenBody), elseBody = r2.getOrElse(o2.elseBody), attr = r3.getOrElse(o2.attr)))
           else
@@ -7668,7 +7668,7 @@ import MTransformer._
         case o2: org.sireum.lang.ast.Stmt.Match =>
           val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
           val r1: MOption[IS[Z, org.sireum.lang.ast.Case]] = transformISZ(o2.cases, transform_langastCase _)
-          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
             MSome(o2(exp = r0.getOrElse(o2.exp), cases = r1.getOrElse(o2.cases), attr = r2.getOrElse(o2.attr)))
           else

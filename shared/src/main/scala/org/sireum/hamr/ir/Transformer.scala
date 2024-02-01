@@ -5661,7 +5661,7 @@ import Transformer._
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.cond)
           val r1: TPostResult[Context, org.sireum.lang.ast.Body] = transform_langastBody(r0.ctx, o2.thenBody)
           val r2: TPostResult[Context, org.sireum.lang.ast.Body] = transform_langastBody(r1.ctx, o2.elseBody)
-          val r3: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r2.ctx, o2.attr)
+          val r3: TPostResult[Context, org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(r2.ctx, o2.attr)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
             TPostResult(r3.ctx, Some(o2(cond = r0.resultOpt.getOrElse(o2.cond), thenBody = r1.resultOpt.getOrElse(o2.thenBody), elseBody = r2.resultOpt.getOrElse(o2.elseBody), attr = r3.resultOpt.getOrElse(o2.attr))))
           else
@@ -5669,7 +5669,7 @@ import Transformer._
         case o2: org.sireum.lang.ast.Stmt.Match =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Case]] = transformISZ(r0.ctx, o2.cases, transform_langastCase _)
-          val r2: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r1.ctx, o2.attr)
+          val r2: TPostResult[Context, org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(r1.ctx, o2.attr)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
             TPostResult(r2.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), cases = r1.resultOpt.getOrElse(o2.cases), attr = r2.resultOpt.getOrElse(o2.attr))))
           else
@@ -6606,7 +6606,7 @@ import Transformer._
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.cond)
           val r1: TPostResult[Context, org.sireum.lang.ast.Body] = transform_langastBody(r0.ctx, o2.thenBody)
           val r2: TPostResult[Context, org.sireum.lang.ast.Body] = transform_langastBody(r1.ctx, o2.elseBody)
-          val r3: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r2.ctx, o2.attr)
+          val r3: TPostResult[Context, org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(r2.ctx, o2.attr)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
             TPostResult(r3.ctx, Some(o2(cond = r0.resultOpt.getOrElse(o2.cond), thenBody = r1.resultOpt.getOrElse(o2.thenBody), elseBody = r2.resultOpt.getOrElse(o2.elseBody), attr = r3.resultOpt.getOrElse(o2.attr))))
           else
@@ -6614,7 +6614,7 @@ import Transformer._
         case o2: org.sireum.lang.ast.Stmt.Match =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Case]] = transformISZ(r0.ctx, o2.cases, transform_langastCase _)
-          val r2: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r1.ctx, o2.attr)
+          val r2: TPostResult[Context, org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(r1.ctx, o2.attr)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
             TPostResult(r2.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), cases = r1.resultOpt.getOrElse(o2.cases), attr = r2.resultOpt.getOrElse(o2.attr))))
           else

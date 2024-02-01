@@ -2050,14 +2050,14 @@ object MsgPack {
       write_langastExp(o.cond)
       write_langastBody(o.thenBody)
       write_langastBody(o.elseBody)
-      write_langastAttr(o.attr)
+      write_langastTypedAttr(o.attr)
     }
 
     def write_langastStmtMatch(o: org.sireum.lang.ast.Stmt.Match): Unit = {
       writer.writeZ(Constants._langastStmtMatch)
       write_langastExp(o.exp)
       writer.writeISZ(o.cases, write_langastCase _)
-      write_langastAttr(o.attr)
+      write_langastTypedAttr(o.attr)
     }
 
     def write_langastStmtWhile(o: org.sireum.lang.ast.Stmt.While): Unit = {
@@ -5833,7 +5833,7 @@ object MsgPack {
       val cond = read_langastExp()
       val thenBody = read_langastBody()
       val elseBody = read_langastBody()
-      val attr = read_langastAttr()
+      val attr = read_langastTypedAttr()
       return org.sireum.lang.ast.Stmt.If(cond, thenBody, elseBody, attr)
     }
 
@@ -5848,7 +5848,7 @@ object MsgPack {
       }
       val exp = read_langastExp()
       val cases = reader.readISZ(read_langastCase _)
-      val attr = read_langastAttr()
+      val attr = read_langastTypedAttr()
       return org.sireum.lang.ast.Stmt.Match(exp, cases, attr)
     }
 

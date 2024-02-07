@@ -76,6 +76,7 @@ object Transformer {
         case o: org.sireum.lang.ast.Stmt.Var => return pre_langastStmtVar(ctx, o)
         case o: org.sireum.lang.ast.Stmt.VarPattern => return pre_langastStmtVarPattern(ctx, o)
         case o: org.sireum.lang.ast.Stmt.SpecVar => return pre_langastStmtSpecVar(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.RsVal => return pre_langastStmtRsVal(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Method => return pre_langastStmtMethod(ctx, o)
         case o: org.sireum.lang.ast.Stmt.ExtMethod => return pre_langastStmtExtMethod(ctx, o)
         case o: org.sireum.lang.ast.Stmt.JustMethod => return pre_langastStmtJustMethod(ctx, o)
@@ -227,6 +228,10 @@ object Transformer {
     }
 
     @pure def pre_langastStmtSpecVar(ctx: Context, o: org.sireum.lang.ast.Stmt.SpecVar): PreResult[Context, org.sireum.lang.ast.Stmt] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def pre_langastStmtRsVal(ctx: Context, o: org.sireum.lang.ast.Stmt.RsVal): PreResult[Context, org.sireum.lang.ast.Stmt] = {
       return PreResult(ctx, T, None())
     }
 
@@ -729,6 +734,7 @@ object Transformer {
           return r
         case o: org.sireum.lang.ast.Exp.Input => return pre_langastExpInput(ctx, o)
         case o: org.sireum.lang.ast.Exp.Old => return pre_langastExpOld(ctx, o)
+        case o: org.sireum.lang.ast.Exp.RS => return pre_langastExpRS(ctx, o)
         case o: org.sireum.lang.ast.Exp.At => return pre_langastExpAt(ctx, o)
         case o: org.sireum.lang.ast.Exp.LoopIndex => return pre_langastExpLoopIndex(ctx, o)
         case o: org.sireum.lang.ast.Exp.StateSeq => return pre_langastExpStateSeq(ctx, o)
@@ -907,6 +913,10 @@ object Transformer {
     }
 
     @pure def pre_langastExpOld(ctx: Context, o: org.sireum.lang.ast.Exp.Old): PreResult[Context, org.sireum.lang.ast.Exp] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def pre_langastExpRS(ctx: Context, o: org.sireum.lang.ast.Exp.RS): PreResult[Context, org.sireum.lang.ast.Exp] = {
       return PreResult(ctx, T, None())
     }
 
@@ -2768,6 +2778,7 @@ object Transformer {
         case o: org.sireum.lang.ast.Stmt.Var => return post_langastStmtVar(ctx, o)
         case o: org.sireum.lang.ast.Stmt.VarPattern => return post_langastStmtVarPattern(ctx, o)
         case o: org.sireum.lang.ast.Stmt.SpecVar => return post_langastStmtSpecVar(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.RsVal => return post_langastStmtRsVal(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Method => return post_langastStmtMethod(ctx, o)
         case o: org.sireum.lang.ast.Stmt.ExtMethod => return post_langastStmtExtMethod(ctx, o)
         case o: org.sireum.lang.ast.Stmt.JustMethod => return post_langastStmtJustMethod(ctx, o)
@@ -2919,6 +2930,10 @@ object Transformer {
     }
 
     @pure def post_langastStmtSpecVar(ctx: Context, o: org.sireum.lang.ast.Stmt.SpecVar): TPostResult[Context, org.sireum.lang.ast.Stmt] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def post_langastStmtRsVal(ctx: Context, o: org.sireum.lang.ast.Stmt.RsVal): TPostResult[Context, org.sireum.lang.ast.Stmt] = {
       return TPostResult(ctx, None())
     }
 
@@ -3421,6 +3436,7 @@ object Transformer {
           return r
         case o: org.sireum.lang.ast.Exp.Input => return post_langastExpInput(ctx, o)
         case o: org.sireum.lang.ast.Exp.Old => return post_langastExpOld(ctx, o)
+        case o: org.sireum.lang.ast.Exp.RS => return post_langastExpRS(ctx, o)
         case o: org.sireum.lang.ast.Exp.At => return post_langastExpAt(ctx, o)
         case o: org.sireum.lang.ast.Exp.LoopIndex => return post_langastExpLoopIndex(ctx, o)
         case o: org.sireum.lang.ast.Exp.StateSeq => return post_langastExpStateSeq(ctx, o)
@@ -3599,6 +3615,10 @@ object Transformer {
     }
 
     @pure def post_langastExpOld(ctx: Context, o: org.sireum.lang.ast.Exp.Old): TPostResult[Context, org.sireum.lang.ast.Exp] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def post_langastExpRS(ctx: Context, o: org.sireum.lang.ast.Exp.RS): TPostResult[Context, org.sireum.lang.ast.Exp] = {
       return TPostResult(ctx, None())
     }
 
@@ -5557,6 +5577,14 @@ import Transformer._
             TPostResult(r2.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), tipe = r1.resultOpt.getOrElse(o2.tipe), attr = r2.resultOpt.getOrElse(o2.attr))))
           else
             TPostResult(r2.ctx, None())
+        case o2: org.sireum.lang.ast.Stmt.RsVal =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Id] = transform_langastId(preR.ctx, o2.id)
+          val r1: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(r0.ctx, o2.init)
+          val r2: TPostResult[Context, org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), init = r1.resultOpt.getOrElse(o2.init), attr = r2.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r2.ctx, None())
         case o2: org.sireum.lang.ast.Stmt.Method =>
           val r0: TPostResult[Context, org.sireum.lang.ast.MethodSig] = transform_langastMethodSig(preR.ctx, o2.sig)
           val r1: TPostResult[Context, org.sireum.lang.ast.MethodContract] = transform_langastMethodContract(r0.ctx, o2.mcontract)
@@ -7095,6 +7123,13 @@ import Transformer._
           val r1: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r0.ctx, o2.attr)
           if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
             TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: org.sireum.lang.ast.Exp.RS =>
+          val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp.Ref]] = transformISZ(preR.ctx, o2.refs, transform_langastExpRef _)
+          val r1: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r0.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(refs = r0.resultOpt.getOrElse(o2.refs), attr = r1.resultOpt.getOrElse(o2.attr))))
           else
             TPostResult(r1.ctx, None())
         case o2: org.sireum.lang.ast.Exp.At =>

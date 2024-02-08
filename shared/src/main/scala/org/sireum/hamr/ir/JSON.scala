@@ -3126,6 +3126,7 @@ object JSON {
     @pure def print_langastResolvedInfoBuiltInKindType(o: org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.Type): ST = {
       val value: String = o match {
         case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.Apply => "Apply"
+        case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.Arrow => "Arrow"
         case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.AsInstanceOf => "AsInstanceOf"
         case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.Assert => "Assert"
         case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.AssertMsg => "AssertMsg"

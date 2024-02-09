@@ -2915,6 +2915,7 @@ object JSON {
     @pure def print_langastExpRS(o: org.sireum.lang.ast.Exp.RS): ST = {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.Exp.RS""""),
+        ("rightToLeft", printB(o.rightToLeft)),
         ("refs", printISZ(F, o.refs, print_langastExpRef _)),
         ("attr", print_langastAttr(o.attr))
       ))
@@ -9083,13 +9084,16 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("org.sireum.lang.ast.Exp.RS")
       }
+      parser.parseObjectKey("rightToLeft")
+      val rightToLeft = parser.parseB()
+      parser.parseObjectNext()
       parser.parseObjectKey("refs")
       val refs = parser.parseISZ(parse_langastExpRef _)
       parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Exp.RS(refs, attr)
+      return org.sireum.lang.ast.Exp.RS(rightToLeft, refs, attr)
     }
 
     def parse_langastExpAt(): org.sireum.lang.ast.Exp.At = {

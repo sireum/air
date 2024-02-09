@@ -2832,6 +2832,7 @@ object MsgPack {
 
     def write_langastExpRS(o: org.sireum.lang.ast.Exp.RS): Unit = {
       writer.writeZ(Constants._langastExpRS)
+      writer.writeB(o.rightToLeft)
       writer.writeISZ(o.refs, write_langastExpRef _)
       write_langastAttr(o.attr)
     }
@@ -7404,9 +7405,10 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastExpRS)
       }
+      val rightToLeft = reader.readB()
       val refs = reader.readISZ(read_langastExpRef _)
       val attr = read_langastAttr()
-      return org.sireum.lang.ast.Exp.RS(refs, attr)
+      return org.sireum.lang.ast.Exp.RS(rightToLeft, refs, attr)
     }
 
     def read_langastExpAt(): org.sireum.lang.ast.Exp.At = {

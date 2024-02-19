@@ -2695,6 +2695,7 @@ object JSON {
     @pure def print_langastExpThis(o: org.sireum.lang.ast.Exp.This): ST = {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.Exp.This""""),
+        ("owner", printISZ(T, o.owner, printString _)),
         ("attr", print_langastTypedAttr(o.attr))
       ))
     }
@@ -8594,10 +8595,13 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("org.sireum.lang.ast.Exp.This")
       }
+      parser.parseObjectKey("owner")
+      val owner = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastTypedAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Exp.This(attr)
+      return org.sireum.lang.ast.Exp.This(owner, attr)
     }
 
     def parse_langastExpSuper(): org.sireum.lang.ast.Exp.Super = {

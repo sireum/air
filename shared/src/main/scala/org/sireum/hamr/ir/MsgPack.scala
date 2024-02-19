@@ -2663,6 +2663,7 @@ object MsgPack {
 
     def write_langastExpThis(o: org.sireum.lang.ast.Exp.This): Unit = {
       writer.writeZ(Constants._langastExpThis)
+      writer.writeISZ(o.owner, writer.writeString _)
       write_langastTypedAttr(o.attr)
     }
 
@@ -7055,8 +7056,9 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastExpThis)
       }
+      val owner = reader.readISZ(reader.readString _)
       val attr = read_langastTypedAttr()
-      return org.sireum.lang.ast.Exp.This(attr)
+      return org.sireum.lang.ast.Exp.This(owner, attr)
     }
 
     def read_langastExpSuper(): org.sireum.lang.ast.Exp.Super = {

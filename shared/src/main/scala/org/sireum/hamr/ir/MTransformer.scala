@@ -849,13 +849,13 @@ object MTransformer {
 
   val PostResultFlow: MOption[Flow] = MNone()
 
-  val PreResult_langastTypedName: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
-
-  val PostResult_langastTypedName: MOption[org.sireum.lang.ast.Typed] = MNone()
-
   val PreResultAnnex: PreResult[Annex] = PreResult(T, MNone())
 
   val PostResultAnnex: MOption[Annex] = MNone()
+
+  val PreResult_langastTypedName: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedName: MOption[org.sireum.lang.ast.Typed] = MNone()
 
   val PreResultOtherAnnex: PreResult[OtherAnnex] = PreResult(T, MNone())
 
@@ -2480,6 +2480,10 @@ import MTransformer._
     return PreResultAadl
   }
 
+  def preEmv2ElementRef(o: Emv2ElementRef): PreResult[Emv2ElementRef] = {
+    return PreResultEmv2ElementRef
+  }
+
   def pre_langastTyped(o: org.sireum.lang.ast.Typed): PreResult[org.sireum.lang.ast.Typed] = {
     o match {
       case o: org.sireum.lang.ast.Typed.Name => return pre_langastTypedName(o)
@@ -2495,10 +2499,6 @@ import MTransformer._
       case o: org.sireum.lang.ast.Typed.Theorem => return pre_langastTypedTheorem(o)
       case o: org.sireum.lang.ast.Typed.Inv => return pre_langastTypedInv(o)
     }
-  }
-
-  def preEmv2ElementRef(o: Emv2ElementRef): PreResult[Emv2ElementRef] = {
-    return PreResultEmv2ElementRef
   }
 
   def preName(o: Name): PreResult[Name] = {
@@ -2760,12 +2760,12 @@ import MTransformer._
     return PreResultFlow
   }
 
-  def pre_langastTypedName(o: org.sireum.lang.ast.Typed.Name): PreResult[org.sireum.lang.ast.Typed] = {
-    return PreResult_langastTypedName
-  }
-
   def preAnnex(o: Annex): PreResult[Annex] = {
     return PreResultAnnex
+  }
+
+  def pre_langastTypedName(o: org.sireum.lang.ast.Typed.Name): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedName
   }
 
   def preAnnexClause(o: AnnexClause): PreResult[AnnexClause] = {
@@ -5182,6 +5182,10 @@ import MTransformer._
     return PostResultAadl
   }
 
+  def postEmv2ElementRef(o: Emv2ElementRef): MOption[Emv2ElementRef] = {
+    return PostResultEmv2ElementRef
+  }
+
   def post_langastTyped(o: org.sireum.lang.ast.Typed): MOption[org.sireum.lang.ast.Typed] = {
     o match {
       case o: org.sireum.lang.ast.Typed.Name => return post_langastTypedName(o)
@@ -5197,10 +5201,6 @@ import MTransformer._
       case o: org.sireum.lang.ast.Typed.Theorem => return post_langastTypedTheorem(o)
       case o: org.sireum.lang.ast.Typed.Inv => return post_langastTypedInv(o)
     }
-  }
-
-  def postEmv2ElementRef(o: Emv2ElementRef): MOption[Emv2ElementRef] = {
-    return PostResultEmv2ElementRef
   }
 
   def postName(o: Name): MOption[Name] = {
@@ -5462,12 +5462,12 @@ import MTransformer._
     return PostResultFlow
   }
 
-  def post_langastTypedName(o: org.sireum.lang.ast.Typed.Name): MOption[org.sireum.lang.ast.Typed] = {
-    return PostResult_langastTypedName
-  }
-
   def postAnnex(o: Annex): MOption[Annex] = {
     return PostResultAnnex
+  }
+
+  def post_langastTypedName(o: org.sireum.lang.ast.Typed.Name): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedName
   }
 
   def postAnnexClause(o: AnnexClause): MOption[AnnexClause] = {
@@ -9560,6 +9560,34 @@ import MTransformer._
     }
   }
 
+  def transformEmv2ElementRef(o: Emv2ElementRef): MOption[Emv2ElementRef] = {
+    val preR: PreResult[Emv2ElementRef] = preEmv2ElementRef(o)
+    val r: MOption[Emv2ElementRef] = if (preR.continu) {
+      val o2: Emv2ElementRef = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.name)
+      val r1: MOption[IS[Z, Name]] = transformISZ(o2.errorTypes, transformName _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), errorTypes = r1.getOrElse(o2.errorTypes)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: Emv2ElementRef = r.getOrElse(o)
+    val postR: MOption[Emv2ElementRef] = postEmv2ElementRef(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transform_langastTyped(o: org.sireum.lang.ast.Typed): MOption[org.sireum.lang.ast.Typed] = {
     val preR: PreResult[org.sireum.lang.ast.Typed] = pre_langastTyped(o)
     val r: MOption[org.sireum.lang.ast.Typed] = if (preR.continu) {
@@ -9642,34 +9670,6 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Typed = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Typed] = post_langastTyped(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformEmv2ElementRef(o: Emv2ElementRef): MOption[Emv2ElementRef] = {
-    val preR: PreResult[Emv2ElementRef] = preEmv2ElementRef(o)
-    val r: MOption[Emv2ElementRef] = if (preR.continu) {
-      val o2: Emv2ElementRef = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[Name] = transformName(o2.name)
-      val r1: MOption[IS[Z, Name]] = transformISZ(o2.errorTypes, transformName _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(name = r0.getOrElse(o2.name), errorTypes = r1.getOrElse(o2.errorTypes)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: Emv2ElementRef = r.getOrElse(o)
-    val postR: MOption[Emv2ElementRef] = postEmv2ElementRef(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

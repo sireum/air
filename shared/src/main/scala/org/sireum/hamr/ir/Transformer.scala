@@ -1380,6 +1380,10 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def preEmv2ElementRef(ctx: Context, o: Emv2ElementRef): PreResult[Context, Emv2ElementRef] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def pre_langastTyped(ctx: Context, o: org.sireum.lang.ast.Typed): PreResult[Context, org.sireum.lang.ast.Typed] = {
       o match {
         case o: org.sireum.lang.ast.Typed.Name => return pre_langastTypedName(ctx, o)
@@ -1395,10 +1399,6 @@ object Transformer {
         case o: org.sireum.lang.ast.Typed.Theorem => return pre_langastTypedTheorem(ctx, o)
         case o: org.sireum.lang.ast.Typed.Inv => return pre_langastTypedInv(ctx, o)
       }
-    }
-
-    @pure def preEmv2ElementRef(ctx: Context, o: Emv2ElementRef): PreResult[Context, Emv2ElementRef] = {
-      return PreResult(ctx, T, None())
     }
 
     @pure def preName(ctx: Context, o: Name): PreResult[Context, Name] = {
@@ -1660,11 +1660,11 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def pre_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): PreResult[Context, org.sireum.lang.ast.Typed] = {
+    @pure def preAnnex(ctx: Context, o: Annex): PreResult[Context, Annex] = {
       return PreResult(ctx, T, None())
     }
 
-    @pure def preAnnex(ctx: Context, o: Annex): PreResult[Context, Annex] = {
+    @pure def pre_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): PreResult[Context, org.sireum.lang.ast.Typed] = {
       return PreResult(ctx, T, None())
     }
 
@@ -4082,6 +4082,10 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
+    @pure def postEmv2ElementRef(ctx: Context, o: Emv2ElementRef): TPostResult[Context, Emv2ElementRef] = {
+      return TPostResult(ctx, None())
+    }
+
     @pure def post_langastTyped(ctx: Context, o: org.sireum.lang.ast.Typed): TPostResult[Context, org.sireum.lang.ast.Typed] = {
       o match {
         case o: org.sireum.lang.ast.Typed.Name => return post_langastTypedName(ctx, o)
@@ -4097,10 +4101,6 @@ object Transformer {
         case o: org.sireum.lang.ast.Typed.Theorem => return post_langastTypedTheorem(ctx, o)
         case o: org.sireum.lang.ast.Typed.Inv => return post_langastTypedInv(ctx, o)
       }
-    }
-
-    @pure def postEmv2ElementRef(ctx: Context, o: Emv2ElementRef): TPostResult[Context, Emv2ElementRef] = {
-      return TPostResult(ctx, None())
     }
 
     @pure def postName(ctx: Context, o: Name): TPostResult[Context, Name] = {
@@ -4362,11 +4362,11 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def post_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): TPostResult[Context, org.sireum.lang.ast.Typed] = {
+    @pure def postAnnex(ctx: Context, o: Annex): TPostResult[Context, Annex] = {
       return TPostResult(ctx, None())
     }
 
-    @pure def postAnnex(ctx: Context, o: Annex): TPostResult[Context, Annex] = {
+    @pure def post_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): TPostResult[Context, org.sireum.lang.ast.Typed] = {
       return TPostResult(ctx, None())
     }
 
@@ -8498,6 +8498,34 @@ import Transformer._
     }
   }
 
+  @pure def transformEmv2ElementRef(ctx: Context, o: Emv2ElementRef): TPostResult[Context, Emv2ElementRef] = {
+    val preR: PreResult[Context, Emv2ElementRef] = pp.preEmv2ElementRef(ctx, o)
+    val r: TPostResult[Context, Emv2ElementRef] = if (preR.continu) {
+      val o2: Emv2ElementRef = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
+      val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.errorTypes, transformName _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), errorTypes = r1.resultOpt.getOrElse(o2.errorTypes))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: Emv2ElementRef = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, Emv2ElementRef] = pp.postEmv2ElementRef(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transform_langastTyped(ctx: Context, o: org.sireum.lang.ast.Typed): TPostResult[Context, org.sireum.lang.ast.Typed] = {
     val preR: PreResult[Context, org.sireum.lang.ast.Typed] = pp.pre_langastTyped(ctx, o)
     val r: TPostResult[Context, org.sireum.lang.ast.Typed] = if (preR.continu) {
@@ -8580,34 +8608,6 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: org.sireum.lang.ast.Typed = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, org.sireum.lang.ast.Typed] = pp.post_langastTyped(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
-  @pure def transformEmv2ElementRef(ctx: Context, o: Emv2ElementRef): TPostResult[Context, Emv2ElementRef] = {
-    val preR: PreResult[Context, Emv2ElementRef] = pp.preEmv2ElementRef(ctx, o)
-    val r: TPostResult[Context, Emv2ElementRef] = if (preR.continu) {
-      val o2: Emv2ElementRef = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.name)
-      val r1: TPostResult[Context, IS[Z, Name]] = transformISZ(r0.ctx, o2.errorTypes, transformName _)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), errorTypes = r1.resultOpt.getOrElse(o2.errorTypes))))
-      else
-        TPostResult(r1.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: Emv2ElementRef = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, Emv2ElementRef] = pp.postEmv2ElementRef(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {

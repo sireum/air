@@ -7910,9 +7910,10 @@ import MTransformer._
             MNone()
         case o2: org.sireum.lang.ast.Pattern.Ref =>
           val r0: MOption[org.sireum.lang.ast.Name] = transform_langastName(o2.name)
-          val r1: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(name = r0.getOrElse(o2.name), attr = r1.getOrElse(o2.attr)))
+          val r1: MOption[Option[org.sireum.lang.ast.Typed.Name]] = transformOption(o2.receiverTipeOpt, transform_langastTypedName _)
+          val r2: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), receiverTipeOpt = r1.getOrElse(o2.receiverTipeOpt), attr = r2.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Pattern.VarBinding =>
@@ -14059,6 +14060,41 @@ import MTransformer._
      case MSome(result: org.sireum.lang.ast.Exp.Eta) => MSome[org.sireum.lang.ast.Exp.Eta](result)
      case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Eta")
      case _ => MNone[org.sireum.lang.ast.Exp.Eta]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastTypedName(o: org.sireum.lang.ast.Typed.Name): MOption[org.sireum.lang.ast.Typed.Name] = {
+    val preR: PreResult[org.sireum.lang.ast.Typed.Name] = pre_langastTypedName(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.Typed.Name)) => PreResult(continu, MSome[org.sireum.lang.ast.Typed.Name](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Name")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Typed.Name]())
+    }
+    val r: MOption[org.sireum.lang.ast.Typed.Name] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Typed.Name = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Typed]] = transformISZ(o2.args, transform_langastTyped _)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(args = r0.getOrElse(o2.args)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Typed.Name = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Typed.Name] = post_langastTypedName(o2) match {
+     case MSome(result: org.sireum.lang.ast.Typed.Name) => MSome[org.sireum.lang.ast.Typed.Name](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Name")
+     case _ => MNone[org.sireum.lang.ast.Typed.Name]()
     }
     if (postR.nonEmpty) {
       return postR

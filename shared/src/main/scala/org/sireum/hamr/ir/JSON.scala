@@ -2513,6 +2513,8 @@ object JSON {
         ("type", st""""org.sireum.lang.ast.Pattern.Ref""""),
         ("isAccess", printB(o.isAccess)),
         ("name", print_langastName(o.name)),
+        ("receiverTipeOpt", printOption(F, o.receiverTipeOpt, print_langastTypedName _)),
+        ("idContext", printISZ(T, o.idContext, printString _)),
         ("attr", print_langastResolvedAttr(o.attr))
       ))
     }
@@ -8262,10 +8264,16 @@ object JSON {
       parser.parseObjectKey("name")
       val name = parse_langastName()
       parser.parseObjectNext()
+      parser.parseObjectKey("receiverTipeOpt")
+      val receiverTipeOpt = parser.parseOption(parse_langastTypedName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("idContext")
+      val idContext = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastResolvedAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Pattern.Ref(isAccess, name, attr)
+      return org.sireum.lang.ast.Pattern.Ref(isAccess, name, receiverTipeOpt, idContext, attr)
     }
 
     def parse_langastPatternVarBinding(): org.sireum.lang.ast.Pattern.VarBinding = {

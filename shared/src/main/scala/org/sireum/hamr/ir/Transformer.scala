@@ -6848,11 +6848,12 @@ import Transformer._
             TPostResult(r0.ctx, None())
         case o2: org.sireum.lang.ast.Pattern.Ref =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Name] = transform_langastName(preR.ctx, o2.name)
-          val r1: TPostResult[Context, org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(r0.ctx, o2.attr)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), attr = r1.resultOpt.getOrElse(o2.attr))))
+          val r1: TPostResult[Context, Option[org.sireum.lang.ast.Typed.Name]] = transformOption(r0.ctx, o2.receiverTipeOpt, transform_langastTypedName _)
+          val r2: TPostResult[Context, org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), receiverTipeOpt = r1.resultOpt.getOrElse(o2.receiverTipeOpt), attr = r2.resultOpt.getOrElse(o2.attr))))
           else
-            TPostResult(r1.ctx, None())
+            TPostResult(r2.ctx, None())
         case o2: org.sireum.lang.ast.Pattern.VarBinding =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Id] = transform_langastId(preR.ctx, o2.id)
           val r1: TPostResult[Context, Option[org.sireum.lang.ast.Type]] = transformOption(r0.ctx, o2.tipeOpt, transform_langastType _)
@@ -12997,6 +12998,41 @@ import Transformer._
      case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Exp.Eta)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Exp.Eta](result))
      case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Eta")
      case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Exp.Eta]())
+    }
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transform_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): TPostResult[Context, org.sireum.lang.ast.Typed.Name] = {
+    val preR: PreResult[Context, org.sireum.lang.ast.Typed.Name] = pp.pre_langastTypedName(ctx, o) match {
+     case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.Typed.Name)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.Typed.Name](r))
+     case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Name")
+     case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.Typed.Name]())
+    }
+    val r: TPostResult[Context, org.sireum.lang.ast.Typed.Name] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Typed.Name = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Typed]] = transformISZ(preR.ctx, o2.args, transform_langastTyped _)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(args = r0.resultOpt.getOrElse(o2.args))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: org.sireum.lang.ast.Typed.Name = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, org.sireum.lang.ast.Typed.Name] = pp.post_langastTypedName(r.ctx, o2) match {
+     case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Typed.Name)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Typed.Name](result))
+     case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Name")
+     case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Typed.Name]())
     }
     if (postR.resultOpt.nonEmpty) {
       return postR

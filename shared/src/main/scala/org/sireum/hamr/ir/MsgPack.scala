@@ -508,211 +508,205 @@ object MsgPack {
 
     val _langastProofAstStepLetParam: Z = 135
 
-    val _langastProofAstStepStructInduction: Z = 136
+    val _langastProofAstStepJustificationRef: Z = 136
 
-    val _langastProofAstStepStructInductionMatchCase: Z = 137
+    val _langastProofAstStepJustificationApply: Z = 137
 
-    val _langastProofAstStepStructInductionMatchDefault: Z = 138
+    val _langastProofAstStepJustificationApplyNamed: Z = 138
 
-    val _langastProofAstStepJustificationRef: Z = 139
+    val _langastProofAstStepJustificationApplyEta: Z = 139
 
-    val _langastProofAstStepJustificationApply: Z = 140
+    val _langastCase: Z = 140
 
-    val _langastProofAstStepJustificationApplyNamed: Z = 141
+    val _langastEnumGenRangeExpr: Z = 141
 
-    val _langastProofAstStepJustificationApplyEta: Z = 142
+    val _langastEnumGenRangeStep: Z = 142
 
-    val _langastCase: Z = 143
+    val _langastEnumGenFor: Z = 143
 
-    val _langastEnumGenRangeExpr: Z = 144
+    val _langastTypeNamed: Z = 144
 
-    val _langastEnumGenRangeStep: Z = 145
+    val _langastTypeFun: Z = 145
 
-    val _langastEnumGenFor: Z = 146
+    val _langastTypeTuple: Z = 146
 
-    val _langastTypeNamed: Z = 147
+    val _langastPatternLiteral: Z = 147
 
-    val _langastTypeFun: Z = 148
+    val _langastPatternLitInterpolate: Z = 148
 
-    val _langastTypeTuple: Z = 149
+    val _langastPatternRef: Z = 149
 
-    val _langastPatternLiteral: Z = 150
+    val _langastPatternVarBinding: Z = 150
 
-    val _langastPatternLitInterpolate: Z = 151
+    val _langastPatternWildcard: Z = 151
 
-    val _langastPatternRef: Z = 152
+    val _langastPatternSeqWildcard: Z = 152
 
-    val _langastPatternVarBinding: Z = 153
+    val _langastPatternStructure: Z = 153
 
-    val _langastPatternWildcard: Z = 154
+    val _langastExpLitB: Z = 154
 
-    val _langastPatternSeqWildcard: Z = 155
+    val _langastExpLitC: Z = 155
 
-    val _langastPatternStructure: Z = 156
+    val _langastExpLitZ: Z = 156
 
-    val _langastExpLitB: Z = 157
+    val _langastExpLitF32: Z = 157
 
-    val _langastExpLitC: Z = 158
+    val _langastExpLitF64: Z = 158
 
-    val _langastExpLitZ: Z = 159
+    val _langastExpLitR: Z = 159
 
-    val _langastExpLitF32: Z = 160
+    val _langastExpLitString: Z = 160
 
-    val _langastExpLitF64: Z = 161
+    val _langastExpStringInterpolate: Z = 161
 
-    val _langastExpLitR: Z = 162
+    val _langastExpThis: Z = 162
 
-    val _langastExpLitString: Z = 163
+    val _langastExpSuper: Z = 163
 
-    val _langastExpStringInterpolate: Z = 164
+    val _langastExpUnary: Z = 164
 
-    val _langastExpThis: Z = 165
+    val _langastExpBinary: Z = 165
 
-    val _langastExpSuper: Z = 166
+    val _langastExpIdent: Z = 166
 
-    val _langastExpUnary: Z = 167
+    val _langastExpEta: Z = 167
 
-    val _langastExpBinary: Z = 168
+    val _langastExpTuple: Z = 168
 
-    val _langastExpIdent: Z = 169
+    val _langastExpSelect: Z = 169
 
-    val _langastExpEta: Z = 170
+    val _langastExpInvoke: Z = 170
 
-    val _langastExpTuple: Z = 171
+    val _langastExpInvokeNamed: Z = 171
 
-    val _langastExpSelect: Z = 172
+    val _langastExpIf: Z = 172
 
-    val _langastExpInvoke: Z = 173
+    val _langastExpTypeCond: Z = 173
 
-    val _langastExpInvokeNamed: Z = 174
+    val _langastExpSym: Z = 174
 
-    val _langastExpIf: Z = 175
+    val _langastExpFunParam: Z = 175
 
-    val _langastExpTypeCond: Z = 176
+    val _langastExpFun: Z = 176
 
-    val _langastExpSym: Z = 177
+    val _langastExpForYield: Z = 177
 
-    val _langastExpFunParam: Z = 178
+    val _langastExpQuantType: Z = 178
 
-    val _langastExpFun: Z = 179
+    val _langastExpQuantRange: Z = 179
 
-    val _langastExpForYield: Z = 180
+    val _langastExpQuantEach: Z = 180
 
-    val _langastExpQuantType: Z = 181
+    val _langastExpInput: Z = 181
 
-    val _langastExpQuantRange: Z = 182
+    val _langastExpOld: Z = 182
 
-    val _langastExpQuantEach: Z = 183
+    val _langastExpRS: Z = 183
 
-    val _langastExpInput: Z = 184
+    val _langastExpAt: Z = 184
 
-    val _langastExpOld: Z = 185
+    val _langastExpLoopIndex: Z = 185
 
-    val _langastExpRS: Z = 186
+    val _langastExpStateSeq: Z = 186
 
-    val _langastExpAt: Z = 187
+    val _langastExpStateSeqFragment: Z = 187
 
-    val _langastExpLoopIndex: Z = 188
+    val _langastExpResult: Z = 188
 
-    val _langastExpStateSeq: Z = 189
+    val _langastExpStrictPureBlock: Z = 189
 
-    val _langastExpStateSeqFragment: Z = 190
+    val _langastExpLabeled: Z = 190
 
-    val _langastExpResult: Z = 191
+    val _langastExpAssumeAgree: Z = 191
 
-    val _langastExpStrictPureBlock: Z = 192
+    val _langastExpAssertAgree: Z = 192
 
-    val _langastExpLabeled: Z = 193
+    val _langastExpInfoFlowInvariant: Z = 193
 
-    val _langastExpAssumeAgree: Z = 194
+    val _langastNamedArg: Z = 194
 
-    val _langastExpAssertAgree: Z = 195
+    val _langastId: Z = 195
 
-    val _langastExpInfoFlowInvariant: Z = 196
+    val _langastName: Z = 196
 
-    val _langastNamedArg: Z = 197
+    val _langastBody: Z = 197
 
-    val _langastId: Z = 198
+    val _langastAdtParam: Z = 198
 
-    val _langastName: Z = 199
+    val _langastMethodSig: Z = 199
 
-    val _langastBody: Z = 200
+    val _langastParam: Z = 200
 
-    val _langastAdtParam: Z = 201
+    val _langastTypeParam: Z = 201
 
-    val _langastMethodSig: Z = 202
+    val _langastAttr: Z = 202
 
-    val _langastParam: Z = 203
+    val _langastTypedAttr: Z = 203
 
-    val _langastTypeParam: Z = 204
+    val _langastResolvedAttr: Z = 204
 
-    val _langastAttr: Z = 205
+    val _langastResolvedInfoBuiltIn: Z = 205
 
-    val _langastTypedAttr: Z = 206
+    val _langastResolvedInfoPackage: Z = 206
 
-    val _langastResolvedAttr: Z = 207
+    val _langastResolvedInfoEnum: Z = 207
 
-    val _langastResolvedInfoBuiltIn: Z = 208
+    val _langastResolvedInfoEnumElement: Z = 208
 
-    val _langastResolvedInfoPackage: Z = 209
+    val _langastResolvedInfoObject: Z = 209
 
-    val _langastResolvedInfoEnum: Z = 210
+    val _langastResolvedInfoVar: Z = 210
 
-    val _langastResolvedInfoEnumElement: Z = 211
+    val _langastResolvedInfoMethod: Z = 211
 
-    val _langastResolvedInfoObject: Z = 212
+    val _langastResolvedInfoMethods: Z = 212
 
-    val _langastResolvedInfoVar: Z = 213
+    val _langastResolvedInfoTuple: Z = 213
 
-    val _langastResolvedInfoMethod: Z = 214
+    val _langastResolvedInfoLocalVar: Z = 214
 
-    val _langastResolvedInfoMethods: Z = 215
+    val _langastResolvedInfoFact: Z = 215
 
-    val _langastResolvedInfoTuple: Z = 216
+    val _langastResolvedInfoTheorem: Z = 216
 
-    val _langastResolvedInfoLocalVar: Z = 217
+    val _langastResolvedInfoInv: Z = 217
 
-    val _langastResolvedInfoFact: Z = 218
+    val _langastTruthTableRow: Z = 218
 
-    val _langastResolvedInfoTheorem: Z = 219
+    val _langastTruthTableAssignment: Z = 219
 
-    val _langastResolvedInfoInv: Z = 220
+    val _langastTruthTableConclusionValidity: Z = 220
 
-    val _langastTruthTableRow: Z = 221
+    val _langastTruthTableConclusionTautology: Z = 221
 
-    val _langastTruthTableAssignment: Z = 222
+    val _langastTruthTableConclusionContradictory: Z = 222
 
-    val _langastTruthTableConclusionValidity: Z = 223
+    val _langastTruthTableConclusionContingent: Z = 223
 
-    val _langastTruthTableConclusionTautology: Z = 224
+    val _langastTypedName: Z = 224
 
-    val _langastTruthTableConclusionContradictory: Z = 225
+    val _langastTypedTuple: Z = 225
 
-    val _langastTruthTableConclusionContingent: Z = 226
+    val _langastTypedFun: Z = 226
 
-    val _langastTypedName: Z = 227
+    val _langastTypedTypeVar: Z = 227
 
-    val _langastTypedTuple: Z = 228
+    val _langastTypedPackage: Z = 228
 
-    val _langastTypedFun: Z = 229
+    val _langastTypedObject: Z = 229
 
-    val _langastTypedTypeVar: Z = 230
+    val _langastTypedEnum: Z = 230
 
-    val _langastTypedPackage: Z = 231
+    val _langastTypedMethod: Z = 231
 
-    val _langastTypedObject: Z = 232
+    val _langastTypedMethods: Z = 232
 
-    val _langastTypedEnum: Z = 233
+    val _langastTypedFact: Z = 233
 
-    val _langastTypedMethod: Z = 234
+    val _langastTypedTheorem: Z = 234
 
-    val _langastTypedMethods: Z = 235
-
-    val _langastTypedFact: Z = 236
-
-    val _langastTypedTheorem: Z = 237
-
-    val _langastTypedInv: Z = 238
+    val _langastTypedInv: Z = 235
 
   }
 
@@ -2290,7 +2284,6 @@ object MsgPack {
         case o: org.sireum.lang.ast.ProofAst.Step.Assert => write_langastProofAstStepAssert(o)
         case o: org.sireum.lang.ast.ProofAst.Step.SubProof => write_langastProofAstStepSubProof(o)
         case o: org.sireum.lang.ast.ProofAst.Step.Let => write_langastProofAstStepLet(o)
-        case o: org.sireum.lang.ast.ProofAst.Step.StructInduction => write_langastProofAstStepStructInduction(o)
       }
     }
 
@@ -2319,12 +2312,14 @@ object MsgPack {
       write_langastProofAstStepId(o.id)
       write_langastExp(o.claim)
       write_langastProofAstStepJustification(o.just)
+      write_langastAttr(o.attr)
     }
 
     def write_langastProofAstStepAssume(o: org.sireum.lang.ast.ProofAst.Step.Assume): Unit = {
       writer.writeZ(Constants._langastProofAstStepAssume)
       write_langastProofAstStepId(o.id)
       write_langastExp(o.claim)
+      write_langastAttr(o.attr)
     }
 
     def write_langastProofAstStepAssert(o: org.sireum.lang.ast.ProofAst.Step.Assert): Unit = {
@@ -2332,12 +2327,14 @@ object MsgPack {
       write_langastProofAstStepId(o.id)
       write_langastExp(o.claim)
       writer.writeISZ(o.steps, write_langastProofAstStep _)
+      write_langastAttr(o.attr)
     }
 
     def write_langastProofAstStepSubProof(o: org.sireum.lang.ast.ProofAst.Step.SubProof): Unit = {
       writer.writeZ(Constants._langastProofAstStepSubProof)
       write_langastProofAstStepId(o.id)
       writer.writeISZ(o.steps, write_langastProofAstStep _)
+      write_langastAttr(o.attr)
     }
 
     def write_langastProofAstStepLet(o: org.sireum.lang.ast.ProofAst.Step.Let): Unit = {
@@ -2345,34 +2342,13 @@ object MsgPack {
       write_langastProofAstStepId(o.id)
       writer.writeISZ(o.params, write_langastProofAstStepLetParam _)
       writer.writeISZ(o.steps, write_langastProofAstStep _)
+      write_langastAttr(o.attr)
     }
 
     def write_langastProofAstStepLetParam(o: org.sireum.lang.ast.ProofAst.Step.Let.Param): Unit = {
       writer.writeZ(Constants._langastProofAstStepLetParam)
       write_langastId(o.id)
       writer.writeOption(o.tipeOpt, write_langastType _)
-    }
-
-    def write_langastProofAstStepStructInduction(o: org.sireum.lang.ast.ProofAst.Step.StructInduction): Unit = {
-      writer.writeZ(Constants._langastProofAstStepStructInduction)
-      write_langastProofAstStepId(o.id)
-      write_langastExp(o.claim)
-      write_langastExp(o.exp)
-      writer.writeISZ(o.cases, write_langastProofAstStepStructInductionMatchCase _)
-      writer.writeOption(o.defaultOpt, write_langastProofAstStepStructInductionMatchDefault _)
-    }
-
-    def write_langastProofAstStepStructInductionMatchCase(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase): Unit = {
-      writer.writeZ(Constants._langastProofAstStepStructInductionMatchCase)
-      write_langastPatternStructure(o.pattern)
-      writer.writeOption(o.hypoOpt, write_langastProofAstStepAssume _)
-      writer.writeISZ(o.steps, write_langastProofAstStep _)
-    }
-
-    def write_langastProofAstStepStructInductionMatchDefault(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault): Unit = {
-      writer.writeZ(Constants._langastProofAstStepStructInductionMatchDefault)
-      writer.writeOption(o.hypoOpt, write_langastProofAstStepAssume _)
-      writer.writeISZ(o.steps, write_langastProofAstStep _)
     }
 
     def write_langastProofAstStepJustification(o: org.sireum.lang.ast.ProofAst.Step.Justification): Unit = {
@@ -2680,6 +2656,7 @@ object MsgPack {
       write_langastExpUnaryOpType(o.op)
       write_langastExp(o.exp)
       write_langastResolvedAttr(o.attr)
+      writer.writeOption(o.opPosOpt, writer.writePosition _)
     }
 
     def write_langastExpRef(o: org.sireum.lang.ast.Exp.Ref): Unit = {
@@ -2695,6 +2672,7 @@ object MsgPack {
       writer.writeString(o.op)
       write_langastExp(o.right)
       write_langastResolvedAttr(o.attr)
+      writer.writeOption(o.opPosOpt, writer.writePosition _)
     }
 
     def write_langastExpIdent(o: org.sireum.lang.ast.Exp.Ident): Unit = {
@@ -6329,10 +6307,9 @@ object MsgPack {
         case Constants._langastProofAstStepAssert => val r = read_langastProofAstStepAssertT(T); return r
         case Constants._langastProofAstStepSubProof => val r = read_langastProofAstStepSubProofT(T); return r
         case Constants._langastProofAstStepLet => val r = read_langastProofAstStepLetT(T); return r
-        case Constants._langastProofAstStepStructInduction => val r = read_langastProofAstStepStructInductionT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of org.sireum.lang.ast.ProofAst.Step.")
-          val r = read_langastProofAstStepStructInductionT(T)
+          val r = read_langastProofAstStepLetT(T)
           return r
       }
     }
@@ -6391,7 +6368,8 @@ object MsgPack {
       val id = read_langastProofAstStepId()
       val claim = read_langastExp()
       val just = read_langastProofAstStepJustification()
-      return org.sireum.lang.ast.ProofAst.Step.Regular(id, claim, just)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.ProofAst.Step.Regular(id, claim, just, attr)
     }
 
     def read_langastProofAstStepAssume(): org.sireum.lang.ast.ProofAst.Step.Assume = {
@@ -6405,7 +6383,8 @@ object MsgPack {
       }
       val id = read_langastProofAstStepId()
       val claim = read_langastExp()
-      return org.sireum.lang.ast.ProofAst.Step.Assume(id, claim)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.ProofAst.Step.Assume(id, claim, attr)
     }
 
     def read_langastProofAstStepAssert(): org.sireum.lang.ast.ProofAst.Step.Assert = {
@@ -6420,7 +6399,8 @@ object MsgPack {
       val id = read_langastProofAstStepId()
       val claim = read_langastExp()
       val steps = reader.readISZ(read_langastProofAstStep _)
-      return org.sireum.lang.ast.ProofAst.Step.Assert(id, claim, steps)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.ProofAst.Step.Assert(id, claim, steps, attr)
     }
 
     def read_langastProofAstStepSubProof(): org.sireum.lang.ast.ProofAst.Step.SubProof = {
@@ -6434,7 +6414,8 @@ object MsgPack {
       }
       val id = read_langastProofAstStepId()
       val steps = reader.readISZ(read_langastProofAstStep _)
-      return org.sireum.lang.ast.ProofAst.Step.SubProof(id, steps)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.ProofAst.Step.SubProof(id, steps, attr)
     }
 
     def read_langastProofAstStepLet(): org.sireum.lang.ast.ProofAst.Step.Let = {
@@ -6449,7 +6430,8 @@ object MsgPack {
       val id = read_langastProofAstStepId()
       val params = reader.readISZ(read_langastProofAstStepLetParam _)
       val steps = reader.readISZ(read_langastProofAstStep _)
-      return org.sireum.lang.ast.ProofAst.Step.Let(id, params, steps)
+      val attr = read_langastAttr()
+      return org.sireum.lang.ast.ProofAst.Step.Let(id, params, steps, attr)
     }
 
     def read_langastProofAstStepLetParam(): org.sireum.lang.ast.ProofAst.Step.Let.Param = {
@@ -6464,52 +6446,6 @@ object MsgPack {
       val id = read_langastId()
       val tipeOpt = reader.readOption(read_langastType _)
       return org.sireum.lang.ast.ProofAst.Step.Let.Param(id, tipeOpt)
-    }
-
-    def read_langastProofAstStepStructInduction(): org.sireum.lang.ast.ProofAst.Step.StructInduction = {
-      val r = read_langastProofAstStepStructInductionT(F)
-      return r
-    }
-
-    def read_langastProofAstStepStructInductionT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.StructInduction = {
-      if (!typeParsed) {
-        reader.expectZ(Constants._langastProofAstStepStructInduction)
-      }
-      val id = read_langastProofAstStepId()
-      val claim = read_langastExp()
-      val exp = read_langastExp()
-      val cases = reader.readISZ(read_langastProofAstStepStructInductionMatchCase _)
-      val defaultOpt = reader.readOption(read_langastProofAstStepStructInductionMatchDefault _)
-      return org.sireum.lang.ast.ProofAst.Step.StructInduction(id, claim, exp, cases, defaultOpt)
-    }
-
-    def read_langastProofAstStepStructInductionMatchCase(): org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase = {
-      val r = read_langastProofAstStepStructInductionMatchCaseT(F)
-      return r
-    }
-
-    def read_langastProofAstStepStructInductionMatchCaseT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase = {
-      if (!typeParsed) {
-        reader.expectZ(Constants._langastProofAstStepStructInductionMatchCase)
-      }
-      val pattern = read_langastPatternStructure()
-      val hypoOpt = reader.readOption(read_langastProofAstStepAssume _)
-      val steps = reader.readISZ(read_langastProofAstStep _)
-      return org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase(pattern, hypoOpt, steps)
-    }
-
-    def read_langastProofAstStepStructInductionMatchDefault(): org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault = {
-      val r = read_langastProofAstStepStructInductionMatchDefaultT(F)
-      return r
-    }
-
-    def read_langastProofAstStepStructInductionMatchDefaultT(typeParsed: B): org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault = {
-      if (!typeParsed) {
-        reader.expectZ(Constants._langastProofAstStepStructInductionMatchDefault)
-      }
-      val hypoOpt = reader.readOption(read_langastProofAstStepAssume _)
-      val steps = reader.readISZ(read_langastProofAstStep _)
-      return org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault(hypoOpt, steps)
     }
 
     def read_langastProofAstStepJustification(): org.sireum.lang.ast.ProofAst.Step.Justification = {
@@ -7091,7 +7027,8 @@ object MsgPack {
       val op = read_langastExpUnaryOpType()
       val exp = read_langastExp()
       val attr = read_langastResolvedAttr()
-      return org.sireum.lang.ast.Exp.Unary(op, exp, attr)
+      val opPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.Exp.Unary(op, exp, attr, opPosOpt)
     }
 
     def read_langastExpRef(): org.sireum.lang.ast.Exp.Ref = {
@@ -7120,7 +7057,8 @@ object MsgPack {
       val op = reader.readString()
       val right = read_langastExp()
       val attr = read_langastResolvedAttr()
-      return org.sireum.lang.ast.Exp.Binary(left, op, right, attr)
+      val opPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.Exp.Binary(left, op, right, attr, opPosOpt)
     }
 
     def read_langastExpIdent(): org.sireum.lang.ast.Exp.Ident = {
@@ -11326,51 +11264,6 @@ object MsgPack {
       return r
     }
     val r = to(data, f_langastProofAstStepLetParam _)
-    return r
-  }
-
-  def from_langastProofAstStepStructInduction(o: org.sireum.lang.ast.ProofAst.Step.StructInduction, pooling: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(pooling))
-    w.write_langastProofAstStepStructInduction(o)
-    return w.result
-  }
-
-  def to_langastProofAstStepStructInduction(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.StructInduction, MessagePack.ErrorMsg] = {
-    def f_langastProofAstStepStructInduction(reader: Reader): org.sireum.lang.ast.ProofAst.Step.StructInduction = {
-      val r = reader.read_langastProofAstStepStructInduction()
-      return r
-    }
-    val r = to(data, f_langastProofAstStepStructInduction _)
-    return r
-  }
-
-  def from_langastProofAstStepStructInductionMatchCase(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase, pooling: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(pooling))
-    w.write_langastProofAstStepStructInductionMatchCase(o)
-    return w.result
-  }
-
-  def to_langastProofAstStepStructInductionMatchCase(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase, MessagePack.ErrorMsg] = {
-    def f_langastProofAstStepStructInductionMatchCase(reader: Reader): org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase = {
-      val r = reader.read_langastProofAstStepStructInductionMatchCase()
-      return r
-    }
-    val r = to(data, f_langastProofAstStepStructInductionMatchCase _)
-    return r
-  }
-
-  def from_langastProofAstStepStructInductionMatchDefault(o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault, pooling: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(pooling))
-    w.write_langastProofAstStepStructInductionMatchDefault(o)
-    return w.result
-  }
-
-  def to_langastProofAstStepStructInductionMatchDefault(data: ISZ[U8]): Either[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault, MessagePack.ErrorMsg] = {
-    def f_langastProofAstStepStructInductionMatchDefault(reader: Reader): org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault = {
-      val r = reader.read_langastProofAstStepStructInductionMatchDefault()
-      return r
-    }
-    val r = to(data, f_langastProofAstStepStructInductionMatchDefault _)
     return r
   }
 

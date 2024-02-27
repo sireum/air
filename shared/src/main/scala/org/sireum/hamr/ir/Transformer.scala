@@ -427,7 +427,6 @@ object Transformer {
         case o: org.sireum.lang.ast.ProofAst.Step.Assert => return pre_langastProofAstStepAssert(ctx, o)
         case o: org.sireum.lang.ast.ProofAst.Step.SubProof => return pre_langastProofAstStepSubProof(ctx, o)
         case o: org.sireum.lang.ast.ProofAst.Step.Let => return pre_langastProofAstStepLet(ctx, o)
-        case o: org.sireum.lang.ast.ProofAst.Step.StructInduction => return pre_langastProofAstStepStructInduction(ctx, o)
       }
     }
 
@@ -467,18 +466,6 @@ object Transformer {
     }
 
     @pure def pre_langastProofAstStepLetParam(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Let.Param): PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Let.Param] = {
-      return PreResult(ctx, T, None())
-    }
-
-    @pure def pre_langastProofAstStepStructInduction(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.StructInduction): PreResult[Context, org.sireum.lang.ast.ProofAst.Step] = {
-      return PreResult(ctx, T, None())
-    }
-
-    @pure def pre_langastProofAstStepStructInductionMatchCase(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase): PreResult[Context, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = {
-      return PreResult(ctx, T, None())
-    }
-
-    @pure def pre_langastProofAstStepStructInductionMatchDefault(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault): PreResult[Context, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = {
       return PreResult(ctx, T, None())
     }
 
@@ -3129,7 +3116,6 @@ object Transformer {
         case o: org.sireum.lang.ast.ProofAst.Step.Assert => return post_langastProofAstStepAssert(ctx, o)
         case o: org.sireum.lang.ast.ProofAst.Step.SubProof => return post_langastProofAstStepSubProof(ctx, o)
         case o: org.sireum.lang.ast.ProofAst.Step.Let => return post_langastProofAstStepLet(ctx, o)
-        case o: org.sireum.lang.ast.ProofAst.Step.StructInduction => return post_langastProofAstStepStructInduction(ctx, o)
       }
     }
 
@@ -3169,18 +3155,6 @@ object Transformer {
     }
 
     @pure def post_langastProofAstStepLetParam(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Let.Param): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Let.Param] = {
-      return TPostResult(ctx, None())
-    }
-
-    @pure def post_langastProofAstStepStructInduction(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.StructInduction): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step] = {
-      return TPostResult(ctx, None())
-    }
-
-    @pure def post_langastProofAstStepStructInductionMatchCase(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = {
-      return TPostResult(ctx, None())
-    }
-
-    @pure def post_langastProofAstStepStructInductionMatchDefault(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = {
       return TPostResult(ctx, None())
     }
 
@@ -6379,50 +6353,45 @@ import Transformer._
           val r0: TPostResult[Context, org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(preR.ctx, o2.id)
           val r1: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(r0.ctx, o2.claim)
           val r2: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Justification] = transform_langastProofAstStepJustification(r1.ctx, o2.just)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            TPostResult(r2.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), claim = r1.resultOpt.getOrElse(o2.claim), just = r2.resultOpt.getOrElse(o2.just))))
+          val r3: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r2.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), claim = r1.resultOpt.getOrElse(o2.claim), just = r2.resultOpt.getOrElse(o2.just), attr = r3.resultOpt.getOrElse(o2.attr))))
           else
-            TPostResult(r2.ctx, None())
+            TPostResult(r3.ctx, None())
         case o2: org.sireum.lang.ast.ProofAst.Step.Assume =>
           val r0: TPostResult[Context, org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(preR.ctx, o2.id)
           val r1: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(r0.ctx, o2.claim)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), claim = r1.resultOpt.getOrElse(o2.claim))))
+          val r2: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), claim = r1.resultOpt.getOrElse(o2.claim), attr = r2.resultOpt.getOrElse(o2.attr))))
           else
-            TPostResult(r1.ctx, None())
+            TPostResult(r2.ctx, None())
         case o2: org.sireum.lang.ast.ProofAst.Step.Assert =>
           val r0: TPostResult[Context, org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(preR.ctx, o2.id)
           val r1: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(r0.ctx, o2.claim)
           val r2: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(r1.ctx, o2.steps, transform_langastProofAstStep _)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            TPostResult(r2.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), claim = r1.resultOpt.getOrElse(o2.claim), steps = r2.resultOpt.getOrElse(o2.steps))))
+          val r3: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r2.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), claim = r1.resultOpt.getOrElse(o2.claim), steps = r2.resultOpt.getOrElse(o2.steps), attr = r3.resultOpt.getOrElse(o2.attr))))
           else
-            TPostResult(r2.ctx, None())
+            TPostResult(r3.ctx, None())
         case o2: org.sireum.lang.ast.ProofAst.Step.SubProof =>
           val r0: TPostResult[Context, org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(preR.ctx, o2.id)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(r0.ctx, o2.steps, transform_langastProofAstStep _)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), steps = r1.resultOpt.getOrElse(o2.steps))))
+          val r2: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), steps = r1.resultOpt.getOrElse(o2.steps), attr = r2.resultOpt.getOrElse(o2.attr))))
           else
-            TPostResult(r1.ctx, None())
+            TPostResult(r2.ctx, None())
         case o2: org.sireum.lang.ast.ProofAst.Step.Let =>
           val r0: TPostResult[Context, org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(preR.ctx, o2.id)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.Step.Let.Param]] = transformISZ(r0.ctx, o2.params, transform_langastProofAstStepLetParam _)
           val r2: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(r1.ctx, o2.steps, transform_langastProofAstStep _)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-            TPostResult(r2.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), params = r1.resultOpt.getOrElse(o2.params), steps = r2.resultOpt.getOrElse(o2.steps))))
+          val r3: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r2.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), params = r1.resultOpt.getOrElse(o2.params), steps = r2.resultOpt.getOrElse(o2.steps), attr = r3.resultOpt.getOrElse(o2.attr))))
           else
-            TPostResult(r2.ctx, None())
-        case o2: org.sireum.lang.ast.ProofAst.Step.StructInduction =>
-          val r0: TPostResult[Context, org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(preR.ctx, o2.id)
-          val r1: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(r0.ctx, o2.claim)
-          val r2: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(r1.ctx, o2.exp)
-          val r3: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase]] = transformISZ(r2.ctx, o2.cases, transform_langastProofAstStepStructInductionMatchCase _)
-          val r4: TPostResult[Context, Option[org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault]] = transformOption(r3.ctx, o2.defaultOpt, transform_langastProofAstStepStructInductionMatchDefault _)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
-            TPostResult(r4.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), claim = r1.resultOpt.getOrElse(o2.claim), exp = r2.resultOpt.getOrElse(o2.exp), cases = r3.resultOpt.getOrElse(o2.cases), defaultOpt = r4.resultOpt.getOrElse(o2.defaultOpt))))
-          else
-            TPostResult(r4.ctx, None())
+            TPostResult(r3.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -6498,63 +6467,6 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: org.sireum.lang.ast.ProofAst.Step.Let.Param = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Let.Param] = pp.post_langastProofAstStepLetParam(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
-  @pure def transform_langastProofAstStepStructInductionMatchCase(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = {
-    val preR: PreResult[Context, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = pp.pre_langastProofAstStepStructInductionMatchCase(ctx, o)
-    val r: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = if (preR.continu) {
-      val o2: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, org.sireum.lang.ast.Pattern.Structure] = transform_langastPatternStructure(preR.ctx, o2.pattern)
-      val r1: TPostResult[Context, Option[org.sireum.lang.ast.ProofAst.Step.Assume]] = transformOption(r0.ctx, o2.hypoOpt, transform_langastProofAstStepAssume _)
-      val r2: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(r1.ctx, o2.steps, transform_langastProofAstStep _)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-        TPostResult(r2.ctx, Some(o2(pattern = r0.resultOpt.getOrElse(o2.pattern), hypoOpt = r1.resultOpt.getOrElse(o2.hypoOpt), steps = r2.resultOpt.getOrElse(o2.steps))))
-      else
-        TPostResult(r2.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchCase] = pp.post_langastProofAstStepStructInductionMatchCase(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
-  @pure def transform_langastProofAstStepStructInductionMatchDefault(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = {
-    val preR: PreResult[Context, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = pp.pre_langastProofAstStepStructInductionMatchDefault(ctx, o)
-    val r: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = if (preR.continu) {
-      val o2: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, Option[org.sireum.lang.ast.ProofAst.Step.Assume]] = transformOption(preR.ctx, o2.hypoOpt, transform_langastProofAstStepAssume _)
-      val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.ProofAst.Step]] = transformISZ(r0.ctx, o2.steps, transform_langastProofAstStep _)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        TPostResult(r1.ctx, Some(o2(hypoOpt = r0.resultOpt.getOrElse(o2.hypoOpt), steps = r1.resultOpt.getOrElse(o2.steps))))
-      else
-        TPostResult(r1.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.StructInduction.MatchDefault] = pp.post_langastProofAstStepStructInductionMatchDefault(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -12774,80 +12686,6 @@ import Transformer._
      case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Exp.LitZ)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Exp.LitZ](result))
      case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitZ")
      case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Exp.LitZ]())
-    }
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
-  @pure def transform_langastPatternStructure(ctx: Context, o: org.sireum.lang.ast.Pattern.Structure): TPostResult[Context, org.sireum.lang.ast.Pattern.Structure] = {
-    val preR: PreResult[Context, org.sireum.lang.ast.Pattern.Structure] = pp.pre_langastPatternStructure(ctx, o) match {
-     case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.Pattern.Structure)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.Pattern.Structure](r))
-     case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Pattern.Structure")
-     case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.Pattern.Structure]())
-    }
-    val r: TPostResult[Context, org.sireum.lang.ast.Pattern.Structure] = if (preR.continu) {
-      val o2: org.sireum.lang.ast.Pattern.Structure = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, Option[org.sireum.lang.ast.Id]] = transformOption(preR.ctx, o2.idOpt, transform_langastId _)
-      val r1: TPostResult[Context, Option[org.sireum.lang.ast.Name]] = transformOption(r0.ctx, o2.nameOpt, transform_langastName _)
-      val r2: TPostResult[Context, IS[Z, org.sireum.lang.ast.Pattern]] = transformISZ(r1.ctx, o2.patterns, transform_langastPattern _)
-      val r3: TPostResult[Context, org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(r2.ctx, o2.attr)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
-        TPostResult(r3.ctx, Some(o2(idOpt = r0.resultOpt.getOrElse(o2.idOpt), nameOpt = r1.resultOpt.getOrElse(o2.nameOpt), patterns = r2.resultOpt.getOrElse(o2.patterns), attr = r3.resultOpt.getOrElse(o2.attr))))
-      else
-        TPostResult(r3.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: org.sireum.lang.ast.Pattern.Structure = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, org.sireum.lang.ast.Pattern.Structure] = pp.post_langastPatternStructure(r.ctx, o2) match {
-     case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Pattern.Structure)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Pattern.Structure](result))
-     case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Pattern.Structure")
-     case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Pattern.Structure]())
-    }
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
-  @pure def transform_langastProofAstStepAssume(ctx: Context, o: org.sireum.lang.ast.ProofAst.Step.Assume): TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Assume] = {
-    val preR: PreResult[Context, org.sireum.lang.ast.ProofAst.Step.Assume] = pp.pre_langastProofAstStepAssume(ctx, o) match {
-     case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.ProofAst.Step.Assume)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.ProofAst.Step.Assume](r))
-     case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Assume")
-     case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.ProofAst.Step.Assume]())
-    }
-    val r: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Assume] = if (preR.continu) {
-      val o2: org.sireum.lang.ast.ProofAst.Step.Assume = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, org.sireum.lang.ast.ProofAst.StepId] = transform_langastProofAstStepId(preR.ctx, o2.id)
-      val r1: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(r0.ctx, o2.claim)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        TPostResult(r1.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), claim = r1.resultOpt.getOrElse(o2.claim))))
-      else
-        TPostResult(r1.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: org.sireum.lang.ast.ProofAst.Step.Assume = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, org.sireum.lang.ast.ProofAst.Step.Assume] = pp.post_langastProofAstStepAssume(r.ctx, o2) match {
-     case TPostResult(postCtx, Some(result: org.sireum.lang.ast.ProofAst.Step.Assume)) => TPostResult(postCtx, Some[org.sireum.lang.ast.ProofAst.Step.Assume](result))
-     case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.ProofAst.Step.Assume")
-     case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.ProofAst.Step.Assume]())
     }
     if (postR.resultOpt.nonEmpty) {
       return postR

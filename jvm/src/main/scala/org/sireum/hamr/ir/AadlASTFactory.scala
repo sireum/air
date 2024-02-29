@@ -39,7 +39,7 @@ class AadlASTFactory {
     for(i <- 0 until args.size) {
       args(i) match {
         case null => halt(s"The argument at position ${i} cannot be null")
-        case l: List[_] =>
+        case l: scala.List[_] =>
           for(j <- 0 until l.size if l(j) == null) {
             halt(s"The ${j}th index of the argument at position ${i} is null: ${l(j)}")
           }

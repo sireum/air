@@ -2061,6 +2061,7 @@ object MsgPack {
 
     def write_langastStmtMatch(o: org.sireum.lang.ast.Stmt.Match): Unit = {
       writer.writeZ(Constants._langastStmtMatch)
+      writer.writeB(o.isInduct)
       write_langastExp(o.exp)
       writer.writeISZ(o.cases, write_langastCase _)
       write_langastTypedAttr(o.attr)
@@ -5863,10 +5864,11 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastStmtMatch)
       }
+      val isInduct = reader.readB()
       val exp = read_langastExp()
       val cases = reader.readISZ(read_langastCase _)
       val attr = read_langastTypedAttr()
-      return org.sireum.lang.ast.Stmt.Match(exp, cases, attr)
+      return org.sireum.lang.ast.Stmt.Match(isInduct, exp, cases, attr)
     }
 
     def read_langastStmtWhile(): org.sireum.lang.ast.Stmt.While = {

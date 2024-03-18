@@ -165,6 +165,10 @@ object MTransformer {
 
   val PostResult_langastStmtIf: MOption[org.sireum.lang.ast.Stmt] = MNone()
 
+  val PreResult_langastStmtInduct: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+
+  val PostResult_langastStmtInduct: MOption[org.sireum.lang.ast.Stmt] = MNone()
+
   val PreResult_langastStmtMatch: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
 
   val PostResult_langastStmtMatch: MOption[org.sireum.lang.ast.Stmt] = MNone()
@@ -1178,6 +1182,7 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.Assign => return pre_langastStmtAssign(o)
       case o: org.sireum.lang.ast.Stmt.Block => return pre_langastStmtBlock(o)
       case o: org.sireum.lang.ast.Stmt.If => return pre_langastStmtIf(o)
+      case o: org.sireum.lang.ast.Stmt.Induct => return pre_langastStmtInduct(o)
       case o: org.sireum.lang.ast.Stmt.Match => return pre_langastStmtMatch(o)
       case o: org.sireum.lang.ast.Stmt.While => return pre_langastStmtWhile(o)
       case o: org.sireum.lang.ast.Stmt.DoWhile => return pre_langastStmtDoWhile(o)
@@ -1373,6 +1378,10 @@ import MTransformer._
 
   def pre_langastStmtIf(o: org.sireum.lang.ast.Stmt.If): PreResult[org.sireum.lang.ast.Stmt] = {
     return PreResult_langastStmtIf
+  }
+
+  def pre_langastStmtInduct(o: org.sireum.lang.ast.Stmt.Induct): PreResult[org.sireum.lang.ast.Stmt] = {
+    return PreResult_langastStmtInduct
   }
 
   def pre_langastStmtMatch(o: org.sireum.lang.ast.Stmt.Match): PreResult[org.sireum.lang.ast.Stmt] = {
@@ -3867,6 +3876,7 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.Assign => return post_langastStmtAssign(o)
       case o: org.sireum.lang.ast.Stmt.Block => return post_langastStmtBlock(o)
       case o: org.sireum.lang.ast.Stmt.If => return post_langastStmtIf(o)
+      case o: org.sireum.lang.ast.Stmt.Induct => return post_langastStmtInduct(o)
       case o: org.sireum.lang.ast.Stmt.Match => return post_langastStmtMatch(o)
       case o: org.sireum.lang.ast.Stmt.While => return post_langastStmtWhile(o)
       case o: org.sireum.lang.ast.Stmt.DoWhile => return post_langastStmtDoWhile(o)
@@ -4062,6 +4072,10 @@ import MTransformer._
 
   def post_langastStmtIf(o: org.sireum.lang.ast.Stmt.If): MOption[org.sireum.lang.ast.Stmt] = {
     return PostResult_langastStmtIf
+  }
+
+  def post_langastStmtInduct(o: org.sireum.lang.ast.Stmt.Induct): MOption[org.sireum.lang.ast.Stmt] = {
+    return PostResult_langastStmtInduct
   }
 
   def post_langastStmtMatch(o: org.sireum.lang.ast.Stmt.Match): MOption[org.sireum.lang.ast.Stmt] = {
@@ -6716,6 +6730,13 @@ import MTransformer._
           val r3: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
             MSome(o2(cond = r0.getOrElse(o2.cond), thenBody = r1.getOrElse(o2.thenBody), elseBody = r2.getOrElse(o2.elseBody), attr = r3.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Induct =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Match =>

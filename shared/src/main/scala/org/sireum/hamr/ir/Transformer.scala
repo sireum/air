@@ -90,6 +90,7 @@ object Transformer {
         case o: org.sireum.lang.ast.Stmt.Assign => return pre_langastStmtAssign(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Block => return pre_langastStmtBlock(ctx, o)
         case o: org.sireum.lang.ast.Stmt.If => return pre_langastStmtIf(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.Induct => return pre_langastStmtInduct(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Match => return pre_langastStmtMatch(ctx, o)
         case o: org.sireum.lang.ast.Stmt.While => return pre_langastStmtWhile(ctx, o)
         case o: org.sireum.lang.ast.Stmt.DoWhile => return pre_langastStmtDoWhile(ctx, o)
@@ -284,6 +285,10 @@ object Transformer {
     }
 
     @pure def pre_langastStmtIf(ctx: Context, o: org.sireum.lang.ast.Stmt.If): PreResult[Context, org.sireum.lang.ast.Stmt] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def pre_langastStmtInduct(ctx: Context, o: org.sireum.lang.ast.Stmt.Induct): PreResult[Context, org.sireum.lang.ast.Stmt] = {
       return PreResult(ctx, T, None())
     }
 
@@ -2779,6 +2784,7 @@ object Transformer {
         case o: org.sireum.lang.ast.Stmt.Assign => return post_langastStmtAssign(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Block => return post_langastStmtBlock(ctx, o)
         case o: org.sireum.lang.ast.Stmt.If => return post_langastStmtIf(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.Induct => return post_langastStmtInduct(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Match => return post_langastStmtMatch(ctx, o)
         case o: org.sireum.lang.ast.Stmt.While => return post_langastStmtWhile(ctx, o)
         case o: org.sireum.lang.ast.Stmt.DoWhile => return post_langastStmtDoWhile(ctx, o)
@@ -2973,6 +2979,10 @@ object Transformer {
     }
 
     @pure def post_langastStmtIf(ctx: Context, o: org.sireum.lang.ast.Stmt.If): TPostResult[Context, org.sireum.lang.ast.Stmt] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def post_langastStmtInduct(ctx: Context, o: org.sireum.lang.ast.Stmt.Induct): TPostResult[Context, org.sireum.lang.ast.Stmt] = {
       return TPostResult(ctx, None())
     }
 
@@ -5668,6 +5678,13 @@ import Transformer._
             TPostResult(r3.ctx, Some(o2(cond = r0.resultOpt.getOrElse(o2.cond), thenBody = r1.resultOpt.getOrElse(o2.thenBody), elseBody = r2.resultOpt.getOrElse(o2.elseBody), attr = r3.resultOpt.getOrElse(o2.attr))))
           else
             TPostResult(r3.ctx, None())
+        case o2: org.sireum.lang.ast.Stmt.Induct =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
+          val r1: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r0.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r1.ctx, None())
         case o2: org.sireum.lang.ast.Stmt.Match =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Case]] = transformISZ(r0.ctx, o2.cases, transform_langastCase _)

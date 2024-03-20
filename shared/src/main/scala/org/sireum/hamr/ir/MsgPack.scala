@@ -2065,6 +2065,7 @@ object MsgPack {
     def write_langastStmtInduct(o: org.sireum.lang.ast.Stmt.Induct): Unit = {
       writer.writeZ(Constants._langastStmtInduct)
       write_langastExp(o.exp)
+      writer.writeISZ(o.context, writer.writeString _)
       writer.writeISZ(o.locals, writer.writeString _)
       write_langastAttr(o.attr)
     }
@@ -5876,9 +5877,10 @@ object MsgPack {
         reader.expectZ(Constants._langastStmtInduct)
       }
       val exp = read_langastExp()
+      val context = reader.readISZ(reader.readString _)
       val locals = reader.readISZ(reader.readString _)
       val attr = read_langastAttr()
-      return org.sireum.lang.ast.Stmt.Induct(exp, locals, attr)
+      return org.sireum.lang.ast.Stmt.Induct(exp, context, locals, attr)
     }
 
     def read_langastStmtMatch(): org.sireum.lang.ast.Stmt.Match = {

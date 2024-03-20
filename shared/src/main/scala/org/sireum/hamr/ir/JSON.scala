@@ -1965,6 +1965,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.Stmt.Induct""""),
         ("exp", print_langastExp(o.exp)),
+        ("context", printISZ(T, o.context, printString _)),
         ("locals", printISZ(T, o.locals, printString _)),
         ("attr", print_langastAttr(o.attr))
       ))
@@ -7073,13 +7074,16 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parse_langastExp()
       parser.parseObjectNext()
+      parser.parseObjectKey("context")
+      val context = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
       parser.parseObjectKey("locals")
       val locals = parser.parseISZ(parser.parseString _)
       parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Stmt.Induct(exp, locals, attr)
+      return org.sireum.lang.ast.Stmt.Induct(exp, context, locals, attr)
     }
 
     def parse_langastStmtMatch(): org.sireum.lang.ast.Stmt.Match = {

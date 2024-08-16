@@ -26,7 +26,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// This file is auto-generated from AadlAST.scala, BlessAST.scala, Emv2AST.scala, GumboAST.scala, SmfAST.scala, AST.scala, Typed.scala
+// This file is auto-generated from AadlAST.scala, BlessAST.scala, Emv2AST.scala, GumboAST.scala, SmfAST.scala, SysmlAst.scala, SysmlTyped.scala, AST.scala, Typed.scala
 
 package org.sireum.hamr.ir
 
@@ -118,7 +118,7 @@ import org.sireum.hamr.ir.BTSFunctionCall
 import org.sireum.hamr.ir.BTSFormalExpPair
 import org.sireum.hamr.ir.BTSBehaviorTime
 import org.sireum.hamr.ir.TODO
-import org.sireum.hamr.ir.Attr
+import org.sireum.hamr.ir.BlessAttr
 import org.sireum.hamr.ir.Emv2Annex
 import org.sireum.hamr.ir.Emv2Lib
 import org.sireum.hamr.ir.Emv2ElementRef
@@ -167,6 +167,12 @@ import org.sireum.hamr.ir.SmfClassification
 import org.sireum.hamr.ir.SmfDeclass
 import org.sireum.hamr.ir.SmfLibrary
 import org.sireum.hamr.ir.SmfType
+import org.sireum.hamr.ir.Attr
+import org.sireum.hamr.ir.ResolvedAttr
+import org.sireum.hamr.ir.ResolvedInfo
+import org.sireum.hamr.ir.Type
+import org.sireum.hamr.ir.TypedAttr
+import org.sireum.hamr.ir.Typed
 
 object MsgPack {
 
@@ -310,7 +316,7 @@ object MsgPack {
 
     val TODO: Z = 36
 
-    val Attr: Z = 37
+    val BlessAttr: Z = 37
 
     val Emv2ElementRef: Z = 38
 
@@ -390,325 +396,435 @@ object MsgPack {
 
     val SmfType: Z = 76
 
-    val _langastTopUnitProgram: Z = 77
+    val SysmlAstId: Z = 77
 
-    val _langastTopUnitTruthTableUnit: Z = 78
+    val SysmlAstName: Z = 78
 
-    val _langastLoopContract: Z = 79
+    val SysmlAstTopUnit: Z = 79
 
-    val _langastStmtImport: Z = 80
+    val SysmlAstFeatureValue: Z = 80
 
-    val _langastStmtImportImporter: Z = 81
+    val SysmlAstEnumeratedValue: Z = 81
 
-    val _langastStmtImportMultiSelector: Z = 82
+    val SysmlAstImport: Z = 82
 
-    val _langastStmtImportWildcardSelector: Z = 83
+    val SysmlAstAliasMember: Z = 83
 
-    val _langastStmtImportNamedSelector: Z = 84
+    val SysmlAstIdentification: Z = 84
 
-    val _langastStmtVar: Z = 85
+    val SysmlAstConnectorEnd: Z = 85
 
-    val _langastStmtVarPattern: Z = 86
+    val SysmlAstBinaryConnectorPart: Z = 86
 
-    val _langastStmtSpecVar: Z = 87
+    val SysmlAstNaryConnectorPart: Z = 87
 
-    val _langastStmtRsVal: Z = 88
+    val SysmlAstTypingsSpecialization: Z = 88
 
-    val _langastStmtMethod: Z = 89
+    val SysmlAstSubsettingsSpecialization: Z = 89
 
-    val _langastStmtExtMethod: Z = 90
+    val SysmlAstReferencesSpecialization: Z = 90
 
-    val _langastStmtJustMethod: Z = 91
+    val SysmlAstRedefinitionsSpecialization: Z = 91
 
-    val _langastStmtSpecMethod: Z = 92
+    val SysmlAstDefinitionPrefix: Z = 92
 
-    val _langastStmtEnum: Z = 93
+    val SysmlAstPackage: Z = 93
 
-    val _langastStmtSubZ: Z = 94
+    val SysmlAstAttributeDefinition: Z = 94
 
-    val _langastStmtObject: Z = 95
+    val SysmlAstOccurrenceDefinitionPrefix: Z = 95
 
-    val _langastStmtSig: Z = 96
+    val SysmlAstAllocationDefinition: Z = 96
 
-    val _langastStmtAdt: Z = 97
+    val SysmlAstConnectionDefinition: Z = 97
 
-    val _langastStmtTypeAlias: Z = 98
+    val SysmlAstEnumerationDefinition: Z = 98
 
-    val _langastStmtAssign: Z = 99
+    val SysmlAstPartDefinition: Z = 99
 
-    val _langastStmtBlock: Z = 100
+    val SysmlAstPortDefinition: Z = 100
 
-    val _langastStmtIf: Z = 101
+    val SysmlAstMetadataDefinition: Z = 101
 
-    val _langastStmtInduct: Z = 102
+    val SysmlAstCommonUsageElements: Z = 102
 
-    val _langastStmtMatch: Z = 103
+    val SysmlAstRefPrefix: Z = 103
 
-    val _langastStmtWhile: Z = 104
+    val SysmlAstUsagePrefix: Z = 104
 
-    val _langastStmtDoWhile: Z = 105
+    val SysmlAstAttributeUsage: Z = 105
 
-    val _langastStmtFor: Z = 106
+    val SysmlAstReferenceUsage: Z = 106
 
-    val _langastStmtReturn: Z = 107
+    val SysmlAstOccurrenceUsagePrefix: Z = 107
 
-    val _langastStmtExpr: Z = 108
+    val SysmlAstConnectionUsage: Z = 108
 
-    val _langastStmtFact: Z = 109
+    val SysmlAstItemUsage: Z = 109
 
-    val _langastStmtInv: Z = 110
+    val SysmlAstPartUsage: Z = 110
 
-    val _langastStmtTheorem: Z = 111
+    val SysmlAstPortUsage: Z = 111
 
-    val _langastStmtDataRefinement: Z = 112
+    val SysmlAstComment: Z = 112
 
-    val _langastStmtSpecLabel: Z = 113
+    val SysmlAstDocumentation: Z = 113
 
-    val _langastStmtSpecBlock: Z = 114
+    val SysmlAstTextualRepresentation: Z = 114
 
-    val _langastStmtDeduceSequent: Z = 115
+    val SysmlAstGumboAnnotation: Z = 115
 
-    val _langastStmtDeduceSteps: Z = 116
+    val Attr: Z = 116
 
-    val _langastStmtHavoc: Z = 117
+    val ResolvedAttr: Z = 117
 
-    val _langastMethodContractAccesses: Z = 118
+    val ResolvedInfoPackage: Z = 118
 
-    val _langastMethodContractClaims: Z = 119
+    val ResolvedInfoEnum: Z = 119
 
-    val _langastMethodContractSimple: Z = 120
+    val ResolvedInfoEnumElement: Z = 120
 
-    val _langastMethodContractCases: Z = 121
+    val ResolvedInfoAttributeUsage: Z = 121
 
-    val _langastMethodContractCase: Z = 122
+    val ResolvedInfoConnectionUsage: Z = 122
 
-    val _langastMethodContractInfoFlows: Z = 123
+    val ResolvedInfoItemUsage: Z = 123
 
-    val _langastMethodContractInfoFlowGroup: Z = 124
+    val ResolvedInfoPartUsage: Z = 124
 
-    val _langastMethodContractInfoFlowFlow: Z = 125
+    val ResolvedInfoPortUsage: Z = 125
 
-    val _langastMethodContractInfoFlowCase: Z = 126
+    val ResolvedInfoReferenceUsage: Z = 126
 
-    val _langastSequent: Z = 127
+    val TypeNamed: Z = 127
 
-    val _langastProofAst: Z = 128
+    val TypedAttr: Z = 128
 
-    val _langastProofAstStepIdNum: Z = 129
+    val TypedPackage: Z = 129
 
-    val _langastProofAstStepIdStr: Z = 130
+    val TypedName: Z = 130
 
-    val _langastProofAstStepRegular: Z = 131
+    val TypedEnum: Z = 131
 
-    val _langastProofAstStepAssume: Z = 132
+    val _langastTopUnitProgram: Z = 132
 
-    val _langastProofAstStepAssert: Z = 133
+    val _langastTopUnitTruthTableUnit: Z = 133
 
-    val _langastProofAstStepSubProof: Z = 134
+    val _langastLoopContract: Z = 134
 
-    val _langastProofAstStepLet: Z = 135
+    val _langastStmtImport: Z = 135
 
-    val _langastProofAstStepLetParam: Z = 136
+    val _langastStmtImportImporter: Z = 136
 
-    val _langastProofAstStepJustificationRef: Z = 137
+    val _langastStmtImportMultiSelector: Z = 137
 
-    val _langastProofAstStepJustificationApply: Z = 138
+    val _langastStmtImportWildcardSelector: Z = 138
 
-    val _langastProofAstStepJustificationApplyNamed: Z = 139
+    val _langastStmtImportNamedSelector: Z = 139
 
-    val _langastProofAstStepJustificationApplyEta: Z = 140
+    val _langastStmtVar: Z = 140
 
-    val _langastCase: Z = 141
+    val _langastStmtVarPattern: Z = 141
 
-    val _langastEnumGenRangeExpr: Z = 142
+    val _langastStmtSpecVar: Z = 142
 
-    val _langastEnumGenRangeStep: Z = 143
+    val _langastStmtRsVal: Z = 143
 
-    val _langastEnumGenFor: Z = 144
+    val _langastStmtMethod: Z = 144
 
-    val _langastTypeNamed: Z = 145
+    val _langastStmtExtMethod: Z = 145
 
-    val _langastTypeFun: Z = 146
+    val _langastStmtJustMethod: Z = 146
 
-    val _langastTypeTuple: Z = 147
+    val _langastStmtSpecMethod: Z = 147
 
-    val _langastPatternLiteral: Z = 148
+    val _langastStmtEnum: Z = 148
 
-    val _langastPatternLitInterpolate: Z = 149
+    val _langastStmtSubZ: Z = 149
 
-    val _langastPatternRef: Z = 150
+    val _langastStmtObject: Z = 150
 
-    val _langastPatternVarBinding: Z = 151
+    val _langastStmtSig: Z = 151
 
-    val _langastPatternWildcard: Z = 152
+    val _langastStmtAdt: Z = 152
 
-    val _langastPatternSeqWildcard: Z = 153
+    val _langastStmtTypeAlias: Z = 153
 
-    val _langastPatternStructure: Z = 154
+    val _langastStmtAssign: Z = 154
 
-    val _langastExpLitB: Z = 155
+    val _langastStmtBlock: Z = 155
 
-    val _langastExpLitC: Z = 156
+    val _langastStmtIf: Z = 156
 
-    val _langastExpLitZ: Z = 157
+    val _langastStmtInduct: Z = 157
 
-    val _langastExpLitF32: Z = 158
+    val _langastStmtMatch: Z = 158
 
-    val _langastExpLitF64: Z = 159
+    val _langastStmtWhile: Z = 159
 
-    val _langastExpLitR: Z = 160
+    val _langastStmtDoWhile: Z = 160
 
-    val _langastExpLitString: Z = 161
+    val _langastStmtFor: Z = 161
 
-    val _langastExpStringInterpolate: Z = 162
+    val _langastStmtReturn: Z = 162
 
-    val _langastExpThis: Z = 163
+    val _langastStmtExpr: Z = 163
 
-    val _langastExpSuper: Z = 164
+    val _langastStmtFact: Z = 164
 
-    val _langastExpUnary: Z = 165
+    val _langastStmtInv: Z = 165
 
-    val _langastExpBinary: Z = 166
+    val _langastStmtTheorem: Z = 166
 
-    val _langastExpIdent: Z = 167
+    val _langastStmtDataRefinement: Z = 167
 
-    val _langastExpEta: Z = 168
+    val _langastStmtSpecLabel: Z = 168
 
-    val _langastExpTuple: Z = 169
+    val _langastStmtSpecBlock: Z = 169
 
-    val _langastExpSelect: Z = 170
+    val _langastStmtDeduceSequent: Z = 170
 
-    val _langastExpInvoke: Z = 171
+    val _langastStmtDeduceSteps: Z = 171
 
-    val _langastExpInvokeNamed: Z = 172
+    val _langastStmtHavoc: Z = 172
 
-    val _langastExpIf: Z = 173
+    val _langastMethodContractAccesses: Z = 173
 
-    val _langastExpTypeCond: Z = 174
+    val _langastMethodContractClaims: Z = 174
 
-    val _langastExpSym: Z = 175
+    val _langastMethodContractSimple: Z = 175
 
-    val _langastExpFunParam: Z = 176
+    val _langastMethodContractCases: Z = 176
 
-    val _langastExpFun: Z = 177
+    val _langastMethodContractCase: Z = 177
 
-    val _langastExpForYield: Z = 178
+    val _langastMethodContractInfoFlows: Z = 178
 
-    val _langastExpQuantType: Z = 179
+    val _langastMethodContractInfoFlowGroup: Z = 179
 
-    val _langastExpQuantRange: Z = 180
+    val _langastMethodContractInfoFlowFlow: Z = 180
 
-    val _langastExpQuantEach: Z = 181
+    val _langastMethodContractInfoFlowCase: Z = 181
 
-    val _langastExpInput: Z = 182
+    val _langastSequent: Z = 182
 
-    val _langastExpOld: Z = 183
+    val _langastProofAst: Z = 183
 
-    val _langastExpRS: Z = 184
+    val _langastProofAstStepIdNum: Z = 184
 
-    val _langastExpAt: Z = 185
+    val _langastProofAstStepIdStr: Z = 185
 
-    val _langastExpLoopIndex: Z = 186
+    val _langastProofAstStepRegular: Z = 186
 
-    val _langastExpStateSeq: Z = 187
+    val _langastProofAstStepAssume: Z = 187
 
-    val _langastExpStateSeqFragment: Z = 188
+    val _langastProofAstStepAssert: Z = 188
 
-    val _langastExpResult: Z = 189
+    val _langastProofAstStepSubProof: Z = 189
 
-    val _langastExpStrictPureBlock: Z = 190
+    val _langastProofAstStepLet: Z = 190
 
-    val _langastExpLabeled: Z = 191
+    val _langastProofAstStepLetParam: Z = 191
 
-    val _langastExpAssumeAgree: Z = 192
+    val _langastProofAstStepJustificationRef: Z = 192
 
-    val _langastExpAssertAgree: Z = 193
+    val _langastProofAstStepJustificationApply: Z = 193
 
-    val _langastExpInfoFlowInvariant: Z = 194
+    val _langastProofAstStepJustificationApplyNamed: Z = 194
 
-    val _langastNamedArg: Z = 195
+    val _langastProofAstStepJustificationApplyEta: Z = 195
 
-    val _langastId: Z = 196
+    val _langastCase: Z = 196
 
-    val _langastName: Z = 197
+    val _langastEnumGenRangeExpr: Z = 197
 
-    val _langastBody: Z = 198
+    val _langastEnumGenRangeStep: Z = 198
 
-    val _langastAdtParam: Z = 199
+    val _langastEnumGenFor: Z = 199
 
-    val _langastMethodSig: Z = 200
+    val _langastTypeNamed: Z = 200
 
-    val _langastParam: Z = 201
+    val _langastTypeFun: Z = 201
 
-    val _langastTypeParam: Z = 202
+    val _langastTypeTuple: Z = 202
 
-    val _langastAttr: Z = 203
+    val _langastPatternLiteral: Z = 203
 
-    val _langastTypedAttr: Z = 204
+    val _langastPatternLitInterpolate: Z = 204
 
-    val _langastResolvedAttr: Z = 205
+    val _langastPatternRef: Z = 205
 
-    val _langastResolvedInfoBuiltIn: Z = 206
+    val _langastPatternVarBinding: Z = 206
 
-    val _langastResolvedInfoPackage: Z = 207
+    val _langastPatternWildcard: Z = 207
 
-    val _langastResolvedInfoEnum: Z = 208
+    val _langastPatternSeqWildcard: Z = 208
 
-    val _langastResolvedInfoEnumElement: Z = 209
+    val _langastPatternStructure: Z = 209
 
-    val _langastResolvedInfoObject: Z = 210
+    val _langastExpLitB: Z = 210
 
-    val _langastResolvedInfoVar: Z = 211
+    val _langastExpLitC: Z = 211
 
-    val _langastResolvedInfoMethod: Z = 212
+    val _langastExpLitZ: Z = 212
 
-    val _langastResolvedInfoMethods: Z = 213
+    val _langastExpLitF32: Z = 213
 
-    val _langastResolvedInfoTuple: Z = 214
+    val _langastExpLitF64: Z = 214
 
-    val _langastResolvedInfoLocalVar: Z = 215
+    val _langastExpLitR: Z = 215
 
-    val _langastResolvedInfoFact: Z = 216
+    val _langastExpLitString: Z = 216
 
-    val _langastResolvedInfoTheorem: Z = 217
+    val _langastExpStringInterpolate: Z = 217
 
-    val _langastResolvedInfoInv: Z = 218
+    val _langastExpThis: Z = 218
 
-    val _langastTruthTableRow: Z = 219
+    val _langastExpSuper: Z = 219
 
-    val _langastTruthTableAssignment: Z = 220
+    val _langastExpUnary: Z = 220
 
-    val _langastTruthTableConclusionValidity: Z = 221
+    val _langastExpBinary: Z = 221
 
-    val _langastTruthTableConclusionTautology: Z = 222
+    val _langastExpIdent: Z = 222
 
-    val _langastTruthTableConclusionContradictory: Z = 223
+    val _langastExpEta: Z = 223
 
-    val _langastTruthTableConclusionContingent: Z = 224
+    val _langastExpTuple: Z = 224
 
-    val _langastTypedName: Z = 225
+    val _langastExpSelect: Z = 225
 
-    val _langastTypedTuple: Z = 226
+    val _langastExpInvoke: Z = 226
 
-    val _langastTypedFun: Z = 227
+    val _langastExpInvokeNamed: Z = 227
 
-    val _langastTypedTypeVar: Z = 228
+    val _langastExpIf: Z = 228
 
-    val _langastTypedPackage: Z = 229
+    val _langastExpTypeCond: Z = 229
 
-    val _langastTypedObject: Z = 230
+    val _langastExpSym: Z = 230
 
-    val _langastTypedEnum: Z = 231
+    val _langastExpFunParam: Z = 231
 
-    val _langastTypedMethod: Z = 232
+    val _langastExpFun: Z = 232
 
-    val _langastTypedMethods: Z = 233
+    val _langastExpForYield: Z = 233
 
-    val _langastTypedFact: Z = 234
+    val _langastExpQuantType: Z = 234
 
-    val _langastTypedTheorem: Z = 235
+    val _langastExpQuantRange: Z = 235
 
-    val _langastTypedInv: Z = 236
+    val _langastExpQuantEach: Z = 236
+
+    val _langastExpInput: Z = 237
+
+    val _langastExpOld: Z = 238
+
+    val _langastExpRS: Z = 239
+
+    val _langastExpAt: Z = 240
+
+    val _langastExpLoopIndex: Z = 241
+
+    val _langastExpStateSeq: Z = 242
+
+    val _langastExpStateSeqFragment: Z = 243
+
+    val _langastExpResult: Z = 244
+
+    val _langastExpStrictPureBlock: Z = 245
+
+    val _langastExpLabeled: Z = 246
+
+    val _langastExpAssumeAgree: Z = 247
+
+    val _langastExpAssertAgree: Z = 248
+
+    val _langastExpInfoFlowInvariant: Z = 249
+
+    val _langastNamedArg: Z = 250
+
+    val _langastId: Z = 251
+
+    val _langastName: Z = 252
+
+    val _langastBody: Z = 253
+
+    val _langastAdtParam: Z = 254
+
+    val _langastMethodSig: Z = 255
+
+    val _langastParam: Z = 256
+
+    val _langastTypeParam: Z = 257
+
+    val _langastAttr: Z = 258
+
+    val _langastTypedAttr: Z = 259
+
+    val _langastResolvedAttr: Z = 260
+
+    val _langastResolvedInfoBuiltIn: Z = 261
+
+    val _langastResolvedInfoPackage: Z = 262
+
+    val _langastResolvedInfoEnum: Z = 263
+
+    val _langastResolvedInfoEnumElement: Z = 264
+
+    val _langastResolvedInfoObject: Z = 265
+
+    val _langastResolvedInfoVar: Z = 266
+
+    val _langastResolvedInfoMethod: Z = 267
+
+    val _langastResolvedInfoMethods: Z = 268
+
+    val _langastResolvedInfoTuple: Z = 269
+
+    val _langastResolvedInfoLocalVar: Z = 270
+
+    val _langastResolvedInfoFact: Z = 271
+
+    val _langastResolvedInfoTheorem: Z = 272
+
+    val _langastResolvedInfoInv: Z = 273
+
+    val _langastTruthTableRow: Z = 274
+
+    val _langastTruthTableAssignment: Z = 275
+
+    val _langastTruthTableConclusionValidity: Z = 276
+
+    val _langastTruthTableConclusionTautology: Z = 277
+
+    val _langastTruthTableConclusionContradictory: Z = 278
+
+    val _langastTruthTableConclusionContingent: Z = 279
+
+    val _langastTypedName: Z = 280
+
+    val _langastTypedTuple: Z = 281
+
+    val _langastTypedFun: Z = 282
+
+    val _langastTypedTypeVar: Z = 283
+
+    val _langastTypedPackage: Z = 284
+
+    val _langastTypedObject: Z = 285
+
+    val _langastTypedEnum: Z = 286
+
+    val _langastTypedMethod: Z = 287
+
+    val _langastTypedMethods: Z = 288
+
+    val _langastTypedFact: Z = 289
+
+    val _langastTypedTheorem: Z = 290
+
+    val _langastTypedInv: Z = 291
 
   }
 
@@ -1412,8 +1528,8 @@ object MsgPack {
       writer.writeZ(Constants.TODO)
     }
 
-    def writeAttr(o: Attr): Unit = {
-      writer.writeZ(Constants.Attr)
+    def writeBlessAttr(o: BlessAttr): Unit = {
+      writer.writeZ(Constants.BlessAttr)
       writer.writeOption(o.posOpt, writer.writePosition _)
     }
 
@@ -1633,6 +1749,7 @@ object MsgPack {
       writer.writeOption(o.initializes, writeGclInitialize _)
       writer.writeOption(o.integration, writeGclIntegration _)
       writer.writeOption(o.compute, writeGclCompute _)
+      writeAttr(o.attr)
     }
 
     def writeGclMethod(o: GclMethod): Unit = {
@@ -1644,7 +1761,7 @@ object MsgPack {
       writer.writeZ(Constants.GclStateVar)
       writer.writeString(o.name)
       writer.writeString(o.classifier)
-      writer.writeOption(o.posOpt, writer.writePosition _)
+      writeAttr(o.attr)
     }
 
     def writeGclClause(o: GclClause): Unit = {
@@ -1669,7 +1786,7 @@ object MsgPack {
       writer.writeString(o.id)
       writer.writeOption(o.descriptor, writer.writeString _)
       write_langastExp(o.exp)
-      writer.writeOption(o.posOpt, writer.writePosition _)
+      writeAttr(o.attr)
     }
 
     def writeGclComputeSpec(o: GclComputeSpec): Unit = {
@@ -1684,7 +1801,7 @@ object MsgPack {
       writer.writeString(o.id)
       writer.writeOption(o.descriptor, writer.writeString _)
       write_langastExp(o.exp)
-      writer.writeOption(o.posOpt, writer.writePosition _)
+      writeAttr(o.attr)
     }
 
     def writeGclGuarantee(o: GclGuarantee): Unit = {
@@ -1692,12 +1809,13 @@ object MsgPack {
       writer.writeString(o.id)
       writer.writeOption(o.descriptor, writer.writeString _)
       write_langastExp(o.exp)
-      writer.writeOption(o.posOpt, writer.writePosition _)
+      writeAttr(o.attr)
     }
 
     def writeGclIntegration(o: GclIntegration): Unit = {
       writer.writeZ(Constants.GclIntegration)
       writer.writeISZ(o.specs, writeGclSpec _)
+      writeAttr(o.attr)
     }
 
     def writeGclCaseStatement(o: GclCaseStatement): Unit = {
@@ -1706,7 +1824,7 @@ object MsgPack {
       writer.writeOption(o.descriptor, writer.writeString _)
       write_langastExp(o.assumes)
       write_langastExp(o.guarantees)
-      writer.writeOption(o.posOpt, writer.writePosition _)
+      writeAttr(o.attr)
     }
 
     def writeGclInitialize(o: GclInitialize): Unit = {
@@ -1714,6 +1832,7 @@ object MsgPack {
       writer.writeISZ(o.modifies, write_langastExp _)
       writer.writeISZ(o.guarantees, writeGclGuarantee _)
       writer.writeISZ(o.flows, writeInfoFlowClause _)
+      writeAttr(o.attr)
     }
 
     def writeGclCompute(o: GclCompute): Unit = {
@@ -1723,6 +1842,7 @@ object MsgPack {
       writer.writeISZ(o.cases, writeGclCaseStatement _)
       writer.writeISZ(o.handlers, writeGclHandle _)
       writer.writeISZ(o.flows, writeInfoFlowClause _)
+      writeAttr(o.attr)
     }
 
     def writeGclHandle(o: GclHandle): Unit = {
@@ -1730,6 +1850,7 @@ object MsgPack {
       write_langastExp(o.port)
       writer.writeISZ(o.modifies, write_langastExp _)
       writer.writeISZ(o.guarantees, writeGclGuarantee _)
+      writeAttr(o.attr)
     }
 
     def writeGclTODO(o: GclTODO): Unit = {
@@ -1740,6 +1861,7 @@ object MsgPack {
       writer.writeZ(Constants.GclLib)
       writeName(o.containingPackage)
       writer.writeISZ(o.methods, writeGclMethod _)
+      writeAttr(o.attr)
     }
 
     def writeInfoFlowClause(o: InfoFlowClause): Unit = {
@@ -1748,7 +1870,7 @@ object MsgPack {
       writer.writeOption(o.descriptor, writer.writeString _)
       writer.writeISZ(o.from, write_langastExp _)
       writer.writeISZ(o.to, write_langastExp _)
-      writer.writeOption(o.posOpt, writer.writePosition _)
+      writeAttr(o.attr)
     }
 
     def writeSmfAnnex(o: SmfAnnex): Unit = {
@@ -1794,6 +1916,644 @@ object MsgPack {
       writer.writeZ(Constants.SmfType)
       writeName(o.typeName)
       writer.writeISZ(o.parentType, writeName _)
+    }
+
+    def writeSysmlAstId(o: SysmlAst.Id): Unit = {
+      writer.writeZ(Constants.SysmlAstId)
+      writer.writeString(o.value)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstName(o: SysmlAst.Name): Unit = {
+      writer.writeZ(Constants.SysmlAstName)
+      writer.writeISZ(o.ids, writeSysmlAstId _)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstTopUnit(o: SysmlAst.TopUnit): Unit = {
+      writer.writeZ(Constants.SysmlAstTopUnit)
+      writer.writeOption(o.fileUri, writer.writeString _)
+      writer.writeISZ(o.packageBodyElements, writeSysmlAstPackageBodyElement _)
+    }
+
+    def writeSysmlAstAttrNode(o: SysmlAst.AttrNode): Unit = {
+      o match {
+        case o: SysmlAst.Import => writeSysmlAstImport(o)
+        case o: SysmlAst.AliasMember => writeSysmlAstAliasMember(o)
+        case o: SysmlAst.Identification => writeSysmlAstIdentification(o)
+        case o: SysmlAst.Package => writeSysmlAstPackage(o)
+        case o: SysmlAst.AttributeDefinition => writeSysmlAstAttributeDefinition(o)
+        case o: SysmlAst.AllocationDefinition => writeSysmlAstAllocationDefinition(o)
+        case o: SysmlAst.ConnectionDefinition => writeSysmlAstConnectionDefinition(o)
+        case o: SysmlAst.EnumerationDefinition => writeSysmlAstEnumerationDefinition(o)
+        case o: SysmlAst.PartDefinition => writeSysmlAstPartDefinition(o)
+        case o: SysmlAst.PortDefinition => writeSysmlAstPortDefinition(o)
+        case o: SysmlAst.MetadataDefinition => writeSysmlAstMetadataDefinition(o)
+        case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => writeSysmlAstReferenceUsage(o)
+        case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => writeSysmlAstPortUsage(o)
+        case o: SysmlAst.Comment => writeSysmlAstComment(o)
+        case o: SysmlAst.Documentation => writeSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => writeSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => writeSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    def writeSysmlAstPackageBodyElement(o: SysmlAst.PackageBodyElement): Unit = {
+      o match {
+        case o: SysmlAst.Import => writeSysmlAstImport(o)
+        case o: SysmlAst.AliasMember => writeSysmlAstAliasMember(o)
+        case o: SysmlAst.Package => writeSysmlAstPackage(o)
+        case o: SysmlAst.AttributeDefinition => writeSysmlAstAttributeDefinition(o)
+        case o: SysmlAst.AllocationDefinition => writeSysmlAstAllocationDefinition(o)
+        case o: SysmlAst.ConnectionDefinition => writeSysmlAstConnectionDefinition(o)
+        case o: SysmlAst.EnumerationDefinition => writeSysmlAstEnumerationDefinition(o)
+        case o: SysmlAst.PartDefinition => writeSysmlAstPartDefinition(o)
+        case o: SysmlAst.PortDefinition => writeSysmlAstPortDefinition(o)
+        case o: SysmlAst.MetadataDefinition => writeSysmlAstMetadataDefinition(o)
+        case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => writeSysmlAstReferenceUsage(o)
+        case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => writeSysmlAstPortUsage(o)
+        case o: SysmlAst.Comment => writeSysmlAstComment(o)
+        case o: SysmlAst.Documentation => writeSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => writeSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => writeSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    def writeSysmlAstDefinitionBodyItem(o: SysmlAst.DefinitionBodyItem): Unit = {
+      o match {
+        case o: SysmlAst.Import => writeSysmlAstImport(o)
+        case o: SysmlAst.AliasMember => writeSysmlAstAliasMember(o)
+        case o: SysmlAst.Package => writeSysmlAstPackage(o)
+        case o: SysmlAst.AttributeDefinition => writeSysmlAstAttributeDefinition(o)
+        case o: SysmlAst.AllocationDefinition => writeSysmlAstAllocationDefinition(o)
+        case o: SysmlAst.ConnectionDefinition => writeSysmlAstConnectionDefinition(o)
+        case o: SysmlAst.EnumerationDefinition => writeSysmlAstEnumerationDefinition(o)
+        case o: SysmlAst.PartDefinition => writeSysmlAstPartDefinition(o)
+        case o: SysmlAst.PortDefinition => writeSysmlAstPortDefinition(o)
+        case o: SysmlAst.MetadataDefinition => writeSysmlAstMetadataDefinition(o)
+        case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => writeSysmlAstReferenceUsage(o)
+        case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => writeSysmlAstPortUsage(o)
+        case o: SysmlAst.Comment => writeSysmlAstComment(o)
+        case o: SysmlAst.Documentation => writeSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => writeSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => writeSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    def writeSysmlAstVisibilityType(o: SysmlAst.Visibility.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def writeSysmlAstFeatureValue(o: SysmlAst.FeatureValue): Unit = {
+      writer.writeZ(Constants.SysmlAstFeatureValue)
+      writer.writeB(o.isBound)
+      writer.writeB(o.isInitial)
+      writer.writeB(o.isDefault)
+      write_langastExp(o.exp)
+    }
+
+    def writeSysmlAstEnumeratedValue(o: SysmlAst.EnumeratedValue): Unit = {
+      writer.writeZ(Constants.SysmlAstEnumeratedValue)
+      writeSysmlAstVisibilityType(o.visibility)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writer.writeISZ(o.specializations, writeSysmlAstFeatureSpecialization _)
+      writer.writeISZ(o.definitionBodyItems, writeSysmlAstDefinitionBodyItem _)
+    }
+
+    def writeSysmlAstImport(o: SysmlAst.Import): Unit = {
+      writer.writeZ(Constants.SysmlAstImport)
+      writeSysmlAstVisibilityType(o.visibility)
+      writer.writeB(o.all)
+      writeSysmlAstName(o.name)
+      writer.writeB(o.star)
+      writer.writeB(o.starStar)
+      writer.writeISZ(o.annotations, writeSysmlAstAnnotatingElement _)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstAliasMember(o: SysmlAst.AliasMember): Unit = {
+      writer.writeZ(Constants.SysmlAstAliasMember)
+      writeSysmlAstVisibilityType(o.visibility)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writeSysmlAstName(o.target)
+      writer.writeISZ(o.annotations, writeSysmlAstAnnotatingElement _)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstIdentification(o: SysmlAst.Identification): Unit = {
+      writer.writeZ(Constants.SysmlAstIdentification)
+      writer.writeOption(o.shortName, writeSysmlAstId _)
+      writer.writeOption(o.name, writeSysmlAstId _)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstFeatureDirectionType(o: SysmlAst.FeatureDirection.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
+    def writeSysmlAstPackageMember(o: SysmlAst.PackageMember): Unit = {
+      o match {
+        case o: SysmlAst.Package => writeSysmlAstPackage(o)
+        case o: SysmlAst.AttributeDefinition => writeSysmlAstAttributeDefinition(o)
+        case o: SysmlAst.AllocationDefinition => writeSysmlAstAllocationDefinition(o)
+        case o: SysmlAst.ConnectionDefinition => writeSysmlAstConnectionDefinition(o)
+        case o: SysmlAst.EnumerationDefinition => writeSysmlAstEnumerationDefinition(o)
+        case o: SysmlAst.PartDefinition => writeSysmlAstPartDefinition(o)
+        case o: SysmlAst.PortDefinition => writeSysmlAstPortDefinition(o)
+        case o: SysmlAst.MetadataDefinition => writeSysmlAstMetadataDefinition(o)
+        case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => writeSysmlAstReferenceUsage(o)
+        case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => writeSysmlAstPortUsage(o)
+        case o: SysmlAst.Comment => writeSysmlAstComment(o)
+        case o: SysmlAst.Documentation => writeSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => writeSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => writeSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    def writeSysmlAstConnectorPart(o: SysmlAst.ConnectorPart): Unit = {
+      o match {
+        case o: SysmlAst.BinaryConnectorPart => writeSysmlAstBinaryConnectorPart(o)
+        case o: SysmlAst.NaryConnectorPart => writeSysmlAstNaryConnectorPart(o)
+      }
+    }
+
+    def writeSysmlAstConnectorEnd(o: SysmlAst.ConnectorEnd): Unit = {
+      writer.writeZ(Constants.SysmlAstConnectorEnd)
+      writer.writeISZ(o.reference, writeSysmlAstName _)
+    }
+
+    def writeSysmlAstBinaryConnectorPart(o: SysmlAst.BinaryConnectorPart): Unit = {
+      writer.writeZ(Constants.SysmlAstBinaryConnectorPart)
+      writeSysmlAstConnectorEnd(o.src)
+      writeSysmlAstConnectorEnd(o.dst)
+    }
+
+    def writeSysmlAstNaryConnectorPart(o: SysmlAst.NaryConnectorPart): Unit = {
+      writer.writeZ(Constants.SysmlAstNaryConnectorPart)
+      writer.writeISZ(o.connectorEnds, writeSysmlAstConnectorEnd _)
+    }
+
+    def writeSysmlAstFeatureSpecialization(o: SysmlAst.FeatureSpecialization): Unit = {
+      o match {
+        case o: SysmlAst.TypingsSpecialization => writeSysmlAstTypingsSpecialization(o)
+        case o: SysmlAst.SubsettingsSpecialization => writeSysmlAstSubsettingsSpecialization(o)
+        case o: SysmlAst.ReferencesSpecialization => writeSysmlAstReferencesSpecialization(o)
+        case o: SysmlAst.RedefinitionsSpecialization => writeSysmlAstRedefinitionsSpecialization(o)
+      }
+    }
+
+    def writeSysmlAstTypingsSpecialization(o: SysmlAst.TypingsSpecialization): Unit = {
+      writer.writeZ(Constants.SysmlAstTypingsSpecialization)
+      writer.writeISZ(o.names, writeSysmlAstName _)
+    }
+
+    def writeSysmlAstSubsettingsSpecialization(o: SysmlAst.SubsettingsSpecialization): Unit = {
+      writer.writeZ(Constants.SysmlAstSubsettingsSpecialization)
+      writer.writeISZ(o.subsettings, writeSysmlAstName _)
+    }
+
+    def writeSysmlAstReferencesSpecialization(o: SysmlAst.ReferencesSpecialization): Unit = {
+      writer.writeZ(Constants.SysmlAstReferencesSpecialization)
+      writer.writeISZ(o.references, writeSysmlAstName _)
+    }
+
+    def writeSysmlAstRedefinitionsSpecialization(o: SysmlAst.RedefinitionsSpecialization): Unit = {
+      writer.writeZ(Constants.SysmlAstRedefinitionsSpecialization)
+      writer.writeISZ(o.references, writeSysmlAstName _)
+    }
+
+    def writeSysmlAstDefinitionMember(o: SysmlAst.DefinitionMember): Unit = {
+      o match {
+        case o: SysmlAst.Package => writeSysmlAstPackage(o)
+        case o: SysmlAst.AttributeDefinition => writeSysmlAstAttributeDefinition(o)
+        case o: SysmlAst.AllocationDefinition => writeSysmlAstAllocationDefinition(o)
+        case o: SysmlAst.ConnectionDefinition => writeSysmlAstConnectionDefinition(o)
+        case o: SysmlAst.EnumerationDefinition => writeSysmlAstEnumerationDefinition(o)
+        case o: SysmlAst.PartDefinition => writeSysmlAstPartDefinition(o)
+        case o: SysmlAst.PortDefinition => writeSysmlAstPortDefinition(o)
+        case o: SysmlAst.MetadataDefinition => writeSysmlAstMetadataDefinition(o)
+        case o: SysmlAst.Comment => writeSysmlAstComment(o)
+        case o: SysmlAst.Documentation => writeSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => writeSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => writeSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    def writeSysmlAstDefinitionElement(o: SysmlAst.DefinitionElement): Unit = {
+      o match {
+        case o: SysmlAst.Package => writeSysmlAstPackage(o)
+        case o: SysmlAst.AttributeDefinition => writeSysmlAstAttributeDefinition(o)
+        case o: SysmlAst.AllocationDefinition => writeSysmlAstAllocationDefinition(o)
+        case o: SysmlAst.ConnectionDefinition => writeSysmlAstConnectionDefinition(o)
+        case o: SysmlAst.EnumerationDefinition => writeSysmlAstEnumerationDefinition(o)
+        case o: SysmlAst.PartDefinition => writeSysmlAstPartDefinition(o)
+        case o: SysmlAst.PortDefinition => writeSysmlAstPortDefinition(o)
+        case o: SysmlAst.MetadataDefinition => writeSysmlAstMetadataDefinition(o)
+        case o: SysmlAst.Comment => writeSysmlAstComment(o)
+        case o: SysmlAst.Documentation => writeSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => writeSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => writeSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    def writeSysmlAstDefinitionPrefix(o: SysmlAst.DefinitionPrefix): Unit = {
+      writer.writeZ(Constants.SysmlAstDefinitionPrefix)
+      writer.writeB(o.isAbstract)
+      writer.writeB(o.isVariation)
+    }
+
+    def writeSysmlAstPackage(o: SysmlAst.Package): Unit = {
+      writer.writeZ(Constants.SysmlAstPackage)
+      writeSysmlAstVisibilityType(o.visibility)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writer.writeISZ(o.packageElements, writeSysmlAstPackageBodyElement _)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstAttributeDefinition(o: SysmlAst.AttributeDefinition): Unit = {
+      writer.writeZ(Constants.SysmlAstAttributeDefinition)
+      writeSysmlAstVisibilityType(o.visibility)
+      writeSysmlAstDefinitionPrefix(o.defPrefix)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writer.writeISZ(o.subClassifications, writeSysmlAstName _)
+      writer.writeISZ(o.parents, writeTypeNamed _)
+      writer.writeISZ(o.bodyItems, writeSysmlAstDefinitionBodyItem _)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstOccurrenceDefinitionPrefix(o: SysmlAst.OccurrenceDefinitionPrefix): Unit = {
+      writer.writeZ(Constants.SysmlAstOccurrenceDefinitionPrefix)
+      writer.writeB(o.isAbstract)
+      writer.writeB(o.isVariation)
+    }
+
+    def writeSysmlAstAllocationDefinition(o: SysmlAst.AllocationDefinition): Unit = {
+      writer.writeZ(Constants.SysmlAstAllocationDefinition)
+      writeSysmlAstVisibilityType(o.visibility)
+      writeSysmlAstOccurrenceDefinitionPrefix(o.occurrenceDefPrefix)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writer.writeISZ(o.subClassifications, writeSysmlAstName _)
+      writer.writeISZ(o.parents, writeTypeNamed _)
+      writer.writeISZ(o.bodyItems, writeSysmlAstDefinitionBodyItem _)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstConnectionDefinition(o: SysmlAst.ConnectionDefinition): Unit = {
+      writer.writeZ(Constants.SysmlAstConnectionDefinition)
+      writeSysmlAstVisibilityType(o.visibility)
+      writeSysmlAstOccurrenceDefinitionPrefix(o.occurrenceDefPrefix)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writer.writeISZ(o.subClassifications, writeSysmlAstName _)
+      writer.writeISZ(o.parents, writeTypeNamed _)
+      writer.writeISZ(o.bodyItems, writeSysmlAstDefinitionBodyItem _)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstEnumerationDefinition(o: SysmlAst.EnumerationDefinition): Unit = {
+      writer.writeZ(Constants.SysmlAstEnumerationDefinition)
+      writeSysmlAstVisibilityType(o.visibility)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writer.writeISZ(o.subClassifications, writeSysmlAstName _)
+      writer.writeISZ(o.annotations, writeSysmlAstAnnotatingElement _)
+      writer.writeISZ(o.enumValues, writeSysmlAstEnumeratedValue _)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstPartDefinition(o: SysmlAst.PartDefinition): Unit = {
+      writer.writeZ(Constants.SysmlAstPartDefinition)
+      writeSysmlAstVisibilityType(o.visibility)
+      writeSysmlAstOccurrenceDefinitionPrefix(o.occurrenceDefPrefix)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writer.writeISZ(o.subClassifications, writeSysmlAstName _)
+      writer.writeISZ(o.parents, writeTypeNamed _)
+      writer.writeISZ(o.bodyItems, writeSysmlAstDefinitionBodyItem _)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstPortDefinition(o: SysmlAst.PortDefinition): Unit = {
+      writer.writeZ(Constants.SysmlAstPortDefinition)
+      writeSysmlAstVisibilityType(o.visibility)
+      writeSysmlAstDefinitionPrefix(o.defPrefix)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writer.writeISZ(o.subClassifications, writeSysmlAstName _)
+      writer.writeISZ(o.parents, writeTypeNamed _)
+      writer.writeISZ(o.bodyItems, writeSysmlAstDefinitionBodyItem _)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstMetadataDefinition(o: SysmlAst.MetadataDefinition): Unit = {
+      writer.writeZ(Constants.SysmlAstMetadataDefinition)
+      writer.writeB(o.isAbstract)
+      writeSysmlAstVisibilityType(o.visibility)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writer.writeISZ(o.subClassifications, writeSysmlAstName _)
+      writer.writeISZ(o.bodyItems, writeSysmlAstDefinitionBodyItem _)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstUsageElement(o: SysmlAst.UsageElement): Unit = {
+      o match {
+        case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => writeSysmlAstReferenceUsage(o)
+        case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => writeSysmlAstPortUsage(o)
+      }
+    }
+
+    def writeSysmlAstCommonUsageElements(o: SysmlAst.CommonUsageElements): Unit = {
+      writer.writeZ(Constants.SysmlAstCommonUsageElements)
+      writeSysmlAstVisibilityType(o.visibility)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writer.writeISZ(o.specializations, writeSysmlAstFeatureSpecialization _)
+      writer.writeOption(o.featureValue, writeSysmlAstFeatureValue _)
+      writer.writeISZ(o.definitionBodyItems, writeSysmlAstDefinitionBodyItem _)
+      writer.writeOption(o.tipeOpt, writeType _)
+      writeResolvedAttr(o.attr)
+    }
+
+    def writeSysmlAstNonOccurrenceUsageMember(o: SysmlAst.NonOccurrenceUsageMember): Unit = {
+      o match {
+        case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => writeSysmlAstReferenceUsage(o)
+      }
+    }
+
+    def writeSysmlAstNonOccurrenceUsageElement(o: SysmlAst.NonOccurrenceUsageElement): Unit = {
+      o match {
+        case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => writeSysmlAstReferenceUsage(o)
+      }
+    }
+
+    def writeSysmlAstRefPrefix(o: SysmlAst.RefPrefix): Unit = {
+      writer.writeZ(Constants.SysmlAstRefPrefix)
+      writer.writeOption(o.direction, writeSysmlAstFeatureDirectionType _)
+      writer.writeB(o.isAbstract)
+      writer.writeB(o.isVariation)
+      writer.writeB(o.isReadOnly)
+      writer.writeB(o.isDerived)
+      writer.writeB(o.isEnd)
+    }
+
+    def writeSysmlAstUsagePrefix(o: SysmlAst.UsagePrefix): Unit = {
+      writer.writeZ(Constants.SysmlAstUsagePrefix)
+      writeSysmlAstRefPrefix(o.refPrefix)
+      writer.writeB(o.isRef)
+      writer.writeISZ(o.usageExtensions, writeSysmlAstName _)
+    }
+
+    def writeSysmlAstAttributeUsage(o: SysmlAst.AttributeUsage): Unit = {
+      writer.writeZ(Constants.SysmlAstAttributeUsage)
+      writeSysmlAstUsagePrefix(o.prefix)
+      writeSysmlAstCommonUsageElements(o.commonUsageElements)
+    }
+
+    def writeSysmlAstReferenceUsage(o: SysmlAst.ReferenceUsage): Unit = {
+      writer.writeZ(Constants.SysmlAstReferenceUsage)
+      writeSysmlAstRefPrefix(o.prefix)
+      writeSysmlAstCommonUsageElements(o.commonUsageElements)
+    }
+
+    def writeSysmlAstOccurrenceUsageMember(o: SysmlAst.OccurrenceUsageMember): Unit = {
+      o match {
+        case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => writeSysmlAstPortUsage(o)
+      }
+    }
+
+    def writeSysmlAstOccurrenceUsageElement(o: SysmlAst.OccurrenceUsageElement): Unit = {
+      o match {
+        case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => writeSysmlAstPortUsage(o)
+      }
+    }
+
+    def writeSysmlAstStructureUsageElement(o: SysmlAst.StructureUsageElement): Unit = {
+      o match {
+        case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => writeSysmlAstPortUsage(o)
+      }
+    }
+
+    def writeSysmlAstOccurrenceUsagePrefix(o: SysmlAst.OccurrenceUsagePrefix): Unit = {
+      writer.writeZ(Constants.SysmlAstOccurrenceUsagePrefix)
+      writeSysmlAstRefPrefix(o.refPrefix)
+      writer.writeB(o.isRef)
+      writer.writeB(o.isIndividual)
+      writer.writeB(o.isSnapshot)
+      writer.writeB(o.isTimeslice)
+      writer.writeISZ(o.usageExtensions, writeSysmlAstName _)
+    }
+
+    def writeSysmlAstConnectionUsage(o: SysmlAst.ConnectionUsage): Unit = {
+      writer.writeZ(Constants.SysmlAstConnectionUsage)
+      writeSysmlAstOccurrenceUsagePrefix(o.occurrenceUsagePrefix)
+      writer.writeOption(o.connectorPart, writeSysmlAstConnectorPart _)
+      writeSysmlAstCommonUsageElements(o.commonUsageElements)
+    }
+
+    def writeSysmlAstItemUsage(o: SysmlAst.ItemUsage): Unit = {
+      writer.writeZ(Constants.SysmlAstItemUsage)
+      writeSysmlAstOccurrenceUsagePrefix(o.occurrenceUsagePrefix)
+      writeSysmlAstCommonUsageElements(o.commonUsageElements)
+    }
+
+    def writeSysmlAstPartUsage(o: SysmlAst.PartUsage): Unit = {
+      writer.writeZ(Constants.SysmlAstPartUsage)
+      writeSysmlAstOccurrenceUsagePrefix(o.occurrenceUsagePrefix)
+      writeSysmlAstCommonUsageElements(o.commonUsageElements)
+    }
+
+    def writeSysmlAstPortUsage(o: SysmlAst.PortUsage): Unit = {
+      writer.writeZ(Constants.SysmlAstPortUsage)
+      writeSysmlAstOccurrenceUsagePrefix(o.occurrenceUsagePrefix)
+      writeSysmlAstCommonUsageElements(o.commonUsageElements)
+    }
+
+    def writeSysmlAstAnnotatingElement(o: SysmlAst.AnnotatingElement): Unit = {
+      o match {
+        case o: SysmlAst.Comment => writeSysmlAstComment(o)
+        case o: SysmlAst.Documentation => writeSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => writeSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => writeSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    def writeSysmlAstComment(o: SysmlAst.Comment): Unit = {
+      writer.writeZ(Constants.SysmlAstComment)
+      writeSysmlAstVisibilityType(o.visibility)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writer.writeISZ(o.abouts, writeSysmlAstName _)
+      writer.writeOption(o.locale, writer.writeString _)
+      writer.writeString(o.comment)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstDocumentation(o: SysmlAst.Documentation): Unit = {
+      writer.writeZ(Constants.SysmlAstDocumentation)
+      writeSysmlAstVisibilityType(o.visibility)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writer.writeOption(o.locale, writer.writeString _)
+      writer.writeString(o.comment)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstTextualRepresentation(o: SysmlAst.TextualRepresentation): Unit = {
+      writer.writeZ(Constants.SysmlAstTextualRepresentation)
+      writeSysmlAstVisibilityType(o.visibility)
+      writer.writeOption(o.identification, writeSysmlAstIdentification _)
+      writer.writeString(o.language)
+      writer.writeString(o.comment)
+      writeAttr(o.attr)
+    }
+
+    def writeSysmlAstGumboAnnotation(o: SysmlAst.GumboAnnotation): Unit = {
+      writer.writeZ(Constants.SysmlAstGumboAnnotation)
+      writeGclSymbol(o.gumboNode)
+    }
+
+    def writeAttr(o: Attr): Unit = {
+      writer.writeZ(Constants.Attr)
+      writer.writeOption(o.posOpt, writer.writePosition _)
+    }
+
+    def writeResolvedAttr(o: ResolvedAttr): Unit = {
+      writer.writeZ(Constants.ResolvedAttr)
+      writer.writeOption(o.posOpt, writer.writePosition _)
+      writer.writeOption(o.resOpt, writeResolvedInfo _)
+      writer.writeOption(o.typedOpt, writeTyped _)
+    }
+
+    def writeResolvedInfo(o: ResolvedInfo): Unit = {
+      o match {
+        case o: ResolvedInfo.Package => writeResolvedInfoPackage(o)
+        case o: ResolvedInfo.Enum => writeResolvedInfoEnum(o)
+        case o: ResolvedInfo.EnumElement => writeResolvedInfoEnumElement(o)
+        case o: ResolvedInfo.AttributeUsage => writeResolvedInfoAttributeUsage(o)
+        case o: ResolvedInfo.ConnectionUsage => writeResolvedInfoConnectionUsage(o)
+        case o: ResolvedInfo.ItemUsage => writeResolvedInfoItemUsage(o)
+        case o: ResolvedInfo.PartUsage => writeResolvedInfoPartUsage(o)
+        case o: ResolvedInfo.PortUsage => writeResolvedInfoPortUsage(o)
+        case o: ResolvedInfo.ReferenceUsage => writeResolvedInfoReferenceUsage(o)
+      }
+    }
+
+    def writeResolvedInfoPackage(o: ResolvedInfo.Package): Unit = {
+      writer.writeZ(Constants.ResolvedInfoPackage)
+      writer.writeISZ(o.name, writer.writeString _)
+    }
+
+    def writeResolvedInfoEnum(o: ResolvedInfo.Enum): Unit = {
+      writer.writeZ(Constants.ResolvedInfoEnum)
+      writer.writeISZ(o.name, writer.writeString _)
+    }
+
+    def writeResolvedInfoEnumElement(o: ResolvedInfo.EnumElement): Unit = {
+      writer.writeZ(Constants.ResolvedInfoEnumElement)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.name)
+      writer.writeZ(o.ordinal)
+    }
+
+    def writeResolvedInfoAttributeUsage(o: ResolvedInfo.AttributeUsage): Unit = {
+      writer.writeZ(Constants.ResolvedInfoAttributeUsage)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.name)
+    }
+
+    def writeResolvedInfoConnectionUsage(o: ResolvedInfo.ConnectionUsage): Unit = {
+      writer.writeZ(Constants.ResolvedInfoConnectionUsage)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.name)
+    }
+
+    def writeResolvedInfoItemUsage(o: ResolvedInfo.ItemUsage): Unit = {
+      writer.writeZ(Constants.ResolvedInfoItemUsage)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.name)
+    }
+
+    def writeResolvedInfoPartUsage(o: ResolvedInfo.PartUsage): Unit = {
+      writer.writeZ(Constants.ResolvedInfoPartUsage)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.name)
+    }
+
+    def writeResolvedInfoPortUsage(o: ResolvedInfo.PortUsage): Unit = {
+      writer.writeZ(Constants.ResolvedInfoPortUsage)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.name)
+    }
+
+    def writeResolvedInfoReferenceUsage(o: ResolvedInfo.ReferenceUsage): Unit = {
+      writer.writeZ(Constants.ResolvedInfoReferenceUsage)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.name)
+    }
+
+    def writeType(o: Type): Unit = {
+      o match {
+        case o: Type.Named => writeTypeNamed(o)
+      }
+    }
+
+    def writeTypeNamed(o: Type.Named): Unit = {
+      writer.writeZ(Constants.TypeNamed)
+      writeSysmlAstName(o.name)
+      writeTypedAttr(o.attr)
+    }
+
+    def writeTypedAttr(o: TypedAttr): Unit = {
+      writer.writeZ(Constants.TypedAttr)
+      writer.writeOption(o.posOpt, writer.writePosition _)
+      writer.writeOption(o.typedOpt, writeTyped _)
+    }
+
+    def writeTyped(o: Typed): Unit = {
+      o match {
+        case o: Typed.Package => writeTypedPackage(o)
+        case o: Typed.Name => writeTypedName(o)
+        case o: Typed.Enum => writeTypedEnum(o)
+      }
+    }
+
+    def writeTypedPackage(o: Typed.Package): Unit = {
+      writer.writeZ(Constants.TypedPackage)
+      writer.writeISZ(o.name, writer.writeString _)
+    }
+
+    def writeTypedName(o: Typed.Name): Unit = {
+      writer.writeZ(Constants.TypedName)
+      writer.writeISZ(o.ids, writer.writeString _)
+    }
+
+    def writeTypedEnum(o: Typed.Enum): Unit = {
+      writer.writeZ(Constants.TypedEnum)
+      writer.writeISZ(o.name, writer.writeString _)
     }
 
     def write_langastTopUnit(o: org.sireum.lang.ast.TopUnit): Unit = {
@@ -4616,17 +5376,17 @@ object MsgPack {
       return TODO()
     }
 
-    def readAttr(): Attr = {
-      val r = readAttrT(F)
+    def readBlessAttr(): BlessAttr = {
+      val r = readBlessAttrT(F)
       return r
     }
 
-    def readAttrT(typeParsed: B): Attr = {
+    def readBlessAttrT(typeParsed: B): BlessAttr = {
       if (!typeParsed) {
-        reader.expectZ(Constants.Attr)
+        reader.expectZ(Constants.BlessAttr)
       }
       val posOpt = reader.readOption(reader.readPosition _)
-      return Attr(posOpt)
+      return BlessAttr(posOpt)
     }
 
     def readEmv2Annex(): Emv2Annex = {
@@ -5039,7 +5799,8 @@ object MsgPack {
       val initializes = reader.readOption(readGclInitialize _)
       val integration = reader.readOption(readGclIntegration _)
       val compute = reader.readOption(readGclCompute _)
-      return GclSubclause(state, methods, invariants, initializes, integration, compute)
+      val attr = readAttr()
+      return GclSubclause(state, methods, invariants, initializes, integration, compute, attr)
     }
 
     def readGclMethod(): GclMethod = {
@@ -5066,8 +5827,8 @@ object MsgPack {
       }
       val name = reader.readString()
       val classifier = reader.readString()
-      val posOpt = reader.readOption(reader.readPosition _)
-      return GclStateVar(name, classifier, posOpt)
+      val attr = readAttr()
+      return GclStateVar(name, classifier, attr)
     }
 
     def readGclClause(): GclClause = {
@@ -5111,8 +5872,8 @@ object MsgPack {
       val id = reader.readString()
       val descriptor = reader.readOption(reader.readString _)
       val exp = read_langastExp()
-      val posOpt = reader.readOption(reader.readPosition _)
-      return GclInvariant(id, descriptor, exp, posOpt)
+      val attr = readAttr()
+      return GclInvariant(id, descriptor, exp, attr)
     }
 
     def readGclComputeSpec(): GclComputeSpec = {
@@ -5140,8 +5901,8 @@ object MsgPack {
       val id = reader.readString()
       val descriptor = reader.readOption(reader.readString _)
       val exp = read_langastExp()
-      val posOpt = reader.readOption(reader.readPosition _)
-      return GclAssume(id, descriptor, exp, posOpt)
+      val attr = readAttr()
+      return GclAssume(id, descriptor, exp, attr)
     }
 
     def readGclGuarantee(): GclGuarantee = {
@@ -5156,8 +5917,8 @@ object MsgPack {
       val id = reader.readString()
       val descriptor = reader.readOption(reader.readString _)
       val exp = read_langastExp()
-      val posOpt = reader.readOption(reader.readPosition _)
-      return GclGuarantee(id, descriptor, exp, posOpt)
+      val attr = readAttr()
+      return GclGuarantee(id, descriptor, exp, attr)
     }
 
     def readGclIntegration(): GclIntegration = {
@@ -5170,7 +5931,8 @@ object MsgPack {
         reader.expectZ(Constants.GclIntegration)
       }
       val specs = reader.readISZ(readGclSpec _)
-      return GclIntegration(specs)
+      val attr = readAttr()
+      return GclIntegration(specs, attr)
     }
 
     def readGclCaseStatement(): GclCaseStatement = {
@@ -5186,8 +5948,8 @@ object MsgPack {
       val descriptor = reader.readOption(reader.readString _)
       val assumes = read_langastExp()
       val guarantees = read_langastExp()
-      val posOpt = reader.readOption(reader.readPosition _)
-      return GclCaseStatement(id, descriptor, assumes, guarantees, posOpt)
+      val attr = readAttr()
+      return GclCaseStatement(id, descriptor, assumes, guarantees, attr)
     }
 
     def readGclInitialize(): GclInitialize = {
@@ -5202,7 +5964,8 @@ object MsgPack {
       val modifies = reader.readISZ(read_langastExp _)
       val guarantees = reader.readISZ(readGclGuarantee _)
       val flows = reader.readISZ(readInfoFlowClause _)
-      return GclInitialize(modifies, guarantees, flows)
+      val attr = readAttr()
+      return GclInitialize(modifies, guarantees, flows, attr)
     }
 
     def readGclCompute(): GclCompute = {
@@ -5219,7 +5982,8 @@ object MsgPack {
       val cases = reader.readISZ(readGclCaseStatement _)
       val handlers = reader.readISZ(readGclHandle _)
       val flows = reader.readISZ(readInfoFlowClause _)
-      return GclCompute(modifies, specs, cases, handlers, flows)
+      val attr = readAttr()
+      return GclCompute(modifies, specs, cases, handlers, flows, attr)
     }
 
     def readGclHandle(): GclHandle = {
@@ -5234,7 +5998,8 @@ object MsgPack {
       val port = read_langastExp()
       val modifies = reader.readISZ(read_langastExp _)
       val guarantees = reader.readISZ(readGclGuarantee _)
-      return GclHandle(port, modifies, guarantees)
+      val attr = readAttr()
+      return GclHandle(port, modifies, guarantees, attr)
     }
 
     def readGclTODO(): GclTODO = {
@@ -5260,7 +6025,8 @@ object MsgPack {
       }
       val containingPackage = readName()
       val methods = reader.readISZ(readGclMethod _)
-      return GclLib(containingPackage, methods)
+      val attr = readAttr()
+      return GclLib(containingPackage, methods, attr)
     }
 
     def readInfoFlowClause(): InfoFlowClause = {
@@ -5276,8 +6042,8 @@ object MsgPack {
       val descriptor = reader.readOption(reader.readString _)
       val from = reader.readISZ(read_langastExp _)
       val to = reader.readISZ(read_langastExp _)
-      val posOpt = reader.readOption(reader.readPosition _)
-      return InfoFlowClause(id, descriptor, from, to, posOpt)
+      val attr = readAttr()
+      return InfoFlowClause(id, descriptor, from, to, attr)
     }
 
     def readSmfAnnex(): SmfAnnex = {
@@ -5375,6 +6141,1194 @@ object MsgPack {
       val typeName = readName()
       val parentType = reader.readISZ(readName _)
       return SmfType(typeName, parentType)
+    }
+
+    def readSysmlAstId(): SysmlAst.Id = {
+      val r = readSysmlAstIdT(F)
+      return r
+    }
+
+    def readSysmlAstIdT(typeParsed: B): SysmlAst.Id = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstId)
+      }
+      val value = reader.readString()
+      val attr = readAttr()
+      return SysmlAst.Id(value, attr)
+    }
+
+    def readSysmlAstName(): SysmlAst.Name = {
+      val r = readSysmlAstNameT(F)
+      return r
+    }
+
+    def readSysmlAstNameT(typeParsed: B): SysmlAst.Name = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstName)
+      }
+      val ids = reader.readISZ(readSysmlAstId _)
+      val attr = readAttr()
+      return SysmlAst.Name(ids, attr)
+    }
+
+    def readSysmlAstTopUnit(): SysmlAst.TopUnit = {
+      val r = readSysmlAstTopUnitT(F)
+      return r
+    }
+
+    def readSysmlAstTopUnitT(typeParsed: B): SysmlAst.TopUnit = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstTopUnit)
+      }
+      val fileUri = reader.readOption(reader.readString _)
+      val packageBodyElements = reader.readISZ(readSysmlAstPackageBodyElement _)
+      return SysmlAst.TopUnit(fileUri, packageBodyElements)
+    }
+
+    def readSysmlAstAttrNode(): SysmlAst.AttrNode = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstImport => val r = readSysmlAstImportT(T); return r
+        case Constants.SysmlAstAliasMember => val r = readSysmlAstAliasMemberT(T); return r
+        case Constants.SysmlAstIdentification => val r = readSysmlAstIdentificationT(T); return r
+        case Constants.SysmlAstPackage => val r = readSysmlAstPackageT(T); return r
+        case Constants.SysmlAstAttributeDefinition => val r = readSysmlAstAttributeDefinitionT(T); return r
+        case Constants.SysmlAstAllocationDefinition => val r = readSysmlAstAllocationDefinitionT(T); return r
+        case Constants.SysmlAstConnectionDefinition => val r = readSysmlAstConnectionDefinitionT(T); return r
+        case Constants.SysmlAstEnumerationDefinition => val r = readSysmlAstEnumerationDefinitionT(T); return r
+        case Constants.SysmlAstPartDefinition => val r = readSysmlAstPartDefinitionT(T); return r
+        case Constants.SysmlAstPortDefinition => val r = readSysmlAstPortDefinitionT(T); return r
+        case Constants.SysmlAstMetadataDefinition => val r = readSysmlAstMetadataDefinitionT(T); return r
+        case Constants.SysmlAstAttributeUsage => val r = readSysmlAstAttributeUsageT(T); return r
+        case Constants.SysmlAstReferenceUsage => val r = readSysmlAstReferenceUsageT(T); return r
+        case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
+        case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
+        case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
+        case Constants.SysmlAstPortUsage => val r = readSysmlAstPortUsageT(T); return r
+        case Constants.SysmlAstComment => val r = readSysmlAstCommentT(T); return r
+        case Constants.SysmlAstDocumentation => val r = readSysmlAstDocumentationT(T); return r
+        case Constants.SysmlAstTextualRepresentation => val r = readSysmlAstTextualRepresentationT(T); return r
+        case Constants.SysmlAstGumboAnnotation => val r = readSysmlAstGumboAnnotationT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.AttrNode.")
+          val r = readSysmlAstGumboAnnotationT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstPackageBodyElement(): SysmlAst.PackageBodyElement = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstImport => val r = readSysmlAstImportT(T); return r
+        case Constants.SysmlAstAliasMember => val r = readSysmlAstAliasMemberT(T); return r
+        case Constants.SysmlAstPackage => val r = readSysmlAstPackageT(T); return r
+        case Constants.SysmlAstAttributeDefinition => val r = readSysmlAstAttributeDefinitionT(T); return r
+        case Constants.SysmlAstAllocationDefinition => val r = readSysmlAstAllocationDefinitionT(T); return r
+        case Constants.SysmlAstConnectionDefinition => val r = readSysmlAstConnectionDefinitionT(T); return r
+        case Constants.SysmlAstEnumerationDefinition => val r = readSysmlAstEnumerationDefinitionT(T); return r
+        case Constants.SysmlAstPartDefinition => val r = readSysmlAstPartDefinitionT(T); return r
+        case Constants.SysmlAstPortDefinition => val r = readSysmlAstPortDefinitionT(T); return r
+        case Constants.SysmlAstMetadataDefinition => val r = readSysmlAstMetadataDefinitionT(T); return r
+        case Constants.SysmlAstAttributeUsage => val r = readSysmlAstAttributeUsageT(T); return r
+        case Constants.SysmlAstReferenceUsage => val r = readSysmlAstReferenceUsageT(T); return r
+        case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
+        case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
+        case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
+        case Constants.SysmlAstPortUsage => val r = readSysmlAstPortUsageT(T); return r
+        case Constants.SysmlAstComment => val r = readSysmlAstCommentT(T); return r
+        case Constants.SysmlAstDocumentation => val r = readSysmlAstDocumentationT(T); return r
+        case Constants.SysmlAstTextualRepresentation => val r = readSysmlAstTextualRepresentationT(T); return r
+        case Constants.SysmlAstGumboAnnotation => val r = readSysmlAstGumboAnnotationT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.PackageBodyElement.")
+          val r = readSysmlAstGumboAnnotationT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstDefinitionBodyItem(): SysmlAst.DefinitionBodyItem = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstImport => val r = readSysmlAstImportT(T); return r
+        case Constants.SysmlAstAliasMember => val r = readSysmlAstAliasMemberT(T); return r
+        case Constants.SysmlAstPackage => val r = readSysmlAstPackageT(T); return r
+        case Constants.SysmlAstAttributeDefinition => val r = readSysmlAstAttributeDefinitionT(T); return r
+        case Constants.SysmlAstAllocationDefinition => val r = readSysmlAstAllocationDefinitionT(T); return r
+        case Constants.SysmlAstConnectionDefinition => val r = readSysmlAstConnectionDefinitionT(T); return r
+        case Constants.SysmlAstEnumerationDefinition => val r = readSysmlAstEnumerationDefinitionT(T); return r
+        case Constants.SysmlAstPartDefinition => val r = readSysmlAstPartDefinitionT(T); return r
+        case Constants.SysmlAstPortDefinition => val r = readSysmlAstPortDefinitionT(T); return r
+        case Constants.SysmlAstMetadataDefinition => val r = readSysmlAstMetadataDefinitionT(T); return r
+        case Constants.SysmlAstAttributeUsage => val r = readSysmlAstAttributeUsageT(T); return r
+        case Constants.SysmlAstReferenceUsage => val r = readSysmlAstReferenceUsageT(T); return r
+        case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
+        case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
+        case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
+        case Constants.SysmlAstPortUsage => val r = readSysmlAstPortUsageT(T); return r
+        case Constants.SysmlAstComment => val r = readSysmlAstCommentT(T); return r
+        case Constants.SysmlAstDocumentation => val r = readSysmlAstDocumentationT(T); return r
+        case Constants.SysmlAstTextualRepresentation => val r = readSysmlAstTextualRepresentationT(T); return r
+        case Constants.SysmlAstGumboAnnotation => val r = readSysmlAstGumboAnnotationT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.DefinitionBodyItem.")
+          val r = readSysmlAstGumboAnnotationT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstVisibilityType(): SysmlAst.Visibility.Type = {
+      val r = reader.readZ()
+      return SysmlAst.Visibility.byOrdinal(r).get
+    }
+
+    def readSysmlAstFeatureValue(): SysmlAst.FeatureValue = {
+      val r = readSysmlAstFeatureValueT(F)
+      return r
+    }
+
+    def readSysmlAstFeatureValueT(typeParsed: B): SysmlAst.FeatureValue = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstFeatureValue)
+      }
+      val isBound = reader.readB()
+      val isInitial = reader.readB()
+      val isDefault = reader.readB()
+      val exp = read_langastExp()
+      return SysmlAst.FeatureValue(isBound, isInitial, isDefault, exp)
+    }
+
+    def readSysmlAstEnumeratedValue(): SysmlAst.EnumeratedValue = {
+      val r = readSysmlAstEnumeratedValueT(F)
+      return r
+    }
+
+    def readSysmlAstEnumeratedValueT(typeParsed: B): SysmlAst.EnumeratedValue = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstEnumeratedValue)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val specializations = reader.readISZ(readSysmlAstFeatureSpecialization _)
+      val definitionBodyItems = reader.readISZ(readSysmlAstDefinitionBodyItem _)
+      return SysmlAst.EnumeratedValue(visibility, identification, specializations, definitionBodyItems)
+    }
+
+    def readSysmlAstImport(): SysmlAst.Import = {
+      val r = readSysmlAstImportT(F)
+      return r
+    }
+
+    def readSysmlAstImportT(typeParsed: B): SysmlAst.Import = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstImport)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val all = reader.readB()
+      val name = readSysmlAstName()
+      val star = reader.readB()
+      val starStar = reader.readB()
+      val annotations = reader.readISZ(readSysmlAstAnnotatingElement _)
+      val attr = readAttr()
+      return SysmlAst.Import(visibility, all, name, star, starStar, annotations, attr)
+    }
+
+    def readSysmlAstAliasMember(): SysmlAst.AliasMember = {
+      val r = readSysmlAstAliasMemberT(F)
+      return r
+    }
+
+    def readSysmlAstAliasMemberT(typeParsed: B): SysmlAst.AliasMember = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstAliasMember)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val target = readSysmlAstName()
+      val annotations = reader.readISZ(readSysmlAstAnnotatingElement _)
+      val attr = readAttr()
+      return SysmlAst.AliasMember(visibility, identification, target, annotations, attr)
+    }
+
+    def readSysmlAstIdentification(): SysmlAst.Identification = {
+      val r = readSysmlAstIdentificationT(F)
+      return r
+    }
+
+    def readSysmlAstIdentificationT(typeParsed: B): SysmlAst.Identification = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstIdentification)
+      }
+      val shortName = reader.readOption(readSysmlAstId _)
+      val name = reader.readOption(readSysmlAstId _)
+      val attr = readAttr()
+      return SysmlAst.Identification(shortName, name, attr)
+    }
+
+    def readSysmlAstFeatureDirectionType(): SysmlAst.FeatureDirection.Type = {
+      val r = reader.readZ()
+      return SysmlAst.FeatureDirection.byOrdinal(r).get
+    }
+
+    def readSysmlAstPackageMember(): SysmlAst.PackageMember = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstPackage => val r = readSysmlAstPackageT(T); return r
+        case Constants.SysmlAstAttributeDefinition => val r = readSysmlAstAttributeDefinitionT(T); return r
+        case Constants.SysmlAstAllocationDefinition => val r = readSysmlAstAllocationDefinitionT(T); return r
+        case Constants.SysmlAstConnectionDefinition => val r = readSysmlAstConnectionDefinitionT(T); return r
+        case Constants.SysmlAstEnumerationDefinition => val r = readSysmlAstEnumerationDefinitionT(T); return r
+        case Constants.SysmlAstPartDefinition => val r = readSysmlAstPartDefinitionT(T); return r
+        case Constants.SysmlAstPortDefinition => val r = readSysmlAstPortDefinitionT(T); return r
+        case Constants.SysmlAstMetadataDefinition => val r = readSysmlAstMetadataDefinitionT(T); return r
+        case Constants.SysmlAstAttributeUsage => val r = readSysmlAstAttributeUsageT(T); return r
+        case Constants.SysmlAstReferenceUsage => val r = readSysmlAstReferenceUsageT(T); return r
+        case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
+        case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
+        case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
+        case Constants.SysmlAstPortUsage => val r = readSysmlAstPortUsageT(T); return r
+        case Constants.SysmlAstComment => val r = readSysmlAstCommentT(T); return r
+        case Constants.SysmlAstDocumentation => val r = readSysmlAstDocumentationT(T); return r
+        case Constants.SysmlAstTextualRepresentation => val r = readSysmlAstTextualRepresentationT(T); return r
+        case Constants.SysmlAstGumboAnnotation => val r = readSysmlAstGumboAnnotationT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.PackageMember.")
+          val r = readSysmlAstGumboAnnotationT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstConnectorPart(): SysmlAst.ConnectorPart = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstBinaryConnectorPart => val r = readSysmlAstBinaryConnectorPartT(T); return r
+        case Constants.SysmlAstNaryConnectorPart => val r = readSysmlAstNaryConnectorPartT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.ConnectorPart.")
+          val r = readSysmlAstNaryConnectorPartT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstConnectorEnd(): SysmlAst.ConnectorEnd = {
+      val r = readSysmlAstConnectorEndT(F)
+      return r
+    }
+
+    def readSysmlAstConnectorEndT(typeParsed: B): SysmlAst.ConnectorEnd = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstConnectorEnd)
+      }
+      val reference = reader.readISZ(readSysmlAstName _)
+      return SysmlAst.ConnectorEnd(reference)
+    }
+
+    def readSysmlAstBinaryConnectorPart(): SysmlAst.BinaryConnectorPart = {
+      val r = readSysmlAstBinaryConnectorPartT(F)
+      return r
+    }
+
+    def readSysmlAstBinaryConnectorPartT(typeParsed: B): SysmlAst.BinaryConnectorPart = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstBinaryConnectorPart)
+      }
+      val src = readSysmlAstConnectorEnd()
+      val dst = readSysmlAstConnectorEnd()
+      return SysmlAst.BinaryConnectorPart(src, dst)
+    }
+
+    def readSysmlAstNaryConnectorPart(): SysmlAst.NaryConnectorPart = {
+      val r = readSysmlAstNaryConnectorPartT(F)
+      return r
+    }
+
+    def readSysmlAstNaryConnectorPartT(typeParsed: B): SysmlAst.NaryConnectorPart = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstNaryConnectorPart)
+      }
+      val connectorEnds = reader.readISZ(readSysmlAstConnectorEnd _)
+      return SysmlAst.NaryConnectorPart(connectorEnds)
+    }
+
+    def readSysmlAstFeatureSpecialization(): SysmlAst.FeatureSpecialization = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstTypingsSpecialization => val r = readSysmlAstTypingsSpecializationT(T); return r
+        case Constants.SysmlAstSubsettingsSpecialization => val r = readSysmlAstSubsettingsSpecializationT(T); return r
+        case Constants.SysmlAstReferencesSpecialization => val r = readSysmlAstReferencesSpecializationT(T); return r
+        case Constants.SysmlAstRedefinitionsSpecialization => val r = readSysmlAstRedefinitionsSpecializationT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.FeatureSpecialization.")
+          val r = readSysmlAstRedefinitionsSpecializationT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstTypingsSpecialization(): SysmlAst.TypingsSpecialization = {
+      val r = readSysmlAstTypingsSpecializationT(F)
+      return r
+    }
+
+    def readSysmlAstTypingsSpecializationT(typeParsed: B): SysmlAst.TypingsSpecialization = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstTypingsSpecialization)
+      }
+      val names = reader.readISZ(readSysmlAstName _)
+      return SysmlAst.TypingsSpecialization(names)
+    }
+
+    def readSysmlAstSubsettingsSpecialization(): SysmlAst.SubsettingsSpecialization = {
+      val r = readSysmlAstSubsettingsSpecializationT(F)
+      return r
+    }
+
+    def readSysmlAstSubsettingsSpecializationT(typeParsed: B): SysmlAst.SubsettingsSpecialization = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstSubsettingsSpecialization)
+      }
+      val subsettings = reader.readISZ(readSysmlAstName _)
+      return SysmlAst.SubsettingsSpecialization(subsettings)
+    }
+
+    def readSysmlAstReferencesSpecialization(): SysmlAst.ReferencesSpecialization = {
+      val r = readSysmlAstReferencesSpecializationT(F)
+      return r
+    }
+
+    def readSysmlAstReferencesSpecializationT(typeParsed: B): SysmlAst.ReferencesSpecialization = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstReferencesSpecialization)
+      }
+      val references = reader.readISZ(readSysmlAstName _)
+      return SysmlAst.ReferencesSpecialization(references)
+    }
+
+    def readSysmlAstRedefinitionsSpecialization(): SysmlAst.RedefinitionsSpecialization = {
+      val r = readSysmlAstRedefinitionsSpecializationT(F)
+      return r
+    }
+
+    def readSysmlAstRedefinitionsSpecializationT(typeParsed: B): SysmlAst.RedefinitionsSpecialization = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstRedefinitionsSpecialization)
+      }
+      val references = reader.readISZ(readSysmlAstName _)
+      return SysmlAst.RedefinitionsSpecialization(references)
+    }
+
+    def readSysmlAstDefinitionMember(): SysmlAst.DefinitionMember = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstPackage => val r = readSysmlAstPackageT(T); return r
+        case Constants.SysmlAstAttributeDefinition => val r = readSysmlAstAttributeDefinitionT(T); return r
+        case Constants.SysmlAstAllocationDefinition => val r = readSysmlAstAllocationDefinitionT(T); return r
+        case Constants.SysmlAstConnectionDefinition => val r = readSysmlAstConnectionDefinitionT(T); return r
+        case Constants.SysmlAstEnumerationDefinition => val r = readSysmlAstEnumerationDefinitionT(T); return r
+        case Constants.SysmlAstPartDefinition => val r = readSysmlAstPartDefinitionT(T); return r
+        case Constants.SysmlAstPortDefinition => val r = readSysmlAstPortDefinitionT(T); return r
+        case Constants.SysmlAstMetadataDefinition => val r = readSysmlAstMetadataDefinitionT(T); return r
+        case Constants.SysmlAstComment => val r = readSysmlAstCommentT(T); return r
+        case Constants.SysmlAstDocumentation => val r = readSysmlAstDocumentationT(T); return r
+        case Constants.SysmlAstTextualRepresentation => val r = readSysmlAstTextualRepresentationT(T); return r
+        case Constants.SysmlAstGumboAnnotation => val r = readSysmlAstGumboAnnotationT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.DefinitionMember.")
+          val r = readSysmlAstGumboAnnotationT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstDefinitionElement(): SysmlAst.DefinitionElement = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstPackage => val r = readSysmlAstPackageT(T); return r
+        case Constants.SysmlAstAttributeDefinition => val r = readSysmlAstAttributeDefinitionT(T); return r
+        case Constants.SysmlAstAllocationDefinition => val r = readSysmlAstAllocationDefinitionT(T); return r
+        case Constants.SysmlAstConnectionDefinition => val r = readSysmlAstConnectionDefinitionT(T); return r
+        case Constants.SysmlAstEnumerationDefinition => val r = readSysmlAstEnumerationDefinitionT(T); return r
+        case Constants.SysmlAstPartDefinition => val r = readSysmlAstPartDefinitionT(T); return r
+        case Constants.SysmlAstPortDefinition => val r = readSysmlAstPortDefinitionT(T); return r
+        case Constants.SysmlAstMetadataDefinition => val r = readSysmlAstMetadataDefinitionT(T); return r
+        case Constants.SysmlAstComment => val r = readSysmlAstCommentT(T); return r
+        case Constants.SysmlAstDocumentation => val r = readSysmlAstDocumentationT(T); return r
+        case Constants.SysmlAstTextualRepresentation => val r = readSysmlAstTextualRepresentationT(T); return r
+        case Constants.SysmlAstGumboAnnotation => val r = readSysmlAstGumboAnnotationT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.DefinitionElement.")
+          val r = readSysmlAstGumboAnnotationT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstDefinitionPrefix(): SysmlAst.DefinitionPrefix = {
+      val r = readSysmlAstDefinitionPrefixT(F)
+      return r
+    }
+
+    def readSysmlAstDefinitionPrefixT(typeParsed: B): SysmlAst.DefinitionPrefix = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstDefinitionPrefix)
+      }
+      val isAbstract = reader.readB()
+      val isVariation = reader.readB()
+      return SysmlAst.DefinitionPrefix(isAbstract, isVariation)
+    }
+
+    def readSysmlAstPackage(): SysmlAst.Package = {
+      val r = readSysmlAstPackageT(F)
+      return r
+    }
+
+    def readSysmlAstPackageT(typeParsed: B): SysmlAst.Package = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstPackage)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val packageElements = reader.readISZ(readSysmlAstPackageBodyElement _)
+      val attr = readAttr()
+      return SysmlAst.Package(visibility, identification, packageElements, attr)
+    }
+
+    def readSysmlAstAttributeDefinition(): SysmlAst.AttributeDefinition = {
+      val r = readSysmlAstAttributeDefinitionT(F)
+      return r
+    }
+
+    def readSysmlAstAttributeDefinitionT(typeParsed: B): SysmlAst.AttributeDefinition = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstAttributeDefinition)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val defPrefix = readSysmlAstDefinitionPrefix()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val subClassifications = reader.readISZ(readSysmlAstName _)
+      val parents = reader.readISZ(readTypeNamed _)
+      val bodyItems = reader.readISZ(readSysmlAstDefinitionBodyItem _)
+      val attr = readAttr()
+      return SysmlAst.AttributeDefinition(visibility, defPrefix, identification, subClassifications, parents, bodyItems, attr)
+    }
+
+    def readSysmlAstOccurrenceDefinitionPrefix(): SysmlAst.OccurrenceDefinitionPrefix = {
+      val r = readSysmlAstOccurrenceDefinitionPrefixT(F)
+      return r
+    }
+
+    def readSysmlAstOccurrenceDefinitionPrefixT(typeParsed: B): SysmlAst.OccurrenceDefinitionPrefix = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstOccurrenceDefinitionPrefix)
+      }
+      val isAbstract = reader.readB()
+      val isVariation = reader.readB()
+      return SysmlAst.OccurrenceDefinitionPrefix(isAbstract, isVariation)
+    }
+
+    def readSysmlAstAllocationDefinition(): SysmlAst.AllocationDefinition = {
+      val r = readSysmlAstAllocationDefinitionT(F)
+      return r
+    }
+
+    def readSysmlAstAllocationDefinitionT(typeParsed: B): SysmlAst.AllocationDefinition = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstAllocationDefinition)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val occurrenceDefPrefix = readSysmlAstOccurrenceDefinitionPrefix()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val subClassifications = reader.readISZ(readSysmlAstName _)
+      val parents = reader.readISZ(readTypeNamed _)
+      val bodyItems = reader.readISZ(readSysmlAstDefinitionBodyItem _)
+      val attr = readAttr()
+      return SysmlAst.AllocationDefinition(visibility, occurrenceDefPrefix, identification, subClassifications, parents, bodyItems, attr)
+    }
+
+    def readSysmlAstConnectionDefinition(): SysmlAst.ConnectionDefinition = {
+      val r = readSysmlAstConnectionDefinitionT(F)
+      return r
+    }
+
+    def readSysmlAstConnectionDefinitionT(typeParsed: B): SysmlAst.ConnectionDefinition = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstConnectionDefinition)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val occurrenceDefPrefix = readSysmlAstOccurrenceDefinitionPrefix()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val subClassifications = reader.readISZ(readSysmlAstName _)
+      val parents = reader.readISZ(readTypeNamed _)
+      val bodyItems = reader.readISZ(readSysmlAstDefinitionBodyItem _)
+      val attr = readAttr()
+      return SysmlAst.ConnectionDefinition(visibility, occurrenceDefPrefix, identification, subClassifications, parents, bodyItems, attr)
+    }
+
+    def readSysmlAstEnumerationDefinition(): SysmlAst.EnumerationDefinition = {
+      val r = readSysmlAstEnumerationDefinitionT(F)
+      return r
+    }
+
+    def readSysmlAstEnumerationDefinitionT(typeParsed: B): SysmlAst.EnumerationDefinition = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstEnumerationDefinition)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val subClassifications = reader.readISZ(readSysmlAstName _)
+      val annotations = reader.readISZ(readSysmlAstAnnotatingElement _)
+      val enumValues = reader.readISZ(readSysmlAstEnumeratedValue _)
+      val attr = readAttr()
+      return SysmlAst.EnumerationDefinition(visibility, identification, subClassifications, annotations, enumValues, attr)
+    }
+
+    def readSysmlAstPartDefinition(): SysmlAst.PartDefinition = {
+      val r = readSysmlAstPartDefinitionT(F)
+      return r
+    }
+
+    def readSysmlAstPartDefinitionT(typeParsed: B): SysmlAst.PartDefinition = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstPartDefinition)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val occurrenceDefPrefix = readSysmlAstOccurrenceDefinitionPrefix()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val subClassifications = reader.readISZ(readSysmlAstName _)
+      val parents = reader.readISZ(readTypeNamed _)
+      val bodyItems = reader.readISZ(readSysmlAstDefinitionBodyItem _)
+      val attr = readAttr()
+      return SysmlAst.PartDefinition(visibility, occurrenceDefPrefix, identification, subClassifications, parents, bodyItems, attr)
+    }
+
+    def readSysmlAstPortDefinition(): SysmlAst.PortDefinition = {
+      val r = readSysmlAstPortDefinitionT(F)
+      return r
+    }
+
+    def readSysmlAstPortDefinitionT(typeParsed: B): SysmlAst.PortDefinition = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstPortDefinition)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val defPrefix = readSysmlAstDefinitionPrefix()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val subClassifications = reader.readISZ(readSysmlAstName _)
+      val parents = reader.readISZ(readTypeNamed _)
+      val bodyItems = reader.readISZ(readSysmlAstDefinitionBodyItem _)
+      val attr = readAttr()
+      return SysmlAst.PortDefinition(visibility, defPrefix, identification, subClassifications, parents, bodyItems, attr)
+    }
+
+    def readSysmlAstMetadataDefinition(): SysmlAst.MetadataDefinition = {
+      val r = readSysmlAstMetadataDefinitionT(F)
+      return r
+    }
+
+    def readSysmlAstMetadataDefinitionT(typeParsed: B): SysmlAst.MetadataDefinition = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstMetadataDefinition)
+      }
+      val isAbstract = reader.readB()
+      val visibility = readSysmlAstVisibilityType()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val subClassifications = reader.readISZ(readSysmlAstName _)
+      val bodyItems = reader.readISZ(readSysmlAstDefinitionBodyItem _)
+      val attr = readAttr()
+      return SysmlAst.MetadataDefinition(isAbstract, visibility, identification, subClassifications, bodyItems, attr)
+    }
+
+    def readSysmlAstUsageElement(): SysmlAst.UsageElement = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstAttributeUsage => val r = readSysmlAstAttributeUsageT(T); return r
+        case Constants.SysmlAstReferenceUsage => val r = readSysmlAstReferenceUsageT(T); return r
+        case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
+        case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
+        case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
+        case Constants.SysmlAstPortUsage => val r = readSysmlAstPortUsageT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.UsageElement.")
+          val r = readSysmlAstPortUsageT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstCommonUsageElements(): SysmlAst.CommonUsageElements = {
+      val r = readSysmlAstCommonUsageElementsT(F)
+      return r
+    }
+
+    def readSysmlAstCommonUsageElementsT(typeParsed: B): SysmlAst.CommonUsageElements = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstCommonUsageElements)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val specializations = reader.readISZ(readSysmlAstFeatureSpecialization _)
+      val featureValue = reader.readOption(readSysmlAstFeatureValue _)
+      val definitionBodyItems = reader.readISZ(readSysmlAstDefinitionBodyItem _)
+      val tipeOpt = reader.readOption(readType _)
+      val attr = readResolvedAttr()
+      return SysmlAst.CommonUsageElements(visibility, identification, specializations, featureValue, definitionBodyItems, tipeOpt, attr)
+    }
+
+    def readSysmlAstNonOccurrenceUsageMember(): SysmlAst.NonOccurrenceUsageMember = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstAttributeUsage => val r = readSysmlAstAttributeUsageT(T); return r
+        case Constants.SysmlAstReferenceUsage => val r = readSysmlAstReferenceUsageT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.NonOccurrenceUsageMember.")
+          val r = readSysmlAstReferenceUsageT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstNonOccurrenceUsageElement(): SysmlAst.NonOccurrenceUsageElement = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstAttributeUsage => val r = readSysmlAstAttributeUsageT(T); return r
+        case Constants.SysmlAstReferenceUsage => val r = readSysmlAstReferenceUsageT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.NonOccurrenceUsageElement.")
+          val r = readSysmlAstReferenceUsageT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstRefPrefix(): SysmlAst.RefPrefix = {
+      val r = readSysmlAstRefPrefixT(F)
+      return r
+    }
+
+    def readSysmlAstRefPrefixT(typeParsed: B): SysmlAst.RefPrefix = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstRefPrefix)
+      }
+      val direction = reader.readOption(readSysmlAstFeatureDirectionType _)
+      val isAbstract = reader.readB()
+      val isVariation = reader.readB()
+      val isReadOnly = reader.readB()
+      val isDerived = reader.readB()
+      val isEnd = reader.readB()
+      return SysmlAst.RefPrefix(direction, isAbstract, isVariation, isReadOnly, isDerived, isEnd)
+    }
+
+    def readSysmlAstUsagePrefix(): SysmlAst.UsagePrefix = {
+      val r = readSysmlAstUsagePrefixT(F)
+      return r
+    }
+
+    def readSysmlAstUsagePrefixT(typeParsed: B): SysmlAst.UsagePrefix = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstUsagePrefix)
+      }
+      val refPrefix = readSysmlAstRefPrefix()
+      val isRef = reader.readB()
+      val usageExtensions = reader.readISZ(readSysmlAstName _)
+      return SysmlAst.UsagePrefix(refPrefix, isRef, usageExtensions)
+    }
+
+    def readSysmlAstAttributeUsage(): SysmlAst.AttributeUsage = {
+      val r = readSysmlAstAttributeUsageT(F)
+      return r
+    }
+
+    def readSysmlAstAttributeUsageT(typeParsed: B): SysmlAst.AttributeUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstAttributeUsage)
+      }
+      val prefix = readSysmlAstUsagePrefix()
+      val commonUsageElements = readSysmlAstCommonUsageElements()
+      return SysmlAst.AttributeUsage(prefix, commonUsageElements)
+    }
+
+    def readSysmlAstReferenceUsage(): SysmlAst.ReferenceUsage = {
+      val r = readSysmlAstReferenceUsageT(F)
+      return r
+    }
+
+    def readSysmlAstReferenceUsageT(typeParsed: B): SysmlAst.ReferenceUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstReferenceUsage)
+      }
+      val prefix = readSysmlAstRefPrefix()
+      val commonUsageElements = readSysmlAstCommonUsageElements()
+      return SysmlAst.ReferenceUsage(prefix, commonUsageElements)
+    }
+
+    def readSysmlAstOccurrenceUsageMember(): SysmlAst.OccurrenceUsageMember = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
+        case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
+        case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
+        case Constants.SysmlAstPortUsage => val r = readSysmlAstPortUsageT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.OccurrenceUsageMember.")
+          val r = readSysmlAstPortUsageT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstOccurrenceUsageElement(): SysmlAst.OccurrenceUsageElement = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
+        case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
+        case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
+        case Constants.SysmlAstPortUsage => val r = readSysmlAstPortUsageT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.OccurrenceUsageElement.")
+          val r = readSysmlAstPortUsageT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstStructureUsageElement(): SysmlAst.StructureUsageElement = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
+        case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
+        case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
+        case Constants.SysmlAstPortUsage => val r = readSysmlAstPortUsageT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.StructureUsageElement.")
+          val r = readSysmlAstPortUsageT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstOccurrenceUsagePrefix(): SysmlAst.OccurrenceUsagePrefix = {
+      val r = readSysmlAstOccurrenceUsagePrefixT(F)
+      return r
+    }
+
+    def readSysmlAstOccurrenceUsagePrefixT(typeParsed: B): SysmlAst.OccurrenceUsagePrefix = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstOccurrenceUsagePrefix)
+      }
+      val refPrefix = readSysmlAstRefPrefix()
+      val isRef = reader.readB()
+      val isIndividual = reader.readB()
+      val isSnapshot = reader.readB()
+      val isTimeslice = reader.readB()
+      val usageExtensions = reader.readISZ(readSysmlAstName _)
+      return SysmlAst.OccurrenceUsagePrefix(refPrefix, isRef, isIndividual, isSnapshot, isTimeslice, usageExtensions)
+    }
+
+    def readSysmlAstConnectionUsage(): SysmlAst.ConnectionUsage = {
+      val r = readSysmlAstConnectionUsageT(F)
+      return r
+    }
+
+    def readSysmlAstConnectionUsageT(typeParsed: B): SysmlAst.ConnectionUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstConnectionUsage)
+      }
+      val occurrenceUsagePrefix = readSysmlAstOccurrenceUsagePrefix()
+      val connectorPart = reader.readOption(readSysmlAstConnectorPart _)
+      val commonUsageElements = readSysmlAstCommonUsageElements()
+      return SysmlAst.ConnectionUsage(occurrenceUsagePrefix, connectorPart, commonUsageElements)
+    }
+
+    def readSysmlAstItemUsage(): SysmlAst.ItemUsage = {
+      val r = readSysmlAstItemUsageT(F)
+      return r
+    }
+
+    def readSysmlAstItemUsageT(typeParsed: B): SysmlAst.ItemUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstItemUsage)
+      }
+      val occurrenceUsagePrefix = readSysmlAstOccurrenceUsagePrefix()
+      val commonUsageElements = readSysmlAstCommonUsageElements()
+      return SysmlAst.ItemUsage(occurrenceUsagePrefix, commonUsageElements)
+    }
+
+    def readSysmlAstPartUsage(): SysmlAst.PartUsage = {
+      val r = readSysmlAstPartUsageT(F)
+      return r
+    }
+
+    def readSysmlAstPartUsageT(typeParsed: B): SysmlAst.PartUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstPartUsage)
+      }
+      val occurrenceUsagePrefix = readSysmlAstOccurrenceUsagePrefix()
+      val commonUsageElements = readSysmlAstCommonUsageElements()
+      return SysmlAst.PartUsage(occurrenceUsagePrefix, commonUsageElements)
+    }
+
+    def readSysmlAstPortUsage(): SysmlAst.PortUsage = {
+      val r = readSysmlAstPortUsageT(F)
+      return r
+    }
+
+    def readSysmlAstPortUsageT(typeParsed: B): SysmlAst.PortUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstPortUsage)
+      }
+      val occurrenceUsagePrefix = readSysmlAstOccurrenceUsagePrefix()
+      val commonUsageElements = readSysmlAstCommonUsageElements()
+      return SysmlAst.PortUsage(occurrenceUsagePrefix, commonUsageElements)
+    }
+
+    def readSysmlAstAnnotatingElement(): SysmlAst.AnnotatingElement = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstComment => val r = readSysmlAstCommentT(T); return r
+        case Constants.SysmlAstDocumentation => val r = readSysmlAstDocumentationT(T); return r
+        case Constants.SysmlAstTextualRepresentation => val r = readSysmlAstTextualRepresentationT(T); return r
+        case Constants.SysmlAstGumboAnnotation => val r = readSysmlAstGumboAnnotationT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.AnnotatingElement.")
+          val r = readSysmlAstGumboAnnotationT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstComment(): SysmlAst.Comment = {
+      val r = readSysmlAstCommentT(F)
+      return r
+    }
+
+    def readSysmlAstCommentT(typeParsed: B): SysmlAst.Comment = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstComment)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val abouts = reader.readISZ(readSysmlAstName _)
+      val locale = reader.readOption(reader.readString _)
+      val comment = reader.readString()
+      val attr = readAttr()
+      return SysmlAst.Comment(visibility, identification, abouts, locale, comment, attr)
+    }
+
+    def readSysmlAstDocumentation(): SysmlAst.Documentation = {
+      val r = readSysmlAstDocumentationT(F)
+      return r
+    }
+
+    def readSysmlAstDocumentationT(typeParsed: B): SysmlAst.Documentation = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstDocumentation)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val locale = reader.readOption(reader.readString _)
+      val comment = reader.readString()
+      val attr = readAttr()
+      return SysmlAst.Documentation(visibility, identification, locale, comment, attr)
+    }
+
+    def readSysmlAstTextualRepresentation(): SysmlAst.TextualRepresentation = {
+      val r = readSysmlAstTextualRepresentationT(F)
+      return r
+    }
+
+    def readSysmlAstTextualRepresentationT(typeParsed: B): SysmlAst.TextualRepresentation = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstTextualRepresentation)
+      }
+      val visibility = readSysmlAstVisibilityType()
+      val identification = reader.readOption(readSysmlAstIdentification _)
+      val language = reader.readString()
+      val comment = reader.readString()
+      val attr = readAttr()
+      return SysmlAst.TextualRepresentation(visibility, identification, language, comment, attr)
+    }
+
+    def readSysmlAstGumboAnnotation(): SysmlAst.GumboAnnotation = {
+      val r = readSysmlAstGumboAnnotationT(F)
+      return r
+    }
+
+    def readSysmlAstGumboAnnotationT(typeParsed: B): SysmlAst.GumboAnnotation = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstGumboAnnotation)
+      }
+      val gumboNode = readGclSymbol()
+      return SysmlAst.GumboAnnotation(gumboNode)
+    }
+
+    def readAttr(): Attr = {
+      val r = readAttrT(F)
+      return r
+    }
+
+    def readAttrT(typeParsed: B): Attr = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.Attr)
+      }
+      val posOpt = reader.readOption(reader.readPosition _)
+      return Attr(posOpt)
+    }
+
+    def readResolvedAttr(): ResolvedAttr = {
+      val r = readResolvedAttrT(F)
+      return r
+    }
+
+    def readResolvedAttrT(typeParsed: B): ResolvedAttr = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.ResolvedAttr)
+      }
+      val posOpt = reader.readOption(reader.readPosition _)
+      val resOpt = reader.readOption(readResolvedInfo _)
+      val typedOpt = reader.readOption(readTyped _)
+      return ResolvedAttr(posOpt, resOpt, typedOpt)
+    }
+
+    def readResolvedInfo(): ResolvedInfo = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.ResolvedInfoPackage => val r = readResolvedInfoPackageT(T); return r
+        case Constants.ResolvedInfoEnum => val r = readResolvedInfoEnumT(T); return r
+        case Constants.ResolvedInfoEnumElement => val r = readResolvedInfoEnumElementT(T); return r
+        case Constants.ResolvedInfoAttributeUsage => val r = readResolvedInfoAttributeUsageT(T); return r
+        case Constants.ResolvedInfoConnectionUsage => val r = readResolvedInfoConnectionUsageT(T); return r
+        case Constants.ResolvedInfoItemUsage => val r = readResolvedInfoItemUsageT(T); return r
+        case Constants.ResolvedInfoPartUsage => val r = readResolvedInfoPartUsageT(T); return r
+        case Constants.ResolvedInfoPortUsage => val r = readResolvedInfoPortUsageT(T); return r
+        case Constants.ResolvedInfoReferenceUsage => val r = readResolvedInfoReferenceUsageT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of ResolvedInfo.")
+          val r = readResolvedInfoReferenceUsageT(T)
+          return r
+      }
+    }
+
+    def readResolvedInfoPackage(): ResolvedInfo.Package = {
+      val r = readResolvedInfoPackageT(F)
+      return r
+    }
+
+    def readResolvedInfoPackageT(typeParsed: B): ResolvedInfo.Package = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.ResolvedInfoPackage)
+      }
+      val name = reader.readISZ(reader.readString _)
+      return ResolvedInfo.Package(name)
+    }
+
+    def readResolvedInfoEnum(): ResolvedInfo.Enum = {
+      val r = readResolvedInfoEnumT(F)
+      return r
+    }
+
+    def readResolvedInfoEnumT(typeParsed: B): ResolvedInfo.Enum = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.ResolvedInfoEnum)
+      }
+      val name = reader.readISZ(reader.readString _)
+      return ResolvedInfo.Enum(name)
+    }
+
+    def readResolvedInfoEnumElement(): ResolvedInfo.EnumElement = {
+      val r = readResolvedInfoEnumElementT(F)
+      return r
+    }
+
+    def readResolvedInfoEnumElementT(typeParsed: B): ResolvedInfo.EnumElement = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.ResolvedInfoEnumElement)
+      }
+      val owner = reader.readISZ(reader.readString _)
+      val name = reader.readString()
+      val ordinal = reader.readZ()
+      return ResolvedInfo.EnumElement(owner, name, ordinal)
+    }
+
+    def readResolvedInfoAttributeUsage(): ResolvedInfo.AttributeUsage = {
+      val r = readResolvedInfoAttributeUsageT(F)
+      return r
+    }
+
+    def readResolvedInfoAttributeUsageT(typeParsed: B): ResolvedInfo.AttributeUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.ResolvedInfoAttributeUsage)
+      }
+      val owner = reader.readISZ(reader.readString _)
+      val name = reader.readString()
+      return ResolvedInfo.AttributeUsage(owner, name)
+    }
+
+    def readResolvedInfoConnectionUsage(): ResolvedInfo.ConnectionUsage = {
+      val r = readResolvedInfoConnectionUsageT(F)
+      return r
+    }
+
+    def readResolvedInfoConnectionUsageT(typeParsed: B): ResolvedInfo.ConnectionUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.ResolvedInfoConnectionUsage)
+      }
+      val owner = reader.readISZ(reader.readString _)
+      val name = reader.readString()
+      return ResolvedInfo.ConnectionUsage(owner, name)
+    }
+
+    def readResolvedInfoItemUsage(): ResolvedInfo.ItemUsage = {
+      val r = readResolvedInfoItemUsageT(F)
+      return r
+    }
+
+    def readResolvedInfoItemUsageT(typeParsed: B): ResolvedInfo.ItemUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.ResolvedInfoItemUsage)
+      }
+      val owner = reader.readISZ(reader.readString _)
+      val name = reader.readString()
+      return ResolvedInfo.ItemUsage(owner, name)
+    }
+
+    def readResolvedInfoPartUsage(): ResolvedInfo.PartUsage = {
+      val r = readResolvedInfoPartUsageT(F)
+      return r
+    }
+
+    def readResolvedInfoPartUsageT(typeParsed: B): ResolvedInfo.PartUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.ResolvedInfoPartUsage)
+      }
+      val owner = reader.readISZ(reader.readString _)
+      val name = reader.readString()
+      return ResolvedInfo.PartUsage(owner, name)
+    }
+
+    def readResolvedInfoPortUsage(): ResolvedInfo.PortUsage = {
+      val r = readResolvedInfoPortUsageT(F)
+      return r
+    }
+
+    def readResolvedInfoPortUsageT(typeParsed: B): ResolvedInfo.PortUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.ResolvedInfoPortUsage)
+      }
+      val owner = reader.readISZ(reader.readString _)
+      val name = reader.readString()
+      return ResolvedInfo.PortUsage(owner, name)
+    }
+
+    def readResolvedInfoReferenceUsage(): ResolvedInfo.ReferenceUsage = {
+      val r = readResolvedInfoReferenceUsageT(F)
+      return r
+    }
+
+    def readResolvedInfoReferenceUsageT(typeParsed: B): ResolvedInfo.ReferenceUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.ResolvedInfoReferenceUsage)
+      }
+      val owner = reader.readISZ(reader.readString _)
+      val name = reader.readString()
+      return ResolvedInfo.ReferenceUsage(owner, name)
+    }
+
+    def readType(): Type = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.TypeNamed => val r = readTypeNamedT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of Type.")
+          val r = readTypeNamedT(T)
+          return r
+      }
+    }
+
+    def readTypeNamed(): Type.Named = {
+      val r = readTypeNamedT(F)
+      return r
+    }
+
+    def readTypeNamedT(typeParsed: B): Type.Named = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.TypeNamed)
+      }
+      val name = readSysmlAstName()
+      val attr = readTypedAttr()
+      return Type.Named(name, attr)
+    }
+
+    def readTypedAttr(): TypedAttr = {
+      val r = readTypedAttrT(F)
+      return r
+    }
+
+    def readTypedAttrT(typeParsed: B): TypedAttr = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.TypedAttr)
+      }
+      val posOpt = reader.readOption(reader.readPosition _)
+      val typedOpt = reader.readOption(readTyped _)
+      return TypedAttr(posOpt, typedOpt)
+    }
+
+    def readTyped(): Typed = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.TypedPackage => val r = readTypedPackageT(T); return r
+        case Constants.TypedName => val r = readTypedNameT(T); return r
+        case Constants.TypedEnum => val r = readTypedEnumT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of Typed.")
+          val r = readTypedEnumT(T)
+          return r
+      }
+    }
+
+    def readTypedPackage(): Typed.Package = {
+      val r = readTypedPackageT(F)
+      return r
+    }
+
+    def readTypedPackageT(typeParsed: B): Typed.Package = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.TypedPackage)
+      }
+      val name = reader.readISZ(reader.readString _)
+      return Typed.Package(name)
+    }
+
+    def readTypedName(): Typed.Name = {
+      val r = readTypedNameT(F)
+      return r
+    }
+
+    def readTypedNameT(typeParsed: B): Typed.Name = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.TypedName)
+      }
+      val ids = reader.readISZ(reader.readString _)
+      return Typed.Name(ids)
+    }
+
+    def readTypedEnum(): Typed.Enum = {
+      val r = readTypedEnumT(F)
+      return r
+    }
+
+    def readTypedEnumT(typeParsed: B): Typed.Enum = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.TypedEnum)
+      }
+      val name = reader.readISZ(reader.readString _)
+      return Typed.Enum(name)
     }
 
     def read_langastTopUnit(): org.sireum.lang.ast.TopUnit = {
@@ -9542,18 +11496,18 @@ object MsgPack {
     return r
   }
 
-  def fromAttr(o: Attr, pooling: B): ISZ[U8] = {
+  def fromBlessAttr(o: BlessAttr, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
-    w.writeAttr(o)
+    w.writeBlessAttr(o)
     return w.result
   }
 
-  def toAttr(data: ISZ[U8]): Either[Attr, MessagePack.ErrorMsg] = {
-    def fAttr(reader: Reader): Attr = {
-      val r = reader.readAttr()
+  def toBlessAttr(data: ISZ[U8]): Either[BlessAttr, MessagePack.ErrorMsg] = {
+    def fBlessAttr(reader: Reader): BlessAttr = {
+      val r = reader.readBlessAttr()
       return r
     }
-    val r = to(data, fAttr _)
+    val r = to(data, fBlessAttr _)
     return r
   }
 
@@ -10274,6 +12228,1101 @@ object MsgPack {
       return r
     }
     val r = to(data, fSmfType _)
+    return r
+  }
+
+  def fromSysmlAstId(o: SysmlAst.Id, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstId(o)
+    return w.result
+  }
+
+  def toSysmlAstId(data: ISZ[U8]): Either[SysmlAst.Id, MessagePack.ErrorMsg] = {
+    def fSysmlAstId(reader: Reader): SysmlAst.Id = {
+      val r = reader.readSysmlAstId()
+      return r
+    }
+    val r = to(data, fSysmlAstId _)
+    return r
+  }
+
+  def fromSysmlAstName(o: SysmlAst.Name, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstName(o)
+    return w.result
+  }
+
+  def toSysmlAstName(data: ISZ[U8]): Either[SysmlAst.Name, MessagePack.ErrorMsg] = {
+    def fSysmlAstName(reader: Reader): SysmlAst.Name = {
+      val r = reader.readSysmlAstName()
+      return r
+    }
+    val r = to(data, fSysmlAstName _)
+    return r
+  }
+
+  def fromSysmlAstTopUnit(o: SysmlAst.TopUnit, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstTopUnit(o)
+    return w.result
+  }
+
+  def toSysmlAstTopUnit(data: ISZ[U8]): Either[SysmlAst.TopUnit, MessagePack.ErrorMsg] = {
+    def fSysmlAstTopUnit(reader: Reader): SysmlAst.TopUnit = {
+      val r = reader.readSysmlAstTopUnit()
+      return r
+    }
+    val r = to(data, fSysmlAstTopUnit _)
+    return r
+  }
+
+  def fromSysmlAstAttrNode(o: SysmlAst.AttrNode, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstAttrNode(o)
+    return w.result
+  }
+
+  def toSysmlAstAttrNode(data: ISZ[U8]): Either[SysmlAst.AttrNode, MessagePack.ErrorMsg] = {
+    def fSysmlAstAttrNode(reader: Reader): SysmlAst.AttrNode = {
+      val r = reader.readSysmlAstAttrNode()
+      return r
+    }
+    val r = to(data, fSysmlAstAttrNode _)
+    return r
+  }
+
+  def fromSysmlAstPackageBodyElement(o: SysmlAst.PackageBodyElement, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstPackageBodyElement(o)
+    return w.result
+  }
+
+  def toSysmlAstPackageBodyElement(data: ISZ[U8]): Either[SysmlAst.PackageBodyElement, MessagePack.ErrorMsg] = {
+    def fSysmlAstPackageBodyElement(reader: Reader): SysmlAst.PackageBodyElement = {
+      val r = reader.readSysmlAstPackageBodyElement()
+      return r
+    }
+    val r = to(data, fSysmlAstPackageBodyElement _)
+    return r
+  }
+
+  def fromSysmlAstDefinitionBodyItem(o: SysmlAst.DefinitionBodyItem, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstDefinitionBodyItem(o)
+    return w.result
+  }
+
+  def toSysmlAstDefinitionBodyItem(data: ISZ[U8]): Either[SysmlAst.DefinitionBodyItem, MessagePack.ErrorMsg] = {
+    def fSysmlAstDefinitionBodyItem(reader: Reader): SysmlAst.DefinitionBodyItem = {
+      val r = reader.readSysmlAstDefinitionBodyItem()
+      return r
+    }
+    val r = to(data, fSysmlAstDefinitionBodyItem _)
+    return r
+  }
+
+  def fromSysmlAstFeatureValue(o: SysmlAst.FeatureValue, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstFeatureValue(o)
+    return w.result
+  }
+
+  def toSysmlAstFeatureValue(data: ISZ[U8]): Either[SysmlAst.FeatureValue, MessagePack.ErrorMsg] = {
+    def fSysmlAstFeatureValue(reader: Reader): SysmlAst.FeatureValue = {
+      val r = reader.readSysmlAstFeatureValue()
+      return r
+    }
+    val r = to(data, fSysmlAstFeatureValue _)
+    return r
+  }
+
+  def fromSysmlAstEnumeratedValue(o: SysmlAst.EnumeratedValue, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstEnumeratedValue(o)
+    return w.result
+  }
+
+  def toSysmlAstEnumeratedValue(data: ISZ[U8]): Either[SysmlAst.EnumeratedValue, MessagePack.ErrorMsg] = {
+    def fSysmlAstEnumeratedValue(reader: Reader): SysmlAst.EnumeratedValue = {
+      val r = reader.readSysmlAstEnumeratedValue()
+      return r
+    }
+    val r = to(data, fSysmlAstEnumeratedValue _)
+    return r
+  }
+
+  def fromSysmlAstImport(o: SysmlAst.Import, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstImport(o)
+    return w.result
+  }
+
+  def toSysmlAstImport(data: ISZ[U8]): Either[SysmlAst.Import, MessagePack.ErrorMsg] = {
+    def fSysmlAstImport(reader: Reader): SysmlAst.Import = {
+      val r = reader.readSysmlAstImport()
+      return r
+    }
+    val r = to(data, fSysmlAstImport _)
+    return r
+  }
+
+  def fromSysmlAstAliasMember(o: SysmlAst.AliasMember, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstAliasMember(o)
+    return w.result
+  }
+
+  def toSysmlAstAliasMember(data: ISZ[U8]): Either[SysmlAst.AliasMember, MessagePack.ErrorMsg] = {
+    def fSysmlAstAliasMember(reader: Reader): SysmlAst.AliasMember = {
+      val r = reader.readSysmlAstAliasMember()
+      return r
+    }
+    val r = to(data, fSysmlAstAliasMember _)
+    return r
+  }
+
+  def fromSysmlAstIdentification(o: SysmlAst.Identification, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstIdentification(o)
+    return w.result
+  }
+
+  def toSysmlAstIdentification(data: ISZ[U8]): Either[SysmlAst.Identification, MessagePack.ErrorMsg] = {
+    def fSysmlAstIdentification(reader: Reader): SysmlAst.Identification = {
+      val r = reader.readSysmlAstIdentification()
+      return r
+    }
+    val r = to(data, fSysmlAstIdentification _)
+    return r
+  }
+
+  def fromSysmlAstPackageMember(o: SysmlAst.PackageMember, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstPackageMember(o)
+    return w.result
+  }
+
+  def toSysmlAstPackageMember(data: ISZ[U8]): Either[SysmlAst.PackageMember, MessagePack.ErrorMsg] = {
+    def fSysmlAstPackageMember(reader: Reader): SysmlAst.PackageMember = {
+      val r = reader.readSysmlAstPackageMember()
+      return r
+    }
+    val r = to(data, fSysmlAstPackageMember _)
+    return r
+  }
+
+  def fromSysmlAstConnectorPart(o: SysmlAst.ConnectorPart, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstConnectorPart(o)
+    return w.result
+  }
+
+  def toSysmlAstConnectorPart(data: ISZ[U8]): Either[SysmlAst.ConnectorPart, MessagePack.ErrorMsg] = {
+    def fSysmlAstConnectorPart(reader: Reader): SysmlAst.ConnectorPart = {
+      val r = reader.readSysmlAstConnectorPart()
+      return r
+    }
+    val r = to(data, fSysmlAstConnectorPart _)
+    return r
+  }
+
+  def fromSysmlAstConnectorEnd(o: SysmlAst.ConnectorEnd, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstConnectorEnd(o)
+    return w.result
+  }
+
+  def toSysmlAstConnectorEnd(data: ISZ[U8]): Either[SysmlAst.ConnectorEnd, MessagePack.ErrorMsg] = {
+    def fSysmlAstConnectorEnd(reader: Reader): SysmlAst.ConnectorEnd = {
+      val r = reader.readSysmlAstConnectorEnd()
+      return r
+    }
+    val r = to(data, fSysmlAstConnectorEnd _)
+    return r
+  }
+
+  def fromSysmlAstBinaryConnectorPart(o: SysmlAst.BinaryConnectorPart, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstBinaryConnectorPart(o)
+    return w.result
+  }
+
+  def toSysmlAstBinaryConnectorPart(data: ISZ[U8]): Either[SysmlAst.BinaryConnectorPart, MessagePack.ErrorMsg] = {
+    def fSysmlAstBinaryConnectorPart(reader: Reader): SysmlAst.BinaryConnectorPart = {
+      val r = reader.readSysmlAstBinaryConnectorPart()
+      return r
+    }
+    val r = to(data, fSysmlAstBinaryConnectorPart _)
+    return r
+  }
+
+  def fromSysmlAstNaryConnectorPart(o: SysmlAst.NaryConnectorPart, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstNaryConnectorPart(o)
+    return w.result
+  }
+
+  def toSysmlAstNaryConnectorPart(data: ISZ[U8]): Either[SysmlAst.NaryConnectorPart, MessagePack.ErrorMsg] = {
+    def fSysmlAstNaryConnectorPart(reader: Reader): SysmlAst.NaryConnectorPart = {
+      val r = reader.readSysmlAstNaryConnectorPart()
+      return r
+    }
+    val r = to(data, fSysmlAstNaryConnectorPart _)
+    return r
+  }
+
+  def fromSysmlAstFeatureSpecialization(o: SysmlAst.FeatureSpecialization, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstFeatureSpecialization(o)
+    return w.result
+  }
+
+  def toSysmlAstFeatureSpecialization(data: ISZ[U8]): Either[SysmlAst.FeatureSpecialization, MessagePack.ErrorMsg] = {
+    def fSysmlAstFeatureSpecialization(reader: Reader): SysmlAst.FeatureSpecialization = {
+      val r = reader.readSysmlAstFeatureSpecialization()
+      return r
+    }
+    val r = to(data, fSysmlAstFeatureSpecialization _)
+    return r
+  }
+
+  def fromSysmlAstTypingsSpecialization(o: SysmlAst.TypingsSpecialization, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstTypingsSpecialization(o)
+    return w.result
+  }
+
+  def toSysmlAstTypingsSpecialization(data: ISZ[U8]): Either[SysmlAst.TypingsSpecialization, MessagePack.ErrorMsg] = {
+    def fSysmlAstTypingsSpecialization(reader: Reader): SysmlAst.TypingsSpecialization = {
+      val r = reader.readSysmlAstTypingsSpecialization()
+      return r
+    }
+    val r = to(data, fSysmlAstTypingsSpecialization _)
+    return r
+  }
+
+  def fromSysmlAstSubsettingsSpecialization(o: SysmlAst.SubsettingsSpecialization, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstSubsettingsSpecialization(o)
+    return w.result
+  }
+
+  def toSysmlAstSubsettingsSpecialization(data: ISZ[U8]): Either[SysmlAst.SubsettingsSpecialization, MessagePack.ErrorMsg] = {
+    def fSysmlAstSubsettingsSpecialization(reader: Reader): SysmlAst.SubsettingsSpecialization = {
+      val r = reader.readSysmlAstSubsettingsSpecialization()
+      return r
+    }
+    val r = to(data, fSysmlAstSubsettingsSpecialization _)
+    return r
+  }
+
+  def fromSysmlAstReferencesSpecialization(o: SysmlAst.ReferencesSpecialization, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstReferencesSpecialization(o)
+    return w.result
+  }
+
+  def toSysmlAstReferencesSpecialization(data: ISZ[U8]): Either[SysmlAst.ReferencesSpecialization, MessagePack.ErrorMsg] = {
+    def fSysmlAstReferencesSpecialization(reader: Reader): SysmlAst.ReferencesSpecialization = {
+      val r = reader.readSysmlAstReferencesSpecialization()
+      return r
+    }
+    val r = to(data, fSysmlAstReferencesSpecialization _)
+    return r
+  }
+
+  def fromSysmlAstRedefinitionsSpecialization(o: SysmlAst.RedefinitionsSpecialization, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstRedefinitionsSpecialization(o)
+    return w.result
+  }
+
+  def toSysmlAstRedefinitionsSpecialization(data: ISZ[U8]): Either[SysmlAst.RedefinitionsSpecialization, MessagePack.ErrorMsg] = {
+    def fSysmlAstRedefinitionsSpecialization(reader: Reader): SysmlAst.RedefinitionsSpecialization = {
+      val r = reader.readSysmlAstRedefinitionsSpecialization()
+      return r
+    }
+    val r = to(data, fSysmlAstRedefinitionsSpecialization _)
+    return r
+  }
+
+  def fromSysmlAstDefinitionMember(o: SysmlAst.DefinitionMember, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstDefinitionMember(o)
+    return w.result
+  }
+
+  def toSysmlAstDefinitionMember(data: ISZ[U8]): Either[SysmlAst.DefinitionMember, MessagePack.ErrorMsg] = {
+    def fSysmlAstDefinitionMember(reader: Reader): SysmlAst.DefinitionMember = {
+      val r = reader.readSysmlAstDefinitionMember()
+      return r
+    }
+    val r = to(data, fSysmlAstDefinitionMember _)
+    return r
+  }
+
+  def fromSysmlAstDefinitionElement(o: SysmlAst.DefinitionElement, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstDefinitionElement(o)
+    return w.result
+  }
+
+  def toSysmlAstDefinitionElement(data: ISZ[U8]): Either[SysmlAst.DefinitionElement, MessagePack.ErrorMsg] = {
+    def fSysmlAstDefinitionElement(reader: Reader): SysmlAst.DefinitionElement = {
+      val r = reader.readSysmlAstDefinitionElement()
+      return r
+    }
+    val r = to(data, fSysmlAstDefinitionElement _)
+    return r
+  }
+
+  def fromSysmlAstDefinitionPrefix(o: SysmlAst.DefinitionPrefix, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstDefinitionPrefix(o)
+    return w.result
+  }
+
+  def toSysmlAstDefinitionPrefix(data: ISZ[U8]): Either[SysmlAst.DefinitionPrefix, MessagePack.ErrorMsg] = {
+    def fSysmlAstDefinitionPrefix(reader: Reader): SysmlAst.DefinitionPrefix = {
+      val r = reader.readSysmlAstDefinitionPrefix()
+      return r
+    }
+    val r = to(data, fSysmlAstDefinitionPrefix _)
+    return r
+  }
+
+  def fromSysmlAstPackage(o: SysmlAst.Package, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstPackage(o)
+    return w.result
+  }
+
+  def toSysmlAstPackage(data: ISZ[U8]): Either[SysmlAst.Package, MessagePack.ErrorMsg] = {
+    def fSysmlAstPackage(reader: Reader): SysmlAst.Package = {
+      val r = reader.readSysmlAstPackage()
+      return r
+    }
+    val r = to(data, fSysmlAstPackage _)
+    return r
+  }
+
+  def fromSysmlAstAttributeDefinition(o: SysmlAst.AttributeDefinition, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstAttributeDefinition(o)
+    return w.result
+  }
+
+  def toSysmlAstAttributeDefinition(data: ISZ[U8]): Either[SysmlAst.AttributeDefinition, MessagePack.ErrorMsg] = {
+    def fSysmlAstAttributeDefinition(reader: Reader): SysmlAst.AttributeDefinition = {
+      val r = reader.readSysmlAstAttributeDefinition()
+      return r
+    }
+    val r = to(data, fSysmlAstAttributeDefinition _)
+    return r
+  }
+
+  def fromSysmlAstOccurrenceDefinitionPrefix(o: SysmlAst.OccurrenceDefinitionPrefix, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstOccurrenceDefinitionPrefix(o)
+    return w.result
+  }
+
+  def toSysmlAstOccurrenceDefinitionPrefix(data: ISZ[U8]): Either[SysmlAst.OccurrenceDefinitionPrefix, MessagePack.ErrorMsg] = {
+    def fSysmlAstOccurrenceDefinitionPrefix(reader: Reader): SysmlAst.OccurrenceDefinitionPrefix = {
+      val r = reader.readSysmlAstOccurrenceDefinitionPrefix()
+      return r
+    }
+    val r = to(data, fSysmlAstOccurrenceDefinitionPrefix _)
+    return r
+  }
+
+  def fromSysmlAstAllocationDefinition(o: SysmlAst.AllocationDefinition, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstAllocationDefinition(o)
+    return w.result
+  }
+
+  def toSysmlAstAllocationDefinition(data: ISZ[U8]): Either[SysmlAst.AllocationDefinition, MessagePack.ErrorMsg] = {
+    def fSysmlAstAllocationDefinition(reader: Reader): SysmlAst.AllocationDefinition = {
+      val r = reader.readSysmlAstAllocationDefinition()
+      return r
+    }
+    val r = to(data, fSysmlAstAllocationDefinition _)
+    return r
+  }
+
+  def fromSysmlAstConnectionDefinition(o: SysmlAst.ConnectionDefinition, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstConnectionDefinition(o)
+    return w.result
+  }
+
+  def toSysmlAstConnectionDefinition(data: ISZ[U8]): Either[SysmlAst.ConnectionDefinition, MessagePack.ErrorMsg] = {
+    def fSysmlAstConnectionDefinition(reader: Reader): SysmlAst.ConnectionDefinition = {
+      val r = reader.readSysmlAstConnectionDefinition()
+      return r
+    }
+    val r = to(data, fSysmlAstConnectionDefinition _)
+    return r
+  }
+
+  def fromSysmlAstEnumerationDefinition(o: SysmlAst.EnumerationDefinition, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstEnumerationDefinition(o)
+    return w.result
+  }
+
+  def toSysmlAstEnumerationDefinition(data: ISZ[U8]): Either[SysmlAst.EnumerationDefinition, MessagePack.ErrorMsg] = {
+    def fSysmlAstEnumerationDefinition(reader: Reader): SysmlAst.EnumerationDefinition = {
+      val r = reader.readSysmlAstEnumerationDefinition()
+      return r
+    }
+    val r = to(data, fSysmlAstEnumerationDefinition _)
+    return r
+  }
+
+  def fromSysmlAstPartDefinition(o: SysmlAst.PartDefinition, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstPartDefinition(o)
+    return w.result
+  }
+
+  def toSysmlAstPartDefinition(data: ISZ[U8]): Either[SysmlAst.PartDefinition, MessagePack.ErrorMsg] = {
+    def fSysmlAstPartDefinition(reader: Reader): SysmlAst.PartDefinition = {
+      val r = reader.readSysmlAstPartDefinition()
+      return r
+    }
+    val r = to(data, fSysmlAstPartDefinition _)
+    return r
+  }
+
+  def fromSysmlAstPortDefinition(o: SysmlAst.PortDefinition, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstPortDefinition(o)
+    return w.result
+  }
+
+  def toSysmlAstPortDefinition(data: ISZ[U8]): Either[SysmlAst.PortDefinition, MessagePack.ErrorMsg] = {
+    def fSysmlAstPortDefinition(reader: Reader): SysmlAst.PortDefinition = {
+      val r = reader.readSysmlAstPortDefinition()
+      return r
+    }
+    val r = to(data, fSysmlAstPortDefinition _)
+    return r
+  }
+
+  def fromSysmlAstMetadataDefinition(o: SysmlAst.MetadataDefinition, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstMetadataDefinition(o)
+    return w.result
+  }
+
+  def toSysmlAstMetadataDefinition(data: ISZ[U8]): Either[SysmlAst.MetadataDefinition, MessagePack.ErrorMsg] = {
+    def fSysmlAstMetadataDefinition(reader: Reader): SysmlAst.MetadataDefinition = {
+      val r = reader.readSysmlAstMetadataDefinition()
+      return r
+    }
+    val r = to(data, fSysmlAstMetadataDefinition _)
+    return r
+  }
+
+  def fromSysmlAstUsageElement(o: SysmlAst.UsageElement, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstUsageElement(o)
+    return w.result
+  }
+
+  def toSysmlAstUsageElement(data: ISZ[U8]): Either[SysmlAst.UsageElement, MessagePack.ErrorMsg] = {
+    def fSysmlAstUsageElement(reader: Reader): SysmlAst.UsageElement = {
+      val r = reader.readSysmlAstUsageElement()
+      return r
+    }
+    val r = to(data, fSysmlAstUsageElement _)
+    return r
+  }
+
+  def fromSysmlAstCommonUsageElements(o: SysmlAst.CommonUsageElements, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstCommonUsageElements(o)
+    return w.result
+  }
+
+  def toSysmlAstCommonUsageElements(data: ISZ[U8]): Either[SysmlAst.CommonUsageElements, MessagePack.ErrorMsg] = {
+    def fSysmlAstCommonUsageElements(reader: Reader): SysmlAst.CommonUsageElements = {
+      val r = reader.readSysmlAstCommonUsageElements()
+      return r
+    }
+    val r = to(data, fSysmlAstCommonUsageElements _)
+    return r
+  }
+
+  def fromSysmlAstNonOccurrenceUsageMember(o: SysmlAst.NonOccurrenceUsageMember, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstNonOccurrenceUsageMember(o)
+    return w.result
+  }
+
+  def toSysmlAstNonOccurrenceUsageMember(data: ISZ[U8]): Either[SysmlAst.NonOccurrenceUsageMember, MessagePack.ErrorMsg] = {
+    def fSysmlAstNonOccurrenceUsageMember(reader: Reader): SysmlAst.NonOccurrenceUsageMember = {
+      val r = reader.readSysmlAstNonOccurrenceUsageMember()
+      return r
+    }
+    val r = to(data, fSysmlAstNonOccurrenceUsageMember _)
+    return r
+  }
+
+  def fromSysmlAstNonOccurrenceUsageElement(o: SysmlAst.NonOccurrenceUsageElement, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstNonOccurrenceUsageElement(o)
+    return w.result
+  }
+
+  def toSysmlAstNonOccurrenceUsageElement(data: ISZ[U8]): Either[SysmlAst.NonOccurrenceUsageElement, MessagePack.ErrorMsg] = {
+    def fSysmlAstNonOccurrenceUsageElement(reader: Reader): SysmlAst.NonOccurrenceUsageElement = {
+      val r = reader.readSysmlAstNonOccurrenceUsageElement()
+      return r
+    }
+    val r = to(data, fSysmlAstNonOccurrenceUsageElement _)
+    return r
+  }
+
+  def fromSysmlAstRefPrefix(o: SysmlAst.RefPrefix, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstRefPrefix(o)
+    return w.result
+  }
+
+  def toSysmlAstRefPrefix(data: ISZ[U8]): Either[SysmlAst.RefPrefix, MessagePack.ErrorMsg] = {
+    def fSysmlAstRefPrefix(reader: Reader): SysmlAst.RefPrefix = {
+      val r = reader.readSysmlAstRefPrefix()
+      return r
+    }
+    val r = to(data, fSysmlAstRefPrefix _)
+    return r
+  }
+
+  def fromSysmlAstUsagePrefix(o: SysmlAst.UsagePrefix, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstUsagePrefix(o)
+    return w.result
+  }
+
+  def toSysmlAstUsagePrefix(data: ISZ[U8]): Either[SysmlAst.UsagePrefix, MessagePack.ErrorMsg] = {
+    def fSysmlAstUsagePrefix(reader: Reader): SysmlAst.UsagePrefix = {
+      val r = reader.readSysmlAstUsagePrefix()
+      return r
+    }
+    val r = to(data, fSysmlAstUsagePrefix _)
+    return r
+  }
+
+  def fromSysmlAstAttributeUsage(o: SysmlAst.AttributeUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstAttributeUsage(o)
+    return w.result
+  }
+
+  def toSysmlAstAttributeUsage(data: ISZ[U8]): Either[SysmlAst.AttributeUsage, MessagePack.ErrorMsg] = {
+    def fSysmlAstAttributeUsage(reader: Reader): SysmlAst.AttributeUsage = {
+      val r = reader.readSysmlAstAttributeUsage()
+      return r
+    }
+    val r = to(data, fSysmlAstAttributeUsage _)
+    return r
+  }
+
+  def fromSysmlAstReferenceUsage(o: SysmlAst.ReferenceUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstReferenceUsage(o)
+    return w.result
+  }
+
+  def toSysmlAstReferenceUsage(data: ISZ[U8]): Either[SysmlAst.ReferenceUsage, MessagePack.ErrorMsg] = {
+    def fSysmlAstReferenceUsage(reader: Reader): SysmlAst.ReferenceUsage = {
+      val r = reader.readSysmlAstReferenceUsage()
+      return r
+    }
+    val r = to(data, fSysmlAstReferenceUsage _)
+    return r
+  }
+
+  def fromSysmlAstOccurrenceUsageMember(o: SysmlAst.OccurrenceUsageMember, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstOccurrenceUsageMember(o)
+    return w.result
+  }
+
+  def toSysmlAstOccurrenceUsageMember(data: ISZ[U8]): Either[SysmlAst.OccurrenceUsageMember, MessagePack.ErrorMsg] = {
+    def fSysmlAstOccurrenceUsageMember(reader: Reader): SysmlAst.OccurrenceUsageMember = {
+      val r = reader.readSysmlAstOccurrenceUsageMember()
+      return r
+    }
+    val r = to(data, fSysmlAstOccurrenceUsageMember _)
+    return r
+  }
+
+  def fromSysmlAstOccurrenceUsageElement(o: SysmlAst.OccurrenceUsageElement, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstOccurrenceUsageElement(o)
+    return w.result
+  }
+
+  def toSysmlAstOccurrenceUsageElement(data: ISZ[U8]): Either[SysmlAst.OccurrenceUsageElement, MessagePack.ErrorMsg] = {
+    def fSysmlAstOccurrenceUsageElement(reader: Reader): SysmlAst.OccurrenceUsageElement = {
+      val r = reader.readSysmlAstOccurrenceUsageElement()
+      return r
+    }
+    val r = to(data, fSysmlAstOccurrenceUsageElement _)
+    return r
+  }
+
+  def fromSysmlAstStructureUsageElement(o: SysmlAst.StructureUsageElement, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstStructureUsageElement(o)
+    return w.result
+  }
+
+  def toSysmlAstStructureUsageElement(data: ISZ[U8]): Either[SysmlAst.StructureUsageElement, MessagePack.ErrorMsg] = {
+    def fSysmlAstStructureUsageElement(reader: Reader): SysmlAst.StructureUsageElement = {
+      val r = reader.readSysmlAstStructureUsageElement()
+      return r
+    }
+    val r = to(data, fSysmlAstStructureUsageElement _)
+    return r
+  }
+
+  def fromSysmlAstOccurrenceUsagePrefix(o: SysmlAst.OccurrenceUsagePrefix, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstOccurrenceUsagePrefix(o)
+    return w.result
+  }
+
+  def toSysmlAstOccurrenceUsagePrefix(data: ISZ[U8]): Either[SysmlAst.OccurrenceUsagePrefix, MessagePack.ErrorMsg] = {
+    def fSysmlAstOccurrenceUsagePrefix(reader: Reader): SysmlAst.OccurrenceUsagePrefix = {
+      val r = reader.readSysmlAstOccurrenceUsagePrefix()
+      return r
+    }
+    val r = to(data, fSysmlAstOccurrenceUsagePrefix _)
+    return r
+  }
+
+  def fromSysmlAstConnectionUsage(o: SysmlAst.ConnectionUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstConnectionUsage(o)
+    return w.result
+  }
+
+  def toSysmlAstConnectionUsage(data: ISZ[U8]): Either[SysmlAst.ConnectionUsage, MessagePack.ErrorMsg] = {
+    def fSysmlAstConnectionUsage(reader: Reader): SysmlAst.ConnectionUsage = {
+      val r = reader.readSysmlAstConnectionUsage()
+      return r
+    }
+    val r = to(data, fSysmlAstConnectionUsage _)
+    return r
+  }
+
+  def fromSysmlAstItemUsage(o: SysmlAst.ItemUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstItemUsage(o)
+    return w.result
+  }
+
+  def toSysmlAstItemUsage(data: ISZ[U8]): Either[SysmlAst.ItemUsage, MessagePack.ErrorMsg] = {
+    def fSysmlAstItemUsage(reader: Reader): SysmlAst.ItemUsage = {
+      val r = reader.readSysmlAstItemUsage()
+      return r
+    }
+    val r = to(data, fSysmlAstItemUsage _)
+    return r
+  }
+
+  def fromSysmlAstPartUsage(o: SysmlAst.PartUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstPartUsage(o)
+    return w.result
+  }
+
+  def toSysmlAstPartUsage(data: ISZ[U8]): Either[SysmlAst.PartUsage, MessagePack.ErrorMsg] = {
+    def fSysmlAstPartUsage(reader: Reader): SysmlAst.PartUsage = {
+      val r = reader.readSysmlAstPartUsage()
+      return r
+    }
+    val r = to(data, fSysmlAstPartUsage _)
+    return r
+  }
+
+  def fromSysmlAstPortUsage(o: SysmlAst.PortUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstPortUsage(o)
+    return w.result
+  }
+
+  def toSysmlAstPortUsage(data: ISZ[U8]): Either[SysmlAst.PortUsage, MessagePack.ErrorMsg] = {
+    def fSysmlAstPortUsage(reader: Reader): SysmlAst.PortUsage = {
+      val r = reader.readSysmlAstPortUsage()
+      return r
+    }
+    val r = to(data, fSysmlAstPortUsage _)
+    return r
+  }
+
+  def fromSysmlAstAnnotatingElement(o: SysmlAst.AnnotatingElement, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstAnnotatingElement(o)
+    return w.result
+  }
+
+  def toSysmlAstAnnotatingElement(data: ISZ[U8]): Either[SysmlAst.AnnotatingElement, MessagePack.ErrorMsg] = {
+    def fSysmlAstAnnotatingElement(reader: Reader): SysmlAst.AnnotatingElement = {
+      val r = reader.readSysmlAstAnnotatingElement()
+      return r
+    }
+    val r = to(data, fSysmlAstAnnotatingElement _)
+    return r
+  }
+
+  def fromSysmlAstComment(o: SysmlAst.Comment, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstComment(o)
+    return w.result
+  }
+
+  def toSysmlAstComment(data: ISZ[U8]): Either[SysmlAst.Comment, MessagePack.ErrorMsg] = {
+    def fSysmlAstComment(reader: Reader): SysmlAst.Comment = {
+      val r = reader.readSysmlAstComment()
+      return r
+    }
+    val r = to(data, fSysmlAstComment _)
+    return r
+  }
+
+  def fromSysmlAstDocumentation(o: SysmlAst.Documentation, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstDocumentation(o)
+    return w.result
+  }
+
+  def toSysmlAstDocumentation(data: ISZ[U8]): Either[SysmlAst.Documentation, MessagePack.ErrorMsg] = {
+    def fSysmlAstDocumentation(reader: Reader): SysmlAst.Documentation = {
+      val r = reader.readSysmlAstDocumentation()
+      return r
+    }
+    val r = to(data, fSysmlAstDocumentation _)
+    return r
+  }
+
+  def fromSysmlAstTextualRepresentation(o: SysmlAst.TextualRepresentation, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstTextualRepresentation(o)
+    return w.result
+  }
+
+  def toSysmlAstTextualRepresentation(data: ISZ[U8]): Either[SysmlAst.TextualRepresentation, MessagePack.ErrorMsg] = {
+    def fSysmlAstTextualRepresentation(reader: Reader): SysmlAst.TextualRepresentation = {
+      val r = reader.readSysmlAstTextualRepresentation()
+      return r
+    }
+    val r = to(data, fSysmlAstTextualRepresentation _)
+    return r
+  }
+
+  def fromSysmlAstGumboAnnotation(o: SysmlAst.GumboAnnotation, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstGumboAnnotation(o)
+    return w.result
+  }
+
+  def toSysmlAstGumboAnnotation(data: ISZ[U8]): Either[SysmlAst.GumboAnnotation, MessagePack.ErrorMsg] = {
+    def fSysmlAstGumboAnnotation(reader: Reader): SysmlAst.GumboAnnotation = {
+      val r = reader.readSysmlAstGumboAnnotation()
+      return r
+    }
+    val r = to(data, fSysmlAstGumboAnnotation _)
+    return r
+  }
+
+  def fromAttr(o: Attr, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeAttr(o)
+    return w.result
+  }
+
+  def toAttr(data: ISZ[U8]): Either[Attr, MessagePack.ErrorMsg] = {
+    def fAttr(reader: Reader): Attr = {
+      val r = reader.readAttr()
+      return r
+    }
+    val r = to(data, fAttr _)
+    return r
+  }
+
+  def fromResolvedAttr(o: ResolvedAttr, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeResolvedAttr(o)
+    return w.result
+  }
+
+  def toResolvedAttr(data: ISZ[U8]): Either[ResolvedAttr, MessagePack.ErrorMsg] = {
+    def fResolvedAttr(reader: Reader): ResolvedAttr = {
+      val r = reader.readResolvedAttr()
+      return r
+    }
+    val r = to(data, fResolvedAttr _)
+    return r
+  }
+
+  def fromResolvedInfo(o: ResolvedInfo, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeResolvedInfo(o)
+    return w.result
+  }
+
+  def toResolvedInfo(data: ISZ[U8]): Either[ResolvedInfo, MessagePack.ErrorMsg] = {
+    def fResolvedInfo(reader: Reader): ResolvedInfo = {
+      val r = reader.readResolvedInfo()
+      return r
+    }
+    val r = to(data, fResolvedInfo _)
+    return r
+  }
+
+  def fromResolvedInfoPackage(o: ResolvedInfo.Package, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeResolvedInfoPackage(o)
+    return w.result
+  }
+
+  def toResolvedInfoPackage(data: ISZ[U8]): Either[ResolvedInfo.Package, MessagePack.ErrorMsg] = {
+    def fResolvedInfoPackage(reader: Reader): ResolvedInfo.Package = {
+      val r = reader.readResolvedInfoPackage()
+      return r
+    }
+    val r = to(data, fResolvedInfoPackage _)
+    return r
+  }
+
+  def fromResolvedInfoEnum(o: ResolvedInfo.Enum, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeResolvedInfoEnum(o)
+    return w.result
+  }
+
+  def toResolvedInfoEnum(data: ISZ[U8]): Either[ResolvedInfo.Enum, MessagePack.ErrorMsg] = {
+    def fResolvedInfoEnum(reader: Reader): ResolvedInfo.Enum = {
+      val r = reader.readResolvedInfoEnum()
+      return r
+    }
+    val r = to(data, fResolvedInfoEnum _)
+    return r
+  }
+
+  def fromResolvedInfoEnumElement(o: ResolvedInfo.EnumElement, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeResolvedInfoEnumElement(o)
+    return w.result
+  }
+
+  def toResolvedInfoEnumElement(data: ISZ[U8]): Either[ResolvedInfo.EnumElement, MessagePack.ErrorMsg] = {
+    def fResolvedInfoEnumElement(reader: Reader): ResolvedInfo.EnumElement = {
+      val r = reader.readResolvedInfoEnumElement()
+      return r
+    }
+    val r = to(data, fResolvedInfoEnumElement _)
+    return r
+  }
+
+  def fromResolvedInfoAttributeUsage(o: ResolvedInfo.AttributeUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeResolvedInfoAttributeUsage(o)
+    return w.result
+  }
+
+  def toResolvedInfoAttributeUsage(data: ISZ[U8]): Either[ResolvedInfo.AttributeUsage, MessagePack.ErrorMsg] = {
+    def fResolvedInfoAttributeUsage(reader: Reader): ResolvedInfo.AttributeUsage = {
+      val r = reader.readResolvedInfoAttributeUsage()
+      return r
+    }
+    val r = to(data, fResolvedInfoAttributeUsage _)
+    return r
+  }
+
+  def fromResolvedInfoConnectionUsage(o: ResolvedInfo.ConnectionUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeResolvedInfoConnectionUsage(o)
+    return w.result
+  }
+
+  def toResolvedInfoConnectionUsage(data: ISZ[U8]): Either[ResolvedInfo.ConnectionUsage, MessagePack.ErrorMsg] = {
+    def fResolvedInfoConnectionUsage(reader: Reader): ResolvedInfo.ConnectionUsage = {
+      val r = reader.readResolvedInfoConnectionUsage()
+      return r
+    }
+    val r = to(data, fResolvedInfoConnectionUsage _)
+    return r
+  }
+
+  def fromResolvedInfoItemUsage(o: ResolvedInfo.ItemUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeResolvedInfoItemUsage(o)
+    return w.result
+  }
+
+  def toResolvedInfoItemUsage(data: ISZ[U8]): Either[ResolvedInfo.ItemUsage, MessagePack.ErrorMsg] = {
+    def fResolvedInfoItemUsage(reader: Reader): ResolvedInfo.ItemUsage = {
+      val r = reader.readResolvedInfoItemUsage()
+      return r
+    }
+    val r = to(data, fResolvedInfoItemUsage _)
+    return r
+  }
+
+  def fromResolvedInfoPartUsage(o: ResolvedInfo.PartUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeResolvedInfoPartUsage(o)
+    return w.result
+  }
+
+  def toResolvedInfoPartUsage(data: ISZ[U8]): Either[ResolvedInfo.PartUsage, MessagePack.ErrorMsg] = {
+    def fResolvedInfoPartUsage(reader: Reader): ResolvedInfo.PartUsage = {
+      val r = reader.readResolvedInfoPartUsage()
+      return r
+    }
+    val r = to(data, fResolvedInfoPartUsage _)
+    return r
+  }
+
+  def fromResolvedInfoPortUsage(o: ResolvedInfo.PortUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeResolvedInfoPortUsage(o)
+    return w.result
+  }
+
+  def toResolvedInfoPortUsage(data: ISZ[U8]): Either[ResolvedInfo.PortUsage, MessagePack.ErrorMsg] = {
+    def fResolvedInfoPortUsage(reader: Reader): ResolvedInfo.PortUsage = {
+      val r = reader.readResolvedInfoPortUsage()
+      return r
+    }
+    val r = to(data, fResolvedInfoPortUsage _)
+    return r
+  }
+
+  def fromResolvedInfoReferenceUsage(o: ResolvedInfo.ReferenceUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeResolvedInfoReferenceUsage(o)
+    return w.result
+  }
+
+  def toResolvedInfoReferenceUsage(data: ISZ[U8]): Either[ResolvedInfo.ReferenceUsage, MessagePack.ErrorMsg] = {
+    def fResolvedInfoReferenceUsage(reader: Reader): ResolvedInfo.ReferenceUsage = {
+      val r = reader.readResolvedInfoReferenceUsage()
+      return r
+    }
+    val r = to(data, fResolvedInfoReferenceUsage _)
+    return r
+  }
+
+  def fromType(o: Type, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeType(o)
+    return w.result
+  }
+
+  def toType(data: ISZ[U8]): Either[Type, MessagePack.ErrorMsg] = {
+    def fType(reader: Reader): Type = {
+      val r = reader.readType()
+      return r
+    }
+    val r = to(data, fType _)
+    return r
+  }
+
+  def fromTypeNamed(o: Type.Named, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeTypeNamed(o)
+    return w.result
+  }
+
+  def toTypeNamed(data: ISZ[U8]): Either[Type.Named, MessagePack.ErrorMsg] = {
+    def fTypeNamed(reader: Reader): Type.Named = {
+      val r = reader.readTypeNamed()
+      return r
+    }
+    val r = to(data, fTypeNamed _)
+    return r
+  }
+
+  def fromTypedAttr(o: TypedAttr, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeTypedAttr(o)
+    return w.result
+  }
+
+  def toTypedAttr(data: ISZ[U8]): Either[TypedAttr, MessagePack.ErrorMsg] = {
+    def fTypedAttr(reader: Reader): TypedAttr = {
+      val r = reader.readTypedAttr()
+      return r
+    }
+    val r = to(data, fTypedAttr _)
+    return r
+  }
+
+  def fromTyped(o: Typed, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeTyped(o)
+    return w.result
+  }
+
+  def toTyped(data: ISZ[U8]): Either[Typed, MessagePack.ErrorMsg] = {
+    def fTyped(reader: Reader): Typed = {
+      val r = reader.readTyped()
+      return r
+    }
+    val r = to(data, fTyped _)
+    return r
+  }
+
+  def fromTypedPackage(o: Typed.Package, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeTypedPackage(o)
+    return w.result
+  }
+
+  def toTypedPackage(data: ISZ[U8]): Either[Typed.Package, MessagePack.ErrorMsg] = {
+    def fTypedPackage(reader: Reader): Typed.Package = {
+      val r = reader.readTypedPackage()
+      return r
+    }
+    val r = to(data, fTypedPackage _)
+    return r
+  }
+
+  def fromTypedName(o: Typed.Name, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeTypedName(o)
+    return w.result
+  }
+
+  def toTypedName(data: ISZ[U8]): Either[Typed.Name, MessagePack.ErrorMsg] = {
+    def fTypedName(reader: Reader): Typed.Name = {
+      val r = reader.readTypedName()
+      return r
+    }
+    val r = to(data, fTypedName _)
+    return r
+  }
+
+  def fromTypedEnum(o: Typed.Enum, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeTypedEnum(o)
+    return w.result
+  }
+
+  def toTypedEnum(data: ISZ[U8]): Either[Typed.Enum, MessagePack.ErrorMsg] = {
+    def fTypedEnum(reader: Reader): Typed.Enum = {
+      val r = reader.readTypedEnum()
+      return r
+    }
+    val r = to(data, fTypedEnum _)
     return r
   }
 

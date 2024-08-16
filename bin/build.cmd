@@ -65,7 +65,10 @@ def usage(): Unit = {
 def regenAir(): Unit = {
   val airRootPath = home
   val airPackagePath = airRootPath / "shared" / "src" / "main" / "scala" / "org" / "sireum" / "hamr" / "ir"
-  val airAsts = ISZ[String]("AadlAST.scala", "BlessAST.scala", "Emv2AST.scala", "GumboAST.scala", "SmfAST.scala").map((m: String) => (airPackagePath / m).value)
+  val airAsts = ISZ[String](
+    "AadlAST.scala",
+    "BlessAST.scala", "Emv2AST.scala", "GumboAST.scala", "SmfAST.scala",
+    "SysmlAst.scala", "SysmlTyped.scala").map((m: String) => (airPackagePath / m).value)
 
   val slangHome: Os.Path = {
     var cand = airRootPath.up.up / "slang"

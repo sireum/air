@@ -29,8 +29,7 @@ package org.sireum.hamr.ir
 import org.sireum._
 import org.sireum.message.Position
 
-@sig
-trait AadlInstInfo {
+@sig trait AadlInstInfo {
   def uriFrag: String
 }
 

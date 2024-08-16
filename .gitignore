@@ -14,6 +14,7 @@ bin/linux/
 bin/mac/
 bin/win/
 bin/scala/
+bin/prelude*
 bin/sireum*
 lib
 **/.aadlbin-gen/

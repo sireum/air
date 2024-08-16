@@ -26,7 +26,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// This file is auto-generated from AadlAST.scala, BlessAST.scala, Emv2AST.scala, GumboAST.scala, SmfAST.scala, AST.scala, Typed.scala
+// This file is auto-generated from AadlAST.scala, BlessAST.scala, Emv2AST.scala, GumboAST.scala, SmfAST.scala, SysmlAst.scala, SysmlTyped.scala, AST.scala, Typed.scala
 
 package org.sireum.hamr.ir
 
@@ -119,7 +119,7 @@ import org.sireum.hamr.ir.BTSFunctionCall
 import org.sireum.hamr.ir.BTSFormalExpPair
 import org.sireum.hamr.ir.BTSBehaviorTime
 import org.sireum.hamr.ir.TODO
-import org.sireum.hamr.ir.Attr
+import org.sireum.hamr.ir.BlessAttr
 import org.sireum.hamr.ir.Emv2Annex
 import org.sireum.hamr.ir.Emv2Lib
 import org.sireum.hamr.ir.Emv2ElementRef
@@ -168,6 +168,12 @@ import org.sireum.hamr.ir.SmfClassification
 import org.sireum.hamr.ir.SmfDeclass
 import org.sireum.hamr.ir.SmfLibrary
 import org.sireum.hamr.ir.SmfType
+import org.sireum.hamr.ir.Attr
+import org.sireum.hamr.ir.ResolvedAttr
+import org.sireum.hamr.ir.ResolvedInfo
+import org.sireum.hamr.ir.Type
+import org.sireum.hamr.ir.TypedAttr
+import org.sireum.hamr.ir.Typed
 
 object JSON {
 
@@ -1155,9 +1161,9 @@ object JSON {
       ))
     }
 
-    @pure def printAttr(o: Attr): ST = {
+    @pure def printBlessAttr(o: BlessAttr): ST = {
       return printObject(ISZ(
-        ("type", st""""Attr""""),
+        ("type", st""""BlessAttr""""),
         ("posOpt", printOption(F, o.posOpt, printPosition _))
       ))
     }
@@ -1444,7 +1450,8 @@ object JSON {
         ("invariants", printISZ(F, o.invariants, printGclInvariant _)),
         ("initializes", printOption(F, o.initializes, printGclInitialize _)),
         ("integration", printOption(F, o.integration, printGclIntegration _)),
-        ("compute", printOption(F, o.compute, printGclCompute _))
+        ("compute", printOption(F, o.compute, printGclCompute _)),
+        ("attr", printAttr(o.attr))
       ))
     }
 
@@ -1460,7 +1467,7 @@ object JSON {
         ("type", st""""GclStateVar""""),
         ("name", printString(o.name)),
         ("classifier", printString(o.classifier)),
-        ("posOpt", printOption(F, o.posOpt, printPosition _))
+        ("attr", printAttr(o.attr))
       ))
     }
 
@@ -1487,7 +1494,7 @@ object JSON {
         ("id", printString(o.id)),
         ("descriptor", printOption(T, o.descriptor, printString _)),
         ("exp", print_langastExp(o.exp)),
-        ("posOpt", printOption(F, o.posOpt, printPosition _))
+        ("attr", printAttr(o.attr))
       ))
     }
 
@@ -1504,7 +1511,7 @@ object JSON {
         ("id", printString(o.id)),
         ("descriptor", printOption(T, o.descriptor, printString _)),
         ("exp", print_langastExp(o.exp)),
-        ("posOpt", printOption(F, o.posOpt, printPosition _))
+        ("attr", printAttr(o.attr))
       ))
     }
 
@@ -1514,14 +1521,15 @@ object JSON {
         ("id", printString(o.id)),
         ("descriptor", printOption(T, o.descriptor, printString _)),
         ("exp", print_langastExp(o.exp)),
-        ("posOpt", printOption(F, o.posOpt, printPosition _))
+        ("attr", printAttr(o.attr))
       ))
     }
 
     @pure def printGclIntegration(o: GclIntegration): ST = {
       return printObject(ISZ(
         ("type", st""""GclIntegration""""),
-        ("specs", printISZ(F, o.specs, printGclSpec _))
+        ("specs", printISZ(F, o.specs, printGclSpec _)),
+        ("attr", printAttr(o.attr))
       ))
     }
 
@@ -1532,7 +1540,7 @@ object JSON {
         ("descriptor", printOption(T, o.descriptor, printString _)),
         ("assumes", print_langastExp(o.assumes)),
         ("guarantees", print_langastExp(o.guarantees)),
-        ("posOpt", printOption(F, o.posOpt, printPosition _))
+        ("attr", printAttr(o.attr))
       ))
     }
 
@@ -1541,7 +1549,8 @@ object JSON {
         ("type", st""""GclInitialize""""),
         ("modifies", printISZ(F, o.modifies, print_langastExp _)),
         ("guarantees", printISZ(F, o.guarantees, printGclGuarantee _)),
-        ("flows", printISZ(F, o.flows, printInfoFlowClause _))
+        ("flows", printISZ(F, o.flows, printInfoFlowClause _)),
+        ("attr", printAttr(o.attr))
       ))
     }
 
@@ -1552,7 +1561,8 @@ object JSON {
         ("specs", printISZ(F, o.specs, printGclComputeSpec _)),
         ("cases", printISZ(F, o.cases, printGclCaseStatement _)),
         ("handlers", printISZ(F, o.handlers, printGclHandle _)),
-        ("flows", printISZ(F, o.flows, printInfoFlowClause _))
+        ("flows", printISZ(F, o.flows, printInfoFlowClause _)),
+        ("attr", printAttr(o.attr))
       ))
     }
 
@@ -1561,7 +1571,8 @@ object JSON {
         ("type", st""""GclHandle""""),
         ("port", print_langastExp(o.port)),
         ("modifies", printISZ(F, o.modifies, print_langastExp _)),
-        ("guarantees", printISZ(F, o.guarantees, printGclGuarantee _))
+        ("guarantees", printISZ(F, o.guarantees, printGclGuarantee _)),
+        ("attr", printAttr(o.attr))
       ))
     }
 
@@ -1575,7 +1586,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""GclLib""""),
         ("containingPackage", printName(o.containingPackage)),
-        ("methods", printISZ(F, o.methods, printGclMethod _))
+        ("methods", printISZ(F, o.methods, printGclMethod _)),
+        ("attr", printAttr(o.attr))
       ))
     }
 
@@ -1586,7 +1598,7 @@ object JSON {
         ("descriptor", printOption(T, o.descriptor, printString _)),
         ("from", printISZ(F, o.from, print_langastExp _)),
         ("to", printISZ(F, o.to, print_langastExp _)),
-        ("posOpt", printOption(F, o.posOpt, printPosition _))
+        ("attr", printAttr(o.attr))
       ))
     }
 
@@ -1642,6 +1654,770 @@ object JSON {
         ("type", st""""SmfType""""),
         ("typeName", printName(o.typeName)),
         ("parentType", printISZ(F, o.parentType, printName _))
+      ))
+    }
+
+    @pure def printSysmlAstId(o: SysmlAst.Id): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.Id""""),
+        ("value", printString(o.value)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstName(o: SysmlAst.Name): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.Name""""),
+        ("ids", printISZ(F, o.ids, printSysmlAstId _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstTopUnit(o: SysmlAst.TopUnit): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.TopUnit""""),
+        ("fileUri", printOption(T, o.fileUri, printString _)),
+        ("packageBodyElements", printISZ(F, o.packageBodyElements, printSysmlAstPackageBodyElement _))
+      ))
+    }
+
+    @pure def printSysmlAstAttrNode(o: SysmlAst.AttrNode): ST = {
+      o match {
+        case o: SysmlAst.Import => return printSysmlAstImport(o)
+        case o: SysmlAst.AliasMember => return printSysmlAstAliasMember(o)
+        case o: SysmlAst.Identification => return printSysmlAstIdentification(o)
+        case o: SysmlAst.Package => return printSysmlAstPackage(o)
+        case o: SysmlAst.AttributeDefinition => return printSysmlAstAttributeDefinition(o)
+        case o: SysmlAst.AllocationDefinition => return printSysmlAstAllocationDefinition(o)
+        case o: SysmlAst.ConnectionDefinition => return printSysmlAstConnectionDefinition(o)
+        case o: SysmlAst.EnumerationDefinition => return printSysmlAstEnumerationDefinition(o)
+        case o: SysmlAst.PartDefinition => return printSysmlAstPartDefinition(o)
+        case o: SysmlAst.PortDefinition => return printSysmlAstPortDefinition(o)
+        case o: SysmlAst.MetadataDefinition => return printSysmlAstMetadataDefinition(o)
+        case o: SysmlAst.AttributeUsage => return printSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => return printSysmlAstReferenceUsage(o)
+        case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => return printSysmlAstPortUsage(o)
+        case o: SysmlAst.Comment => return printSysmlAstComment(o)
+        case o: SysmlAst.Documentation => return printSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => return printSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => return printSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    @pure def printSysmlAstPackageBodyElement(o: SysmlAst.PackageBodyElement): ST = {
+      o match {
+        case o: SysmlAst.Import => return printSysmlAstImport(o)
+        case o: SysmlAst.AliasMember => return printSysmlAstAliasMember(o)
+        case o: SysmlAst.Package => return printSysmlAstPackage(o)
+        case o: SysmlAst.AttributeDefinition => return printSysmlAstAttributeDefinition(o)
+        case o: SysmlAst.AllocationDefinition => return printSysmlAstAllocationDefinition(o)
+        case o: SysmlAst.ConnectionDefinition => return printSysmlAstConnectionDefinition(o)
+        case o: SysmlAst.EnumerationDefinition => return printSysmlAstEnumerationDefinition(o)
+        case o: SysmlAst.PartDefinition => return printSysmlAstPartDefinition(o)
+        case o: SysmlAst.PortDefinition => return printSysmlAstPortDefinition(o)
+        case o: SysmlAst.MetadataDefinition => return printSysmlAstMetadataDefinition(o)
+        case o: SysmlAst.AttributeUsage => return printSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => return printSysmlAstReferenceUsage(o)
+        case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => return printSysmlAstPortUsage(o)
+        case o: SysmlAst.Comment => return printSysmlAstComment(o)
+        case o: SysmlAst.Documentation => return printSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => return printSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => return printSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    @pure def printSysmlAstDefinitionBodyItem(o: SysmlAst.DefinitionBodyItem): ST = {
+      o match {
+        case o: SysmlAst.Import => return printSysmlAstImport(o)
+        case o: SysmlAst.AliasMember => return printSysmlAstAliasMember(o)
+        case o: SysmlAst.Package => return printSysmlAstPackage(o)
+        case o: SysmlAst.AttributeDefinition => return printSysmlAstAttributeDefinition(o)
+        case o: SysmlAst.AllocationDefinition => return printSysmlAstAllocationDefinition(o)
+        case o: SysmlAst.ConnectionDefinition => return printSysmlAstConnectionDefinition(o)
+        case o: SysmlAst.EnumerationDefinition => return printSysmlAstEnumerationDefinition(o)
+        case o: SysmlAst.PartDefinition => return printSysmlAstPartDefinition(o)
+        case o: SysmlAst.PortDefinition => return printSysmlAstPortDefinition(o)
+        case o: SysmlAst.MetadataDefinition => return printSysmlAstMetadataDefinition(o)
+        case o: SysmlAst.AttributeUsage => return printSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => return printSysmlAstReferenceUsage(o)
+        case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => return printSysmlAstPortUsage(o)
+        case o: SysmlAst.Comment => return printSysmlAstComment(o)
+        case o: SysmlAst.Documentation => return printSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => return printSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => return printSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    @pure def printSysmlAstVisibilityType(o: SysmlAst.Visibility.Type): ST = {
+      val value: String = o match {
+        case SysmlAst.Visibility.Public => "Public"
+        case SysmlAst.Visibility.Private => "Private"
+        case SysmlAst.Visibility.Protected => "Protected"
+      }
+      return printObject(ISZ(
+        ("type", printString("SysmlAst.Visibility")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def printSysmlAstFeatureValue(o: SysmlAst.FeatureValue): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.FeatureValue""""),
+        ("isBound", printB(o.isBound)),
+        ("isInitial", printB(o.isInitial)),
+        ("isDefault", printB(o.isDefault)),
+        ("exp", print_langastExp(o.exp))
+      ))
+    }
+
+    @pure def printSysmlAstEnumeratedValue(o: SysmlAst.EnumeratedValue): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.EnumeratedValue""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("specializations", printISZ(F, o.specializations, printSysmlAstFeatureSpecialization _)),
+        ("definitionBodyItems", printISZ(F, o.definitionBodyItems, printSysmlAstDefinitionBodyItem _))
+      ))
+    }
+
+    @pure def printSysmlAstImport(o: SysmlAst.Import): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.Import""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("all", printB(o.all)),
+        ("name", printSysmlAstName(o.name)),
+        ("star", printB(o.star)),
+        ("starStar", printB(o.starStar)),
+        ("annotations", printISZ(F, o.annotations, printSysmlAstAnnotatingElement _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstAliasMember(o: SysmlAst.AliasMember): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.AliasMember""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("target", printSysmlAstName(o.target)),
+        ("annotations", printISZ(F, o.annotations, printSysmlAstAnnotatingElement _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstIdentification(o: SysmlAst.Identification): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.Identification""""),
+        ("shortName", printOption(F, o.shortName, printSysmlAstId _)),
+        ("name", printOption(F, o.name, printSysmlAstId _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstFeatureDirectionType(o: SysmlAst.FeatureDirection.Type): ST = {
+      val value: String = o match {
+        case SysmlAst.FeatureDirection.In => "In"
+        case SysmlAst.FeatureDirection.Out => "Out"
+        case SysmlAst.FeatureDirection.InOut => "InOut"
+      }
+      return printObject(ISZ(
+        ("type", printString("SysmlAst.FeatureDirection")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def printSysmlAstPackageMember(o: SysmlAst.PackageMember): ST = {
+      o match {
+        case o: SysmlAst.Package => return printSysmlAstPackage(o)
+        case o: SysmlAst.AttributeDefinition => return printSysmlAstAttributeDefinition(o)
+        case o: SysmlAst.AllocationDefinition => return printSysmlAstAllocationDefinition(o)
+        case o: SysmlAst.ConnectionDefinition => return printSysmlAstConnectionDefinition(o)
+        case o: SysmlAst.EnumerationDefinition => return printSysmlAstEnumerationDefinition(o)
+        case o: SysmlAst.PartDefinition => return printSysmlAstPartDefinition(o)
+        case o: SysmlAst.PortDefinition => return printSysmlAstPortDefinition(o)
+        case o: SysmlAst.MetadataDefinition => return printSysmlAstMetadataDefinition(o)
+        case o: SysmlAst.AttributeUsage => return printSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => return printSysmlAstReferenceUsage(o)
+        case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => return printSysmlAstPortUsage(o)
+        case o: SysmlAst.Comment => return printSysmlAstComment(o)
+        case o: SysmlAst.Documentation => return printSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => return printSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => return printSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    @pure def printSysmlAstConnectorPart(o: SysmlAst.ConnectorPart): ST = {
+      o match {
+        case o: SysmlAst.BinaryConnectorPart => return printSysmlAstBinaryConnectorPart(o)
+        case o: SysmlAst.NaryConnectorPart => return printSysmlAstNaryConnectorPart(o)
+      }
+    }
+
+    @pure def printSysmlAstConnectorEnd(o: SysmlAst.ConnectorEnd): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.ConnectorEnd""""),
+        ("reference", printISZ(F, o.reference, printSysmlAstName _))
+      ))
+    }
+
+    @pure def printSysmlAstBinaryConnectorPart(o: SysmlAst.BinaryConnectorPart): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.BinaryConnectorPart""""),
+        ("src", printSysmlAstConnectorEnd(o.src)),
+        ("dst", printSysmlAstConnectorEnd(o.dst))
+      ))
+    }
+
+    @pure def printSysmlAstNaryConnectorPart(o: SysmlAst.NaryConnectorPart): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.NaryConnectorPart""""),
+        ("connectorEnds", printISZ(F, o.connectorEnds, printSysmlAstConnectorEnd _))
+      ))
+    }
+
+    @pure def printSysmlAstFeatureSpecialization(o: SysmlAst.FeatureSpecialization): ST = {
+      o match {
+        case o: SysmlAst.TypingsSpecialization => return printSysmlAstTypingsSpecialization(o)
+        case o: SysmlAst.SubsettingsSpecialization => return printSysmlAstSubsettingsSpecialization(o)
+        case o: SysmlAst.ReferencesSpecialization => return printSysmlAstReferencesSpecialization(o)
+        case o: SysmlAst.RedefinitionsSpecialization => return printSysmlAstRedefinitionsSpecialization(o)
+      }
+    }
+
+    @pure def printSysmlAstTypingsSpecialization(o: SysmlAst.TypingsSpecialization): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.TypingsSpecialization""""),
+        ("names", printISZ(F, o.names, printSysmlAstName _))
+      ))
+    }
+
+    @pure def printSysmlAstSubsettingsSpecialization(o: SysmlAst.SubsettingsSpecialization): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.SubsettingsSpecialization""""),
+        ("subsettings", printISZ(F, o.subsettings, printSysmlAstName _))
+      ))
+    }
+
+    @pure def printSysmlAstReferencesSpecialization(o: SysmlAst.ReferencesSpecialization): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.ReferencesSpecialization""""),
+        ("references", printISZ(F, o.references, printSysmlAstName _))
+      ))
+    }
+
+    @pure def printSysmlAstRedefinitionsSpecialization(o: SysmlAst.RedefinitionsSpecialization): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.RedefinitionsSpecialization""""),
+        ("references", printISZ(F, o.references, printSysmlAstName _))
+      ))
+    }
+
+    @pure def printSysmlAstDefinitionMember(o: SysmlAst.DefinitionMember): ST = {
+      o match {
+        case o: SysmlAst.Package => return printSysmlAstPackage(o)
+        case o: SysmlAst.AttributeDefinition => return printSysmlAstAttributeDefinition(o)
+        case o: SysmlAst.AllocationDefinition => return printSysmlAstAllocationDefinition(o)
+        case o: SysmlAst.ConnectionDefinition => return printSysmlAstConnectionDefinition(o)
+        case o: SysmlAst.EnumerationDefinition => return printSysmlAstEnumerationDefinition(o)
+        case o: SysmlAst.PartDefinition => return printSysmlAstPartDefinition(o)
+        case o: SysmlAst.PortDefinition => return printSysmlAstPortDefinition(o)
+        case o: SysmlAst.MetadataDefinition => return printSysmlAstMetadataDefinition(o)
+        case o: SysmlAst.Comment => return printSysmlAstComment(o)
+        case o: SysmlAst.Documentation => return printSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => return printSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => return printSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    @pure def printSysmlAstDefinitionElement(o: SysmlAst.DefinitionElement): ST = {
+      o match {
+        case o: SysmlAst.Package => return printSysmlAstPackage(o)
+        case o: SysmlAst.AttributeDefinition => return printSysmlAstAttributeDefinition(o)
+        case o: SysmlAst.AllocationDefinition => return printSysmlAstAllocationDefinition(o)
+        case o: SysmlAst.ConnectionDefinition => return printSysmlAstConnectionDefinition(o)
+        case o: SysmlAst.EnumerationDefinition => return printSysmlAstEnumerationDefinition(o)
+        case o: SysmlAst.PartDefinition => return printSysmlAstPartDefinition(o)
+        case o: SysmlAst.PortDefinition => return printSysmlAstPortDefinition(o)
+        case o: SysmlAst.MetadataDefinition => return printSysmlAstMetadataDefinition(o)
+        case o: SysmlAst.Comment => return printSysmlAstComment(o)
+        case o: SysmlAst.Documentation => return printSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => return printSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => return printSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    @pure def printSysmlAstDefinitionPrefix(o: SysmlAst.DefinitionPrefix): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.DefinitionPrefix""""),
+        ("isAbstract", printB(o.isAbstract)),
+        ("isVariation", printB(o.isVariation))
+      ))
+    }
+
+    @pure def printSysmlAstPackage(o: SysmlAst.Package): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.Package""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("packageElements", printISZ(F, o.packageElements, printSysmlAstPackageBodyElement _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstAttributeDefinition(o: SysmlAst.AttributeDefinition): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.AttributeDefinition""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("defPrefix", printSysmlAstDefinitionPrefix(o.defPrefix)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("subClassifications", printISZ(F, o.subClassifications, printSysmlAstName _)),
+        ("parents", printISZ(F, o.parents, printTypeNamed _)),
+        ("bodyItems", printISZ(F, o.bodyItems, printSysmlAstDefinitionBodyItem _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstOccurrenceDefinitionPrefix(o: SysmlAst.OccurrenceDefinitionPrefix): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.OccurrenceDefinitionPrefix""""),
+        ("isAbstract", printB(o.isAbstract)),
+        ("isVariation", printB(o.isVariation))
+      ))
+    }
+
+    @pure def printSysmlAstAllocationDefinition(o: SysmlAst.AllocationDefinition): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.AllocationDefinition""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("occurrenceDefPrefix", printSysmlAstOccurrenceDefinitionPrefix(o.occurrenceDefPrefix)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("subClassifications", printISZ(F, o.subClassifications, printSysmlAstName _)),
+        ("parents", printISZ(F, o.parents, printTypeNamed _)),
+        ("bodyItems", printISZ(F, o.bodyItems, printSysmlAstDefinitionBodyItem _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstConnectionDefinition(o: SysmlAst.ConnectionDefinition): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.ConnectionDefinition""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("occurrenceDefPrefix", printSysmlAstOccurrenceDefinitionPrefix(o.occurrenceDefPrefix)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("subClassifications", printISZ(F, o.subClassifications, printSysmlAstName _)),
+        ("parents", printISZ(F, o.parents, printTypeNamed _)),
+        ("bodyItems", printISZ(F, o.bodyItems, printSysmlAstDefinitionBodyItem _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstEnumerationDefinition(o: SysmlAst.EnumerationDefinition): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.EnumerationDefinition""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("subClassifications", printISZ(F, o.subClassifications, printSysmlAstName _)),
+        ("annotations", printISZ(F, o.annotations, printSysmlAstAnnotatingElement _)),
+        ("enumValues", printISZ(F, o.enumValues, printSysmlAstEnumeratedValue _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstPartDefinition(o: SysmlAst.PartDefinition): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.PartDefinition""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("occurrenceDefPrefix", printSysmlAstOccurrenceDefinitionPrefix(o.occurrenceDefPrefix)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("subClassifications", printISZ(F, o.subClassifications, printSysmlAstName _)),
+        ("parents", printISZ(F, o.parents, printTypeNamed _)),
+        ("bodyItems", printISZ(F, o.bodyItems, printSysmlAstDefinitionBodyItem _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstPortDefinition(o: SysmlAst.PortDefinition): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.PortDefinition""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("defPrefix", printSysmlAstDefinitionPrefix(o.defPrefix)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("subClassifications", printISZ(F, o.subClassifications, printSysmlAstName _)),
+        ("parents", printISZ(F, o.parents, printTypeNamed _)),
+        ("bodyItems", printISZ(F, o.bodyItems, printSysmlAstDefinitionBodyItem _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstMetadataDefinition(o: SysmlAst.MetadataDefinition): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.MetadataDefinition""""),
+        ("isAbstract", printB(o.isAbstract)),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("subClassifications", printISZ(F, o.subClassifications, printSysmlAstName _)),
+        ("bodyItems", printISZ(F, o.bodyItems, printSysmlAstDefinitionBodyItem _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstUsageElement(o: SysmlAst.UsageElement): ST = {
+      o match {
+        case o: SysmlAst.AttributeUsage => return printSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => return printSysmlAstReferenceUsage(o)
+        case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => return printSysmlAstPortUsage(o)
+      }
+    }
+
+    @pure def printSysmlAstCommonUsageElements(o: SysmlAst.CommonUsageElements): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.CommonUsageElements""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("specializations", printISZ(F, o.specializations, printSysmlAstFeatureSpecialization _)),
+        ("featureValue", printOption(F, o.featureValue, printSysmlAstFeatureValue _)),
+        ("definitionBodyItems", printISZ(F, o.definitionBodyItems, printSysmlAstDefinitionBodyItem _)),
+        ("tipeOpt", printOption(F, o.tipeOpt, printType _)),
+        ("attr", printResolvedAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstNonOccurrenceUsageMember(o: SysmlAst.NonOccurrenceUsageMember): ST = {
+      o match {
+        case o: SysmlAst.AttributeUsage => return printSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => return printSysmlAstReferenceUsage(o)
+      }
+    }
+
+    @pure def printSysmlAstNonOccurrenceUsageElement(o: SysmlAst.NonOccurrenceUsageElement): ST = {
+      o match {
+        case o: SysmlAst.AttributeUsage => return printSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => return printSysmlAstReferenceUsage(o)
+      }
+    }
+
+    @pure def printSysmlAstRefPrefix(o: SysmlAst.RefPrefix): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.RefPrefix""""),
+        ("direction", printOption(F, o.direction, printSysmlAstFeatureDirectionType _)),
+        ("isAbstract", printB(o.isAbstract)),
+        ("isVariation", printB(o.isVariation)),
+        ("isReadOnly", printB(o.isReadOnly)),
+        ("isDerived", printB(o.isDerived)),
+        ("isEnd", printB(o.isEnd))
+      ))
+    }
+
+    @pure def printSysmlAstUsagePrefix(o: SysmlAst.UsagePrefix): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.UsagePrefix""""),
+        ("refPrefix", printSysmlAstRefPrefix(o.refPrefix)),
+        ("isRef", printB(o.isRef)),
+        ("usageExtensions", printISZ(F, o.usageExtensions, printSysmlAstName _))
+      ))
+    }
+
+    @pure def printSysmlAstAttributeUsage(o: SysmlAst.AttributeUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.AttributeUsage""""),
+        ("prefix", printSysmlAstUsagePrefix(o.prefix)),
+        ("commonUsageElements", printSysmlAstCommonUsageElements(o.commonUsageElements))
+      ))
+    }
+
+    @pure def printSysmlAstReferenceUsage(o: SysmlAst.ReferenceUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.ReferenceUsage""""),
+        ("prefix", printSysmlAstRefPrefix(o.prefix)),
+        ("commonUsageElements", printSysmlAstCommonUsageElements(o.commonUsageElements))
+      ))
+    }
+
+    @pure def printSysmlAstOccurrenceUsageMember(o: SysmlAst.OccurrenceUsageMember): ST = {
+      o match {
+        case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => return printSysmlAstPortUsage(o)
+      }
+    }
+
+    @pure def printSysmlAstOccurrenceUsageElement(o: SysmlAst.OccurrenceUsageElement): ST = {
+      o match {
+        case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => return printSysmlAstPortUsage(o)
+      }
+    }
+
+    @pure def printSysmlAstStructureUsageElement(o: SysmlAst.StructureUsageElement): ST = {
+      o match {
+        case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => return printSysmlAstPortUsage(o)
+      }
+    }
+
+    @pure def printSysmlAstOccurrenceUsagePrefix(o: SysmlAst.OccurrenceUsagePrefix): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.OccurrenceUsagePrefix""""),
+        ("refPrefix", printSysmlAstRefPrefix(o.refPrefix)),
+        ("isRef", printB(o.isRef)),
+        ("isIndividual", printB(o.isIndividual)),
+        ("isSnapshot", printB(o.isSnapshot)),
+        ("isTimeslice", printB(o.isTimeslice)),
+        ("usageExtensions", printISZ(F, o.usageExtensions, printSysmlAstName _))
+      ))
+    }
+
+    @pure def printSysmlAstConnectionUsage(o: SysmlAst.ConnectionUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.ConnectionUsage""""),
+        ("occurrenceUsagePrefix", printSysmlAstOccurrenceUsagePrefix(o.occurrenceUsagePrefix)),
+        ("connectorPart", printOption(F, o.connectorPart, printSysmlAstConnectorPart _)),
+        ("commonUsageElements", printSysmlAstCommonUsageElements(o.commonUsageElements))
+      ))
+    }
+
+    @pure def printSysmlAstItemUsage(o: SysmlAst.ItemUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.ItemUsage""""),
+        ("occurrenceUsagePrefix", printSysmlAstOccurrenceUsagePrefix(o.occurrenceUsagePrefix)),
+        ("commonUsageElements", printSysmlAstCommonUsageElements(o.commonUsageElements))
+      ))
+    }
+
+    @pure def printSysmlAstPartUsage(o: SysmlAst.PartUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.PartUsage""""),
+        ("occurrenceUsagePrefix", printSysmlAstOccurrenceUsagePrefix(o.occurrenceUsagePrefix)),
+        ("commonUsageElements", printSysmlAstCommonUsageElements(o.commonUsageElements))
+      ))
+    }
+
+    @pure def printSysmlAstPortUsage(o: SysmlAst.PortUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.PortUsage""""),
+        ("occurrenceUsagePrefix", printSysmlAstOccurrenceUsagePrefix(o.occurrenceUsagePrefix)),
+        ("commonUsageElements", printSysmlAstCommonUsageElements(o.commonUsageElements))
+      ))
+    }
+
+    @pure def printSysmlAstAnnotatingElement(o: SysmlAst.AnnotatingElement): ST = {
+      o match {
+        case o: SysmlAst.Comment => return printSysmlAstComment(o)
+        case o: SysmlAst.Documentation => return printSysmlAstDocumentation(o)
+        case o: SysmlAst.TextualRepresentation => return printSysmlAstTextualRepresentation(o)
+        case o: SysmlAst.GumboAnnotation => return printSysmlAstGumboAnnotation(o)
+      }
+    }
+
+    @pure def printSysmlAstComment(o: SysmlAst.Comment): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.Comment""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("abouts", printISZ(F, o.abouts, printSysmlAstName _)),
+        ("locale", printOption(T, o.locale, printString _)),
+        ("comment", printString(o.comment)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstDocumentation(o: SysmlAst.Documentation): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.Documentation""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("locale", printOption(T, o.locale, printString _)),
+        ("comment", printString(o.comment)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstTextualRepresentation(o: SysmlAst.TextualRepresentation): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.TextualRepresentation""""),
+        ("visibility", printSysmlAstVisibilityType(o.visibility)),
+        ("identification", printOption(F, o.identification, printSysmlAstIdentification _)),
+        ("language", printString(o.language)),
+        ("comment", printString(o.comment)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printSysmlAstGumboAnnotation(o: SysmlAst.GumboAnnotation): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.GumboAnnotation""""),
+        ("gumboNode", printGclSymbol(o.gumboNode))
+      ))
+    }
+
+    @pure def printAttr(o: Attr): ST = {
+      return printObject(ISZ(
+        ("type", st""""Attr""""),
+        ("posOpt", printOption(F, o.posOpt, printPosition _))
+      ))
+    }
+
+    @pure def printResolvedAttr(o: ResolvedAttr): ST = {
+      return printObject(ISZ(
+        ("type", st""""ResolvedAttr""""),
+        ("posOpt", printOption(F, o.posOpt, printPosition _)),
+        ("resOpt", printOption(F, o.resOpt, printResolvedInfo _)),
+        ("typedOpt", printOption(F, o.typedOpt, printTyped _))
+      ))
+    }
+
+    @pure def printResolvedInfo(o: ResolvedInfo): ST = {
+      o match {
+        case o: ResolvedInfo.Package => return printResolvedInfoPackage(o)
+        case o: ResolvedInfo.Enum => return printResolvedInfoEnum(o)
+        case o: ResolvedInfo.EnumElement => return printResolvedInfoEnumElement(o)
+        case o: ResolvedInfo.AttributeUsage => return printResolvedInfoAttributeUsage(o)
+        case o: ResolvedInfo.ConnectionUsage => return printResolvedInfoConnectionUsage(o)
+        case o: ResolvedInfo.ItemUsage => return printResolvedInfoItemUsage(o)
+        case o: ResolvedInfo.PartUsage => return printResolvedInfoPartUsage(o)
+        case o: ResolvedInfo.PortUsage => return printResolvedInfoPortUsage(o)
+        case o: ResolvedInfo.ReferenceUsage => return printResolvedInfoReferenceUsage(o)
+      }
+    }
+
+    @pure def printResolvedInfoPackage(o: ResolvedInfo.Package): ST = {
+      return printObject(ISZ(
+        ("type", st""""ResolvedInfo.Package""""),
+        ("name", printISZ(T, o.name, printString _))
+      ))
+    }
+
+    @pure def printResolvedInfoEnum(o: ResolvedInfo.Enum): ST = {
+      return printObject(ISZ(
+        ("type", st""""ResolvedInfo.Enum""""),
+        ("name", printISZ(T, o.name, printString _))
+      ))
+    }
+
+    @pure def printResolvedInfoEnumElement(o: ResolvedInfo.EnumElement): ST = {
+      return printObject(ISZ(
+        ("type", st""""ResolvedInfo.EnumElement""""),
+        ("owner", printISZ(T, o.owner, printString _)),
+        ("name", printString(o.name)),
+        ("ordinal", printZ(o.ordinal))
+      ))
+    }
+
+    @pure def printResolvedInfoAttributeUsage(o: ResolvedInfo.AttributeUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""ResolvedInfo.AttributeUsage""""),
+        ("owner", printISZ(T, o.owner, printString _)),
+        ("name", printString(o.name))
+      ))
+    }
+
+    @pure def printResolvedInfoConnectionUsage(o: ResolvedInfo.ConnectionUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""ResolvedInfo.ConnectionUsage""""),
+        ("owner", printISZ(T, o.owner, printString _)),
+        ("name", printString(o.name))
+      ))
+    }
+
+    @pure def printResolvedInfoItemUsage(o: ResolvedInfo.ItemUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""ResolvedInfo.ItemUsage""""),
+        ("owner", printISZ(T, o.owner, printString _)),
+        ("name", printString(o.name))
+      ))
+    }
+
+    @pure def printResolvedInfoPartUsage(o: ResolvedInfo.PartUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""ResolvedInfo.PartUsage""""),
+        ("owner", printISZ(T, o.owner, printString _)),
+        ("name", printString(o.name))
+      ))
+    }
+
+    @pure def printResolvedInfoPortUsage(o: ResolvedInfo.PortUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""ResolvedInfo.PortUsage""""),
+        ("owner", printISZ(T, o.owner, printString _)),
+        ("name", printString(o.name))
+      ))
+    }
+
+    @pure def printResolvedInfoReferenceUsage(o: ResolvedInfo.ReferenceUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""ResolvedInfo.ReferenceUsage""""),
+        ("owner", printISZ(T, o.owner, printString _)),
+        ("name", printString(o.name))
+      ))
+    }
+
+    @pure def printType(o: Type): ST = {
+      o match {
+        case o: Type.Named => return printTypeNamed(o)
+      }
+    }
+
+    @pure def printTypeNamed(o: Type.Named): ST = {
+      return printObject(ISZ(
+        ("type", st""""Type.Named""""),
+        ("name", printSysmlAstName(o.name)),
+        ("attr", printTypedAttr(o.attr))
+      ))
+    }
+
+    @pure def printTypedAttr(o: TypedAttr): ST = {
+      return printObject(ISZ(
+        ("type", st""""TypedAttr""""),
+        ("posOpt", printOption(F, o.posOpt, printPosition _)),
+        ("typedOpt", printOption(F, o.typedOpt, printTyped _))
+      ))
+    }
+
+    @pure def printTyped(o: Typed): ST = {
+      o match {
+        case o: Typed.Package => return printTypedPackage(o)
+        case o: Typed.Name => return printTypedName(o)
+        case o: Typed.Enum => return printTypedEnum(o)
+      }
+    }
+
+    @pure def printTypedPackage(o: Typed.Package): ST = {
+      return printObject(ISZ(
+        ("type", st""""Typed.Package""""),
+        ("name", printISZ(T, o.name, printString _))
+      ))
+    }
+
+    @pure def printTypedName(o: Typed.Name): ST = {
+      return printObject(ISZ(
+        ("type", st""""Typed.Name""""),
+        ("ids", printISZ(T, o.ids, printString _))
+      ))
+    }
+
+    @pure def printTypedEnum(o: Typed.Enum): ST = {
+      return printObject(ISZ(
+        ("type", st""""Typed.Enum""""),
+        ("name", printISZ(T, o.name, printString _))
       ))
     }
 
@@ -5377,19 +6153,19 @@ object JSON {
       return TODO()
     }
 
-    def parseAttr(): Attr = {
-      val r = parseAttrT(F)
+    def parseBlessAttr(): BlessAttr = {
+      val r = parseBlessAttrT(F)
       return r
     }
 
-    def parseAttrT(typeParsed: B): Attr = {
+    def parseBlessAttrT(typeParsed: B): BlessAttr = {
       if (!typeParsed) {
-        parser.parseObjectType("Attr")
+        parser.parseObjectType("BlessAttr")
       }
       parser.parseObjectKey("posOpt")
       val posOpt = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
-      return Attr(posOpt)
+      return BlessAttr(posOpt)
     }
 
     def parseEmv2Annex(): Emv2Annex = {
@@ -5960,7 +6736,10 @@ object JSON {
       parser.parseObjectKey("compute")
       val compute = parser.parseOption(parseGclCompute _)
       parser.parseObjectNext()
-      return GclSubclause(state, methods, invariants, initializes, integration, compute)
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclSubclause(state, methods, invariants, initializes, integration, compute, attr)
     }
 
     def parseGclMethod(): GclMethod = {
@@ -5993,10 +6772,10 @@ object JSON {
       parser.parseObjectKey("classifier")
       val classifier = parser.parseString()
       parser.parseObjectNext()
-      parser.parseObjectKey("posOpt")
-      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
       parser.parseObjectNext()
-      return GclStateVar(name, classifier, posOpt)
+      return GclStateVar(name, classifier, attr)
     }
 
     def parseGclClause(): GclClause = {
@@ -6038,10 +6817,10 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parse_langastExp()
       parser.parseObjectNext()
-      parser.parseObjectKey("posOpt")
-      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
       parser.parseObjectNext()
-      return GclInvariant(id, descriptor, exp, posOpt)
+      return GclInvariant(id, descriptor, exp, attr)
     }
 
     def parseGclComputeSpec(): GclComputeSpec = {
@@ -6071,10 +6850,10 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parse_langastExp()
       parser.parseObjectNext()
-      parser.parseObjectKey("posOpt")
-      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
       parser.parseObjectNext()
-      return GclAssume(id, descriptor, exp, posOpt)
+      return GclAssume(id, descriptor, exp, attr)
     }
 
     def parseGclGuarantee(): GclGuarantee = {
@@ -6095,10 +6874,10 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parse_langastExp()
       parser.parseObjectNext()
-      parser.parseObjectKey("posOpt")
-      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
       parser.parseObjectNext()
-      return GclGuarantee(id, descriptor, exp, posOpt)
+      return GclGuarantee(id, descriptor, exp, attr)
     }
 
     def parseGclIntegration(): GclIntegration = {
@@ -6113,7 +6892,10 @@ object JSON {
       parser.parseObjectKey("specs")
       val specs = parser.parseISZ(parseGclSpec _)
       parser.parseObjectNext()
-      return GclIntegration(specs)
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclIntegration(specs, attr)
     }
 
     def parseGclCaseStatement(): GclCaseStatement = {
@@ -6137,10 +6919,10 @@ object JSON {
       parser.parseObjectKey("guarantees")
       val guarantees = parse_langastExp()
       parser.parseObjectNext()
-      parser.parseObjectKey("posOpt")
-      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
       parser.parseObjectNext()
-      return GclCaseStatement(id, descriptor, assumes, guarantees, posOpt)
+      return GclCaseStatement(id, descriptor, assumes, guarantees, attr)
     }
 
     def parseGclInitialize(): GclInitialize = {
@@ -6161,7 +6943,10 @@ object JSON {
       parser.parseObjectKey("flows")
       val flows = parser.parseISZ(parseInfoFlowClause _)
       parser.parseObjectNext()
-      return GclInitialize(modifies, guarantees, flows)
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclInitialize(modifies, guarantees, flows, attr)
     }
 
     def parseGclCompute(): GclCompute = {
@@ -6188,7 +6973,10 @@ object JSON {
       parser.parseObjectKey("flows")
       val flows = parser.parseISZ(parseInfoFlowClause _)
       parser.parseObjectNext()
-      return GclCompute(modifies, specs, cases, handlers, flows)
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclCompute(modifies, specs, cases, handlers, flows, attr)
     }
 
     def parseGclHandle(): GclHandle = {
@@ -6209,7 +6997,10 @@ object JSON {
       parser.parseObjectKey("guarantees")
       val guarantees = parser.parseISZ(parseGclGuarantee _)
       parser.parseObjectNext()
-      return GclHandle(port, modifies, guarantees)
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclHandle(port, modifies, guarantees, attr)
     }
 
     def parseGclTODO(): GclTODO = {
@@ -6239,7 +7030,10 @@ object JSON {
       parser.parseObjectKey("methods")
       val methods = parser.parseISZ(parseGclMethod _)
       parser.parseObjectNext()
-      return GclLib(containingPackage, methods)
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclLib(containingPackage, methods, attr)
     }
 
     def parseInfoFlowClause(): InfoFlowClause = {
@@ -6263,10 +7057,10 @@ object JSON {
       parser.parseObjectKey("to")
       val to = parser.parseISZ(parse_langastExp _)
       parser.parseObjectNext()
-      parser.parseObjectKey("posOpt")
-      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
       parser.parseObjectNext()
-      return InfoFlowClause(id, descriptor, from, to, posOpt)
+      return InfoFlowClause(id, descriptor, from, to, attr)
     }
 
     def parseSmfAnnex(): SmfAnnex = {
@@ -6376,6 +7170,1498 @@ object JSON {
       val parentType = parser.parseISZ(parseName _)
       parser.parseObjectNext()
       return SmfType(typeName, parentType)
+    }
+
+    def parseSysmlAstId(): SysmlAst.Id = {
+      val r = parseSysmlAstIdT(F)
+      return r
+    }
+
+    def parseSysmlAstIdT(typeParsed: B): SysmlAst.Id = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.Id")
+      }
+      parser.parseObjectKey("value")
+      val value = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.Id(value, attr)
+    }
+
+    def parseSysmlAstName(): SysmlAst.Name = {
+      val r = parseSysmlAstNameT(F)
+      return r
+    }
+
+    def parseSysmlAstNameT(typeParsed: B): SysmlAst.Name = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.Name")
+      }
+      parser.parseObjectKey("ids")
+      val ids = parser.parseISZ(parseSysmlAstId _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.Name(ids, attr)
+    }
+
+    def parseSysmlAstTopUnit(): SysmlAst.TopUnit = {
+      val r = parseSysmlAstTopUnitT(F)
+      return r
+    }
+
+    def parseSysmlAstTopUnitT(typeParsed: B): SysmlAst.TopUnit = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.TopUnit")
+      }
+      parser.parseObjectKey("fileUri")
+      val fileUri = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("packageBodyElements")
+      val packageBodyElements = parser.parseISZ(parseSysmlAstPackageBodyElement _)
+      parser.parseObjectNext()
+      return SysmlAst.TopUnit(fileUri, packageBodyElements)
+    }
+
+    def parseSysmlAstAttrNode(): SysmlAst.AttrNode = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.Import", "SysmlAst.AliasMember", "SysmlAst.Identification", "SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
+      t.native match {
+        case "SysmlAst.Import" => val r = parseSysmlAstImportT(T); return r
+        case "SysmlAst.AliasMember" => val r = parseSysmlAstAliasMemberT(T); return r
+        case "SysmlAst.Identification" => val r = parseSysmlAstIdentificationT(T); return r
+        case "SysmlAst.Package" => val r = parseSysmlAstPackageT(T); return r
+        case "SysmlAst.AttributeDefinition" => val r = parseSysmlAstAttributeDefinitionT(T); return r
+        case "SysmlAst.AllocationDefinition" => val r = parseSysmlAstAllocationDefinitionT(T); return r
+        case "SysmlAst.ConnectionDefinition" => val r = parseSysmlAstConnectionDefinitionT(T); return r
+        case "SysmlAst.EnumerationDefinition" => val r = parseSysmlAstEnumerationDefinitionT(T); return r
+        case "SysmlAst.PartDefinition" => val r = parseSysmlAstPartDefinitionT(T); return r
+        case "SysmlAst.PortDefinition" => val r = parseSysmlAstPortDefinitionT(T); return r
+        case "SysmlAst.MetadataDefinition" => val r = parseSysmlAstMetadataDefinitionT(T); return r
+        case "SysmlAst.AttributeUsage" => val r = parseSysmlAstAttributeUsageT(T); return r
+        case "SysmlAst.ReferenceUsage" => val r = parseSysmlAstReferenceUsageT(T); return r
+        case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
+        case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
+        case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
+        case "SysmlAst.PortUsage" => val r = parseSysmlAstPortUsageT(T); return r
+        case "SysmlAst.Comment" => val r = parseSysmlAstCommentT(T); return r
+        case "SysmlAst.Documentation" => val r = parseSysmlAstDocumentationT(T); return r
+        case "SysmlAst.TextualRepresentation" => val r = parseSysmlAstTextualRepresentationT(T); return r
+        case "SysmlAst.GumboAnnotation" => val r = parseSysmlAstGumboAnnotationT(T); return r
+        case _ => val r = parseSysmlAstGumboAnnotationT(T); return r
+      }
+    }
+
+    def parseSysmlAstPackageBodyElement(): SysmlAst.PackageBodyElement = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.Import", "SysmlAst.AliasMember", "SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
+      t.native match {
+        case "SysmlAst.Import" => val r = parseSysmlAstImportT(T); return r
+        case "SysmlAst.AliasMember" => val r = parseSysmlAstAliasMemberT(T); return r
+        case "SysmlAst.Package" => val r = parseSysmlAstPackageT(T); return r
+        case "SysmlAst.AttributeDefinition" => val r = parseSysmlAstAttributeDefinitionT(T); return r
+        case "SysmlAst.AllocationDefinition" => val r = parseSysmlAstAllocationDefinitionT(T); return r
+        case "SysmlAst.ConnectionDefinition" => val r = parseSysmlAstConnectionDefinitionT(T); return r
+        case "SysmlAst.EnumerationDefinition" => val r = parseSysmlAstEnumerationDefinitionT(T); return r
+        case "SysmlAst.PartDefinition" => val r = parseSysmlAstPartDefinitionT(T); return r
+        case "SysmlAst.PortDefinition" => val r = parseSysmlAstPortDefinitionT(T); return r
+        case "SysmlAst.MetadataDefinition" => val r = parseSysmlAstMetadataDefinitionT(T); return r
+        case "SysmlAst.AttributeUsage" => val r = parseSysmlAstAttributeUsageT(T); return r
+        case "SysmlAst.ReferenceUsage" => val r = parseSysmlAstReferenceUsageT(T); return r
+        case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
+        case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
+        case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
+        case "SysmlAst.PortUsage" => val r = parseSysmlAstPortUsageT(T); return r
+        case "SysmlAst.Comment" => val r = parseSysmlAstCommentT(T); return r
+        case "SysmlAst.Documentation" => val r = parseSysmlAstDocumentationT(T); return r
+        case "SysmlAst.TextualRepresentation" => val r = parseSysmlAstTextualRepresentationT(T); return r
+        case "SysmlAst.GumboAnnotation" => val r = parseSysmlAstGumboAnnotationT(T); return r
+        case _ => val r = parseSysmlAstGumboAnnotationT(T); return r
+      }
+    }
+
+    def parseSysmlAstDefinitionBodyItem(): SysmlAst.DefinitionBodyItem = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.Import", "SysmlAst.AliasMember", "SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
+      t.native match {
+        case "SysmlAst.Import" => val r = parseSysmlAstImportT(T); return r
+        case "SysmlAst.AliasMember" => val r = parseSysmlAstAliasMemberT(T); return r
+        case "SysmlAst.Package" => val r = parseSysmlAstPackageT(T); return r
+        case "SysmlAst.AttributeDefinition" => val r = parseSysmlAstAttributeDefinitionT(T); return r
+        case "SysmlAst.AllocationDefinition" => val r = parseSysmlAstAllocationDefinitionT(T); return r
+        case "SysmlAst.ConnectionDefinition" => val r = parseSysmlAstConnectionDefinitionT(T); return r
+        case "SysmlAst.EnumerationDefinition" => val r = parseSysmlAstEnumerationDefinitionT(T); return r
+        case "SysmlAst.PartDefinition" => val r = parseSysmlAstPartDefinitionT(T); return r
+        case "SysmlAst.PortDefinition" => val r = parseSysmlAstPortDefinitionT(T); return r
+        case "SysmlAst.MetadataDefinition" => val r = parseSysmlAstMetadataDefinitionT(T); return r
+        case "SysmlAst.AttributeUsage" => val r = parseSysmlAstAttributeUsageT(T); return r
+        case "SysmlAst.ReferenceUsage" => val r = parseSysmlAstReferenceUsageT(T); return r
+        case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
+        case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
+        case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
+        case "SysmlAst.PortUsage" => val r = parseSysmlAstPortUsageT(T); return r
+        case "SysmlAst.Comment" => val r = parseSysmlAstCommentT(T); return r
+        case "SysmlAst.Documentation" => val r = parseSysmlAstDocumentationT(T); return r
+        case "SysmlAst.TextualRepresentation" => val r = parseSysmlAstTextualRepresentationT(T); return r
+        case "SysmlAst.GumboAnnotation" => val r = parseSysmlAstGumboAnnotationT(T); return r
+        case _ => val r = parseSysmlAstGumboAnnotationT(T); return r
+      }
+    }
+
+    def parseSysmlAstVisibilityType(): SysmlAst.Visibility.Type = {
+      val r = parseSysmlAstVisibilityT(F)
+      return r
+    }
+
+    def parseSysmlAstVisibilityT(typeParsed: B): SysmlAst.Visibility.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.Visibility")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      SysmlAst.Visibility.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for SysmlAst.Visibility.")
+          return SysmlAst.Visibility.byOrdinal(0).get
+      }
+    }
+
+    def parseSysmlAstFeatureValue(): SysmlAst.FeatureValue = {
+      val r = parseSysmlAstFeatureValueT(F)
+      return r
+    }
+
+    def parseSysmlAstFeatureValueT(typeParsed: B): SysmlAst.FeatureValue = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.FeatureValue")
+      }
+      parser.parseObjectKey("isBound")
+      val isBound = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isInitial")
+      val isInitial = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isDefault")
+      val isDefault = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("exp")
+      val exp = parse_langastExp()
+      parser.parseObjectNext()
+      return SysmlAst.FeatureValue(isBound, isInitial, isDefault, exp)
+    }
+
+    def parseSysmlAstEnumeratedValue(): SysmlAst.EnumeratedValue = {
+      val r = parseSysmlAstEnumeratedValueT(F)
+      return r
+    }
+
+    def parseSysmlAstEnumeratedValueT(typeParsed: B): SysmlAst.EnumeratedValue = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.EnumeratedValue")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("specializations")
+      val specializations = parser.parseISZ(parseSysmlAstFeatureSpecialization _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("definitionBodyItems")
+      val definitionBodyItems = parser.parseISZ(parseSysmlAstDefinitionBodyItem _)
+      parser.parseObjectNext()
+      return SysmlAst.EnumeratedValue(visibility, identification, specializations, definitionBodyItems)
+    }
+
+    def parseSysmlAstImport(): SysmlAst.Import = {
+      val r = parseSysmlAstImportT(F)
+      return r
+    }
+
+    def parseSysmlAstImportT(typeParsed: B): SysmlAst.Import = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.Import")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("all")
+      val all = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("name")
+      val name = parseSysmlAstName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("star")
+      val star = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("starStar")
+      val starStar = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parseSysmlAstAnnotatingElement _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.Import(visibility, all, name, star, starStar, annotations, attr)
+    }
+
+    def parseSysmlAstAliasMember(): SysmlAst.AliasMember = {
+      val r = parseSysmlAstAliasMemberT(F)
+      return r
+    }
+
+    def parseSysmlAstAliasMemberT(typeParsed: B): SysmlAst.AliasMember = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.AliasMember")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("target")
+      val target = parseSysmlAstName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parseSysmlAstAnnotatingElement _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.AliasMember(visibility, identification, target, annotations, attr)
+    }
+
+    def parseSysmlAstIdentification(): SysmlAst.Identification = {
+      val r = parseSysmlAstIdentificationT(F)
+      return r
+    }
+
+    def parseSysmlAstIdentificationT(typeParsed: B): SysmlAst.Identification = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.Identification")
+      }
+      parser.parseObjectKey("shortName")
+      val shortName = parser.parseOption(parseSysmlAstId _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("name")
+      val name = parser.parseOption(parseSysmlAstId _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.Identification(shortName, name, attr)
+    }
+
+    def parseSysmlAstFeatureDirectionType(): SysmlAst.FeatureDirection.Type = {
+      val r = parseSysmlAstFeatureDirectionT(F)
+      return r
+    }
+
+    def parseSysmlAstFeatureDirectionT(typeParsed: B): SysmlAst.FeatureDirection.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.FeatureDirection")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      SysmlAst.FeatureDirection.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for SysmlAst.FeatureDirection.")
+          return SysmlAst.FeatureDirection.byOrdinal(0).get
+      }
+    }
+
+    def parseSysmlAstPackageMember(): SysmlAst.PackageMember = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
+      t.native match {
+        case "SysmlAst.Package" => val r = parseSysmlAstPackageT(T); return r
+        case "SysmlAst.AttributeDefinition" => val r = parseSysmlAstAttributeDefinitionT(T); return r
+        case "SysmlAst.AllocationDefinition" => val r = parseSysmlAstAllocationDefinitionT(T); return r
+        case "SysmlAst.ConnectionDefinition" => val r = parseSysmlAstConnectionDefinitionT(T); return r
+        case "SysmlAst.EnumerationDefinition" => val r = parseSysmlAstEnumerationDefinitionT(T); return r
+        case "SysmlAst.PartDefinition" => val r = parseSysmlAstPartDefinitionT(T); return r
+        case "SysmlAst.PortDefinition" => val r = parseSysmlAstPortDefinitionT(T); return r
+        case "SysmlAst.MetadataDefinition" => val r = parseSysmlAstMetadataDefinitionT(T); return r
+        case "SysmlAst.AttributeUsage" => val r = parseSysmlAstAttributeUsageT(T); return r
+        case "SysmlAst.ReferenceUsage" => val r = parseSysmlAstReferenceUsageT(T); return r
+        case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
+        case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
+        case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
+        case "SysmlAst.PortUsage" => val r = parseSysmlAstPortUsageT(T); return r
+        case "SysmlAst.Comment" => val r = parseSysmlAstCommentT(T); return r
+        case "SysmlAst.Documentation" => val r = parseSysmlAstDocumentationT(T); return r
+        case "SysmlAst.TextualRepresentation" => val r = parseSysmlAstTextualRepresentationT(T); return r
+        case "SysmlAst.GumboAnnotation" => val r = parseSysmlAstGumboAnnotationT(T); return r
+        case _ => val r = parseSysmlAstGumboAnnotationT(T); return r
+      }
+    }
+
+    def parseSysmlAstConnectorPart(): SysmlAst.ConnectorPart = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.BinaryConnectorPart", "SysmlAst.NaryConnectorPart"))
+      t.native match {
+        case "SysmlAst.BinaryConnectorPart" => val r = parseSysmlAstBinaryConnectorPartT(T); return r
+        case "SysmlAst.NaryConnectorPart" => val r = parseSysmlAstNaryConnectorPartT(T); return r
+        case _ => val r = parseSysmlAstNaryConnectorPartT(T); return r
+      }
+    }
+
+    def parseSysmlAstConnectorEnd(): SysmlAst.ConnectorEnd = {
+      val r = parseSysmlAstConnectorEndT(F)
+      return r
+    }
+
+    def parseSysmlAstConnectorEndT(typeParsed: B): SysmlAst.ConnectorEnd = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.ConnectorEnd")
+      }
+      parser.parseObjectKey("reference")
+      val reference = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      return SysmlAst.ConnectorEnd(reference)
+    }
+
+    def parseSysmlAstBinaryConnectorPart(): SysmlAst.BinaryConnectorPart = {
+      val r = parseSysmlAstBinaryConnectorPartT(F)
+      return r
+    }
+
+    def parseSysmlAstBinaryConnectorPartT(typeParsed: B): SysmlAst.BinaryConnectorPart = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.BinaryConnectorPart")
+      }
+      parser.parseObjectKey("src")
+      val src = parseSysmlAstConnectorEnd()
+      parser.parseObjectNext()
+      parser.parseObjectKey("dst")
+      val dst = parseSysmlAstConnectorEnd()
+      parser.parseObjectNext()
+      return SysmlAst.BinaryConnectorPart(src, dst)
+    }
+
+    def parseSysmlAstNaryConnectorPart(): SysmlAst.NaryConnectorPart = {
+      val r = parseSysmlAstNaryConnectorPartT(F)
+      return r
+    }
+
+    def parseSysmlAstNaryConnectorPartT(typeParsed: B): SysmlAst.NaryConnectorPart = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.NaryConnectorPart")
+      }
+      parser.parseObjectKey("connectorEnds")
+      val connectorEnds = parser.parseISZ(parseSysmlAstConnectorEnd _)
+      parser.parseObjectNext()
+      return SysmlAst.NaryConnectorPart(connectorEnds)
+    }
+
+    def parseSysmlAstFeatureSpecialization(): SysmlAst.FeatureSpecialization = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.TypingsSpecialization", "SysmlAst.SubsettingsSpecialization", "SysmlAst.ReferencesSpecialization", "SysmlAst.RedefinitionsSpecialization"))
+      t.native match {
+        case "SysmlAst.TypingsSpecialization" => val r = parseSysmlAstTypingsSpecializationT(T); return r
+        case "SysmlAst.SubsettingsSpecialization" => val r = parseSysmlAstSubsettingsSpecializationT(T); return r
+        case "SysmlAst.ReferencesSpecialization" => val r = parseSysmlAstReferencesSpecializationT(T); return r
+        case "SysmlAst.RedefinitionsSpecialization" => val r = parseSysmlAstRedefinitionsSpecializationT(T); return r
+        case _ => val r = parseSysmlAstRedefinitionsSpecializationT(T); return r
+      }
+    }
+
+    def parseSysmlAstTypingsSpecialization(): SysmlAst.TypingsSpecialization = {
+      val r = parseSysmlAstTypingsSpecializationT(F)
+      return r
+    }
+
+    def parseSysmlAstTypingsSpecializationT(typeParsed: B): SysmlAst.TypingsSpecialization = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.TypingsSpecialization")
+      }
+      parser.parseObjectKey("names")
+      val names = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      return SysmlAst.TypingsSpecialization(names)
+    }
+
+    def parseSysmlAstSubsettingsSpecialization(): SysmlAst.SubsettingsSpecialization = {
+      val r = parseSysmlAstSubsettingsSpecializationT(F)
+      return r
+    }
+
+    def parseSysmlAstSubsettingsSpecializationT(typeParsed: B): SysmlAst.SubsettingsSpecialization = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.SubsettingsSpecialization")
+      }
+      parser.parseObjectKey("subsettings")
+      val subsettings = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      return SysmlAst.SubsettingsSpecialization(subsettings)
+    }
+
+    def parseSysmlAstReferencesSpecialization(): SysmlAst.ReferencesSpecialization = {
+      val r = parseSysmlAstReferencesSpecializationT(F)
+      return r
+    }
+
+    def parseSysmlAstReferencesSpecializationT(typeParsed: B): SysmlAst.ReferencesSpecialization = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.ReferencesSpecialization")
+      }
+      parser.parseObjectKey("references")
+      val references = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      return SysmlAst.ReferencesSpecialization(references)
+    }
+
+    def parseSysmlAstRedefinitionsSpecialization(): SysmlAst.RedefinitionsSpecialization = {
+      val r = parseSysmlAstRedefinitionsSpecializationT(F)
+      return r
+    }
+
+    def parseSysmlAstRedefinitionsSpecializationT(typeParsed: B): SysmlAst.RedefinitionsSpecialization = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.RedefinitionsSpecialization")
+      }
+      parser.parseObjectKey("references")
+      val references = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      return SysmlAst.RedefinitionsSpecialization(references)
+    }
+
+    def parseSysmlAstDefinitionMember(): SysmlAst.DefinitionMember = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
+      t.native match {
+        case "SysmlAst.Package" => val r = parseSysmlAstPackageT(T); return r
+        case "SysmlAst.AttributeDefinition" => val r = parseSysmlAstAttributeDefinitionT(T); return r
+        case "SysmlAst.AllocationDefinition" => val r = parseSysmlAstAllocationDefinitionT(T); return r
+        case "SysmlAst.ConnectionDefinition" => val r = parseSysmlAstConnectionDefinitionT(T); return r
+        case "SysmlAst.EnumerationDefinition" => val r = parseSysmlAstEnumerationDefinitionT(T); return r
+        case "SysmlAst.PartDefinition" => val r = parseSysmlAstPartDefinitionT(T); return r
+        case "SysmlAst.PortDefinition" => val r = parseSysmlAstPortDefinitionT(T); return r
+        case "SysmlAst.MetadataDefinition" => val r = parseSysmlAstMetadataDefinitionT(T); return r
+        case "SysmlAst.Comment" => val r = parseSysmlAstCommentT(T); return r
+        case "SysmlAst.Documentation" => val r = parseSysmlAstDocumentationT(T); return r
+        case "SysmlAst.TextualRepresentation" => val r = parseSysmlAstTextualRepresentationT(T); return r
+        case "SysmlAst.GumboAnnotation" => val r = parseSysmlAstGumboAnnotationT(T); return r
+        case _ => val r = parseSysmlAstGumboAnnotationT(T); return r
+      }
+    }
+
+    def parseSysmlAstDefinitionElement(): SysmlAst.DefinitionElement = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
+      t.native match {
+        case "SysmlAst.Package" => val r = parseSysmlAstPackageT(T); return r
+        case "SysmlAst.AttributeDefinition" => val r = parseSysmlAstAttributeDefinitionT(T); return r
+        case "SysmlAst.AllocationDefinition" => val r = parseSysmlAstAllocationDefinitionT(T); return r
+        case "SysmlAst.ConnectionDefinition" => val r = parseSysmlAstConnectionDefinitionT(T); return r
+        case "SysmlAst.EnumerationDefinition" => val r = parseSysmlAstEnumerationDefinitionT(T); return r
+        case "SysmlAst.PartDefinition" => val r = parseSysmlAstPartDefinitionT(T); return r
+        case "SysmlAst.PortDefinition" => val r = parseSysmlAstPortDefinitionT(T); return r
+        case "SysmlAst.MetadataDefinition" => val r = parseSysmlAstMetadataDefinitionT(T); return r
+        case "SysmlAst.Comment" => val r = parseSysmlAstCommentT(T); return r
+        case "SysmlAst.Documentation" => val r = parseSysmlAstDocumentationT(T); return r
+        case "SysmlAst.TextualRepresentation" => val r = parseSysmlAstTextualRepresentationT(T); return r
+        case "SysmlAst.GumboAnnotation" => val r = parseSysmlAstGumboAnnotationT(T); return r
+        case _ => val r = parseSysmlAstGumboAnnotationT(T); return r
+      }
+    }
+
+    def parseSysmlAstDefinitionPrefix(): SysmlAst.DefinitionPrefix = {
+      val r = parseSysmlAstDefinitionPrefixT(F)
+      return r
+    }
+
+    def parseSysmlAstDefinitionPrefixT(typeParsed: B): SysmlAst.DefinitionPrefix = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.DefinitionPrefix")
+      }
+      parser.parseObjectKey("isAbstract")
+      val isAbstract = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isVariation")
+      val isVariation = parser.parseB()
+      parser.parseObjectNext()
+      return SysmlAst.DefinitionPrefix(isAbstract, isVariation)
+    }
+
+    def parseSysmlAstPackage(): SysmlAst.Package = {
+      val r = parseSysmlAstPackageT(F)
+      return r
+    }
+
+    def parseSysmlAstPackageT(typeParsed: B): SysmlAst.Package = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.Package")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("packageElements")
+      val packageElements = parser.parseISZ(parseSysmlAstPackageBodyElement _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.Package(visibility, identification, packageElements, attr)
+    }
+
+    def parseSysmlAstAttributeDefinition(): SysmlAst.AttributeDefinition = {
+      val r = parseSysmlAstAttributeDefinitionT(F)
+      return r
+    }
+
+    def parseSysmlAstAttributeDefinitionT(typeParsed: B): SysmlAst.AttributeDefinition = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.AttributeDefinition")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("defPrefix")
+      val defPrefix = parseSysmlAstDefinitionPrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("subClassifications")
+      val subClassifications = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("parents")
+      val parents = parser.parseISZ(parseTypeNamed _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("bodyItems")
+      val bodyItems = parser.parseISZ(parseSysmlAstDefinitionBodyItem _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.AttributeDefinition(visibility, defPrefix, identification, subClassifications, parents, bodyItems, attr)
+    }
+
+    def parseSysmlAstOccurrenceDefinitionPrefix(): SysmlAst.OccurrenceDefinitionPrefix = {
+      val r = parseSysmlAstOccurrenceDefinitionPrefixT(F)
+      return r
+    }
+
+    def parseSysmlAstOccurrenceDefinitionPrefixT(typeParsed: B): SysmlAst.OccurrenceDefinitionPrefix = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.OccurrenceDefinitionPrefix")
+      }
+      parser.parseObjectKey("isAbstract")
+      val isAbstract = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isVariation")
+      val isVariation = parser.parseB()
+      parser.parseObjectNext()
+      return SysmlAst.OccurrenceDefinitionPrefix(isAbstract, isVariation)
+    }
+
+    def parseSysmlAstAllocationDefinition(): SysmlAst.AllocationDefinition = {
+      val r = parseSysmlAstAllocationDefinitionT(F)
+      return r
+    }
+
+    def parseSysmlAstAllocationDefinitionT(typeParsed: B): SysmlAst.AllocationDefinition = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.AllocationDefinition")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("occurrenceDefPrefix")
+      val occurrenceDefPrefix = parseSysmlAstOccurrenceDefinitionPrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("subClassifications")
+      val subClassifications = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("parents")
+      val parents = parser.parseISZ(parseTypeNamed _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("bodyItems")
+      val bodyItems = parser.parseISZ(parseSysmlAstDefinitionBodyItem _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.AllocationDefinition(visibility, occurrenceDefPrefix, identification, subClassifications, parents, bodyItems, attr)
+    }
+
+    def parseSysmlAstConnectionDefinition(): SysmlAst.ConnectionDefinition = {
+      val r = parseSysmlAstConnectionDefinitionT(F)
+      return r
+    }
+
+    def parseSysmlAstConnectionDefinitionT(typeParsed: B): SysmlAst.ConnectionDefinition = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.ConnectionDefinition")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("occurrenceDefPrefix")
+      val occurrenceDefPrefix = parseSysmlAstOccurrenceDefinitionPrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("subClassifications")
+      val subClassifications = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("parents")
+      val parents = parser.parseISZ(parseTypeNamed _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("bodyItems")
+      val bodyItems = parser.parseISZ(parseSysmlAstDefinitionBodyItem _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.ConnectionDefinition(visibility, occurrenceDefPrefix, identification, subClassifications, parents, bodyItems, attr)
+    }
+
+    def parseSysmlAstEnumerationDefinition(): SysmlAst.EnumerationDefinition = {
+      val r = parseSysmlAstEnumerationDefinitionT(F)
+      return r
+    }
+
+    def parseSysmlAstEnumerationDefinitionT(typeParsed: B): SysmlAst.EnumerationDefinition = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.EnumerationDefinition")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("subClassifications")
+      val subClassifications = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parseSysmlAstAnnotatingElement _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("enumValues")
+      val enumValues = parser.parseISZ(parseSysmlAstEnumeratedValue _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.EnumerationDefinition(visibility, identification, subClassifications, annotations, enumValues, attr)
+    }
+
+    def parseSysmlAstPartDefinition(): SysmlAst.PartDefinition = {
+      val r = parseSysmlAstPartDefinitionT(F)
+      return r
+    }
+
+    def parseSysmlAstPartDefinitionT(typeParsed: B): SysmlAst.PartDefinition = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.PartDefinition")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("occurrenceDefPrefix")
+      val occurrenceDefPrefix = parseSysmlAstOccurrenceDefinitionPrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("subClassifications")
+      val subClassifications = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("parents")
+      val parents = parser.parseISZ(parseTypeNamed _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("bodyItems")
+      val bodyItems = parser.parseISZ(parseSysmlAstDefinitionBodyItem _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.PartDefinition(visibility, occurrenceDefPrefix, identification, subClassifications, parents, bodyItems, attr)
+    }
+
+    def parseSysmlAstPortDefinition(): SysmlAst.PortDefinition = {
+      val r = parseSysmlAstPortDefinitionT(F)
+      return r
+    }
+
+    def parseSysmlAstPortDefinitionT(typeParsed: B): SysmlAst.PortDefinition = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.PortDefinition")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("defPrefix")
+      val defPrefix = parseSysmlAstDefinitionPrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("subClassifications")
+      val subClassifications = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("parents")
+      val parents = parser.parseISZ(parseTypeNamed _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("bodyItems")
+      val bodyItems = parser.parseISZ(parseSysmlAstDefinitionBodyItem _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.PortDefinition(visibility, defPrefix, identification, subClassifications, parents, bodyItems, attr)
+    }
+
+    def parseSysmlAstMetadataDefinition(): SysmlAst.MetadataDefinition = {
+      val r = parseSysmlAstMetadataDefinitionT(F)
+      return r
+    }
+
+    def parseSysmlAstMetadataDefinitionT(typeParsed: B): SysmlAst.MetadataDefinition = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.MetadataDefinition")
+      }
+      parser.parseObjectKey("isAbstract")
+      val isAbstract = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("subClassifications")
+      val subClassifications = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("bodyItems")
+      val bodyItems = parser.parseISZ(parseSysmlAstDefinitionBodyItem _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.MetadataDefinition(isAbstract, visibility, identification, subClassifications, bodyItems, attr)
+    }
+
+    def parseSysmlAstUsageElement(): SysmlAst.UsageElement = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage"))
+      t.native match {
+        case "SysmlAst.AttributeUsage" => val r = parseSysmlAstAttributeUsageT(T); return r
+        case "SysmlAst.ReferenceUsage" => val r = parseSysmlAstReferenceUsageT(T); return r
+        case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
+        case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
+        case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
+        case "SysmlAst.PortUsage" => val r = parseSysmlAstPortUsageT(T); return r
+        case _ => val r = parseSysmlAstPortUsageT(T); return r
+      }
+    }
+
+    def parseSysmlAstCommonUsageElements(): SysmlAst.CommonUsageElements = {
+      val r = parseSysmlAstCommonUsageElementsT(F)
+      return r
+    }
+
+    def parseSysmlAstCommonUsageElementsT(typeParsed: B): SysmlAst.CommonUsageElements = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.CommonUsageElements")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("specializations")
+      val specializations = parser.parseISZ(parseSysmlAstFeatureSpecialization _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("featureValue")
+      val featureValue = parser.parseOption(parseSysmlAstFeatureValue _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("definitionBodyItems")
+      val definitionBodyItems = parser.parseISZ(parseSysmlAstDefinitionBodyItem _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("tipeOpt")
+      val tipeOpt = parser.parseOption(parseType _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseResolvedAttr()
+      parser.parseObjectNext()
+      return SysmlAst.CommonUsageElements(visibility, identification, specializations, featureValue, definitionBodyItems, tipeOpt, attr)
+    }
+
+    def parseSysmlAstNonOccurrenceUsageMember(): SysmlAst.NonOccurrenceUsageMember = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage"))
+      t.native match {
+        case "SysmlAst.AttributeUsage" => val r = parseSysmlAstAttributeUsageT(T); return r
+        case "SysmlAst.ReferenceUsage" => val r = parseSysmlAstReferenceUsageT(T); return r
+        case _ => val r = parseSysmlAstReferenceUsageT(T); return r
+      }
+    }
+
+    def parseSysmlAstNonOccurrenceUsageElement(): SysmlAst.NonOccurrenceUsageElement = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage"))
+      t.native match {
+        case "SysmlAst.AttributeUsage" => val r = parseSysmlAstAttributeUsageT(T); return r
+        case "SysmlAst.ReferenceUsage" => val r = parseSysmlAstReferenceUsageT(T); return r
+        case _ => val r = parseSysmlAstReferenceUsageT(T); return r
+      }
+    }
+
+    def parseSysmlAstRefPrefix(): SysmlAst.RefPrefix = {
+      val r = parseSysmlAstRefPrefixT(F)
+      return r
+    }
+
+    def parseSysmlAstRefPrefixT(typeParsed: B): SysmlAst.RefPrefix = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.RefPrefix")
+      }
+      parser.parseObjectKey("direction")
+      val direction = parser.parseOption(parseSysmlAstFeatureDirectionType _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("isAbstract")
+      val isAbstract = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isVariation")
+      val isVariation = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isReadOnly")
+      val isReadOnly = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isDerived")
+      val isDerived = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isEnd")
+      val isEnd = parser.parseB()
+      parser.parseObjectNext()
+      return SysmlAst.RefPrefix(direction, isAbstract, isVariation, isReadOnly, isDerived, isEnd)
+    }
+
+    def parseSysmlAstUsagePrefix(): SysmlAst.UsagePrefix = {
+      val r = parseSysmlAstUsagePrefixT(F)
+      return r
+    }
+
+    def parseSysmlAstUsagePrefixT(typeParsed: B): SysmlAst.UsagePrefix = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.UsagePrefix")
+      }
+      parser.parseObjectKey("refPrefix")
+      val refPrefix = parseSysmlAstRefPrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isRef")
+      val isRef = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("usageExtensions")
+      val usageExtensions = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      return SysmlAst.UsagePrefix(refPrefix, isRef, usageExtensions)
+    }
+
+    def parseSysmlAstAttributeUsage(): SysmlAst.AttributeUsage = {
+      val r = parseSysmlAstAttributeUsageT(F)
+      return r
+    }
+
+    def parseSysmlAstAttributeUsageT(typeParsed: B): SysmlAst.AttributeUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.AttributeUsage")
+      }
+      parser.parseObjectKey("prefix")
+      val prefix = parseSysmlAstUsagePrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("commonUsageElements")
+      val commonUsageElements = parseSysmlAstCommonUsageElements()
+      parser.parseObjectNext()
+      return SysmlAst.AttributeUsage(prefix, commonUsageElements)
+    }
+
+    def parseSysmlAstReferenceUsage(): SysmlAst.ReferenceUsage = {
+      val r = parseSysmlAstReferenceUsageT(F)
+      return r
+    }
+
+    def parseSysmlAstReferenceUsageT(typeParsed: B): SysmlAst.ReferenceUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.ReferenceUsage")
+      }
+      parser.parseObjectKey("prefix")
+      val prefix = parseSysmlAstRefPrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("commonUsageElements")
+      val commonUsageElements = parseSysmlAstCommonUsageElements()
+      parser.parseObjectNext()
+      return SysmlAst.ReferenceUsage(prefix, commonUsageElements)
+    }
+
+    def parseSysmlAstOccurrenceUsageMember(): SysmlAst.OccurrenceUsageMember = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage"))
+      t.native match {
+        case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
+        case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
+        case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
+        case "SysmlAst.PortUsage" => val r = parseSysmlAstPortUsageT(T); return r
+        case _ => val r = parseSysmlAstPortUsageT(T); return r
+      }
+    }
+
+    def parseSysmlAstOccurrenceUsageElement(): SysmlAst.OccurrenceUsageElement = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage"))
+      t.native match {
+        case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
+        case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
+        case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
+        case "SysmlAst.PortUsage" => val r = parseSysmlAstPortUsageT(T); return r
+        case _ => val r = parseSysmlAstPortUsageT(T); return r
+      }
+    }
+
+    def parseSysmlAstStructureUsageElement(): SysmlAst.StructureUsageElement = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage"))
+      t.native match {
+        case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
+        case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
+        case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
+        case "SysmlAst.PortUsage" => val r = parseSysmlAstPortUsageT(T); return r
+        case _ => val r = parseSysmlAstPortUsageT(T); return r
+      }
+    }
+
+    def parseSysmlAstOccurrenceUsagePrefix(): SysmlAst.OccurrenceUsagePrefix = {
+      val r = parseSysmlAstOccurrenceUsagePrefixT(F)
+      return r
+    }
+
+    def parseSysmlAstOccurrenceUsagePrefixT(typeParsed: B): SysmlAst.OccurrenceUsagePrefix = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.OccurrenceUsagePrefix")
+      }
+      parser.parseObjectKey("refPrefix")
+      val refPrefix = parseSysmlAstRefPrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isRef")
+      val isRef = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isIndividual")
+      val isIndividual = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isSnapshot")
+      val isSnapshot = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("isTimeslice")
+      val isTimeslice = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("usageExtensions")
+      val usageExtensions = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      return SysmlAst.OccurrenceUsagePrefix(refPrefix, isRef, isIndividual, isSnapshot, isTimeslice, usageExtensions)
+    }
+
+    def parseSysmlAstConnectionUsage(): SysmlAst.ConnectionUsage = {
+      val r = parseSysmlAstConnectionUsageT(F)
+      return r
+    }
+
+    def parseSysmlAstConnectionUsageT(typeParsed: B): SysmlAst.ConnectionUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.ConnectionUsage")
+      }
+      parser.parseObjectKey("occurrenceUsagePrefix")
+      val occurrenceUsagePrefix = parseSysmlAstOccurrenceUsagePrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("connectorPart")
+      val connectorPart = parser.parseOption(parseSysmlAstConnectorPart _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("commonUsageElements")
+      val commonUsageElements = parseSysmlAstCommonUsageElements()
+      parser.parseObjectNext()
+      return SysmlAst.ConnectionUsage(occurrenceUsagePrefix, connectorPart, commonUsageElements)
+    }
+
+    def parseSysmlAstItemUsage(): SysmlAst.ItemUsage = {
+      val r = parseSysmlAstItemUsageT(F)
+      return r
+    }
+
+    def parseSysmlAstItemUsageT(typeParsed: B): SysmlAst.ItemUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.ItemUsage")
+      }
+      parser.parseObjectKey("occurrenceUsagePrefix")
+      val occurrenceUsagePrefix = parseSysmlAstOccurrenceUsagePrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("commonUsageElements")
+      val commonUsageElements = parseSysmlAstCommonUsageElements()
+      parser.parseObjectNext()
+      return SysmlAst.ItemUsage(occurrenceUsagePrefix, commonUsageElements)
+    }
+
+    def parseSysmlAstPartUsage(): SysmlAst.PartUsage = {
+      val r = parseSysmlAstPartUsageT(F)
+      return r
+    }
+
+    def parseSysmlAstPartUsageT(typeParsed: B): SysmlAst.PartUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.PartUsage")
+      }
+      parser.parseObjectKey("occurrenceUsagePrefix")
+      val occurrenceUsagePrefix = parseSysmlAstOccurrenceUsagePrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("commonUsageElements")
+      val commonUsageElements = parseSysmlAstCommonUsageElements()
+      parser.parseObjectNext()
+      return SysmlAst.PartUsage(occurrenceUsagePrefix, commonUsageElements)
+    }
+
+    def parseSysmlAstPortUsage(): SysmlAst.PortUsage = {
+      val r = parseSysmlAstPortUsageT(F)
+      return r
+    }
+
+    def parseSysmlAstPortUsageT(typeParsed: B): SysmlAst.PortUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.PortUsage")
+      }
+      parser.parseObjectKey("occurrenceUsagePrefix")
+      val occurrenceUsagePrefix = parseSysmlAstOccurrenceUsagePrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("commonUsageElements")
+      val commonUsageElements = parseSysmlAstCommonUsageElements()
+      parser.parseObjectNext()
+      return SysmlAst.PortUsage(occurrenceUsagePrefix, commonUsageElements)
+    }
+
+    def parseSysmlAstAnnotatingElement(): SysmlAst.AnnotatingElement = {
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
+      t.native match {
+        case "SysmlAst.Comment" => val r = parseSysmlAstCommentT(T); return r
+        case "SysmlAst.Documentation" => val r = parseSysmlAstDocumentationT(T); return r
+        case "SysmlAst.TextualRepresentation" => val r = parseSysmlAstTextualRepresentationT(T); return r
+        case "SysmlAst.GumboAnnotation" => val r = parseSysmlAstGumboAnnotationT(T); return r
+        case _ => val r = parseSysmlAstGumboAnnotationT(T); return r
+      }
+    }
+
+    def parseSysmlAstComment(): SysmlAst.Comment = {
+      val r = parseSysmlAstCommentT(F)
+      return r
+    }
+
+    def parseSysmlAstCommentT(typeParsed: B): SysmlAst.Comment = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.Comment")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("abouts")
+      val abouts = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("locale")
+      val locale = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("comment")
+      val comment = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.Comment(visibility, identification, abouts, locale, comment, attr)
+    }
+
+    def parseSysmlAstDocumentation(): SysmlAst.Documentation = {
+      val r = parseSysmlAstDocumentationT(F)
+      return r
+    }
+
+    def parseSysmlAstDocumentationT(typeParsed: B): SysmlAst.Documentation = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.Documentation")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("locale")
+      val locale = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("comment")
+      val comment = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.Documentation(visibility, identification, locale, comment, attr)
+    }
+
+    def parseSysmlAstTextualRepresentation(): SysmlAst.TextualRepresentation = {
+      val r = parseSysmlAstTextualRepresentationT(F)
+      return r
+    }
+
+    def parseSysmlAstTextualRepresentationT(typeParsed: B): SysmlAst.TextualRepresentation = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.TextualRepresentation")
+      }
+      parser.parseObjectKey("visibility")
+      val visibility = parseSysmlAstVisibilityType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("identification")
+      val identification = parser.parseOption(parseSysmlAstIdentification _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("language")
+      val language = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("comment")
+      val comment = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return SysmlAst.TextualRepresentation(visibility, identification, language, comment, attr)
+    }
+
+    def parseSysmlAstGumboAnnotation(): SysmlAst.GumboAnnotation = {
+      val r = parseSysmlAstGumboAnnotationT(F)
+      return r
+    }
+
+    def parseSysmlAstGumboAnnotationT(typeParsed: B): SysmlAst.GumboAnnotation = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.GumboAnnotation")
+      }
+      parser.parseObjectKey("gumboNode")
+      val gumboNode = parseGclSymbol()
+      parser.parseObjectNext()
+      return SysmlAst.GumboAnnotation(gumboNode)
+    }
+
+    def parseAttr(): Attr = {
+      val r = parseAttrT(F)
+      return r
+    }
+
+    def parseAttrT(typeParsed: B): Attr = {
+      if (!typeParsed) {
+        parser.parseObjectType("Attr")
+      }
+      parser.parseObjectKey("posOpt")
+      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return Attr(posOpt)
+    }
+
+    def parseResolvedAttr(): ResolvedAttr = {
+      val r = parseResolvedAttrT(F)
+      return r
+    }
+
+    def parseResolvedAttrT(typeParsed: B): ResolvedAttr = {
+      if (!typeParsed) {
+        parser.parseObjectType("ResolvedAttr")
+      }
+      parser.parseObjectKey("posOpt")
+      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("resOpt")
+      val resOpt = parser.parseOption(parseResolvedInfo _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("typedOpt")
+      val typedOpt = parser.parseOption(parseTyped _)
+      parser.parseObjectNext()
+      return ResolvedAttr(posOpt, resOpt, typedOpt)
+    }
+
+    def parseResolvedInfo(): ResolvedInfo = {
+      val t = parser.parseObjectTypes(ISZ("ResolvedInfo.Package", "ResolvedInfo.Enum", "ResolvedInfo.EnumElement", "ResolvedInfo.AttributeUsage", "ResolvedInfo.ConnectionUsage", "ResolvedInfo.ItemUsage", "ResolvedInfo.PartUsage", "ResolvedInfo.PortUsage", "ResolvedInfo.ReferenceUsage"))
+      t.native match {
+        case "ResolvedInfo.Package" => val r = parseResolvedInfoPackageT(T); return r
+        case "ResolvedInfo.Enum" => val r = parseResolvedInfoEnumT(T); return r
+        case "ResolvedInfo.EnumElement" => val r = parseResolvedInfoEnumElementT(T); return r
+        case "ResolvedInfo.AttributeUsage" => val r = parseResolvedInfoAttributeUsageT(T); return r
+        case "ResolvedInfo.ConnectionUsage" => val r = parseResolvedInfoConnectionUsageT(T); return r
+        case "ResolvedInfo.ItemUsage" => val r = parseResolvedInfoItemUsageT(T); return r
+        case "ResolvedInfo.PartUsage" => val r = parseResolvedInfoPartUsageT(T); return r
+        case "ResolvedInfo.PortUsage" => val r = parseResolvedInfoPortUsageT(T); return r
+        case "ResolvedInfo.ReferenceUsage" => val r = parseResolvedInfoReferenceUsageT(T); return r
+        case _ => val r = parseResolvedInfoReferenceUsageT(T); return r
+      }
+    }
+
+    def parseResolvedInfoPackage(): ResolvedInfo.Package = {
+      val r = parseResolvedInfoPackageT(F)
+      return r
+    }
+
+    def parseResolvedInfoPackageT(typeParsed: B): ResolvedInfo.Package = {
+      if (!typeParsed) {
+        parser.parseObjectType("ResolvedInfo.Package")
+      }
+      parser.parseObjectKey("name")
+      val name = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      return ResolvedInfo.Package(name)
+    }
+
+    def parseResolvedInfoEnum(): ResolvedInfo.Enum = {
+      val r = parseResolvedInfoEnumT(F)
+      return r
+    }
+
+    def parseResolvedInfoEnumT(typeParsed: B): ResolvedInfo.Enum = {
+      if (!typeParsed) {
+        parser.parseObjectType("ResolvedInfo.Enum")
+      }
+      parser.parseObjectKey("name")
+      val name = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      return ResolvedInfo.Enum(name)
+    }
+
+    def parseResolvedInfoEnumElement(): ResolvedInfo.EnumElement = {
+      val r = parseResolvedInfoEnumElementT(F)
+      return r
+    }
+
+    def parseResolvedInfoEnumElementT(typeParsed: B): ResolvedInfo.EnumElement = {
+      if (!typeParsed) {
+        parser.parseObjectType("ResolvedInfo.EnumElement")
+      }
+      parser.parseObjectKey("owner")
+      val owner = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("ordinal")
+      val ordinal = parser.parseZ()
+      parser.parseObjectNext()
+      return ResolvedInfo.EnumElement(owner, name, ordinal)
+    }
+
+    def parseResolvedInfoAttributeUsage(): ResolvedInfo.AttributeUsage = {
+      val r = parseResolvedInfoAttributeUsageT(F)
+      return r
+    }
+
+    def parseResolvedInfoAttributeUsageT(typeParsed: B): ResolvedInfo.AttributeUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("ResolvedInfo.AttributeUsage")
+      }
+      parser.parseObjectKey("owner")
+      val owner = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      return ResolvedInfo.AttributeUsage(owner, name)
+    }
+
+    def parseResolvedInfoConnectionUsage(): ResolvedInfo.ConnectionUsage = {
+      val r = parseResolvedInfoConnectionUsageT(F)
+      return r
+    }
+
+    def parseResolvedInfoConnectionUsageT(typeParsed: B): ResolvedInfo.ConnectionUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("ResolvedInfo.ConnectionUsage")
+      }
+      parser.parseObjectKey("owner")
+      val owner = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      return ResolvedInfo.ConnectionUsage(owner, name)
+    }
+
+    def parseResolvedInfoItemUsage(): ResolvedInfo.ItemUsage = {
+      val r = parseResolvedInfoItemUsageT(F)
+      return r
+    }
+
+    def parseResolvedInfoItemUsageT(typeParsed: B): ResolvedInfo.ItemUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("ResolvedInfo.ItemUsage")
+      }
+      parser.parseObjectKey("owner")
+      val owner = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      return ResolvedInfo.ItemUsage(owner, name)
+    }
+
+    def parseResolvedInfoPartUsage(): ResolvedInfo.PartUsage = {
+      val r = parseResolvedInfoPartUsageT(F)
+      return r
+    }
+
+    def parseResolvedInfoPartUsageT(typeParsed: B): ResolvedInfo.PartUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("ResolvedInfo.PartUsage")
+      }
+      parser.parseObjectKey("owner")
+      val owner = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      return ResolvedInfo.PartUsage(owner, name)
+    }
+
+    def parseResolvedInfoPortUsage(): ResolvedInfo.PortUsage = {
+      val r = parseResolvedInfoPortUsageT(F)
+      return r
+    }
+
+    def parseResolvedInfoPortUsageT(typeParsed: B): ResolvedInfo.PortUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("ResolvedInfo.PortUsage")
+      }
+      parser.parseObjectKey("owner")
+      val owner = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      return ResolvedInfo.PortUsage(owner, name)
+    }
+
+    def parseResolvedInfoReferenceUsage(): ResolvedInfo.ReferenceUsage = {
+      val r = parseResolvedInfoReferenceUsageT(F)
+      return r
+    }
+
+    def parseResolvedInfoReferenceUsageT(typeParsed: B): ResolvedInfo.ReferenceUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("ResolvedInfo.ReferenceUsage")
+      }
+      parser.parseObjectKey("owner")
+      val owner = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      return ResolvedInfo.ReferenceUsage(owner, name)
+    }
+
+    def parseType(): Type = {
+      val t = parser.parseObjectTypes(ISZ("Type.Named"))
+      t.native match {
+        case "Type.Named" => val r = parseTypeNamedT(T); return r
+        case _ => val r = parseTypeNamedT(T); return r
+      }
+    }
+
+    def parseTypeNamed(): Type.Named = {
+      val r = parseTypeNamedT(F)
+      return r
+    }
+
+    def parseTypeNamedT(typeParsed: B): Type.Named = {
+      if (!typeParsed) {
+        parser.parseObjectType("Type.Named")
+      }
+      parser.parseObjectKey("name")
+      val name = parseSysmlAstName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseTypedAttr()
+      parser.parseObjectNext()
+      return Type.Named(name, attr)
+    }
+
+    def parseTypedAttr(): TypedAttr = {
+      val r = parseTypedAttrT(F)
+      return r
+    }
+
+    def parseTypedAttrT(typeParsed: B): TypedAttr = {
+      if (!typeParsed) {
+        parser.parseObjectType("TypedAttr")
+      }
+      parser.parseObjectKey("posOpt")
+      val posOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("typedOpt")
+      val typedOpt = parser.parseOption(parseTyped _)
+      parser.parseObjectNext()
+      return TypedAttr(posOpt, typedOpt)
+    }
+
+    def parseTyped(): Typed = {
+      val t = parser.parseObjectTypes(ISZ("Typed.Package", "Typed.Name", "Typed.Enum"))
+      t.native match {
+        case "Typed.Package" => val r = parseTypedPackageT(T); return r
+        case "Typed.Name" => val r = parseTypedNameT(T); return r
+        case "Typed.Enum" => val r = parseTypedEnumT(T); return r
+        case _ => val r = parseTypedEnumT(T); return r
+      }
+    }
+
+    def parseTypedPackage(): Typed.Package = {
+      val r = parseTypedPackageT(F)
+      return r
+    }
+
+    def parseTypedPackageT(typeParsed: B): Typed.Package = {
+      if (!typeParsed) {
+        parser.parseObjectType("Typed.Package")
+      }
+      parser.parseObjectKey("name")
+      val name = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      return Typed.Package(name)
+    }
+
+    def parseTypedName(): Typed.Name = {
+      val r = parseTypedNameT(F)
+      return r
+    }
+
+    def parseTypedNameT(typeParsed: B): Typed.Name = {
+      if (!typeParsed) {
+        parser.parseObjectType("Typed.Name")
+      }
+      parser.parseObjectKey("ids")
+      val ids = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      return Typed.Name(ids)
+    }
+
+    def parseTypedEnum(): Typed.Enum = {
+      val r = parseTypedEnumT(F)
+      return r
+    }
+
+    def parseTypedEnumT(typeParsed: B): Typed.Enum = {
+      if (!typeParsed) {
+        parser.parseObjectType("Typed.Enum")
+      }
+      parser.parseObjectKey("name")
+      val name = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      return Typed.Enum(name)
     }
 
     def parse_langastTopUnit(): org.sireum.lang.ast.TopUnit = {
@@ -11823,8 +14109,8 @@ object JSON {
     return r
   }
 
-  def fromAttr(o: Attr, isCompact: B): String = {
-    val st = Printer.printAttr(o)
+  def fromBlessAttr(o: BlessAttr, isCompact: B): String = {
+    val st = Printer.printBlessAttr(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -11832,12 +14118,12 @@ object JSON {
     }
   }
 
-  def toAttr(s: String): Either[Attr, Json.ErrorMsg] = {
-    def fAttr(parser: Parser): Attr = {
-      val r = parser.parseAttr()
+  def toBlessAttr(s: String): Either[BlessAttr, Json.ErrorMsg] = {
+    def fBlessAttr(parser: Parser): BlessAttr = {
+      val r = parser.parseBlessAttr()
       return r
     }
-    val r = to(s, fAttr _)
+    val r = to(s, fBlessAttr _)
     return r
   }
 
@@ -12702,6 +14988,1320 @@ object JSON {
       return r
     }
     val r = to(s, fSmfType _)
+    return r
+  }
+
+  def fromSysmlAstId(o: SysmlAst.Id, isCompact: B): String = {
+    val st = Printer.printSysmlAstId(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstId(s: String): Either[SysmlAst.Id, Json.ErrorMsg] = {
+    def fSysmlAstId(parser: Parser): SysmlAst.Id = {
+      val r = parser.parseSysmlAstId()
+      return r
+    }
+    val r = to(s, fSysmlAstId _)
+    return r
+  }
+
+  def fromSysmlAstName(o: SysmlAst.Name, isCompact: B): String = {
+    val st = Printer.printSysmlAstName(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstName(s: String): Either[SysmlAst.Name, Json.ErrorMsg] = {
+    def fSysmlAstName(parser: Parser): SysmlAst.Name = {
+      val r = parser.parseSysmlAstName()
+      return r
+    }
+    val r = to(s, fSysmlAstName _)
+    return r
+  }
+
+  def fromSysmlAstTopUnit(o: SysmlAst.TopUnit, isCompact: B): String = {
+    val st = Printer.printSysmlAstTopUnit(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstTopUnit(s: String): Either[SysmlAst.TopUnit, Json.ErrorMsg] = {
+    def fSysmlAstTopUnit(parser: Parser): SysmlAst.TopUnit = {
+      val r = parser.parseSysmlAstTopUnit()
+      return r
+    }
+    val r = to(s, fSysmlAstTopUnit _)
+    return r
+  }
+
+  def fromSysmlAstAttrNode(o: SysmlAst.AttrNode, isCompact: B): String = {
+    val st = Printer.printSysmlAstAttrNode(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstAttrNode(s: String): Either[SysmlAst.AttrNode, Json.ErrorMsg] = {
+    def fSysmlAstAttrNode(parser: Parser): SysmlAst.AttrNode = {
+      val r = parser.parseSysmlAstAttrNode()
+      return r
+    }
+    val r = to(s, fSysmlAstAttrNode _)
+    return r
+  }
+
+  def fromSysmlAstPackageBodyElement(o: SysmlAst.PackageBodyElement, isCompact: B): String = {
+    val st = Printer.printSysmlAstPackageBodyElement(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstPackageBodyElement(s: String): Either[SysmlAst.PackageBodyElement, Json.ErrorMsg] = {
+    def fSysmlAstPackageBodyElement(parser: Parser): SysmlAst.PackageBodyElement = {
+      val r = parser.parseSysmlAstPackageBodyElement()
+      return r
+    }
+    val r = to(s, fSysmlAstPackageBodyElement _)
+    return r
+  }
+
+  def fromSysmlAstDefinitionBodyItem(o: SysmlAst.DefinitionBodyItem, isCompact: B): String = {
+    val st = Printer.printSysmlAstDefinitionBodyItem(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstDefinitionBodyItem(s: String): Either[SysmlAst.DefinitionBodyItem, Json.ErrorMsg] = {
+    def fSysmlAstDefinitionBodyItem(parser: Parser): SysmlAst.DefinitionBodyItem = {
+      val r = parser.parseSysmlAstDefinitionBodyItem()
+      return r
+    }
+    val r = to(s, fSysmlAstDefinitionBodyItem _)
+    return r
+  }
+
+  def fromSysmlAstFeatureValue(o: SysmlAst.FeatureValue, isCompact: B): String = {
+    val st = Printer.printSysmlAstFeatureValue(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstFeatureValue(s: String): Either[SysmlAst.FeatureValue, Json.ErrorMsg] = {
+    def fSysmlAstFeatureValue(parser: Parser): SysmlAst.FeatureValue = {
+      val r = parser.parseSysmlAstFeatureValue()
+      return r
+    }
+    val r = to(s, fSysmlAstFeatureValue _)
+    return r
+  }
+
+  def fromSysmlAstEnumeratedValue(o: SysmlAst.EnumeratedValue, isCompact: B): String = {
+    val st = Printer.printSysmlAstEnumeratedValue(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstEnumeratedValue(s: String): Either[SysmlAst.EnumeratedValue, Json.ErrorMsg] = {
+    def fSysmlAstEnumeratedValue(parser: Parser): SysmlAst.EnumeratedValue = {
+      val r = parser.parseSysmlAstEnumeratedValue()
+      return r
+    }
+    val r = to(s, fSysmlAstEnumeratedValue _)
+    return r
+  }
+
+  def fromSysmlAstImport(o: SysmlAst.Import, isCompact: B): String = {
+    val st = Printer.printSysmlAstImport(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstImport(s: String): Either[SysmlAst.Import, Json.ErrorMsg] = {
+    def fSysmlAstImport(parser: Parser): SysmlAst.Import = {
+      val r = parser.parseSysmlAstImport()
+      return r
+    }
+    val r = to(s, fSysmlAstImport _)
+    return r
+  }
+
+  def fromSysmlAstAliasMember(o: SysmlAst.AliasMember, isCompact: B): String = {
+    val st = Printer.printSysmlAstAliasMember(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstAliasMember(s: String): Either[SysmlAst.AliasMember, Json.ErrorMsg] = {
+    def fSysmlAstAliasMember(parser: Parser): SysmlAst.AliasMember = {
+      val r = parser.parseSysmlAstAliasMember()
+      return r
+    }
+    val r = to(s, fSysmlAstAliasMember _)
+    return r
+  }
+
+  def fromSysmlAstIdentification(o: SysmlAst.Identification, isCompact: B): String = {
+    val st = Printer.printSysmlAstIdentification(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstIdentification(s: String): Either[SysmlAst.Identification, Json.ErrorMsg] = {
+    def fSysmlAstIdentification(parser: Parser): SysmlAst.Identification = {
+      val r = parser.parseSysmlAstIdentification()
+      return r
+    }
+    val r = to(s, fSysmlAstIdentification _)
+    return r
+  }
+
+  def fromSysmlAstPackageMember(o: SysmlAst.PackageMember, isCompact: B): String = {
+    val st = Printer.printSysmlAstPackageMember(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstPackageMember(s: String): Either[SysmlAst.PackageMember, Json.ErrorMsg] = {
+    def fSysmlAstPackageMember(parser: Parser): SysmlAst.PackageMember = {
+      val r = parser.parseSysmlAstPackageMember()
+      return r
+    }
+    val r = to(s, fSysmlAstPackageMember _)
+    return r
+  }
+
+  def fromSysmlAstConnectorPart(o: SysmlAst.ConnectorPart, isCompact: B): String = {
+    val st = Printer.printSysmlAstConnectorPart(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstConnectorPart(s: String): Either[SysmlAst.ConnectorPart, Json.ErrorMsg] = {
+    def fSysmlAstConnectorPart(parser: Parser): SysmlAst.ConnectorPart = {
+      val r = parser.parseSysmlAstConnectorPart()
+      return r
+    }
+    val r = to(s, fSysmlAstConnectorPart _)
+    return r
+  }
+
+  def fromSysmlAstConnectorEnd(o: SysmlAst.ConnectorEnd, isCompact: B): String = {
+    val st = Printer.printSysmlAstConnectorEnd(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstConnectorEnd(s: String): Either[SysmlAst.ConnectorEnd, Json.ErrorMsg] = {
+    def fSysmlAstConnectorEnd(parser: Parser): SysmlAst.ConnectorEnd = {
+      val r = parser.parseSysmlAstConnectorEnd()
+      return r
+    }
+    val r = to(s, fSysmlAstConnectorEnd _)
+    return r
+  }
+
+  def fromSysmlAstBinaryConnectorPart(o: SysmlAst.BinaryConnectorPart, isCompact: B): String = {
+    val st = Printer.printSysmlAstBinaryConnectorPart(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstBinaryConnectorPart(s: String): Either[SysmlAst.BinaryConnectorPart, Json.ErrorMsg] = {
+    def fSysmlAstBinaryConnectorPart(parser: Parser): SysmlAst.BinaryConnectorPart = {
+      val r = parser.parseSysmlAstBinaryConnectorPart()
+      return r
+    }
+    val r = to(s, fSysmlAstBinaryConnectorPart _)
+    return r
+  }
+
+  def fromSysmlAstNaryConnectorPart(o: SysmlAst.NaryConnectorPart, isCompact: B): String = {
+    val st = Printer.printSysmlAstNaryConnectorPart(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstNaryConnectorPart(s: String): Either[SysmlAst.NaryConnectorPart, Json.ErrorMsg] = {
+    def fSysmlAstNaryConnectorPart(parser: Parser): SysmlAst.NaryConnectorPart = {
+      val r = parser.parseSysmlAstNaryConnectorPart()
+      return r
+    }
+    val r = to(s, fSysmlAstNaryConnectorPart _)
+    return r
+  }
+
+  def fromSysmlAstFeatureSpecialization(o: SysmlAst.FeatureSpecialization, isCompact: B): String = {
+    val st = Printer.printSysmlAstFeatureSpecialization(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstFeatureSpecialization(s: String): Either[SysmlAst.FeatureSpecialization, Json.ErrorMsg] = {
+    def fSysmlAstFeatureSpecialization(parser: Parser): SysmlAst.FeatureSpecialization = {
+      val r = parser.parseSysmlAstFeatureSpecialization()
+      return r
+    }
+    val r = to(s, fSysmlAstFeatureSpecialization _)
+    return r
+  }
+
+  def fromSysmlAstTypingsSpecialization(o: SysmlAst.TypingsSpecialization, isCompact: B): String = {
+    val st = Printer.printSysmlAstTypingsSpecialization(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstTypingsSpecialization(s: String): Either[SysmlAst.TypingsSpecialization, Json.ErrorMsg] = {
+    def fSysmlAstTypingsSpecialization(parser: Parser): SysmlAst.TypingsSpecialization = {
+      val r = parser.parseSysmlAstTypingsSpecialization()
+      return r
+    }
+    val r = to(s, fSysmlAstTypingsSpecialization _)
+    return r
+  }
+
+  def fromSysmlAstSubsettingsSpecialization(o: SysmlAst.SubsettingsSpecialization, isCompact: B): String = {
+    val st = Printer.printSysmlAstSubsettingsSpecialization(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstSubsettingsSpecialization(s: String): Either[SysmlAst.SubsettingsSpecialization, Json.ErrorMsg] = {
+    def fSysmlAstSubsettingsSpecialization(parser: Parser): SysmlAst.SubsettingsSpecialization = {
+      val r = parser.parseSysmlAstSubsettingsSpecialization()
+      return r
+    }
+    val r = to(s, fSysmlAstSubsettingsSpecialization _)
+    return r
+  }
+
+  def fromSysmlAstReferencesSpecialization(o: SysmlAst.ReferencesSpecialization, isCompact: B): String = {
+    val st = Printer.printSysmlAstReferencesSpecialization(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstReferencesSpecialization(s: String): Either[SysmlAst.ReferencesSpecialization, Json.ErrorMsg] = {
+    def fSysmlAstReferencesSpecialization(parser: Parser): SysmlAst.ReferencesSpecialization = {
+      val r = parser.parseSysmlAstReferencesSpecialization()
+      return r
+    }
+    val r = to(s, fSysmlAstReferencesSpecialization _)
+    return r
+  }
+
+  def fromSysmlAstRedefinitionsSpecialization(o: SysmlAst.RedefinitionsSpecialization, isCompact: B): String = {
+    val st = Printer.printSysmlAstRedefinitionsSpecialization(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstRedefinitionsSpecialization(s: String): Either[SysmlAst.RedefinitionsSpecialization, Json.ErrorMsg] = {
+    def fSysmlAstRedefinitionsSpecialization(parser: Parser): SysmlAst.RedefinitionsSpecialization = {
+      val r = parser.parseSysmlAstRedefinitionsSpecialization()
+      return r
+    }
+    val r = to(s, fSysmlAstRedefinitionsSpecialization _)
+    return r
+  }
+
+  def fromSysmlAstDefinitionMember(o: SysmlAst.DefinitionMember, isCompact: B): String = {
+    val st = Printer.printSysmlAstDefinitionMember(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstDefinitionMember(s: String): Either[SysmlAst.DefinitionMember, Json.ErrorMsg] = {
+    def fSysmlAstDefinitionMember(parser: Parser): SysmlAst.DefinitionMember = {
+      val r = parser.parseSysmlAstDefinitionMember()
+      return r
+    }
+    val r = to(s, fSysmlAstDefinitionMember _)
+    return r
+  }
+
+  def fromSysmlAstDefinitionElement(o: SysmlAst.DefinitionElement, isCompact: B): String = {
+    val st = Printer.printSysmlAstDefinitionElement(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstDefinitionElement(s: String): Either[SysmlAst.DefinitionElement, Json.ErrorMsg] = {
+    def fSysmlAstDefinitionElement(parser: Parser): SysmlAst.DefinitionElement = {
+      val r = parser.parseSysmlAstDefinitionElement()
+      return r
+    }
+    val r = to(s, fSysmlAstDefinitionElement _)
+    return r
+  }
+
+  def fromSysmlAstDefinitionPrefix(o: SysmlAst.DefinitionPrefix, isCompact: B): String = {
+    val st = Printer.printSysmlAstDefinitionPrefix(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstDefinitionPrefix(s: String): Either[SysmlAst.DefinitionPrefix, Json.ErrorMsg] = {
+    def fSysmlAstDefinitionPrefix(parser: Parser): SysmlAst.DefinitionPrefix = {
+      val r = parser.parseSysmlAstDefinitionPrefix()
+      return r
+    }
+    val r = to(s, fSysmlAstDefinitionPrefix _)
+    return r
+  }
+
+  def fromSysmlAstPackage(o: SysmlAst.Package, isCompact: B): String = {
+    val st = Printer.printSysmlAstPackage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstPackage(s: String): Either[SysmlAst.Package, Json.ErrorMsg] = {
+    def fSysmlAstPackage(parser: Parser): SysmlAst.Package = {
+      val r = parser.parseSysmlAstPackage()
+      return r
+    }
+    val r = to(s, fSysmlAstPackage _)
+    return r
+  }
+
+  def fromSysmlAstAttributeDefinition(o: SysmlAst.AttributeDefinition, isCompact: B): String = {
+    val st = Printer.printSysmlAstAttributeDefinition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstAttributeDefinition(s: String): Either[SysmlAst.AttributeDefinition, Json.ErrorMsg] = {
+    def fSysmlAstAttributeDefinition(parser: Parser): SysmlAst.AttributeDefinition = {
+      val r = parser.parseSysmlAstAttributeDefinition()
+      return r
+    }
+    val r = to(s, fSysmlAstAttributeDefinition _)
+    return r
+  }
+
+  def fromSysmlAstOccurrenceDefinitionPrefix(o: SysmlAst.OccurrenceDefinitionPrefix, isCompact: B): String = {
+    val st = Printer.printSysmlAstOccurrenceDefinitionPrefix(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstOccurrenceDefinitionPrefix(s: String): Either[SysmlAst.OccurrenceDefinitionPrefix, Json.ErrorMsg] = {
+    def fSysmlAstOccurrenceDefinitionPrefix(parser: Parser): SysmlAst.OccurrenceDefinitionPrefix = {
+      val r = parser.parseSysmlAstOccurrenceDefinitionPrefix()
+      return r
+    }
+    val r = to(s, fSysmlAstOccurrenceDefinitionPrefix _)
+    return r
+  }
+
+  def fromSysmlAstAllocationDefinition(o: SysmlAst.AllocationDefinition, isCompact: B): String = {
+    val st = Printer.printSysmlAstAllocationDefinition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstAllocationDefinition(s: String): Either[SysmlAst.AllocationDefinition, Json.ErrorMsg] = {
+    def fSysmlAstAllocationDefinition(parser: Parser): SysmlAst.AllocationDefinition = {
+      val r = parser.parseSysmlAstAllocationDefinition()
+      return r
+    }
+    val r = to(s, fSysmlAstAllocationDefinition _)
+    return r
+  }
+
+  def fromSysmlAstConnectionDefinition(o: SysmlAst.ConnectionDefinition, isCompact: B): String = {
+    val st = Printer.printSysmlAstConnectionDefinition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstConnectionDefinition(s: String): Either[SysmlAst.ConnectionDefinition, Json.ErrorMsg] = {
+    def fSysmlAstConnectionDefinition(parser: Parser): SysmlAst.ConnectionDefinition = {
+      val r = parser.parseSysmlAstConnectionDefinition()
+      return r
+    }
+    val r = to(s, fSysmlAstConnectionDefinition _)
+    return r
+  }
+
+  def fromSysmlAstEnumerationDefinition(o: SysmlAst.EnumerationDefinition, isCompact: B): String = {
+    val st = Printer.printSysmlAstEnumerationDefinition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstEnumerationDefinition(s: String): Either[SysmlAst.EnumerationDefinition, Json.ErrorMsg] = {
+    def fSysmlAstEnumerationDefinition(parser: Parser): SysmlAst.EnumerationDefinition = {
+      val r = parser.parseSysmlAstEnumerationDefinition()
+      return r
+    }
+    val r = to(s, fSysmlAstEnumerationDefinition _)
+    return r
+  }
+
+  def fromSysmlAstPartDefinition(o: SysmlAst.PartDefinition, isCompact: B): String = {
+    val st = Printer.printSysmlAstPartDefinition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstPartDefinition(s: String): Either[SysmlAst.PartDefinition, Json.ErrorMsg] = {
+    def fSysmlAstPartDefinition(parser: Parser): SysmlAst.PartDefinition = {
+      val r = parser.parseSysmlAstPartDefinition()
+      return r
+    }
+    val r = to(s, fSysmlAstPartDefinition _)
+    return r
+  }
+
+  def fromSysmlAstPortDefinition(o: SysmlAst.PortDefinition, isCompact: B): String = {
+    val st = Printer.printSysmlAstPortDefinition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstPortDefinition(s: String): Either[SysmlAst.PortDefinition, Json.ErrorMsg] = {
+    def fSysmlAstPortDefinition(parser: Parser): SysmlAst.PortDefinition = {
+      val r = parser.parseSysmlAstPortDefinition()
+      return r
+    }
+    val r = to(s, fSysmlAstPortDefinition _)
+    return r
+  }
+
+  def fromSysmlAstMetadataDefinition(o: SysmlAst.MetadataDefinition, isCompact: B): String = {
+    val st = Printer.printSysmlAstMetadataDefinition(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstMetadataDefinition(s: String): Either[SysmlAst.MetadataDefinition, Json.ErrorMsg] = {
+    def fSysmlAstMetadataDefinition(parser: Parser): SysmlAst.MetadataDefinition = {
+      val r = parser.parseSysmlAstMetadataDefinition()
+      return r
+    }
+    val r = to(s, fSysmlAstMetadataDefinition _)
+    return r
+  }
+
+  def fromSysmlAstUsageElement(o: SysmlAst.UsageElement, isCompact: B): String = {
+    val st = Printer.printSysmlAstUsageElement(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstUsageElement(s: String): Either[SysmlAst.UsageElement, Json.ErrorMsg] = {
+    def fSysmlAstUsageElement(parser: Parser): SysmlAst.UsageElement = {
+      val r = parser.parseSysmlAstUsageElement()
+      return r
+    }
+    val r = to(s, fSysmlAstUsageElement _)
+    return r
+  }
+
+  def fromSysmlAstCommonUsageElements(o: SysmlAst.CommonUsageElements, isCompact: B): String = {
+    val st = Printer.printSysmlAstCommonUsageElements(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstCommonUsageElements(s: String): Either[SysmlAst.CommonUsageElements, Json.ErrorMsg] = {
+    def fSysmlAstCommonUsageElements(parser: Parser): SysmlAst.CommonUsageElements = {
+      val r = parser.parseSysmlAstCommonUsageElements()
+      return r
+    }
+    val r = to(s, fSysmlAstCommonUsageElements _)
+    return r
+  }
+
+  def fromSysmlAstNonOccurrenceUsageMember(o: SysmlAst.NonOccurrenceUsageMember, isCompact: B): String = {
+    val st = Printer.printSysmlAstNonOccurrenceUsageMember(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstNonOccurrenceUsageMember(s: String): Either[SysmlAst.NonOccurrenceUsageMember, Json.ErrorMsg] = {
+    def fSysmlAstNonOccurrenceUsageMember(parser: Parser): SysmlAst.NonOccurrenceUsageMember = {
+      val r = parser.parseSysmlAstNonOccurrenceUsageMember()
+      return r
+    }
+    val r = to(s, fSysmlAstNonOccurrenceUsageMember _)
+    return r
+  }
+
+  def fromSysmlAstNonOccurrenceUsageElement(o: SysmlAst.NonOccurrenceUsageElement, isCompact: B): String = {
+    val st = Printer.printSysmlAstNonOccurrenceUsageElement(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstNonOccurrenceUsageElement(s: String): Either[SysmlAst.NonOccurrenceUsageElement, Json.ErrorMsg] = {
+    def fSysmlAstNonOccurrenceUsageElement(parser: Parser): SysmlAst.NonOccurrenceUsageElement = {
+      val r = parser.parseSysmlAstNonOccurrenceUsageElement()
+      return r
+    }
+    val r = to(s, fSysmlAstNonOccurrenceUsageElement _)
+    return r
+  }
+
+  def fromSysmlAstRefPrefix(o: SysmlAst.RefPrefix, isCompact: B): String = {
+    val st = Printer.printSysmlAstRefPrefix(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstRefPrefix(s: String): Either[SysmlAst.RefPrefix, Json.ErrorMsg] = {
+    def fSysmlAstRefPrefix(parser: Parser): SysmlAst.RefPrefix = {
+      val r = parser.parseSysmlAstRefPrefix()
+      return r
+    }
+    val r = to(s, fSysmlAstRefPrefix _)
+    return r
+  }
+
+  def fromSysmlAstUsagePrefix(o: SysmlAst.UsagePrefix, isCompact: B): String = {
+    val st = Printer.printSysmlAstUsagePrefix(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstUsagePrefix(s: String): Either[SysmlAst.UsagePrefix, Json.ErrorMsg] = {
+    def fSysmlAstUsagePrefix(parser: Parser): SysmlAst.UsagePrefix = {
+      val r = parser.parseSysmlAstUsagePrefix()
+      return r
+    }
+    val r = to(s, fSysmlAstUsagePrefix _)
+    return r
+  }
+
+  def fromSysmlAstAttributeUsage(o: SysmlAst.AttributeUsage, isCompact: B): String = {
+    val st = Printer.printSysmlAstAttributeUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstAttributeUsage(s: String): Either[SysmlAst.AttributeUsage, Json.ErrorMsg] = {
+    def fSysmlAstAttributeUsage(parser: Parser): SysmlAst.AttributeUsage = {
+      val r = parser.parseSysmlAstAttributeUsage()
+      return r
+    }
+    val r = to(s, fSysmlAstAttributeUsage _)
+    return r
+  }
+
+  def fromSysmlAstReferenceUsage(o: SysmlAst.ReferenceUsage, isCompact: B): String = {
+    val st = Printer.printSysmlAstReferenceUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstReferenceUsage(s: String): Either[SysmlAst.ReferenceUsage, Json.ErrorMsg] = {
+    def fSysmlAstReferenceUsage(parser: Parser): SysmlAst.ReferenceUsage = {
+      val r = parser.parseSysmlAstReferenceUsage()
+      return r
+    }
+    val r = to(s, fSysmlAstReferenceUsage _)
+    return r
+  }
+
+  def fromSysmlAstOccurrenceUsageMember(o: SysmlAst.OccurrenceUsageMember, isCompact: B): String = {
+    val st = Printer.printSysmlAstOccurrenceUsageMember(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstOccurrenceUsageMember(s: String): Either[SysmlAst.OccurrenceUsageMember, Json.ErrorMsg] = {
+    def fSysmlAstOccurrenceUsageMember(parser: Parser): SysmlAst.OccurrenceUsageMember = {
+      val r = parser.parseSysmlAstOccurrenceUsageMember()
+      return r
+    }
+    val r = to(s, fSysmlAstOccurrenceUsageMember _)
+    return r
+  }
+
+  def fromSysmlAstOccurrenceUsageElement(o: SysmlAst.OccurrenceUsageElement, isCompact: B): String = {
+    val st = Printer.printSysmlAstOccurrenceUsageElement(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstOccurrenceUsageElement(s: String): Either[SysmlAst.OccurrenceUsageElement, Json.ErrorMsg] = {
+    def fSysmlAstOccurrenceUsageElement(parser: Parser): SysmlAst.OccurrenceUsageElement = {
+      val r = parser.parseSysmlAstOccurrenceUsageElement()
+      return r
+    }
+    val r = to(s, fSysmlAstOccurrenceUsageElement _)
+    return r
+  }
+
+  def fromSysmlAstStructureUsageElement(o: SysmlAst.StructureUsageElement, isCompact: B): String = {
+    val st = Printer.printSysmlAstStructureUsageElement(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstStructureUsageElement(s: String): Either[SysmlAst.StructureUsageElement, Json.ErrorMsg] = {
+    def fSysmlAstStructureUsageElement(parser: Parser): SysmlAst.StructureUsageElement = {
+      val r = parser.parseSysmlAstStructureUsageElement()
+      return r
+    }
+    val r = to(s, fSysmlAstStructureUsageElement _)
+    return r
+  }
+
+  def fromSysmlAstOccurrenceUsagePrefix(o: SysmlAst.OccurrenceUsagePrefix, isCompact: B): String = {
+    val st = Printer.printSysmlAstOccurrenceUsagePrefix(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstOccurrenceUsagePrefix(s: String): Either[SysmlAst.OccurrenceUsagePrefix, Json.ErrorMsg] = {
+    def fSysmlAstOccurrenceUsagePrefix(parser: Parser): SysmlAst.OccurrenceUsagePrefix = {
+      val r = parser.parseSysmlAstOccurrenceUsagePrefix()
+      return r
+    }
+    val r = to(s, fSysmlAstOccurrenceUsagePrefix _)
+    return r
+  }
+
+  def fromSysmlAstConnectionUsage(o: SysmlAst.ConnectionUsage, isCompact: B): String = {
+    val st = Printer.printSysmlAstConnectionUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstConnectionUsage(s: String): Either[SysmlAst.ConnectionUsage, Json.ErrorMsg] = {
+    def fSysmlAstConnectionUsage(parser: Parser): SysmlAst.ConnectionUsage = {
+      val r = parser.parseSysmlAstConnectionUsage()
+      return r
+    }
+    val r = to(s, fSysmlAstConnectionUsage _)
+    return r
+  }
+
+  def fromSysmlAstItemUsage(o: SysmlAst.ItemUsage, isCompact: B): String = {
+    val st = Printer.printSysmlAstItemUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstItemUsage(s: String): Either[SysmlAst.ItemUsage, Json.ErrorMsg] = {
+    def fSysmlAstItemUsage(parser: Parser): SysmlAst.ItemUsage = {
+      val r = parser.parseSysmlAstItemUsage()
+      return r
+    }
+    val r = to(s, fSysmlAstItemUsage _)
+    return r
+  }
+
+  def fromSysmlAstPartUsage(o: SysmlAst.PartUsage, isCompact: B): String = {
+    val st = Printer.printSysmlAstPartUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstPartUsage(s: String): Either[SysmlAst.PartUsage, Json.ErrorMsg] = {
+    def fSysmlAstPartUsage(parser: Parser): SysmlAst.PartUsage = {
+      val r = parser.parseSysmlAstPartUsage()
+      return r
+    }
+    val r = to(s, fSysmlAstPartUsage _)
+    return r
+  }
+
+  def fromSysmlAstPortUsage(o: SysmlAst.PortUsage, isCompact: B): String = {
+    val st = Printer.printSysmlAstPortUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstPortUsage(s: String): Either[SysmlAst.PortUsage, Json.ErrorMsg] = {
+    def fSysmlAstPortUsage(parser: Parser): SysmlAst.PortUsage = {
+      val r = parser.parseSysmlAstPortUsage()
+      return r
+    }
+    val r = to(s, fSysmlAstPortUsage _)
+    return r
+  }
+
+  def fromSysmlAstAnnotatingElement(o: SysmlAst.AnnotatingElement, isCompact: B): String = {
+    val st = Printer.printSysmlAstAnnotatingElement(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstAnnotatingElement(s: String): Either[SysmlAst.AnnotatingElement, Json.ErrorMsg] = {
+    def fSysmlAstAnnotatingElement(parser: Parser): SysmlAst.AnnotatingElement = {
+      val r = parser.parseSysmlAstAnnotatingElement()
+      return r
+    }
+    val r = to(s, fSysmlAstAnnotatingElement _)
+    return r
+  }
+
+  def fromSysmlAstComment(o: SysmlAst.Comment, isCompact: B): String = {
+    val st = Printer.printSysmlAstComment(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstComment(s: String): Either[SysmlAst.Comment, Json.ErrorMsg] = {
+    def fSysmlAstComment(parser: Parser): SysmlAst.Comment = {
+      val r = parser.parseSysmlAstComment()
+      return r
+    }
+    val r = to(s, fSysmlAstComment _)
+    return r
+  }
+
+  def fromSysmlAstDocumentation(o: SysmlAst.Documentation, isCompact: B): String = {
+    val st = Printer.printSysmlAstDocumentation(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstDocumentation(s: String): Either[SysmlAst.Documentation, Json.ErrorMsg] = {
+    def fSysmlAstDocumentation(parser: Parser): SysmlAst.Documentation = {
+      val r = parser.parseSysmlAstDocumentation()
+      return r
+    }
+    val r = to(s, fSysmlAstDocumentation _)
+    return r
+  }
+
+  def fromSysmlAstTextualRepresentation(o: SysmlAst.TextualRepresentation, isCompact: B): String = {
+    val st = Printer.printSysmlAstTextualRepresentation(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstTextualRepresentation(s: String): Either[SysmlAst.TextualRepresentation, Json.ErrorMsg] = {
+    def fSysmlAstTextualRepresentation(parser: Parser): SysmlAst.TextualRepresentation = {
+      val r = parser.parseSysmlAstTextualRepresentation()
+      return r
+    }
+    val r = to(s, fSysmlAstTextualRepresentation _)
+    return r
+  }
+
+  def fromSysmlAstGumboAnnotation(o: SysmlAst.GumboAnnotation, isCompact: B): String = {
+    val st = Printer.printSysmlAstGumboAnnotation(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstGumboAnnotation(s: String): Either[SysmlAst.GumboAnnotation, Json.ErrorMsg] = {
+    def fSysmlAstGumboAnnotation(parser: Parser): SysmlAst.GumboAnnotation = {
+      val r = parser.parseSysmlAstGumboAnnotation()
+      return r
+    }
+    val r = to(s, fSysmlAstGumboAnnotation _)
+    return r
+  }
+
+  def fromAttr(o: Attr, isCompact: B): String = {
+    val st = Printer.printAttr(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toAttr(s: String): Either[Attr, Json.ErrorMsg] = {
+    def fAttr(parser: Parser): Attr = {
+      val r = parser.parseAttr()
+      return r
+    }
+    val r = to(s, fAttr _)
+    return r
+  }
+
+  def fromResolvedAttr(o: ResolvedAttr, isCompact: B): String = {
+    val st = Printer.printResolvedAttr(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toResolvedAttr(s: String): Either[ResolvedAttr, Json.ErrorMsg] = {
+    def fResolvedAttr(parser: Parser): ResolvedAttr = {
+      val r = parser.parseResolvedAttr()
+      return r
+    }
+    val r = to(s, fResolvedAttr _)
+    return r
+  }
+
+  def fromResolvedInfo(o: ResolvedInfo, isCompact: B): String = {
+    val st = Printer.printResolvedInfo(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toResolvedInfo(s: String): Either[ResolvedInfo, Json.ErrorMsg] = {
+    def fResolvedInfo(parser: Parser): ResolvedInfo = {
+      val r = parser.parseResolvedInfo()
+      return r
+    }
+    val r = to(s, fResolvedInfo _)
+    return r
+  }
+
+  def fromResolvedInfoPackage(o: ResolvedInfo.Package, isCompact: B): String = {
+    val st = Printer.printResolvedInfoPackage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toResolvedInfoPackage(s: String): Either[ResolvedInfo.Package, Json.ErrorMsg] = {
+    def fResolvedInfoPackage(parser: Parser): ResolvedInfo.Package = {
+      val r = parser.parseResolvedInfoPackage()
+      return r
+    }
+    val r = to(s, fResolvedInfoPackage _)
+    return r
+  }
+
+  def fromResolvedInfoEnum(o: ResolvedInfo.Enum, isCompact: B): String = {
+    val st = Printer.printResolvedInfoEnum(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toResolvedInfoEnum(s: String): Either[ResolvedInfo.Enum, Json.ErrorMsg] = {
+    def fResolvedInfoEnum(parser: Parser): ResolvedInfo.Enum = {
+      val r = parser.parseResolvedInfoEnum()
+      return r
+    }
+    val r = to(s, fResolvedInfoEnum _)
+    return r
+  }
+
+  def fromResolvedInfoEnumElement(o: ResolvedInfo.EnumElement, isCompact: B): String = {
+    val st = Printer.printResolvedInfoEnumElement(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toResolvedInfoEnumElement(s: String): Either[ResolvedInfo.EnumElement, Json.ErrorMsg] = {
+    def fResolvedInfoEnumElement(parser: Parser): ResolvedInfo.EnumElement = {
+      val r = parser.parseResolvedInfoEnumElement()
+      return r
+    }
+    val r = to(s, fResolvedInfoEnumElement _)
+    return r
+  }
+
+  def fromResolvedInfoAttributeUsage(o: ResolvedInfo.AttributeUsage, isCompact: B): String = {
+    val st = Printer.printResolvedInfoAttributeUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toResolvedInfoAttributeUsage(s: String): Either[ResolvedInfo.AttributeUsage, Json.ErrorMsg] = {
+    def fResolvedInfoAttributeUsage(parser: Parser): ResolvedInfo.AttributeUsage = {
+      val r = parser.parseResolvedInfoAttributeUsage()
+      return r
+    }
+    val r = to(s, fResolvedInfoAttributeUsage _)
+    return r
+  }
+
+  def fromResolvedInfoConnectionUsage(o: ResolvedInfo.ConnectionUsage, isCompact: B): String = {
+    val st = Printer.printResolvedInfoConnectionUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toResolvedInfoConnectionUsage(s: String): Either[ResolvedInfo.ConnectionUsage, Json.ErrorMsg] = {
+    def fResolvedInfoConnectionUsage(parser: Parser): ResolvedInfo.ConnectionUsage = {
+      val r = parser.parseResolvedInfoConnectionUsage()
+      return r
+    }
+    val r = to(s, fResolvedInfoConnectionUsage _)
+    return r
+  }
+
+  def fromResolvedInfoItemUsage(o: ResolvedInfo.ItemUsage, isCompact: B): String = {
+    val st = Printer.printResolvedInfoItemUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toResolvedInfoItemUsage(s: String): Either[ResolvedInfo.ItemUsage, Json.ErrorMsg] = {
+    def fResolvedInfoItemUsage(parser: Parser): ResolvedInfo.ItemUsage = {
+      val r = parser.parseResolvedInfoItemUsage()
+      return r
+    }
+    val r = to(s, fResolvedInfoItemUsage _)
+    return r
+  }
+
+  def fromResolvedInfoPartUsage(o: ResolvedInfo.PartUsage, isCompact: B): String = {
+    val st = Printer.printResolvedInfoPartUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toResolvedInfoPartUsage(s: String): Either[ResolvedInfo.PartUsage, Json.ErrorMsg] = {
+    def fResolvedInfoPartUsage(parser: Parser): ResolvedInfo.PartUsage = {
+      val r = parser.parseResolvedInfoPartUsage()
+      return r
+    }
+    val r = to(s, fResolvedInfoPartUsage _)
+    return r
+  }
+
+  def fromResolvedInfoPortUsage(o: ResolvedInfo.PortUsage, isCompact: B): String = {
+    val st = Printer.printResolvedInfoPortUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toResolvedInfoPortUsage(s: String): Either[ResolvedInfo.PortUsage, Json.ErrorMsg] = {
+    def fResolvedInfoPortUsage(parser: Parser): ResolvedInfo.PortUsage = {
+      val r = parser.parseResolvedInfoPortUsage()
+      return r
+    }
+    val r = to(s, fResolvedInfoPortUsage _)
+    return r
+  }
+
+  def fromResolvedInfoReferenceUsage(o: ResolvedInfo.ReferenceUsage, isCompact: B): String = {
+    val st = Printer.printResolvedInfoReferenceUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toResolvedInfoReferenceUsage(s: String): Either[ResolvedInfo.ReferenceUsage, Json.ErrorMsg] = {
+    def fResolvedInfoReferenceUsage(parser: Parser): ResolvedInfo.ReferenceUsage = {
+      val r = parser.parseResolvedInfoReferenceUsage()
+      return r
+    }
+    val r = to(s, fResolvedInfoReferenceUsage _)
+    return r
+  }
+
+  def fromType(o: Type, isCompact: B): String = {
+    val st = Printer.printType(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toType(s: String): Either[Type, Json.ErrorMsg] = {
+    def fType(parser: Parser): Type = {
+      val r = parser.parseType()
+      return r
+    }
+    val r = to(s, fType _)
+    return r
+  }
+
+  def fromTypeNamed(o: Type.Named, isCompact: B): String = {
+    val st = Printer.printTypeNamed(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toTypeNamed(s: String): Either[Type.Named, Json.ErrorMsg] = {
+    def fTypeNamed(parser: Parser): Type.Named = {
+      val r = parser.parseTypeNamed()
+      return r
+    }
+    val r = to(s, fTypeNamed _)
+    return r
+  }
+
+  def fromTypedAttr(o: TypedAttr, isCompact: B): String = {
+    val st = Printer.printTypedAttr(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toTypedAttr(s: String): Either[TypedAttr, Json.ErrorMsg] = {
+    def fTypedAttr(parser: Parser): TypedAttr = {
+      val r = parser.parseTypedAttr()
+      return r
+    }
+    val r = to(s, fTypedAttr _)
+    return r
+  }
+
+  def fromTyped(o: Typed, isCompact: B): String = {
+    val st = Printer.printTyped(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toTyped(s: String): Either[Typed, Json.ErrorMsg] = {
+    def fTyped(parser: Parser): Typed = {
+      val r = parser.parseTyped()
+      return r
+    }
+    val r = to(s, fTyped _)
+    return r
+  }
+
+  def fromTypedPackage(o: Typed.Package, isCompact: B): String = {
+    val st = Printer.printTypedPackage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toTypedPackage(s: String): Either[Typed.Package, Json.ErrorMsg] = {
+    def fTypedPackage(parser: Parser): Typed.Package = {
+      val r = parser.parseTypedPackage()
+      return r
+    }
+    val r = to(s, fTypedPackage _)
+    return r
+  }
+
+  def fromTypedName(o: Typed.Name, isCompact: B): String = {
+    val st = Printer.printTypedName(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toTypedName(s: String): Either[Typed.Name, Json.ErrorMsg] = {
+    def fTypedName(parser: Parser): Typed.Name = {
+      val r = parser.parseTypedName()
+      return r
+    }
+    val r = to(s, fTypedName _)
+    return r
+  }
+
+  def fromTypedEnum(o: Typed.Enum, isCompact: B): String = {
+    val st = Printer.printTypedEnum(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toTypedEnum(s: String): Either[Typed.Enum, Json.ErrorMsg] = {
+    def fTypedEnum(parser: Parser): Typed.Enum = {
+      val r = parser.parseTypedEnum()
+      return r
+    }
+    val r = to(s, fTypedEnum _)
     return r
   }
 

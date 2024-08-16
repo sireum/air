@@ -497,4 +497,4 @@ InternalCondition:
 @datatype class TODO
 
 
-@datatype class Attr(val posOpt: Option[Position])
+@datatype class BlessAttr(val posOpt: Option[Position])

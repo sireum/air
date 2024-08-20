@@ -2096,6 +2096,8 @@ object MsgPack {
     def writeSysmlAstConnectorEnd(o: SysmlAst.ConnectorEnd): Unit = {
       writer.writeZ(Constants.SysmlAstConnectorEnd)
       writer.writeISZ(o.reference, writeSysmlAstName _)
+      writer.writeOption(o.tipeOpt, writeType _)
+      writeResolvedAttr(o.resOpt)
     }
 
     def writeSysmlAstBinaryConnectorPart(o: SysmlAst.BinaryConnectorPart): Unit = {
@@ -6424,7 +6426,9 @@ object MsgPack {
         reader.expectZ(Constants.SysmlAstConnectorEnd)
       }
       val reference = reader.readISZ(readSysmlAstName _)
-      return SysmlAst.ConnectorEnd(reference)
+      val tipeOpt = reader.readOption(readType _)
+      val resOpt = readResolvedAttr()
+      return SysmlAst.ConnectorEnd(reference, tipeOpt, resOpt)
     }
 
     def readSysmlAstBinaryConnectorPart(): SysmlAst.BinaryConnectorPart = {

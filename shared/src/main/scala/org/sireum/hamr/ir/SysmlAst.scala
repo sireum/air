@@ -103,10 +103,12 @@ object SysmlAst {
 
   @sig trait ConnectorPart
 
-  @datatype class ConnectorEnd(val reference: ISZ[Name])
+  @datatype class ConnectorEnd(val reference: ISZ[Name],
+                               val tipeOpt: Option[Type],
+                               @hidden val resOpt: ResolvedAttr)
 
   @datatype class BinaryConnectorPart(val src: ConnectorEnd,
-                                      val dst: ConnectorEnd) extends  ConnectorPart
+                                      val dst: ConnectorEnd) extends ConnectorPart
 
   @datatype class NaryConnectorPart(val connectorEnds: ISZ[ConnectorEnd]) extends ConnectorPart
 

@@ -16,7 +16,7 @@ object ConnectionInstantiation extends App {
     for (p <- args) {
       val path = Os.path(p)
       if (!path.exists || !path.isFile) {
-        reporter.error(None(), ConnectionInfo.toolName, s"Not a valid file: $path")
+        reporter.error(None(), ConnectionInstantiator.toolName, s"Not a valid file: $path")
       }
       JSON.toAadl(path.read) match {
         case Either.Left(model) =>
@@ -31,7 +31,7 @@ object ConnectionInstantiation extends App {
             println(s"Wrote: $dst")
           }
         case Either.Right(r) =>
-          reporter.error(None(), ConnectionInfo.toolName, r.message)
+          reporter.error(None(), ConnectionInstantiator.toolName, r.message)
       }
     }
 
@@ -39,6 +39,6 @@ object ConnectionInstantiation extends App {
   }
 
   def instantiate(model: ir.Aadl, reporter: Reporter): ir.Aadl = {
-    return ConnectionInfo.instantiateConnections(model, reporter)
+    return ConnectionInstantiator.instantiateConnections(model, reporter)
   }
 }

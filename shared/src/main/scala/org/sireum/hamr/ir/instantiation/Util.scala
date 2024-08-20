@@ -3,7 +3,7 @@ package org.sireum.hamr.ir.instantiation
 
 import org.sireum._
 import org.sireum.hamr.ir
-import org.sireum.hamr.ir.instantiation.ConnectionInfo.{ConnectionSegments, toolName}
+import org.sireum.hamr.ir.instantiation.ConnectionInstantiator.{ConnectionSegments, toolName}
 import org.sireum.hamr.ir.{Component, Feature, FeatureCategory, Transformer}
 import org.sireum.message.{Level, Message, Reporter}
 
@@ -79,7 +79,9 @@ object Util {
       o.category match {
         case ir.ComponentCategory.System =>
         case ir.ComponentCategory.Process =>
+        case ir.ComponentCategory.Processor =>
         case ir.ComponentCategory.Thread =>
+        case ir.ComponentCategory.Abstract =>
         case _ =>
           reporter.error(o.identifier.pos, toolName, s"Sireum's SysMLv2 profile does not currently support ${o.category}")
       }
@@ -103,6 +105,7 @@ object Util {
             featureEnd.direction match {
               case ir.Direction.In =>
               case ir.Direction.Out =>
+              case ir.Direction.InOut =>
               case _ => reporter.error(o.identifier.pos, toolName, s"Sireum's SysMLv2 profile does not currently support ${featureEnd.direction}")
             }
           case _ =>
@@ -122,7 +125,9 @@ object Util {
             subComponent.category match {
               case ir.ComponentCategory.System =>
               case ir.ComponentCategory.Process =>
-              case _ => reporter.error(o.identifier.pos, toolName, s"AADL System's cannot contain ${subComponent.category}}")
+              case ir.ComponentCategory.Processor =>
+              case ir.ComponentCategory.Abstract =>
+              case _ => reporter.error(o.identifier.pos, toolName, s"AADL System's cannot contain ${subComponent.category}")
             }
           case ir.ComponentCategory.Process =>
             subComponent.category match {
@@ -198,13 +203,13 @@ object Util {
     }
   }
 
-  type addConnsContext = (ISZ[ConnectionSegments], Set[ISZ[String]])
+  type addConnsContext = (ISZ[ConnectionSegments], Set[ISZ[String]], ISZ[Message])
 
   @datatype class AddConnectionInstances extends ir.Transformer.PrePost[addConnsContext] {
     override def preComponent(ctx: addConnsContext, o: ir.Component): ir.Transformer.PreResult[addConnsContext, Component] = {
       val componentsSegments = ctx._1.filter(p => p.root.identifier.name == o.identifier.name) // conn instances rooted at o
       var connInsts = ISZ[ir.ConnectionInstance]()
-
+      var messages = ISZ[Message]()
       for (seg <- componentsSegments) {
         val src = seg.segments(0)._1.src(0)
         val dst = seg.segments(seg.segments.size - 1)._1.dst(0)
@@ -220,18 +225,22 @@ object Util {
               isParent = c._2.name == o.identifier.name
             )
 
+          val name = st"${(src.feature.get.name, ".")} -> ${(dst.feature.get.name, ".")}".render
           connInsts = connInsts :+
             ir.ConnectionInstance(
-              name = ir.Name(ISZ[String](st"${(src.feature.get.name, ".")} -> ${(dst.feature.get.name, ".")}".render), None()),
+              name = ir.Name(ISZ[String](name), None()),
               src = src,
               dst = dst,
               kind = ir.ConnectionKind.Port,
               connectionRefs = connRefs,
               properties = ISZ())
+
+          messages = messages :+ Message(level = Level.Info, posOpt = o.identifier.pos, kind = ConnectionInstantiator.toolName,
+            text = s"Connected: $name")
         }
       }
 
-      return Transformer.PreResult((ctx._1, ctx._2), T, Some(o(connectionInstances = connInsts)))
+      return Transformer.PreResult((ctx._1, ctx._2, ctx._3 ++ messages), T, Some(o(connectionInstances = connInsts)))
     }
   }
 }

@@ -11,8 +11,8 @@ import org.sireum.message.Reporter
   * sysmlv2 models that use our AADL profile (e.g. feature groups are not currently
   * profiled/supported).
   */
-object ConnectionInfo {
-  val toolName: String = "ConnectionInfo"
+object ConnectionInstantiator {
+  val toolName: String = "Connection Instantiator"
 
   def instantiateConnections(model: ir.Aadl, reporter: Reporter): ir.Aadl = {
 
@@ -36,7 +36,9 @@ object ConnectionInfo {
       connectedInPorts = connectedInPorts ++ seg.connectedInPorts
     }
 
-    val transformed = ir.Transformer(Util.AddConnectionInstances()).transformAadl((segments, connectedInPorts), model)
+    val transformed = ir.Transformer(Util.AddConnectionInstances()).transformAadl((segments, connectedInPorts, ISZ()), model)
+
+    reporter.reports(transformed.ctx._3)
 
     return transformed.resultOpt.get
   }

@@ -1867,7 +1867,9 @@ object JSON {
     @pure def printSysmlAstConnectorEnd(o: SysmlAst.ConnectorEnd): ST = {
       return printObject(ISZ(
         ("type", st""""SysmlAst.ConnectorEnd""""),
-        ("reference", printISZ(F, o.reference, printSysmlAstName _))
+        ("reference", printISZ(F, o.reference, printSysmlAstName _)),
+        ("tipeOpt", printOption(F, o.tipeOpt, printType _)),
+        ("resOpt", printResolvedAttr(o.resOpt))
       ))
     }
 
@@ -7525,7 +7527,13 @@ object JSON {
       parser.parseObjectKey("reference")
       val reference = parser.parseISZ(parseSysmlAstName _)
       parser.parseObjectNext()
-      return SysmlAst.ConnectorEnd(reference)
+      parser.parseObjectKey("tipeOpt")
+      val tipeOpt = parser.parseOption(parseType _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("resOpt")
+      val resOpt = parseResolvedAttr()
+      parser.parseObjectNext()
+      return SysmlAst.ConnectorEnd(reference, tipeOpt, resOpt)
     }
 
     def parseSysmlAstBinaryConnectorPart(): SysmlAst.BinaryConnectorPart = {

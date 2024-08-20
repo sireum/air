@@ -52,7 +52,7 @@ class ConnectionInstantiationTests extends org.sireum.test.TestSuite {
 
         val noConnectionInstances =  x.resultOpt.get
 
-        val transModel = ConnectionInfo.instantiateConnections(noConnectionInstances, reporter)
+        val transModel = ConnectionInstantiator.instantiateConnections(noConnectionInstances, reporter)
 
         // build symbol tables for the original and transformed models
         val stOrig = Util.SymbolResolver().process(origModel.components(0), reporter)

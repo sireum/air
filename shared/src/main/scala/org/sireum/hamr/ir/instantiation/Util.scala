@@ -235,8 +235,8 @@ object Util {
               connectionRefs = connRefs,
               properties = ISZ())
 
-          messages = messages :+ Message(level = Level.Info, posOpt = o.identifier.pos, kind = ConnectionInstantiator.toolName,
-            text = s"Connected: $name")
+          //messages = messages :+ Message(level = Level.Info, posOpt = o.identifier.pos, kind = ConnectionInstantiator.toolName,
+          //  text = s"Connected: $name")
         }
       }
 

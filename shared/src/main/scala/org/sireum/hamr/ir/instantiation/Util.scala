@@ -157,7 +157,7 @@ object Util {
           reporter.error(connection.name.pos, toolName, s"Sireum's SysMLv2 profile does not support bidirectional connections")
         }
         if (connection.src(0).direction.get == ir.Direction.In && connection.dst(0).direction.get == ir.Direction.Out) {
-          reporter.error(connection.name.pos, toolName, s"Sireum's SysMLv2 profile does not currently support In to Out Connections")
+          reporter.error(connection.name.pos, toolName, s"Source must be outgoing and destination incoming.")
         }
       }
     }

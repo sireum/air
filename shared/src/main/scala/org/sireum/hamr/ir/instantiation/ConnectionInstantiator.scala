@@ -86,7 +86,7 @@ object ConnectionInstantiator {
             val continuations = buildSegments(parent.get, updatedConSegs, symbolTable, reporter)
             if (continuations.isEmpty) {
               // probably won't happen given that we've restricted ourselves to just systems, processes, and threads
-              halt("will this ever happen?")
+              reporter.error(conn.name.pos, ConnectionInstantiator.toolName, "Invalid connection")
             }
             ret = ret ++ continuations
           }

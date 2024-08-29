@@ -4,6 +4,7 @@ package org.sireum.hamr.ir.instantiation
 import org.sireum._
 import org.sireum.hamr.ir
 import org.sireum.hamr.ir.instantiation.ConnectionInstantiator.{ConnectionSegments, toolName}
+import org.sireum.hamr.ir.util.AadlUtil
 import org.sireum.hamr.ir.{Component, Feature, FeatureCategory, Transformer}
 import org.sireum.message.{Level, Message, Reporter}
 
@@ -120,26 +121,10 @@ object Util {
       }
 
       for(subComponent <- o.subComponents) {
-        o.category match {
-          case ir.ComponentCategory.System =>
-            subComponent.category match {
-              case ir.ComponentCategory.System =>
-              case ir.ComponentCategory.Process =>
-              case ir.ComponentCategory.Processor =>
-              case ir.ComponentCategory.Abstract =>
-              case _ => reporter.error(o.identifier.pos, toolName, s"AADL System's cannot contain ${subComponent.category}")
-            }
-          case ir.ComponentCategory.Process =>
-            subComponent.category match {
-              case ir.ComponentCategory.Thread =>
-              case _ => reporter.error(o.identifier.pos, toolName, s"AADL Processes cannot contain ${subComponent.category}")
-            }
-          case ir.ComponentCategory.Thread =>
-            subComponent.category match {
-              case _ => reporter.error(o.identifier.pos, toolName, s"AADL Threads cannot contain ${subComponent.category}")
-            }
-          case _ =>
+        if (!AadlUtil.isValidSubcomponent(o.category, subComponent.category)) {
+          reporter.error(o.identifier.pos, toolName, s"${subComponent.category} is not a valid subcomponent of ${o.category}")
         }
+
         processH(subComponent, o.identifier.name, reporter)
       }
 

@@ -216,11 +216,14 @@ object Util {
 
         // only include seg if its src feature is never used in
         // a continuation
-        if (!ctx._2.contains(src.feature.get.name)) {
+        if (src.feature.get.name == dst.feature.get.name) {
+          messages = messages :+ Message(level = Level.Error, posOpt = o.identifier.pos, kind = ConnectionInstantiator.toolName,
+            text = "Port cannot be connected to itself")
+        } else if (!ctx._2.contains(src.feature.get.name)) {
 
           val connRefs: ISZ[ir.ConnectionReference] = for (c <- seg.segments) yield
             ir.ConnectionReference(
-              name = c._2,
+              name = c._1.name,
               context = c._2,
               isParent = c._2.name == o.identifier.name
             )

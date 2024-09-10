@@ -157,13 +157,6 @@ object SysmlAst {
                                       val bodyItems: ISZ[DefinitionBodyItem],
                                       @hidden val attr: Attr) extends DefinitionElement {
     @strictpure override def posOpt: Option[Position] = attr.posOpt
-
-    /*
-    @pure def parents: ISZ[Type.Named] = {
-      for (parentName <- subClassifications) yield
-        Type.Named(name = parentName, attr = TypedAttr(posOpt = parentName.posOpt, typedOpt = None()))
-    }
-     */
   }
 
   @datatype class OccurrenceDefinitionPrefix(val isAbstract: B,
@@ -177,13 +170,6 @@ object SysmlAst {
                                        val bodyItems: ISZ[DefinitionBodyItem],
                                        @hidden val attr: Attr) extends DefinitionElement {
     @strictpure override def posOpt: Option[Position] = attr.posOpt
-
-    /*
-    @pure def parents: ISZ[Type.Named] = {
-      for (parentName <- subClassifications) yield
-        Type.Named(name = parentName, attr = TypedAttr(posOpt = parentName.posOpt, typedOpt = None()))
-    }
-     */
   }
 
   @datatype class ConnectionDefinition(val visibility: Visibility.Type,
@@ -194,13 +180,6 @@ object SysmlAst {
                                        val bodyItems: ISZ[DefinitionBodyItem],
                                        @hidden val attr: Attr) extends DefinitionElement {
     @strictpure override def posOpt: Option[Position] = attr.posOpt
-
-    /*
-    @pure def parents: ISZ[Type.Named] = {
-      for (parentName <- subClassifications) yield
-        Type.Named(name = parentName, attr = TypedAttr(posOpt = parentName.posOpt, typedOpt = None()))
-    }
-     */
   }
 
   @datatype class EnumerationDefinition(val visibility: Visibility.Type,
@@ -220,13 +199,6 @@ object SysmlAst {
                                  val bodyItems: ISZ[DefinitionBodyItem],
                                  @hidden val attr: Attr) extends DefinitionElement {
     @strictpure override def posOpt: Option[Position] = attr.posOpt
-
-    /*
-    @pure def parents: ISZ[Type.Named] = {
-      for (parentName <- subClassifications) yield
-        Type.Named(name = parentName, attr = TypedAttr(posOpt = parentName.posOpt, typedOpt = None()))
-    }
-    */
   }
 
   @datatype class PortDefinition(val visibility: Visibility.Type,
@@ -237,13 +209,6 @@ object SysmlAst {
                                  val bodyItems: ISZ[DefinitionBodyItem],
                                  @hidden val attr: Attr) extends DefinitionElement {
     @strictpure override def posOpt: Option[Position] = attr.posOpt
-
-    /*
-    @pure def parents: ISZ[Type.Named] = {
-      for (parentName <- subClassifications) yield
-        Type.Named(name = parentName, attr = TypedAttr(posOpt = parentName.posOpt, typedOpt = None()))
-    }
-     */
   }
 
   @datatype class MetadataDefinition(val isAbstract: B,
@@ -266,17 +231,7 @@ object SysmlAst {
   */
 
   @sig trait UsageElement extends PackageMember {
-    /*
-    def visibility: Visibility.Type
-    def identification: Option[Identification]
-    def specializations: ISZ[FeatureSpecialization]
-    def featureValue: Option[FeatureValue]
-    def definitionBodyItems: ISZ[DefinitionBodyItem]
-    def tipeOpt: Option[Type]
-    def attr: ResolvedAttr
-    */
     def commonUsageElements: CommonUsageElements
-
   }
 
   @datatype class CommonUsageElements (val visibility: Visibility.Type,
@@ -317,33 +272,13 @@ object SysmlAst {
 
   @datatype class AttributeUsage(val prefix: UsagePrefix,
 
-                                 val commonUsageElements: CommonUsageElements
-  /*
-                                 val visibility: Visibility.Type,
-                                 val identification: Option[Identification],
-                                 val specializations: ISZ[FeatureSpecialization],
-                                 val featureValue: Option[FeatureValue],
-                                 val definitionBodyItems: ISZ[DefinitionBodyItem],
-                                 val tipeOpt: Option[Type],
-                                 @hidden val attr: ResolvedAttr
-
-   */
-                                ) extends NonOccurrenceUsageElement {
+                                 val commonUsageElements: CommonUsageElements) extends NonOccurrenceUsageElement {
     @strictpure override def posOpt: Option[Position] = commonUsageElements.attr.posOpt
   }
 
   @datatype class ReferenceUsage(val prefix: RefPrefix,
 
-                                 val commonUsageElements: CommonUsageElements
-  /*
-                                 val visibility: Visibility.Type,
-                                 val identification: Option[Identification],
-                                 val specializations: ISZ[FeatureSpecialization],
-                                 val featureValue: Option[FeatureValue],
-                                 val definitionBodyItems: ISZ[DefinitionBodyItem],
-                                 val tipeOpt: Option[Type],
-                                 @hidden val attr: ResolvedAttr */
-                                 ) extends NonOccurrenceUsageElement {
+                                 val commonUsageElements: CommonUsageElements) extends NonOccurrenceUsageElement {
 
     @strictpure override def posOpt: Option[Position] = commonUsageElements.attr.posOpt
   }
@@ -369,60 +304,32 @@ object SysmlAst {
                                         val isTimeslice: B,
                                         val usageExtensions: ISZ[Name])
 
-  @datatype class ConnectionUsage(val occurrenceUsagePrefix: OccurrenceUsagePrefix,
-                                  val connectorPart: Option[ConnectorPart],
+  @datatype class AllocationUsage(val occurrenceUsagePrefix: OccurrenceUsagePrefix,
+                                  val commonUsageElements: CommonUsageElements,
 
-                                  val commonUsageElements: CommonUsageElements
-  /*
-                                  val visibility: Visibility.Type,
-                                  val identification: Option[Identification],
-                                  val specializations: ISZ[FeatureSpecialization],
-                                  val featureValue: Option[FeatureValue],
-                                  val definitionBodyItems: ISZ[DefinitionBodyItem],
-                                  val tipeOpt: Option[Type],
-                                  @hidden val attr: ResolvedAttr*/) extends StructureUsageElement {
+                                  val connectorPart: Option[ConnectorPart]) extends StructureUsageElement {
+    @strictpure override def posOpt: Option[Position] = commonUsageElements.attr.posOpt
+  }
+
+  @datatype class ConnectionUsage(val occurrenceUsagePrefix: OccurrenceUsagePrefix,
+                                  val commonUsageElements: CommonUsageElements,
+
+                                  val connectorPart: Option[ConnectorPart]) extends StructureUsageElement {
     @strictpure override def posOpt: Option[Position] = commonUsageElements.attr.posOpt
   }
 
   @datatype class ItemUsage(val occurrenceUsagePrefix: OccurrenceUsagePrefix,
-
-                            val commonUsageElements: CommonUsageElements
-  /*
-                            val visibility: Visibility.Type,
-                            val identification: Option[Identification],
-                            val specializations: ISZ[FeatureSpecialization],
-                            val featureValue: Option[FeatureValue],
-                            val definitionBodyItems: ISZ[DefinitionBodyItem],
-                            val tipeOpt: Option[Type],
-                            @hidden val attr: ResolvedAttr*/) extends StructureUsageElement {
+                            val commonUsageElements: CommonUsageElements) extends StructureUsageElement {
     @strictpure override def posOpt: Option[Position] = commonUsageElements.attr.posOpt
   }
 
   @datatype class PartUsage(val occurrenceUsagePrefix: OccurrenceUsagePrefix,
-
-                            val commonUsageElements: CommonUsageElements
-  /*
-                            val visibility: Visibility.Type,
-                            val identification: Option[Identification],
-                            val specializations: ISZ[FeatureSpecialization],
-                            val featureValue: Option[FeatureValue],
-                            val definitionBodyItems: ISZ[DefinitionBodyItem],
-                            val tipeOpt: Option[Type],
-                            @hidden val attr: ResolvedAttr*/) extends StructureUsageElement {
+                            val commonUsageElements: CommonUsageElements) extends StructureUsageElement {
     @strictpure override def posOpt: Option[Position] = commonUsageElements.attr.posOpt
   }
 
   @datatype class PortUsage(val occurrenceUsagePrefix: OccurrenceUsagePrefix,
-
-                            val commonUsageElements: CommonUsageElements
-  /*
-                            val visibility: Visibility.Type,
-                            val identification: Option[Identification],
-                            val specializations: ISZ[FeatureSpecialization],
-                            val featureValue: Option[FeatureValue],
-                            val definitionBodyItems: ISZ[DefinitionBodyItem],
-                            val tipeOpt: Option[Type],
-                            @hidden val attr: ResolvedAttr*/) extends StructureUsageElement {
+                            val commonUsageElements: CommonUsageElements) extends StructureUsageElement {
     @strictpure override def posOpt: Option[Position] = commonUsageElements.attr.posOpt
   }
 
@@ -504,6 +411,10 @@ object ResolvedInfo {
     @strictpure override def qname: ISZ[String] = owner :+ name
   }
 
+
+  @datatype class AllocationUsage(val owner: ISZ[String], val name: String) extends ResolvedInfo {
+    @strictpure override def qname: ISZ[String] = owner :+ name
+  }
 
   @datatype class AttributeUsage(val owner: ISZ[String], val name: String) extends ResolvedInfo {
     @strictpure override def qname: ISZ[String] = owner :+ name

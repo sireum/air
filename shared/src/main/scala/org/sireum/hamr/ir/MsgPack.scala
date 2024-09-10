@@ -458,373 +458,377 @@ object MsgPack {
 
     val SysmlAstOccurrenceUsagePrefix: Z = 107
 
-    val SysmlAstConnectionUsage: Z = 108
+    val SysmlAstAllocationUsage: Z = 108
 
-    val SysmlAstItemUsage: Z = 109
+    val SysmlAstConnectionUsage: Z = 109
 
-    val SysmlAstPartUsage: Z = 110
+    val SysmlAstItemUsage: Z = 110
 
-    val SysmlAstPortUsage: Z = 111
+    val SysmlAstPartUsage: Z = 111
 
-    val SysmlAstComment: Z = 112
+    val SysmlAstPortUsage: Z = 112
 
-    val SysmlAstDocumentation: Z = 113
+    val SysmlAstComment: Z = 113
 
-    val SysmlAstTextualRepresentation: Z = 114
+    val SysmlAstDocumentation: Z = 114
 
-    val SysmlAstGumboAnnotation: Z = 115
+    val SysmlAstTextualRepresentation: Z = 115
 
-    val Attr: Z = 116
+    val SysmlAstGumboAnnotation: Z = 116
 
-    val ResolvedAttr: Z = 117
+    val Attr: Z = 117
 
-    val ResolvedInfoPackage: Z = 118
+    val ResolvedAttr: Z = 118
 
-    val ResolvedInfoEnum: Z = 119
+    val ResolvedInfoPackage: Z = 119
 
-    val ResolvedInfoEnumElement: Z = 120
+    val ResolvedInfoEnum: Z = 120
 
-    val ResolvedInfoAttributeUsage: Z = 121
+    val ResolvedInfoEnumElement: Z = 121
 
-    val ResolvedInfoConnectionUsage: Z = 122
+    val ResolvedInfoAllocationUsage: Z = 122
 
-    val ResolvedInfoItemUsage: Z = 123
+    val ResolvedInfoAttributeUsage: Z = 123
 
-    val ResolvedInfoPartUsage: Z = 124
+    val ResolvedInfoConnectionUsage: Z = 124
 
-    val ResolvedInfoPortUsage: Z = 125
+    val ResolvedInfoItemUsage: Z = 125
 
-    val ResolvedInfoReferenceUsage: Z = 126
+    val ResolvedInfoPartUsage: Z = 126
 
-    val TypeNamed: Z = 127
+    val ResolvedInfoPortUsage: Z = 127
 
-    val TypedAttr: Z = 128
+    val ResolvedInfoReferenceUsage: Z = 128
 
-    val TypedPackage: Z = 129
+    val TypeNamed: Z = 129
 
-    val TypedName: Z = 130
+    val TypedAttr: Z = 130
 
-    val TypedEnum: Z = 131
+    val TypedPackage: Z = 131
 
-    val _langastTopUnitProgram: Z = 132
+    val TypedName: Z = 132
 
-    val _langastTopUnitTruthTableUnit: Z = 133
+    val TypedEnum: Z = 133
 
-    val _langastLoopContract: Z = 134
+    val _langastTopUnitProgram: Z = 134
 
-    val _langastStmtImport: Z = 135
+    val _langastTopUnitTruthTableUnit: Z = 135
 
-    val _langastStmtImportImporter: Z = 136
+    val _langastLoopContract: Z = 136
 
-    val _langastStmtImportMultiSelector: Z = 137
+    val _langastStmtImport: Z = 137
 
-    val _langastStmtImportWildcardSelector: Z = 138
+    val _langastStmtImportImporter: Z = 138
 
-    val _langastStmtImportNamedSelector: Z = 139
+    val _langastStmtImportMultiSelector: Z = 139
 
-    val _langastStmtVar: Z = 140
+    val _langastStmtImportWildcardSelector: Z = 140
 
-    val _langastStmtVarPattern: Z = 141
+    val _langastStmtImportNamedSelector: Z = 141
 
-    val _langastStmtSpecVar: Z = 142
+    val _langastStmtVar: Z = 142
 
-    val _langastStmtRsVal: Z = 143
+    val _langastStmtVarPattern: Z = 143
 
-    val _langastStmtMethod: Z = 144
+    val _langastStmtSpecVar: Z = 144
 
-    val _langastStmtExtMethod: Z = 145
+    val _langastStmtRsVal: Z = 145
 
-    val _langastStmtJustMethod: Z = 146
+    val _langastStmtMethod: Z = 146
 
-    val _langastStmtSpecMethod: Z = 147
+    val _langastStmtExtMethod: Z = 147
 
-    val _langastStmtEnum: Z = 148
+    val _langastStmtJustMethod: Z = 148
 
-    val _langastStmtSubZ: Z = 149
+    val _langastStmtSpecMethod: Z = 149
 
-    val _langastStmtObject: Z = 150
+    val _langastStmtEnum: Z = 150
 
-    val _langastStmtSig: Z = 151
+    val _langastStmtSubZ: Z = 151
 
-    val _langastStmtAdt: Z = 152
+    val _langastStmtObject: Z = 152
 
-    val _langastStmtTypeAlias: Z = 153
+    val _langastStmtSig: Z = 153
 
-    val _langastStmtAssign: Z = 154
+    val _langastStmtAdt: Z = 154
 
-    val _langastStmtBlock: Z = 155
+    val _langastStmtTypeAlias: Z = 155
 
-    val _langastStmtIf: Z = 156
+    val _langastStmtAssign: Z = 156
 
-    val _langastStmtInduct: Z = 157
+    val _langastStmtBlock: Z = 157
 
-    val _langastStmtMatch: Z = 158
+    val _langastStmtIf: Z = 158
 
-    val _langastStmtWhile: Z = 159
+    val _langastStmtInduct: Z = 159
 
-    val _langastStmtDoWhile: Z = 160
+    val _langastStmtMatch: Z = 160
 
-    val _langastStmtFor: Z = 161
+    val _langastStmtWhile: Z = 161
 
-    val _langastStmtReturn: Z = 162
+    val _langastStmtDoWhile: Z = 162
 
-    val _langastStmtExpr: Z = 163
+    val _langastStmtFor: Z = 163
 
-    val _langastStmtFact: Z = 164
+    val _langastStmtReturn: Z = 164
 
-    val _langastStmtInv: Z = 165
+    val _langastStmtExpr: Z = 165
 
-    val _langastStmtTheorem: Z = 166
+    val _langastStmtFact: Z = 166
 
-    val _langastStmtDataRefinement: Z = 167
+    val _langastStmtInv: Z = 167
 
-    val _langastStmtSpecLabel: Z = 168
+    val _langastStmtTheorem: Z = 168
 
-    val _langastStmtSpecBlock: Z = 169
+    val _langastStmtDataRefinement: Z = 169
 
-    val _langastStmtDeduceSequent: Z = 170
+    val _langastStmtSpecLabel: Z = 170
 
-    val _langastStmtDeduceSteps: Z = 171
+    val _langastStmtSpecBlock: Z = 171
 
-    val _langastStmtHavoc: Z = 172
+    val _langastStmtDeduceSequent: Z = 172
 
-    val _langastMethodContractAccesses: Z = 173
+    val _langastStmtDeduceSteps: Z = 173
 
-    val _langastMethodContractClaims: Z = 174
+    val _langastStmtHavoc: Z = 174
 
-    val _langastMethodContractSimple: Z = 175
+    val _langastMethodContractAccesses: Z = 175
 
-    val _langastMethodContractCases: Z = 176
+    val _langastMethodContractClaims: Z = 176
 
-    val _langastMethodContractCase: Z = 177
+    val _langastMethodContractSimple: Z = 177
 
-    val _langastMethodContractInfoFlows: Z = 178
+    val _langastMethodContractCases: Z = 178
 
-    val _langastMethodContractInfoFlowGroup: Z = 179
+    val _langastMethodContractCase: Z = 179
 
-    val _langastMethodContractInfoFlowFlow: Z = 180
+    val _langastMethodContractInfoFlows: Z = 180
 
-    val _langastMethodContractInfoFlowCase: Z = 181
+    val _langastMethodContractInfoFlowGroup: Z = 181
 
-    val _langastSequent: Z = 182
+    val _langastMethodContractInfoFlowFlow: Z = 182
 
-    val _langastProofAst: Z = 183
+    val _langastMethodContractInfoFlowCase: Z = 183
 
-    val _langastProofAstStepIdNum: Z = 184
+    val _langastSequent: Z = 184
 
-    val _langastProofAstStepIdStr: Z = 185
+    val _langastProofAst: Z = 185
 
-    val _langastProofAstStepRegular: Z = 186
+    val _langastProofAstStepIdNum: Z = 186
 
-    val _langastProofAstStepAssume: Z = 187
+    val _langastProofAstStepIdStr: Z = 187
 
-    val _langastProofAstStepAssert: Z = 188
+    val _langastProofAstStepRegular: Z = 188
 
-    val _langastProofAstStepSubProof: Z = 189
+    val _langastProofAstStepAssume: Z = 189
 
-    val _langastProofAstStepLet: Z = 190
+    val _langastProofAstStepAssert: Z = 190
 
-    val _langastProofAstStepLetParam: Z = 191
+    val _langastProofAstStepSubProof: Z = 191
 
-    val _langastProofAstStepJustificationRef: Z = 192
+    val _langastProofAstStepLet: Z = 192
 
-    val _langastProofAstStepJustificationApply: Z = 193
+    val _langastProofAstStepLetParam: Z = 193
 
-    val _langastProofAstStepJustificationApplyNamed: Z = 194
+    val _langastProofAstStepJustificationRef: Z = 194
 
-    val _langastProofAstStepJustificationApplyEta: Z = 195
+    val _langastProofAstStepJustificationApply: Z = 195
 
-    val _langastCase: Z = 196
+    val _langastProofAstStepJustificationApplyNamed: Z = 196
 
-    val _langastEnumGenRangeExpr: Z = 197
+    val _langastProofAstStepJustificationApplyEta: Z = 197
 
-    val _langastEnumGenRangeStep: Z = 198
+    val _langastCase: Z = 198
 
-    val _langastEnumGenFor: Z = 199
+    val _langastEnumGenRangeExpr: Z = 199
 
-    val _langastTypeNamed: Z = 200
+    val _langastEnumGenRangeStep: Z = 200
 
-    val _langastTypeFun: Z = 201
+    val _langastEnumGenFor: Z = 201
 
-    val _langastTypeTuple: Z = 202
+    val _langastTypeNamed: Z = 202
 
-    val _langastPatternLiteral: Z = 203
+    val _langastTypeFun: Z = 203
 
-    val _langastPatternLitInterpolate: Z = 204
+    val _langastTypeTuple: Z = 204
 
-    val _langastPatternRef: Z = 205
+    val _langastPatternLiteral: Z = 205
 
-    val _langastPatternVarBinding: Z = 206
+    val _langastPatternLitInterpolate: Z = 206
 
-    val _langastPatternWildcard: Z = 207
+    val _langastPatternRef: Z = 207
 
-    val _langastPatternSeqWildcard: Z = 208
+    val _langastPatternVarBinding: Z = 208
 
-    val _langastPatternStructure: Z = 209
+    val _langastPatternWildcard: Z = 209
 
-    val _langastExpLitB: Z = 210
+    val _langastPatternSeqWildcard: Z = 210
 
-    val _langastExpLitC: Z = 211
+    val _langastPatternStructure: Z = 211
 
-    val _langastExpLitZ: Z = 212
+    val _langastExpLitB: Z = 212
 
-    val _langastExpLitF32: Z = 213
+    val _langastExpLitC: Z = 213
 
-    val _langastExpLitF64: Z = 214
+    val _langastExpLitZ: Z = 214
 
-    val _langastExpLitR: Z = 215
+    val _langastExpLitF32: Z = 215
 
-    val _langastExpLitString: Z = 216
+    val _langastExpLitF64: Z = 216
 
-    val _langastExpStringInterpolate: Z = 217
+    val _langastExpLitR: Z = 217
 
-    val _langastExpThis: Z = 218
+    val _langastExpLitString: Z = 218
 
-    val _langastExpSuper: Z = 219
+    val _langastExpStringInterpolate: Z = 219
 
-    val _langastExpUnary: Z = 220
+    val _langastExpThis: Z = 220
 
-    val _langastExpBinary: Z = 221
+    val _langastExpSuper: Z = 221
 
-    val _langastExpIdent: Z = 222
+    val _langastExpUnary: Z = 222
 
-    val _langastExpEta: Z = 223
+    val _langastExpBinary: Z = 223
 
-    val _langastExpTuple: Z = 224
+    val _langastExpIdent: Z = 224
 
-    val _langastExpSelect: Z = 225
+    val _langastExpEta: Z = 225
 
-    val _langastExpInvoke: Z = 226
+    val _langastExpTuple: Z = 226
 
-    val _langastExpInvokeNamed: Z = 227
+    val _langastExpSelect: Z = 227
 
-    val _langastExpIf: Z = 228
+    val _langastExpInvoke: Z = 228
 
-    val _langastExpTypeCond: Z = 229
+    val _langastExpInvokeNamed: Z = 229
 
-    val _langastExpSym: Z = 230
+    val _langastExpIf: Z = 230
 
-    val _langastExpFunParam: Z = 231
+    val _langastExpTypeCond: Z = 231
 
-    val _langastExpFun: Z = 232
+    val _langastExpSym: Z = 232
 
-    val _langastExpForYield: Z = 233
+    val _langastExpFunParam: Z = 233
 
-    val _langastExpQuantType: Z = 234
+    val _langastExpFun: Z = 234
 
-    val _langastExpQuantRange: Z = 235
+    val _langastExpForYield: Z = 235
 
-    val _langastExpQuantEach: Z = 236
+    val _langastExpQuantType: Z = 236
 
-    val _langastExpInput: Z = 237
+    val _langastExpQuantRange: Z = 237
 
-    val _langastExpOld: Z = 238
+    val _langastExpQuantEach: Z = 238
 
-    val _langastExpRS: Z = 239
+    val _langastExpInput: Z = 239
 
-    val _langastExpAt: Z = 240
+    val _langastExpOld: Z = 240
 
-    val _langastExpLoopIndex: Z = 241
+    val _langastExpRS: Z = 241
 
-    val _langastExpStateSeq: Z = 242
+    val _langastExpAt: Z = 242
 
-    val _langastExpStateSeqFragment: Z = 243
+    val _langastExpLoopIndex: Z = 243
 
-    val _langastExpResult: Z = 244
+    val _langastExpStateSeq: Z = 244
 
-    val _langastExpStrictPureBlock: Z = 245
+    val _langastExpStateSeqFragment: Z = 245
 
-    val _langastExpLabeled: Z = 246
+    val _langastExpResult: Z = 246
 
-    val _langastExpAssumeAgree: Z = 247
+    val _langastExpStrictPureBlock: Z = 247
 
-    val _langastExpAssertAgree: Z = 248
+    val _langastExpLabeled: Z = 248
 
-    val _langastExpInfoFlowInvariant: Z = 249
+    val _langastExpAssumeAgree: Z = 249
 
-    val _langastNamedArg: Z = 250
+    val _langastExpAssertAgree: Z = 250
 
-    val _langastId: Z = 251
+    val _langastExpInfoFlowInvariant: Z = 251
 
-    val _langastName: Z = 252
+    val _langastNamedArg: Z = 252
 
-    val _langastBody: Z = 253
+    val _langastId: Z = 253
 
-    val _langastAdtParam: Z = 254
+    val _langastName: Z = 254
 
-    val _langastMethodSig: Z = 255
+    val _langastBody: Z = 255
 
-    val _langastParam: Z = 256
+    val _langastAdtParam: Z = 256
 
-    val _langastTypeParam: Z = 257
+    val _langastMethodSig: Z = 257
 
-    val _langastAttr: Z = 258
+    val _langastParam: Z = 258
 
-    val _langastTypedAttr: Z = 259
+    val _langastTypeParam: Z = 259
 
-    val _langastResolvedAttr: Z = 260
+    val _langastAttr: Z = 260
 
-    val _langastResolvedInfoBuiltIn: Z = 261
+    val _langastTypedAttr: Z = 261
 
-    val _langastResolvedInfoPackage: Z = 262
+    val _langastResolvedAttr: Z = 262
 
-    val _langastResolvedInfoEnum: Z = 263
+    val _langastResolvedInfoBuiltIn: Z = 263
 
-    val _langastResolvedInfoEnumElement: Z = 264
+    val _langastResolvedInfoPackage: Z = 264
 
-    val _langastResolvedInfoObject: Z = 265
+    val _langastResolvedInfoEnum: Z = 265
 
-    val _langastResolvedInfoVar: Z = 266
+    val _langastResolvedInfoEnumElement: Z = 266
 
-    val _langastResolvedInfoMethod: Z = 267
+    val _langastResolvedInfoObject: Z = 267
 
-    val _langastResolvedInfoMethods: Z = 268
+    val _langastResolvedInfoVar: Z = 268
 
-    val _langastResolvedInfoTuple: Z = 269
+    val _langastResolvedInfoMethod: Z = 269
 
-    val _langastResolvedInfoLocalVar: Z = 270
+    val _langastResolvedInfoMethods: Z = 270
 
-    val _langastResolvedInfoFact: Z = 271
+    val _langastResolvedInfoTuple: Z = 271
 
-    val _langastResolvedInfoTheorem: Z = 272
+    val _langastResolvedInfoLocalVar: Z = 272
 
-    val _langastResolvedInfoInv: Z = 273
+    val _langastResolvedInfoFact: Z = 273
 
-    val _langastTruthTableRow: Z = 274
+    val _langastResolvedInfoTheorem: Z = 274
 
-    val _langastTruthTableAssignment: Z = 275
+    val _langastResolvedInfoInv: Z = 275
 
-    val _langastTruthTableConclusionValidity: Z = 276
+    val _langastTruthTableRow: Z = 276
 
-    val _langastTruthTableConclusionTautology: Z = 277
+    val _langastTruthTableAssignment: Z = 277
 
-    val _langastTruthTableConclusionContradictory: Z = 278
+    val _langastTruthTableConclusionValidity: Z = 278
 
-    val _langastTruthTableConclusionContingent: Z = 279
+    val _langastTruthTableConclusionTautology: Z = 279
 
-    val _langastTypedName: Z = 280
+    val _langastTruthTableConclusionContradictory: Z = 280
 
-    val _langastTypedTuple: Z = 281
+    val _langastTruthTableConclusionContingent: Z = 281
 
-    val _langastTypedFun: Z = 282
+    val _langastTypedName: Z = 282
 
-    val _langastTypedTypeVar: Z = 283
+    val _langastTypedTuple: Z = 283
 
-    val _langastTypedPackage: Z = 284
+    val _langastTypedFun: Z = 284
 
-    val _langastTypedObject: Z = 285
+    val _langastTypedTypeVar: Z = 285
 
-    val _langastTypedEnum: Z = 286
+    val _langastTypedPackage: Z = 286
 
-    val _langastTypedMethod: Z = 287
+    val _langastTypedObject: Z = 287
 
-    val _langastTypedMethods: Z = 288
+    val _langastTypedEnum: Z = 288
 
-    val _langastTypedFact: Z = 289
+    val _langastTypedMethod: Z = 289
 
-    val _langastTypedTheorem: Z = 290
+    val _langastTypedMethods: Z = 290
 
-    val _langastTypedInv: Z = 291
+    val _langastTypedFact: Z = 291
+
+    val _langastTypedTheorem: Z = 292
+
+    val _langastTypedInv: Z = 293
 
   }
 
@@ -1951,6 +1955,7 @@ object MsgPack {
         case o: SysmlAst.MetadataDefinition => writeSysmlAstMetadataDefinition(o)
         case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
         case o: SysmlAst.ReferenceUsage => writeSysmlAstReferenceUsage(o)
+        case o: SysmlAst.AllocationUsage => writeSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
@@ -1976,6 +1981,7 @@ object MsgPack {
         case o: SysmlAst.MetadataDefinition => writeSysmlAstMetadataDefinition(o)
         case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
         case o: SysmlAst.ReferenceUsage => writeSysmlAstReferenceUsage(o)
+        case o: SysmlAst.AllocationUsage => writeSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
@@ -2001,6 +2007,7 @@ object MsgPack {
         case o: SysmlAst.MetadataDefinition => writeSysmlAstMetadataDefinition(o)
         case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
         case o: SysmlAst.ReferenceUsage => writeSysmlAstReferenceUsage(o)
+        case o: SysmlAst.AllocationUsage => writeSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
@@ -2075,6 +2082,7 @@ object MsgPack {
         case o: SysmlAst.MetadataDefinition => writeSysmlAstMetadataDefinition(o)
         case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
         case o: SysmlAst.ReferenceUsage => writeSysmlAstReferenceUsage(o)
+        case o: SysmlAst.AllocationUsage => writeSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
@@ -2273,6 +2281,7 @@ object MsgPack {
       o match {
         case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
         case o: SysmlAst.ReferenceUsage => writeSysmlAstReferenceUsage(o)
+        case o: SysmlAst.AllocationUsage => writeSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
@@ -2336,6 +2345,7 @@ object MsgPack {
 
     def writeSysmlAstOccurrenceUsageMember(o: SysmlAst.OccurrenceUsageMember): Unit = {
       o match {
+        case o: SysmlAst.AllocationUsage => writeSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
@@ -2345,6 +2355,7 @@ object MsgPack {
 
     def writeSysmlAstOccurrenceUsageElement(o: SysmlAst.OccurrenceUsageElement): Unit = {
       o match {
+        case o: SysmlAst.AllocationUsage => writeSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
@@ -2354,6 +2365,7 @@ object MsgPack {
 
     def writeSysmlAstStructureUsageElement(o: SysmlAst.StructureUsageElement): Unit = {
       o match {
+        case o: SysmlAst.AllocationUsage => writeSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
@@ -2371,11 +2383,18 @@ object MsgPack {
       writer.writeISZ(o.usageExtensions, writeSysmlAstName _)
     }
 
+    def writeSysmlAstAllocationUsage(o: SysmlAst.AllocationUsage): Unit = {
+      writer.writeZ(Constants.SysmlAstAllocationUsage)
+      writeSysmlAstOccurrenceUsagePrefix(o.occurrenceUsagePrefix)
+      writeSysmlAstCommonUsageElements(o.commonUsageElements)
+      writer.writeOption(o.connectorPart, writeSysmlAstConnectorPart _)
+    }
+
     def writeSysmlAstConnectionUsage(o: SysmlAst.ConnectionUsage): Unit = {
       writer.writeZ(Constants.SysmlAstConnectionUsage)
       writeSysmlAstOccurrenceUsagePrefix(o.occurrenceUsagePrefix)
-      writer.writeOption(o.connectorPart, writeSysmlAstConnectorPart _)
       writeSysmlAstCommonUsageElements(o.commonUsageElements)
+      writer.writeOption(o.connectorPart, writeSysmlAstConnectorPart _)
     }
 
     def writeSysmlAstItemUsage(o: SysmlAst.ItemUsage): Unit = {
@@ -2455,6 +2474,7 @@ object MsgPack {
         case o: ResolvedInfo.Package => writeResolvedInfoPackage(o)
         case o: ResolvedInfo.Enum => writeResolvedInfoEnum(o)
         case o: ResolvedInfo.EnumElement => writeResolvedInfoEnumElement(o)
+        case o: ResolvedInfo.AllocationUsage => writeResolvedInfoAllocationUsage(o)
         case o: ResolvedInfo.AttributeUsage => writeResolvedInfoAttributeUsage(o)
         case o: ResolvedInfo.ConnectionUsage => writeResolvedInfoConnectionUsage(o)
         case o: ResolvedInfo.ItemUsage => writeResolvedInfoItemUsage(o)
@@ -2479,6 +2499,12 @@ object MsgPack {
       writer.writeISZ(o.owner, writer.writeString _)
       writer.writeString(o.name)
       writer.writeZ(o.ordinal)
+    }
+
+    def writeResolvedInfoAllocationUsage(o: ResolvedInfo.AllocationUsage): Unit = {
+      writer.writeZ(Constants.ResolvedInfoAllocationUsage)
+      writer.writeISZ(o.owner, writer.writeString _)
+      writer.writeString(o.name)
     }
 
     def writeResolvedInfoAttributeUsage(o: ResolvedInfo.AttributeUsage): Unit = {
@@ -6204,6 +6230,7 @@ object MsgPack {
         case Constants.SysmlAstMetadataDefinition => val r = readSysmlAstMetadataDefinitionT(T); return r
         case Constants.SysmlAstAttributeUsage => val r = readSysmlAstAttributeUsageT(T); return r
         case Constants.SysmlAstReferenceUsage => val r = readSysmlAstReferenceUsageT(T); return r
+        case Constants.SysmlAstAllocationUsage => val r = readSysmlAstAllocationUsageT(T); return r
         case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
         case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
         case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
@@ -6235,6 +6262,7 @@ object MsgPack {
         case Constants.SysmlAstMetadataDefinition => val r = readSysmlAstMetadataDefinitionT(T); return r
         case Constants.SysmlAstAttributeUsage => val r = readSysmlAstAttributeUsageT(T); return r
         case Constants.SysmlAstReferenceUsage => val r = readSysmlAstReferenceUsageT(T); return r
+        case Constants.SysmlAstAllocationUsage => val r = readSysmlAstAllocationUsageT(T); return r
         case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
         case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
         case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
@@ -6266,6 +6294,7 @@ object MsgPack {
         case Constants.SysmlAstMetadataDefinition => val r = readSysmlAstMetadataDefinitionT(T); return r
         case Constants.SysmlAstAttributeUsage => val r = readSysmlAstAttributeUsageT(T); return r
         case Constants.SysmlAstReferenceUsage => val r = readSysmlAstReferenceUsageT(T); return r
+        case Constants.SysmlAstAllocationUsage => val r = readSysmlAstAllocationUsageT(T); return r
         case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
         case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
         case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
@@ -6388,6 +6417,7 @@ object MsgPack {
         case Constants.SysmlAstMetadataDefinition => val r = readSysmlAstMetadataDefinitionT(T); return r
         case Constants.SysmlAstAttributeUsage => val r = readSysmlAstAttributeUsageT(T); return r
         case Constants.SysmlAstReferenceUsage => val r = readSysmlAstReferenceUsageT(T); return r
+        case Constants.SysmlAstAllocationUsage => val r = readSysmlAstAllocationUsageT(T); return r
         case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
         case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
         case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
@@ -6752,6 +6782,7 @@ object MsgPack {
       t match {
         case Constants.SysmlAstAttributeUsage => val r = readSysmlAstAttributeUsageT(T); return r
         case Constants.SysmlAstReferenceUsage => val r = readSysmlAstReferenceUsageT(T); return r
+        case Constants.SysmlAstAllocationUsage => val r = readSysmlAstAllocationUsageT(T); return r
         case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
         case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
         case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
@@ -6873,6 +6904,7 @@ object MsgPack {
       val i = reader.curr
       val t = reader.readZ()
       t match {
+        case Constants.SysmlAstAllocationUsage => val r = readSysmlAstAllocationUsageT(T); return r
         case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
         case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
         case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
@@ -6888,6 +6920,7 @@ object MsgPack {
       val i = reader.curr
       val t = reader.readZ()
       t match {
+        case Constants.SysmlAstAllocationUsage => val r = readSysmlAstAllocationUsageT(T); return r
         case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
         case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
         case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
@@ -6903,6 +6936,7 @@ object MsgPack {
       val i = reader.curr
       val t = reader.readZ()
       t match {
+        case Constants.SysmlAstAllocationUsage => val r = readSysmlAstAllocationUsageT(T); return r
         case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
         case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
         case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
@@ -6932,6 +6966,21 @@ object MsgPack {
       return SysmlAst.OccurrenceUsagePrefix(refPrefix, isRef, isIndividual, isSnapshot, isTimeslice, usageExtensions)
     }
 
+    def readSysmlAstAllocationUsage(): SysmlAst.AllocationUsage = {
+      val r = readSysmlAstAllocationUsageT(F)
+      return r
+    }
+
+    def readSysmlAstAllocationUsageT(typeParsed: B): SysmlAst.AllocationUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstAllocationUsage)
+      }
+      val occurrenceUsagePrefix = readSysmlAstOccurrenceUsagePrefix()
+      val commonUsageElements = readSysmlAstCommonUsageElements()
+      val connectorPart = reader.readOption(readSysmlAstConnectorPart _)
+      return SysmlAst.AllocationUsage(occurrenceUsagePrefix, commonUsageElements, connectorPart)
+    }
+
     def readSysmlAstConnectionUsage(): SysmlAst.ConnectionUsage = {
       val r = readSysmlAstConnectionUsageT(F)
       return r
@@ -6942,9 +6991,9 @@ object MsgPack {
         reader.expectZ(Constants.SysmlAstConnectionUsage)
       }
       val occurrenceUsagePrefix = readSysmlAstOccurrenceUsagePrefix()
-      val connectorPart = reader.readOption(readSysmlAstConnectorPart _)
       val commonUsageElements = readSysmlAstCommonUsageElements()
-      return SysmlAst.ConnectionUsage(occurrenceUsagePrefix, connectorPart, commonUsageElements)
+      val connectorPart = reader.readOption(readSysmlAstConnectorPart _)
+      return SysmlAst.ConnectionUsage(occurrenceUsagePrefix, commonUsageElements, connectorPart)
     }
 
     def readSysmlAstItemUsage(): SysmlAst.ItemUsage = {
@@ -7104,6 +7153,7 @@ object MsgPack {
         case Constants.ResolvedInfoPackage => val r = readResolvedInfoPackageT(T); return r
         case Constants.ResolvedInfoEnum => val r = readResolvedInfoEnumT(T); return r
         case Constants.ResolvedInfoEnumElement => val r = readResolvedInfoEnumElementT(T); return r
+        case Constants.ResolvedInfoAllocationUsage => val r = readResolvedInfoAllocationUsageT(T); return r
         case Constants.ResolvedInfoAttributeUsage => val r = readResolvedInfoAttributeUsageT(T); return r
         case Constants.ResolvedInfoConnectionUsage => val r = readResolvedInfoConnectionUsageT(T); return r
         case Constants.ResolvedInfoItemUsage => val r = readResolvedInfoItemUsageT(T); return r
@@ -7156,6 +7206,20 @@ object MsgPack {
       val name = reader.readString()
       val ordinal = reader.readZ()
       return ResolvedInfo.EnumElement(owner, name, ordinal)
+    }
+
+    def readResolvedInfoAllocationUsage(): ResolvedInfo.AllocationUsage = {
+      val r = readResolvedInfoAllocationUsageT(F)
+      return r
+    }
+
+    def readResolvedInfoAllocationUsageT(typeParsed: B): ResolvedInfo.AllocationUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.ResolvedInfoAllocationUsage)
+      }
+      val owner = reader.readISZ(reader.readString _)
+      val name = reader.readString()
+      return ResolvedInfo.AllocationUsage(owner, name)
     }
 
     def readResolvedInfoAttributeUsage(): ResolvedInfo.AttributeUsage = {
@@ -12910,6 +12974,21 @@ object MsgPack {
     return r
   }
 
+  def fromSysmlAstAllocationUsage(o: SysmlAst.AllocationUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstAllocationUsage(o)
+    return w.result
+  }
+
+  def toSysmlAstAllocationUsage(data: ISZ[U8]): Either[SysmlAst.AllocationUsage, MessagePack.ErrorMsg] = {
+    def fSysmlAstAllocationUsage(reader: Reader): SysmlAst.AllocationUsage = {
+      val r = reader.readSysmlAstAllocationUsage()
+      return r
+    }
+    val r = to(data, fSysmlAstAllocationUsage _)
+    return r
+  }
+
   def fromSysmlAstConnectionUsage(o: SysmlAst.ConnectionUsage, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
     w.writeSysmlAstConnectionUsage(o)
@@ -13132,6 +13211,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fResolvedInfoEnumElement _)
+    return r
+  }
+
+  def fromResolvedInfoAllocationUsage(o: ResolvedInfo.AllocationUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeResolvedInfoAllocationUsage(o)
+    return w.result
+  }
+
+  def toResolvedInfoAllocationUsage(data: ISZ[U8]): Either[ResolvedInfo.AllocationUsage, MessagePack.ErrorMsg] = {
+    def fResolvedInfoAllocationUsage(reader: Reader): ResolvedInfo.AllocationUsage = {
+      val r = reader.readResolvedInfoAllocationUsage()
+      return r
+    }
+    val r = to(data, fResolvedInfoAllocationUsage _)
     return r
   }
 

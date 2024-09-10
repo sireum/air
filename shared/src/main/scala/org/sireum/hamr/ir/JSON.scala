@@ -1696,6 +1696,7 @@ object JSON {
         case o: SysmlAst.MetadataDefinition => return printSysmlAstMetadataDefinition(o)
         case o: SysmlAst.AttributeUsage => return printSysmlAstAttributeUsage(o)
         case o: SysmlAst.ReferenceUsage => return printSysmlAstReferenceUsage(o)
+        case o: SysmlAst.AllocationUsage => return printSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
@@ -1721,6 +1722,7 @@ object JSON {
         case o: SysmlAst.MetadataDefinition => return printSysmlAstMetadataDefinition(o)
         case o: SysmlAst.AttributeUsage => return printSysmlAstAttributeUsage(o)
         case o: SysmlAst.ReferenceUsage => return printSysmlAstReferenceUsage(o)
+        case o: SysmlAst.AllocationUsage => return printSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
@@ -1746,6 +1748,7 @@ object JSON {
         case o: SysmlAst.MetadataDefinition => return printSysmlAstMetadataDefinition(o)
         case o: SysmlAst.AttributeUsage => return printSysmlAstAttributeUsage(o)
         case o: SysmlAst.ReferenceUsage => return printSysmlAstReferenceUsage(o)
+        case o: SysmlAst.AllocationUsage => return printSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
@@ -1846,6 +1849,7 @@ object JSON {
         case o: SysmlAst.MetadataDefinition => return printSysmlAstMetadataDefinition(o)
         case o: SysmlAst.AttributeUsage => return printSysmlAstAttributeUsage(o)
         case o: SysmlAst.ReferenceUsage => return printSysmlAstReferenceUsage(o)
+        case o: SysmlAst.AllocationUsage => return printSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
@@ -2078,6 +2082,7 @@ object JSON {
       o match {
         case o: SysmlAst.AttributeUsage => return printSysmlAstAttributeUsage(o)
         case o: SysmlAst.ReferenceUsage => return printSysmlAstReferenceUsage(o)
+        case o: SysmlAst.AllocationUsage => return printSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
@@ -2151,6 +2156,7 @@ object JSON {
 
     @pure def printSysmlAstOccurrenceUsageMember(o: SysmlAst.OccurrenceUsageMember): ST = {
       o match {
+        case o: SysmlAst.AllocationUsage => return printSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
@@ -2160,6 +2166,7 @@ object JSON {
 
     @pure def printSysmlAstOccurrenceUsageElement(o: SysmlAst.OccurrenceUsageElement): ST = {
       o match {
+        case o: SysmlAst.AllocationUsage => return printSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
@@ -2169,6 +2176,7 @@ object JSON {
 
     @pure def printSysmlAstStructureUsageElement(o: SysmlAst.StructureUsageElement): ST = {
       o match {
+        case o: SysmlAst.AllocationUsage => return printSysmlAstAllocationUsage(o)
         case o: SysmlAst.ConnectionUsage => return printSysmlAstConnectionUsage(o)
         case o: SysmlAst.ItemUsage => return printSysmlAstItemUsage(o)
         case o: SysmlAst.PartUsage => return printSysmlAstPartUsage(o)
@@ -2188,12 +2196,21 @@ object JSON {
       ))
     }
 
+    @pure def printSysmlAstAllocationUsage(o: SysmlAst.AllocationUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.AllocationUsage""""),
+        ("occurrenceUsagePrefix", printSysmlAstOccurrenceUsagePrefix(o.occurrenceUsagePrefix)),
+        ("commonUsageElements", printSysmlAstCommonUsageElements(o.commonUsageElements)),
+        ("connectorPart", printOption(F, o.connectorPart, printSysmlAstConnectorPart _))
+      ))
+    }
+
     @pure def printSysmlAstConnectionUsage(o: SysmlAst.ConnectionUsage): ST = {
       return printObject(ISZ(
         ("type", st""""SysmlAst.ConnectionUsage""""),
         ("occurrenceUsagePrefix", printSysmlAstOccurrenceUsagePrefix(o.occurrenceUsagePrefix)),
-        ("connectorPart", printOption(F, o.connectorPart, printSysmlAstConnectorPart _)),
-        ("commonUsageElements", printSysmlAstCommonUsageElements(o.commonUsageElements))
+        ("commonUsageElements", printSysmlAstCommonUsageElements(o.commonUsageElements)),
+        ("connectorPart", printOption(F, o.connectorPart, printSysmlAstConnectorPart _))
       ))
     }
 
@@ -2292,6 +2309,7 @@ object JSON {
         case o: ResolvedInfo.Package => return printResolvedInfoPackage(o)
         case o: ResolvedInfo.Enum => return printResolvedInfoEnum(o)
         case o: ResolvedInfo.EnumElement => return printResolvedInfoEnumElement(o)
+        case o: ResolvedInfo.AllocationUsage => return printResolvedInfoAllocationUsage(o)
         case o: ResolvedInfo.AttributeUsage => return printResolvedInfoAttributeUsage(o)
         case o: ResolvedInfo.ConnectionUsage => return printResolvedInfoConnectionUsage(o)
         case o: ResolvedInfo.ItemUsage => return printResolvedInfoItemUsage(o)
@@ -2321,6 +2339,14 @@ object JSON {
         ("owner", printISZ(T, o.owner, printString _)),
         ("name", printString(o.name)),
         ("ordinal", printZ(o.ordinal))
+      ))
+    }
+
+    @pure def printResolvedInfoAllocationUsage(o: ResolvedInfo.AllocationUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""ResolvedInfo.AllocationUsage""""),
+        ("owner", printISZ(T, o.owner, printString _)),
+        ("name", printString(o.name))
       ))
     }
 
@@ -7229,7 +7255,7 @@ object JSON {
     }
 
     def parseSysmlAstAttrNode(): SysmlAst.AttrNode = {
-      val t = parser.parseObjectTypes(ISZ("SysmlAst.Import", "SysmlAst.AliasMember", "SysmlAst.Identification", "SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.Import", "SysmlAst.AliasMember", "SysmlAst.Identification", "SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.AllocationUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
       t.native match {
         case "SysmlAst.Import" => val r = parseSysmlAstImportT(T); return r
         case "SysmlAst.AliasMember" => val r = parseSysmlAstAliasMemberT(T); return r
@@ -7244,6 +7270,7 @@ object JSON {
         case "SysmlAst.MetadataDefinition" => val r = parseSysmlAstMetadataDefinitionT(T); return r
         case "SysmlAst.AttributeUsage" => val r = parseSysmlAstAttributeUsageT(T); return r
         case "SysmlAst.ReferenceUsage" => val r = parseSysmlAstReferenceUsageT(T); return r
+        case "SysmlAst.AllocationUsage" => val r = parseSysmlAstAllocationUsageT(T); return r
         case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
         case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
         case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
@@ -7257,7 +7284,7 @@ object JSON {
     }
 
     def parseSysmlAstPackageBodyElement(): SysmlAst.PackageBodyElement = {
-      val t = parser.parseObjectTypes(ISZ("SysmlAst.Import", "SysmlAst.AliasMember", "SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.Import", "SysmlAst.AliasMember", "SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.AllocationUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
       t.native match {
         case "SysmlAst.Import" => val r = parseSysmlAstImportT(T); return r
         case "SysmlAst.AliasMember" => val r = parseSysmlAstAliasMemberT(T); return r
@@ -7271,6 +7298,7 @@ object JSON {
         case "SysmlAst.MetadataDefinition" => val r = parseSysmlAstMetadataDefinitionT(T); return r
         case "SysmlAst.AttributeUsage" => val r = parseSysmlAstAttributeUsageT(T); return r
         case "SysmlAst.ReferenceUsage" => val r = parseSysmlAstReferenceUsageT(T); return r
+        case "SysmlAst.AllocationUsage" => val r = parseSysmlAstAllocationUsageT(T); return r
         case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
         case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
         case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
@@ -7284,7 +7312,7 @@ object JSON {
     }
 
     def parseSysmlAstDefinitionBodyItem(): SysmlAst.DefinitionBodyItem = {
-      val t = parser.parseObjectTypes(ISZ("SysmlAst.Import", "SysmlAst.AliasMember", "SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.Import", "SysmlAst.AliasMember", "SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.AllocationUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
       t.native match {
         case "SysmlAst.Import" => val r = parseSysmlAstImportT(T); return r
         case "SysmlAst.AliasMember" => val r = parseSysmlAstAliasMemberT(T); return r
@@ -7298,6 +7326,7 @@ object JSON {
         case "SysmlAst.MetadataDefinition" => val r = parseSysmlAstMetadataDefinitionT(T); return r
         case "SysmlAst.AttributeUsage" => val r = parseSysmlAstAttributeUsageT(T); return r
         case "SysmlAst.ReferenceUsage" => val r = parseSysmlAstReferenceUsageT(T); return r
+        case "SysmlAst.AllocationUsage" => val r = parseSysmlAstAllocationUsageT(T); return r
         case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
         case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
         case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
@@ -7482,7 +7511,7 @@ object JSON {
     }
 
     def parseSysmlAstPackageMember(): SysmlAst.PackageMember = {
-      val t = parser.parseObjectTypes(ISZ("SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.Package", "SysmlAst.AttributeDefinition", "SysmlAst.AllocationDefinition", "SysmlAst.ConnectionDefinition", "SysmlAst.EnumerationDefinition", "SysmlAst.PartDefinition", "SysmlAst.PortDefinition", "SysmlAst.MetadataDefinition", "SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.AllocationUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage", "SysmlAst.Comment", "SysmlAst.Documentation", "SysmlAst.TextualRepresentation", "SysmlAst.GumboAnnotation"))
       t.native match {
         case "SysmlAst.Package" => val r = parseSysmlAstPackageT(T); return r
         case "SysmlAst.AttributeDefinition" => val r = parseSysmlAstAttributeDefinitionT(T); return r
@@ -7494,6 +7523,7 @@ object JSON {
         case "SysmlAst.MetadataDefinition" => val r = parseSysmlAstMetadataDefinitionT(T); return r
         case "SysmlAst.AttributeUsage" => val r = parseSysmlAstAttributeUsageT(T); return r
         case "SysmlAst.ReferenceUsage" => val r = parseSysmlAstReferenceUsageT(T); return r
+        case "SysmlAst.AllocationUsage" => val r = parseSysmlAstAllocationUsageT(T); return r
         case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
         case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
         case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
@@ -7964,10 +7994,11 @@ object JSON {
     }
 
     def parseSysmlAstUsageElement(): SysmlAst.UsageElement = {
-      val t = parser.parseObjectTypes(ISZ("SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage"))
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.AttributeUsage", "SysmlAst.ReferenceUsage", "SysmlAst.AllocationUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage"))
       t.native match {
         case "SysmlAst.AttributeUsage" => val r = parseSysmlAstAttributeUsageT(T); return r
         case "SysmlAst.ReferenceUsage" => val r = parseSysmlAstReferenceUsageT(T); return r
+        case "SysmlAst.AllocationUsage" => val r = parseSysmlAstAllocationUsageT(T); return r
         case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
         case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
         case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
@@ -8115,8 +8146,9 @@ object JSON {
     }
 
     def parseSysmlAstOccurrenceUsageMember(): SysmlAst.OccurrenceUsageMember = {
-      val t = parser.parseObjectTypes(ISZ("SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage"))
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.AllocationUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage"))
       t.native match {
+        case "SysmlAst.AllocationUsage" => val r = parseSysmlAstAllocationUsageT(T); return r
         case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
         case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
         case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
@@ -8126,8 +8158,9 @@ object JSON {
     }
 
     def parseSysmlAstOccurrenceUsageElement(): SysmlAst.OccurrenceUsageElement = {
-      val t = parser.parseObjectTypes(ISZ("SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage"))
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.AllocationUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage"))
       t.native match {
+        case "SysmlAst.AllocationUsage" => val r = parseSysmlAstAllocationUsageT(T); return r
         case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
         case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
         case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
@@ -8137,8 +8170,9 @@ object JSON {
     }
 
     def parseSysmlAstStructureUsageElement(): SysmlAst.StructureUsageElement = {
-      val t = parser.parseObjectTypes(ISZ("SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage"))
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.AllocationUsage", "SysmlAst.ConnectionUsage", "SysmlAst.ItemUsage", "SysmlAst.PartUsage", "SysmlAst.PortUsage"))
       t.native match {
+        case "SysmlAst.AllocationUsage" => val r = parseSysmlAstAllocationUsageT(T); return r
         case "SysmlAst.ConnectionUsage" => val r = parseSysmlAstConnectionUsageT(T); return r
         case "SysmlAst.ItemUsage" => val r = parseSysmlAstItemUsageT(T); return r
         case "SysmlAst.PartUsage" => val r = parseSysmlAstPartUsageT(T); return r
@@ -8177,6 +8211,27 @@ object JSON {
       return SysmlAst.OccurrenceUsagePrefix(refPrefix, isRef, isIndividual, isSnapshot, isTimeslice, usageExtensions)
     }
 
+    def parseSysmlAstAllocationUsage(): SysmlAst.AllocationUsage = {
+      val r = parseSysmlAstAllocationUsageT(F)
+      return r
+    }
+
+    def parseSysmlAstAllocationUsageT(typeParsed: B): SysmlAst.AllocationUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.AllocationUsage")
+      }
+      parser.parseObjectKey("occurrenceUsagePrefix")
+      val occurrenceUsagePrefix = parseSysmlAstOccurrenceUsagePrefix()
+      parser.parseObjectNext()
+      parser.parseObjectKey("commonUsageElements")
+      val commonUsageElements = parseSysmlAstCommonUsageElements()
+      parser.parseObjectNext()
+      parser.parseObjectKey("connectorPart")
+      val connectorPart = parser.parseOption(parseSysmlAstConnectorPart _)
+      parser.parseObjectNext()
+      return SysmlAst.AllocationUsage(occurrenceUsagePrefix, commonUsageElements, connectorPart)
+    }
+
     def parseSysmlAstConnectionUsage(): SysmlAst.ConnectionUsage = {
       val r = parseSysmlAstConnectionUsageT(F)
       return r
@@ -8189,13 +8244,13 @@ object JSON {
       parser.parseObjectKey("occurrenceUsagePrefix")
       val occurrenceUsagePrefix = parseSysmlAstOccurrenceUsagePrefix()
       parser.parseObjectNext()
-      parser.parseObjectKey("connectorPart")
-      val connectorPart = parser.parseOption(parseSysmlAstConnectorPart _)
-      parser.parseObjectNext()
       parser.parseObjectKey("commonUsageElements")
       val commonUsageElements = parseSysmlAstCommonUsageElements()
       parser.parseObjectNext()
-      return SysmlAst.ConnectionUsage(occurrenceUsagePrefix, connectorPart, commonUsageElements)
+      parser.parseObjectKey("connectorPart")
+      val connectorPart = parser.parseOption(parseSysmlAstConnectorPart _)
+      parser.parseObjectNext()
+      return SysmlAst.ConnectionUsage(occurrenceUsagePrefix, commonUsageElements, connectorPart)
     }
 
     def parseSysmlAstItemUsage(): SysmlAst.ItemUsage = {
@@ -8399,11 +8454,12 @@ object JSON {
     }
 
     def parseResolvedInfo(): ResolvedInfo = {
-      val t = parser.parseObjectTypes(ISZ("ResolvedInfo.Package", "ResolvedInfo.Enum", "ResolvedInfo.EnumElement", "ResolvedInfo.AttributeUsage", "ResolvedInfo.ConnectionUsage", "ResolvedInfo.ItemUsage", "ResolvedInfo.PartUsage", "ResolvedInfo.PortUsage", "ResolvedInfo.ReferenceUsage"))
+      val t = parser.parseObjectTypes(ISZ("ResolvedInfo.Package", "ResolvedInfo.Enum", "ResolvedInfo.EnumElement", "ResolvedInfo.AllocationUsage", "ResolvedInfo.AttributeUsage", "ResolvedInfo.ConnectionUsage", "ResolvedInfo.ItemUsage", "ResolvedInfo.PartUsage", "ResolvedInfo.PortUsage", "ResolvedInfo.ReferenceUsage"))
       t.native match {
         case "ResolvedInfo.Package" => val r = parseResolvedInfoPackageT(T); return r
         case "ResolvedInfo.Enum" => val r = parseResolvedInfoEnumT(T); return r
         case "ResolvedInfo.EnumElement" => val r = parseResolvedInfoEnumElementT(T); return r
+        case "ResolvedInfo.AllocationUsage" => val r = parseResolvedInfoAllocationUsageT(T); return r
         case "ResolvedInfo.AttributeUsage" => val r = parseResolvedInfoAttributeUsageT(T); return r
         case "ResolvedInfo.ConnectionUsage" => val r = parseResolvedInfoConnectionUsageT(T); return r
         case "ResolvedInfo.ItemUsage" => val r = parseResolvedInfoItemUsageT(T); return r
@@ -8463,6 +8519,24 @@ object JSON {
       val ordinal = parser.parseZ()
       parser.parseObjectNext()
       return ResolvedInfo.EnumElement(owner, name, ordinal)
+    }
+
+    def parseResolvedInfoAllocationUsage(): ResolvedInfo.AllocationUsage = {
+      val r = parseResolvedInfoAllocationUsageT(F)
+      return r
+    }
+
+    def parseResolvedInfoAllocationUsageT(typeParsed: B): ResolvedInfo.AllocationUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("ResolvedInfo.AllocationUsage")
+      }
+      parser.parseObjectKey("owner")
+      val owner = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("name")
+      val name = parser.parseString()
+      parser.parseObjectNext()
+      return ResolvedInfo.AllocationUsage(owner, name)
     }
 
     def parseResolvedInfoAttributeUsage(): ResolvedInfo.AttributeUsage = {
@@ -15809,6 +15883,24 @@ object JSON {
     return r
   }
 
+  def fromSysmlAstAllocationUsage(o: SysmlAst.AllocationUsage, isCompact: B): String = {
+    val st = Printer.printSysmlAstAllocationUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstAllocationUsage(s: String): Either[SysmlAst.AllocationUsage, Json.ErrorMsg] = {
+    def fSysmlAstAllocationUsage(parser: Parser): SysmlAst.AllocationUsage = {
+      val r = parser.parseSysmlAstAllocationUsage()
+      return r
+    }
+    val r = to(s, fSysmlAstAllocationUsage _)
+    return r
+  }
+
   def fromSysmlAstConnectionUsage(o: SysmlAst.ConnectionUsage, isCompact: B): String = {
     val st = Printer.printSysmlAstConnectionUsage(o)
     if (isCompact) {
@@ -16076,6 +16168,24 @@ object JSON {
       return r
     }
     val r = to(s, fResolvedInfoEnumElement _)
+    return r
+  }
+
+  def fromResolvedInfoAllocationUsage(o: ResolvedInfo.AllocationUsage, isCompact: B): String = {
+    val st = Printer.printResolvedInfoAllocationUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toResolvedInfoAllocationUsage(s: String): Either[ResolvedInfo.AllocationUsage, Json.ErrorMsg] = {
+    def fResolvedInfoAllocationUsage(parser: Parser): ResolvedInfo.AllocationUsage = {
+      val r = parser.parseResolvedInfoAllocationUsage()
+      return r
+    }
+    val r = to(s, fResolvedInfoAllocationUsage _)
     return r
   }
 

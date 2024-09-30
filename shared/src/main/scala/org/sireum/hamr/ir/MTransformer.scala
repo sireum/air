@@ -105,13 +105,13 @@ object MTransformer {
 
   val PostResult_langastStmtVarPattern: MOption[org.sireum.lang.ast.Stmt] = MNone()
 
-  val PreResult_langastStmtSpecVar: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+  val PreResult_langastStmtSpecVar: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
 
-  val PostResult_langastStmtSpecVar: MOption[org.sireum.lang.ast.Stmt] = MNone()
+  val PostResult_langastStmtSpecVar: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
 
-  val PreResult_langastStmtRsVal: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+  val PreResult_langastStmtRsVal: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
 
-  val PostResult_langastStmtRsVal: MOption[org.sireum.lang.ast.Stmt] = MNone()
+  val PostResult_langastStmtRsVal: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
 
   val PreResult_langastStmtMethod: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
 
@@ -121,13 +121,13 @@ object MTransformer {
 
   val PostResult_langastStmtExtMethod: MOption[org.sireum.lang.ast.Stmt] = MNone()
 
-  val PreResult_langastStmtJustMethod: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+  val PreResult_langastStmtJustMethod: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
 
-  val PostResult_langastStmtJustMethod: MOption[org.sireum.lang.ast.Stmt] = MNone()
+  val PostResult_langastStmtJustMethod: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
 
-  val PreResult_langastStmtSpecMethod: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+  val PreResult_langastStmtSpecMethod: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
 
-  val PostResult_langastStmtSpecMethod: MOption[org.sireum.lang.ast.Stmt] = MNone()
+  val PostResult_langastStmtSpecMethod: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
 
   val PreResult_langastStmtEnum: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
 
@@ -165,9 +165,9 @@ object MTransformer {
 
   val PostResult_langastStmtIf: MOption[org.sireum.lang.ast.Stmt] = MNone()
 
-  val PreResult_langastStmtInduct: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
+  val PreResult_langastStmtInduct: PreResult[org.sireum.lang.ast.Stmt.Spec] = PreResult(T, MNone())
 
-  val PostResult_langastStmtInduct: MOption[org.sireum.lang.ast.Stmt] = MNone()
+  val PostResult_langastStmtInduct: MOption[org.sireum.lang.ast.Stmt.Spec] = MNone()
 
   val PreResult_langastStmtMatch: PreResult[org.sireum.lang.ast.Stmt] = PreResult(T, MNone())
 
@@ -1395,12 +1395,36 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.Import => return pre_langastStmtImport(o)
       case o: org.sireum.lang.ast.Stmt.Var => return pre_langastStmtVar(o)
       case o: org.sireum.lang.ast.Stmt.VarPattern => return pre_langastStmtVarPattern(o)
-      case o: org.sireum.lang.ast.Stmt.SpecVar => return pre_langastStmtSpecVar(o)
-      case o: org.sireum.lang.ast.Stmt.RsVal => return pre_langastStmtRsVal(o)
+      case o: org.sireum.lang.ast.Stmt.SpecVar =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtSpecVar(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.RsVal =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtRsVal(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
       case o: org.sireum.lang.ast.Stmt.Method => return pre_langastStmtMethod(o)
       case o: org.sireum.lang.ast.Stmt.ExtMethod => return pre_langastStmtExtMethod(o)
-      case o: org.sireum.lang.ast.Stmt.JustMethod => return pre_langastStmtJustMethod(o)
-      case o: org.sireum.lang.ast.Stmt.SpecMethod => return pre_langastStmtSpecMethod(o)
+      case o: org.sireum.lang.ast.Stmt.JustMethod =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtJustMethod(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.SpecMethod =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtSpecMethod(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
       case o: org.sireum.lang.ast.Stmt.Enum => return pre_langastStmtEnum(o)
       case o: org.sireum.lang.ast.Stmt.SubZ => return pre_langastStmtSubZ(o)
       case o: org.sireum.lang.ast.Stmt.Object => return pre_langastStmtObject(o)
@@ -1410,7 +1434,13 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.Assign => return pre_langastStmtAssign(o)
       case o: org.sireum.lang.ast.Stmt.Block => return pre_langastStmtBlock(o)
       case o: org.sireum.lang.ast.Stmt.If => return pre_langastStmtIf(o)
-      case o: org.sireum.lang.ast.Stmt.Induct => return pre_langastStmtInduct(o)
+      case o: org.sireum.lang.ast.Stmt.Induct =>
+        val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtInduct(o) match {
+         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
+        }
+        return r
       case o: org.sireum.lang.ast.Stmt.Match => return pre_langastStmtMatch(o)
       case o: org.sireum.lang.ast.Stmt.While => return pre_langastStmtWhile(o)
       case o: org.sireum.lang.ast.Stmt.DoWhile => return pre_langastStmtDoWhile(o)
@@ -1548,11 +1578,11 @@ import MTransformer._
     return PreResult_langastStmtVarPattern
   }
 
-  def pre_langastStmtSpecVar(o: org.sireum.lang.ast.Stmt.SpecVar): PreResult[org.sireum.lang.ast.Stmt] = {
+  def pre_langastStmtSpecVar(o: org.sireum.lang.ast.Stmt.SpecVar): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
     return PreResult_langastStmtSpecVar
   }
 
-  def pre_langastStmtRsVal(o: org.sireum.lang.ast.Stmt.RsVal): PreResult[org.sireum.lang.ast.Stmt] = {
+  def pre_langastStmtRsVal(o: org.sireum.lang.ast.Stmt.RsVal): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
     return PreResult_langastStmtRsVal
   }
 
@@ -1564,11 +1594,11 @@ import MTransformer._
     return PreResult_langastStmtExtMethod
   }
 
-  def pre_langastStmtJustMethod(o: org.sireum.lang.ast.Stmt.JustMethod): PreResult[org.sireum.lang.ast.Stmt] = {
+  def pre_langastStmtJustMethod(o: org.sireum.lang.ast.Stmt.JustMethod): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
     return PreResult_langastStmtJustMethod
   }
 
-  def pre_langastStmtSpecMethod(o: org.sireum.lang.ast.Stmt.SpecMethod): PreResult[org.sireum.lang.ast.Stmt] = {
+  def pre_langastStmtSpecMethod(o: org.sireum.lang.ast.Stmt.SpecMethod): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
     return PreResult_langastStmtSpecMethod
   }
 
@@ -1608,7 +1638,7 @@ import MTransformer._
     return PreResult_langastStmtIf
   }
 
-  def pre_langastStmtInduct(o: org.sireum.lang.ast.Stmt.Induct): PreResult[org.sireum.lang.ast.Stmt] = {
+  def pre_langastStmtInduct(o: org.sireum.lang.ast.Stmt.Induct): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
     return PreResult_langastStmtInduct
   }
 
@@ -1638,6 +1668,11 @@ import MTransformer._
 
   def pre_langastStmtSpec(o: org.sireum.lang.ast.Stmt.Spec): PreResult[org.sireum.lang.ast.Stmt.Spec] = {
     o match {
+      case o: org.sireum.lang.ast.Stmt.SpecVar => return pre_langastStmtSpecVar(o)
+      case o: org.sireum.lang.ast.Stmt.RsVal => return pre_langastStmtRsVal(o)
+      case o: org.sireum.lang.ast.Stmt.JustMethod => return pre_langastStmtJustMethod(o)
+      case o: org.sireum.lang.ast.Stmt.SpecMethod => return pre_langastStmtSpecMethod(o)
+      case o: org.sireum.lang.ast.Stmt.Induct => return pre_langastStmtInduct(o)
       case o: org.sireum.lang.ast.Stmt.Fact => return pre_langastStmtFact(o)
       case o: org.sireum.lang.ast.Stmt.Inv => return pre_langastStmtInv(o)
       case o: org.sireum.lang.ast.Stmt.Theorem => return pre_langastStmtTheorem(o)
@@ -5422,12 +5457,36 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.Import => return post_langastStmtImport(o)
       case o: org.sireum.lang.ast.Stmt.Var => return post_langastStmtVar(o)
       case o: org.sireum.lang.ast.Stmt.VarPattern => return post_langastStmtVarPattern(o)
-      case o: org.sireum.lang.ast.Stmt.SpecVar => return post_langastStmtSpecVar(o)
-      case o: org.sireum.lang.ast.Stmt.RsVal => return post_langastStmtRsVal(o)
+      case o: org.sireum.lang.ast.Stmt.SpecVar =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtSpecVar(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.RsVal =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtRsVal(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
       case o: org.sireum.lang.ast.Stmt.Method => return post_langastStmtMethod(o)
       case o: org.sireum.lang.ast.Stmt.ExtMethod => return post_langastStmtExtMethod(o)
-      case o: org.sireum.lang.ast.Stmt.JustMethod => return post_langastStmtJustMethod(o)
-      case o: org.sireum.lang.ast.Stmt.SpecMethod => return post_langastStmtSpecMethod(o)
+      case o: org.sireum.lang.ast.Stmt.JustMethod =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtJustMethod(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
+      case o: org.sireum.lang.ast.Stmt.SpecMethod =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtSpecMethod(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
       case o: org.sireum.lang.ast.Stmt.Enum => return post_langastStmtEnum(o)
       case o: org.sireum.lang.ast.Stmt.SubZ => return post_langastStmtSubZ(o)
       case o: org.sireum.lang.ast.Stmt.Object => return post_langastStmtObject(o)
@@ -5437,7 +5496,13 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.Assign => return post_langastStmtAssign(o)
       case o: org.sireum.lang.ast.Stmt.Block => return post_langastStmtBlock(o)
       case o: org.sireum.lang.ast.Stmt.If => return post_langastStmtIf(o)
-      case o: org.sireum.lang.ast.Stmt.Induct => return post_langastStmtInduct(o)
+      case o: org.sireum.lang.ast.Stmt.Induct =>
+        val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtInduct(o) match {
+         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
+         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case _ => MNone[org.sireum.lang.ast.Stmt]()
+        }
+        return r
       case o: org.sireum.lang.ast.Stmt.Match => return post_langastStmtMatch(o)
       case o: org.sireum.lang.ast.Stmt.While => return post_langastStmtWhile(o)
       case o: org.sireum.lang.ast.Stmt.DoWhile => return post_langastStmtDoWhile(o)
@@ -5575,11 +5640,11 @@ import MTransformer._
     return PostResult_langastStmtVarPattern
   }
 
-  def post_langastStmtSpecVar(o: org.sireum.lang.ast.Stmt.SpecVar): MOption[org.sireum.lang.ast.Stmt] = {
+  def post_langastStmtSpecVar(o: org.sireum.lang.ast.Stmt.SpecVar): MOption[org.sireum.lang.ast.Stmt.Spec] = {
     return PostResult_langastStmtSpecVar
   }
 
-  def post_langastStmtRsVal(o: org.sireum.lang.ast.Stmt.RsVal): MOption[org.sireum.lang.ast.Stmt] = {
+  def post_langastStmtRsVal(o: org.sireum.lang.ast.Stmt.RsVal): MOption[org.sireum.lang.ast.Stmt.Spec] = {
     return PostResult_langastStmtRsVal
   }
 
@@ -5591,11 +5656,11 @@ import MTransformer._
     return PostResult_langastStmtExtMethod
   }
 
-  def post_langastStmtJustMethod(o: org.sireum.lang.ast.Stmt.JustMethod): MOption[org.sireum.lang.ast.Stmt] = {
+  def post_langastStmtJustMethod(o: org.sireum.lang.ast.Stmt.JustMethod): MOption[org.sireum.lang.ast.Stmt.Spec] = {
     return PostResult_langastStmtJustMethod
   }
 
-  def post_langastStmtSpecMethod(o: org.sireum.lang.ast.Stmt.SpecMethod): MOption[org.sireum.lang.ast.Stmt] = {
+  def post_langastStmtSpecMethod(o: org.sireum.lang.ast.Stmt.SpecMethod): MOption[org.sireum.lang.ast.Stmt.Spec] = {
     return PostResult_langastStmtSpecMethod
   }
 
@@ -5635,7 +5700,7 @@ import MTransformer._
     return PostResult_langastStmtIf
   }
 
-  def post_langastStmtInduct(o: org.sireum.lang.ast.Stmt.Induct): MOption[org.sireum.lang.ast.Stmt] = {
+  def post_langastStmtInduct(o: org.sireum.lang.ast.Stmt.Induct): MOption[org.sireum.lang.ast.Stmt.Spec] = {
     return PostResult_langastStmtInduct
   }
 
@@ -5665,6 +5730,11 @@ import MTransformer._
 
   def post_langastStmtSpec(o: org.sireum.lang.ast.Stmt.Spec): MOption[org.sireum.lang.ast.Stmt.Spec] = {
     o match {
+      case o: org.sireum.lang.ast.Stmt.SpecVar => return post_langastStmtSpecVar(o)
+      case o: org.sireum.lang.ast.Stmt.RsVal => return post_langastStmtRsVal(o)
+      case o: org.sireum.lang.ast.Stmt.JustMethod => return post_langastStmtJustMethod(o)
+      case o: org.sireum.lang.ast.Stmt.SpecMethod => return post_langastStmtSpecMethod(o)
+      case o: org.sireum.lang.ast.Stmt.Induct => return post_langastStmtInduct(o)
       case o: org.sireum.lang.ast.Stmt.Fact => return post_langastStmtFact(o)
       case o: org.sireum.lang.ast.Stmt.Inv => return post_langastStmtInv(o)
       case o: org.sireum.lang.ast.Stmt.Theorem => return post_langastStmtTheorem(o)
@@ -9952,6 +10022,44 @@ import MTransformer._
       val o2: org.sireum.lang.ast.Stmt.Spec = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: MOption[org.sireum.lang.ast.Stmt.Spec] = o2 match {
+        case o2: org.sireum.lang.ast.Stmt.SpecVar =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[org.sireum.lang.ast.Type] = transform_langastType(o2.tipe)
+          val r2: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), tipe = r1.getOrElse(o2.tipe), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.RsVal =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.init)
+          val r2: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), init = r1.getOrElse(o2.init), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.JustMethod =>
+          val r0: MOption[Option[org.sireum.lang.ast.Exp.LitString]] = transformOption(o2.etaOpt, transform_langastExpLitString _)
+          val r1: MOption[org.sireum.lang.ast.MethodSig] = transform_langastMethodSig(o2.sig)
+          val r2: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(etaOpt = r0.getOrElse(o2.etaOpt), sig = r1.getOrElse(o2.sig), attr = r2.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.SpecMethod =>
+          val r0: MOption[org.sireum.lang.ast.MethodSig] = transform_langastMethodSig(o2.sig)
+          val r1: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(sig = r0.getOrElse(o2.sig), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.Stmt.Induct =>
+          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
+          else
+            MNone()
         case o2: org.sireum.lang.ast.Stmt.Fact =>
           val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
           val r1: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)

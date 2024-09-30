@@ -2904,8 +2904,17 @@ object MsgPack {
       write_langastTypedAttr(o.attr)
     }
 
+    def write_langastStmtExprKindType(o: org.sireum.lang.ast.Stmt.Expr.Kind.Type): Unit = {
+      writer.writeZ(o.ordinal)
+    }
+
     def write_langastStmtSpec(o: org.sireum.lang.ast.Stmt.Spec): Unit = {
       o match {
+        case o: org.sireum.lang.ast.Stmt.SpecVar => write_langastStmtSpecVar(o)
+        case o: org.sireum.lang.ast.Stmt.RsVal => write_langastStmtRsVal(o)
+        case o: org.sireum.lang.ast.Stmt.JustMethod => write_langastStmtJustMethod(o)
+        case o: org.sireum.lang.ast.Stmt.SpecMethod => write_langastStmtSpecMethod(o)
+        case o: org.sireum.lang.ast.Stmt.Induct => write_langastStmtInduct(o)
         case o: org.sireum.lang.ast.Stmt.Fact => write_langastStmtFact(o)
         case o: org.sireum.lang.ast.Stmt.Inv => write_langastStmtInv(o)
         case o: org.sireum.lang.ast.Stmt.Theorem => write_langastStmtTheorem(o)
@@ -7999,10 +8008,20 @@ object MsgPack {
       return org.sireum.lang.ast.Stmt.Expr(exp, attr)
     }
 
+    def read_langastStmtExprKindType(): org.sireum.lang.ast.Stmt.Expr.Kind.Type = {
+      val r = reader.readZ()
+      return org.sireum.lang.ast.Stmt.Expr.Kind.byOrdinal(r).get
+    }
+
     def read_langastStmtSpec(): org.sireum.lang.ast.Stmt.Spec = {
       val i = reader.curr
       val t = reader.readZ()
       t match {
+        case Constants._langastStmtSpecVar => val r = read_langastStmtSpecVarT(T); return r
+        case Constants._langastStmtRsVal => val r = read_langastStmtRsValT(T); return r
+        case Constants._langastStmtJustMethod => val r = read_langastStmtJustMethodT(T); return r
+        case Constants._langastStmtSpecMethod => val r = read_langastStmtSpecMethodT(T); return r
+        case Constants._langastStmtInduct => val r = read_langastStmtInductT(T); return r
         case Constants._langastStmtFact => val r = read_langastStmtFactT(T); return r
         case Constants._langastStmtInv => val r = read_langastStmtInvT(T); return r
         case Constants._langastStmtTheorem => val r = read_langastStmtTheoremT(T); return r

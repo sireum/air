@@ -2833,8 +2833,34 @@ object JSON {
       ))
     }
 
+    @pure def print_langastStmtExprKindType(o: org.sireum.lang.ast.Stmt.Expr.Kind.Type): ST = {
+      val value: String = o match {
+        case org.sireum.lang.ast.Stmt.Expr.Kind.General => "General"
+        case org.sireum.lang.ast.Stmt.Expr.Kind.Assert => "Assert"
+        case org.sireum.lang.ast.Stmt.Expr.Kind.AssertMsg => "AssertMsg"
+        case org.sireum.lang.ast.Stmt.Expr.Kind.Assume => "Assume"
+        case org.sireum.lang.ast.Stmt.Expr.Kind.AssumeMsg => "AssumeMsg"
+        case org.sireum.lang.ast.Stmt.Expr.Kind.Cprint => "Cprint"
+        case org.sireum.lang.ast.Stmt.Expr.Kind.Cprintln => "Cprintln"
+        case org.sireum.lang.ast.Stmt.Expr.Kind.Eprint => "Eprint"
+        case org.sireum.lang.ast.Stmt.Expr.Kind.Eprintln => "Eprintln"
+        case org.sireum.lang.ast.Stmt.Expr.Kind.Print => "Print"
+        case org.sireum.lang.ast.Stmt.Expr.Kind.Println => "Println"
+        case org.sireum.lang.ast.Stmt.Expr.Kind.SetOptions => "SetOptions"
+      }
+      return printObject(ISZ(
+        ("type", printString("org.sireum.lang.ast.Stmt.Expr.Kind")),
+        ("value", printString(value))
+      ))
+    }
+
     @pure def print_langastStmtSpec(o: org.sireum.lang.ast.Stmt.Spec): ST = {
       o match {
+        case o: org.sireum.lang.ast.Stmt.SpecVar => return print_langastStmtSpecVar(o)
+        case o: org.sireum.lang.ast.Stmt.RsVal => return print_langastStmtRsVal(o)
+        case o: org.sireum.lang.ast.Stmt.JustMethod => return print_langastStmtJustMethod(o)
+        case o: org.sireum.lang.ast.Stmt.SpecMethod => return print_langastStmtSpecMethod(o)
+        case o: org.sireum.lang.ast.Stmt.Induct => return print_langastStmtInduct(o)
         case o: org.sireum.lang.ast.Stmt.Fact => return print_langastStmtFact(o)
         case o: org.sireum.lang.ast.Stmt.Inv => return print_langastStmtInv(o)
         case o: org.sireum.lang.ast.Stmt.Theorem => return print_langastStmtTheorem(o)
@@ -9592,9 +9618,35 @@ object JSON {
       return org.sireum.lang.ast.Stmt.Expr(exp, attr)
     }
 
+    def parse_langastStmtExprKindType(): org.sireum.lang.ast.Stmt.Expr.Kind.Type = {
+      val r = parse_langastStmtExprKindT(F)
+      return r
+    }
+
+    def parse_langastStmtExprKindT(typeParsed: B): org.sireum.lang.ast.Stmt.Expr.Kind.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("org.sireum.lang.ast.Stmt.Expr.Kind")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      org.sireum.lang.ast.Stmt.Expr.Kind.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for org.sireum.lang.ast.Stmt.Expr.Kind.")
+          return org.sireum.lang.ast.Stmt.Expr.Kind.byOrdinal(0).get
+      }
+    }
+
     def parse_langastStmtSpec(): org.sireum.lang.ast.Stmt.Spec = {
-      val t = parser.parseObjectTypes(ISZ("org.sireum.lang.ast.Stmt.Fact", "org.sireum.lang.ast.Stmt.Inv", "org.sireum.lang.ast.Stmt.Theorem", "org.sireum.lang.ast.Stmt.DataRefinement", "org.sireum.lang.ast.Stmt.SpecLabel", "org.sireum.lang.ast.Stmt.SpecBlock", "org.sireum.lang.ast.Stmt.DeduceSequent", "org.sireum.lang.ast.Stmt.DeduceSteps", "org.sireum.lang.ast.Stmt.Havoc"))
+      val t = parser.parseObjectTypes(ISZ("org.sireum.lang.ast.Stmt.SpecVar", "org.sireum.lang.ast.Stmt.RsVal", "org.sireum.lang.ast.Stmt.JustMethod", "org.sireum.lang.ast.Stmt.SpecMethod", "org.sireum.lang.ast.Stmt.Induct", "org.sireum.lang.ast.Stmt.Fact", "org.sireum.lang.ast.Stmt.Inv", "org.sireum.lang.ast.Stmt.Theorem", "org.sireum.lang.ast.Stmt.DataRefinement", "org.sireum.lang.ast.Stmt.SpecLabel", "org.sireum.lang.ast.Stmt.SpecBlock", "org.sireum.lang.ast.Stmt.DeduceSequent", "org.sireum.lang.ast.Stmt.DeduceSteps", "org.sireum.lang.ast.Stmt.Havoc"))
       t.native match {
+        case "org.sireum.lang.ast.Stmt.SpecVar" => val r = parse_langastStmtSpecVarT(T); return r
+        case "org.sireum.lang.ast.Stmt.RsVal" => val r = parse_langastStmtRsValT(T); return r
+        case "org.sireum.lang.ast.Stmt.JustMethod" => val r = parse_langastStmtJustMethodT(T); return r
+        case "org.sireum.lang.ast.Stmt.SpecMethod" => val r = parse_langastStmtSpecMethodT(T); return r
+        case "org.sireum.lang.ast.Stmt.Induct" => val r = parse_langastStmtInductT(T); return r
         case "org.sireum.lang.ast.Stmt.Fact" => val r = parse_langastStmtFactT(T); return r
         case "org.sireum.lang.ast.Stmt.Inv" => val r = parse_langastStmtInvT(T); return r
         case "org.sireum.lang.ast.Stmt.Theorem" => val r = parse_langastStmtTheoremT(T); return r

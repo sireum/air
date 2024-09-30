@@ -79,12 +79,36 @@ object Transformer {
         case o: org.sireum.lang.ast.Stmt.Import => return pre_langastStmtImport(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Var => return pre_langastStmtVar(ctx, o)
         case o: org.sireum.lang.ast.Stmt.VarPattern => return pre_langastStmtVarPattern(ctx, o)
-        case o: org.sireum.lang.ast.Stmt.SpecVar => return pre_langastStmtSpecVar(ctx, o)
-        case o: org.sireum.lang.ast.Stmt.RsVal => return pre_langastStmtRsVal(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.SpecVar =>
+          val r: PreResult[Context, org.sireum.lang.ast.Stmt] = pre_langastStmtSpecVar(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.Stmt)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.Stmt](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.Stmt]())
+          }
+          return r
+        case o: org.sireum.lang.ast.Stmt.RsVal =>
+          val r: PreResult[Context, org.sireum.lang.ast.Stmt] = pre_langastStmtRsVal(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.Stmt)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.Stmt](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.Stmt]())
+          }
+          return r
         case o: org.sireum.lang.ast.Stmt.Method => return pre_langastStmtMethod(ctx, o)
         case o: org.sireum.lang.ast.Stmt.ExtMethod => return pre_langastStmtExtMethod(ctx, o)
-        case o: org.sireum.lang.ast.Stmt.JustMethod => return pre_langastStmtJustMethod(ctx, o)
-        case o: org.sireum.lang.ast.Stmt.SpecMethod => return pre_langastStmtSpecMethod(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.JustMethod =>
+          val r: PreResult[Context, org.sireum.lang.ast.Stmt] = pre_langastStmtJustMethod(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.Stmt)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.Stmt](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.Stmt]())
+          }
+          return r
+        case o: org.sireum.lang.ast.Stmt.SpecMethod =>
+          val r: PreResult[Context, org.sireum.lang.ast.Stmt] = pre_langastStmtSpecMethod(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.Stmt)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.Stmt](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.Stmt]())
+          }
+          return r
         case o: org.sireum.lang.ast.Stmt.Enum => return pre_langastStmtEnum(ctx, o)
         case o: org.sireum.lang.ast.Stmt.SubZ => return pre_langastStmtSubZ(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Object => return pre_langastStmtObject(ctx, o)
@@ -94,7 +118,13 @@ object Transformer {
         case o: org.sireum.lang.ast.Stmt.Assign => return pre_langastStmtAssign(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Block => return pre_langastStmtBlock(ctx, o)
         case o: org.sireum.lang.ast.Stmt.If => return pre_langastStmtIf(ctx, o)
-        case o: org.sireum.lang.ast.Stmt.Induct => return pre_langastStmtInduct(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.Induct =>
+          val r: PreResult[Context, org.sireum.lang.ast.Stmt] = pre_langastStmtInduct(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: org.sireum.lang.ast.Stmt)) => PreResult(preCtx, continu, Some[org.sireum.lang.ast.Stmt](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[org.sireum.lang.ast.Stmt]())
+          }
+          return r
         case o: org.sireum.lang.ast.Stmt.Match => return pre_langastStmtMatch(ctx, o)
         case o: org.sireum.lang.ast.Stmt.While => return pre_langastStmtWhile(ctx, o)
         case o: org.sireum.lang.ast.Stmt.DoWhile => return pre_langastStmtDoWhile(ctx, o)
@@ -232,11 +262,11 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def pre_langastStmtSpecVar(ctx: Context, o: org.sireum.lang.ast.Stmt.SpecVar): PreResult[Context, org.sireum.lang.ast.Stmt] = {
+    @pure def pre_langastStmtSpecVar(ctx: Context, o: org.sireum.lang.ast.Stmt.SpecVar): PreResult[Context, org.sireum.lang.ast.Stmt.Spec] = {
       return PreResult(ctx, T, None())
     }
 
-    @pure def pre_langastStmtRsVal(ctx: Context, o: org.sireum.lang.ast.Stmt.RsVal): PreResult[Context, org.sireum.lang.ast.Stmt] = {
+    @pure def pre_langastStmtRsVal(ctx: Context, o: org.sireum.lang.ast.Stmt.RsVal): PreResult[Context, org.sireum.lang.ast.Stmt.Spec] = {
       return PreResult(ctx, T, None())
     }
 
@@ -248,11 +278,11 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def pre_langastStmtJustMethod(ctx: Context, o: org.sireum.lang.ast.Stmt.JustMethod): PreResult[Context, org.sireum.lang.ast.Stmt] = {
+    @pure def pre_langastStmtJustMethod(ctx: Context, o: org.sireum.lang.ast.Stmt.JustMethod): PreResult[Context, org.sireum.lang.ast.Stmt.Spec] = {
       return PreResult(ctx, T, None())
     }
 
-    @pure def pre_langastStmtSpecMethod(ctx: Context, o: org.sireum.lang.ast.Stmt.SpecMethod): PreResult[Context, org.sireum.lang.ast.Stmt] = {
+    @pure def pre_langastStmtSpecMethod(ctx: Context, o: org.sireum.lang.ast.Stmt.SpecMethod): PreResult[Context, org.sireum.lang.ast.Stmt.Spec] = {
       return PreResult(ctx, T, None())
     }
 
@@ -292,7 +322,7 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def pre_langastStmtInduct(ctx: Context, o: org.sireum.lang.ast.Stmt.Induct): PreResult[Context, org.sireum.lang.ast.Stmt] = {
+    @pure def pre_langastStmtInduct(ctx: Context, o: org.sireum.lang.ast.Stmt.Induct): PreResult[Context, org.sireum.lang.ast.Stmt.Spec] = {
       return PreResult(ctx, T, None())
     }
 
@@ -322,6 +352,11 @@ object Transformer {
 
     @pure def pre_langastStmtSpec(ctx: Context, o: org.sireum.lang.ast.Stmt.Spec): PreResult[Context, org.sireum.lang.ast.Stmt.Spec] = {
       o match {
+        case o: org.sireum.lang.ast.Stmt.SpecVar => return pre_langastStmtSpecVar(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.RsVal => return pre_langastStmtRsVal(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.JustMethod => return pre_langastStmtJustMethod(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.SpecMethod => return pre_langastStmtSpecMethod(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.Induct => return pre_langastStmtInduct(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Fact => return pre_langastStmtFact(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Inv => return pre_langastStmtInv(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Theorem => return pre_langastStmtTheorem(ctx, o)
@@ -4106,12 +4141,36 @@ object Transformer {
         case o: org.sireum.lang.ast.Stmt.Import => return post_langastStmtImport(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Var => return post_langastStmtVar(ctx, o)
         case o: org.sireum.lang.ast.Stmt.VarPattern => return post_langastStmtVarPattern(ctx, o)
-        case o: org.sireum.lang.ast.Stmt.SpecVar => return post_langastStmtSpecVar(ctx, o)
-        case o: org.sireum.lang.ast.Stmt.RsVal => return post_langastStmtRsVal(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.SpecVar =>
+          val r: TPostResult[Context, org.sireum.lang.ast.Stmt] = post_langastStmtSpecVar(ctx, o) match {
+           case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Stmt)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Stmt](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Stmt]())
+          }
+          return r
+        case o: org.sireum.lang.ast.Stmt.RsVal =>
+          val r: TPostResult[Context, org.sireum.lang.ast.Stmt] = post_langastStmtRsVal(ctx, o) match {
+           case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Stmt)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Stmt](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Stmt]())
+          }
+          return r
         case o: org.sireum.lang.ast.Stmt.Method => return post_langastStmtMethod(ctx, o)
         case o: org.sireum.lang.ast.Stmt.ExtMethod => return post_langastStmtExtMethod(ctx, o)
-        case o: org.sireum.lang.ast.Stmt.JustMethod => return post_langastStmtJustMethod(ctx, o)
-        case o: org.sireum.lang.ast.Stmt.SpecMethod => return post_langastStmtSpecMethod(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.JustMethod =>
+          val r: TPostResult[Context, org.sireum.lang.ast.Stmt] = post_langastStmtJustMethod(ctx, o) match {
+           case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Stmt)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Stmt](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Stmt]())
+          }
+          return r
+        case o: org.sireum.lang.ast.Stmt.SpecMethod =>
+          val r: TPostResult[Context, org.sireum.lang.ast.Stmt] = post_langastStmtSpecMethod(ctx, o) match {
+           case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Stmt)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Stmt](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Stmt]())
+          }
+          return r
         case o: org.sireum.lang.ast.Stmt.Enum => return post_langastStmtEnum(ctx, o)
         case o: org.sireum.lang.ast.Stmt.SubZ => return post_langastStmtSubZ(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Object => return post_langastStmtObject(ctx, o)
@@ -4121,7 +4180,13 @@ object Transformer {
         case o: org.sireum.lang.ast.Stmt.Assign => return post_langastStmtAssign(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Block => return post_langastStmtBlock(ctx, o)
         case o: org.sireum.lang.ast.Stmt.If => return post_langastStmtIf(ctx, o)
-        case o: org.sireum.lang.ast.Stmt.Induct => return post_langastStmtInduct(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.Induct =>
+          val r: TPostResult[Context, org.sireum.lang.ast.Stmt] = post_langastStmtInduct(ctx, o) match {
+           case TPostResult(postCtx, Some(result: org.sireum.lang.ast.Stmt)) => TPostResult(postCtx, Some[org.sireum.lang.ast.Stmt](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[org.sireum.lang.ast.Stmt]())
+          }
+          return r
         case o: org.sireum.lang.ast.Stmt.Match => return post_langastStmtMatch(ctx, o)
         case o: org.sireum.lang.ast.Stmt.While => return post_langastStmtWhile(ctx, o)
         case o: org.sireum.lang.ast.Stmt.DoWhile => return post_langastStmtDoWhile(ctx, o)
@@ -4259,11 +4324,11 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def post_langastStmtSpecVar(ctx: Context, o: org.sireum.lang.ast.Stmt.SpecVar): TPostResult[Context, org.sireum.lang.ast.Stmt] = {
+    @pure def post_langastStmtSpecVar(ctx: Context, o: org.sireum.lang.ast.Stmt.SpecVar): TPostResult[Context, org.sireum.lang.ast.Stmt.Spec] = {
       return TPostResult(ctx, None())
     }
 
-    @pure def post_langastStmtRsVal(ctx: Context, o: org.sireum.lang.ast.Stmt.RsVal): TPostResult[Context, org.sireum.lang.ast.Stmt] = {
+    @pure def post_langastStmtRsVal(ctx: Context, o: org.sireum.lang.ast.Stmt.RsVal): TPostResult[Context, org.sireum.lang.ast.Stmt.Spec] = {
       return TPostResult(ctx, None())
     }
 
@@ -4275,11 +4340,11 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def post_langastStmtJustMethod(ctx: Context, o: org.sireum.lang.ast.Stmt.JustMethod): TPostResult[Context, org.sireum.lang.ast.Stmt] = {
+    @pure def post_langastStmtJustMethod(ctx: Context, o: org.sireum.lang.ast.Stmt.JustMethod): TPostResult[Context, org.sireum.lang.ast.Stmt.Spec] = {
       return TPostResult(ctx, None())
     }
 
-    @pure def post_langastStmtSpecMethod(ctx: Context, o: org.sireum.lang.ast.Stmt.SpecMethod): TPostResult[Context, org.sireum.lang.ast.Stmt] = {
+    @pure def post_langastStmtSpecMethod(ctx: Context, o: org.sireum.lang.ast.Stmt.SpecMethod): TPostResult[Context, org.sireum.lang.ast.Stmt.Spec] = {
       return TPostResult(ctx, None())
     }
 
@@ -4319,7 +4384,7 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def post_langastStmtInduct(ctx: Context, o: org.sireum.lang.ast.Stmt.Induct): TPostResult[Context, org.sireum.lang.ast.Stmt] = {
+    @pure def post_langastStmtInduct(ctx: Context, o: org.sireum.lang.ast.Stmt.Induct): TPostResult[Context, org.sireum.lang.ast.Stmt.Spec] = {
       return TPostResult(ctx, None())
     }
 
@@ -4349,6 +4414,11 @@ object Transformer {
 
     @pure def post_langastStmtSpec(ctx: Context, o: org.sireum.lang.ast.Stmt.Spec): TPostResult[Context, org.sireum.lang.ast.Stmt.Spec] = {
       o match {
+        case o: org.sireum.lang.ast.Stmt.SpecVar => return post_langastStmtSpecVar(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.RsVal => return post_langastStmtRsVal(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.JustMethod => return post_langastStmtJustMethod(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.SpecMethod => return post_langastStmtSpecMethod(ctx, o)
+        case o: org.sireum.lang.ast.Stmt.Induct => return post_langastStmtInduct(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Fact => return post_langastStmtFact(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Inv => return post_langastStmtInv(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Theorem => return post_langastStmtTheorem(ctx, o)
@@ -8674,6 +8744,44 @@ import Transformer._
       val o2: org.sireum.lang.ast.Stmt.Spec = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: TPostResult[Context, org.sireum.lang.ast.Stmt.Spec] = o2 match {
+        case o2: org.sireum.lang.ast.Stmt.SpecVar =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Id] = transform_langastId(preR.ctx, o2.id)
+          val r1: TPostResult[Context, org.sireum.lang.ast.Type] = transform_langastType(r0.ctx, o2.tipe)
+          val r2: TPostResult[Context, org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), tipe = r1.resultOpt.getOrElse(o2.tipe), attr = r2.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: org.sireum.lang.ast.Stmt.RsVal =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Id] = transform_langastId(preR.ctx, o2.id)
+          val r1: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(r0.ctx, o2.init)
+          val r2: TPostResult[Context, org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), init = r1.resultOpt.getOrElse(o2.init), attr = r2.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: org.sireum.lang.ast.Stmt.JustMethod =>
+          val r0: TPostResult[Context, Option[org.sireum.lang.ast.Exp.LitString]] = transformOption(preR.ctx, o2.etaOpt, transform_langastExpLitString _)
+          val r1: TPostResult[Context, org.sireum.lang.ast.MethodSig] = transform_langastMethodSig(r0.ctx, o2.sig)
+          val r2: TPostResult[Context, org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(etaOpt = r0.resultOpt.getOrElse(o2.etaOpt), sig = r1.resultOpt.getOrElse(o2.sig), attr = r2.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: org.sireum.lang.ast.Stmt.SpecMethod =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.MethodSig] = transform_langastMethodSig(preR.ctx, o2.sig)
+          val r1: TPostResult[Context, org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(r0.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(sig = r0.resultOpt.getOrElse(o2.sig), attr = r1.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: org.sireum.lang.ast.Stmt.Induct =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
+          val r1: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r0.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r1.ctx, None())
         case o2: org.sireum.lang.ast.Stmt.Fact =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Id] = transform_langastId(preR.ctx, o2.id)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(r0.ctx, o2.typeParams, transform_langastTypeParam _)

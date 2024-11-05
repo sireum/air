@@ -85,10 +85,11 @@ object ConnectionInstantiator {
             // need to recurse into parent to see what connections it contains
             val continuations = buildSegments(parent.get, updatedConSegs, symbolTable, reporter)
             if (continuations.isEmpty) {
-              // probably won't happen given that we've restricted ourselves to just systems, processes, and threads
-              reporter.error(conn.name.pos, ConnectionInstantiator.toolName, "Invalid connection")
+              // parent didn't contain a continuation so this is the end of the trail for this conn seg
+              ret = ret :+ updatedConSegs
+            } else {
+              ret = ret ++ continuations
             }
-            ret = ret ++ continuations
           }
         } else {
           // do a recursive call to see if the dst component continues the connection

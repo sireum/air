@@ -122,7 +122,9 @@ object Util {
 
       for(subComponent <- o.subComponents) {
         if (!AadlUtil.isValidSubcomponent(o.category, subComponent.category)) {
-          reporter.error(o.identifier.pos, toolName, s"${subComponent.category} is not a valid subcomponent of ${o.category}")
+          val sname = subComponent.identifier.name(subComponent.identifier.name.lastIndex)
+          val oname = o.identifier.name(o.identifier.name.lastIndex)
+          reporter.error(o.identifier.pos, toolName, s"${subComponent.category} $sname is not a valid subcomponent of ${o.category} $oname")
         }
 
         processH(subComponent, o.identifier.name, reporter)

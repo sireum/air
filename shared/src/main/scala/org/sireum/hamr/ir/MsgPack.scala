@@ -3151,6 +3151,7 @@ object MsgPack {
       write_langastProofAstStepId(o.id)
       writer.writeISZ(o.params, write_langastProofAstStepLetParam _)
       writer.writeISZ(o.steps, write_langastProofAstStep _)
+      writer.writeISZ(o.context, writer.writeString _)
       write_langastAttr(o.attr)
     }
 
@@ -8501,8 +8502,9 @@ object MsgPack {
       val id = read_langastProofAstStepId()
       val params = reader.readISZ(read_langastProofAstStepLetParam _)
       val steps = reader.readISZ(read_langastProofAstStep _)
+      val context = reader.readISZ(reader.readString _)
       val attr = read_langastAttr()
-      return org.sireum.lang.ast.ProofAst.Step.Let(id, params, steps, attr)
+      return org.sireum.lang.ast.ProofAst.Step.Let(id, params, steps, context, attr)
     }
 
     def read_langastProofAstStepLetParam(): org.sireum.lang.ast.ProofAst.Step.Let.Param = {

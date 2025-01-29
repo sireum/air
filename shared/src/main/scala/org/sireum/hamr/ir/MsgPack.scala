@@ -566,269 +566,267 @@ object MsgPack {
 
     val _langastStmtWhile: Z = 161
 
-    val _langastStmtDoWhile: Z = 162
+    val _langastStmtFor: Z = 162
 
-    val _langastStmtFor: Z = 163
+    val _langastStmtReturn: Z = 163
 
-    val _langastStmtReturn: Z = 164
+    val _langastStmtExpr: Z = 164
 
-    val _langastStmtExpr: Z = 165
+    val _langastStmtFact: Z = 165
 
-    val _langastStmtFact: Z = 166
+    val _langastStmtInv: Z = 166
 
-    val _langastStmtInv: Z = 167
+    val _langastStmtTheorem: Z = 167
 
-    val _langastStmtTheorem: Z = 168
+    val _langastStmtDataRefinement: Z = 168
 
-    val _langastStmtDataRefinement: Z = 169
+    val _langastStmtSpecLabel: Z = 169
 
-    val _langastStmtSpecLabel: Z = 170
+    val _langastStmtSpecBlock: Z = 170
 
-    val _langastStmtSpecBlock: Z = 171
+    val _langastStmtDeduceSequent: Z = 171
 
-    val _langastStmtDeduceSequent: Z = 172
+    val _langastStmtDeduceSteps: Z = 172
 
-    val _langastStmtDeduceSteps: Z = 173
+    val _langastStmtHavoc: Z = 173
 
-    val _langastStmtHavoc: Z = 174
+    val _langastMethodContractAccesses: Z = 174
 
-    val _langastMethodContractAccesses: Z = 175
+    val _langastMethodContractClaims: Z = 175
 
-    val _langastMethodContractClaims: Z = 176
+    val _langastMethodContractSimple: Z = 176
 
-    val _langastMethodContractSimple: Z = 177
+    val _langastMethodContractCases: Z = 177
 
-    val _langastMethodContractCases: Z = 178
+    val _langastMethodContractCase: Z = 178
 
-    val _langastMethodContractCase: Z = 179
+    val _langastMethodContractInfoFlows: Z = 179
 
-    val _langastMethodContractInfoFlows: Z = 180
+    val _langastMethodContractInfoFlowGroup: Z = 180
 
-    val _langastMethodContractInfoFlowGroup: Z = 181
+    val _langastMethodContractInfoFlowFlow: Z = 181
 
-    val _langastMethodContractInfoFlowFlow: Z = 182
+    val _langastMethodContractInfoFlowCase: Z = 182
 
-    val _langastMethodContractInfoFlowCase: Z = 183
+    val _langastSequent: Z = 183
 
-    val _langastSequent: Z = 184
+    val _langastProofAst: Z = 184
 
-    val _langastProofAst: Z = 185
+    val _langastProofAstStepIdNum: Z = 185
 
-    val _langastProofAstStepIdNum: Z = 186
+    val _langastProofAstStepIdStr: Z = 186
 
-    val _langastProofAstStepIdStr: Z = 187
+    val _langastProofAstStepRegular: Z = 187
 
-    val _langastProofAstStepRegular: Z = 188
+    val _langastProofAstStepAssume: Z = 188
 
-    val _langastProofAstStepAssume: Z = 189
+    val _langastProofAstStepAssert: Z = 189
 
-    val _langastProofAstStepAssert: Z = 190
+    val _langastProofAstStepSubProof: Z = 190
 
-    val _langastProofAstStepSubProof: Z = 191
+    val _langastProofAstStepLet: Z = 191
 
-    val _langastProofAstStepLet: Z = 192
+    val _langastProofAstStepLetParam: Z = 192
 
-    val _langastProofAstStepLetParam: Z = 193
+    val _langastProofAstStepJustificationRef: Z = 193
 
-    val _langastProofAstStepJustificationRef: Z = 194
+    val _langastProofAstStepJustificationApply: Z = 194
 
-    val _langastProofAstStepJustificationApply: Z = 195
+    val _langastProofAstStepJustificationApplyNamed: Z = 195
 
-    val _langastProofAstStepJustificationApplyNamed: Z = 196
+    val _langastProofAstStepJustificationApplyEta: Z = 196
 
-    val _langastProofAstStepJustificationApplyEta: Z = 197
+    val _langastCase: Z = 197
 
-    val _langastCase: Z = 198
+    val _langastEnumGenRangeExpr: Z = 198
 
-    val _langastEnumGenRangeExpr: Z = 199
+    val _langastEnumGenRangeStep: Z = 199
 
-    val _langastEnumGenRangeStep: Z = 200
+    val _langastEnumGenFor: Z = 200
 
-    val _langastEnumGenFor: Z = 201
+    val _langastTypeNamed: Z = 201
 
-    val _langastTypeNamed: Z = 202
+    val _langastTypeFun: Z = 202
 
-    val _langastTypeFun: Z = 203
+    val _langastTypeTuple: Z = 203
 
-    val _langastTypeTuple: Z = 204
+    val _langastPatternLiteral: Z = 204
 
-    val _langastPatternLiteral: Z = 205
+    val _langastPatternLitInterpolate: Z = 205
 
-    val _langastPatternLitInterpolate: Z = 206
+    val _langastPatternRef: Z = 206
 
-    val _langastPatternRef: Z = 207
+    val _langastPatternVarBinding: Z = 207
 
-    val _langastPatternVarBinding: Z = 208
+    val _langastPatternWildcard: Z = 208
 
-    val _langastPatternWildcard: Z = 209
+    val _langastPatternSeqWildcard: Z = 209
 
-    val _langastPatternSeqWildcard: Z = 210
+    val _langastPatternStructure: Z = 210
 
-    val _langastPatternStructure: Z = 211
+    val _langastExpLitB: Z = 211
 
-    val _langastExpLitB: Z = 212
+    val _langastExpLitC: Z = 212
 
-    val _langastExpLitC: Z = 213
+    val _langastExpLitZ: Z = 213
 
-    val _langastExpLitZ: Z = 214
+    val _langastExpLitF32: Z = 214
 
-    val _langastExpLitF32: Z = 215
+    val _langastExpLitF64: Z = 215
 
-    val _langastExpLitF64: Z = 216
+    val _langastExpLitR: Z = 216
 
-    val _langastExpLitR: Z = 217
+    val _langastExpLitString: Z = 217
 
-    val _langastExpLitString: Z = 218
+    val _langastExpStringInterpolate: Z = 218
 
-    val _langastExpStringInterpolate: Z = 219
+    val _langastExpThis: Z = 219
 
-    val _langastExpThis: Z = 220
+    val _langastExpSuper: Z = 220
 
-    val _langastExpSuper: Z = 221
+    val _langastExpUnary: Z = 221
 
-    val _langastExpUnary: Z = 222
+    val _langastExpBinary: Z = 222
 
-    val _langastExpBinary: Z = 223
+    val _langastExpIdent: Z = 223
 
-    val _langastExpIdent: Z = 224
+    val _langastExpEta: Z = 224
 
-    val _langastExpEta: Z = 225
+    val _langastExpTuple: Z = 225
 
-    val _langastExpTuple: Z = 226
+    val _langastExpSelect: Z = 226
 
-    val _langastExpSelect: Z = 227
+    val _langastExpInvoke: Z = 227
 
-    val _langastExpInvoke: Z = 228
+    val _langastExpInvokeNamed: Z = 228
 
-    val _langastExpInvokeNamed: Z = 229
+    val _langastExpIf: Z = 229
 
-    val _langastExpIf: Z = 230
+    val _langastExpTypeCond: Z = 230
 
-    val _langastExpTypeCond: Z = 231
+    val _langastExpSym: Z = 231
 
-    val _langastExpSym: Z = 232
+    val _langastExpFunParam: Z = 232
 
-    val _langastExpFunParam: Z = 233
+    val _langastExpFun: Z = 233
 
-    val _langastExpFun: Z = 234
+    val _langastExpForYield: Z = 234
 
-    val _langastExpForYield: Z = 235
+    val _langastExpQuantType: Z = 235
 
-    val _langastExpQuantType: Z = 236
+    val _langastExpQuantRange: Z = 236
 
-    val _langastExpQuantRange: Z = 237
+    val _langastExpQuantEach: Z = 237
 
-    val _langastExpQuantEach: Z = 238
+    val _langastExpInput: Z = 238
 
-    val _langastExpInput: Z = 239
+    val _langastExpOld: Z = 239
 
-    val _langastExpOld: Z = 240
+    val _langastExpRS: Z = 240
 
-    val _langastExpRS: Z = 241
+    val _langastExpAt: Z = 241
 
-    val _langastExpAt: Z = 242
+    val _langastExpLoopIndex: Z = 242
 
-    val _langastExpLoopIndex: Z = 243
+    val _langastExpStateSeq: Z = 243
 
-    val _langastExpStateSeq: Z = 244
+    val _langastExpStateSeqFragment: Z = 244
 
-    val _langastExpStateSeqFragment: Z = 245
+    val _langastExpResult: Z = 245
 
-    val _langastExpResult: Z = 246
+    val _langastExpStrictPureBlock: Z = 246
 
-    val _langastExpStrictPureBlock: Z = 247
+    val _langastExpLabeled: Z = 247
 
-    val _langastExpLabeled: Z = 248
+    val _langastExpAssumeAgree: Z = 248
 
-    val _langastExpAssumeAgree: Z = 249
+    val _langastExpAssertAgree: Z = 249
 
-    val _langastExpAssertAgree: Z = 250
+    val _langastExpInfoFlowInvariant: Z = 250
 
-    val _langastExpInfoFlowInvariant: Z = 251
+    val _langastNamedArg: Z = 251
 
-    val _langastNamedArg: Z = 252
+    val _langastId: Z = 252
 
-    val _langastId: Z = 253
+    val _langastName: Z = 253
 
-    val _langastName: Z = 254
+    val _langastBody: Z = 254
 
-    val _langastBody: Z = 255
+    val _langastAdtParam: Z = 255
 
-    val _langastAdtParam: Z = 256
+    val _langastMethodSig: Z = 256
 
-    val _langastMethodSig: Z = 257
+    val _langastParam: Z = 257
 
-    val _langastParam: Z = 258
+    val _langastTypeParam: Z = 258
 
-    val _langastTypeParam: Z = 259
+    val _langastAttr: Z = 259
 
-    val _langastAttr: Z = 260
+    val _langastTypedAttr: Z = 260
 
-    val _langastTypedAttr: Z = 261
+    val _langastResolvedAttr: Z = 261
 
-    val _langastResolvedAttr: Z = 262
+    val _langastResolvedInfoBuiltIn: Z = 262
 
-    val _langastResolvedInfoBuiltIn: Z = 263
+    val _langastResolvedInfoPackage: Z = 263
 
-    val _langastResolvedInfoPackage: Z = 264
+    val _langastResolvedInfoEnum: Z = 264
 
-    val _langastResolvedInfoEnum: Z = 265
+    val _langastResolvedInfoEnumElement: Z = 265
 
-    val _langastResolvedInfoEnumElement: Z = 266
+    val _langastResolvedInfoObject: Z = 266
 
-    val _langastResolvedInfoObject: Z = 267
+    val _langastResolvedInfoVar: Z = 267
 
-    val _langastResolvedInfoVar: Z = 268
+    val _langastResolvedInfoMethod: Z = 268
 
-    val _langastResolvedInfoMethod: Z = 269
+    val _langastResolvedInfoMethods: Z = 269
 
-    val _langastResolvedInfoMethods: Z = 270
+    val _langastResolvedInfoTuple: Z = 270
 
-    val _langastResolvedInfoTuple: Z = 271
+    val _langastResolvedInfoLocalVar: Z = 271
 
-    val _langastResolvedInfoLocalVar: Z = 272
+    val _langastResolvedInfoFact: Z = 272
 
-    val _langastResolvedInfoFact: Z = 273
+    val _langastResolvedInfoTheorem: Z = 273
 
-    val _langastResolvedInfoTheorem: Z = 274
+    val _langastResolvedInfoInv: Z = 274
 
-    val _langastResolvedInfoInv: Z = 275
+    val _langastTruthTableRow: Z = 275
 
-    val _langastTruthTableRow: Z = 276
+    val _langastTruthTableAssignment: Z = 276
 
-    val _langastTruthTableAssignment: Z = 277
+    val _langastTruthTableConclusionValidity: Z = 277
 
-    val _langastTruthTableConclusionValidity: Z = 278
+    val _langastTruthTableConclusionTautology: Z = 278
 
-    val _langastTruthTableConclusionTautology: Z = 279
+    val _langastTruthTableConclusionContradictory: Z = 279
 
-    val _langastTruthTableConclusionContradictory: Z = 280
+    val _langastTruthTableConclusionContingent: Z = 280
 
-    val _langastTruthTableConclusionContingent: Z = 281
+    val _langastTypedName: Z = 281
 
-    val _langastTypedName: Z = 282
+    val _langastTypedTuple: Z = 282
 
-    val _langastTypedTuple: Z = 283
+    val _langastTypedFun: Z = 283
 
-    val _langastTypedFun: Z = 284
+    val _langastTypedTypeVar: Z = 284
 
-    val _langastTypedTypeVar: Z = 285
+    val _langastTypedPackage: Z = 285
 
-    val _langastTypedPackage: Z = 286
+    val _langastTypedObject: Z = 286
 
-    val _langastTypedObject: Z = 287
+    val _langastTypedEnum: Z = 287
 
-    val _langastTypedEnum: Z = 288
+    val _langastTypedMethod: Z = 288
 
-    val _langastTypedMethod: Z = 289
+    val _langastTypedMethods: Z = 289
 
-    val _langastTypedMethods: Z = 290
+    val _langastTypedFact: Z = 290
 
-    val _langastTypedFact: Z = 291
+    val _langastTypedTheorem: Z = 291
 
-    val _langastTypedTheorem: Z = 292
-
-    val _langastTypedInv: Z = 293
+    val _langastTypedInv: Z = 292
 
   }
 
@@ -2633,7 +2631,6 @@ object MsgPack {
         case o: org.sireum.lang.ast.Stmt.Induct => write_langastStmtInduct(o)
         case o: org.sireum.lang.ast.Stmt.Match => write_langastStmtMatch(o)
         case o: org.sireum.lang.ast.Stmt.While => write_langastStmtWhile(o)
-        case o: org.sireum.lang.ast.Stmt.DoWhile => write_langastStmtDoWhile(o)
         case o: org.sireum.lang.ast.Stmt.For => write_langastStmtFor(o)
         case o: org.sireum.lang.ast.Stmt.Return => write_langastStmtReturn(o)
         case o: org.sireum.lang.ast.Stmt.Expr => write_langastStmtExpr(o)
@@ -2868,15 +2865,6 @@ object MsgPack {
 
     def write_langastStmtWhile(o: org.sireum.lang.ast.Stmt.While): Unit = {
       writer.writeZ(Constants._langastStmtWhile)
-      writer.writeISZ(o.context, writer.writeString _)
-      write_langastExp(o.cond)
-      write_langastLoopContract(o.contract)
-      write_langastBody(o.body)
-      write_langastAttr(o.attr)
-    }
-
-    def write_langastStmtDoWhile(o: org.sireum.lang.ast.Stmt.DoWhile): Unit = {
-      writer.writeZ(Constants._langastStmtDoWhile)
       writer.writeISZ(o.context, writer.writeString _)
       write_langastExp(o.cond)
       write_langastLoopContract(o.contract)
@@ -7482,7 +7470,6 @@ object MsgPack {
         case Constants._langastStmtInduct => val r = read_langastStmtInductT(T); return r
         case Constants._langastStmtMatch => val r = read_langastStmtMatchT(T); return r
         case Constants._langastStmtWhile => val r = read_langastStmtWhileT(T); return r
-        case Constants._langastStmtDoWhile => val r = read_langastStmtDoWhileT(T); return r
         case Constants._langastStmtFor => val r = read_langastStmtForT(T); return r
         case Constants._langastStmtReturn => val r = read_langastStmtReturnT(T); return r
         case Constants._langastStmtExpr => val r = read_langastStmtExprT(T); return r
@@ -7946,23 +7933,6 @@ object MsgPack {
       val body = read_langastBody()
       val attr = read_langastAttr()
       return org.sireum.lang.ast.Stmt.While(context, cond, contract, body, attr)
-    }
-
-    def read_langastStmtDoWhile(): org.sireum.lang.ast.Stmt.DoWhile = {
-      val r = read_langastStmtDoWhileT(F)
-      return r
-    }
-
-    def read_langastStmtDoWhileT(typeParsed: B): org.sireum.lang.ast.Stmt.DoWhile = {
-      if (!typeParsed) {
-        reader.expectZ(Constants._langastStmtDoWhile)
-      }
-      val context = reader.readISZ(reader.readString _)
-      val cond = read_langastExp()
-      val contract = read_langastLoopContract()
-      val body = read_langastBody()
-      val attr = read_langastAttr()
-      return org.sireum.lang.ast.Stmt.DoWhile(context, cond, contract, body, attr)
     }
 
     def read_langastStmtFor(): org.sireum.lang.ast.Stmt.For = {
@@ -13922,21 +13892,6 @@ object MsgPack {
       return r
     }
     val r = to(data, f_langastStmtWhile _)
-    return r
-  }
-
-  def from_langastStmtDoWhile(o: org.sireum.lang.ast.Stmt.DoWhile, pooling: B): ISZ[U8] = {
-    val w = Writer.Default(MessagePack.writer(pooling))
-    w.write_langastStmtDoWhile(o)
-    return w.result
-  }
-
-  def to_langastStmtDoWhile(data: ISZ[U8]): Either[org.sireum.lang.ast.Stmt.DoWhile, MessagePack.ErrorMsg] = {
-    def f_langastStmtDoWhile(reader: Reader): org.sireum.lang.ast.Stmt.DoWhile = {
-      val r = reader.read_langastStmtDoWhile()
-      return r
-    }
-    val r = to(data, f_langastStmtDoWhile _)
     return r
   }
 

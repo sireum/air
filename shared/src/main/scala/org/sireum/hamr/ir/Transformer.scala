@@ -127,7 +127,6 @@ object Transformer {
           return r
         case o: org.sireum.lang.ast.Stmt.Match => return pre_langastStmtMatch(ctx, o)
         case o: org.sireum.lang.ast.Stmt.While => return pre_langastStmtWhile(ctx, o)
-        case o: org.sireum.lang.ast.Stmt.DoWhile => return pre_langastStmtDoWhile(ctx, o)
         case o: org.sireum.lang.ast.Stmt.For => return pre_langastStmtFor(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Return => return pre_langastStmtReturn(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Expr => return pre_langastStmtExpr(ctx, o)
@@ -331,10 +330,6 @@ object Transformer {
     }
 
     @pure def pre_langastStmtWhile(ctx: Context, o: org.sireum.lang.ast.Stmt.While): PreResult[Context, org.sireum.lang.ast.Stmt] = {
-      return PreResult(ctx, T, None())
-    }
-
-    @pure def pre_langastStmtDoWhile(ctx: Context, o: org.sireum.lang.ast.Stmt.DoWhile): PreResult[Context, org.sireum.lang.ast.Stmt] = {
       return PreResult(ctx, T, None())
     }
 
@@ -4189,7 +4184,6 @@ object Transformer {
           return r
         case o: org.sireum.lang.ast.Stmt.Match => return post_langastStmtMatch(ctx, o)
         case o: org.sireum.lang.ast.Stmt.While => return post_langastStmtWhile(ctx, o)
-        case o: org.sireum.lang.ast.Stmt.DoWhile => return post_langastStmtDoWhile(ctx, o)
         case o: org.sireum.lang.ast.Stmt.For => return post_langastStmtFor(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Return => return post_langastStmtReturn(ctx, o)
         case o: org.sireum.lang.ast.Stmt.Expr => return post_langastStmtExpr(ctx, o)
@@ -4393,10 +4387,6 @@ object Transformer {
     }
 
     @pure def post_langastStmtWhile(ctx: Context, o: org.sireum.lang.ast.Stmt.While): TPostResult[Context, org.sireum.lang.ast.Stmt] = {
-      return TPostResult(ctx, None())
-    }
-
-    @pure def post_langastStmtDoWhile(ctx: Context, o: org.sireum.lang.ast.Stmt.DoWhile): TPostResult[Context, org.sireum.lang.ast.Stmt] = {
       return TPostResult(ctx, None())
     }
 
@@ -8434,15 +8424,6 @@ import Transformer._
           else
             TPostResult(r2.ctx, None())
         case o2: org.sireum.lang.ast.Stmt.While =>
-          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.cond)
-          val r1: TPostResult[Context, org.sireum.lang.ast.LoopContract] = transform_langastLoopContract(r0.ctx, o2.contract)
-          val r2: TPostResult[Context, org.sireum.lang.ast.Body] = transform_langastBody(r1.ctx, o2.body)
-          val r3: TPostResult[Context, org.sireum.lang.ast.Attr] = transform_langastAttr(r2.ctx, o2.attr)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
-            TPostResult(r3.ctx, Some(o2(cond = r0.resultOpt.getOrElse(o2.cond), contract = r1.resultOpt.getOrElse(o2.contract), body = r2.resultOpt.getOrElse(o2.body), attr = r3.resultOpt.getOrElse(o2.attr))))
-          else
-            TPostResult(r3.ctx, None())
-        case o2: org.sireum.lang.ast.Stmt.DoWhile =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.cond)
           val r1: TPostResult[Context, org.sireum.lang.ast.LoopContract] = transform_langastLoopContract(r0.ctx, o2.contract)
           val r2: TPostResult[Context, org.sireum.lang.ast.Body] = transform_langastBody(r1.ctx, o2.body)

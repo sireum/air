@@ -125,6 +125,8 @@ object SysmlAst {
 
   @datatype class ReferencesSpecialization(val references: ISZ[Name]) extends FeatureSpecialization
 
+  @datatype class CrossingsSpecialization() extends FeatureSpecialization
+
   @datatype class RedefinitionsSpecialization(val references: ISZ[Name]) extends FeatureSpecialization
 
   /****************************************************************
@@ -261,8 +263,9 @@ object SysmlAst {
                             val isAbstract: B,
                             val isVariation: B,
                             val isReadOnly: B,
-                            val isDerived: B,
-                            val isEnd: B)
+                            val isDerived: B)
+
+  @datatype class EndUsage
 
   @datatype class UsagePrefix(val refPrefix: RefPrefix,
 
@@ -296,13 +299,20 @@ object SysmlAst {
 
   @sig trait StructureUsageElement extends OccurrenceUsageElement
 
-  @datatype class OccurrenceUsagePrefix(val refPrefix: RefPrefix,
+  @sig trait OccurrenceUsagePrefix {
+    def usageExtensions: ISZ[Name]
+  }
 
-                                        val isRef: B,
-                                        val isIndividual: B,
-                                        val isSnapshot: B,
-                                        val isTimeslice: B,
-                                        val usageExtensions: ISZ[Name])
+  @datatype class OccurrenceBasicUsagePrefix(val refPrefix: RefPrefix,
+                                             val isRef: B,
+                                             val isIndividual: B,
+                                             val isSnapshot: B,
+                                             val isTimeslice: B,
+
+                                             val usageExtensions: ISZ[Name]) extends OccurrenceUsagePrefix
+
+  @datatype class OccurrenceEndUsagePrefix(endUsagePrefix: EndUsage,
+                                           val usageExtensions: ISZ[Name]) extends OccurrenceUsagePrefix
 
   @datatype class AllocationUsage(val occurrenceUsagePrefix: OccurrenceUsagePrefix,
                                   val commonUsageElements: CommonUsageElements,

@@ -424,409 +424,415 @@ object MsgPack {
 
     val SysmlAstReferencesSpecialization: Z = 90
 
-    val SysmlAstRedefinitionsSpecialization: Z = 91
+    val SysmlAstCrossingsSpecialization: Z = 91
 
-    val SysmlAstDefinitionPrefix: Z = 92
+    val SysmlAstRedefinitionsSpecialization: Z = 92
 
-    val SysmlAstPackage: Z = 93
+    val SysmlAstDefinitionPrefix: Z = 93
 
-    val SysmlAstAttributeDefinition: Z = 94
+    val SysmlAstPackage: Z = 94
 
-    val SysmlAstOccurrenceDefinitionPrefix: Z = 95
+    val SysmlAstAttributeDefinition: Z = 95
 
-    val SysmlAstAllocationDefinition: Z = 96
+    val SysmlAstOccurrenceDefinitionPrefix: Z = 96
 
-    val SysmlAstConnectionDefinition: Z = 97
+    val SysmlAstAllocationDefinition: Z = 97
 
-    val SysmlAstEnumerationDefinition: Z = 98
+    val SysmlAstConnectionDefinition: Z = 98
 
-    val SysmlAstPartDefinition: Z = 99
+    val SysmlAstEnumerationDefinition: Z = 99
 
-    val SysmlAstPortDefinition: Z = 100
+    val SysmlAstPartDefinition: Z = 100
 
-    val SysmlAstMetadataDefinition: Z = 101
+    val SysmlAstPortDefinition: Z = 101
 
-    val SysmlAstCommonUsageElements: Z = 102
+    val SysmlAstMetadataDefinition: Z = 102
 
-    val SysmlAstRefPrefix: Z = 103
+    val SysmlAstCommonUsageElements: Z = 103
 
-    val SysmlAstUsagePrefix: Z = 104
+    val SysmlAstRefPrefix: Z = 104
 
-    val SysmlAstAttributeUsage: Z = 105
+    val SysmlAstEndUsage: Z = 105
 
-    val SysmlAstReferenceUsage: Z = 106
+    val SysmlAstUsagePrefix: Z = 106
 
-    val SysmlAstOccurrenceUsagePrefix: Z = 107
+    val SysmlAstAttributeUsage: Z = 107
 
-    val SysmlAstAllocationUsage: Z = 108
+    val SysmlAstReferenceUsage: Z = 108
 
-    val SysmlAstConnectionUsage: Z = 109
+    val SysmlAstOccurrenceBasicUsagePrefix: Z = 109
 
-    val SysmlAstItemUsage: Z = 110
+    val SysmlAstOccurrenceEndUsagePrefix: Z = 110
 
-    val SysmlAstPartUsage: Z = 111
+    val SysmlAstAllocationUsage: Z = 111
 
-    val SysmlAstPortUsage: Z = 112
+    val SysmlAstConnectionUsage: Z = 112
 
-    val SysmlAstComment: Z = 113
+    val SysmlAstItemUsage: Z = 113
 
-    val SysmlAstDocumentation: Z = 114
+    val SysmlAstPartUsage: Z = 114
 
-    val SysmlAstTextualRepresentation: Z = 115
+    val SysmlAstPortUsage: Z = 115
 
-    val SysmlAstGumboAnnotation: Z = 116
+    val SysmlAstComment: Z = 116
 
-    val Attr: Z = 117
+    val SysmlAstDocumentation: Z = 117
 
-    val ResolvedAttr: Z = 118
+    val SysmlAstTextualRepresentation: Z = 118
 
-    val ResolvedInfoPackage: Z = 119
+    val SysmlAstGumboAnnotation: Z = 119
 
-    val ResolvedInfoEnum: Z = 120
+    val Attr: Z = 120
 
-    val ResolvedInfoEnumElement: Z = 121
+    val ResolvedAttr: Z = 121
 
-    val ResolvedInfoAllocationUsage: Z = 122
+    val ResolvedInfoPackage: Z = 122
 
-    val ResolvedInfoAttributeUsage: Z = 123
+    val ResolvedInfoEnum: Z = 123
 
-    val ResolvedInfoConnectionUsage: Z = 124
+    val ResolvedInfoEnumElement: Z = 124
 
-    val ResolvedInfoItemUsage: Z = 125
+    val ResolvedInfoAllocationUsage: Z = 125
 
-    val ResolvedInfoPartUsage: Z = 126
+    val ResolvedInfoAttributeUsage: Z = 126
 
-    val ResolvedInfoPortUsage: Z = 127
+    val ResolvedInfoConnectionUsage: Z = 127
 
-    val ResolvedInfoReferenceUsage: Z = 128
+    val ResolvedInfoItemUsage: Z = 128
 
-    val TypeNamed: Z = 129
+    val ResolvedInfoPartUsage: Z = 129
 
-    val TypedAttr: Z = 130
+    val ResolvedInfoPortUsage: Z = 130
 
-    val TypedPackage: Z = 131
+    val ResolvedInfoReferenceUsage: Z = 131
 
-    val TypedName: Z = 132
+    val TypeNamed: Z = 132
 
-    val TypedEnum: Z = 133
+    val TypedAttr: Z = 133
 
-    val _langastTopUnitProgram: Z = 134
+    val TypedPackage: Z = 134
 
-    val _langastTopUnitTruthTableUnit: Z = 135
+    val TypedName: Z = 135
 
-    val _langastLoopContract: Z = 136
+    val TypedEnum: Z = 136
 
-    val _langastStmtImport: Z = 137
+    val _langastTopUnitProgram: Z = 137
 
-    val _langastStmtImportImporter: Z = 138
+    val _langastTopUnitTruthTableUnit: Z = 138
 
-    val _langastStmtImportMultiSelector: Z = 139
+    val _langastLoopContract: Z = 139
 
-    val _langastStmtImportWildcardSelector: Z = 140
+    val _langastStmtImport: Z = 140
 
-    val _langastStmtImportNamedSelector: Z = 141
+    val _langastStmtImportImporter: Z = 141
 
-    val _langastStmtVar: Z = 142
+    val _langastStmtImportMultiSelector: Z = 142
 
-    val _langastStmtVarPattern: Z = 143
+    val _langastStmtImportWildcardSelector: Z = 143
 
-    val _langastStmtSpecVar: Z = 144
+    val _langastStmtImportNamedSelector: Z = 144
 
-    val _langastStmtRsVal: Z = 145
+    val _langastStmtVar: Z = 145
 
-    val _langastStmtMethod: Z = 146
+    val _langastStmtVarPattern: Z = 146
 
-    val _langastStmtExtMethod: Z = 147
+    val _langastStmtSpecVar: Z = 147
 
-    val _langastStmtJustMethod: Z = 148
+    val _langastStmtRsVal: Z = 148
 
-    val _langastStmtSpecMethod: Z = 149
+    val _langastStmtMethod: Z = 149
 
-    val _langastStmtEnum: Z = 150
+    val _langastStmtExtMethod: Z = 150
 
-    val _langastStmtSubZ: Z = 151
+    val _langastStmtJustMethod: Z = 151
 
-    val _langastStmtObject: Z = 152
+    val _langastStmtSpecMethod: Z = 152
 
-    val _langastStmtSig: Z = 153
+    val _langastStmtEnum: Z = 153
 
-    val _langastStmtAdt: Z = 154
+    val _langastStmtSubZ: Z = 154
 
-    val _langastStmtTypeAlias: Z = 155
+    val _langastStmtObject: Z = 155
 
-    val _langastStmtAssign: Z = 156
+    val _langastStmtSig: Z = 156
 
-    val _langastStmtBlock: Z = 157
+    val _langastStmtAdt: Z = 157
 
-    val _langastStmtIf: Z = 158
+    val _langastStmtTypeAlias: Z = 158
 
-    val _langastStmtInduct: Z = 159
+    val _langastStmtAssign: Z = 159
 
-    val _langastStmtMatch: Z = 160
+    val _langastStmtBlock: Z = 160
 
-    val _langastStmtWhile: Z = 161
+    val _langastStmtIf: Z = 161
 
-    val _langastStmtFor: Z = 162
+    val _langastStmtInduct: Z = 162
 
-    val _langastStmtReturn: Z = 163
+    val _langastStmtMatch: Z = 163
 
-    val _langastStmtExpr: Z = 164
+    val _langastStmtWhile: Z = 164
 
-    val _langastStmtFact: Z = 165
+    val _langastStmtFor: Z = 165
 
-    val _langastStmtInv: Z = 166
+    val _langastStmtReturn: Z = 166
 
-    val _langastStmtTheorem: Z = 167
+    val _langastStmtExpr: Z = 167
 
-    val _langastStmtDataRefinement: Z = 168
+    val _langastStmtFact: Z = 168
 
-    val _langastStmtSpecLabel: Z = 169
+    val _langastStmtInv: Z = 169
 
-    val _langastStmtSpecBlock: Z = 170
+    val _langastStmtTheorem: Z = 170
 
-    val _langastStmtDeduceSequent: Z = 171
+    val _langastStmtDataRefinement: Z = 171
 
-    val _langastStmtDeduceSteps: Z = 172
+    val _langastStmtSpecLabel: Z = 172
 
-    val _langastStmtHavoc: Z = 173
+    val _langastStmtSpecBlock: Z = 173
 
-    val _langastMethodContractAccesses: Z = 174
+    val _langastStmtDeduceSequent: Z = 174
 
-    val _langastMethodContractClaims: Z = 175
+    val _langastStmtDeduceSteps: Z = 175
 
-    val _langastMethodContractSimple: Z = 176
+    val _langastStmtHavoc: Z = 176
 
-    val _langastMethodContractCases: Z = 177
+    val _langastMethodContractAccesses: Z = 177
 
-    val _langastMethodContractCase: Z = 178
+    val _langastMethodContractClaims: Z = 178
 
-    val _langastMethodContractInfoFlows: Z = 179
+    val _langastMethodContractSimple: Z = 179
 
-    val _langastMethodContractInfoFlowGroup: Z = 180
+    val _langastMethodContractCases: Z = 180
 
-    val _langastMethodContractInfoFlowFlow: Z = 181
+    val _langastMethodContractCase: Z = 181
 
-    val _langastMethodContractInfoFlowCase: Z = 182
+    val _langastMethodContractInfoFlows: Z = 182
 
-    val _langastSequent: Z = 183
+    val _langastMethodContractInfoFlowGroup: Z = 183
 
-    val _langastProofAst: Z = 184
+    val _langastMethodContractInfoFlowFlow: Z = 184
 
-    val _langastProofAstStepIdNum: Z = 185
+    val _langastMethodContractInfoFlowCase: Z = 185
 
-    val _langastProofAstStepIdStr: Z = 186
+    val _langastSequent: Z = 186
 
-    val _langastProofAstStepRegular: Z = 187
+    val _langastProofAst: Z = 187
 
-    val _langastProofAstStepAssume: Z = 188
+    val _langastProofAstStepIdNum: Z = 188
 
-    val _langastProofAstStepAssert: Z = 189
+    val _langastProofAstStepIdStr: Z = 189
 
-    val _langastProofAstStepSubProof: Z = 190
+    val _langastProofAstStepRegular: Z = 190
 
-    val _langastProofAstStepLet: Z = 191
+    val _langastProofAstStepAssume: Z = 191
 
-    val _langastProofAstStepLetParam: Z = 192
+    val _langastProofAstStepAssert: Z = 192
 
-    val _langastProofAstStepJustificationRef: Z = 193
+    val _langastProofAstStepSubProof: Z = 193
 
-    val _langastProofAstStepJustificationApply: Z = 194
+    val _langastProofAstStepLet: Z = 194
 
-    val _langastProofAstStepJustificationApplyNamed: Z = 195
+    val _langastProofAstStepLetParam: Z = 195
 
-    val _langastProofAstStepJustificationApplyEta: Z = 196
+    val _langastProofAstStepJustificationRef: Z = 196
 
-    val _langastCase: Z = 197
+    val _langastProofAstStepJustificationApply: Z = 197
 
-    val _langastEnumGenRangeExpr: Z = 198
+    val _langastProofAstStepJustificationApplyNamed: Z = 198
 
-    val _langastEnumGenRangeStep: Z = 199
+    val _langastProofAstStepJustificationApplyEta: Z = 199
 
-    val _langastEnumGenFor: Z = 200
+    val _langastCase: Z = 200
 
-    val _langastTypeNamed: Z = 201
+    val _langastEnumGenRangeExpr: Z = 201
 
-    val _langastTypeFun: Z = 202
+    val _langastEnumGenRangeStep: Z = 202
 
-    val _langastTypeTuple: Z = 203
+    val _langastEnumGenFor: Z = 203
 
-    val _langastPatternLiteral: Z = 204
+    val _langastTypeNamed: Z = 204
 
-    val _langastPatternLitInterpolate: Z = 205
+    val _langastTypeFun: Z = 205
 
-    val _langastPatternRef: Z = 206
+    val _langastTypeTuple: Z = 206
 
-    val _langastPatternVarBinding: Z = 207
+    val _langastPatternLiteral: Z = 207
 
-    val _langastPatternWildcard: Z = 208
+    val _langastPatternLitInterpolate: Z = 208
 
-    val _langastPatternSeqWildcard: Z = 209
+    val _langastPatternRef: Z = 209
 
-    val _langastPatternStructure: Z = 210
+    val _langastPatternVarBinding: Z = 210
 
-    val _langastExpLitB: Z = 211
+    val _langastPatternWildcard: Z = 211
 
-    val _langastExpLitC: Z = 212
+    val _langastPatternSeqWildcard: Z = 212
 
-    val _langastExpLitZ: Z = 213
+    val _langastPatternStructure: Z = 213
 
-    val _langastExpLitF32: Z = 214
+    val _langastExpLitB: Z = 214
 
-    val _langastExpLitF64: Z = 215
+    val _langastExpLitC: Z = 215
 
-    val _langastExpLitR: Z = 216
+    val _langastExpLitZ: Z = 216
 
-    val _langastExpLitString: Z = 217
+    val _langastExpLitF32: Z = 217
 
-    val _langastExpStringInterpolate: Z = 218
+    val _langastExpLitF64: Z = 218
 
-    val _langastExpThis: Z = 219
+    val _langastExpLitR: Z = 219
 
-    val _langastExpSuper: Z = 220
+    val _langastExpLitString: Z = 220
 
-    val _langastExpUnary: Z = 221
+    val _langastExpStringInterpolate: Z = 221
 
-    val _langastExpBinary: Z = 222
+    val _langastExpThis: Z = 222
 
-    val _langastExpIdent: Z = 223
+    val _langastExpSuper: Z = 223
 
-    val _langastExpEta: Z = 224
+    val _langastExpUnary: Z = 224
 
-    val _langastExpTuple: Z = 225
+    val _langastExpBinary: Z = 225
 
-    val _langastExpSelect: Z = 226
+    val _langastExpIdent: Z = 226
 
-    val _langastExpInvoke: Z = 227
+    val _langastExpEta: Z = 227
 
-    val _langastExpInvokeNamed: Z = 228
+    val _langastExpTuple: Z = 228
 
-    val _langastExpIf: Z = 229
+    val _langastExpSelect: Z = 229
 
-    val _langastExpTypeCond: Z = 230
+    val _langastExpInvoke: Z = 230
 
-    val _langastExpSym: Z = 231
+    val _langastExpInvokeNamed: Z = 231
 
-    val _langastExpFunParam: Z = 232
+    val _langastExpIf: Z = 232
 
-    val _langastExpFun: Z = 233
+    val _langastExpTypeCond: Z = 233
 
-    val _langastExpForYield: Z = 234
+    val _langastExpSym: Z = 234
 
-    val _langastExpQuantType: Z = 235
+    val _langastExpFunParam: Z = 235
 
-    val _langastExpQuantRange: Z = 236
+    val _langastExpFun: Z = 236
 
-    val _langastExpQuantEach: Z = 237
+    val _langastExpForYield: Z = 237
 
-    val _langastExpInput: Z = 238
+    val _langastExpQuantType: Z = 238
 
-    val _langastExpOld: Z = 239
+    val _langastExpQuantRange: Z = 239
 
-    val _langastExpRS: Z = 240
+    val _langastExpQuantEach: Z = 240
 
-    val _langastExpAt: Z = 241
+    val _langastExpInput: Z = 241
 
-    val _langastExpLoopIndex: Z = 242
+    val _langastExpOld: Z = 242
 
-    val _langastExpStateSeq: Z = 243
+    val _langastExpRS: Z = 243
 
-    val _langastExpStateSeqFragment: Z = 244
+    val _langastExpAt: Z = 244
 
-    val _langastExpResult: Z = 245
+    val _langastExpLoopIndex: Z = 245
 
-    val _langastExpStrictPureBlock: Z = 246
+    val _langastExpStateSeq: Z = 246
 
-    val _langastExpLabeled: Z = 247
+    val _langastExpStateSeqFragment: Z = 247
 
-    val _langastExpAssumeAgree: Z = 248
+    val _langastExpResult: Z = 248
 
-    val _langastExpAssertAgree: Z = 249
+    val _langastExpStrictPureBlock: Z = 249
 
-    val _langastExpInfoFlowInvariant: Z = 250
+    val _langastExpLabeled: Z = 250
 
-    val _langastNamedArg: Z = 251
+    val _langastExpAssumeAgree: Z = 251
 
-    val _langastId: Z = 252
+    val _langastExpAssertAgree: Z = 252
 
-    val _langastName: Z = 253
+    val _langastExpInfoFlowInvariant: Z = 253
 
-    val _langastBody: Z = 254
+    val _langastNamedArg: Z = 254
 
-    val _langastAdtParam: Z = 255
+    val _langastId: Z = 255
 
-    val _langastMethodSig: Z = 256
+    val _langastName: Z = 256
 
-    val _langastParam: Z = 257
+    val _langastBody: Z = 257
 
-    val _langastTypeParam: Z = 258
+    val _langastAdtParam: Z = 258
 
-    val _langastAttr: Z = 259
+    val _langastMethodSig: Z = 259
 
-    val _langastTypedAttr: Z = 260
+    val _langastParam: Z = 260
 
-    val _langastResolvedAttr: Z = 261
+    val _langastTypeParam: Z = 261
 
-    val _langastResolvedInfoBuiltIn: Z = 262
+    val _langastAttr: Z = 262
 
-    val _langastResolvedInfoPackage: Z = 263
+    val _langastTypedAttr: Z = 263
 
-    val _langastResolvedInfoEnum: Z = 264
+    val _langastResolvedAttr: Z = 264
 
-    val _langastResolvedInfoEnumElement: Z = 265
+    val _langastResolvedInfoBuiltIn: Z = 265
 
-    val _langastResolvedInfoObject: Z = 266
+    val _langastResolvedInfoPackage: Z = 266
 
-    val _langastResolvedInfoVar: Z = 267
+    val _langastResolvedInfoEnum: Z = 267
 
-    val _langastResolvedInfoMethod: Z = 268
+    val _langastResolvedInfoEnumElement: Z = 268
 
-    val _langastResolvedInfoMethods: Z = 269
+    val _langastResolvedInfoObject: Z = 269
 
-    val _langastResolvedInfoTuple: Z = 270
+    val _langastResolvedInfoVar: Z = 270
 
-    val _langastResolvedInfoLocalVar: Z = 271
+    val _langastResolvedInfoMethod: Z = 271
 
-    val _langastResolvedInfoFact: Z = 272
+    val _langastResolvedInfoMethods: Z = 272
 
-    val _langastResolvedInfoTheorem: Z = 273
+    val _langastResolvedInfoTuple: Z = 273
 
-    val _langastResolvedInfoInv: Z = 274
+    val _langastResolvedInfoLocalVar: Z = 274
 
-    val _langastTruthTableRow: Z = 275
+    val _langastResolvedInfoFact: Z = 275
 
-    val _langastTruthTableAssignment: Z = 276
+    val _langastResolvedInfoTheorem: Z = 276
 
-    val _langastTruthTableConclusionValidity: Z = 277
+    val _langastResolvedInfoInv: Z = 277
 
-    val _langastTruthTableConclusionTautology: Z = 278
+    val _langastTruthTableRow: Z = 278
 
-    val _langastTruthTableConclusionContradictory: Z = 279
+    val _langastTruthTableAssignment: Z = 279
 
-    val _langastTruthTableConclusionContingent: Z = 280
+    val _langastTruthTableConclusionValidity: Z = 280
 
-    val _langastTypedName: Z = 281
+    val _langastTruthTableConclusionTautology: Z = 281
 
-    val _langastTypedTuple: Z = 282
+    val _langastTruthTableConclusionContradictory: Z = 282
 
-    val _langastTypedFun: Z = 283
+    val _langastTruthTableConclusionContingent: Z = 283
 
-    val _langastTypedTypeVar: Z = 284
+    val _langastTypedName: Z = 284
 
-    val _langastTypedPackage: Z = 285
+    val _langastTypedTuple: Z = 285
 
-    val _langastTypedObject: Z = 286
+    val _langastTypedFun: Z = 286
 
-    val _langastTypedEnum: Z = 287
+    val _langastTypedTypeVar: Z = 287
 
-    val _langastTypedMethod: Z = 288
+    val _langastTypedPackage: Z = 288
 
-    val _langastTypedMethods: Z = 289
+    val _langastTypedObject: Z = 289
 
-    val _langastTypedFact: Z = 290
+    val _langastTypedEnum: Z = 290
 
-    val _langastTypedTheorem: Z = 291
+    val _langastTypedMethod: Z = 291
 
-    val _langastTypedInv: Z = 292
+    val _langastTypedMethods: Z = 292
+
+    val _langastTypedFact: Z = 293
+
+    val _langastTypedTheorem: Z = 294
+
+    val _langastTypedInv: Z = 295
 
   }
 
@@ -2122,6 +2128,7 @@ object MsgPack {
         case o: SysmlAst.TypingsSpecialization => writeSysmlAstTypingsSpecialization(o)
         case o: SysmlAst.SubsettingsSpecialization => writeSysmlAstSubsettingsSpecialization(o)
         case o: SysmlAst.ReferencesSpecialization => writeSysmlAstReferencesSpecialization(o)
+        case o: SysmlAst.CrossingsSpecialization => writeSysmlAstCrossingsSpecialization(o)
         case o: SysmlAst.RedefinitionsSpecialization => writeSysmlAstRedefinitionsSpecialization(o)
       }
     }
@@ -2139,6 +2146,10 @@ object MsgPack {
     def writeSysmlAstReferencesSpecialization(o: SysmlAst.ReferencesSpecialization): Unit = {
       writer.writeZ(Constants.SysmlAstReferencesSpecialization)
       writer.writeISZ(o.references, writeSysmlAstName _)
+    }
+
+    def writeSysmlAstCrossingsSpecialization(o: SysmlAst.CrossingsSpecialization): Unit = {
+      writer.writeZ(Constants.SysmlAstCrossingsSpecialization)
     }
 
     def writeSysmlAstRedefinitionsSpecialization(o: SysmlAst.RedefinitionsSpecialization): Unit = {
@@ -2319,7 +2330,10 @@ object MsgPack {
       writer.writeB(o.isVariation)
       writer.writeB(o.isReadOnly)
       writer.writeB(o.isDerived)
-      writer.writeB(o.isEnd)
+    }
+
+    def writeSysmlAstEndUsage(o: SysmlAst.EndUsage): Unit = {
+      writer.writeZ(Constants.SysmlAstEndUsage)
     }
 
     def writeSysmlAstUsagePrefix(o: SysmlAst.UsagePrefix): Unit = {
@@ -2372,12 +2386,25 @@ object MsgPack {
     }
 
     def writeSysmlAstOccurrenceUsagePrefix(o: SysmlAst.OccurrenceUsagePrefix): Unit = {
-      writer.writeZ(Constants.SysmlAstOccurrenceUsagePrefix)
+      o match {
+        case o: SysmlAst.OccurrenceBasicUsagePrefix => writeSysmlAstOccurrenceBasicUsagePrefix(o)
+        case o: SysmlAst.OccurrenceEndUsagePrefix => writeSysmlAstOccurrenceEndUsagePrefix(o)
+      }
+    }
+
+    def writeSysmlAstOccurrenceBasicUsagePrefix(o: SysmlAst.OccurrenceBasicUsagePrefix): Unit = {
+      writer.writeZ(Constants.SysmlAstOccurrenceBasicUsagePrefix)
       writeSysmlAstRefPrefix(o.refPrefix)
       writer.writeB(o.isRef)
       writer.writeB(o.isIndividual)
       writer.writeB(o.isSnapshot)
       writer.writeB(o.isTimeslice)
+      writer.writeISZ(o.usageExtensions, writeSysmlAstName _)
+    }
+
+    def writeSysmlAstOccurrenceEndUsagePrefix(o: SysmlAst.OccurrenceEndUsagePrefix): Unit = {
+      writer.writeZ(Constants.SysmlAstOccurrenceEndUsagePrefix)
+      writeSysmlAstEndUsage(o.endUsagePrefix)
       writer.writeISZ(o.usageExtensions, writeSysmlAstName _)
     }
 
@@ -6493,6 +6520,7 @@ object MsgPack {
         case Constants.SysmlAstTypingsSpecialization => val r = readSysmlAstTypingsSpecializationT(T); return r
         case Constants.SysmlAstSubsettingsSpecialization => val r = readSysmlAstSubsettingsSpecializationT(T); return r
         case Constants.SysmlAstReferencesSpecialization => val r = readSysmlAstReferencesSpecializationT(T); return r
+        case Constants.SysmlAstCrossingsSpecialization => val r = readSysmlAstCrossingsSpecializationT(T); return r
         case Constants.SysmlAstRedefinitionsSpecialization => val r = readSysmlAstRedefinitionsSpecializationT(T); return r
         case _ =>
           reader.error(i, s"$t is not a valid type of SysmlAst.FeatureSpecialization.")
@@ -6538,6 +6566,18 @@ object MsgPack {
       }
       val references = reader.readISZ(readSysmlAstName _)
       return SysmlAst.ReferencesSpecialization(references)
+    }
+
+    def readSysmlAstCrossingsSpecialization(): SysmlAst.CrossingsSpecialization = {
+      val r = readSysmlAstCrossingsSpecializationT(F)
+      return r
+    }
+
+    def readSysmlAstCrossingsSpecializationT(typeParsed: B): SysmlAst.CrossingsSpecialization = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstCrossingsSpecialization)
+      }
+      return SysmlAst.CrossingsSpecialization()
     }
 
     def readSysmlAstRedefinitionsSpecialization(): SysmlAst.RedefinitionsSpecialization = {
@@ -6851,8 +6891,19 @@ object MsgPack {
       val isVariation = reader.readB()
       val isReadOnly = reader.readB()
       val isDerived = reader.readB()
-      val isEnd = reader.readB()
-      return SysmlAst.RefPrefix(direction, isAbstract, isVariation, isReadOnly, isDerived, isEnd)
+      return SysmlAst.RefPrefix(direction, isAbstract, isVariation, isReadOnly, isDerived)
+    }
+
+    def readSysmlAstEndUsage(): SysmlAst.EndUsage = {
+      val r = readSysmlAstEndUsageT(F)
+      return r
+    }
+
+    def readSysmlAstEndUsageT(typeParsed: B): SysmlAst.EndUsage = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstEndUsage)
+      }
+      return SysmlAst.EndUsage()
     }
 
     def readSysmlAstUsagePrefix(): SysmlAst.UsagePrefix = {
@@ -6947,13 +6998,26 @@ object MsgPack {
     }
 
     def readSysmlAstOccurrenceUsagePrefix(): SysmlAst.OccurrenceUsagePrefix = {
-      val r = readSysmlAstOccurrenceUsagePrefixT(F)
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstOccurrenceBasicUsagePrefix => val r = readSysmlAstOccurrenceBasicUsagePrefixT(T); return r
+        case Constants.SysmlAstOccurrenceEndUsagePrefix => val r = readSysmlAstOccurrenceEndUsagePrefixT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.OccurrenceUsagePrefix.")
+          val r = readSysmlAstOccurrenceEndUsagePrefixT(T)
+          return r
+      }
+    }
+
+    def readSysmlAstOccurrenceBasicUsagePrefix(): SysmlAst.OccurrenceBasicUsagePrefix = {
+      val r = readSysmlAstOccurrenceBasicUsagePrefixT(F)
       return r
     }
 
-    def readSysmlAstOccurrenceUsagePrefixT(typeParsed: B): SysmlAst.OccurrenceUsagePrefix = {
+    def readSysmlAstOccurrenceBasicUsagePrefixT(typeParsed: B): SysmlAst.OccurrenceBasicUsagePrefix = {
       if (!typeParsed) {
-        reader.expectZ(Constants.SysmlAstOccurrenceUsagePrefix)
+        reader.expectZ(Constants.SysmlAstOccurrenceBasicUsagePrefix)
       }
       val refPrefix = readSysmlAstRefPrefix()
       val isRef = reader.readB()
@@ -6961,7 +7025,21 @@ object MsgPack {
       val isSnapshot = reader.readB()
       val isTimeslice = reader.readB()
       val usageExtensions = reader.readISZ(readSysmlAstName _)
-      return SysmlAst.OccurrenceUsagePrefix(refPrefix, isRef, isIndividual, isSnapshot, isTimeslice, usageExtensions)
+      return SysmlAst.OccurrenceBasicUsagePrefix(refPrefix, isRef, isIndividual, isSnapshot, isTimeslice, usageExtensions)
+    }
+
+    def readSysmlAstOccurrenceEndUsagePrefix(): SysmlAst.OccurrenceEndUsagePrefix = {
+      val r = readSysmlAstOccurrenceEndUsagePrefixT(F)
+      return r
+    }
+
+    def readSysmlAstOccurrenceEndUsagePrefixT(typeParsed: B): SysmlAst.OccurrenceEndUsagePrefix = {
+      if (!typeParsed) {
+        reader.expectZ(Constants.SysmlAstOccurrenceEndUsagePrefix)
+      }
+      val endUsagePrefix = readSysmlAstEndUsage()
+      val usageExtensions = reader.readISZ(readSysmlAstName _)
+      return SysmlAst.OccurrenceEndUsagePrefix(endUsagePrefix, usageExtensions)
     }
 
     def readSysmlAstAllocationUsage(): SysmlAst.AllocationUsage = {
@@ -12590,6 +12668,21 @@ object MsgPack {
     return r
   }
 
+  def fromSysmlAstCrossingsSpecialization(o: SysmlAst.CrossingsSpecialization, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstCrossingsSpecialization(o)
+    return w.result
+  }
+
+  def toSysmlAstCrossingsSpecialization(data: ISZ[U8]): Either[SysmlAst.CrossingsSpecialization, MessagePack.ErrorMsg] = {
+    def fSysmlAstCrossingsSpecialization(reader: Reader): SysmlAst.CrossingsSpecialization = {
+      val r = reader.readSysmlAstCrossingsSpecialization()
+      return r
+    }
+    val r = to(data, fSysmlAstCrossingsSpecialization _)
+    return r
+  }
+
   def fromSysmlAstRedefinitionsSpecialization(o: SysmlAst.RedefinitionsSpecialization, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
     w.writeSysmlAstRedefinitionsSpecialization(o)
@@ -12860,6 +12953,21 @@ object MsgPack {
     return r
   }
 
+  def fromSysmlAstEndUsage(o: SysmlAst.EndUsage, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstEndUsage(o)
+    return w.result
+  }
+
+  def toSysmlAstEndUsage(data: ISZ[U8]): Either[SysmlAst.EndUsage, MessagePack.ErrorMsg] = {
+    def fSysmlAstEndUsage(reader: Reader): SysmlAst.EndUsage = {
+      val r = reader.readSysmlAstEndUsage()
+      return r
+    }
+    val r = to(data, fSysmlAstEndUsage _)
+    return r
+  }
+
   def fromSysmlAstUsagePrefix(o: SysmlAst.UsagePrefix, pooling: B): ISZ[U8] = {
     val w = Writer.Default(MessagePack.writer(pooling))
     w.writeSysmlAstUsagePrefix(o)
@@ -12962,6 +13070,36 @@ object MsgPack {
       return r
     }
     val r = to(data, fSysmlAstOccurrenceUsagePrefix _)
+    return r
+  }
+
+  def fromSysmlAstOccurrenceBasicUsagePrefix(o: SysmlAst.OccurrenceBasicUsagePrefix, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstOccurrenceBasicUsagePrefix(o)
+    return w.result
+  }
+
+  def toSysmlAstOccurrenceBasicUsagePrefix(data: ISZ[U8]): Either[SysmlAst.OccurrenceBasicUsagePrefix, MessagePack.ErrorMsg] = {
+    def fSysmlAstOccurrenceBasicUsagePrefix(reader: Reader): SysmlAst.OccurrenceBasicUsagePrefix = {
+      val r = reader.readSysmlAstOccurrenceBasicUsagePrefix()
+      return r
+    }
+    val r = to(data, fSysmlAstOccurrenceBasicUsagePrefix _)
+    return r
+  }
+
+  def fromSysmlAstOccurrenceEndUsagePrefix(o: SysmlAst.OccurrenceEndUsagePrefix, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstOccurrenceEndUsagePrefix(o)
+    return w.result
+  }
+
+  def toSysmlAstOccurrenceEndUsagePrefix(data: ISZ[U8]): Either[SysmlAst.OccurrenceEndUsagePrefix, MessagePack.ErrorMsg] = {
+    def fSysmlAstOccurrenceEndUsagePrefix(reader: Reader): SysmlAst.OccurrenceEndUsagePrefix = {
+      val r = reader.readSysmlAstOccurrenceEndUsagePrefix()
+      return r
+    }
+    val r = to(data, fSysmlAstOccurrenceEndUsagePrefix _)
     return r
   }
 

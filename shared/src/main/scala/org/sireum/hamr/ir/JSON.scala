@@ -1897,6 +1897,7 @@ object JSON {
         case o: SysmlAst.TypingsSpecialization => return printSysmlAstTypingsSpecialization(o)
         case o: SysmlAst.SubsettingsSpecialization => return printSysmlAstSubsettingsSpecialization(o)
         case o: SysmlAst.ReferencesSpecialization => return printSysmlAstReferencesSpecialization(o)
+        case o: SysmlAst.CrossingsSpecialization => return printSysmlAstCrossingsSpecialization(o)
         case o: SysmlAst.RedefinitionsSpecialization => return printSysmlAstRedefinitionsSpecialization(o)
       }
     }
@@ -1919,6 +1920,12 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""SysmlAst.ReferencesSpecialization""""),
         ("references", printISZ(F, o.references, printSysmlAstName _))
+      ))
+    }
+
+    @pure def printSysmlAstCrossingsSpecialization(o: SysmlAst.CrossingsSpecialization): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.CrossingsSpecialization"""")
       ))
     }
 
@@ -2124,8 +2131,13 @@ object JSON {
         ("isAbstract", printB(o.isAbstract)),
         ("isVariation", printB(o.isVariation)),
         ("isReadOnly", printB(o.isReadOnly)),
-        ("isDerived", printB(o.isDerived)),
-        ("isEnd", printB(o.isEnd))
+        ("isDerived", printB(o.isDerived))
+      ))
+    }
+
+    @pure def printSysmlAstEndUsage(o: SysmlAst.EndUsage): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.EndUsage"""")
       ))
     }
 
@@ -2185,13 +2197,28 @@ object JSON {
     }
 
     @pure def printSysmlAstOccurrenceUsagePrefix(o: SysmlAst.OccurrenceUsagePrefix): ST = {
+      o match {
+        case o: SysmlAst.OccurrenceBasicUsagePrefix => return printSysmlAstOccurrenceBasicUsagePrefix(o)
+        case o: SysmlAst.OccurrenceEndUsagePrefix => return printSysmlAstOccurrenceEndUsagePrefix(o)
+      }
+    }
+
+    @pure def printSysmlAstOccurrenceBasicUsagePrefix(o: SysmlAst.OccurrenceBasicUsagePrefix): ST = {
       return printObject(ISZ(
-        ("type", st""""SysmlAst.OccurrenceUsagePrefix""""),
+        ("type", st""""SysmlAst.OccurrenceBasicUsagePrefix""""),
         ("refPrefix", printSysmlAstRefPrefix(o.refPrefix)),
         ("isRef", printB(o.isRef)),
         ("isIndividual", printB(o.isIndividual)),
         ("isSnapshot", printB(o.isSnapshot)),
         ("isTimeslice", printB(o.isTimeslice)),
+        ("usageExtensions", printISZ(F, o.usageExtensions, printSysmlAstName _))
+      ))
+    }
+
+    @pure def printSysmlAstOccurrenceEndUsagePrefix(o: SysmlAst.OccurrenceEndUsagePrefix): ST = {
+      return printObject(ISZ(
+        ("type", st""""SysmlAst.OccurrenceEndUsagePrefix""""),
+        ("endUsagePrefix", printSysmlAstEndUsage(o.endUsagePrefix)),
         ("usageExtensions", printISZ(F, o.usageExtensions, printSysmlAstName _))
       ))
     }
@@ -7615,11 +7642,12 @@ object JSON {
     }
 
     def parseSysmlAstFeatureSpecialization(): SysmlAst.FeatureSpecialization = {
-      val t = parser.parseObjectTypes(ISZ("SysmlAst.TypingsSpecialization", "SysmlAst.SubsettingsSpecialization", "SysmlAst.ReferencesSpecialization", "SysmlAst.RedefinitionsSpecialization"))
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.TypingsSpecialization", "SysmlAst.SubsettingsSpecialization", "SysmlAst.ReferencesSpecialization", "SysmlAst.CrossingsSpecialization", "SysmlAst.RedefinitionsSpecialization"))
       t.native match {
         case "SysmlAst.TypingsSpecialization" => val r = parseSysmlAstTypingsSpecializationT(T); return r
         case "SysmlAst.SubsettingsSpecialization" => val r = parseSysmlAstSubsettingsSpecializationT(T); return r
         case "SysmlAst.ReferencesSpecialization" => val r = parseSysmlAstReferencesSpecializationT(T); return r
+        case "SysmlAst.CrossingsSpecialization" => val r = parseSysmlAstCrossingsSpecializationT(T); return r
         case "SysmlAst.RedefinitionsSpecialization" => val r = parseSysmlAstRedefinitionsSpecializationT(T); return r
         case _ => val r = parseSysmlAstRedefinitionsSpecializationT(T); return r
       }
@@ -7668,6 +7696,18 @@ object JSON {
       val references = parser.parseISZ(parseSysmlAstName _)
       parser.parseObjectNext()
       return SysmlAst.ReferencesSpecialization(references)
+    }
+
+    def parseSysmlAstCrossingsSpecialization(): SysmlAst.CrossingsSpecialization = {
+      val r = parseSysmlAstCrossingsSpecializationT(F)
+      return r
+    }
+
+    def parseSysmlAstCrossingsSpecializationT(typeParsed: B): SysmlAst.CrossingsSpecialization = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.CrossingsSpecialization")
+      }
+      return SysmlAst.CrossingsSpecialization()
     }
 
     def parseSysmlAstRedefinitionsSpecialization(): SysmlAst.RedefinitionsSpecialization = {
@@ -8097,10 +8137,19 @@ object JSON {
       parser.parseObjectKey("isDerived")
       val isDerived = parser.parseB()
       parser.parseObjectNext()
-      parser.parseObjectKey("isEnd")
-      val isEnd = parser.parseB()
-      parser.parseObjectNext()
-      return SysmlAst.RefPrefix(direction, isAbstract, isVariation, isReadOnly, isDerived, isEnd)
+      return SysmlAst.RefPrefix(direction, isAbstract, isVariation, isReadOnly, isDerived)
+    }
+
+    def parseSysmlAstEndUsage(): SysmlAst.EndUsage = {
+      val r = parseSysmlAstEndUsageT(F)
+      return r
+    }
+
+    def parseSysmlAstEndUsageT(typeParsed: B): SysmlAst.EndUsage = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.EndUsage")
+      }
+      return SysmlAst.EndUsage()
     }
 
     def parseSysmlAstUsagePrefix(): SysmlAst.UsagePrefix = {
@@ -8197,13 +8246,22 @@ object JSON {
     }
 
     def parseSysmlAstOccurrenceUsagePrefix(): SysmlAst.OccurrenceUsagePrefix = {
-      val r = parseSysmlAstOccurrenceUsagePrefixT(F)
+      val t = parser.parseObjectTypes(ISZ("SysmlAst.OccurrenceBasicUsagePrefix", "SysmlAst.OccurrenceEndUsagePrefix"))
+      t.native match {
+        case "SysmlAst.OccurrenceBasicUsagePrefix" => val r = parseSysmlAstOccurrenceBasicUsagePrefixT(T); return r
+        case "SysmlAst.OccurrenceEndUsagePrefix" => val r = parseSysmlAstOccurrenceEndUsagePrefixT(T); return r
+        case _ => val r = parseSysmlAstOccurrenceEndUsagePrefixT(T); return r
+      }
+    }
+
+    def parseSysmlAstOccurrenceBasicUsagePrefix(): SysmlAst.OccurrenceBasicUsagePrefix = {
+      val r = parseSysmlAstOccurrenceBasicUsagePrefixT(F)
       return r
     }
 
-    def parseSysmlAstOccurrenceUsagePrefixT(typeParsed: B): SysmlAst.OccurrenceUsagePrefix = {
+    def parseSysmlAstOccurrenceBasicUsagePrefixT(typeParsed: B): SysmlAst.OccurrenceBasicUsagePrefix = {
       if (!typeParsed) {
-        parser.parseObjectType("SysmlAst.OccurrenceUsagePrefix")
+        parser.parseObjectType("SysmlAst.OccurrenceBasicUsagePrefix")
       }
       parser.parseObjectKey("refPrefix")
       val refPrefix = parseSysmlAstRefPrefix()
@@ -8223,7 +8281,25 @@ object JSON {
       parser.parseObjectKey("usageExtensions")
       val usageExtensions = parser.parseISZ(parseSysmlAstName _)
       parser.parseObjectNext()
-      return SysmlAst.OccurrenceUsagePrefix(refPrefix, isRef, isIndividual, isSnapshot, isTimeslice, usageExtensions)
+      return SysmlAst.OccurrenceBasicUsagePrefix(refPrefix, isRef, isIndividual, isSnapshot, isTimeslice, usageExtensions)
+    }
+
+    def parseSysmlAstOccurrenceEndUsagePrefix(): SysmlAst.OccurrenceEndUsagePrefix = {
+      val r = parseSysmlAstOccurrenceEndUsagePrefixT(F)
+      return r
+    }
+
+    def parseSysmlAstOccurrenceEndUsagePrefixT(typeParsed: B): SysmlAst.OccurrenceEndUsagePrefix = {
+      if (!typeParsed) {
+        parser.parseObjectType("SysmlAst.OccurrenceEndUsagePrefix")
+      }
+      parser.parseObjectKey("endUsagePrefix")
+      val endUsagePrefix = parseSysmlAstEndUsage()
+      parser.parseObjectNext()
+      parser.parseObjectKey("usageExtensions")
+      val usageExtensions = parser.parseISZ(parseSysmlAstName _)
+      parser.parseObjectNext()
+      return SysmlAst.OccurrenceEndUsagePrefix(endUsagePrefix, usageExtensions)
     }
 
     def parseSysmlAstAllocationUsage(): SysmlAst.AllocationUsage = {
@@ -15449,6 +15525,24 @@ object JSON {
     return r
   }
 
+  def fromSysmlAstCrossingsSpecialization(o: SysmlAst.CrossingsSpecialization, isCompact: B): String = {
+    val st = Printer.printSysmlAstCrossingsSpecialization(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstCrossingsSpecialization(s: String): Either[SysmlAst.CrossingsSpecialization, Json.ErrorMsg] = {
+    def fSysmlAstCrossingsSpecialization(parser: Parser): SysmlAst.CrossingsSpecialization = {
+      val r = parser.parseSysmlAstCrossingsSpecialization()
+      return r
+    }
+    val r = to(s, fSysmlAstCrossingsSpecialization _)
+    return r
+  }
+
   def fromSysmlAstRedefinitionsSpecialization(o: SysmlAst.RedefinitionsSpecialization, isCompact: B): String = {
     val st = Printer.printSysmlAstRedefinitionsSpecialization(o)
     if (isCompact) {
@@ -15773,6 +15867,24 @@ object JSON {
     return r
   }
 
+  def fromSysmlAstEndUsage(o: SysmlAst.EndUsage, isCompact: B): String = {
+    val st = Printer.printSysmlAstEndUsage(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstEndUsage(s: String): Either[SysmlAst.EndUsage, Json.ErrorMsg] = {
+    def fSysmlAstEndUsage(parser: Parser): SysmlAst.EndUsage = {
+      val r = parser.parseSysmlAstEndUsage()
+      return r
+    }
+    val r = to(s, fSysmlAstEndUsage _)
+    return r
+  }
+
   def fromSysmlAstUsagePrefix(o: SysmlAst.UsagePrefix, isCompact: B): String = {
     val st = Printer.printSysmlAstUsagePrefix(o)
     if (isCompact) {
@@ -15896,6 +16008,42 @@ object JSON {
       return r
     }
     val r = to(s, fSysmlAstOccurrenceUsagePrefix _)
+    return r
+  }
+
+  def fromSysmlAstOccurrenceBasicUsagePrefix(o: SysmlAst.OccurrenceBasicUsagePrefix, isCompact: B): String = {
+    val st = Printer.printSysmlAstOccurrenceBasicUsagePrefix(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstOccurrenceBasicUsagePrefix(s: String): Either[SysmlAst.OccurrenceBasicUsagePrefix, Json.ErrorMsg] = {
+    def fSysmlAstOccurrenceBasicUsagePrefix(parser: Parser): SysmlAst.OccurrenceBasicUsagePrefix = {
+      val r = parser.parseSysmlAstOccurrenceBasicUsagePrefix()
+      return r
+    }
+    val r = to(s, fSysmlAstOccurrenceBasicUsagePrefix _)
+    return r
+  }
+
+  def fromSysmlAstOccurrenceEndUsagePrefix(o: SysmlAst.OccurrenceEndUsagePrefix, isCompact: B): String = {
+    val st = Printer.printSysmlAstOccurrenceEndUsagePrefix(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toSysmlAstOccurrenceEndUsagePrefix(s: String): Either[SysmlAst.OccurrenceEndUsagePrefix, Json.ErrorMsg] = {
+    def fSysmlAstOccurrenceEndUsagePrefix(parser: Parser): SysmlAst.OccurrenceEndUsagePrefix = {
+      val r = parser.parseSysmlAstOccurrenceEndUsagePrefix()
+      return r
+    }
+    val r = to(s, fSysmlAstOccurrenceEndUsagePrefix _)
     return r
   }
 

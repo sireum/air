@@ -1006,6 +1006,10 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def pre_langastAnnotation(ctx: Context, o: org.sireum.lang.ast.Annotation): PreResult[Context, org.sireum.lang.ast.Annotation] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def pre_langastMethodSig(ctx: Context, o: org.sireum.lang.ast.MethodSig): PreResult[Context, org.sireum.lang.ast.MethodSig] = {
       return PreResult(ctx, T, None())
     }
@@ -5098,6 +5102,10 @@ object Transformer {
     }
 
     @pure def post_langastAdtParam(ctx: Context, o: org.sireum.lang.ast.AdtParam): TPostResult[Context, org.sireum.lang.ast.AdtParam] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def post_langastAnnotation(ctx: Context, o: org.sireum.lang.ast.Annotation): TPostResult[Context, org.sireum.lang.ast.Annotation] = {
       return TPostResult(ctx, None())
     }
 
@@ -10353,19 +10361,47 @@ import Transformer._
     }
   }
 
+  @pure def transform_langastAnnotation(ctx: Context, o: org.sireum.lang.ast.Annotation): TPostResult[Context, org.sireum.lang.ast.Annotation] = {
+    val preR: PreResult[Context, org.sireum.lang.ast.Annotation] = pp.pre_langastAnnotation(ctx, o)
+    val r: TPostResult[Context, org.sireum.lang.ast.Annotation] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Annotation = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Lit]] = transformISZ(preR.ctx, o2.args, transform_langastLit _)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(args = r0.resultOpt.getOrElse(o2.args))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: org.sireum.lang.ast.Annotation = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, org.sireum.lang.ast.Annotation] = pp.post_langastAnnotation(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transform_langastMethodSig(ctx: Context, o: org.sireum.lang.ast.MethodSig): TPostResult[Context, org.sireum.lang.ast.MethodSig] = {
     val preR: PreResult[Context, org.sireum.lang.ast.MethodSig] = pp.pre_langastMethodSig(ctx, o)
     val r: TPostResult[Context, org.sireum.lang.ast.MethodSig] = if (preR.continu) {
       val o2: org.sireum.lang.ast.MethodSig = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, org.sireum.lang.ast.Id] = transform_langastId(preR.ctx, o2.id)
-      val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(r0.ctx, o2.typeParams, transform_langastTypeParam _)
-      val r2: TPostResult[Context, IS[Z, org.sireum.lang.ast.Param]] = transformISZ(r1.ctx, o2.params, transform_langastParam _)
-      val r3: TPostResult[Context, org.sireum.lang.ast.Type] = transform_langastType(r2.ctx, o2.returnType)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
-        TPostResult(r3.ctx, Some(o2(id = r0.resultOpt.getOrElse(o2.id), typeParams = r1.resultOpt.getOrElse(o2.typeParams), params = r2.resultOpt.getOrElse(o2.params), returnType = r3.resultOpt.getOrElse(o2.returnType))))
+      val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(preR.ctx, o2.annotations, transform_langastAnnotation _)
+      val r1: TPostResult[Context, org.sireum.lang.ast.Id] = transform_langastId(r0.ctx, o2.id)
+      val r2: TPostResult[Context, IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(r1.ctx, o2.typeParams, transform_langastTypeParam _)
+      val r3: TPostResult[Context, IS[Z, org.sireum.lang.ast.Param]] = transformISZ(r2.ctx, o2.params, transform_langastParam _)
+      val r4: TPostResult[Context, org.sireum.lang.ast.Type] = transform_langastType(r3.ctx, o2.returnType)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty)
+        TPostResult(r4.ctx, Some(o2(annotations = r0.resultOpt.getOrElse(o2.annotations), id = r1.resultOpt.getOrElse(o2.id), typeParams = r2.resultOpt.getOrElse(o2.typeParams), params = r3.resultOpt.getOrElse(o2.params), returnType = r4.resultOpt.getOrElse(o2.returnType))))
       else
-        TPostResult(r3.ctx, None())
+        TPostResult(r4.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {

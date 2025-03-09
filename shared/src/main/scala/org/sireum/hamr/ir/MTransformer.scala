@@ -553,6 +553,10 @@ object MTransformer {
 
   val PostResult_langastAdtParam: MOption[org.sireum.lang.ast.AdtParam] = MNone()
 
+  val PreResult_langastAnnotation: PreResult[org.sireum.lang.ast.Annotation] = PreResult(T, MNone())
+
+  val PostResult_langastAnnotation: MOption[org.sireum.lang.ast.Annotation] = MNone()
+
   val PreResult_langastMethodSig: PreResult[org.sireum.lang.ast.MethodSig] = PreResult(T, MNone())
 
   val PostResult_langastMethodSig: MOption[org.sireum.lang.ast.MethodSig] = MNone()
@@ -2328,6 +2332,10 @@ import MTransformer._
 
   def pre_langastAdtParam(o: org.sireum.lang.ast.AdtParam): PreResult[org.sireum.lang.ast.AdtParam] = {
     return PreResult_langastAdtParam
+  }
+
+  def pre_langastAnnotation(o: org.sireum.lang.ast.Annotation): PreResult[org.sireum.lang.ast.Annotation] = {
+    return PreResult_langastAnnotation
   }
 
   def pre_langastMethodSig(o: org.sireum.lang.ast.MethodSig): PreResult[org.sireum.lang.ast.MethodSig] = {
@@ -6423,6 +6431,10 @@ import MTransformer._
 
   def post_langastAdtParam(o: org.sireum.lang.ast.AdtParam): MOption[org.sireum.lang.ast.AdtParam] = {
     return PostResult_langastAdtParam
+  }
+
+  def post_langastAnnotation(o: org.sireum.lang.ast.Annotation): MOption[org.sireum.lang.ast.Annotation] = {
+    return PostResult_langastAnnotation
   }
 
   def post_langastMethodSig(o: org.sireum.lang.ast.MethodSig): MOption[org.sireum.lang.ast.MethodSig] = {
@@ -11639,17 +11651,45 @@ import MTransformer._
     }
   }
 
+  def transform_langastAnnotation(o: org.sireum.lang.ast.Annotation): MOption[org.sireum.lang.ast.Annotation] = {
+    val preR: PreResult[org.sireum.lang.ast.Annotation] = pre_langastAnnotation(o)
+    val r: MOption[org.sireum.lang.ast.Annotation] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.Annotation = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Lit]] = transformISZ(o2.args, transform_langastLit _)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(args = r0.getOrElse(o2.args)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.Annotation = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.Annotation] = post_langastAnnotation(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transform_langastMethodSig(o: org.sireum.lang.ast.MethodSig): MOption[org.sireum.lang.ast.MethodSig] = {
     val preR: PreResult[org.sireum.lang.ast.MethodSig] = pre_langastMethodSig(o)
     val r: MOption[org.sireum.lang.ast.MethodSig] = if (preR.continu) {
       val o2: org.sireum.lang.ast.MethodSig = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
-      val r1: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)
-      val r2: MOption[IS[Z, org.sireum.lang.ast.Param]] = transformISZ(o2.params, transform_langastParam _)
-      val r3: MOption[org.sireum.lang.ast.Type] = transform_langastType(o2.returnType)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-        MSome(o2(id = r0.getOrElse(o2.id), typeParams = r1.getOrElse(o2.typeParams), params = r2.getOrElse(o2.params), returnType = r3.getOrElse(o2.returnType)))
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+      val r1: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+      val r2: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)
+      val r3: MOption[IS[Z, org.sireum.lang.ast.Param]] = transformISZ(o2.params, transform_langastParam _)
+      val r4: MOption[org.sireum.lang.ast.Type] = transform_langastType(o2.returnType)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+        MSome(o2(annotations = r0.getOrElse(o2.annotations), id = r1.getOrElse(o2.id), typeParams = r2.getOrElse(o2.typeParams), params = r3.getOrElse(o2.params), returnType = r4.getOrElse(o2.returnType)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {

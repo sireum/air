@@ -1832,7 +1832,7 @@ object MsgPack {
       writer.writeZ(Constants.GclCaseStatement)
       writer.writeString(o.id)
       writer.writeOption(o.descriptor, writer.writeString _)
-      write_langastExp(o.assumes)
+      writer.writeOption(o.assumes, write_langastExp _)
       write_langastExp(o.guarantees)
       writeAttr(o.attr)
     }
@@ -1848,7 +1848,8 @@ object MsgPack {
     def writeGclCompute(o: GclCompute): Unit = {
       writer.writeZ(Constants.GclCompute)
       writer.writeISZ(o.modifies, write_langastExp _)
-      writer.writeISZ(o.specs, writeGclComputeSpec _)
+      writer.writeISZ(o.assumes, writeGclAssume _)
+      writer.writeISZ(o.guarantees, writeGclGuarantee _)
       writer.writeISZ(o.cases, writeGclCaseStatement _)
       writer.writeISZ(o.handlers, writeGclHandle _)
       writer.writeISZ(o.flows, writeInfoFlowClause _)
@@ -1859,7 +1860,9 @@ object MsgPack {
       writer.writeZ(Constants.GclHandle)
       write_langastExp(o.port)
       writer.writeISZ(o.modifies, write_langastExp _)
+      writer.writeISZ(o.assumes, writeGclAssume _)
       writer.writeISZ(o.guarantees, writeGclGuarantee _)
+      writer.writeISZ(o.cases, writeGclCaseStatement _)
       writeAttr(o.attr)
     }
 
@@ -6009,7 +6012,7 @@ object MsgPack {
       }
       val id = reader.readString()
       val descriptor = reader.readOption(reader.readString _)
-      val assumes = read_langastExp()
+      val assumes = reader.readOption(read_langastExp _)
       val guarantees = read_langastExp()
       val attr = readAttr()
       return GclCaseStatement(id, descriptor, assumes, guarantees, attr)
@@ -6041,12 +6044,13 @@ object MsgPack {
         reader.expectZ(Constants.GclCompute)
       }
       val modifies = reader.readISZ(read_langastExp _)
-      val specs = reader.readISZ(readGclComputeSpec _)
+      val assumes = reader.readISZ(readGclAssume _)
+      val guarantees = reader.readISZ(readGclGuarantee _)
       val cases = reader.readISZ(readGclCaseStatement _)
       val handlers = reader.readISZ(readGclHandle _)
       val flows = reader.readISZ(readInfoFlowClause _)
       val attr = readAttr()
-      return GclCompute(modifies, specs, cases, handlers, flows, attr)
+      return GclCompute(modifies, assumes, guarantees, cases, handlers, flows, attr)
     }
 
     def readGclHandle(): GclHandle = {
@@ -6060,9 +6064,11 @@ object MsgPack {
       }
       val port = read_langastExp()
       val modifies = reader.readISZ(read_langastExp _)
+      val assumes = reader.readISZ(readGclAssume _)
       val guarantees = reader.readISZ(readGclGuarantee _)
+      val cases = reader.readISZ(readGclCaseStatement _)
       val attr = readAttr()
-      return GclHandle(port, modifies, guarantees, attr)
+      return GclHandle(port, modifies, assumes, guarantees, cases, attr)
     }
 
     def readGclTODO(): GclTODO = {

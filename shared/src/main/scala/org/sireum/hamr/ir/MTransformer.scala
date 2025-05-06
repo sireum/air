@@ -1077,13 +1077,13 @@ object MTransformer {
 
   val PostResultSysmlAstPartDefinition: MOption[SysmlAst.PartDefinition] = MNone()
 
-  val PreResultGclHandle: PreResult[GclHandle] = PreResult(T, MNone())
-
-  val PostResultGclHandle: MOption[GclHandle] = MNone()
-
   val PreResultSysmlAstPortDefinition: PreResult[SysmlAst.PortDefinition] = PreResult(T, MNone())
 
   val PostResultSysmlAstPortDefinition: MOption[SysmlAst.PortDefinition] = MNone()
+
+  val PreResultGclHandle: PreResult[GclHandle] = PreResult(T, MNone())
+
+  val PostResultGclHandle: MOption[GclHandle] = MNone()
 
   val PreResultBTSDispatchCondition: PreResult[BTSDispatchCondition] = PreResult(T, MNone())
 
@@ -1093,17 +1093,9 @@ object MTransformer {
 
   val PostResultSysmlAstMetadataDefinition: MOption[SysmlAst.MetadataDefinition] = MNone()
 
-  val PreResultGclTODO: PreResult[GclTODO] = PreResult(T, MNone())
-
-  val PostResultGclTODO: MOption[GclTODO] = MNone()
-
   val PreResultBTSDispatchConjunction: PreResult[BTSDispatchConjunction] = PreResult(T, MNone())
 
   val PostResultBTSDispatchConjunction: MOption[BTSDispatchConjunction] = MNone()
-
-  val PreResultGclLib: PreResult[GclLib] = PreResult(T, MNone())
-
-  val PostResultGclLib: MOption[GclLib] = MNone()
 
   val PreResultBTSDispatchTriggerStop: PreResult[BTSDispatchTriggerStop] = PreResult(T, MNone())
 
@@ -1117,9 +1109,13 @@ object MTransformer {
 
   val PostResultBTSDispatchTriggerTimeout: MOption[BTSDispatchTriggerTimeout] = MNone()
 
-  val PreResultInfoFlowClause: PreResult[InfoFlowClause] = PreResult(T, MNone())
+  val PreResultGclTODO: PreResult[GclTODO] = PreResult(T, MNone())
 
-  val PostResultInfoFlowClause: MOption[InfoFlowClause] = MNone()
+  val PostResultGclTODO: MOption[GclTODO] = MNone()
+
+  val PreResultGclLib: PreResult[GclLib] = PreResult(T, MNone())
+
+  val PostResultGclLib: MOption[GclLib] = MNone()
 
   val PreResultSysmlAstCommonUsageElements: PreResult[SysmlAst.CommonUsageElements] = PreResult(T, MNone())
 
@@ -1132,6 +1128,10 @@ object MTransformer {
   val PreResultBTSExecuteConditionTimeout: PreResult[BTSExecuteConditionTimeout] = PreResult(T, MNone())
 
   val PostResultBTSExecuteConditionTimeout: MOption[BTSExecuteConditionTimeout] = MNone()
+
+  val PreResultInfoFlowClause: PreResult[InfoFlowClause] = PreResult(T, MNone())
+
+  val PostResultInfoFlowClause: MOption[InfoFlowClause] = MNone()
 
   val PreResultBTSExecuteConditionOtherwise: PreResult[BTSExecuteConditionOtherwise] = PreResult(T, MNone())
 
@@ -4543,12 +4543,12 @@ import MTransformer._
     return PreResultSysmlAstPartDefinition
   }
 
-  def preGclHandle(o: GclHandle): PreResult[GclHandle] = {
-    return PreResultGclHandle
-  }
-
   def preSysmlAstPortDefinition(o: SysmlAst.PortDefinition): PreResult[SysmlAst.PortDefinition] = {
     return PreResultSysmlAstPortDefinition
+  }
+
+  def preGclHandle(o: GclHandle): PreResult[GclHandle] = {
+    return PreResultGclHandle
   }
 
   def preBTSTransitionCondition(o: BTSTransitionCondition): PreResult[BTSTransitionCondition] = {
@@ -4606,10 +4606,6 @@ import MTransformer._
     return PreResultSysmlAstMetadataDefinition
   }
 
-  def preGclTODO(o: GclTODO): PreResult[GclTODO] = {
-    return PreResultGclTODO
-  }
-
   def preBTSDispatchConjunction(o: BTSDispatchConjunction): PreResult[BTSDispatchConjunction] = {
     return PreResultBTSDispatchConjunction
   }
@@ -4640,10 +4636,6 @@ import MTransformer._
     }
   }
 
-  def preGclLib(o: GclLib): PreResult[GclLib] = {
-    return PreResultGclLib
-  }
-
   def preBTSDispatchTriggerStop(o: BTSDispatchTriggerStop): PreResult[BTSDispatchTriggerStop] = {
     return PreResultBTSDispatchTriggerStop
   }
@@ -4656,8 +4648,8 @@ import MTransformer._
     return PreResultBTSDispatchTriggerTimeout
   }
 
-  def preInfoFlowClause(o: InfoFlowClause): PreResult[InfoFlowClause] = {
-    return PreResultInfoFlowClause
+  def preGclTODO(o: GclTODO): PreResult[GclTODO] = {
+    return PreResultGclTODO
   }
 
   def preSysmlAstUsageElement(o: SysmlAst.UsageElement): PreResult[SysmlAst.UsageElement] = {
@@ -4714,6 +4706,10 @@ import MTransformer._
     }
   }
 
+  def preGclLib(o: GclLib): PreResult[GclLib] = {
+    return PreResultGclLib
+  }
+
   def preSysmlAstCommonUsageElements(o: SysmlAst.CommonUsageElements): PreResult[SysmlAst.CommonUsageElements] = {
     return PreResultSysmlAstCommonUsageElements
   }
@@ -4750,6 +4746,10 @@ import MTransformer._
 
   def preBTSExecuteConditionTimeout(o: BTSExecuteConditionTimeout): PreResult[BTSExecuteConditionTimeout] = {
     return PreResultBTSExecuteConditionTimeout
+  }
+
+  def preInfoFlowClause(o: InfoFlowClause): PreResult[InfoFlowClause] = {
+    return PreResultInfoFlowClause
   }
 
   def preBTSExecuteConditionOtherwise(o: BTSExecuteConditionOtherwise): PreResult[BTSExecuteConditionOtherwise] = {
@@ -8642,12 +8642,12 @@ import MTransformer._
     return PostResultSysmlAstPartDefinition
   }
 
-  def postGclHandle(o: GclHandle): MOption[GclHandle] = {
-    return PostResultGclHandle
-  }
-
   def postSysmlAstPortDefinition(o: SysmlAst.PortDefinition): MOption[SysmlAst.PortDefinition] = {
     return PostResultSysmlAstPortDefinition
+  }
+
+  def postGclHandle(o: GclHandle): MOption[GclHandle] = {
+    return PostResultGclHandle
   }
 
   def postBTSTransitionCondition(o: BTSTransitionCondition): MOption[BTSTransitionCondition] = {
@@ -8705,10 +8705,6 @@ import MTransformer._
     return PostResultSysmlAstMetadataDefinition
   }
 
-  def postGclTODO(o: GclTODO): MOption[GclTODO] = {
-    return PostResultGclTODO
-  }
-
   def postBTSDispatchConjunction(o: BTSDispatchConjunction): MOption[BTSDispatchConjunction] = {
     return PostResultBTSDispatchConjunction
   }
@@ -8739,10 +8735,6 @@ import MTransformer._
     }
   }
 
-  def postGclLib(o: GclLib): MOption[GclLib] = {
-    return PostResultGclLib
-  }
-
   def postBTSDispatchTriggerStop(o: BTSDispatchTriggerStop): MOption[BTSDispatchTriggerStop] = {
     return PostResultBTSDispatchTriggerStop
   }
@@ -8755,8 +8747,8 @@ import MTransformer._
     return PostResultBTSDispatchTriggerTimeout
   }
 
-  def postInfoFlowClause(o: InfoFlowClause): MOption[InfoFlowClause] = {
-    return PostResultInfoFlowClause
+  def postGclTODO(o: GclTODO): MOption[GclTODO] = {
+    return PostResultGclTODO
   }
 
   def postSysmlAstUsageElement(o: SysmlAst.UsageElement): MOption[SysmlAst.UsageElement] = {
@@ -8813,6 +8805,10 @@ import MTransformer._
     }
   }
 
+  def postGclLib(o: GclLib): MOption[GclLib] = {
+    return PostResultGclLib
+  }
+
   def postSysmlAstCommonUsageElements(o: SysmlAst.CommonUsageElements): MOption[SysmlAst.CommonUsageElements] = {
     return PostResultSysmlAstCommonUsageElements
   }
@@ -8849,6 +8845,10 @@ import MTransformer._
 
   def postBTSExecuteConditionTimeout(o: BTSExecuteConditionTimeout): MOption[BTSExecuteConditionTimeout] = {
     return PostResultBTSExecuteConditionTimeout
+  }
+
+  def postInfoFlowClause(o: InfoFlowClause): MOption[InfoFlowClause] = {
+    return PostResultInfoFlowClause
   }
 
   def postBTSExecuteConditionOtherwise(o: BTSExecuteConditionOtherwise): MOption[BTSExecuteConditionOtherwise] = {
@@ -14997,7 +14997,7 @@ import MTransformer._
           else
             MNone()
         case o2: GclCaseStatement =>
-          val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.assumes)
+          val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.assumes, transform_langastExp _)
           val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.guarantees)
           val r2: MOption[Attr] = transformAttr(o2.attr)
           if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
@@ -15015,22 +15015,25 @@ import MTransformer._
             MNone()
         case o2: GclCompute =>
           val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.modifies, transform_langastExp _)
-          val r1: MOption[IS[Z, GclComputeSpec]] = transformISZ(o2.specs, transformGclComputeSpec _)
-          val r2: MOption[IS[Z, GclCaseStatement]] = transformISZ(o2.cases, transformGclCaseStatement _)
-          val r3: MOption[IS[Z, GclHandle]] = transformISZ(o2.handlers, transformGclHandle _)
-          val r4: MOption[IS[Z, InfoFlowClause]] = transformISZ(o2.flows, transformInfoFlowClause _)
-          val r5: MOption[Attr] = transformAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
-            MSome(o2(modifies = r0.getOrElse(o2.modifies), specs = r1.getOrElse(o2.specs), cases = r2.getOrElse(o2.cases), handlers = r3.getOrElse(o2.handlers), flows = r4.getOrElse(o2.flows), attr = r5.getOrElse(o2.attr)))
+          val r1: MOption[IS[Z, GclAssume]] = transformISZ(o2.assumes, transformGclAssume _)
+          val r2: MOption[IS[Z, GclGuarantee]] = transformISZ(o2.guarantees, transformGclGuarantee _)
+          val r3: MOption[IS[Z, GclCaseStatement]] = transformISZ(o2.cases, transformGclCaseStatement _)
+          val r4: MOption[IS[Z, GclHandle]] = transformISZ(o2.handlers, transformGclHandle _)
+          val r5: MOption[IS[Z, InfoFlowClause]] = transformISZ(o2.flows, transformInfoFlowClause _)
+          val r6: MOption[Attr] = transformAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty || r6.nonEmpty)
+            MSome(o2(modifies = r0.getOrElse(o2.modifies), assumes = r1.getOrElse(o2.assumes), guarantees = r2.getOrElse(o2.guarantees), cases = r3.getOrElse(o2.cases), handlers = r4.getOrElse(o2.handlers), flows = r5.getOrElse(o2.flows), attr = r6.getOrElse(o2.attr)))
           else
             MNone()
         case o2: GclHandle =>
           val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.port)
           val r1: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.modifies, transform_langastExp _)
-          val r2: MOption[IS[Z, GclGuarantee]] = transformISZ(o2.guarantees, transformGclGuarantee _)
-          val r3: MOption[Attr] = transformAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(o2(port = r0.getOrElse(o2.port), modifies = r1.getOrElse(o2.modifies), guarantees = r2.getOrElse(o2.guarantees), attr = r3.getOrElse(o2.attr)))
+          val r2: MOption[IS[Z, GclAssume]] = transformISZ(o2.assumes, transformGclAssume _)
+          val r3: MOption[IS[Z, GclGuarantee]] = transformISZ(o2.guarantees, transformGclGuarantee _)
+          val r4: MOption[IS[Z, GclCaseStatement]] = transformISZ(o2.cases, transformGclCaseStatement _)
+          val r5: MOption[Attr] = transformAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
+            MSome(o2(port = r0.getOrElse(o2.port), modifies = r1.getOrElse(o2.modifies), assumes = r2.getOrElse(o2.assumes), guarantees = r3.getOrElse(o2.guarantees), cases = r4.getOrElse(o2.cases), attr = r5.getOrElse(o2.attr)))
           else
             MNone()
         case o2: GclTODO =>
@@ -16634,7 +16637,7 @@ import MTransformer._
     val r: MOption[GclCaseStatement] = if (preR.continu) {
       val o2: GclCaseStatement = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.assumes)
+      val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.assumes, transform_langastExp _)
       val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.guarantees)
       val r2: MOption[Attr] = transformAttr(o2.attr)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
@@ -16897,13 +16900,14 @@ import MTransformer._
       val o2: GclCompute = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.modifies, transform_langastExp _)
-      val r1: MOption[IS[Z, GclComputeSpec]] = transformISZ(o2.specs, transformGclComputeSpec _)
-      val r2: MOption[IS[Z, GclCaseStatement]] = transformISZ(o2.cases, transformGclCaseStatement _)
-      val r3: MOption[IS[Z, GclHandle]] = transformISZ(o2.handlers, transformGclHandle _)
-      val r4: MOption[IS[Z, InfoFlowClause]] = transformISZ(o2.flows, transformInfoFlowClause _)
-      val r5: MOption[Attr] = transformAttr(o2.attr)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
-        MSome(o2(modifies = r0.getOrElse(o2.modifies), specs = r1.getOrElse(o2.specs), cases = r2.getOrElse(o2.cases), handlers = r3.getOrElse(o2.handlers), flows = r4.getOrElse(o2.flows), attr = r5.getOrElse(o2.attr)))
+      val r1: MOption[IS[Z, GclAssume]] = transformISZ(o2.assumes, transformGclAssume _)
+      val r2: MOption[IS[Z, GclGuarantee]] = transformISZ(o2.guarantees, transformGclGuarantee _)
+      val r3: MOption[IS[Z, GclCaseStatement]] = transformISZ(o2.cases, transformGclCaseStatement _)
+      val r4: MOption[IS[Z, GclHandle]] = transformISZ(o2.handlers, transformGclHandle _)
+      val r5: MOption[IS[Z, InfoFlowClause]] = transformISZ(o2.flows, transformInfoFlowClause _)
+      val r6: MOption[Attr] = transformAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty || r6.nonEmpty)
+        MSome(o2(modifies = r0.getOrElse(o2.modifies), assumes = r1.getOrElse(o2.assumes), guarantees = r2.getOrElse(o2.guarantees), cases = r3.getOrElse(o2.cases), handlers = r4.getOrElse(o2.handlers), flows = r5.getOrElse(o2.flows), attr = r6.getOrElse(o2.attr)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -17013,36 +17017,6 @@ import MTransformer._
     }
   }
 
-  def transformGclHandle(o: GclHandle): MOption[GclHandle] = {
-    val preR: PreResult[GclHandle] = preGclHandle(o)
-    val r: MOption[GclHandle] = if (preR.continu) {
-      val o2: GclHandle = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.port)
-      val r1: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.modifies, transform_langastExp _)
-      val r2: MOption[IS[Z, GclGuarantee]] = transformISZ(o2.guarantees, transformGclGuarantee _)
-      val r3: MOption[Attr] = transformAttr(o2.attr)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-        MSome(o2(port = r0.getOrElse(o2.port), modifies = r1.getOrElse(o2.modifies), guarantees = r2.getOrElse(o2.guarantees), attr = r3.getOrElse(o2.attr)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: GclHandle = r.getOrElse(o)
-    val postR: MOption[GclHandle] = postGclHandle(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
   def transformSysmlAstPortDefinition(o: SysmlAst.PortDefinition): MOption[SysmlAst.PortDefinition] = {
     val preR: PreResult[SysmlAst.PortDefinition] = preSysmlAstPortDefinition(o)
     val r: MOption[SysmlAst.PortDefinition] = if (preR.continu) {
@@ -17066,6 +17040,38 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: SysmlAst.PortDefinition = r.getOrElse(o)
     val postR: MOption[SysmlAst.PortDefinition] = postSysmlAstPortDefinition(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformGclHandle(o: GclHandle): MOption[GclHandle] = {
+    val preR: PreResult[GclHandle] = preGclHandle(o)
+    val r: MOption[GclHandle] = if (preR.continu) {
+      val o2: GclHandle = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.port)
+      val r1: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.modifies, transform_langastExp _)
+      val r2: MOption[IS[Z, GclAssume]] = transformISZ(o2.assumes, transformGclAssume _)
+      val r3: MOption[IS[Z, GclGuarantee]] = transformISZ(o2.guarantees, transformGclGuarantee _)
+      val r4: MOption[IS[Z, GclCaseStatement]] = transformISZ(o2.cases, transformGclCaseStatement _)
+      val r5: MOption[Attr] = transformAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
+        MSome(o2(port = r0.getOrElse(o2.port), modifies = r1.getOrElse(o2.modifies), assumes = r2.getOrElse(o2.assumes), guarantees = r3.getOrElse(o2.guarantees), cases = r4.getOrElse(o2.cases), attr = r5.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: GclHandle = r.getOrElse(o)
+    val postR: MOption[GclHandle] = postGclHandle(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -17191,32 +17197,6 @@ import MTransformer._
     }
   }
 
-  def transformGclTODO(o: GclTODO): MOption[GclTODO] = {
-    val preR: PreResult[GclTODO] = preGclTODO(o)
-    val r: MOption[GclTODO] = if (preR.continu) {
-      val o2: GclTODO = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: GclTODO = r.getOrElse(o)
-    val postR: MOption[GclTODO] = postGclTODO(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
   def transformBTSDispatchConjunction(o: BTSDispatchConjunction): MOption[BTSDispatchConjunction] = {
     val preR: PreResult[BTSDispatchConjunction] = preBTSDispatchConjunction(o)
     val r: MOption[BTSDispatchConjunction] = if (preR.continu) {
@@ -17278,35 +17258,6 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: BTSDispatchTrigger = r.getOrElse(o)
     val postR: MOption[BTSDispatchTrigger] = postBTSDispatchTrigger(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformGclLib(o: GclLib): MOption[GclLib] = {
-    val preR: PreResult[GclLib] = preGclLib(o)
-    val r: MOption[GclLib] = if (preR.continu) {
-      val o2: GclLib = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[Name] = transformName(o2.containingPackage)
-      val r1: MOption[IS[Z, GclMethod]] = transformISZ(o2.methods, transformGclMethod _)
-      val r2: MOption[Attr] = transformAttr(o2.attr)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(containingPackage = r0.getOrElse(o2.containingPackage), methods = r1.getOrElse(o2.methods), attr = r2.getOrElse(o2.attr)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: GclLib = r.getOrElse(o)
-    val postR: MOption[GclLib] = postGclLib(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -17397,16 +17348,13 @@ import MTransformer._
     }
   }
 
-  def transformInfoFlowClause(o: InfoFlowClause): MOption[InfoFlowClause] = {
-    val preR: PreResult[InfoFlowClause] = preInfoFlowClause(o)
-    val r: MOption[InfoFlowClause] = if (preR.continu) {
-      val o2: InfoFlowClause = preR.resultOpt.getOrElse(o)
+  def transformGclTODO(o: GclTODO): MOption[GclTODO] = {
+    val preR: PreResult[GclTODO] = preGclTODO(o)
+    val r: MOption[GclTODO] = if (preR.continu) {
+      val o2: GclTODO = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.from, transform_langastExp _)
-      val r1: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.to, transform_langastExp _)
-      val r2: MOption[Attr] = transformAttr(o2.attr)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(from = r0.getOrElse(o2.from), to = r1.getOrElse(o2.to), attr = r2.getOrElse(o2.attr)))
+      if (hasChanged)
+        MSome(o2)
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -17415,8 +17363,8 @@ import MTransformer._
       MNone()
     }
     val hasChanged: B = r.nonEmpty
-    val o2: InfoFlowClause = r.getOrElse(o)
-    val postR: MOption[InfoFlowClause] = postInfoFlowClause(o2)
+    val o2: GclTODO = r.getOrElse(o)
+    val postR: MOption[GclTODO] = postGclTODO(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -17493,6 +17441,35 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: SysmlAst.UsageElement = r.getOrElse(o)
     val postR: MOption[SysmlAst.UsageElement] = postSysmlAstUsageElement(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformGclLib(o: GclLib): MOption[GclLib] = {
+    val preR: PreResult[GclLib] = preGclLib(o)
+    val r: MOption[GclLib] = if (preR.continu) {
+      val o2: GclLib = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Name] = transformName(o2.containingPackage)
+      val r1: MOption[IS[Z, GclMethod]] = transformISZ(o2.methods, transformGclMethod _)
+      val r2: MOption[Attr] = transformAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(containingPackage = r0.getOrElse(o2.containingPackage), methods = r1.getOrElse(o2.methods), attr = r2.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: GclLib = r.getOrElse(o)
+    val postR: MOption[GclLib] = postGclLib(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -17619,6 +17596,35 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: BTSExecuteConditionTimeout = r.getOrElse(o)
     val postR: MOption[BTSExecuteConditionTimeout] = postBTSExecuteConditionTimeout(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformInfoFlowClause(o: InfoFlowClause): MOption[InfoFlowClause] = {
+    val preR: PreResult[InfoFlowClause] = preInfoFlowClause(o)
+    val r: MOption[InfoFlowClause] = if (preR.continu) {
+      val o2: InfoFlowClause = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.from, transform_langastExp _)
+      val r1: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.to, transform_langastExp _)
+      val r2: MOption[Attr] = transformAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(from = r0.getOrElse(o2.from), to = r1.getOrElse(o2.to), attr = r2.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: InfoFlowClause = r.getOrElse(o)
+    val postR: MOption[InfoFlowClause] = postInfoFlowClause(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

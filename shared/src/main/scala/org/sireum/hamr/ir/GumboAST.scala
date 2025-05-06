@@ -184,7 +184,7 @@ import org.sireum.message.Position
 
 @datatype class GclCaseStatement(val id: String,
                                  val descriptor: Option[String],
-                                 val assumes: org.sireum.lang.ast.Exp,
+                                 val assumes: Option[org.sireum.lang.ast.Exp],
                                  val guarantees: org.sireum.lang.ast.Exp,
                                  @hidden val attr: Attr) extends GclSymbol {
   @strictpure override def posOpt: Option[Position] = attr.posOpt
@@ -223,7 +223,8 @@ import org.sireum.message.Position
 }
 
 @datatype class GclCompute(val modifies: ISZ[org.sireum.lang.ast.Exp],
-                           val specs: ISZ[GclComputeSpec],
+                           val assumes: ISZ[GclAssume],
+                           val guarantees: ISZ[GclGuarantee],
                            val cases: ISZ[GclCaseStatement],
                            val handlers: ISZ[GclHandle],
                            val flows: ISZ[InfoFlowClause],
@@ -240,9 +241,13 @@ import org.sireum.message.Position
       if (modifies.nonEmpty) Some(
         st"""Modifies(${(modifies, ", ")})""")
       else None()
-    val sspecs: Option[ST] =
-      if (specs.nonEmpty) Some(
-        st"""${(specs, "\n")}""")
+    val sassumes: Option[ST] =
+      if (assumes.nonEmpty) Some(
+        st"${(assumes, "\n")}")
+      else None()
+    val sguarantees: Option[ST] =
+      if (guarantees.nonEmpty) Some(
+        st"${(guarantees, "\n")}")
       else None()
     val scases: Option[ST] =
       if (cases.nonEmpty) Some(
@@ -261,7 +266,8 @@ import org.sireum.message.Position
 
     return (
       st"""$smodifies
-          |$sspecs
+          |$sassumes
+          |$sguarantees
           |$scases
           |$shandles
           |$sflows""")
@@ -270,7 +276,9 @@ import org.sireum.message.Position
 
 @datatype class GclHandle(val port: org.sireum.lang.ast.Exp,
                           val modifies: ISZ[org.sireum.lang.ast.Exp],
+                          val assumes: ISZ[GclAssume],
                           val guarantees: ISZ[GclGuarantee],
+                          val cases: ISZ[GclCaseStatement],
                           @hidden val attr: Attr) extends GclSymbol {
   @strictpure override def posOpt: Option[Position] = attr.posOpt
 
@@ -283,15 +291,25 @@ import org.sireum.message.Position
       if (modifies.nonEmpty) Some(
         st"""Modifies(${(modifies, ", ")})""")
       else None()
+    val sassumes: Option[ST] =
+      if (assumes.nonEmpty) Some(
+        st"${(assumes, "\n")}")
+      else None()
     val sguarantees: Option[ST] =
       if (guarantees.nonEmpty) Some(
-        st"""${(guarantees, "\n")}""")
+        st"${(guarantees, "\n")}")
       else None()
-    return (
+    val scases: Option[ST] =
+      if (cases.nonEmpty) Some(
+        st"""compute_cases
+            |  ${(cases, "\n")}""")
+      else None()
+          return (
       st"""handle $port:
           |  $smodifies
+          |  $sassumes
           |  $sguarantees
-          |""")
+          |  $scases""")
   }
 }
 

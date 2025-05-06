@@ -1538,7 +1538,7 @@ object JSON {
         ("type", st""""GclCaseStatement""""),
         ("id", printString(o.id)),
         ("descriptor", printOption(T, o.descriptor, printString _)),
-        ("assumes", print_langastExp(o.assumes)),
+        ("assumes", printOption(F, o.assumes, print_langastExp _)),
         ("guarantees", print_langastExp(o.guarantees)),
         ("attr", printAttr(o.attr))
       ))
@@ -1558,7 +1558,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""GclCompute""""),
         ("modifies", printISZ(F, o.modifies, print_langastExp _)),
-        ("specs", printISZ(F, o.specs, printGclComputeSpec _)),
+        ("assumes", printISZ(F, o.assumes, printGclAssume _)),
+        ("guarantees", printISZ(F, o.guarantees, printGclGuarantee _)),
         ("cases", printISZ(F, o.cases, printGclCaseStatement _)),
         ("handlers", printISZ(F, o.handlers, printGclHandle _)),
         ("flows", printISZ(F, o.flows, printInfoFlowClause _)),
@@ -1571,7 +1572,9 @@ object JSON {
         ("type", st""""GclHandle""""),
         ("port", print_langastExp(o.port)),
         ("modifies", printISZ(F, o.modifies, print_langastExp _)),
+        ("assumes", printISZ(F, o.assumes, printGclAssume _)),
         ("guarantees", printISZ(F, o.guarantees, printGclGuarantee _)),
+        ("cases", printISZ(F, o.cases, printGclCaseStatement _)),
         ("attr", printAttr(o.attr))
       ))
     }
@@ -6994,7 +6997,7 @@ object JSON {
       val descriptor = parser.parseOption(parser.parseString _)
       parser.parseObjectNext()
       parser.parseObjectKey("assumes")
-      val assumes = parse_langastExp()
+      val assumes = parser.parseOption(parse_langastExp _)
       parser.parseObjectNext()
       parser.parseObjectKey("guarantees")
       val guarantees = parse_langastExp()
@@ -7041,8 +7044,11 @@ object JSON {
       parser.parseObjectKey("modifies")
       val modifies = parser.parseISZ(parse_langastExp _)
       parser.parseObjectNext()
-      parser.parseObjectKey("specs")
-      val specs = parser.parseISZ(parseGclComputeSpec _)
+      parser.parseObjectKey("assumes")
+      val assumes = parser.parseISZ(parseGclAssume _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("guarantees")
+      val guarantees = parser.parseISZ(parseGclGuarantee _)
       parser.parseObjectNext()
       parser.parseObjectKey("cases")
       val cases = parser.parseISZ(parseGclCaseStatement _)
@@ -7056,7 +7062,7 @@ object JSON {
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclCompute(modifies, specs, cases, handlers, flows, attr)
+      return GclCompute(modifies, assumes, guarantees, cases, handlers, flows, attr)
     }
 
     def parseGclHandle(): GclHandle = {
@@ -7074,13 +7080,19 @@ object JSON {
       parser.parseObjectKey("modifies")
       val modifies = parser.parseISZ(parse_langastExp _)
       parser.parseObjectNext()
+      parser.parseObjectKey("assumes")
+      val assumes = parser.parseISZ(parseGclAssume _)
+      parser.parseObjectNext()
       parser.parseObjectKey("guarantees")
       val guarantees = parser.parseISZ(parseGclGuarantee _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("cases")
+      val cases = parser.parseISZ(parseGclCaseStatement _)
       parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclHandle(port, modifies, guarantees, attr)
+      return GclHandle(port, modifies, assumes, guarantees, cases, attr)
     }
 
     def parseGclTODO(): GclTODO = {

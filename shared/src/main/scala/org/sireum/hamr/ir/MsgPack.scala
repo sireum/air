@@ -2331,10 +2331,10 @@ object MsgPack {
     def writeSysmlAstRefPrefix(o: SysmlAst.RefPrefix): Unit = {
       writer.writeZ(Constants.SysmlAstRefPrefix)
       writer.writeOption(o.direction, writeSysmlAstFeatureDirectionType _)
+      writer.writeB(o.isDerived)
       writer.writeB(o.isAbstract)
       writer.writeB(o.isVariation)
-      writer.writeB(o.isReadOnly)
-      writer.writeB(o.isDerived)
+      writer.writeB(o.isConstant)
     }
 
     def writeSysmlAstEndUsage(o: SysmlAst.EndUsage): Unit = {
@@ -6903,11 +6903,11 @@ object MsgPack {
         reader.expectZ(Constants.SysmlAstRefPrefix)
       }
       val direction = reader.readOption(readSysmlAstFeatureDirectionType _)
+      val isDerived = reader.readB()
       val isAbstract = reader.readB()
       val isVariation = reader.readB()
-      val isReadOnly = reader.readB()
-      val isDerived = reader.readB()
-      return SysmlAst.RefPrefix(direction, isAbstract, isVariation, isReadOnly, isDerived)
+      val isConstant = reader.readB()
+      return SysmlAst.RefPrefix(direction, isDerived, isAbstract, isVariation, isConstant)
     }
 
     def readSysmlAstEndUsage(): SysmlAst.EndUsage = {

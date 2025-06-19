@@ -260,10 +260,10 @@ object SysmlAst {
   @sig trait NonOccurrenceUsageElement extends NonOccurrenceUsageMember with UsageElement
 
   @datatype class RefPrefix(val direction: Option[FeatureDirection.Type],
+                            val isDerived: B,
                             val isAbstract: B,
                             val isVariation: B,
-                            val isReadOnly: B,
-                            val isDerived: B)
+                            val isConstant: B)
 
   @datatype class EndUsage
 

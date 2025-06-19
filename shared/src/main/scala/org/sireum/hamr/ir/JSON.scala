@@ -2131,10 +2131,10 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""SysmlAst.RefPrefix""""),
         ("direction", printOption(F, o.direction, printSysmlAstFeatureDirectionType _)),
+        ("isDerived", printB(o.isDerived)),
         ("isAbstract", printB(o.isAbstract)),
         ("isVariation", printB(o.isVariation)),
-        ("isReadOnly", printB(o.isReadOnly)),
-        ("isDerived", printB(o.isDerived))
+        ("isConstant", printB(o.isConstant))
       ))
     }
 
@@ -8147,19 +8147,19 @@ object JSON {
       parser.parseObjectKey("direction")
       val direction = parser.parseOption(parseSysmlAstFeatureDirectionType _)
       parser.parseObjectNext()
+      parser.parseObjectKey("isDerived")
+      val isDerived = parser.parseB()
+      parser.parseObjectNext()
       parser.parseObjectKey("isAbstract")
       val isAbstract = parser.parseB()
       parser.parseObjectNext()
       parser.parseObjectKey("isVariation")
       val isVariation = parser.parseB()
       parser.parseObjectNext()
-      parser.parseObjectKey("isReadOnly")
-      val isReadOnly = parser.parseB()
+      parser.parseObjectKey("isConstant")
+      val isConstant = parser.parseB()
       parser.parseObjectNext()
-      parser.parseObjectKey("isDerived")
-      val isDerived = parser.parseB()
-      parser.parseObjectNext()
-      return SysmlAst.RefPrefix(direction, isAbstract, isVariation, isReadOnly, isDerived)
+      return SysmlAst.RefPrefix(direction, isDerived, isAbstract, isVariation, isConstant)
     }
 
     def parseSysmlAstEndUsage(): SysmlAst.EndUsage = {

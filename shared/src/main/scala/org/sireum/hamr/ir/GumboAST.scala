@@ -32,6 +32,10 @@ import org.sireum.message.Position
   def posOpt: Option[Position]
 }
 
+@sig trait GclNamedElement extends GclSymbol {
+  @pure def id: String
+}
+
 @datatype class GclSubclause(val state: ISZ[GclStateVar],
                              val methods: ISZ[GclMethod],
                              val invariants: ISZ[GclInvariant],
@@ -81,7 +85,9 @@ import org.sireum.message.Position
   }
 }
 
-@datatype class GclMethod(val method: org.sireum.lang.ast.Stmt.Method) extends GclSymbol {
+@datatype class GclMethod(val method: org.sireum.lang.ast.Stmt.Method) extends GclNamedElement {
+  @strictpure override def id: String = method.sig.id.value
+
   @strictpure override def posOpt: Option[Position] = method.posOpt
 
   override def string: String = {
@@ -91,7 +97,9 @@ import org.sireum.message.Position
 
 @datatype class GclStateVar(val name: String,
                             val classifier: String,
-                            @hidden val attr: Attr) extends GclSymbol {
+                            @hidden val attr: Attr) extends GclNamedElement {
+
+  @strictpure override def id: String = name
 
   @strictpure override def posOpt: Option[Position] = attr.posOpt
 
@@ -104,9 +112,7 @@ import org.sireum.message.Position
   }
 }
 
-@sig trait GclClause extends GclSymbol {
-  def id: String
-
+@sig trait GclClause extends GclNamedElement {
   def descriptor: Option[String]
 }
 
@@ -186,7 +192,7 @@ import org.sireum.message.Position
                                  val descriptor: Option[String],
                                  val assumes: Option[org.sireum.lang.ast.Exp],
                                  val guarantees: org.sireum.lang.ast.Exp,
-                                 @hidden val attr: Attr) extends GclSymbol {
+                                 @hidden val attr: Attr) extends GclNamedElement {
   @strictpure override def posOpt: Option[Position] = attr.posOpt
 }
 

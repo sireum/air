@@ -193,6 +193,7 @@ import org.sireum.message.Position
 @datatype class GclInitialize(val modifies: ISZ[org.sireum.lang.ast.Exp],
                               val guarantees: ISZ[GclGuarantee],
                               val flows: ISZ[InfoFlowClause],
+                              val gumboTables: ISZ[GclGumboTable],
                               @hidden val attr: Attr) extends GclSymbol {
   @strictpure override def posOpt: Option[Position] = attr.posOpt
 
@@ -215,6 +216,11 @@ import org.sireum.message.Position
         st"""flows
             |  ${(flows, "\n")}""")
       else None()
+    val sgumboTables: Option[ST] =
+      if(gumboTables.nonEmpty) Some(
+        st"""GumboTables
+            ${(gumboTables,"\n")}""")
+      else None()
     return (
       st"""$smodifies
           |$sguarantees
@@ -228,6 +234,7 @@ import org.sireum.message.Position
                            val cases: ISZ[GclCaseStatement],
                            val handlers: ISZ[GclHandle],
                            val flows: ISZ[InfoFlowClause],
+                           val gumboTables: ISZ[GclGumboTable],
                            @hidden val attr: Attr) extends GclSymbol {
   @strictpure override def posOpt: Option[Position] = attr.posOpt
 
@@ -263,6 +270,11 @@ import org.sireum.message.Position
         st"""InfoFlows(
             |  ${(flows, "\n")})""")
       else None()
+    val sgumboTables: Option[ST] = //Sierra: var Added
+      if (cases.nonEmpty) Some (
+        st"""GumboTables(
+            ${(gumboTables,"\n")})""")
+      else None()
 
     return (
       st"""$smodifies
@@ -270,7 +282,87 @@ import org.sireum.message.Position
           |$sguarantees
           |$scases
           |$shandles
-          |$sflows""")
+          |$sflows
+          |$sgumboTables""") // Sierra: Appended tables.
+  }
+}
+
+@datatype class GclGumboTable(val table: GclNormalTable, // Sierra: Added datatype, table attribute will need to be modified once inverse and nested are added.
+                           @hidden val attr: Attr) extends GclSymbol {
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @pure def prettyST: ST = {
+    val stable: ST = // Sierra: table instead of specific as it could be one of three types.
+        st"""NormalTable(${(table,"\n ")})"""
+
+    return (
+      st"""$stable""")
+  }
+}
+
+@datatype class GclNormalTable(val id: String, // Sierra: Added datatype
+                               val descriptor: Option[String],
+                               val horizontalPredicates: ISZ[org.sireum.lang.ast.Exp],
+                               val verticalPredicates: ISZ[org.sireum.lang.ast.Exp],
+                               val resultRows: ISZ[GclResultRow],
+                              @hidden val attr: Attr) extends GclSymbol {
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @pure def prettyST: ST = {
+    val sdescriptor: Option[ST] = // Sierra: table instead of specific as it could be one of three types.
+      if(descriptor.nonEmpty) Some(
+        st"""$descriptor""")
+      else None()
+    val shorizontalPredicates: Option[ST] =
+      if(horizontalPredicates.nonEmpty) Some(
+        st"""HorizontalPredicates(${(horizontalPredicates)})"""
+      )
+      else None()
+
+    val sverticalPredicates: Option[ST] =
+      if(verticalPredicates.nonEmpty) Some(
+        st"""verticalPredicates(${(verticalPredicates)})"""
+      )
+      else None()
+
+    val sresultRows: Option[ST] =
+      if(resultRows.nonEmpty) Some(
+        st"""verticalPredicates(${(resultRows)})"""
+      )
+      else None()
+
+    return (
+      st"""$id
+           $sdescriptor
+           $shorizontalPredicates
+           $sverticalPredicates
+           $sresultRows
+        """)
+  }
+}
+
+@datatype class GclResultRow(val results: ISZ[org.sireum.lang.ast.Exp], // Sierra: Added datatype, table attribute will need to be modified once inverse and nested are added.
+                              @hidden val attr: Attr) extends GclSymbol {
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @pure def prettyST: ST = {
+    val sresults: Option[ST] =
+      if(results.nonEmpty) Some(
+        st"""verticalPredicates(${(results)})"""
+      )
+      else None()
+
+    return (
+      st"""$results""")
   }
 }
 

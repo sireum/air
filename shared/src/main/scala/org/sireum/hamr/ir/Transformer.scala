@@ -2521,6 +2521,27 @@ object Transformer {
            case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclSymbol]())
           }
           return r
+        case o: GclGumboTable =>
+          val r: PreResult[Context, GclSymbol] = preGclGumboTable(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclSymbol)) => PreResult(preCtx, continu, Some[GclSymbol](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclSymbol")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclSymbol]())
+          }
+          return r
+        case o: GclNormalTable =>
+          val r: PreResult[Context, GclSymbol] = preGclNormalTable(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclSymbol)) => PreResult(preCtx, continu, Some[GclSymbol](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclSymbol")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclSymbol]())
+          }
+          return r
+        case o: GclResultRow =>
+          val r: PreResult[Context, GclSymbol] = preGclResultRow(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclSymbol)) => PreResult(preCtx, continu, Some[GclSymbol](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclSymbol")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclSymbol]())
+          }
+          return r
         case o: GclHandle =>
           val r: PreResult[Context, GclSymbol] = preGclHandle(ctx, o) match {
            case PreResult(preCtx, continu, Some(r: GclSymbol)) => PreResult(preCtx, continu, Some[GclSymbol](r))
@@ -2554,6 +2575,60 @@ object Transformer {
 
     @pure def preSysmlAstEnumeratedValue(ctx: Context, o: SysmlAst.EnumeratedValue): PreResult[Context, SysmlAst.EnumeratedValue] = {
       return PreResult(ctx, T, None())
+    }
+
+    @pure def preGclNamedElement(ctx: Context, o: GclNamedElement): PreResult[Context, GclNamedElement] = {
+      o match {
+        case o: GclMethod =>
+          val r: PreResult[Context, GclNamedElement] = preGclMethod(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclNamedElement)) => PreResult(preCtx, continu, Some[GclNamedElement](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclNamedElement]())
+          }
+          return r
+        case o: GclStateVar =>
+          val r: PreResult[Context, GclNamedElement] = preGclStateVar(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclNamedElement)) => PreResult(preCtx, continu, Some[GclNamedElement](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclNamedElement]())
+          }
+          return r
+        case o: GclInvariant =>
+          val r: PreResult[Context, GclNamedElement] = preGclInvariant(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclNamedElement)) => PreResult(preCtx, continu, Some[GclNamedElement](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclNamedElement]())
+          }
+          return r
+        case o: GclAssume =>
+          val r: PreResult[Context, GclNamedElement] = preGclAssume(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclNamedElement)) => PreResult(preCtx, continu, Some[GclNamedElement](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclNamedElement]())
+          }
+          return r
+        case o: GclGuarantee =>
+          val r: PreResult[Context, GclNamedElement] = preGclGuarantee(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclNamedElement)) => PreResult(preCtx, continu, Some[GclNamedElement](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclNamedElement]())
+          }
+          return r
+        case o: GclCaseStatement =>
+          val r: PreResult[Context, GclNamedElement] = preGclCaseStatement(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclNamedElement)) => PreResult(preCtx, continu, Some[GclNamedElement](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclNamedElement]())
+          }
+          return r
+        case o: InfoFlowClause =>
+          val r: PreResult[Context, GclNamedElement] = preInfoFlowClause(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclNamedElement)) => PreResult(preCtx, continu, Some[GclNamedElement](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclNamedElement]())
+          }
+          return r
+      }
     }
 
     @pure def preGclSubclause(ctx: Context, o: GclSubclause): PreResult[Context, GclSubclause] = {
@@ -2623,10 +2698,6 @@ object Transformer {
     }
 
     @pure def preSysmlAstIdentification(ctx: Context, o: SysmlAst.Identification): PreResult[Context, SysmlAst.Identification] = {
-      return PreResult(ctx, T, None())
-    }
-
-    @pure def preGclMethod(ctx: Context, o: GclMethod): PreResult[Context, GclMethod] = {
       return PreResult(ctx, T, None())
     }
 
@@ -2768,6 +2839,10 @@ object Transformer {
       }
     }
 
+    @pure def preGclMethod(ctx: Context, o: GclMethod): PreResult[Context, GclMethod] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def preSysmlAstConnectorPart(ctx: Context, o: SysmlAst.ConnectorPart): PreResult[Context, SysmlAst.ConnectorPart] = {
       o match {
         case o: SysmlAst.BinaryConnectorPart =>
@@ -2787,11 +2862,11 @@ object Transformer {
       }
     }
 
-    @pure def preGclStateVar(ctx: Context, o: GclStateVar): PreResult[Context, GclStateVar] = {
+    @pure def preSysmlAstConnectorEnd(ctx: Context, o: SysmlAst.ConnectorEnd): PreResult[Context, SysmlAst.ConnectorEnd] = {
       return PreResult(ctx, T, None())
     }
 
-    @pure def preSysmlAstConnectorEnd(ctx: Context, o: SysmlAst.ConnectorEnd): PreResult[Context, SysmlAst.ConnectorEnd] = {
+    @pure def preGclStateVar(ctx: Context, o: GclStateVar): PreResult[Context, GclStateVar] = {
       return PreResult(ctx, T, None())
     }
 
@@ -2836,36 +2911,6 @@ object Transformer {
       }
     }
 
-    @pure def preGclSpec(ctx: Context, o: GclSpec): PreResult[Context, GclSpec] = {
-      o match {
-        case o: GclInvariant =>
-          val r: PreResult[Context, GclSpec] = preGclInvariant(ctx, o) match {
-           case PreResult(preCtx, continu, Some(r: GclSpec)) => PreResult(preCtx, continu, Some[GclSpec](r))
-           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclSpec")
-           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclSpec]())
-          }
-          return r
-        case o: GclAssume =>
-          val r: PreResult[Context, GclSpec] = preGclAssume(ctx, o) match {
-           case PreResult(preCtx, continu, Some(r: GclSpec)) => PreResult(preCtx, continu, Some[GclSpec](r))
-           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclSpec")
-           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclSpec]())
-          }
-          return r
-        case o: GclGuarantee =>
-          val r: PreResult[Context, GclSpec] = preGclGuarantee(ctx, o) match {
-           case PreResult(preCtx, continu, Some(r: GclSpec)) => PreResult(preCtx, continu, Some[GclSpec](r))
-           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclSpec")
-           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclSpec]())
-          }
-          return r
-      }
-    }
-
-    @pure def preGclInvariant(ctx: Context, o: GclInvariant): PreResult[Context, GclInvariant] = {
-      return PreResult(ctx, T, None())
-    }
-
     @pure def preSysmlAstFeatureSpecialization(ctx: Context, o: SysmlAst.FeatureSpecialization): PreResult[Context, SysmlAst.FeatureSpecialization] = {
       o match {
         case o: SysmlAst.TypingsSpecialization =>
@@ -2906,7 +2951,37 @@ object Transformer {
       }
     }
 
+    @pure def preGclSpec(ctx: Context, o: GclSpec): PreResult[Context, GclSpec] = {
+      o match {
+        case o: GclInvariant =>
+          val r: PreResult[Context, GclSpec] = preGclInvariant(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclSpec)) => PreResult(preCtx, continu, Some[GclSpec](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclSpec")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclSpec]())
+          }
+          return r
+        case o: GclAssume =>
+          val r: PreResult[Context, GclSpec] = preGclAssume(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclSpec)) => PreResult(preCtx, continu, Some[GclSpec](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclSpec")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclSpec]())
+          }
+          return r
+        case o: GclGuarantee =>
+          val r: PreResult[Context, GclSpec] = preGclGuarantee(ctx, o) match {
+           case PreResult(preCtx, continu, Some(r: GclSpec)) => PreResult(preCtx, continu, Some[GclSpec](r))
+           case PreResult(_, _, Some(_)) => halt("Can only produce object of type GclSpec")
+           case PreResult(preCtx, continu, _) => PreResult(preCtx, continu, None[GclSpec]())
+          }
+          return r
+      }
+    }
+
     @pure def preSysmlAstTypingsSpecialization(ctx: Context, o: SysmlAst.TypingsSpecialization): PreResult[Context, SysmlAst.TypingsSpecialization] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preGclInvariant(ctx: Context, o: GclInvariant): PreResult[Context, GclInvariant] = {
       return PreResult(ctx, T, None())
     }
 
@@ -2919,6 +2994,10 @@ object Transformer {
     }
 
     @pure def preSysmlAstCrossingsSpecialization(ctx: Context, o: SysmlAst.CrossingsSpecialization): PreResult[Context, SysmlAst.CrossingsSpecialization] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preSysmlAstRedefinitionsSpecialization(ctx: Context, o: SysmlAst.RedefinitionsSpecialization): PreResult[Context, SysmlAst.RedefinitionsSpecialization] = {
       return PreResult(ctx, T, None())
     }
 
@@ -2939,10 +3018,6 @@ object Transformer {
           }
           return r
       }
-    }
-
-    @pure def preSysmlAstRedefinitionsSpecialization(ctx: Context, o: SysmlAst.RedefinitionsSpecialization): PreResult[Context, SysmlAst.RedefinitionsSpecialization] = {
-      return PreResult(ctx, T, None())
     }
 
     @pure def preGclAssume(ctx: Context, o: GclAssume): PreResult[Context, GclAssume] = {
@@ -3131,15 +3206,15 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def preGclGuarantee(ctx: Context, o: GclGuarantee): PreResult[Context, GclGuarantee] = {
-      return PreResult(ctx, T, None())
-    }
-
     @pure def preSysmlAstPackage(ctx: Context, o: SysmlAst.Package): PreResult[Context, SysmlAst.Package] = {
       return PreResult(ctx, T, None())
     }
 
     @pure def preBTSVariableDeclaration(ctx: Context, o: BTSVariableDeclaration): PreResult[Context, BTSVariableDeclaration] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preGclGuarantee(ctx: Context, o: GclGuarantee): PreResult[Context, GclGuarantee] = {
       return PreResult(ctx, T, None())
     }
 
@@ -3163,15 +3238,15 @@ object Transformer {
       }
     }
 
-    @pure def preGclCaseStatement(ctx: Context, o: GclCaseStatement): PreResult[Context, GclCaseStatement] = {
-      return PreResult(ctx, T, None())
-    }
-
     @pure def preBTSClassifier(ctx: Context, o: BTSClassifier): PreResult[Context, BTSClassifier] = {
       return PreResult(ctx, T, None())
     }
 
     @pure def preBLESSIntConst(ctx: Context, o: BLESSIntConst): PreResult[Context, BLESSIntConst] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preGclCaseStatement(ctx: Context, o: GclCaseStatement): PreResult[Context, GclCaseStatement] = {
       return PreResult(ctx, T, None())
     }
 
@@ -3216,10 +3291,6 @@ object Transformer {
     }
 
     @pure def preSysmlAstPortDefinition(ctx: Context, o: SysmlAst.PortDefinition): PreResult[Context, SysmlAst.PortDefinition] = {
-      return PreResult(ctx, T, None())
-    }
-
-    @pure def preGclHandle(ctx: Context, o: GclHandle): PreResult[Context, GclHandle] = {
       return PreResult(ctx, T, None())
     }
 
@@ -3274,6 +3345,10 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def preGclGumboTable(ctx: Context, o: GclGumboTable): PreResult[Context, GclGumboTable] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def preSysmlAstMetadataDefinition(ctx: Context, o: SysmlAst.MetadataDefinition): PreResult[Context, SysmlAst.MetadataDefinition] = {
       return PreResult(ctx, T, None())
     }
@@ -3320,7 +3395,7 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def preGclTODO(ctx: Context, o: GclTODO): PreResult[Context, GclTODO] = {
+    @pure def preGclNormalTable(ctx: Context, o: GclNormalTable): PreResult[Context, GclNormalTable] = {
       return PreResult(ctx, T, None())
     }
 
@@ -3378,10 +3453,6 @@ object Transformer {
       }
     }
 
-    @pure def preGclLib(ctx: Context, o: GclLib): PreResult[Context, GclLib] = {
-      return PreResult(ctx, T, None())
-    }
-
     @pure def preSysmlAstCommonUsageElements(ctx: Context, o: SysmlAst.CommonUsageElements): PreResult[Context, SysmlAst.CommonUsageElements] = {
       return PreResult(ctx, T, None())
     }
@@ -3420,10 +3491,6 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
-    @pure def preInfoFlowClause(ctx: Context, o: InfoFlowClause): PreResult[Context, InfoFlowClause] = {
-      return PreResult(ctx, T, None())
-    }
-
     @pure def preBTSExecuteConditionOtherwise(ctx: Context, o: BTSExecuteConditionOtherwise): PreResult[Context, BTSExecuteConditionOtherwise] = {
       return PreResult(ctx, T, None())
     }
@@ -3449,6 +3516,10 @@ object Transformer {
           }
           return r
       }
+    }
+
+    @pure def preGclResultRow(ctx: Context, o: GclResultRow): PreResult[Context, GclResultRow] = {
+      return PreResult(ctx, T, None())
     }
 
     @pure def preSysmlAstNonOccurrenceUsageElement(ctx: Context, o: SysmlAst.NonOccurrenceUsageElement): PreResult[Context, SysmlAst.NonOccurrenceUsageElement] = {
@@ -3487,6 +3558,10 @@ object Transformer {
     }
 
     @pure def preBTSAssertion(ctx: Context, o: BTSAssertion): PreResult[Context, BTSAssertion] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preGclHandle(ctx: Context, o: GclHandle): PreResult[Context, GclHandle] = {
       return PreResult(ctx, T, None())
     }
 
@@ -3820,7 +3895,15 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def preGclTODO(ctx: Context, o: GclTODO): PreResult[Context, GclTODO] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def preBTSPortInAction(ctx: Context, o: BTSPortInAction): PreResult[Context, BTSPortInAction] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preGclLib(ctx: Context, o: GclLib): PreResult[Context, GclLib] = {
       return PreResult(ctx, T, None())
     }
 
@@ -3856,6 +3939,10 @@ object Transformer {
     }
 
     @pure def preSysmlAstAllocationUsage(ctx: Context, o: SysmlAst.AllocationUsage): PreResult[Context, SysmlAst.AllocationUsage] = {
+      return PreResult(ctx, T, None())
+    }
+
+    @pure def preInfoFlowClause(ctx: Context, o: InfoFlowClause): PreResult[Context, InfoFlowClause] = {
       return PreResult(ctx, T, None())
     }
 
@@ -6620,6 +6707,27 @@ object Transformer {
            case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclSymbol]())
           }
           return r
+        case o: GclGumboTable =>
+          val r: TPostResult[Context, GclSymbol] = postGclGumboTable(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclSymbol)) => TPostResult(postCtx, Some[GclSymbol](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclSymbol")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclSymbol]())
+          }
+          return r
+        case o: GclNormalTable =>
+          val r: TPostResult[Context, GclSymbol] = postGclNormalTable(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclSymbol)) => TPostResult(postCtx, Some[GclSymbol](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclSymbol")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclSymbol]())
+          }
+          return r
+        case o: GclResultRow =>
+          val r: TPostResult[Context, GclSymbol] = postGclResultRow(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclSymbol)) => TPostResult(postCtx, Some[GclSymbol](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclSymbol")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclSymbol]())
+          }
+          return r
         case o: GclHandle =>
           val r: TPostResult[Context, GclSymbol] = postGclHandle(ctx, o) match {
            case TPostResult(postCtx, Some(result: GclSymbol)) => TPostResult(postCtx, Some[GclSymbol](result))
@@ -6653,6 +6761,60 @@ object Transformer {
 
     @pure def postSysmlAstEnumeratedValue(ctx: Context, o: SysmlAst.EnumeratedValue): TPostResult[Context, SysmlAst.EnumeratedValue] = {
       return TPostResult(ctx, None())
+    }
+
+    @pure def postGclNamedElement(ctx: Context, o: GclNamedElement): TPostResult[Context, GclNamedElement] = {
+      o match {
+        case o: GclMethod =>
+          val r: TPostResult[Context, GclNamedElement] = postGclMethod(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclNamedElement)) => TPostResult(postCtx, Some[GclNamedElement](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclNamedElement]())
+          }
+          return r
+        case o: GclStateVar =>
+          val r: TPostResult[Context, GclNamedElement] = postGclStateVar(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclNamedElement)) => TPostResult(postCtx, Some[GclNamedElement](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclNamedElement]())
+          }
+          return r
+        case o: GclInvariant =>
+          val r: TPostResult[Context, GclNamedElement] = postGclInvariant(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclNamedElement)) => TPostResult(postCtx, Some[GclNamedElement](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclNamedElement]())
+          }
+          return r
+        case o: GclAssume =>
+          val r: TPostResult[Context, GclNamedElement] = postGclAssume(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclNamedElement)) => TPostResult(postCtx, Some[GclNamedElement](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclNamedElement]())
+          }
+          return r
+        case o: GclGuarantee =>
+          val r: TPostResult[Context, GclNamedElement] = postGclGuarantee(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclNamedElement)) => TPostResult(postCtx, Some[GclNamedElement](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclNamedElement]())
+          }
+          return r
+        case o: GclCaseStatement =>
+          val r: TPostResult[Context, GclNamedElement] = postGclCaseStatement(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclNamedElement)) => TPostResult(postCtx, Some[GclNamedElement](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclNamedElement]())
+          }
+          return r
+        case o: InfoFlowClause =>
+          val r: TPostResult[Context, GclNamedElement] = postInfoFlowClause(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclNamedElement)) => TPostResult(postCtx, Some[GclNamedElement](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclNamedElement")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclNamedElement]())
+          }
+          return r
+      }
     }
 
     @pure def postGclSubclause(ctx: Context, o: GclSubclause): TPostResult[Context, GclSubclause] = {
@@ -6722,10 +6884,6 @@ object Transformer {
     }
 
     @pure def postSysmlAstIdentification(ctx: Context, o: SysmlAst.Identification): TPostResult[Context, SysmlAst.Identification] = {
-      return TPostResult(ctx, None())
-    }
-
-    @pure def postGclMethod(ctx: Context, o: GclMethod): TPostResult[Context, GclMethod] = {
       return TPostResult(ctx, None())
     }
 
@@ -6867,6 +7025,10 @@ object Transformer {
       }
     }
 
+    @pure def postGclMethod(ctx: Context, o: GclMethod): TPostResult[Context, GclMethod] = {
+      return TPostResult(ctx, None())
+    }
+
     @pure def postSysmlAstConnectorPart(ctx: Context, o: SysmlAst.ConnectorPart): TPostResult[Context, SysmlAst.ConnectorPart] = {
       o match {
         case o: SysmlAst.BinaryConnectorPart =>
@@ -6886,11 +7048,11 @@ object Transformer {
       }
     }
 
-    @pure def postGclStateVar(ctx: Context, o: GclStateVar): TPostResult[Context, GclStateVar] = {
+    @pure def postSysmlAstConnectorEnd(ctx: Context, o: SysmlAst.ConnectorEnd): TPostResult[Context, SysmlAst.ConnectorEnd] = {
       return TPostResult(ctx, None())
     }
 
-    @pure def postSysmlAstConnectorEnd(ctx: Context, o: SysmlAst.ConnectorEnd): TPostResult[Context, SysmlAst.ConnectorEnd] = {
+    @pure def postGclStateVar(ctx: Context, o: GclStateVar): TPostResult[Context, GclStateVar] = {
       return TPostResult(ctx, None())
     }
 
@@ -6935,36 +7097,6 @@ object Transformer {
       }
     }
 
-    @pure def postGclSpec(ctx: Context, o: GclSpec): TPostResult[Context, GclSpec] = {
-      o match {
-        case o: GclInvariant =>
-          val r: TPostResult[Context, GclSpec] = postGclInvariant(ctx, o) match {
-           case TPostResult(postCtx, Some(result: GclSpec)) => TPostResult(postCtx, Some[GclSpec](result))
-           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclSpec")
-           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclSpec]())
-          }
-          return r
-        case o: GclAssume =>
-          val r: TPostResult[Context, GclSpec] = postGclAssume(ctx, o) match {
-           case TPostResult(postCtx, Some(result: GclSpec)) => TPostResult(postCtx, Some[GclSpec](result))
-           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclSpec")
-           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclSpec]())
-          }
-          return r
-        case o: GclGuarantee =>
-          val r: TPostResult[Context, GclSpec] = postGclGuarantee(ctx, o) match {
-           case TPostResult(postCtx, Some(result: GclSpec)) => TPostResult(postCtx, Some[GclSpec](result))
-           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclSpec")
-           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclSpec]())
-          }
-          return r
-      }
-    }
-
-    @pure def postGclInvariant(ctx: Context, o: GclInvariant): TPostResult[Context, GclInvariant] = {
-      return TPostResult(ctx, None())
-    }
-
     @pure def postSysmlAstFeatureSpecialization(ctx: Context, o: SysmlAst.FeatureSpecialization): TPostResult[Context, SysmlAst.FeatureSpecialization] = {
       o match {
         case o: SysmlAst.TypingsSpecialization =>
@@ -7005,7 +7137,37 @@ object Transformer {
       }
     }
 
+    @pure def postGclSpec(ctx: Context, o: GclSpec): TPostResult[Context, GclSpec] = {
+      o match {
+        case o: GclInvariant =>
+          val r: TPostResult[Context, GclSpec] = postGclInvariant(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclSpec)) => TPostResult(postCtx, Some[GclSpec](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclSpec")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclSpec]())
+          }
+          return r
+        case o: GclAssume =>
+          val r: TPostResult[Context, GclSpec] = postGclAssume(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclSpec)) => TPostResult(postCtx, Some[GclSpec](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclSpec")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclSpec]())
+          }
+          return r
+        case o: GclGuarantee =>
+          val r: TPostResult[Context, GclSpec] = postGclGuarantee(ctx, o) match {
+           case TPostResult(postCtx, Some(result: GclSpec)) => TPostResult(postCtx, Some[GclSpec](result))
+           case TPostResult(_, Some(_)) => halt("Can only produce object of type GclSpec")
+           case TPostResult(postCtx, _) => TPostResult(postCtx, None[GclSpec]())
+          }
+          return r
+      }
+    }
+
     @pure def postSysmlAstTypingsSpecialization(ctx: Context, o: SysmlAst.TypingsSpecialization): TPostResult[Context, SysmlAst.TypingsSpecialization] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postGclInvariant(ctx: Context, o: GclInvariant): TPostResult[Context, GclInvariant] = {
       return TPostResult(ctx, None())
     }
 
@@ -7018,6 +7180,10 @@ object Transformer {
     }
 
     @pure def postSysmlAstCrossingsSpecialization(ctx: Context, o: SysmlAst.CrossingsSpecialization): TPostResult[Context, SysmlAst.CrossingsSpecialization] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postSysmlAstRedefinitionsSpecialization(ctx: Context, o: SysmlAst.RedefinitionsSpecialization): TPostResult[Context, SysmlAst.RedefinitionsSpecialization] = {
       return TPostResult(ctx, None())
     }
 
@@ -7038,10 +7204,6 @@ object Transformer {
           }
           return r
       }
-    }
-
-    @pure def postSysmlAstRedefinitionsSpecialization(ctx: Context, o: SysmlAst.RedefinitionsSpecialization): TPostResult[Context, SysmlAst.RedefinitionsSpecialization] = {
-      return TPostResult(ctx, None())
     }
 
     @pure def postGclAssume(ctx: Context, o: GclAssume): TPostResult[Context, GclAssume] = {
@@ -7230,15 +7392,15 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def postGclGuarantee(ctx: Context, o: GclGuarantee): TPostResult[Context, GclGuarantee] = {
-      return TPostResult(ctx, None())
-    }
-
     @pure def postSysmlAstPackage(ctx: Context, o: SysmlAst.Package): TPostResult[Context, SysmlAst.Package] = {
       return TPostResult(ctx, None())
     }
 
     @pure def postBTSVariableDeclaration(ctx: Context, o: BTSVariableDeclaration): TPostResult[Context, BTSVariableDeclaration] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postGclGuarantee(ctx: Context, o: GclGuarantee): TPostResult[Context, GclGuarantee] = {
       return TPostResult(ctx, None())
     }
 
@@ -7262,15 +7424,15 @@ object Transformer {
       }
     }
 
-    @pure def postGclCaseStatement(ctx: Context, o: GclCaseStatement): TPostResult[Context, GclCaseStatement] = {
-      return TPostResult(ctx, None())
-    }
-
     @pure def postBTSClassifier(ctx: Context, o: BTSClassifier): TPostResult[Context, BTSClassifier] = {
       return TPostResult(ctx, None())
     }
 
     @pure def postBLESSIntConst(ctx: Context, o: BLESSIntConst): TPostResult[Context, BLESSIntConst] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postGclCaseStatement(ctx: Context, o: GclCaseStatement): TPostResult[Context, GclCaseStatement] = {
       return TPostResult(ctx, None())
     }
 
@@ -7315,10 +7477,6 @@ object Transformer {
     }
 
     @pure def postSysmlAstPortDefinition(ctx: Context, o: SysmlAst.PortDefinition): TPostResult[Context, SysmlAst.PortDefinition] = {
-      return TPostResult(ctx, None())
-    }
-
-    @pure def postGclHandle(ctx: Context, o: GclHandle): TPostResult[Context, GclHandle] = {
       return TPostResult(ctx, None())
     }
 
@@ -7373,6 +7531,10 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
+    @pure def postGclGumboTable(ctx: Context, o: GclGumboTable): TPostResult[Context, GclGumboTable] = {
+      return TPostResult(ctx, None())
+    }
+
     @pure def postSysmlAstMetadataDefinition(ctx: Context, o: SysmlAst.MetadataDefinition): TPostResult[Context, SysmlAst.MetadataDefinition] = {
       return TPostResult(ctx, None())
     }
@@ -7419,7 +7581,7 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def postGclTODO(ctx: Context, o: GclTODO): TPostResult[Context, GclTODO] = {
+    @pure def postGclNormalTable(ctx: Context, o: GclNormalTable): TPostResult[Context, GclNormalTable] = {
       return TPostResult(ctx, None())
     }
 
@@ -7477,10 +7639,6 @@ object Transformer {
       }
     }
 
-    @pure def postGclLib(ctx: Context, o: GclLib): TPostResult[Context, GclLib] = {
-      return TPostResult(ctx, None())
-    }
-
     @pure def postSysmlAstCommonUsageElements(ctx: Context, o: SysmlAst.CommonUsageElements): TPostResult[Context, SysmlAst.CommonUsageElements] = {
       return TPostResult(ctx, None())
     }
@@ -7519,10 +7677,6 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
-    @pure def postInfoFlowClause(ctx: Context, o: InfoFlowClause): TPostResult[Context, InfoFlowClause] = {
-      return TPostResult(ctx, None())
-    }
-
     @pure def postBTSExecuteConditionOtherwise(ctx: Context, o: BTSExecuteConditionOtherwise): TPostResult[Context, BTSExecuteConditionOtherwise] = {
       return TPostResult(ctx, None())
     }
@@ -7548,6 +7702,10 @@ object Transformer {
           }
           return r
       }
+    }
+
+    @pure def postGclResultRow(ctx: Context, o: GclResultRow): TPostResult[Context, GclResultRow] = {
+      return TPostResult(ctx, None())
     }
 
     @pure def postSysmlAstNonOccurrenceUsageElement(ctx: Context, o: SysmlAst.NonOccurrenceUsageElement): TPostResult[Context, SysmlAst.NonOccurrenceUsageElement] = {
@@ -7586,6 +7744,10 @@ object Transformer {
     }
 
     @pure def postBTSAssertion(ctx: Context, o: BTSAssertion): TPostResult[Context, BTSAssertion] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postGclHandle(ctx: Context, o: GclHandle): TPostResult[Context, GclHandle] = {
       return TPostResult(ctx, None())
     }
 
@@ -7919,7 +8081,15 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
+    @pure def postGclTODO(ctx: Context, o: GclTODO): TPostResult[Context, GclTODO] = {
+      return TPostResult(ctx, None())
+    }
+
     @pure def postBTSPortInAction(ctx: Context, o: BTSPortInAction): TPostResult[Context, BTSPortInAction] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postGclLib(ctx: Context, o: GclLib): TPostResult[Context, GclLib] = {
       return TPostResult(ctx, None())
     }
 
@@ -7955,6 +8125,10 @@ object Transformer {
     }
 
     @pure def postSysmlAstAllocationUsage(ctx: Context, o: SysmlAst.AllocationUsage): TPostResult[Context, SysmlAst.AllocationUsage] = {
+      return TPostResult(ctx, None())
+    }
+
+    @pure def postInfoFlowClause(ctx: Context, o: InfoFlowClause): TPostResult[Context, InfoFlowClause] = {
       return TPostResult(ctx, None())
     }
 
@@ -13730,11 +13904,35 @@ import Transformer._
           val r3: TPostResult[Context, IS[Z, GclCaseStatement]] = transformISZ(r2.ctx, o2.cases, transformGclCaseStatement _)
           val r4: TPostResult[Context, IS[Z, GclHandle]] = transformISZ(r3.ctx, o2.handlers, transformGclHandle _)
           val r5: TPostResult[Context, IS[Z, InfoFlowClause]] = transformISZ(r4.ctx, o2.flows, transformInfoFlowClause _)
-          val r6: TPostResult[Context, Attr] = transformAttr(r5.ctx, o2.attr)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty || r5.resultOpt.nonEmpty || r6.resultOpt.nonEmpty)
-            TPostResult(r6.ctx, Some(o2(modifies = r0.resultOpt.getOrElse(o2.modifies), assumes = r1.resultOpt.getOrElse(o2.assumes), guarantees = r2.resultOpt.getOrElse(o2.guarantees), cases = r3.resultOpt.getOrElse(o2.cases), handlers = r4.resultOpt.getOrElse(o2.handlers), flows = r5.resultOpt.getOrElse(o2.flows), attr = r6.resultOpt.getOrElse(o2.attr))))
+          val r6: TPostResult[Context, IS[Z, GclGumboTable]] = transformISZ(r5.ctx, o2.gumboTables, transformGclGumboTable _)
+          val r7: TPostResult[Context, Attr] = transformAttr(r6.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty || r5.resultOpt.nonEmpty || r6.resultOpt.nonEmpty || r7.resultOpt.nonEmpty)
+            TPostResult(r7.ctx, Some(o2(modifies = r0.resultOpt.getOrElse(o2.modifies), assumes = r1.resultOpt.getOrElse(o2.assumes), guarantees = r2.resultOpt.getOrElse(o2.guarantees), cases = r3.resultOpt.getOrElse(o2.cases), handlers = r4.resultOpt.getOrElse(o2.handlers), flows = r5.resultOpt.getOrElse(o2.flows), gumboTables = r6.resultOpt.getOrElse(o2.gumboTables), attr = r7.resultOpt.getOrElse(o2.attr))))
           else
-            TPostResult(r6.ctx, None())
+            TPostResult(r7.ctx, None())
+        case o2: GclGumboTable =>
+          val r0: TPostResult[Context, GclNormalTable] = transformGclNormalTable(preR.ctx, o2.table)
+          val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(table = r0.resultOpt.getOrElse(o2.table), attr = r1.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: GclNormalTable =>
+          val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(preR.ctx, o2.horizontalPredicates, transform_langastExp _)
+          val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(r0.ctx, o2.verticalPredicates, transform_langastExp _)
+          val r2: TPostResult[Context, IS[Z, GclResultRow]] = transformISZ(r1.ctx, o2.resultRows, transformGclResultRow _)
+          val r3: TPostResult[Context, Attr] = transformAttr(r2.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+            TPostResult(r3.ctx, Some(o2(horizontalPredicates = r0.resultOpt.getOrElse(o2.horizontalPredicates), verticalPredicates = r1.resultOpt.getOrElse(o2.verticalPredicates), resultRows = r2.resultOpt.getOrElse(o2.resultRows), attr = r3.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r3.ctx, None())
+        case o2: GclResultRow =>
+          val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(preR.ctx, o2.results, transform_langastExp _)
+          val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(results = r0.resultOpt.getOrElse(o2.results), attr = r1.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r1.ctx, None())
         case o2: GclHandle =>
           val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.port)
           val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(r0.ctx, o2.modifies, transform_langastExp _)
@@ -13806,6 +14004,80 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: SysmlAst.EnumeratedValue = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, SysmlAst.EnumeratedValue] = pp.postSysmlAstEnumeratedValue(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformGclNamedElement(ctx: Context, o: GclNamedElement): TPostResult[Context, GclNamedElement] = {
+    val preR: PreResult[Context, GclNamedElement] = pp.preGclNamedElement(ctx, o)
+    val r: TPostResult[Context, GclNamedElement] = if (preR.continu) {
+      val o2: GclNamedElement = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, GclNamedElement] = o2 match {
+        case o2: GclMethod =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Stmt.Method] = transform_langastStmtMethod(preR.ctx, o2.method)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(method = r0.resultOpt.getOrElse(o2.method))))
+          else
+            TPostResult(r0.ctx, None())
+        case o2: GclStateVar =>
+          val r0: TPostResult[Context, Attr] = transformAttr(preR.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty)
+            TPostResult(r0.ctx, Some(o2(attr = r0.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r0.ctx, None())
+        case o2: GclInvariant =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
+          val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: GclAssume =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
+          val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: GclGuarantee =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
+          val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: GclCaseStatement =>
+          val r0: TPostResult[Context, Option[org.sireum.lang.ast.Exp]] = transformOption(preR.ctx, o2.assumes, transform_langastExp _)
+          val r1: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(r0.ctx, o2.guarantees)
+          val r2: TPostResult[Context, Attr] = transformAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(assumes = r0.resultOpt.getOrElse(o2.assumes), guarantees = r1.resultOpt.getOrElse(o2.guarantees), attr = r2.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r2.ctx, None())
+        case o2: InfoFlowClause =>
+          val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(preR.ctx, o2.from, transform_langastExp _)
+          val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(r0.ctx, o2.to, transform_langastExp _)
+          val r2: TPostResult[Context, Attr] = transformAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(from = r0.resultOpt.getOrElse(o2.from), to = r1.resultOpt.getOrElse(o2.to), attr = r2.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r2.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclNamedElement = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclNamedElement] = pp.postGclNamedElement(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -14122,33 +14394,6 @@ import Transformer._
     }
   }
 
-  @pure def transformGclMethod(ctx: Context, o: GclMethod): TPostResult[Context, GclMethod] = {
-    val preR: PreResult[Context, GclMethod] = pp.preGclMethod(ctx, o)
-    val r: TPostResult[Context, GclMethod] = if (preR.continu) {
-      val o2: GclMethod = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, org.sireum.lang.ast.Stmt.Method] = transform_langastStmtMethod(preR.ctx, o2.method)
-      if (hasChanged || r0.resultOpt.nonEmpty)
-        TPostResult(r0.ctx, Some(o2(method = r0.resultOpt.getOrElse(o2.method))))
-      else
-        TPostResult(r0.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: GclMethod = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, GclMethod] = pp.postGclMethod(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
   @pure def transformSysmlAstPackageMember(ctx: Context, o: SysmlAst.PackageMember): TPostResult[Context, SysmlAst.PackageMember] = {
     val preR: PreResult[Context, SysmlAst.PackageMember] = pp.preSysmlAstPackageMember(ctx, o)
     val r: TPostResult[Context, SysmlAst.PackageMember] = if (preR.continu) {
@@ -14335,6 +14580,33 @@ import Transformer._
     }
   }
 
+  @pure def transformGclMethod(ctx: Context, o: GclMethod): TPostResult[Context, GclMethod] = {
+    val preR: PreResult[Context, GclMethod] = pp.preGclMethod(ctx, o)
+    val r: TPostResult[Context, GclMethod] = if (preR.continu) {
+      val o2: GclMethod = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, org.sireum.lang.ast.Stmt.Method] = transform_langastStmtMethod(preR.ctx, o2.method)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(method = r0.resultOpt.getOrElse(o2.method))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclMethod = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclMethod] = pp.postGclMethod(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transformSysmlAstConnectorPart(ctx: Context, o: SysmlAst.ConnectorPart): TPostResult[Context, SysmlAst.ConnectorPart] = {
     val preR: PreResult[Context, SysmlAst.ConnectorPart] = pp.preSysmlAstConnectorPart(ctx, o)
     val r: TPostResult[Context, SysmlAst.ConnectorPart] = if (preR.continu) {
@@ -14373,33 +14645,6 @@ import Transformer._
     }
   }
 
-  @pure def transformGclStateVar(ctx: Context, o: GclStateVar): TPostResult[Context, GclStateVar] = {
-    val preR: PreResult[Context, GclStateVar] = pp.preGclStateVar(ctx, o)
-    val r: TPostResult[Context, GclStateVar] = if (preR.continu) {
-      val o2: GclStateVar = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, Attr] = transformAttr(preR.ctx, o2.attr)
-      if (hasChanged || r0.resultOpt.nonEmpty)
-        TPostResult(r0.ctx, Some(o2(attr = r0.resultOpt.getOrElse(o2.attr))))
-      else
-        TPostResult(r0.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: GclStateVar = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, GclStateVar] = pp.postGclStateVar(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
   @pure def transformSysmlAstConnectorEnd(ctx: Context, o: SysmlAst.ConnectorEnd): TPostResult[Context, SysmlAst.ConnectorEnd] = {
     val preR: PreResult[Context, SysmlAst.ConnectorEnd] = pp.preSysmlAstConnectorEnd(ctx, o)
     val r: TPostResult[Context, SysmlAst.ConnectorEnd] = if (preR.continu) {
@@ -14420,6 +14665,33 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: SysmlAst.ConnectorEnd = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, SysmlAst.ConnectorEnd] = pp.postSysmlAstConnectorEnd(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformGclStateVar(ctx: Context, o: GclStateVar): TPostResult[Context, GclStateVar] = {
+    val preR: PreResult[Context, GclStateVar] = pp.preGclStateVar(ctx, o)
+    val r: TPostResult[Context, GclStateVar] = if (preR.continu) {
+      val o2: GclStateVar = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Attr] = transformAttr(preR.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(attr = r0.resultOpt.getOrElse(o2.attr))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclStateVar = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclStateVar] = pp.postGclStateVar(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -14538,80 +14810,6 @@ import Transformer._
     }
   }
 
-  @pure def transformGclSpec(ctx: Context, o: GclSpec): TPostResult[Context, GclSpec] = {
-    val preR: PreResult[Context, GclSpec] = pp.preGclSpec(ctx, o)
-    val r: TPostResult[Context, GclSpec] = if (preR.continu) {
-      val o2: GclSpec = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val rOpt: TPostResult[Context, GclSpec] = o2 match {
-        case o2: GclInvariant =>
-          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
-          val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
-          else
-            TPostResult(r1.ctx, None())
-        case o2: GclAssume =>
-          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
-          val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
-          else
-            TPostResult(r1.ctx, None())
-        case o2: GclGuarantee =>
-          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
-          val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
-          else
-            TPostResult(r1.ctx, None())
-      }
-      rOpt
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: GclSpec = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, GclSpec] = pp.postGclSpec(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
-  @pure def transformGclInvariant(ctx: Context, o: GclInvariant): TPostResult[Context, GclInvariant] = {
-    val preR: PreResult[Context, GclInvariant] = pp.preGclInvariant(ctx, o)
-    val r: TPostResult[Context, GclInvariant] = if (preR.continu) {
-      val o2: GclInvariant = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
-      val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
-      else
-        TPostResult(r1.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: GclInvariant = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, GclInvariant] = pp.postGclInvariant(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
   @pure def transformSysmlAstFeatureSpecialization(ctx: Context, o: SysmlAst.FeatureSpecialization): TPostResult[Context, SysmlAst.FeatureSpecialization] = {
     val preR: PreResult[Context, SysmlAst.FeatureSpecialization] = pp.preSysmlAstFeatureSpecialization(ctx, o)
     val r: TPostResult[Context, SysmlAst.FeatureSpecialization] = if (preR.continu) {
@@ -14666,6 +14864,52 @@ import Transformer._
     }
   }
 
+  @pure def transformGclSpec(ctx: Context, o: GclSpec): TPostResult[Context, GclSpec] = {
+    val preR: PreResult[Context, GclSpec] = pp.preGclSpec(ctx, o)
+    val r: TPostResult[Context, GclSpec] = if (preR.continu) {
+      val o2: GclSpec = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: TPostResult[Context, GclSpec] = o2 match {
+        case o2: GclInvariant =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
+          val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: GclAssume =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
+          val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r1.ctx, None())
+        case o2: GclGuarantee =>
+          val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
+          val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+            TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
+          else
+            TPostResult(r1.ctx, None())
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclSpec = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclSpec] = pp.postGclSpec(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transformSysmlAstTypingsSpecialization(ctx: Context, o: SysmlAst.TypingsSpecialization): TPostResult[Context, SysmlAst.TypingsSpecialization] = {
     val preR: PreResult[Context, SysmlAst.TypingsSpecialization] = pp.preSysmlAstTypingsSpecialization(ctx, o)
     val r: TPostResult[Context, SysmlAst.TypingsSpecialization] = if (preR.continu) {
@@ -14684,6 +14928,34 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: SysmlAst.TypingsSpecialization = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, SysmlAst.TypingsSpecialization] = pp.postSysmlAstTypingsSpecialization(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformGclInvariant(ctx: Context, o: GclInvariant): TPostResult[Context, GclInvariant] = {
+    val preR: PreResult[Context, GclInvariant] = pp.preGclInvariant(ctx, o)
+    val r: TPostResult[Context, GclInvariant] = if (preR.continu) {
+      val o2: GclInvariant = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
+      val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclInvariant = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclInvariant] = pp.postGclInvariant(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -14773,6 +15045,33 @@ import Transformer._
     }
   }
 
+  @pure def transformSysmlAstRedefinitionsSpecialization(ctx: Context, o: SysmlAst.RedefinitionsSpecialization): TPostResult[Context, SysmlAst.RedefinitionsSpecialization] = {
+    val preR: PreResult[Context, SysmlAst.RedefinitionsSpecialization] = pp.preSysmlAstRedefinitionsSpecialization(ctx, o)
+    val r: TPostResult[Context, SysmlAst.RedefinitionsSpecialization] = if (preR.continu) {
+      val o2: SysmlAst.RedefinitionsSpecialization = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, IS[Z, SysmlAst.Name]] = transformISZ(preR.ctx, o2.references, transformSysmlAstName _)
+      if (hasChanged || r0.resultOpt.nonEmpty)
+        TPostResult(r0.ctx, Some(o2(references = r0.resultOpt.getOrElse(o2.references))))
+      else
+        TPostResult(r0.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: SysmlAst.RedefinitionsSpecialization = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, SysmlAst.RedefinitionsSpecialization] = pp.postSysmlAstRedefinitionsSpecialization(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transformGclComputeSpec(ctx: Context, o: GclComputeSpec): TPostResult[Context, GclComputeSpec] = {
     val preR: PreResult[Context, GclComputeSpec] = pp.preGclComputeSpec(ctx, o)
     val r: TPostResult[Context, GclComputeSpec] = if (preR.continu) {
@@ -14803,33 +15102,6 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: GclComputeSpec = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, GclComputeSpec] = pp.postGclComputeSpec(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
-  @pure def transformSysmlAstRedefinitionsSpecialization(ctx: Context, o: SysmlAst.RedefinitionsSpecialization): TPostResult[Context, SysmlAst.RedefinitionsSpecialization] = {
-    val preR: PreResult[Context, SysmlAst.RedefinitionsSpecialization] = pp.preSysmlAstRedefinitionsSpecialization(ctx, o)
-    val r: TPostResult[Context, SysmlAst.RedefinitionsSpecialization] = if (preR.continu) {
-      val o2: SysmlAst.RedefinitionsSpecialization = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, IS[Z, SysmlAst.Name]] = transformISZ(preR.ctx, o2.references, transformSysmlAstName _)
-      if (hasChanged || r0.resultOpt.nonEmpty)
-        TPostResult(r0.ctx, Some(o2(references = r0.resultOpt.getOrElse(o2.references))))
-      else
-        TPostResult(r0.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: SysmlAst.RedefinitionsSpecialization = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, SysmlAst.RedefinitionsSpecialization] = pp.postSysmlAstRedefinitionsSpecialization(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -15163,34 +15435,6 @@ import Transformer._
     }
   }
 
-  @pure def transformGclGuarantee(ctx: Context, o: GclGuarantee): TPostResult[Context, GclGuarantee] = {
-    val preR: PreResult[Context, GclGuarantee] = pp.preGclGuarantee(ctx, o)
-    val r: TPostResult[Context, GclGuarantee] = if (preR.continu) {
-      val o2: GclGuarantee = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
-      val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
-      else
-        TPostResult(r1.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: GclGuarantee = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, GclGuarantee] = pp.postGclGuarantee(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
   @pure def transformSysmlAstPackage(ctx: Context, o: SysmlAst.Package): TPostResult[Context, SysmlAst.Package] = {
     val preR: PreResult[Context, SysmlAst.Package] = pp.preSysmlAstPackage(ctx, o)
     val r: TPostResult[Context, SysmlAst.Package] = if (preR.continu) {
@@ -15242,6 +15486,34 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: BTSVariableDeclaration = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, BTSVariableDeclaration] = pp.postBTSVariableDeclaration(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformGclGuarantee(ctx: Context, o: GclGuarantee): TPostResult[Context, GclGuarantee] = {
+    val preR: PreResult[Context, GclGuarantee] = pp.preGclGuarantee(ctx, o)
+    val r: TPostResult[Context, GclGuarantee] = if (preR.continu) {
+      val o2: GclGuarantee = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.exp)
+      val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(exp = r0.resultOpt.getOrElse(o2.exp), attr = r1.resultOpt.getOrElse(o2.attr))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclGuarantee = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclGuarantee] = pp.postGclGuarantee(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -15342,35 +15614,6 @@ import Transformer._
     }
   }
 
-  @pure def transformGclCaseStatement(ctx: Context, o: GclCaseStatement): TPostResult[Context, GclCaseStatement] = {
-    val preR: PreResult[Context, GclCaseStatement] = pp.preGclCaseStatement(ctx, o)
-    val r: TPostResult[Context, GclCaseStatement] = if (preR.continu) {
-      val o2: GclCaseStatement = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, Option[org.sireum.lang.ast.Exp]] = transformOption(preR.ctx, o2.assumes, transform_langastExp _)
-      val r1: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(r0.ctx, o2.guarantees)
-      val r2: TPostResult[Context, Attr] = transformAttr(r1.ctx, o2.attr)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-        TPostResult(r2.ctx, Some(o2(assumes = r0.resultOpt.getOrElse(o2.assumes), guarantees = r1.resultOpt.getOrElse(o2.guarantees), attr = r2.resultOpt.getOrElse(o2.attr))))
-      else
-        TPostResult(r2.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: GclCaseStatement = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, GclCaseStatement] = pp.postGclCaseStatement(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
   @pure def transformBTSClassifier(ctx: Context, o: BTSClassifier): TPostResult[Context, BTSClassifier] = {
     val preR: PreResult[Context, BTSClassifier] = pp.preBTSClassifier(ctx, o)
     val r: TPostResult[Context, BTSClassifier] = if (preR.continu) {
@@ -15415,6 +15658,35 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: BLESSIntConst = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, BLESSIntConst] = pp.postBLESSIntConst(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformGclCaseStatement(ctx: Context, o: GclCaseStatement): TPostResult[Context, GclCaseStatement] = {
+    val preR: PreResult[Context, GclCaseStatement] = pp.preGclCaseStatement(ctx, o)
+    val r: TPostResult[Context, GclCaseStatement] = if (preR.continu) {
+      val o2: GclCaseStatement = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Option[org.sireum.lang.ast.Exp]] = transformOption(preR.ctx, o2.assumes, transform_langastExp _)
+      val r1: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(r0.ctx, o2.guarantees)
+      val r2: TPostResult[Context, Attr] = transformAttr(r1.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(assumes = r0.resultOpt.getOrElse(o2.assumes), guarantees = r1.resultOpt.getOrElse(o2.guarantees), attr = r2.resultOpt.getOrElse(o2.attr))))
+      else
+        TPostResult(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclCaseStatement = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclCaseStatement] = pp.postGclCaseStatement(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -15615,11 +15887,12 @@ import Transformer._
       val r3: TPostResult[Context, IS[Z, GclCaseStatement]] = transformISZ(r2.ctx, o2.cases, transformGclCaseStatement _)
       val r4: TPostResult[Context, IS[Z, GclHandle]] = transformISZ(r3.ctx, o2.handlers, transformGclHandle _)
       val r5: TPostResult[Context, IS[Z, InfoFlowClause]] = transformISZ(r4.ctx, o2.flows, transformInfoFlowClause _)
-      val r6: TPostResult[Context, Attr] = transformAttr(r5.ctx, o2.attr)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty || r5.resultOpt.nonEmpty || r6.resultOpt.nonEmpty)
-        TPostResult(r6.ctx, Some(o2(modifies = r0.resultOpt.getOrElse(o2.modifies), assumes = r1.resultOpt.getOrElse(o2.assumes), guarantees = r2.resultOpt.getOrElse(o2.guarantees), cases = r3.resultOpt.getOrElse(o2.cases), handlers = r4.resultOpt.getOrElse(o2.handlers), flows = r5.resultOpt.getOrElse(o2.flows), attr = r6.resultOpt.getOrElse(o2.attr))))
+      val r6: TPostResult[Context, IS[Z, GclGumboTable]] = transformISZ(r5.ctx, o2.gumboTables, transformGclGumboTable _)
+      val r7: TPostResult[Context, Attr] = transformAttr(r6.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty || r5.resultOpt.nonEmpty || r6.resultOpt.nonEmpty || r7.resultOpt.nonEmpty)
+        TPostResult(r7.ctx, Some(o2(modifies = r0.resultOpt.getOrElse(o2.modifies), assumes = r1.resultOpt.getOrElse(o2.assumes), guarantees = r2.resultOpt.getOrElse(o2.guarantees), cases = r3.resultOpt.getOrElse(o2.cases), handlers = r4.resultOpt.getOrElse(o2.handlers), flows = r5.resultOpt.getOrElse(o2.flows), gumboTables = r6.resultOpt.getOrElse(o2.gumboTables), attr = r7.resultOpt.getOrElse(o2.attr))))
       else
-        TPostResult(r6.ctx, None())
+        TPostResult(r7.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
@@ -15759,38 +16032,6 @@ import Transformer._
     }
   }
 
-  @pure def transformGclHandle(ctx: Context, o: GclHandle): TPostResult[Context, GclHandle] = {
-    val preR: PreResult[Context, GclHandle] = pp.preGclHandle(ctx, o)
-    val r: TPostResult[Context, GclHandle] = if (preR.continu) {
-      val o2: GclHandle = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.port)
-      val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(r0.ctx, o2.modifies, transform_langastExp _)
-      val r2: TPostResult[Context, IS[Z, GclAssume]] = transformISZ(r1.ctx, o2.assumes, transformGclAssume _)
-      val r3: TPostResult[Context, IS[Z, GclGuarantee]] = transformISZ(r2.ctx, o2.guarantees, transformGclGuarantee _)
-      val r4: TPostResult[Context, IS[Z, GclCaseStatement]] = transformISZ(r3.ctx, o2.cases, transformGclCaseStatement _)
-      val r5: TPostResult[Context, Attr] = transformAttr(r4.ctx, o2.attr)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty || r5.resultOpt.nonEmpty)
-        TPostResult(r5.ctx, Some(o2(port = r0.resultOpt.getOrElse(o2.port), modifies = r1.resultOpt.getOrElse(o2.modifies), assumes = r2.resultOpt.getOrElse(o2.assumes), guarantees = r3.resultOpt.getOrElse(o2.guarantees), cases = r4.resultOpt.getOrElse(o2.cases), attr = r5.resultOpt.getOrElse(o2.attr))))
-      else
-        TPostResult(r5.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: GclHandle = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, GclHandle] = pp.postGclHandle(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
   @pure def transformBTSTransitionCondition(ctx: Context, o: BTSTransitionCondition): TPostResult[Context, BTSTransitionCondition] = {
     val preR: PreResult[Context, BTSTransitionCondition] = pp.preBTSTransitionCondition(ctx, o)
     val r: TPostResult[Context, BTSTransitionCondition] = if (preR.continu) {
@@ -15868,6 +16109,34 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: BTSDispatchCondition = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, BTSDispatchCondition] = pp.postBTSDispatchCondition(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformGclGumboTable(ctx: Context, o: GclGumboTable): TPostResult[Context, GclGumboTable] = {
+    val preR: PreResult[Context, GclGumboTable] = pp.preGclGumboTable(ctx, o)
+    val r: TPostResult[Context, GclGumboTable] = if (preR.continu) {
+      val o2: GclGumboTable = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, GclNormalTable] = transformGclNormalTable(preR.ctx, o2.table)
+      val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(table = r0.resultOpt.getOrElse(o2.table), attr = r1.resultOpt.getOrElse(o2.attr))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclGumboTable = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclGumboTable] = pp.postGclGumboTable(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -16058,23 +16327,27 @@ import Transformer._
     }
   }
 
-  @pure def transformGclTODO(ctx: Context, o: GclTODO): TPostResult[Context, GclTODO] = {
-    val preR: PreResult[Context, GclTODO] = pp.preGclTODO(ctx, o)
-    val r: TPostResult[Context, GclTODO] = if (preR.continu) {
-      val o2: GclTODO = preR.resultOpt.getOrElse(o)
+  @pure def transformGclNormalTable(ctx: Context, o: GclNormalTable): TPostResult[Context, GclNormalTable] = {
+    val preR: PreResult[Context, GclNormalTable] = pp.preGclNormalTable(ctx, o)
+    val r: TPostResult[Context, GclNormalTable] = if (preR.continu) {
+      val o2: GclNormalTable = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        TPostResult(preR.ctx, Some(o2))
+      val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(preR.ctx, o2.horizontalPredicates, transform_langastExp _)
+      val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(r0.ctx, o2.verticalPredicates, transform_langastExp _)
+      val r2: TPostResult[Context, IS[Z, GclResultRow]] = transformISZ(r1.ctx, o2.resultRows, transformGclResultRow _)
+      val r3: TPostResult[Context, Attr] = transformAttr(r2.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty)
+        TPostResult(r3.ctx, Some(o2(horizontalPredicates = r0.resultOpt.getOrElse(o2.horizontalPredicates), verticalPredicates = r1.resultOpt.getOrElse(o2.verticalPredicates), resultRows = r2.resultOpt.getOrElse(o2.resultRows), attr = r3.resultOpt.getOrElse(o2.attr))))
       else
-        TPostResult(preR.ctx, None())
+        TPostResult(r3.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {
       TPostResult(preR.ctx, None())
     }
     val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: GclTODO = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, GclTODO] = pp.postGclTODO(r.ctx, o2)
+    val o2: GclNormalTable = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclNormalTable] = pp.postGclNormalTable(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -16151,35 +16424,6 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: SysmlAst.UsageElement = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, SysmlAst.UsageElement] = pp.postSysmlAstUsageElement(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
-  @pure def transformGclLib(ctx: Context, o: GclLib): TPostResult[Context, GclLib] = {
-    val preR: PreResult[Context, GclLib] = pp.preGclLib(ctx, o)
-    val r: TPostResult[Context, GclLib] = if (preR.continu) {
-      val o2: GclLib = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.containingPackage)
-      val r1: TPostResult[Context, IS[Z, GclMethod]] = transformISZ(r0.ctx, o2.methods, transformGclMethod _)
-      val r2: TPostResult[Context, Attr] = transformAttr(r1.ctx, o2.attr)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-        TPostResult(r2.ctx, Some(o2(containingPackage = r0.resultOpt.getOrElse(o2.containingPackage), methods = r1.resultOpt.getOrElse(o2.methods), attr = r2.resultOpt.getOrElse(o2.attr))))
-      else
-        TPostResult(r2.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: GclLib = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, GclLib] = pp.postGclLib(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -16315,35 +16559,6 @@ import Transformer._
     }
   }
 
-  @pure def transformInfoFlowClause(ctx: Context, o: InfoFlowClause): TPostResult[Context, InfoFlowClause] = {
-    val preR: PreResult[Context, InfoFlowClause] = pp.preInfoFlowClause(ctx, o)
-    val r: TPostResult[Context, InfoFlowClause] = if (preR.continu) {
-      val o2: InfoFlowClause = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(preR.ctx, o2.from, transform_langastExp _)
-      val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(r0.ctx, o2.to, transform_langastExp _)
-      val r2: TPostResult[Context, Attr] = transformAttr(r1.ctx, o2.attr)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
-        TPostResult(r2.ctx, Some(o2(from = r0.resultOpt.getOrElse(o2.from), to = r1.resultOpt.getOrElse(o2.to), attr = r2.resultOpt.getOrElse(o2.attr))))
-      else
-        TPostResult(r2.ctx, None())
-    } else if (preR.resultOpt.nonEmpty) {
-      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
-    } else {
-      TPostResult(preR.ctx, None())
-    }
-    val hasChanged: B = r.resultOpt.nonEmpty
-    val o2: InfoFlowClause = r.resultOpt.getOrElse(o)
-    val postR: TPostResult[Context, InfoFlowClause] = pp.postInfoFlowClause(r.ctx, o2)
-    if (postR.resultOpt.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return TPostResult(postR.ctx, Some(o2))
-    } else {
-      return TPostResult(postR.ctx, None())
-    }
-  }
-
   @pure def transformBTSExecuteConditionOtherwise(ctx: Context, o: BTSExecuteConditionOtherwise): TPostResult[Context, BTSExecuteConditionOtherwise] = {
     val preR: PreResult[Context, BTSExecuteConditionOtherwise] = pp.preBTSExecuteConditionOtherwise(ctx, o)
     val r: TPostResult[Context, BTSExecuteConditionOtherwise] = if (preR.continu) {
@@ -16426,6 +16641,34 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: SysmlAst.NonOccurrenceUsageMember = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, SysmlAst.NonOccurrenceUsageMember] = pp.postSysmlAstNonOccurrenceUsageMember(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformGclResultRow(ctx: Context, o: GclResultRow): TPostResult[Context, GclResultRow] = {
+    val preR: PreResult[Context, GclResultRow] = pp.preGclResultRow(ctx, o)
+    val r: TPostResult[Context, GclResultRow] = if (preR.continu) {
+      val o2: GclResultRow = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(preR.ctx, o2.results, transform_langastExp _)
+      val r1: TPostResult[Context, Attr] = transformAttr(r0.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
+        TPostResult(r1.ctx, Some(o2(results = r0.resultOpt.getOrElse(o2.results), attr = r1.resultOpt.getOrElse(o2.attr))))
+      else
+        TPostResult(r1.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclResultRow = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclResultRow] = pp.postGclResultRow(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -16597,6 +16840,38 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: BTSAssertion = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, BTSAssertion] = pp.postBTSAssertion(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformGclHandle(ctx: Context, o: GclHandle): TPostResult[Context, GclHandle] = {
+    val preR: PreResult[Context, GclHandle] = pp.preGclHandle(ctx, o)
+    val r: TPostResult[Context, GclHandle] = if (preR.continu) {
+      val o2: GclHandle = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, org.sireum.lang.ast.Exp] = transform_langastExp(preR.ctx, o2.port)
+      val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(r0.ctx, o2.modifies, transform_langastExp _)
+      val r2: TPostResult[Context, IS[Z, GclAssume]] = transformISZ(r1.ctx, o2.assumes, transformGclAssume _)
+      val r3: TPostResult[Context, IS[Z, GclGuarantee]] = transformISZ(r2.ctx, o2.guarantees, transformGclGuarantee _)
+      val r4: TPostResult[Context, IS[Z, GclCaseStatement]] = transformISZ(r3.ctx, o2.cases, transformGclCaseStatement _)
+      val r5: TPostResult[Context, Attr] = transformAttr(r4.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty || r3.resultOpt.nonEmpty || r4.resultOpt.nonEmpty || r5.resultOpt.nonEmpty)
+        TPostResult(r5.ctx, Some(o2(port = r0.resultOpt.getOrElse(o2.port), modifies = r1.resultOpt.getOrElse(o2.modifies), assumes = r2.resultOpt.getOrElse(o2.assumes), guarantees = r3.resultOpt.getOrElse(o2.guarantees), cases = r4.resultOpt.getOrElse(o2.cases), attr = r5.resultOpt.getOrElse(o2.attr))))
+      else
+        TPostResult(r5.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclHandle = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclHandle] = pp.postGclHandle(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -17293,6 +17568,32 @@ import Transformer._
     }
   }
 
+  @pure def transformGclTODO(ctx: Context, o: GclTODO): TPostResult[Context, GclTODO] = {
+    val preR: PreResult[Context, GclTODO] = pp.preGclTODO(ctx, o)
+    val r: TPostResult[Context, GclTODO] = if (preR.continu) {
+      val o2: GclTODO = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        TPostResult(preR.ctx, Some(o2))
+      else
+        TPostResult(preR.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclTODO = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclTODO] = pp.postGclTODO(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
   @pure def transformBTSPortInAction(ctx: Context, o: BTSPortInAction): TPostResult[Context, BTSPortInAction] = {
     val preR: PreResult[Context, BTSPortInAction] = pp.preBTSPortInAction(ctx, o)
     val r: TPostResult[Context, BTSPortInAction] = if (preR.continu) {
@@ -17312,6 +17613,35 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: BTSPortInAction = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, BTSPortInAction] = pp.postBTSPortInAction(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformGclLib(ctx: Context, o: GclLib): TPostResult[Context, GclLib] = {
+    val preR: PreResult[Context, GclLib] = pp.preGclLib(ctx, o)
+    val r: TPostResult[Context, GclLib] = if (preR.continu) {
+      val o2: GclLib = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, Name] = transformName(preR.ctx, o2.containingPackage)
+      val r1: TPostResult[Context, IS[Z, GclMethod]] = transformISZ(r0.ctx, o2.methods, transformGclMethod _)
+      val r2: TPostResult[Context, Attr] = transformAttr(r1.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(containingPackage = r0.resultOpt.getOrElse(o2.containingPackage), methods = r1.resultOpt.getOrElse(o2.methods), attr = r2.resultOpt.getOrElse(o2.attr))))
+      else
+        TPostResult(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: GclLib = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, GclLib] = pp.postGclLib(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -17464,6 +17794,35 @@ import Transformer._
     val hasChanged: B = r.resultOpt.nonEmpty
     val o2: SysmlAst.AllocationUsage = r.resultOpt.getOrElse(o)
     val postR: TPostResult[Context, SysmlAst.AllocationUsage] = pp.postSysmlAstAllocationUsage(r.ctx, o2)
+    if (postR.resultOpt.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return TPostResult(postR.ctx, Some(o2))
+    } else {
+      return TPostResult(postR.ctx, None())
+    }
+  }
+
+  @pure def transformInfoFlowClause(ctx: Context, o: InfoFlowClause): TPostResult[Context, InfoFlowClause] = {
+    val preR: PreResult[Context, InfoFlowClause] = pp.preInfoFlowClause(ctx, o)
+    val r: TPostResult[Context, InfoFlowClause] = if (preR.continu) {
+      val o2: InfoFlowClause = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(preR.ctx, o2.from, transform_langastExp _)
+      val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(r0.ctx, o2.to, transform_langastExp _)
+      val r2: TPostResult[Context, Attr] = transformAttr(r1.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(from = r0.resultOpt.getOrElse(o2.from), to = r1.resultOpt.getOrElse(o2.to), attr = r2.resultOpt.getOrElse(o2.attr))))
+      else
+        TPostResult(r2.ctx, None())
+    } else if (preR.resultOpt.nonEmpty) {
+      TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
+    } else {
+      TPostResult(preR.ctx, None())
+    }
+    val hasChanged: B = r.resultOpt.nonEmpty
+    val o2: InfoFlowClause = r.resultOpt.getOrElse(o)
+    val postR: TPostResult[Context, InfoFlowClause] = pp.postInfoFlowClause(r.ctx, o2)
     if (postR.resultOpt.nonEmpty) {
       return postR
     } else if (hasChanged) {

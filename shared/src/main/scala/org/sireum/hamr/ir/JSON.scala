@@ -144,6 +144,7 @@ import org.sireum.hamr.ir.Emv2Flow
 import org.sireum.hamr.ir.Emv2BehaviorSection
 import org.sireum.hamr.ir.ErrorPropagation
 import org.sireum.hamr.ir.GclSymbol
+import org.sireum.hamr.ir.GclNamedElement
 import org.sireum.hamr.ir.GclSubclause
 import org.sireum.hamr.ir.GclMethod
 import org.sireum.hamr.ir.GclStateVar
@@ -157,6 +158,9 @@ import org.sireum.hamr.ir.GclIntegration
 import org.sireum.hamr.ir.GclCaseStatement
 import org.sireum.hamr.ir.GclInitialize
 import org.sireum.hamr.ir.GclCompute
+import org.sireum.hamr.ir.GclGumboTable
+import org.sireum.hamr.ir.GclNormalTable
+import org.sireum.hamr.ir.GclResultRow
 import org.sireum.hamr.ir.GclHandle
 import org.sireum.hamr.ir.GclTODO
 import org.sireum.hamr.ir.GclLib
@@ -1435,9 +1439,24 @@ object JSON {
         case o: GclCaseStatement => return printGclCaseStatement(o)
         case o: GclInitialize => return printGclInitialize(o)
         case o: GclCompute => return printGclCompute(o)
+        case o: GclGumboTable => return printGclGumboTable(o)
+        case o: GclNormalTable => return printGclNormalTable(o)
+        case o: GclResultRow => return printGclResultRow(o)
         case o: GclHandle => return printGclHandle(o)
         case o: GclTODO => return printGclTODO(o)
         case o: GclLib => return printGclLib(o)
+        case o: InfoFlowClause => return printInfoFlowClause(o)
+      }
+    }
+
+    @pure def printGclNamedElement(o: GclNamedElement): ST = {
+      o match {
+        case o: GclMethod => return printGclMethod(o)
+        case o: GclStateVar => return printGclStateVar(o)
+        case o: GclInvariant => return printGclInvariant(o)
+        case o: GclAssume => return printGclAssume(o)
+        case o: GclGuarantee => return printGclGuarantee(o)
+        case o: GclCaseStatement => return printGclCaseStatement(o)
         case o: InfoFlowClause => return printInfoFlowClause(o)
       }
     }
@@ -1563,6 +1582,35 @@ object JSON {
         ("cases", printISZ(F, o.cases, printGclCaseStatement _)),
         ("handlers", printISZ(F, o.handlers, printGclHandle _)),
         ("flows", printISZ(F, o.flows, printInfoFlowClause _)),
+        ("gumboTables", printISZ(F, o.gumboTables, printGclGumboTable _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printGclGumboTable(o: GclGumboTable): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclGumboTable""""),
+        ("table", printGclNormalTable(o.table)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printGclNormalTable(o: GclNormalTable): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclNormalTable""""),
+        ("id", printString(o.id)),
+        ("descriptor", printOption(T, o.descriptor, printString _)),
+        ("horizontalPredicates", printISZ(F, o.horizontalPredicates, print_langastExp _)),
+        ("verticalPredicates", printISZ(F, o.verticalPredicates, print_langastExp _)),
+        ("resultRows", printISZ(F, o.resultRows, printGclResultRow _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printGclResultRow(o: GclResultRow): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclResultRow""""),
+        ("results", printISZ(F, o.results, print_langastExp _)),
         ("attr", printAttr(o.attr))
       ))
     }
@@ -6772,7 +6820,7 @@ object JSON {
     }
 
     def parseGclSymbol(): GclSymbol = {
-      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclHandle", "GclTODO", "GclLib", "InfoFlowClause"))
+      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclGumboTable", "GclNormalTable", "GclResultRow", "GclHandle", "GclTODO", "GclLib", "InfoFlowClause"))
       t.native match {
         case "GclSubclause" => val r = parseGclSubclauseT(T); return r
         case "GclMethod" => val r = parseGclMethodT(T); return r
@@ -6784,9 +6832,26 @@ object JSON {
         case "GclCaseStatement" => val r = parseGclCaseStatementT(T); return r
         case "GclInitialize" => val r = parseGclInitializeT(T); return r
         case "GclCompute" => val r = parseGclComputeT(T); return r
+        case "GclGumboTable" => val r = parseGclGumboTableT(T); return r
+        case "GclNormalTable" => val r = parseGclNormalTableT(T); return r
+        case "GclResultRow" => val r = parseGclResultRowT(T); return r
         case "GclHandle" => val r = parseGclHandleT(T); return r
         case "GclTODO" => val r = parseGclTODOT(T); return r
         case "GclLib" => val r = parseGclLibT(T); return r
+        case "InfoFlowClause" => val r = parseInfoFlowClauseT(T); return r
+        case _ => val r = parseInfoFlowClauseT(T); return r
+      }
+    }
+
+    def parseGclNamedElement(): GclNamedElement = {
+      val t = parser.parseObjectTypes(ISZ("GclMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclCaseStatement", "InfoFlowClause"))
+      t.native match {
+        case "GclMethod" => val r = parseGclMethodT(T); return r
+        case "GclStateVar" => val r = parseGclStateVarT(T); return r
+        case "GclInvariant" => val r = parseGclInvariantT(T); return r
+        case "GclAssume" => val r = parseGclAssumeT(T); return r
+        case "GclGuarantee" => val r = parseGclGuaranteeT(T); return r
+        case "GclCaseStatement" => val r = parseGclCaseStatementT(T); return r
         case "InfoFlowClause" => val r = parseInfoFlowClauseT(T); return r
         case _ => val r = parseInfoFlowClauseT(T); return r
       }
@@ -7059,10 +7124,79 @@ object JSON {
       parser.parseObjectKey("flows")
       val flows = parser.parseISZ(parseInfoFlowClause _)
       parser.parseObjectNext()
+      parser.parseObjectKey("gumboTables")
+      val gumboTables = parser.parseISZ(parseGclGumboTable _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclCompute(modifies, assumes, guarantees, cases, handlers, flows, attr)
+      return GclCompute(modifies, assumes, guarantees, cases, handlers, flows, gumboTables, attr)
+    }
+
+    def parseGclGumboTable(): GclGumboTable = {
+      val r = parseGclGumboTableT(F)
+      return r
+    }
+
+    def parseGclGumboTableT(typeParsed: B): GclGumboTable = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclGumboTable")
+      }
+      parser.parseObjectKey("table")
+      val table = parseGclNormalTable()
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclGumboTable(table, attr)
+    }
+
+    def parseGclNormalTable(): GclNormalTable = {
+      val r = parseGclNormalTableT(F)
+      return r
+    }
+
+    def parseGclNormalTableT(typeParsed: B): GclNormalTable = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclNormalTable")
+      }
+      parser.parseObjectKey("id")
+      val id = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("descriptor")
+      val descriptor = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("horizontalPredicates")
+      val horizontalPredicates = parser.parseISZ(parse_langastExp _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("verticalPredicates")
+      val verticalPredicates = parser.parseISZ(parse_langastExp _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("resultRows")
+      val resultRows = parser.parseISZ(parseGclResultRow _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclNormalTable(id, descriptor, horizontalPredicates, verticalPredicates, resultRows, attr)
+    }
+
+    def parseGclResultRow(): GclResultRow = {
+      val r = parseGclResultRowT(F)
+      return r
+    }
+
+    def parseGclResultRowT(typeParsed: B): GclResultRow = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclResultRow")
+      }
+      parser.parseObjectKey("results")
+      val results = parser.parseISZ(parse_langastExp _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclResultRow(results, attr)
     }
 
     def parseGclHandle(): GclHandle = {
@@ -14779,6 +14913,24 @@ object JSON {
     return r
   }
 
+  def fromGclNamedElement(o: GclNamedElement, isCompact: B): String = {
+    val st = Printer.printGclNamedElement(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclNamedElement(s: String): Either[GclNamedElement, Json.ErrorMsg] = {
+    def fGclNamedElement(parser: Parser): GclNamedElement = {
+      val r = parser.parseGclNamedElement()
+      return r
+    }
+    val r = to(s, fGclNamedElement _)
+    return r
+  }
+
   def fromGclSubclause(o: GclSubclause, isCompact: B): String = {
     val st = Printer.printGclSubclause(o)
     if (isCompact) {
@@ -15010,6 +15162,60 @@ object JSON {
       return r
     }
     val r = to(s, fGclCompute _)
+    return r
+  }
+
+  def fromGclGumboTable(o: GclGumboTable, isCompact: B): String = {
+    val st = Printer.printGclGumboTable(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclGumboTable(s: String): Either[GclGumboTable, Json.ErrorMsg] = {
+    def fGclGumboTable(parser: Parser): GclGumboTable = {
+      val r = parser.parseGclGumboTable()
+      return r
+    }
+    val r = to(s, fGclGumboTable _)
+    return r
+  }
+
+  def fromGclNormalTable(o: GclNormalTable, isCompact: B): String = {
+    val st = Printer.printGclNormalTable(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclNormalTable(s: String): Either[GclNormalTable, Json.ErrorMsg] = {
+    def fGclNormalTable(parser: Parser): GclNormalTable = {
+      val r = parser.parseGclNormalTable()
+      return r
+    }
+    val r = to(s, fGclNormalTable _)
+    return r
+  }
+
+  def fromGclResultRow(o: GclResultRow, isCompact: B): String = {
+    val st = Printer.printGclResultRow(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclResultRow(s: String): Either[GclResultRow, Json.ErrorMsg] = {
+    def fGclResultRow(parser: Parser): GclResultRow = {
+      val r = parser.parseGclResultRow()
+      return r
+    }
+    val r = to(s, fGclResultRow _)
     return r
   }
 

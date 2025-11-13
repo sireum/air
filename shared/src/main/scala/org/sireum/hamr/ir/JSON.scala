@@ -160,6 +160,7 @@ import org.sireum.hamr.ir.GclInitialize
 import org.sireum.hamr.ir.GclCompute
 import org.sireum.hamr.ir.GclGumboTable
 import org.sireum.hamr.ir.GclNormalTable
+import org.sireum.hamr.ir.GclCaseTable
 import org.sireum.hamr.ir.GclNestedTable
 import org.sireum.hamr.ir.GclResultRow
 import org.sireum.hamr.ir.GclBlankRow
@@ -1443,6 +1444,7 @@ object JSON {
         case o: GclCompute => return printGclCompute(o)
         case o: GclGumboTable => return printGclGumboTable(o)
         case o: GclNormalTable => return printGclNormalTable(o)
+        case o: GclCaseTable => return printGclCaseTable(o)
         case o: GclNestedTable => return printGclNestedTable(o)
         case o: GclResultRow => return printGclResultRow(o)
         case o: GclBlankRow => return printGclBlankRow(o)
@@ -1595,6 +1597,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""GclGumboTable""""),
         ("normal", printOption(F, o.normal, printGclNormalTable _)),
+        ("cases", printOption(F, o.cases, printGclCaseTable _)),
         ("nested", printOption(F, o.nested, printGclNestedTable _)),
         ("attr", printAttr(o.attr))
       ))
@@ -1607,6 +1610,19 @@ object JSON {
         ("descriptor", printOption(T, o.descriptor, printString _)),
         ("horizontalPredicates", printISZ(F, o.horizontalPredicates, print_langastExp _)),
         ("verticalPredicates", printISZ(F, o.verticalPredicates, print_langastExp _)),
+        ("resultRows", printISZ(F, o.resultRows, printGclResultRow _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printGclCaseTable(o: GclCaseTable): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclCaseTable""""),
+        ("id", printString(o.id)),
+        ("caseEval", print_langastExp(o.caseEval)),
+        ("descriptor", printOption(T, o.descriptor, printString _)),
+        ("horizontalPredicates", printISZ(F, o.horizontalPredicates, print_langastExp _)),
+        ("verticalPredicateRows", printISZ(F, o.verticalPredicateRows, printGclBlankRow _)),
         ("resultRows", printISZ(F, o.resultRows, printGclResultRow _)),
         ("attr", printAttr(o.attr))
       ))
@@ -6846,7 +6862,7 @@ object JSON {
     }
 
     def parseGclSymbol(): GclSymbol = {
-      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclGumboTable", "GclNormalTable", "GclNestedTable", "GclResultRow", "GclBlankRow", "GclHandle", "GclTODO", "GclLib", "InfoFlowClause"))
+      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclGumboTable", "GclNormalTable", "GclCaseTable", "GclNestedTable", "GclResultRow", "GclBlankRow", "GclHandle", "GclTODO", "GclLib", "InfoFlowClause"))
       t.native match {
         case "GclSubclause" => val r = parseGclSubclauseT(T); return r
         case "GclMethod" => val r = parseGclMethodT(T); return r
@@ -6860,6 +6876,7 @@ object JSON {
         case "GclCompute" => val r = parseGclComputeT(T); return r
         case "GclGumboTable" => val r = parseGclGumboTableT(T); return r
         case "GclNormalTable" => val r = parseGclNormalTableT(T); return r
+        case "GclCaseTable" => val r = parseGclCaseTableT(T); return r
         case "GclNestedTable" => val r = parseGclNestedTableT(T); return r
         case "GclResultRow" => val r = parseGclResultRowT(T); return r
         case "GclBlankRow" => val r = parseGclBlankRowT(T); return r
@@ -7173,13 +7190,16 @@ object JSON {
       parser.parseObjectKey("normal")
       val normal = parser.parseOption(parseGclNormalTable _)
       parser.parseObjectNext()
+      parser.parseObjectKey("cases")
+      val cases = parser.parseOption(parseGclCaseTable _)
+      parser.parseObjectNext()
       parser.parseObjectKey("nested")
       val nested = parser.parseOption(parseGclNestedTable _)
       parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclGumboTable(normal, nested, attr)
+      return GclGumboTable(normal, cases, nested, attr)
     }
 
     def parseGclNormalTable(): GclNormalTable = {
@@ -7210,6 +7230,39 @@ object JSON {
       val attr = parseAttr()
       parser.parseObjectNext()
       return GclNormalTable(id, descriptor, horizontalPredicates, verticalPredicates, resultRows, attr)
+    }
+
+    def parseGclCaseTable(): GclCaseTable = {
+      val r = parseGclCaseTableT(F)
+      return r
+    }
+
+    def parseGclCaseTableT(typeParsed: B): GclCaseTable = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclCaseTable")
+      }
+      parser.parseObjectKey("id")
+      val id = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("caseEval")
+      val caseEval = parse_langastExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("descriptor")
+      val descriptor = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("horizontalPredicates")
+      val horizontalPredicates = parser.parseISZ(parse_langastExp _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("verticalPredicateRows")
+      val verticalPredicateRows = parser.parseISZ(parseGclBlankRow _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("resultRows")
+      val resultRows = parser.parseISZ(parseGclResultRow _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclCaseTable(id, caseEval, descriptor, horizontalPredicates, verticalPredicateRows, resultRows, attr)
     }
 
     def parseGclNestedTable(): GclNestedTable = {
@@ -15280,6 +15333,24 @@ object JSON {
       return r
     }
     val r = to(s, fGclNormalTable _)
+    return r
+  }
+
+  def fromGclCaseTable(o: GclCaseTable, isCompact: B): String = {
+    val st = Printer.printGclCaseTable(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclCaseTable(s: String): Either[GclCaseTable, Json.ErrorMsg] = {
+    def fGclCaseTable(parser: Parser): GclCaseTable = {
+      val r = parser.parseGclCaseTable()
+      return r
+    }
+    val r = to(s, fGclCaseTable _)
     return r
   }
 

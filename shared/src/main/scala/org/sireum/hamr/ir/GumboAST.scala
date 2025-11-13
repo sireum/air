@@ -288,6 +288,7 @@ import org.sireum.message.Position
 }
 
 @datatype class GclGumboTable(val normal: Option[GclNormalTable], // Sierra: Added datatype, table attribute will need to be modified once inverse and nested are added.
+                              val cases: Option[GclCaseTable],
                               val nested: Option[GclNestedTable],
                               @hidden val attr: Attr) extends GclSymbol {
   @strictpure override def posOpt: Option[Position] = attr.posOpt
@@ -299,13 +300,19 @@ import org.sireum.message.Position
       if (normal.nonEmpty) Some(
         st"""Modifies(${(normal, ", ")})""")
       else None()
+    val scases: Option[ST] =
+      if (cases.nonEmpty) Some(
+        st"""Modifies(${(cases,", ")})"""
+      )
+      else None()
     val snested: Option[ST] =
       if (nested.nonEmpty) Some(
         st"""Modifies(${(nested, ", ")})""")
       else None()
     return (
-      st"""$normal
-           $nested""")
+      st"""$snormal
+           $scases
+           $snested""")
   }
 }
 
@@ -345,6 +352,52 @@ import org.sireum.message.Position
           |$sdescriptor
           |$shorizontalPredicates
           |$sverticalPredicates
+          |$sresultRows""")
+  }
+}
+
+@datatype class GclCaseTable(val id: String,
+                               val caseEval: org.sireum.lang.ast.Exp,
+                               val descriptor: Option[String],
+                               val horizontalPredicates: ISZ[org.sireum.lang.ast.Exp],
+                               val verticalPredicateRows: ISZ[GclBlankRow],
+                               val resultRows: ISZ[GclResultRow],
+                               @hidden val attr: Attr) extends GclSymbol {
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @pure def prettyST: ST = {
+    val scaseEval: Option[ST] =
+      if(descriptor.nonEmpty) Some(
+        st"""$caseEval""")
+      else None()
+    val sdescriptor: Option[ST] = // Sierra: table instead of specific as it could be one of three types.
+      if(descriptor.nonEmpty) Some(
+        st"""$descriptor""")
+      else None()
+    val shorizontalPredicates: Option[ST] =
+      if(horizontalPredicates.nonEmpty) Some(
+        st"""HorizontalPredicates(${(horizontalPredicates)})"""
+      )
+      else None()
+    val sverticalPredicateRows: Option[ST] =
+      if(verticalPredicateRows.nonEmpty) Some(
+        st"""verticalPredicates(${(verticalPredicateRows)})"""
+      )
+      else None()
+    val sresultRows: Option[ST] =
+      if(resultRows.nonEmpty) Some(
+        st"""resultRows(${(resultRows)})"""
+      )
+      else None()
+    return (
+      st"""$id
+          |$scaseEval
+          |$sdescriptor
+          |$shorizontalPredicates
+          |$sverticalPredicateRows
           |$sresultRows""")
   }
 }

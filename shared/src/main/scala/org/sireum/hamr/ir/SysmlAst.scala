@@ -112,6 +112,25 @@ object SysmlAst {
 
   @datatype class NaryConnectorPart(val connectorEnds: ISZ[ConnectorEnd]) extends ConnectorPart
 
+  /****************************************************************
+   * M U L T I P L I C I T I E S
+   *****************************************************************/
+
+  @sig trait Multiplicity {
+    @pure def nonunique: B
+    @pure def ordered: B
+    @pure def attr: Attr
+  }
+
+  @datatype class MultiplicityNonRange(val nonunique: B,
+                                       val ordered: B,
+                                       @hidden val attr: Attr) extends Multiplicity
+
+  @datatype class MultiplicityRange(val l: AST.Exp,
+                                    val u: Option[AST.Exp],
+                                    val nonunique: B,
+                                    val ordered: B,
+                                    @hidden val attr: Attr) extends Multiplicity
 
   /****************************************************************
    * S P E C I A L I Z A T I O N S
@@ -181,6 +200,16 @@ object SysmlAst {
                                        val parents: ISZ[Type.Named],
                                        val bodyItems: ISZ[DefinitionBodyItem],
                                        @hidden val attr: Attr) extends DefinitionElement {
+    @strictpure override def posOpt: Option[Position] = attr.posOpt
+  }
+
+  @datatype class InterfaceDefinition(val visibility: Visibility.Type,
+                                      val occurrenceDefPrefix: OccurrenceDefinitionPrefix,
+                                      val identification: Option[Identification],
+                                      val subClassifications: ISZ[Name],
+                                      val parents: ISZ[Type.Named],
+                                      val bodyItems: ISZ[DefinitionBodyItem],
+                                      @hidden val attr: Attr) extends DefinitionElement {
     @strictpure override def posOpt: Option[Position] = attr.posOpt
   }
 

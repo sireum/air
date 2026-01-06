@@ -284,9 +284,12 @@ object SysmlAst {
     | ruleExtendedUsage #ruleNonOccurrenceUsageElement7;
   */
 
-  @sig trait NonOccurrenceUsageMember extends DefinitionBodyItem
+  @sig trait UsageMember extends DefinitionBodyItem with UsageElement
 
-  @sig trait NonOccurrenceUsageElement extends NonOccurrenceUsageMember with UsageElement
+  @sig trait NonOccurrenceUsageMember extends UsageMember//extends DefinitionBodyItem
+
+  @sig trait NonOccurrenceUsageElement extends NonOccurrenceUsageMember// with UsageElement
+  //@sig trait NonOccurrenceUsageElement extends DefinitionBodyItem with UsageElement
 
   @datatype class RefPrefix(val direction: Option[FeatureDirection.Type],
                             val isDerived: B,
@@ -322,9 +325,9 @@ object SysmlAst {
     | ruleBehaviorUsageElement #ruleOccurrenceUsageElement2;
   */
 
-  @sig trait OccurrenceUsageMember extends DefinitionBodyItem
+  @sig trait OccurrenceUsageMember extends UsageMember //DefinitionBodyItem
 
-  @sig trait OccurrenceUsageElement extends OccurrenceUsageMember with UsageElement
+  @sig trait OccurrenceUsageElement extends OccurrenceUsageMember //with UsageElement
 
   @sig trait StructureUsageElement extends OccurrenceUsageElement
 

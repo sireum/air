@@ -1177,33 +1177,29 @@ object MTransformer {
 
   val PostResultBTSAssignmentAction: MOption[BTSAssignmentAction] = MNone()
 
-  val PreResultSysmlAstRefPrefix: PreResult[SysmlAst.RefPrefix] = PreResult(T, MNone())
-
-  val PostResultSysmlAstRefPrefix: MOption[SysmlAst.RefPrefix] = MNone()
-
   val PreResultBTSSubprogramCallAction: PreResult[BTSSubprogramCallAction] = PreResult(T, MNone())
 
   val PostResultBTSSubprogramCallAction: MOption[BTSSubprogramCallAction] = MNone()
 
-  val PreResultSysmlAstEndUsage: PreResult[SysmlAst.EndUsage] = PreResult(T, MNone())
+  val PreResultSysmlAstRefPrefix: PreResult[SysmlAst.RefPrefix] = PreResult(T, MNone())
 
-  val PostResultSysmlAstEndUsage: MOption[SysmlAst.EndUsage] = MNone()
+  val PostResultSysmlAstRefPrefix: MOption[SysmlAst.RefPrefix] = MNone()
 
   val PreResultBTSPortOutAction: PreResult[BTSPortOutAction] = PreResult(T, MNone())
 
   val PostResultBTSPortOutAction: MOption[BTSPortOutAction] = MNone()
 
-  val PreResultSysmlAstUsagePrefix: PreResult[SysmlAst.UsagePrefix] = PreResult(T, MNone())
-
-  val PostResultSysmlAstUsagePrefix: MOption[SysmlAst.UsagePrefix] = MNone()
-
   val PreResultBTSPortInAction: PreResult[BTSPortInAction] = PreResult(T, MNone())
 
   val PostResultBTSPortInAction: MOption[BTSPortInAction] = MNone()
 
-  val PreResultSysmlAstAttributeUsage: PreResult[SysmlAst.AttributeUsage] = PreResult(T, MNone())
+  val PreResultSysmlAstEndUsage: PreResult[SysmlAst.EndUsage] = PreResult(T, MNone())
 
-  val PostResultSysmlAstAttributeUsage: MOption[SysmlAst.AttributeUsage] = MNone()
+  val PostResultSysmlAstEndUsage: MOption[SysmlAst.EndUsage] = MNone()
+
+  val PreResultSysmlAstUsagePrefix: PreResult[SysmlAst.UsagePrefix] = PreResult(T, MNone())
+
+  val PostResultSysmlAstUsagePrefix: MOption[SysmlAst.UsagePrefix] = MNone()
 
   val PreResultBTSFrozenPortAction: PreResult[BTSFrozenPortAction] = PreResult(T, MNone())
 
@@ -1213,13 +1209,17 @@ object MTransformer {
 
   val PostResultBTSIfBLESSAction: MOption[BTSIfBLESSAction] = MNone()
 
-  val PreResultSysmlAstReferenceUsage: PreResult[SysmlAst.ReferenceUsage] = PreResult(T, MNone())
+  val PreResultSysmlAstAttributeUsage: PreResult[SysmlAst.AttributeUsage] = PreResult(T, MNone())
 
-  val PostResultSysmlAstReferenceUsage: MOption[SysmlAst.ReferenceUsage] = MNone()
+  val PostResultSysmlAstAttributeUsage: MOption[SysmlAst.AttributeUsage] = MNone()
 
   val PreResultBTSGuardedAction: PreResult[BTSGuardedAction] = PreResult(T, MNone())
 
   val PostResultBTSGuardedAction: MOption[BTSGuardedAction] = MNone()
+
+  val PreResultSysmlAstReferenceUsage: PreResult[SysmlAst.ReferenceUsage] = PreResult(T, MNone())
+
+  val PostResultSysmlAstReferenceUsage: MOption[SysmlAst.ReferenceUsage] = MNone()
 
   val PreResultBTSIfBAAction: PreResult[BTSIfBAAction] = PreResult(T, MNone())
 
@@ -1265,25 +1265,25 @@ object MTransformer {
 
   val PostResultSysmlAstItemUsage: MOption[SysmlAst.ItemUsage] = MNone()
 
-  val PreResultSysmlAstPartUsage: PreResult[SysmlAst.PartUsage] = PreResult(T, MNone())
-
-  val PostResultSysmlAstPartUsage: MOption[SysmlAst.PartUsage] = MNone()
-
   val PreResultBTSLiteralExp: PreResult[BTSLiteralExp] = PreResult(T, MNone())
 
   val PostResultBTSLiteralExp: MOption[BTSLiteralExp] = MNone()
+
+  val PreResultSysmlAstPartUsage: PreResult[SysmlAst.PartUsage] = PreResult(T, MNone())
+
+  val PostResultSysmlAstPartUsage: MOption[SysmlAst.PartUsage] = MNone()
 
   val PreResultBTSNameExp: PreResult[BTSNameExp] = PreResult(T, MNone())
 
   val PostResultBTSNameExp: MOption[BTSNameExp] = MNone()
 
-  val PreResultSysmlAstPortUsage: PreResult[SysmlAst.PortUsage] = PreResult(T, MNone())
-
-  val PostResultSysmlAstPortUsage: MOption[SysmlAst.PortUsage] = MNone()
-
   val PreResultBTSIndexingExp: PreResult[BTSIndexingExp] = PreResult(T, MNone())
 
   val PostResultBTSIndexingExp: MOption[BTSIndexingExp] = MNone()
+
+  val PreResultSysmlAstPortUsage: PreResult[SysmlAst.PortUsage] = PreResult(T, MNone())
+
+  val PostResultSysmlAstPortUsage: MOption[SysmlAst.PortUsage] = MNone()
 
   val PreResultBTSAccessExp: PreResult[BTSAccessExp] = PreResult(T, MNone())
 
@@ -1301,10 +1301,6 @@ object MTransformer {
 
   val PostResultBTSBehaviorTime: MOption[BTSBehaviorTime] = MNone()
 
-  val PreResultSysmlAstComment: PreResult[SysmlAst.Comment] = PreResult(T, MNone())
-
-  val PostResultSysmlAstComment: MOption[SysmlAst.Comment] = MNone()
-
   val PreResultTODO: PreResult[TODO] = PreResult(T, MNone())
 
   val PostResultTODO: MOption[TODO] = MNone()
@@ -1312,6 +1308,10 @@ object MTransformer {
   val PreResultBlessAttr: PreResult[BlessAttr] = PreResult(T, MNone())
 
   val PostResultBlessAttr: MOption[BlessAttr] = MNone()
+
+  val PreResultSysmlAstComment: PreResult[SysmlAst.Comment] = PreResult(T, MNone())
+
+  val PostResultSysmlAstComment: MOption[SysmlAst.Comment] = MNone()
 
   val PreResultSysmlAstDocumentation: PreResult[SysmlAst.Documentation] = PreResult(T, MNone())
 
@@ -5037,6 +5037,64 @@ import MTransformer._
     }
   }
 
+  def preSysmlAstUsageMember(o: SysmlAst.UsageMember): PreResult[SysmlAst.UsageMember] = {
+    o match {
+      case o: SysmlAst.AttributeUsage =>
+        val r: PreResult[SysmlAst.UsageMember] = preSysmlAstAttributeUsage(o) match {
+         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
+        }
+        return r
+      case o: SysmlAst.ReferenceUsage =>
+        val r: PreResult[SysmlAst.UsageMember] = preSysmlAstReferenceUsage(o) match {
+         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
+        }
+        return r
+      case o: SysmlAst.AllocationUsage =>
+        val r: PreResult[SysmlAst.UsageMember] = preSysmlAstAllocationUsage(o) match {
+         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
+        }
+        return r
+      case o: SysmlAst.ConnectionUsage =>
+        val r: PreResult[SysmlAst.UsageMember] = preSysmlAstConnectionUsage(o) match {
+         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
+        }
+        return r
+      case o: SysmlAst.ItemUsage =>
+        val r: PreResult[SysmlAst.UsageMember] = preSysmlAstItemUsage(o) match {
+         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
+        }
+        return r
+      case o: SysmlAst.PartUsage =>
+        val r: PreResult[SysmlAst.UsageMember] = preSysmlAstPartUsage(o) match {
+         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
+        }
+        return r
+      case o: SysmlAst.PortUsage =>
+        val r: PreResult[SysmlAst.UsageMember] = preSysmlAstPortUsage(o) match {
+         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
+        }
+        return r
+    }
+  }
+
+  def preBTSSkipAction(o: BTSSkipAction): PreResult[BTSSkipAction] = {
+    return PreResultBTSSkipAction
+  }
+
   def preSysmlAstNonOccurrenceUsageMember(o: SysmlAst.NonOccurrenceUsageMember): PreResult[SysmlAst.NonOccurrenceUsageMember] = {
     o match {
       case o: SysmlAst.AttributeUsage =>
@@ -5056,8 +5114,8 @@ import MTransformer._
     }
   }
 
-  def preBTSSkipAction(o: BTSSkipAction): PreResult[BTSSkipAction] = {
-    return PreResultBTSSkipAction
+  def preBTSAssignmentAction(o: BTSAssignmentAction): PreResult[BTSAssignmentAction] = {
+    return PreResultBTSAssignmentAction
   }
 
   def preSysmlAstNonOccurrenceUsageElement(o: SysmlAst.NonOccurrenceUsageElement): PreResult[SysmlAst.NonOccurrenceUsageElement] = {
@@ -5077,14 +5135,6 @@ import MTransformer._
         }
         return r
     }
-  }
-
-  def preBTSAssignmentAction(o: BTSAssignmentAction): PreResult[BTSAssignmentAction] = {
-    return PreResultBTSAssignmentAction
-  }
-
-  def preSysmlAstRefPrefix(o: SysmlAst.RefPrefix): PreResult[SysmlAst.RefPrefix] = {
-    return PreResultSysmlAstRefPrefix
   }
 
   def preBTSCommunicationAction(o: BTSCommunicationAction): PreResult[BTSCommunicationAction] = {
@@ -5124,24 +5174,24 @@ import MTransformer._
     return PreResultBTSSubprogramCallAction
   }
 
-  def preSysmlAstEndUsage(o: SysmlAst.EndUsage): PreResult[SysmlAst.EndUsage] = {
-    return PreResultSysmlAstEndUsage
+  def preSysmlAstRefPrefix(o: SysmlAst.RefPrefix): PreResult[SysmlAst.RefPrefix] = {
+    return PreResultSysmlAstRefPrefix
   }
 
   def preBTSPortOutAction(o: BTSPortOutAction): PreResult[BTSPortOutAction] = {
     return PreResultBTSPortOutAction
   }
 
-  def preSysmlAstUsagePrefix(o: SysmlAst.UsagePrefix): PreResult[SysmlAst.UsagePrefix] = {
-    return PreResultSysmlAstUsagePrefix
-  }
-
   def preBTSPortInAction(o: BTSPortInAction): PreResult[BTSPortInAction] = {
     return PreResultBTSPortInAction
   }
 
-  def preSysmlAstAttributeUsage(o: SysmlAst.AttributeUsage): PreResult[SysmlAst.AttributeUsage] = {
-    return PreResultSysmlAstAttributeUsage
+  def preSysmlAstEndUsage(o: SysmlAst.EndUsage): PreResult[SysmlAst.EndUsage] = {
+    return PreResultSysmlAstEndUsage
+  }
+
+  def preSysmlAstUsagePrefix(o: SysmlAst.UsagePrefix): PreResult[SysmlAst.UsagePrefix] = {
+    return PreResultSysmlAstUsagePrefix
   }
 
   def preBTSFrozenPortAction(o: BTSFrozenPortAction): PreResult[BTSFrozenPortAction] = {
@@ -5171,12 +5221,16 @@ import MTransformer._
     return PreResultBTSIfBLESSAction
   }
 
-  def preSysmlAstReferenceUsage(o: SysmlAst.ReferenceUsage): PreResult[SysmlAst.ReferenceUsage] = {
-    return PreResultSysmlAstReferenceUsage
+  def preSysmlAstAttributeUsage(o: SysmlAst.AttributeUsage): PreResult[SysmlAst.AttributeUsage] = {
+    return PreResultSysmlAstAttributeUsage
   }
 
   def preBTSGuardedAction(o: BTSGuardedAction): PreResult[BTSGuardedAction] = {
     return PreResultBTSGuardedAction
+  }
+
+  def preSysmlAstReferenceUsage(o: SysmlAst.ReferenceUsage): PreResult[SysmlAst.ReferenceUsage] = {
+    return PreResultSysmlAstReferenceUsage
   }
 
   def preBTSIfBAAction(o: BTSIfBAAction): PreResult[BTSIfBAAction] = {
@@ -5185,6 +5239,25 @@ import MTransformer._
 
   def preBTSConditionalActions(o: BTSConditionalActions): PreResult[BTSConditionalActions] = {
     return PreResultBTSConditionalActions
+  }
+
+  def preBTSQuantificationActions(o: BTSQuantificationActions): PreResult[BTSQuantificationActions] = {
+    o match {
+      case o: BTSExistentialLatticeQuantification =>
+        val r: PreResult[BTSQuantificationActions] = preBTSExistentialLatticeQuantification(o) match {
+         case PreResult(continu, MSome(r: BTSQuantificationActions)) => PreResult(continu, MSome[BTSQuantificationActions](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSQuantificationActions")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSQuantificationActions]())
+        }
+        return r
+      case o: BTSUniversalLatticeQuantification =>
+        val r: PreResult[BTSQuantificationActions] = preBTSUniversalLatticeQuantification(o) match {
+         case PreResult(continu, MSome(r: BTSQuantificationActions)) => PreResult(continu, MSome[BTSQuantificationActions](r))
+         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSQuantificationActions")
+         case PreResult(continu, _) => PreResult(continu, MNone[BTSQuantificationActions]())
+        }
+        return r
+    }
   }
 
   def preSysmlAstOccurrenceUsageMember(o: SysmlAst.OccurrenceUsageMember): PreResult[SysmlAst.OccurrenceUsageMember] = {
@@ -5227,6 +5300,10 @@ import MTransformer._
     }
   }
 
+  def preBTSExistentialLatticeQuantification(o: BTSExistentialLatticeQuantification): PreResult[BTSExistentialLatticeQuantification] = {
+    return PreResultBTSExistentialLatticeQuantification
+  }
+
   def preSysmlAstOccurrenceUsageElement(o: SysmlAst.OccurrenceUsageElement): PreResult[SysmlAst.OccurrenceUsageElement] = {
     o match {
       case o: SysmlAst.AllocationUsage =>
@@ -5262,25 +5339,6 @@ import MTransformer._
          case PreResult(continu, MSome(r: SysmlAst.OccurrenceUsageElement)) => PreResult(continu, MSome[SysmlAst.OccurrenceUsageElement](r))
          case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.OccurrenceUsageElement]())
-        }
-        return r
-    }
-  }
-
-  def preBTSQuantificationActions(o: BTSQuantificationActions): PreResult[BTSQuantificationActions] = {
-    o match {
-      case o: BTSExistentialLatticeQuantification =>
-        val r: PreResult[BTSQuantificationActions] = preBTSExistentialLatticeQuantification(o) match {
-         case PreResult(continu, MSome(r: BTSQuantificationActions)) => PreResult(continu, MSome[BTSQuantificationActions](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSQuantificationActions")
-         case PreResult(continu, _) => PreResult(continu, MNone[BTSQuantificationActions]())
-        }
-        return r
-      case o: BTSUniversalLatticeQuantification =>
-        val r: PreResult[BTSQuantificationActions] = preBTSUniversalLatticeQuantification(o) match {
-         case PreResult(continu, MSome(r: BTSQuantificationActions)) => PreResult(continu, MSome[BTSQuantificationActions](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSQuantificationActions")
-         case PreResult(continu, _) => PreResult(continu, MNone[BTSQuantificationActions]())
         }
         return r
     }
@@ -5326,10 +5384,6 @@ import MTransformer._
     }
   }
 
-  def preBTSExistentialLatticeQuantification(o: BTSExistentialLatticeQuantification): PreResult[BTSExistentialLatticeQuantification] = {
-    return PreResultBTSExistentialLatticeQuantification
-  }
-
   def preSysmlAstOccurrenceUsagePrefix(o: SysmlAst.OccurrenceUsagePrefix): PreResult[SysmlAst.OccurrenceUsagePrefix] = {
     o match {
       case o: SysmlAst.OccurrenceBasicUsagePrefix =>
@@ -5359,10 +5413,6 @@ import MTransformer._
 
   def preSysmlAstOccurrenceEndUsagePrefix(o: SysmlAst.OccurrenceEndUsagePrefix): PreResult[SysmlAst.OccurrenceEndUsagePrefix] = {
     return PreResultSysmlAstOccurrenceEndUsagePrefix
-  }
-
-  def preSysmlAstAllocationUsage(o: SysmlAst.AllocationUsage): PreResult[SysmlAst.AllocationUsage] = {
-    return PreResultSysmlAstAllocationUsage
   }
 
   def preBTSExp(o: BTSExp): PreResult[BTSExp] = {
@@ -5419,6 +5469,10 @@ import MTransformer._
     }
   }
 
+  def preSysmlAstAllocationUsage(o: SysmlAst.AllocationUsage): PreResult[SysmlAst.AllocationUsage] = {
+    return PreResultSysmlAstAllocationUsage
+  }
+
   def preBTSUnaryExp(o: BTSUnaryExp): PreResult[BTSUnaryExp] = {
     return PreResultBTSUnaryExp
   }
@@ -5435,24 +5489,24 @@ import MTransformer._
     return PreResultSysmlAstItemUsage
   }
 
-  def preSysmlAstPartUsage(o: SysmlAst.PartUsage): PreResult[SysmlAst.PartUsage] = {
-    return PreResultSysmlAstPartUsage
-  }
-
   def preBTSLiteralExp(o: BTSLiteralExp): PreResult[BTSLiteralExp] = {
     return PreResultBTSLiteralExp
+  }
+
+  def preSysmlAstPartUsage(o: SysmlAst.PartUsage): PreResult[SysmlAst.PartUsage] = {
+    return PreResultSysmlAstPartUsage
   }
 
   def preBTSNameExp(o: BTSNameExp): PreResult[BTSNameExp] = {
     return PreResultBTSNameExp
   }
 
-  def preSysmlAstPortUsage(o: SysmlAst.PortUsage): PreResult[SysmlAst.PortUsage] = {
-    return PreResultSysmlAstPortUsage
-  }
-
   def preBTSIndexingExp(o: BTSIndexingExp): PreResult[BTSIndexingExp] = {
     return PreResultBTSIndexingExp
+  }
+
+  def preSysmlAstPortUsage(o: SysmlAst.PortUsage): PreResult[SysmlAst.PortUsage] = {
+    return PreResultSysmlAstPortUsage
   }
 
   def preBTSAccessExp(o: BTSAccessExp): PreResult[BTSAccessExp] = {
@@ -5465,6 +5519,18 @@ import MTransformer._
 
   def preBTSFormalExpPair(o: BTSFormalExpPair): PreResult[BTSFormalExpPair] = {
     return PreResultBTSFormalExpPair
+  }
+
+  def preBTSBehaviorTime(o: BTSBehaviorTime): PreResult[BTSBehaviorTime] = {
+    return PreResultBTSBehaviorTime
+  }
+
+  def preTODO(o: TODO): PreResult[TODO] = {
+    return PreResultTODO
+  }
+
+  def preBlessAttr(o: BlessAttr): PreResult[BlessAttr] = {
+    return PreResultBlessAttr
   }
 
   def preSysmlAstAnnotatingElement(o: SysmlAst.AnnotatingElement): PreResult[SysmlAst.AnnotatingElement] = {
@@ -5500,20 +5566,8 @@ import MTransformer._
     }
   }
 
-  def preBTSBehaviorTime(o: BTSBehaviorTime): PreResult[BTSBehaviorTime] = {
-    return PreResultBTSBehaviorTime
-  }
-
   def preSysmlAstComment(o: SysmlAst.Comment): PreResult[SysmlAst.Comment] = {
     return PreResultSysmlAstComment
-  }
-
-  def preTODO(o: TODO): PreResult[TODO] = {
-    return PreResultTODO
-  }
-
-  def preBlessAttr(o: BlessAttr): PreResult[BlessAttr] = {
-    return PreResultBlessAttr
   }
 
   def preSysmlAstDocumentation(o: SysmlAst.Documentation): PreResult[SysmlAst.Documentation] = {
@@ -9263,6 +9317,64 @@ import MTransformer._
     }
   }
 
+  def postSysmlAstUsageMember(o: SysmlAst.UsageMember): MOption[SysmlAst.UsageMember] = {
+    o match {
+      case o: SysmlAst.AttributeUsage =>
+        val r: MOption[SysmlAst.UsageMember] = postSysmlAstAttributeUsage(o) match {
+         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
+         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case _ => MNone[SysmlAst.UsageMember]()
+        }
+        return r
+      case o: SysmlAst.ReferenceUsage =>
+        val r: MOption[SysmlAst.UsageMember] = postSysmlAstReferenceUsage(o) match {
+         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
+         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case _ => MNone[SysmlAst.UsageMember]()
+        }
+        return r
+      case o: SysmlAst.AllocationUsage =>
+        val r: MOption[SysmlAst.UsageMember] = postSysmlAstAllocationUsage(o) match {
+         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
+         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case _ => MNone[SysmlAst.UsageMember]()
+        }
+        return r
+      case o: SysmlAst.ConnectionUsage =>
+        val r: MOption[SysmlAst.UsageMember] = postSysmlAstConnectionUsage(o) match {
+         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
+         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case _ => MNone[SysmlAst.UsageMember]()
+        }
+        return r
+      case o: SysmlAst.ItemUsage =>
+        val r: MOption[SysmlAst.UsageMember] = postSysmlAstItemUsage(o) match {
+         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
+         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case _ => MNone[SysmlAst.UsageMember]()
+        }
+        return r
+      case o: SysmlAst.PartUsage =>
+        val r: MOption[SysmlAst.UsageMember] = postSysmlAstPartUsage(o) match {
+         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
+         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case _ => MNone[SysmlAst.UsageMember]()
+        }
+        return r
+      case o: SysmlAst.PortUsage =>
+        val r: MOption[SysmlAst.UsageMember] = postSysmlAstPortUsage(o) match {
+         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
+         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case _ => MNone[SysmlAst.UsageMember]()
+        }
+        return r
+    }
+  }
+
+  def postBTSSkipAction(o: BTSSkipAction): MOption[BTSSkipAction] = {
+    return PostResultBTSSkipAction
+  }
+
   def postSysmlAstNonOccurrenceUsageMember(o: SysmlAst.NonOccurrenceUsageMember): MOption[SysmlAst.NonOccurrenceUsageMember] = {
     o match {
       case o: SysmlAst.AttributeUsage =>
@@ -9282,8 +9394,8 @@ import MTransformer._
     }
   }
 
-  def postBTSSkipAction(o: BTSSkipAction): MOption[BTSSkipAction] = {
-    return PostResultBTSSkipAction
+  def postBTSAssignmentAction(o: BTSAssignmentAction): MOption[BTSAssignmentAction] = {
+    return PostResultBTSAssignmentAction
   }
 
   def postSysmlAstNonOccurrenceUsageElement(o: SysmlAst.NonOccurrenceUsageElement): MOption[SysmlAst.NonOccurrenceUsageElement] = {
@@ -9303,14 +9415,6 @@ import MTransformer._
         }
         return r
     }
-  }
-
-  def postBTSAssignmentAction(o: BTSAssignmentAction): MOption[BTSAssignmentAction] = {
-    return PostResultBTSAssignmentAction
-  }
-
-  def postSysmlAstRefPrefix(o: SysmlAst.RefPrefix): MOption[SysmlAst.RefPrefix] = {
-    return PostResultSysmlAstRefPrefix
   }
 
   def postBTSCommunicationAction(o: BTSCommunicationAction): MOption[BTSCommunicationAction] = {
@@ -9350,24 +9454,24 @@ import MTransformer._
     return PostResultBTSSubprogramCallAction
   }
 
-  def postSysmlAstEndUsage(o: SysmlAst.EndUsage): MOption[SysmlAst.EndUsage] = {
-    return PostResultSysmlAstEndUsage
+  def postSysmlAstRefPrefix(o: SysmlAst.RefPrefix): MOption[SysmlAst.RefPrefix] = {
+    return PostResultSysmlAstRefPrefix
   }
 
   def postBTSPortOutAction(o: BTSPortOutAction): MOption[BTSPortOutAction] = {
     return PostResultBTSPortOutAction
   }
 
-  def postSysmlAstUsagePrefix(o: SysmlAst.UsagePrefix): MOption[SysmlAst.UsagePrefix] = {
-    return PostResultSysmlAstUsagePrefix
-  }
-
   def postBTSPortInAction(o: BTSPortInAction): MOption[BTSPortInAction] = {
     return PostResultBTSPortInAction
   }
 
-  def postSysmlAstAttributeUsage(o: SysmlAst.AttributeUsage): MOption[SysmlAst.AttributeUsage] = {
-    return PostResultSysmlAstAttributeUsage
+  def postSysmlAstEndUsage(o: SysmlAst.EndUsage): MOption[SysmlAst.EndUsage] = {
+    return PostResultSysmlAstEndUsage
+  }
+
+  def postSysmlAstUsagePrefix(o: SysmlAst.UsagePrefix): MOption[SysmlAst.UsagePrefix] = {
+    return PostResultSysmlAstUsagePrefix
   }
 
   def postBTSFrozenPortAction(o: BTSFrozenPortAction): MOption[BTSFrozenPortAction] = {
@@ -9397,12 +9501,16 @@ import MTransformer._
     return PostResultBTSIfBLESSAction
   }
 
-  def postSysmlAstReferenceUsage(o: SysmlAst.ReferenceUsage): MOption[SysmlAst.ReferenceUsage] = {
-    return PostResultSysmlAstReferenceUsage
+  def postSysmlAstAttributeUsage(o: SysmlAst.AttributeUsage): MOption[SysmlAst.AttributeUsage] = {
+    return PostResultSysmlAstAttributeUsage
   }
 
   def postBTSGuardedAction(o: BTSGuardedAction): MOption[BTSGuardedAction] = {
     return PostResultBTSGuardedAction
+  }
+
+  def postSysmlAstReferenceUsage(o: SysmlAst.ReferenceUsage): MOption[SysmlAst.ReferenceUsage] = {
+    return PostResultSysmlAstReferenceUsage
   }
 
   def postBTSIfBAAction(o: BTSIfBAAction): MOption[BTSIfBAAction] = {
@@ -9411,6 +9519,25 @@ import MTransformer._
 
   def postBTSConditionalActions(o: BTSConditionalActions): MOption[BTSConditionalActions] = {
     return PostResultBTSConditionalActions
+  }
+
+  def postBTSQuantificationActions(o: BTSQuantificationActions): MOption[BTSQuantificationActions] = {
+    o match {
+      case o: BTSExistentialLatticeQuantification =>
+        val r: MOption[BTSQuantificationActions] = postBTSExistentialLatticeQuantification(o) match {
+         case MSome(result: BTSQuantificationActions) => MSome[BTSQuantificationActions](result)
+         case MSome(_) => halt("Can only produce object of type BTSQuantificationActions")
+         case _ => MNone[BTSQuantificationActions]()
+        }
+        return r
+      case o: BTSUniversalLatticeQuantification =>
+        val r: MOption[BTSQuantificationActions] = postBTSUniversalLatticeQuantification(o) match {
+         case MSome(result: BTSQuantificationActions) => MSome[BTSQuantificationActions](result)
+         case MSome(_) => halt("Can only produce object of type BTSQuantificationActions")
+         case _ => MNone[BTSQuantificationActions]()
+        }
+        return r
+    }
   }
 
   def postSysmlAstOccurrenceUsageMember(o: SysmlAst.OccurrenceUsageMember): MOption[SysmlAst.OccurrenceUsageMember] = {
@@ -9453,6 +9580,10 @@ import MTransformer._
     }
   }
 
+  def postBTSExistentialLatticeQuantification(o: BTSExistentialLatticeQuantification): MOption[BTSExistentialLatticeQuantification] = {
+    return PostResultBTSExistentialLatticeQuantification
+  }
+
   def postSysmlAstOccurrenceUsageElement(o: SysmlAst.OccurrenceUsageElement): MOption[SysmlAst.OccurrenceUsageElement] = {
     o match {
       case o: SysmlAst.AllocationUsage =>
@@ -9488,25 +9619,6 @@ import MTransformer._
          case MSome(result: SysmlAst.OccurrenceUsageElement) => MSome[SysmlAst.OccurrenceUsageElement](result)
          case MSome(_) => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
          case _ => MNone[SysmlAst.OccurrenceUsageElement]()
-        }
-        return r
-    }
-  }
-
-  def postBTSQuantificationActions(o: BTSQuantificationActions): MOption[BTSQuantificationActions] = {
-    o match {
-      case o: BTSExistentialLatticeQuantification =>
-        val r: MOption[BTSQuantificationActions] = postBTSExistentialLatticeQuantification(o) match {
-         case MSome(result: BTSQuantificationActions) => MSome[BTSQuantificationActions](result)
-         case MSome(_) => halt("Can only produce object of type BTSQuantificationActions")
-         case _ => MNone[BTSQuantificationActions]()
-        }
-        return r
-      case o: BTSUniversalLatticeQuantification =>
-        val r: MOption[BTSQuantificationActions] = postBTSUniversalLatticeQuantification(o) match {
-         case MSome(result: BTSQuantificationActions) => MSome[BTSQuantificationActions](result)
-         case MSome(_) => halt("Can only produce object of type BTSQuantificationActions")
-         case _ => MNone[BTSQuantificationActions]()
         }
         return r
     }
@@ -9552,10 +9664,6 @@ import MTransformer._
     }
   }
 
-  def postBTSExistentialLatticeQuantification(o: BTSExistentialLatticeQuantification): MOption[BTSExistentialLatticeQuantification] = {
-    return PostResultBTSExistentialLatticeQuantification
-  }
-
   def postSysmlAstOccurrenceUsagePrefix(o: SysmlAst.OccurrenceUsagePrefix): MOption[SysmlAst.OccurrenceUsagePrefix] = {
     o match {
       case o: SysmlAst.OccurrenceBasicUsagePrefix =>
@@ -9585,10 +9693,6 @@ import MTransformer._
 
   def postSysmlAstOccurrenceEndUsagePrefix(o: SysmlAst.OccurrenceEndUsagePrefix): MOption[SysmlAst.OccurrenceEndUsagePrefix] = {
     return PostResultSysmlAstOccurrenceEndUsagePrefix
-  }
-
-  def postSysmlAstAllocationUsage(o: SysmlAst.AllocationUsage): MOption[SysmlAst.AllocationUsage] = {
-    return PostResultSysmlAstAllocationUsage
   }
 
   def postBTSExp(o: BTSExp): MOption[BTSExp] = {
@@ -9645,6 +9749,10 @@ import MTransformer._
     }
   }
 
+  def postSysmlAstAllocationUsage(o: SysmlAst.AllocationUsage): MOption[SysmlAst.AllocationUsage] = {
+    return PostResultSysmlAstAllocationUsage
+  }
+
   def postBTSUnaryExp(o: BTSUnaryExp): MOption[BTSUnaryExp] = {
     return PostResultBTSUnaryExp
   }
@@ -9661,24 +9769,24 @@ import MTransformer._
     return PostResultSysmlAstItemUsage
   }
 
-  def postSysmlAstPartUsage(o: SysmlAst.PartUsage): MOption[SysmlAst.PartUsage] = {
-    return PostResultSysmlAstPartUsage
-  }
-
   def postBTSLiteralExp(o: BTSLiteralExp): MOption[BTSLiteralExp] = {
     return PostResultBTSLiteralExp
+  }
+
+  def postSysmlAstPartUsage(o: SysmlAst.PartUsage): MOption[SysmlAst.PartUsage] = {
+    return PostResultSysmlAstPartUsage
   }
 
   def postBTSNameExp(o: BTSNameExp): MOption[BTSNameExp] = {
     return PostResultBTSNameExp
   }
 
-  def postSysmlAstPortUsage(o: SysmlAst.PortUsage): MOption[SysmlAst.PortUsage] = {
-    return PostResultSysmlAstPortUsage
-  }
-
   def postBTSIndexingExp(o: BTSIndexingExp): MOption[BTSIndexingExp] = {
     return PostResultBTSIndexingExp
+  }
+
+  def postSysmlAstPortUsage(o: SysmlAst.PortUsage): MOption[SysmlAst.PortUsage] = {
+    return PostResultSysmlAstPortUsage
   }
 
   def postBTSAccessExp(o: BTSAccessExp): MOption[BTSAccessExp] = {
@@ -9691,6 +9799,18 @@ import MTransformer._
 
   def postBTSFormalExpPair(o: BTSFormalExpPair): MOption[BTSFormalExpPair] = {
     return PostResultBTSFormalExpPair
+  }
+
+  def postBTSBehaviorTime(o: BTSBehaviorTime): MOption[BTSBehaviorTime] = {
+    return PostResultBTSBehaviorTime
+  }
+
+  def postTODO(o: TODO): MOption[TODO] = {
+    return PostResultTODO
+  }
+
+  def postBlessAttr(o: BlessAttr): MOption[BlessAttr] = {
+    return PostResultBlessAttr
   }
 
   def postSysmlAstAnnotatingElement(o: SysmlAst.AnnotatingElement): MOption[SysmlAst.AnnotatingElement] = {
@@ -9726,20 +9846,8 @@ import MTransformer._
     }
   }
 
-  def postBTSBehaviorTime(o: BTSBehaviorTime): MOption[BTSBehaviorTime] = {
-    return PostResultBTSBehaviorTime
-  }
-
   def postSysmlAstComment(o: SysmlAst.Comment): MOption[SysmlAst.Comment] = {
     return PostResultSysmlAstComment
-  }
-
-  def postTODO(o: TODO): MOption[TODO] = {
-    return PostResultTODO
-  }
-
-  def postBlessAttr(o: BlessAttr): MOption[BlessAttr] = {
-    return PostResultBlessAttr
   }
 
   def postSysmlAstDocumentation(o: SysmlAst.Documentation): MOption[SysmlAst.Documentation] = {
@@ -18489,6 +18597,108 @@ import MTransformer._
     }
   }
 
+  def transformSysmlAstUsageMember(o: SysmlAst.UsageMember): MOption[SysmlAst.UsageMember] = {
+    val preR: PreResult[SysmlAst.UsageMember] = preSysmlAstUsageMember(o)
+    val r: MOption[SysmlAst.UsageMember] = if (preR.continu) {
+      val o2: SysmlAst.UsageMember = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[SysmlAst.UsageMember] = o2 match {
+        case o2: SysmlAst.AttributeUsage =>
+          val r0: MOption[SysmlAst.UsagePrefix] = transformSysmlAstUsagePrefix(o2.prefix)
+          val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(prefix = r0.getOrElse(o2.prefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements)))
+          else
+            MNone()
+        case o2: SysmlAst.ReferenceUsage =>
+          val r0: MOption[SysmlAst.RefPrefix] = transformSysmlAstRefPrefix(o2.prefix)
+          val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(prefix = r0.getOrElse(o2.prefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements)))
+          else
+            MNone()
+        case o2: SysmlAst.AllocationUsage =>
+          val r0: MOption[SysmlAst.OccurrenceUsagePrefix] = transformSysmlAstOccurrenceUsagePrefix(o2.occurrenceUsagePrefix)
+          val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
+          val r2: MOption[Option[SysmlAst.ConnectorPart]] = transformOption(o2.connectorPart, transformSysmlAstConnectorPart _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(occurrenceUsagePrefix = r0.getOrElse(o2.occurrenceUsagePrefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements), connectorPart = r2.getOrElse(o2.connectorPart)))
+          else
+            MNone()
+        case o2: SysmlAst.ConnectionUsage =>
+          val r0: MOption[SysmlAst.OccurrenceUsagePrefix] = transformSysmlAstOccurrenceUsagePrefix(o2.occurrenceUsagePrefix)
+          val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
+          val r2: MOption[Option[SysmlAst.ConnectorPart]] = transformOption(o2.connectorPart, transformSysmlAstConnectorPart _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(occurrenceUsagePrefix = r0.getOrElse(o2.occurrenceUsagePrefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements), connectorPart = r2.getOrElse(o2.connectorPart)))
+          else
+            MNone()
+        case o2: SysmlAst.ItemUsage =>
+          val r0: MOption[SysmlAst.OccurrenceUsagePrefix] = transformSysmlAstOccurrenceUsagePrefix(o2.occurrenceUsagePrefix)
+          val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(occurrenceUsagePrefix = r0.getOrElse(o2.occurrenceUsagePrefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements)))
+          else
+            MNone()
+        case o2: SysmlAst.PartUsage =>
+          val r0: MOption[SysmlAst.OccurrenceUsagePrefix] = transformSysmlAstOccurrenceUsagePrefix(o2.occurrenceUsagePrefix)
+          val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(occurrenceUsagePrefix = r0.getOrElse(o2.occurrenceUsagePrefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements)))
+          else
+            MNone()
+        case o2: SysmlAst.PortUsage =>
+          val r0: MOption[SysmlAst.OccurrenceUsagePrefix] = transformSysmlAstOccurrenceUsagePrefix(o2.occurrenceUsagePrefix)
+          val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(occurrenceUsagePrefix = r0.getOrElse(o2.occurrenceUsagePrefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: SysmlAst.UsageMember = r.getOrElse(o)
+    val postR: MOption[SysmlAst.UsageMember] = postSysmlAstUsageMember(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSSkipAction(o: BTSSkipAction): MOption[BTSSkipAction] = {
+    val preR: PreResult[BTSSkipAction] = preBTSSkipAction(o)
+    val r: MOption[BTSSkipAction] = if (preR.continu) {
+      val o2: BTSSkipAction = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSSkipAction = r.getOrElse(o)
+    val postR: MOption[BTSSkipAction] = postBTSSkipAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformSysmlAstNonOccurrenceUsageMember(o: SysmlAst.NonOccurrenceUsageMember): MOption[SysmlAst.NonOccurrenceUsageMember] = {
     val preR: PreResult[SysmlAst.NonOccurrenceUsageMember] = preSysmlAstNonOccurrenceUsageMember(o)
     val r: MOption[SysmlAst.NonOccurrenceUsageMember] = if (preR.continu) {
@@ -18528,13 +18738,15 @@ import MTransformer._
     }
   }
 
-  def transformBTSSkipAction(o: BTSSkipAction): MOption[BTSSkipAction] = {
-    val preR: PreResult[BTSSkipAction] = preBTSSkipAction(o)
-    val r: MOption[BTSSkipAction] = if (preR.continu) {
-      val o2: BTSSkipAction = preR.resultOpt.getOrElse(o)
+  def transformBTSAssignmentAction(o: BTSAssignmentAction): MOption[BTSAssignmentAction] = {
+    val preR: PreResult[BTSAssignmentAction] = preBTSAssignmentAction(o)
+    val r: MOption[BTSAssignmentAction] = if (preR.continu) {
+      val o2: BTSAssignmentAction = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
+      val r0: MOption[BTSExp] = transformBTSExp(o2.lhs)
+      val r1: MOption[BTSExp] = transformBTSExp(o2.rhs)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -18543,8 +18755,8 @@ import MTransformer._
       MNone()
     }
     val hasChanged: B = r.nonEmpty
-    val o2: BTSSkipAction = r.getOrElse(o)
-    val postR: MOption[BTSSkipAction] = postBTSSkipAction(o2)
+    val o2: BTSAssignmentAction = r.getOrElse(o)
+    val postR: MOption[BTSAssignmentAction] = postBTSAssignmentAction(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -18584,60 +18796,6 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: SysmlAst.NonOccurrenceUsageElement = r.getOrElse(o)
     val postR: MOption[SysmlAst.NonOccurrenceUsageElement] = postSysmlAstNonOccurrenceUsageElement(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformBTSAssignmentAction(o: BTSAssignmentAction): MOption[BTSAssignmentAction] = {
-    val preR: PreResult[BTSAssignmentAction] = preBTSAssignmentAction(o)
-    val r: MOption[BTSAssignmentAction] = if (preR.continu) {
-      val o2: BTSAssignmentAction = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[BTSExp] = transformBTSExp(o2.lhs)
-      val r1: MOption[BTSExp] = transformBTSExp(o2.rhs)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: BTSAssignmentAction = r.getOrElse(o)
-    val postR: MOption[BTSAssignmentAction] = postBTSAssignmentAction(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformSysmlAstRefPrefix(o: SysmlAst.RefPrefix): MOption[SysmlAst.RefPrefix] = {
-    val preR: PreResult[SysmlAst.RefPrefix] = preSysmlAstRefPrefix(o)
-    val r: MOption[SysmlAst.RefPrefix] = if (preR.continu) {
-      val o2: SysmlAst.RefPrefix = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: SysmlAst.RefPrefix = r.getOrElse(o)
-    val postR: MOption[SysmlAst.RefPrefix] = postSysmlAstRefPrefix(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -18727,10 +18885,10 @@ import MTransformer._
     }
   }
 
-  def transformSysmlAstEndUsage(o: SysmlAst.EndUsage): MOption[SysmlAst.EndUsage] = {
-    val preR: PreResult[SysmlAst.EndUsage] = preSysmlAstEndUsage(o)
-    val r: MOption[SysmlAst.EndUsage] = if (preR.continu) {
-      val o2: SysmlAst.EndUsage = preR.resultOpt.getOrElse(o)
+  def transformSysmlAstRefPrefix(o: SysmlAst.RefPrefix): MOption[SysmlAst.RefPrefix] = {
+    val preR: PreResult[SysmlAst.RefPrefix] = preSysmlAstRefPrefix(o)
+    val r: MOption[SysmlAst.RefPrefix] = if (preR.continu) {
+      val o2: SysmlAst.RefPrefix = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       if (hasChanged)
         MSome(o2)
@@ -18742,8 +18900,8 @@ import MTransformer._
       MNone()
     }
     val hasChanged: B = r.nonEmpty
-    val o2: SysmlAst.EndUsage = r.getOrElse(o)
-    val postR: MOption[SysmlAst.EndUsage] = postSysmlAstEndUsage(o2)
+    val o2: SysmlAst.RefPrefix = r.getOrElse(o)
+    val postR: MOption[SysmlAst.RefPrefix] = postSysmlAstRefPrefix(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -18781,34 +18939,6 @@ import MTransformer._
     }
   }
 
-  def transformSysmlAstUsagePrefix(o: SysmlAst.UsagePrefix): MOption[SysmlAst.UsagePrefix] = {
-    val preR: PreResult[SysmlAst.UsagePrefix] = preSysmlAstUsagePrefix(o)
-    val r: MOption[SysmlAst.UsagePrefix] = if (preR.continu) {
-      val o2: SysmlAst.UsagePrefix = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[SysmlAst.RefPrefix] = transformSysmlAstRefPrefix(o2.refPrefix)
-      val r1: MOption[IS[Z, SysmlAst.Name]] = transformISZ(o2.usageExtensions, transformSysmlAstName _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(refPrefix = r0.getOrElse(o2.refPrefix), usageExtensions = r1.getOrElse(o2.usageExtensions)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: SysmlAst.UsagePrefix = r.getOrElse(o)
-    val postR: MOption[SysmlAst.UsagePrefix] = postSysmlAstUsagePrefix(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
   def transformBTSPortInAction(o: BTSPortInAction): MOption[BTSPortInAction] = {
     val preR: PreResult[BTSPortInAction] = preBTSPortInAction(o)
     val r: MOption[BTSPortInAction] = if (preR.continu) {
@@ -18837,15 +18967,13 @@ import MTransformer._
     }
   }
 
-  def transformSysmlAstAttributeUsage(o: SysmlAst.AttributeUsage): MOption[SysmlAst.AttributeUsage] = {
-    val preR: PreResult[SysmlAst.AttributeUsage] = preSysmlAstAttributeUsage(o)
-    val r: MOption[SysmlAst.AttributeUsage] = if (preR.continu) {
-      val o2: SysmlAst.AttributeUsage = preR.resultOpt.getOrElse(o)
+  def transformSysmlAstEndUsage(o: SysmlAst.EndUsage): MOption[SysmlAst.EndUsage] = {
+    val preR: PreResult[SysmlAst.EndUsage] = preSysmlAstEndUsage(o)
+    val r: MOption[SysmlAst.EndUsage] = if (preR.continu) {
+      val o2: SysmlAst.EndUsage = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[SysmlAst.UsagePrefix] = transformSysmlAstUsagePrefix(o2.prefix)
-      val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(prefix = r0.getOrElse(o2.prefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements)))
+      if (hasChanged)
+        MSome(o2)
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -18854,8 +18982,36 @@ import MTransformer._
       MNone()
     }
     val hasChanged: B = r.nonEmpty
-    val o2: SysmlAst.AttributeUsage = r.getOrElse(o)
-    val postR: MOption[SysmlAst.AttributeUsage] = postSysmlAstAttributeUsage(o2)
+    val o2: SysmlAst.EndUsage = r.getOrElse(o)
+    val postR: MOption[SysmlAst.EndUsage] = postSysmlAstEndUsage(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformSysmlAstUsagePrefix(o: SysmlAst.UsagePrefix): MOption[SysmlAst.UsagePrefix] = {
+    val preR: PreResult[SysmlAst.UsagePrefix] = preSysmlAstUsagePrefix(o)
+    val r: MOption[SysmlAst.UsagePrefix] = if (preR.continu) {
+      val o2: SysmlAst.UsagePrefix = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[SysmlAst.RefPrefix] = transformSysmlAstRefPrefix(o2.refPrefix)
+      val r1: MOption[IS[Z, SysmlAst.Name]] = transformISZ(o2.usageExtensions, transformSysmlAstName _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(refPrefix = r0.getOrElse(o2.refPrefix), usageExtensions = r1.getOrElse(o2.usageExtensions)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: SysmlAst.UsagePrefix = r.getOrElse(o)
+    val postR: MOption[SysmlAst.UsagePrefix] = postSysmlAstUsagePrefix(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -18960,12 +19116,12 @@ import MTransformer._
     }
   }
 
-  def transformSysmlAstReferenceUsage(o: SysmlAst.ReferenceUsage): MOption[SysmlAst.ReferenceUsage] = {
-    val preR: PreResult[SysmlAst.ReferenceUsage] = preSysmlAstReferenceUsage(o)
-    val r: MOption[SysmlAst.ReferenceUsage] = if (preR.continu) {
-      val o2: SysmlAst.ReferenceUsage = preR.resultOpt.getOrElse(o)
+  def transformSysmlAstAttributeUsage(o: SysmlAst.AttributeUsage): MOption[SysmlAst.AttributeUsage] = {
+    val preR: PreResult[SysmlAst.AttributeUsage] = preSysmlAstAttributeUsage(o)
+    val r: MOption[SysmlAst.AttributeUsage] = if (preR.continu) {
+      val o2: SysmlAst.AttributeUsage = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[SysmlAst.RefPrefix] = transformSysmlAstRefPrefix(o2.prefix)
+      val r0: MOption[SysmlAst.UsagePrefix] = transformSysmlAstUsagePrefix(o2.prefix)
       val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
       if (hasChanged || r0.nonEmpty || r1.nonEmpty)
         MSome(o2(prefix = r0.getOrElse(o2.prefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements)))
@@ -18977,8 +19133,8 @@ import MTransformer._
       MNone()
     }
     val hasChanged: B = r.nonEmpty
-    val o2: SysmlAst.ReferenceUsage = r.getOrElse(o)
-    val postR: MOption[SysmlAst.ReferenceUsage] = postSysmlAstReferenceUsage(o2)
+    val o2: SysmlAst.AttributeUsage = r.getOrElse(o)
+    val postR: MOption[SysmlAst.AttributeUsage] = postSysmlAstAttributeUsage(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -19007,6 +19163,34 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: BTSGuardedAction = r.getOrElse(o)
     val postR: MOption[BTSGuardedAction] = postBTSGuardedAction(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformSysmlAstReferenceUsage(o: SysmlAst.ReferenceUsage): MOption[SysmlAst.ReferenceUsage] = {
+    val preR: PreResult[SysmlAst.ReferenceUsage] = preSysmlAstReferenceUsage(o)
+    val r: MOption[SysmlAst.ReferenceUsage] = if (preR.continu) {
+      val o2: SysmlAst.ReferenceUsage = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[SysmlAst.RefPrefix] = transformSysmlAstRefPrefix(o2.prefix)
+      val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(prefix = r0.getOrElse(o2.prefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: SysmlAst.ReferenceUsage = r.getOrElse(o)
+    val postR: MOption[SysmlAst.ReferenceUsage] = postSysmlAstReferenceUsage(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -19064,6 +19248,48 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: BTSConditionalActions = r.getOrElse(o)
     val postR: MOption[BTSConditionalActions] = postBTSConditionalActions(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBTSQuantificationActions(o: BTSQuantificationActions): MOption[BTSQuantificationActions] = {
+    val preR: PreResult[BTSQuantificationActions] = preBTSQuantificationActions(o)
+    val r: MOption[BTSQuantificationActions] = if (preR.continu) {
+      val o2: BTSQuantificationActions = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[BTSQuantificationActions] = o2 match {
+        case o2: BTSExistentialLatticeQuantification =>
+          val r0: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.quantifiedVariables, transformBTSVariableDeclaration _)
+          val r1: MOption[BTSBehaviorActions] = transformBTSBehaviorActions(o2.actions)
+          val r2: MOption[Option[BTSBehaviorTime]] = transformOption(o2.timeout, transformBTSBehaviorTime _)
+          val r3: MOption[Option[TODO]] = transformOption(o2.catchClause, transformTODO _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(quantifiedVariables = r0.getOrElse(o2.quantifiedVariables), actions = r1.getOrElse(o2.actions), timeout = r2.getOrElse(o2.timeout), catchClause = r3.getOrElse(o2.catchClause)))
+          else
+            MNone()
+        case o2: BTSUniversalLatticeQuantification =>
+          val r0: MOption[IS[Z, Name]] = transformISZ(o2.latticeVariables, transformName _)
+          val r1: MOption[Option[TODO]] = transformOption(o2.range, transformTODO _)
+          val r2: MOption[BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(o2.elq)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(latticeVariables = r0.getOrElse(o2.latticeVariables), range = r1.getOrElse(o2.range), elq = r2.getOrElse(o2.elq)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSQuantificationActions = r.getOrElse(o)
+    val postR: MOption[BTSQuantificationActions] = postBTSQuantificationActions(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -19135,6 +19361,36 @@ import MTransformer._
     }
   }
 
+  def transformBTSExistentialLatticeQuantification(o: BTSExistentialLatticeQuantification): MOption[BTSExistentialLatticeQuantification] = {
+    val preR: PreResult[BTSExistentialLatticeQuantification] = preBTSExistentialLatticeQuantification(o)
+    val r: MOption[BTSExistentialLatticeQuantification] = if (preR.continu) {
+      val o2: BTSExistentialLatticeQuantification = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.quantifiedVariables, transformBTSVariableDeclaration _)
+      val r1: MOption[BTSBehaviorActions] = transformBTSBehaviorActions(o2.actions)
+      val r2: MOption[Option[BTSBehaviorTime]] = transformOption(o2.timeout, transformBTSBehaviorTime _)
+      val r3: MOption[Option[TODO]] = transformOption(o2.catchClause, transformTODO _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(quantifiedVariables = r0.getOrElse(o2.quantifiedVariables), actions = r1.getOrElse(o2.actions), timeout = r2.getOrElse(o2.timeout), catchClause = r3.getOrElse(o2.catchClause)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSExistentialLatticeQuantification = r.getOrElse(o)
+    val postR: MOption[BTSExistentialLatticeQuantification] = postBTSExistentialLatticeQuantification(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformSysmlAstOccurrenceUsageElement(o: SysmlAst.OccurrenceUsageElement): MOption[SysmlAst.OccurrenceUsageElement] = {
     val preR: PreResult[SysmlAst.OccurrenceUsageElement] = preSysmlAstOccurrenceUsageElement(o)
     val r: MOption[SysmlAst.OccurrenceUsageElement] = if (preR.continu) {
@@ -19197,48 +19453,6 @@ import MTransformer._
     }
   }
 
-  def transformBTSQuantificationActions(o: BTSQuantificationActions): MOption[BTSQuantificationActions] = {
-    val preR: PreResult[BTSQuantificationActions] = preBTSQuantificationActions(o)
-    val r: MOption[BTSQuantificationActions] = if (preR.continu) {
-      val o2: BTSQuantificationActions = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val rOpt: MOption[BTSQuantificationActions] = o2 match {
-        case o2: BTSExistentialLatticeQuantification =>
-          val r0: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.quantifiedVariables, transformBTSVariableDeclaration _)
-          val r1: MOption[BTSBehaviorActions] = transformBTSBehaviorActions(o2.actions)
-          val r2: MOption[Option[BTSBehaviorTime]] = transformOption(o2.timeout, transformBTSBehaviorTime _)
-          val r3: MOption[Option[TODO]] = transformOption(o2.catchClause, transformTODO _)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(o2(quantifiedVariables = r0.getOrElse(o2.quantifiedVariables), actions = r1.getOrElse(o2.actions), timeout = r2.getOrElse(o2.timeout), catchClause = r3.getOrElse(o2.catchClause)))
-          else
-            MNone()
-        case o2: BTSUniversalLatticeQuantification =>
-          val r0: MOption[IS[Z, Name]] = transformISZ(o2.latticeVariables, transformName _)
-          val r1: MOption[Option[TODO]] = transformOption(o2.range, transformTODO _)
-          val r2: MOption[BTSExistentialLatticeQuantification] = transformBTSExistentialLatticeQuantification(o2.elq)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(latticeVariables = r0.getOrElse(o2.latticeVariables), range = r1.getOrElse(o2.range), elq = r2.getOrElse(o2.elq)))
-          else
-            MNone()
-      }
-      rOpt
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: BTSQuantificationActions = r.getOrElse(o)
-    val postR: MOption[BTSQuantificationActions] = postBTSQuantificationActions(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
   def transformSysmlAstStructureUsageElement(o: SysmlAst.StructureUsageElement): MOption[SysmlAst.StructureUsageElement] = {
     val preR: PreResult[SysmlAst.StructureUsageElement] = preSysmlAstStructureUsageElement(o)
     val r: MOption[SysmlAst.StructureUsageElement] = if (preR.continu) {
@@ -19292,36 +19506,6 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: SysmlAst.StructureUsageElement = r.getOrElse(o)
     val postR: MOption[SysmlAst.StructureUsageElement] = postSysmlAstStructureUsageElement(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformBTSExistentialLatticeQuantification(o: BTSExistentialLatticeQuantification): MOption[BTSExistentialLatticeQuantification] = {
-    val preR: PreResult[BTSExistentialLatticeQuantification] = preBTSExistentialLatticeQuantification(o)
-    val r: MOption[BTSExistentialLatticeQuantification] = if (preR.continu) {
-      val o2: BTSExistentialLatticeQuantification = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, BTSVariableDeclaration]] = transformISZ(o2.quantifiedVariables, transformBTSVariableDeclaration _)
-      val r1: MOption[BTSBehaviorActions] = transformBTSBehaviorActions(o2.actions)
-      val r2: MOption[Option[BTSBehaviorTime]] = transformOption(o2.timeout, transformBTSBehaviorTime _)
-      val r3: MOption[Option[TODO]] = transformOption(o2.catchClause, transformTODO _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-        MSome(o2(quantifiedVariables = r0.getOrElse(o2.quantifiedVariables), actions = r1.getOrElse(o2.actions), timeout = r2.getOrElse(o2.timeout), catchClause = r3.getOrElse(o2.catchClause)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: BTSExistentialLatticeQuantification = r.getOrElse(o)
-    val postR: MOption[BTSExistentialLatticeQuantification] = postBTSExistentialLatticeQuantification(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -19455,35 +19639,6 @@ import MTransformer._
     }
   }
 
-  def transformSysmlAstAllocationUsage(o: SysmlAst.AllocationUsage): MOption[SysmlAst.AllocationUsage] = {
-    val preR: PreResult[SysmlAst.AllocationUsage] = preSysmlAstAllocationUsage(o)
-    val r: MOption[SysmlAst.AllocationUsage] = if (preR.continu) {
-      val o2: SysmlAst.AllocationUsage = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[SysmlAst.OccurrenceUsagePrefix] = transformSysmlAstOccurrenceUsagePrefix(o2.occurrenceUsagePrefix)
-      val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
-      val r2: MOption[Option[SysmlAst.ConnectorPart]] = transformOption(o2.connectorPart, transformSysmlAstConnectorPart _)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(occurrenceUsagePrefix = r0.getOrElse(o2.occurrenceUsagePrefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements), connectorPart = r2.getOrElse(o2.connectorPart)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: SysmlAst.AllocationUsage = r.getOrElse(o)
-    val postR: MOption[SysmlAst.AllocationUsage] = postSysmlAstAllocationUsage(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
   def transformBTSExp(o: BTSExp): MOption[BTSExp] = {
     val preR: PreResult[BTSExp] = preBTSExp(o)
     val r: MOption[BTSExp] = if (preR.continu) {
@@ -19544,6 +19699,35 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: BTSExp = r.getOrElse(o)
     val postR: MOption[BTSExp] = postBTSExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformSysmlAstAllocationUsage(o: SysmlAst.AllocationUsage): MOption[SysmlAst.AllocationUsage] = {
+    val preR: PreResult[SysmlAst.AllocationUsage] = preSysmlAstAllocationUsage(o)
+    val r: MOption[SysmlAst.AllocationUsage] = if (preR.continu) {
+      val o2: SysmlAst.AllocationUsage = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[SysmlAst.OccurrenceUsagePrefix] = transformSysmlAstOccurrenceUsagePrefix(o2.occurrenceUsagePrefix)
+      val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
+      val r2: MOption[Option[SysmlAst.ConnectorPart]] = transformOption(o2.connectorPart, transformSysmlAstConnectorPart _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(occurrenceUsagePrefix = r0.getOrElse(o2.occurrenceUsagePrefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements), connectorPart = r2.getOrElse(o2.connectorPart)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: SysmlAst.AllocationUsage = r.getOrElse(o)
+    val postR: MOption[SysmlAst.AllocationUsage] = postSysmlAstAllocationUsage(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -19665,6 +19849,32 @@ import MTransformer._
     }
   }
 
+  def transformBTSLiteralExp(o: BTSLiteralExp): MOption[BTSLiteralExp] = {
+    val preR: PreResult[BTSLiteralExp] = preBTSLiteralExp(o)
+    val r: MOption[BTSLiteralExp] = if (preR.continu) {
+      val o2: BTSLiteralExp = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSLiteralExp = r.getOrElse(o)
+    val postR: MOption[BTSLiteralExp] = postBTSLiteralExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformSysmlAstPartUsage(o: SysmlAst.PartUsage): MOption[SysmlAst.PartUsage] = {
     val preR: PreResult[SysmlAst.PartUsage] = preSysmlAstPartUsage(o)
     val r: MOption[SysmlAst.PartUsage] = if (preR.continu) {
@@ -19684,32 +19894,6 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: SysmlAst.PartUsage = r.getOrElse(o)
     val postR: MOption[SysmlAst.PartUsage] = postSysmlAstPartUsage(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformBTSLiteralExp(o: BTSLiteralExp): MOption[BTSLiteralExp] = {
-    val preR: PreResult[BTSLiteralExp] = preBTSLiteralExp(o)
-    val r: MOption[BTSLiteralExp] = if (preR.continu) {
-      val o2: BTSLiteralExp = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: BTSLiteralExp = r.getOrElse(o)
-    val postR: MOption[BTSLiteralExp] = postBTSLiteralExp(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -19746,34 +19930,6 @@ import MTransformer._
     }
   }
 
-  def transformSysmlAstPortUsage(o: SysmlAst.PortUsage): MOption[SysmlAst.PortUsage] = {
-    val preR: PreResult[SysmlAst.PortUsage] = preSysmlAstPortUsage(o)
-    val r: MOption[SysmlAst.PortUsage] = if (preR.continu) {
-      val o2: SysmlAst.PortUsage = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[SysmlAst.OccurrenceUsagePrefix] = transformSysmlAstOccurrenceUsagePrefix(o2.occurrenceUsagePrefix)
-      val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(occurrenceUsagePrefix = r0.getOrElse(o2.occurrenceUsagePrefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: SysmlAst.PortUsage = r.getOrElse(o)
-    val postR: MOption[SysmlAst.PortUsage] = postSysmlAstPortUsage(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
   def transformBTSIndexingExp(o: BTSIndexingExp): MOption[BTSIndexingExp] = {
     val preR: PreResult[BTSIndexingExp] = preBTSIndexingExp(o)
     val r: MOption[BTSIndexingExp] = if (preR.continu) {
@@ -19793,6 +19949,34 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: BTSIndexingExp = r.getOrElse(o)
     val postR: MOption[BTSIndexingExp] = postBTSIndexingExp(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformSysmlAstPortUsage(o: SysmlAst.PortUsage): MOption[SysmlAst.PortUsage] = {
+    val preR: PreResult[SysmlAst.PortUsage] = preSysmlAstPortUsage(o)
+    val r: MOption[SysmlAst.PortUsage] = if (preR.continu) {
+      val o2: SysmlAst.PortUsage = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[SysmlAst.OccurrenceUsagePrefix] = transformSysmlAstOccurrenceUsagePrefix(o2.occurrenceUsagePrefix)
+      val r1: MOption[SysmlAst.CommonUsageElements] = transformSysmlAstCommonUsageElements(o2.commonUsageElements)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(occurrenceUsagePrefix = r0.getOrElse(o2.occurrenceUsagePrefix), commonUsageElements = r1.getOrElse(o2.commonUsageElements)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: SysmlAst.PortUsage = r.getOrElse(o)
+    val postR: MOption[SysmlAst.PortUsage] = postSysmlAstPortUsage(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -19885,6 +20069,84 @@ import MTransformer._
     }
   }
 
+  def transformBTSBehaviorTime(o: BTSBehaviorTime): MOption[BTSBehaviorTime] = {
+    val preR: PreResult[BTSBehaviorTime] = preBTSBehaviorTime(o)
+    val r: MOption[BTSBehaviorTime] = if (preR.continu) {
+      val o2: BTSBehaviorTime = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BTSBehaviorTime = r.getOrElse(o)
+    val postR: MOption[BTSBehaviorTime] = postBTSBehaviorTime(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformTODO(o: TODO): MOption[TODO] = {
+    val preR: PreResult[TODO] = preTODO(o)
+    val r: MOption[TODO] = if (preR.continu) {
+      val o2: TODO = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: TODO = r.getOrElse(o)
+    val postR: MOption[TODO] = postTODO(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformBlessAttr(o: BlessAttr): MOption[BlessAttr] = {
+    val preR: PreResult[BlessAttr] = preBlessAttr(o)
+    val r: MOption[BlessAttr] = if (preR.continu) {
+      val o2: BlessAttr = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      if (hasChanged)
+        MSome(o2)
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: BlessAttr = r.getOrElse(o)
+    val postR: MOption[BlessAttr] = postBlessAttr(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformSysmlAstAnnotatingElement(o: SysmlAst.AnnotatingElement): MOption[SysmlAst.AnnotatingElement] = {
     val preR: PreResult[SysmlAst.AnnotatingElement] = preSysmlAstAnnotatingElement(o)
     val r: MOption[SysmlAst.AnnotatingElement] = if (preR.continu) {
@@ -19938,32 +20200,6 @@ import MTransformer._
     }
   }
 
-  def transformBTSBehaviorTime(o: BTSBehaviorTime): MOption[BTSBehaviorTime] = {
-    val preR: PreResult[BTSBehaviorTime] = preBTSBehaviorTime(o)
-    val r: MOption[BTSBehaviorTime] = if (preR.continu) {
-      val o2: BTSBehaviorTime = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: BTSBehaviorTime = r.getOrElse(o)
-    val postR: MOption[BTSBehaviorTime] = postBTSBehaviorTime(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
   def transformSysmlAstComment(o: SysmlAst.Comment): MOption[SysmlAst.Comment] = {
     val preR: PreResult[SysmlAst.Comment] = preSysmlAstComment(o)
     val r: MOption[SysmlAst.Comment] = if (preR.continu) {
@@ -19984,58 +20220,6 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: SysmlAst.Comment = r.getOrElse(o)
     val postR: MOption[SysmlAst.Comment] = postSysmlAstComment(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformTODO(o: TODO): MOption[TODO] = {
-    val preR: PreResult[TODO] = preTODO(o)
-    val r: MOption[TODO] = if (preR.continu) {
-      val o2: TODO = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: TODO = r.getOrElse(o)
-    val postR: MOption[TODO] = postTODO(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformBlessAttr(o: BlessAttr): MOption[BlessAttr] = {
-    val preR: PreResult[BlessAttr] = preBlessAttr(o)
-    val r: MOption[BlessAttr] = if (preR.continu) {
-      val o2: BlessAttr = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      if (hasChanged)
-        MSome(o2)
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: BlessAttr = r.getOrElse(o)
-    val postR: MOption[BlessAttr] = postBlessAttr(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

@@ -2373,6 +2373,18 @@ object MsgPack {
       writeResolvedAttr(o.attr)
     }
 
+    def writeSysmlAstUsageMember(o: SysmlAst.UsageMember): Unit = {
+      o match {
+        case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
+        case o: SysmlAst.ReferenceUsage => writeSysmlAstReferenceUsage(o)
+        case o: SysmlAst.AllocationUsage => writeSysmlAstAllocationUsage(o)
+        case o: SysmlAst.ConnectionUsage => writeSysmlAstConnectionUsage(o)
+        case o: SysmlAst.ItemUsage => writeSysmlAstItemUsage(o)
+        case o: SysmlAst.PartUsage => writeSysmlAstPartUsage(o)
+        case o: SysmlAst.PortUsage => writeSysmlAstPortUsage(o)
+      }
+    }
+
     def writeSysmlAstNonOccurrenceUsageMember(o: SysmlAst.NonOccurrenceUsageMember): Unit = {
       o match {
         case o: SysmlAst.AttributeUsage => writeSysmlAstAttributeUsage(o)
@@ -7013,6 +7025,24 @@ object MsgPack {
       val tipeOpt = reader.readOption(readType _)
       val attr = readResolvedAttr()
       return SysmlAst.CommonUsageElements(visibility, identification, specializations, featureValue, definitionBodyItems, tipeOpt, attr)
+    }
+
+    def readSysmlAstUsageMember(): SysmlAst.UsageMember = {
+      val i = reader.curr
+      val t = reader.readZ()
+      t match {
+        case Constants.SysmlAstAttributeUsage => val r = readSysmlAstAttributeUsageT(T); return r
+        case Constants.SysmlAstReferenceUsage => val r = readSysmlAstReferenceUsageT(T); return r
+        case Constants.SysmlAstAllocationUsage => val r = readSysmlAstAllocationUsageT(T); return r
+        case Constants.SysmlAstConnectionUsage => val r = readSysmlAstConnectionUsageT(T); return r
+        case Constants.SysmlAstItemUsage => val r = readSysmlAstItemUsageT(T); return r
+        case Constants.SysmlAstPartUsage => val r = readSysmlAstPartUsageT(T); return r
+        case Constants.SysmlAstPortUsage => val r = readSysmlAstPortUsageT(T); return r
+        case _ =>
+          reader.error(i, s"$t is not a valid type of SysmlAst.UsageMember.")
+          val r = readSysmlAstPortUsageT(T)
+          return r
+      }
     }
 
     def readSysmlAstNonOccurrenceUsageMember(): SysmlAst.NonOccurrenceUsageMember = {
@@ -13161,6 +13191,21 @@ object MsgPack {
       return r
     }
     val r = to(data, fSysmlAstCommonUsageElements _)
+    return r
+  }
+
+  def fromSysmlAstUsageMember(o: SysmlAst.UsageMember, pooling: B): ISZ[U8] = {
+    val w = Writer.Default(MessagePack.writer(pooling))
+    w.writeSysmlAstUsageMember(o)
+    return w.result
+  }
+
+  def toSysmlAstUsageMember(data: ISZ[U8]): Either[SysmlAst.UsageMember, MessagePack.ErrorMsg] = {
+    def fSysmlAstUsageMember(reader: Reader): SysmlAst.UsageMember = {
+      val r = reader.readSysmlAstUsageMember()
+      return r
+    }
+    val r = to(data, fSysmlAstUsageMember _)
     return r
   }
 

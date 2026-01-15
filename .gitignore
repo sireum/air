@@ -16,6 +16,7 @@ bin/win/
 bin/scala/
 bin/prelude*
 bin/sireum*
+bin/*7zz*
 lib
 **/.aadlbin-gen/
 **/results/

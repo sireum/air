@@ -147,6 +147,8 @@ import org.sireum.hamr.ir.GclSymbol
 import org.sireum.hamr.ir.GclNamedElement
 import org.sireum.hamr.ir.GclSubclause
 import org.sireum.hamr.ir.GclMethod
+import org.sireum.hamr.ir.GclSpecMethod
+import org.sireum.hamr.ir.GclBodyMethod
 import org.sireum.hamr.ir.GclStateVar
 import org.sireum.hamr.ir.GclClause
 import org.sireum.hamr.ir.GclSpec
@@ -1427,7 +1429,8 @@ object JSON {
     @pure def printGclSymbol(o: GclSymbol): ST = {
       o match {
         case o: GclSubclause => return printGclSubclause(o)
-        case o: GclMethod => return printGclMethod(o)
+        case o: GclSpecMethod => return printGclSpecMethod(o)
+        case o: GclBodyMethod => return printGclBodyMethod(o)
         case o: GclStateVar => return printGclStateVar(o)
         case o: GclInvariant => return printGclInvariant(o)
         case o: GclAssume => return printGclAssume(o)
@@ -1445,7 +1448,8 @@ object JSON {
 
     @pure def printGclNamedElement(o: GclNamedElement): ST = {
       o match {
-        case o: GclMethod => return printGclMethod(o)
+        case o: GclSpecMethod => return printGclSpecMethod(o)
+        case o: GclBodyMethod => return printGclBodyMethod(o)
         case o: GclStateVar => return printGclStateVar(o)
         case o: GclInvariant => return printGclInvariant(o)
         case o: GclAssume => return printGclAssume(o)
@@ -1469,8 +1473,22 @@ object JSON {
     }
 
     @pure def printGclMethod(o: GclMethod): ST = {
+      o match {
+        case o: GclSpecMethod => return printGclSpecMethod(o)
+        case o: GclBodyMethod => return printGclBodyMethod(o)
+      }
+    }
+
+    @pure def printGclSpecMethod(o: GclSpecMethod): ST = {
       return printObject(ISZ(
-        ("type", st""""GclMethod""""),
+        ("type", st""""GclSpecMethod""""),
+        ("method", print_langastStmtSpecMethod(o.method))
+      ))
+    }
+
+    @pure def printGclBodyMethod(o: GclBodyMethod): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclBodyMethod""""),
         ("method", print_langastStmtMethod(o.method))
       ))
     }
@@ -6844,10 +6862,11 @@ object JSON {
     }
 
     def parseGclSymbol(): GclSymbol = {
-      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclHandle", "GclTODO", "GclLib", "InfoFlowClause"))
+      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclSpecMethod", "GclBodyMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclHandle", "GclTODO", "GclLib", "InfoFlowClause"))
       t.native match {
         case "GclSubclause" => val r = parseGclSubclauseT(T); return r
-        case "GclMethod" => val r = parseGclMethodT(T); return r
+        case "GclSpecMethod" => val r = parseGclSpecMethodT(T); return r
+        case "GclBodyMethod" => val r = parseGclBodyMethodT(T); return r
         case "GclStateVar" => val r = parseGclStateVarT(T); return r
         case "GclInvariant" => val r = parseGclInvariantT(T); return r
         case "GclAssume" => val r = parseGclAssumeT(T); return r
@@ -6865,9 +6884,10 @@ object JSON {
     }
 
     def parseGclNamedElement(): GclNamedElement = {
-      val t = parser.parseObjectTypes(ISZ("GclMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclCaseStatement", "InfoFlowClause"))
+      val t = parser.parseObjectTypes(ISZ("GclSpecMethod", "GclBodyMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclCaseStatement", "InfoFlowClause"))
       t.native match {
-        case "GclMethod" => val r = parseGclMethodT(T); return r
+        case "GclSpecMethod" => val r = parseGclSpecMethodT(T); return r
+        case "GclBodyMethod" => val r = parseGclBodyMethodT(T); return r
         case "GclStateVar" => val r = parseGclStateVarT(T); return r
         case "GclInvariant" => val r = parseGclInvariantT(T); return r
         case "GclAssume" => val r = parseGclAssumeT(T); return r
@@ -6912,18 +6932,42 @@ object JSON {
     }
 
     def parseGclMethod(): GclMethod = {
-      val r = parseGclMethodT(F)
+      val t = parser.parseObjectTypes(ISZ("GclSpecMethod", "GclBodyMethod"))
+      t.native match {
+        case "GclSpecMethod" => val r = parseGclSpecMethodT(T); return r
+        case "GclBodyMethod" => val r = parseGclBodyMethodT(T); return r
+        case _ => val r = parseGclBodyMethodT(T); return r
+      }
+    }
+
+    def parseGclSpecMethod(): GclSpecMethod = {
+      val r = parseGclSpecMethodT(F)
       return r
     }
 
-    def parseGclMethodT(typeParsed: B): GclMethod = {
+    def parseGclSpecMethodT(typeParsed: B): GclSpecMethod = {
       if (!typeParsed) {
-        parser.parseObjectType("GclMethod")
+        parser.parseObjectType("GclSpecMethod")
+      }
+      parser.parseObjectKey("method")
+      val method = parse_langastStmtSpecMethod()
+      parser.parseObjectNext()
+      return GclSpecMethod(method)
+    }
+
+    def parseGclBodyMethod(): GclBodyMethod = {
+      val r = parseGclBodyMethodT(F)
+      return r
+    }
+
+    def parseGclBodyMethodT(typeParsed: B): GclBodyMethod = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclBodyMethod")
       }
       parser.parseObjectKey("method")
       val method = parse_langastStmtMethod()
       parser.parseObjectNext()
-      return GclMethod(method)
+      return GclBodyMethod(method)
     }
 
     def parseGclStateVar(): GclStateVar = {
@@ -15029,6 +15073,42 @@ object JSON {
       return r
     }
     val r = to(s, fGclMethod _)
+    return r
+  }
+
+  def fromGclSpecMethod(o: GclSpecMethod, isCompact: B): String = {
+    val st = Printer.printGclSpecMethod(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclSpecMethod(s: String): Either[GclSpecMethod, Json.ErrorMsg] = {
+    def fGclSpecMethod(parser: Parser): GclSpecMethod = {
+      val r = parser.parseGclSpecMethod()
+      return r
+    }
+    val r = to(s, fGclSpecMethod _)
+    return r
+  }
+
+  def fromGclBodyMethod(o: GclBodyMethod, isCompact: B): String = {
+    val st = Printer.printGclBodyMethod(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclBodyMethod(s: String): Either[GclBodyMethod, Json.ErrorMsg] = {
+    def fGclBodyMethod(parser: Parser): GclBodyMethod = {
+      val r = parser.parseGclBodyMethod()
+      return r
+    }
+    val r = to(s, fGclBodyMethod _)
     return r
   }
 

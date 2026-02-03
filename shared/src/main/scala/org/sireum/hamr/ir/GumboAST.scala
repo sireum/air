@@ -26,6 +26,7 @@
 package org.sireum.hamr.ir
 
 import org.sireum._
+import org.sireum.lang.ast.MethodSig
 import org.sireum.message.Position
 
 @sig trait GclSymbol {
@@ -85,7 +86,11 @@ import org.sireum.message.Position
   }
 }
 
-@datatype class GclMethod(val method: org.sireum.lang.ast.Stmt.Method) extends GclNamedElement {
+@sig trait GclMethod extends GclNamedElement {
+  @strictpure def sig: org.sireum.lang.ast.MethodSig
+}
+
+@datatype class GclSpecMethod(val method: org.sireum.lang.ast.Stmt.SpecMethod) extends GclMethod {
   @strictpure override def id: String = method.sig.id.value
 
   @strictpure override def posOpt: Option[Position] = method.posOpt
@@ -93,6 +98,20 @@ import org.sireum.message.Position
   override def string: String = {
     return method.string
   }
+
+  @strictpure override def sig: MethodSig = method.sig
+}
+
+@datatype class GclBodyMethod(val method: org.sireum.lang.ast.Stmt.Method) extends GclMethod {
+  @strictpure override def id: String = method.sig.id.value
+
+  @strictpure override def posOpt: Option[Position] = method.posOpt
+
+  override def string: String = {
+    return method.string
+  }
+
+  @strictpure override def sig: MethodSig = method.sig
 }
 
 @datatype class GclStateVar(val name: String,

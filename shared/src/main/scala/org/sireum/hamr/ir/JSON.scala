@@ -2425,6 +2425,7 @@ object JSON {
 
     @pure def printResolvedInfo(o: ResolvedInfo): ST = {
       o match {
+        case o: ResolvedInfo.BuiltIn => return printResolvedInfoBuiltIn(o)
         case o: ResolvedInfo.Package => return printResolvedInfoPackage(o)
         case o: ResolvedInfo.Enum => return printResolvedInfoEnum(o)
         case o: ResolvedInfo.EnumElement => return printResolvedInfoEnumElement(o)
@@ -2436,6 +2437,24 @@ object JSON {
         case o: ResolvedInfo.PortUsage => return printResolvedInfoPortUsage(o)
         case o: ResolvedInfo.ReferenceUsage => return printResolvedInfoReferenceUsage(o)
       }
+    }
+
+    @pure def printResolvedInfoBuiltInKindType(o: ResolvedInfo.BuiltIn.Kind.Type): ST = {
+      val value: String = o match {
+        case ResolvedInfo.BuiltIn.Kind.AsInstanceOf => "AsInstanceOf"
+      }
+      return printObject(ISZ(
+        ("type", printString("ResolvedInfo.BuiltIn.Kind")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def printResolvedInfoBuiltIn(o: ResolvedInfo.BuiltIn): ST = {
+      return printObject(ISZ(
+        ("type", st""""ResolvedInfo.BuiltIn""""),
+        ("qname", printISZ(T, o.qname, printString _)),
+        ("kind", printResolvedInfoBuiltInKindType(o.kind))
+      ))
     }
 
     @pure def printResolvedInfoPackage(o: ResolvedInfo.Package): ST = {
@@ -2527,6 +2546,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""Type.Named""""),
         ("name", printSysmlAstName(o.name)),
+        ("typeArgs", printISZ(F, o.typeArgs, printType _)),
         ("attr", printTypedAttr(o.attr))
       ))
     }
@@ -8807,8 +8827,9 @@ object JSON {
     }
 
     def parseResolvedInfo(): ResolvedInfo = {
-      val t = parser.parseObjectTypes(ISZ("ResolvedInfo.Package", "ResolvedInfo.Enum", "ResolvedInfo.EnumElement", "ResolvedInfo.AllocationUsage", "ResolvedInfo.AttributeUsage", "ResolvedInfo.ConnectionUsage", "ResolvedInfo.ItemUsage", "ResolvedInfo.PartUsage", "ResolvedInfo.PortUsage", "ResolvedInfo.ReferenceUsage"))
+      val t = parser.parseObjectTypes(ISZ("ResolvedInfo.BuiltIn", "ResolvedInfo.Package", "ResolvedInfo.Enum", "ResolvedInfo.EnumElement", "ResolvedInfo.AllocationUsage", "ResolvedInfo.AttributeUsage", "ResolvedInfo.ConnectionUsage", "ResolvedInfo.ItemUsage", "ResolvedInfo.PartUsage", "ResolvedInfo.PortUsage", "ResolvedInfo.ReferenceUsage"))
       t.native match {
+        case "ResolvedInfo.BuiltIn" => val r = parseResolvedInfoBuiltInT(T); return r
         case "ResolvedInfo.Package" => val r = parseResolvedInfoPackageT(T); return r
         case "ResolvedInfo.Enum" => val r = parseResolvedInfoEnumT(T); return r
         case "ResolvedInfo.EnumElement" => val r = parseResolvedInfoEnumElementT(T); return r
@@ -8821,6 +8842,45 @@ object JSON {
         case "ResolvedInfo.ReferenceUsage" => val r = parseResolvedInfoReferenceUsageT(T); return r
         case _ => val r = parseResolvedInfoReferenceUsageT(T); return r
       }
+    }
+
+    def parseResolvedInfoBuiltInKindType(): ResolvedInfo.BuiltIn.Kind.Type = {
+      val r = parseResolvedInfoBuiltInKindT(F)
+      return r
+    }
+
+    def parseResolvedInfoBuiltInKindT(typeParsed: B): ResolvedInfo.BuiltIn.Kind.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("ResolvedInfo.BuiltIn.Kind")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      ResolvedInfo.BuiltIn.Kind.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for ResolvedInfo.BuiltIn.Kind.")
+          return ResolvedInfo.BuiltIn.Kind.byOrdinal(0).get
+      }
+    }
+
+    def parseResolvedInfoBuiltIn(): ResolvedInfo.BuiltIn = {
+      val r = parseResolvedInfoBuiltInT(F)
+      return r
+    }
+
+    def parseResolvedInfoBuiltInT(typeParsed: B): ResolvedInfo.BuiltIn = {
+      if (!typeParsed) {
+        parser.parseObjectType("ResolvedInfo.BuiltIn")
+      }
+      parser.parseObjectKey("qname")
+      val qname = parser.parseISZ(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("kind")
+      val kind = parseResolvedInfoBuiltInKindType()
+      parser.parseObjectNext()
+      return ResolvedInfo.BuiltIn(qname, kind)
     }
 
     def parseResolvedInfoPackage(): ResolvedInfo.Package = {
@@ -9020,10 +9080,13 @@ object JSON {
       parser.parseObjectKey("name")
       val name = parseSysmlAstName()
       parser.parseObjectNext()
+      parser.parseObjectKey("typeArgs")
+      val typeArgs = parser.parseISZ(parseType _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parseTypedAttr()
       parser.parseObjectNext()
-      return Type.Named(name, attr)
+      return Type.Named(name, typeArgs, attr)
     }
 
     def parseTypedAttr(): TypedAttr = {
@@ -16711,6 +16774,24 @@ object JSON {
       return r
     }
     val r = to(s, fResolvedInfo _)
+    return r
+  }
+
+  def fromResolvedInfoBuiltIn(o: ResolvedInfo.BuiltIn, isCompact: B): String = {
+    val st = Printer.printResolvedInfoBuiltIn(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toResolvedInfoBuiltIn(s: String): Either[ResolvedInfo.BuiltIn, Json.ErrorMsg] = {
+    def fResolvedInfoBuiltIn(parser: Parser): ResolvedInfo.BuiltIn = {
+      val r = parser.parseResolvedInfoBuiltIn()
+      return r
+    }
+    val r = to(s, fResolvedInfoBuiltIn _)
     return r
   }
 

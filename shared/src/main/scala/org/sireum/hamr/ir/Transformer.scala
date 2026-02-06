@@ -4289,6 +4289,7 @@ object Transformer {
 
     @pure def preResolvedInfo(ctx: Context, o: ResolvedInfo): PreResult[Context, ResolvedInfo] = {
       o match {
+        case o: ResolvedInfo.BuiltIn => return preResolvedInfoBuiltIn(ctx, o)
         case o: ResolvedInfo.Package => return preResolvedInfoPackage(ctx, o)
         case o: ResolvedInfo.Enum => return preResolvedInfoEnum(ctx, o)
         case o: ResolvedInfo.EnumElement => return preResolvedInfoEnumElement(ctx, o)
@@ -4300,6 +4301,10 @@ object Transformer {
         case o: ResolvedInfo.PortUsage => return preResolvedInfoPortUsage(ctx, o)
         case o: ResolvedInfo.ReferenceUsage => return preResolvedInfoReferenceUsage(ctx, o)
       }
+    }
+
+    @pure def preResolvedInfoBuiltIn(ctx: Context, o: ResolvedInfo.BuiltIn): PreResult[Context, ResolvedInfo] = {
+      return PreResult(ctx, T, None())
     }
 
     @pure def preResolvedInfoPackage(ctx: Context, o: ResolvedInfo.Package): PreResult[Context, ResolvedInfo] = {
@@ -8606,6 +8611,7 @@ object Transformer {
 
     @pure def postResolvedInfo(ctx: Context, o: ResolvedInfo): TPostResult[Context, ResolvedInfo] = {
       o match {
+        case o: ResolvedInfo.BuiltIn => return postResolvedInfoBuiltIn(ctx, o)
         case o: ResolvedInfo.Package => return postResolvedInfoPackage(ctx, o)
         case o: ResolvedInfo.Enum => return postResolvedInfoEnum(ctx, o)
         case o: ResolvedInfo.EnumElement => return postResolvedInfoEnumElement(ctx, o)
@@ -8617,6 +8623,10 @@ object Transformer {
         case o: ResolvedInfo.PortUsage => return postResolvedInfoPortUsage(ctx, o)
         case o: ResolvedInfo.ReferenceUsage => return postResolvedInfoReferenceUsage(ctx, o)
       }
+    }
+
+    @pure def postResolvedInfoBuiltIn(ctx: Context, o: ResolvedInfo.BuiltIn): TPostResult[Context, ResolvedInfo] = {
+      return TPostResult(ctx, None())
     }
 
     @pure def postResolvedInfoPackage(ctx: Context, o: ResolvedInfo.Package): TPostResult[Context, ResolvedInfo] = {
@@ -19220,6 +19230,11 @@ import Transformer._
       val o2: ResolvedInfo = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: TPostResult[Context, ResolvedInfo] = o2 match {
+        case o2: ResolvedInfo.BuiltIn =>
+          if (hasChanged)
+            TPostResult(preR.ctx, Some(o2))
+          else
+            TPostResult(preR.ctx, None())
         case o2: ResolvedInfo.Package =>
           if (hasChanged)
             TPostResult(preR.ctx, Some(o2))
@@ -19297,11 +19312,12 @@ import Transformer._
       val rOpt: TPostResult[Context, Type] = o2 match {
         case o2: Type.Named =>
           val r0: TPostResult[Context, SysmlAst.Name] = transformSysmlAstName(preR.ctx, o2.name)
-          val r1: TPostResult[Context, TypedAttr] = transformTypedAttr(r0.ctx, o2.attr)
-          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-            TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), attr = r1.resultOpt.getOrElse(o2.attr))))
+          val r1: TPostResult[Context, IS[Z, Type]] = transformISZ(r0.ctx, o2.typeArgs, transformType _)
+          val r2: TPostResult[Context, TypedAttr] = transformTypedAttr(r1.ctx, o2.attr)
+          if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+            TPostResult(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), typeArgs = r1.resultOpt.getOrElse(o2.typeArgs), attr = r2.resultOpt.getOrElse(o2.attr))))
           else
-            TPostResult(r1.ctx, None())
+            TPostResult(r2.ctx, None())
       }
       rOpt
     } else if (preR.resultOpt.nonEmpty) {
@@ -20013,11 +20029,12 @@ import Transformer._
       val o2: Type.Named = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: TPostResult[Context, SysmlAst.Name] = transformSysmlAstName(preR.ctx, o2.name)
-      val r1: TPostResult[Context, TypedAttr] = transformTypedAttr(r0.ctx, o2.attr)
-      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty)
-        TPostResult(r1.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), attr = r1.resultOpt.getOrElse(o2.attr))))
+      val r1: TPostResult[Context, IS[Z, Type]] = transformISZ(r0.ctx, o2.typeArgs, transformType _)
+      val r2: TPostResult[Context, TypedAttr] = transformTypedAttr(r1.ctx, o2.attr)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), typeArgs = r1.resultOpt.getOrElse(o2.typeArgs), attr = r2.resultOpt.getOrElse(o2.attr))))
       else
-        TPostResult(r1.ctx, None())
+        TPostResult(r2.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {

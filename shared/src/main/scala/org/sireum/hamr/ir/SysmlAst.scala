@@ -441,6 +441,15 @@ object SysmlAst {
 
 
 object ResolvedInfo {
+  object BuiltIn {
+    @enum object Kind {
+      "AsInstanceOf"
+    }
+  }
+
+  @datatype class BuiltIn(val qname: ISZ[String],
+                          val kind: BuiltIn.Kind.Type) extends ResolvedInfo
+
   @datatype class Package(val name: ISZ[String]) extends ResolvedInfo {
     @strictpure override def qname: ISZ[String] = name
   }
@@ -504,11 +513,11 @@ object ResolvedInfo {
 }
 
 object Type {
-  @datatype class Named(val name: Name, @hidden attr: TypedAttr) extends Type {
+  @datatype class Named(val name: Name, val typeArgs: ISZ[Type], @hidden attr: TypedAttr) extends Type {
 
     @strictpure override def posOpt: Option[Position] = attr.posOpt
     @strictpure override def typedOpt: Option[Typed] = attr.typedOpt
-    @strictpure override def typed(t: Typed): Type.Named = this (name, attr(typedOpt = Some(t)))
+    @strictpure override def typed(t: Typed): Type.Named = this (name, typeArgs, attr(typedOpt = Some(t)))
 
     @pure def isEqual(other: Named): B = {
       (typedOpt, other.typedOpt) match {

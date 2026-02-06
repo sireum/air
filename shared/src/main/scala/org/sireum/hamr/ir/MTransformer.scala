@@ -1337,6 +1337,10 @@ object MTransformer {
 
   val PostResultResolvedAttr: MOption[ResolvedAttr] = MNone()
 
+  val PreResultResolvedInfoBuiltIn: PreResult[ResolvedInfo] = PreResult(T, MNone())
+
+  val PostResultResolvedInfoBuiltIn: MOption[ResolvedInfo] = MNone()
+
   val PreResultResolvedInfoPackage: PreResult[ResolvedInfo] = PreResult(T, MNone())
 
   val PostResultResolvedInfoPackage: MOption[ResolvedInfo] = MNone()
@@ -5633,6 +5637,7 @@ import MTransformer._
 
   def preResolvedInfo(o: ResolvedInfo): PreResult[ResolvedInfo] = {
     o match {
+      case o: ResolvedInfo.BuiltIn => return preResolvedInfoBuiltIn(o)
       case o: ResolvedInfo.Package => return preResolvedInfoPackage(o)
       case o: ResolvedInfo.Enum => return preResolvedInfoEnum(o)
       case o: ResolvedInfo.EnumElement => return preResolvedInfoEnumElement(o)
@@ -5644,6 +5649,10 @@ import MTransformer._
       case o: ResolvedInfo.PortUsage => return preResolvedInfoPortUsage(o)
       case o: ResolvedInfo.ReferenceUsage => return preResolvedInfoReferenceUsage(o)
     }
+  }
+
+  def preResolvedInfoBuiltIn(o: ResolvedInfo.BuiltIn): PreResult[ResolvedInfo] = {
+    return PreResultResolvedInfoBuiltIn
   }
 
   def preResolvedInfoPackage(o: ResolvedInfo.Package): PreResult[ResolvedInfo] = {
@@ -9950,6 +9959,7 @@ import MTransformer._
 
   def postResolvedInfo(o: ResolvedInfo): MOption[ResolvedInfo] = {
     o match {
+      case o: ResolvedInfo.BuiltIn => return postResolvedInfoBuiltIn(o)
       case o: ResolvedInfo.Package => return postResolvedInfoPackage(o)
       case o: ResolvedInfo.Enum => return postResolvedInfoEnum(o)
       case o: ResolvedInfo.EnumElement => return postResolvedInfoEnumElement(o)
@@ -9961,6 +9971,10 @@ import MTransformer._
       case o: ResolvedInfo.PortUsage => return postResolvedInfoPortUsage(o)
       case o: ResolvedInfo.ReferenceUsage => return postResolvedInfoReferenceUsage(o)
     }
+  }
+
+  def postResolvedInfoBuiltIn(o: ResolvedInfo.BuiltIn): MOption[ResolvedInfo] = {
+    return PostResultResolvedInfoBuiltIn
   }
 
   def postResolvedInfoPackage(o: ResolvedInfo.Package): MOption[ResolvedInfo] = {
@@ -20526,6 +20540,11 @@ import MTransformer._
       val o2: ResolvedInfo = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: MOption[ResolvedInfo] = o2 match {
+        case o2: ResolvedInfo.BuiltIn =>
+          if (hasChanged)
+            MSome(o2)
+          else
+            MNone()
         case o2: ResolvedInfo.Package =>
           if (hasChanged)
             MSome(o2)
@@ -20603,9 +20622,10 @@ import MTransformer._
       val rOpt: MOption[Type] = o2 match {
         case o2: Type.Named =>
           val r0: MOption[SysmlAst.Name] = transformSysmlAstName(o2.name)
-          val r1: MOption[TypedAttr] = transformTypedAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(name = r0.getOrElse(o2.name), attr = r1.getOrElse(o2.attr)))
+          val r1: MOption[IS[Z, Type]] = transformISZ(o2.typeArgs, transformType _)
+          val r2: MOption[TypedAttr] = transformTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), typeArgs = r1.getOrElse(o2.typeArgs), attr = r2.getOrElse(o2.attr)))
           else
             MNone()
       }
@@ -21319,9 +21339,10 @@ import MTransformer._
       val o2: Type.Named = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[SysmlAst.Name] = transformSysmlAstName(o2.name)
-      val r1: MOption[TypedAttr] = transformTypedAttr(o2.attr)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(name = r0.getOrElse(o2.name), attr = r1.getOrElse(o2.attr)))
+      val r1: MOption[IS[Z, Type]] = transformISZ(o2.typeArgs, transformType _)
+      val r2: MOption[TypedAttr] = transformTypedAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), typeArgs = r1.getOrElse(o2.typeArgs), attr = r2.getOrElse(o2.attr)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {

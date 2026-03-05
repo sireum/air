@@ -79,6 +79,7 @@ object Util {
     def processH (o: ir.Component, parent: ISZ[String], reporter: Reporter): Unit = {
       o.category match {
         case ir.ComponentCategory.System =>
+        case ir.ComponentCategory.VirtualProcessor =>
         case ir.ComponentCategory.Process =>
         case ir.ComponentCategory.Processor =>
         case ir.ComponentCategory.Thread =>

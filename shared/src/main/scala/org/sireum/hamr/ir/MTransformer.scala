@@ -557,6 +557,26 @@ object MTransformer {
 
   val PostResult_langastAnnotation: MOption[org.sireum.lang.ast.Annotation] = MNone()
 
+  val PreResult_langastRTypeVar: PreResult[org.sireum.lang.ast.RType] = PreResult(T, MNone())
+
+  val PostResult_langastRTypeVar: MOption[org.sireum.lang.ast.RType] = MNone()
+
+  val PreResult_langastRTypeArena: PreResult[org.sireum.lang.ast.RType] = PreResult(T, MNone())
+
+  val PostResult_langastRTypeArena: MOption[org.sireum.lang.ast.RType] = MNone()
+
+  val PreResult_langastRTypePool: PreResult[org.sireum.lang.ast.RType] = PreResult(T, MNone())
+
+  val PostResult_langastRTypePool: MOption[org.sireum.lang.ast.RType] = MNone()
+
+  val PreResult_langastRTypeScope: PreResult[org.sireum.lang.ast.RType] = PreResult(T, MNone())
+
+  val PostResult_langastRTypeScope: MOption[org.sireum.lang.ast.RType] = MNone()
+
+  val PreResult_langastRTypeRaw: PreResult[org.sireum.lang.ast.RType] = PreResult(T, MNone())
+
+  val PostResult_langastRTypeRaw: MOption[org.sireum.lang.ast.RType] = MNone()
+
   val PreResult_langastMethodSig: PreResult[org.sireum.lang.ast.MethodSig] = PreResult(T, MNone())
 
   val PostResult_langastMethodSig: MOption[org.sireum.lang.ast.MethodSig] = MNone()
@@ -2356,6 +2376,36 @@ import MTransformer._
 
   def pre_langastAnnotation(o: org.sireum.lang.ast.Annotation): PreResult[org.sireum.lang.ast.Annotation] = {
     return PreResult_langastAnnotation
+  }
+
+  def pre_langastRType(o: org.sireum.lang.ast.RType): PreResult[org.sireum.lang.ast.RType] = {
+    o match {
+      case o: org.sireum.lang.ast.RType.Var => return pre_langastRTypeVar(o)
+      case o: org.sireum.lang.ast.RType.Arena => return pre_langastRTypeArena(o)
+      case o: org.sireum.lang.ast.RType.Pool => return pre_langastRTypePool(o)
+      case o: org.sireum.lang.ast.RType.Scope => return pre_langastRTypeScope(o)
+      case o: org.sireum.lang.ast.RType.Raw => return pre_langastRTypeRaw(o)
+    }
+  }
+
+  def pre_langastRTypeVar(o: org.sireum.lang.ast.RType.Var): PreResult[org.sireum.lang.ast.RType] = {
+    return PreResult_langastRTypeVar
+  }
+
+  def pre_langastRTypeArena(o: org.sireum.lang.ast.RType.Arena): PreResult[org.sireum.lang.ast.RType] = {
+    return PreResult_langastRTypeArena
+  }
+
+  def pre_langastRTypePool(o: org.sireum.lang.ast.RType.Pool): PreResult[org.sireum.lang.ast.RType] = {
+    return PreResult_langastRTypePool
+  }
+
+  def pre_langastRTypeScope(o: org.sireum.lang.ast.RType.Scope): PreResult[org.sireum.lang.ast.RType] = {
+    return PreResult_langastRTypeScope
+  }
+
+  def pre_langastRTypeRaw(o: org.sireum.lang.ast.RType.Raw): PreResult[org.sireum.lang.ast.RType] = {
+    return PreResult_langastRTypeRaw
   }
 
   def pre_langastMethodSig(o: org.sireum.lang.ast.MethodSig): PreResult[org.sireum.lang.ast.MethodSig] = {
@@ -6680,6 +6730,36 @@ import MTransformer._
     return PostResult_langastAnnotation
   }
 
+  def post_langastRType(o: org.sireum.lang.ast.RType): MOption[org.sireum.lang.ast.RType] = {
+    o match {
+      case o: org.sireum.lang.ast.RType.Var => return post_langastRTypeVar(o)
+      case o: org.sireum.lang.ast.RType.Arena => return post_langastRTypeArena(o)
+      case o: org.sireum.lang.ast.RType.Pool => return post_langastRTypePool(o)
+      case o: org.sireum.lang.ast.RType.Scope => return post_langastRTypeScope(o)
+      case o: org.sireum.lang.ast.RType.Raw => return post_langastRTypeRaw(o)
+    }
+  }
+
+  def post_langastRTypeVar(o: org.sireum.lang.ast.RType.Var): MOption[org.sireum.lang.ast.RType] = {
+    return PostResult_langastRTypeVar
+  }
+
+  def post_langastRTypeArena(o: org.sireum.lang.ast.RType.Arena): MOption[org.sireum.lang.ast.RType] = {
+    return PostResult_langastRTypeArena
+  }
+
+  def post_langastRTypePool(o: org.sireum.lang.ast.RType.Pool): MOption[org.sireum.lang.ast.RType] = {
+    return PostResult_langastRTypePool
+  }
+
+  def post_langastRTypeScope(o: org.sireum.lang.ast.RType.Scope): MOption[org.sireum.lang.ast.RType] = {
+    return PostResult_langastRTypeScope
+  }
+
+  def post_langastRTypeRaw(o: org.sireum.lang.ast.RType.Raw): MOption[org.sireum.lang.ast.RType] = {
+    return PostResult_langastRTypeRaw
+  }
+
   def post_langastMethodSig(o: org.sireum.lang.ast.MethodSig): MOption[org.sireum.lang.ast.MethodSig] = {
     return PostResult_langastMethodSig
   }
@@ -10060,8 +10140,9 @@ import MTransformer._
         case o2: org.sireum.lang.ast.TopUnit.Program =>
           val r0: MOption[org.sireum.lang.ast.Name] = transform_langastName(o2.packageName)
           val r1: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.body)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(packageName = r0.getOrElse(o2.packageName), body = r1.getOrElse(o2.body)))
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(packageName = r0.getOrElse(o2.packageName), body = r1.getOrElse(o2.body), annotations = r2.getOrElse(o2.annotations)))
           else
             MNone()
         case o2: org.sireum.lang.ast.TopUnit.TruthTableUnit =>
@@ -10109,18 +10190,20 @@ import MTransformer._
           val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
           val r1: MOption[Option[org.sireum.lang.ast.Type]] = transformOption(o2.tipeOpt, transform_langastType _)
           val r2: MOption[Option[org.sireum.lang.ast.AssignExp]] = transformOption(o2.initOpt, transform_langastAssignExp _)
-          val r3: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(o2(id = r0.getOrElse(o2.id), tipeOpt = r1.getOrElse(o2.tipeOpt), initOpt = r2.getOrElse(o2.initOpt), attr = r3.getOrElse(o2.attr)))
+          val r3: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r4: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), tipeOpt = r1.getOrElse(o2.tipeOpt), initOpt = r2.getOrElse(o2.initOpt), annotations = r3.getOrElse(o2.annotations), attr = r4.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.VarPattern =>
           val r0: MOption[org.sireum.lang.ast.Pattern] = transform_langastPattern(o2.pattern)
           val r1: MOption[Option[org.sireum.lang.ast.Type]] = transformOption(o2.tipeOpt, transform_langastType _)
           val r2: MOption[org.sireum.lang.ast.AssignExp] = transform_langastAssignExp(o2.init)
-          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(o2(pattern = r0.getOrElse(o2.pattern), tipeOpt = r1.getOrElse(o2.tipeOpt), init = r2.getOrElse(o2.init), attr = r3.getOrElse(o2.attr)))
+          val r3: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r4: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(pattern = r0.getOrElse(o2.pattern), tipeOpt = r1.getOrElse(o2.tipeOpt), init = r2.getOrElse(o2.init), annotations = r3.getOrElse(o2.annotations), attr = r4.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.SpecVar =>
@@ -10189,9 +10272,10 @@ import MTransformer._
         case o2: org.sireum.lang.ast.Stmt.Object =>
           val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
           val r1: MOption[IS[Z, org.sireum.lang.ast.Stmt]] = transformISZ(o2.stmts, transform_langastStmt _)
-          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(id = r0.getOrElse(o2.id), stmts = r1.getOrElse(o2.stmts), attr = r2.getOrElse(o2.attr)))
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), stmts = r1.getOrElse(o2.stmts), annotations = r2.getOrElse(o2.annotations), attr = r3.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Sig =>
@@ -10199,9 +10283,10 @@ import MTransformer._
           val r1: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)
           val r2: MOption[IS[Z, org.sireum.lang.ast.Type.Named]] = transformISZ(o2.parents, transform_langastTypeNamed _)
           val r3: MOption[IS[Z, org.sireum.lang.ast.Stmt]] = transformISZ(o2.stmts, transform_langastStmt _)
-          val r4: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
-            MSome(o2(id = r0.getOrElse(o2.id), typeParams = r1.getOrElse(o2.typeParams), parents = r2.getOrElse(o2.parents), stmts = r3.getOrElse(o2.stmts), attr = r4.getOrElse(o2.attr)))
+          val r4: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r5: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), typeParams = r1.getOrElse(o2.typeParams), parents = r2.getOrElse(o2.parents), stmts = r3.getOrElse(o2.stmts), annotations = r4.getOrElse(o2.annotations), attr = r5.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Adt =>
@@ -10210,9 +10295,10 @@ import MTransformer._
           val r2: MOption[IS[Z, org.sireum.lang.ast.AdtParam]] = transformISZ(o2.params, transform_langastAdtParam _)
           val r3: MOption[IS[Z, org.sireum.lang.ast.Type.Named]] = transformISZ(o2.parents, transform_langastTypeNamed _)
           val r4: MOption[IS[Z, org.sireum.lang.ast.Stmt]] = transformISZ(o2.stmts, transform_langastStmt _)
-          val r5: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
-            MSome(o2(id = r0.getOrElse(o2.id), typeParams = r1.getOrElse(o2.typeParams), params = r2.getOrElse(o2.params), parents = r3.getOrElse(o2.parents), stmts = r4.getOrElse(o2.stmts), attr = r5.getOrElse(o2.attr)))
+          val r5: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r6: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty || r6.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id), typeParams = r1.getOrElse(o2.typeParams), params = r2.getOrElse(o2.params), parents = r3.getOrElse(o2.parents), stmts = r4.getOrElse(o2.stmts), annotations = r5.getOrElse(o2.annotations), attr = r6.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.TypeAlias =>
@@ -10227,9 +10313,10 @@ import MTransformer._
         case o2: org.sireum.lang.ast.Stmt.Assign =>
           val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.lhs)
           val r1: MOption[org.sireum.lang.ast.AssignExp] = transform_langastAssignExp(o2.rhs)
-          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs), attr = r2.getOrElse(o2.attr)))
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(lhs = r0.getOrElse(o2.lhs), rhs = r1.getOrElse(o2.rhs), annotations = r2.getOrElse(o2.annotations), attr = r3.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Block =>
@@ -10283,16 +10370,18 @@ import MTransformer._
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Return =>
           val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.expOpt, transform_langastExp _)
-          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(expOpt = r0.getOrElse(o2.expOpt), attr = r1.getOrElse(o2.attr)))
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(expOpt = r0.getOrElse(o2.expOpt), annotations = r1.getOrElse(o2.annotations), attr = r2.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Expr =>
           val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
-          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), annotations = r1.getOrElse(o2.annotations), attr = r2.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Fact =>
@@ -10509,8 +10598,9 @@ import MTransformer._
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Import.WildcardSelector =>
-          if (hasChanged)
-            MSome(o2)
+          val r0: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(annotations = r0.getOrElse(o2.annotations)))
           else
             MNone()
       }
@@ -10539,8 +10629,9 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.from)
       val r1: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.to)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-        MSome(o2(from = r0.getOrElse(o2.from), to = r1.getOrElse(o2.to)))
+      val r2: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(from = r0.getOrElse(o2.from), to = r1.getOrElse(o2.to), annotations = r2.getOrElse(o2.annotations)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -11179,16 +11270,18 @@ import MTransformer._
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Return =>
           val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.expOpt, transform_langastExp _)
-          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(expOpt = r0.getOrElse(o2.expOpt), attr = r1.getOrElse(o2.attr)))
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(expOpt = r0.getOrElse(o2.expOpt), annotations = r1.getOrElse(o2.annotations), attr = r2.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Stmt.Expr =>
           val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
-          val r1: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), annotations = r1.getOrElse(o2.annotations), attr = r2.getOrElse(o2.attr)))
           else
             MNone()
       }
@@ -11218,8 +11311,9 @@ import MTransformer._
       val r0: MOption[org.sireum.lang.ast.Pattern] = transform_langastPattern(o2.pattern)
       val r1: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.condOpt, transform_langastExp _)
       val r2: MOption[org.sireum.lang.ast.Body] = transform_langastBody(o2.body)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(pattern = r0.getOrElse(o2.pattern), condOpt = r1.getOrElse(o2.condOpt), body = r2.getOrElse(o2.body)))
+      val r3: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(pattern = r0.getOrElse(o2.pattern), condOpt = r1.getOrElse(o2.condOpt), body = r2.getOrElse(o2.body), annotations = r3.getOrElse(o2.annotations)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -11247,18 +11341,20 @@ import MTransformer._
       val rOpt: MOption[org.sireum.lang.ast.EnumGen.Range] = o2 match {
         case o2: org.sireum.lang.ast.EnumGen.Range.Expr =>
           val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
-          val r1: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
-            MSome(o2(exp = r0.getOrElse(o2.exp), attr = r1.getOrElse(o2.attr)))
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r2: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+            MSome(o2(exp = r0.getOrElse(o2.exp), annotations = r1.getOrElse(o2.annotations), attr = r2.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.EnumGen.Range.Step =>
           val r0: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.start)
           val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.end)
           val r2: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.byOpt, transform_langastExp _)
-          val r3: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
-            MSome(o2(start = r0.getOrElse(o2.start), end = r1.getOrElse(o2.end), byOpt = r2.getOrElse(o2.byOpt), attr = r3.getOrElse(o2.attr)))
+          val r3: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r4: MOption[org.sireum.lang.ast.Attr] = transform_langastAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
+            MSome(o2(start = r0.getOrElse(o2.start), end = r1.getOrElse(o2.end), byOpt = r2.getOrElse(o2.byOpt), annotations = r3.getOrElse(o2.annotations), attr = r4.getOrElse(o2.attr)))
           else
             MNone()
       }
@@ -11318,10 +11414,11 @@ import MTransformer._
       val rOpt: MOption[org.sireum.lang.ast.Type] = o2 match {
         case o2: org.sireum.lang.ast.Type.Named =>
           val r0: MOption[org.sireum.lang.ast.Name] = transform_langastName(o2.name)
-          val r1: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.typeArgs, transform_langastType _)
-          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(name = r0.getOrElse(o2.name), typeArgs = r1.getOrElse(o2.typeArgs), attr = r2.getOrElse(o2.attr)))
+          val r1: MOption[Option[org.sireum.lang.ast.RType]] = transformOption(o2.rTypeOpt, transform_langastRType _)
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.typeArgs, transform_langastType _)
+          val r3: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(name = r0.getOrElse(o2.name), rTypeOpt = r1.getOrElse(o2.rTypeOpt), typeArgs = r2.getOrElse(o2.typeArgs), attr = r3.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Type.Fun =>
@@ -11562,21 +11659,23 @@ import MTransformer._
         case o2: org.sireum.lang.ast.Exp.Invoke =>
           val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.receiverOpt, transform_langastExp _)
           val r1: MOption[org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(o2.ident)
-          val r2: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
-          val r3: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.args, transform_langastExp _)
-          val r4: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
-            MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), ident = r1.getOrElse(o2.ident), targs = r2.getOrElse(o2.targs), args = r3.getOrElse(o2.args), attr = r4.getOrElse(o2.attr)))
+          val r2: MOption[IS[Z, org.sireum.lang.ast.RType]] = transformISZ(o2.rTypes, transform_langastRType _)
+          val r3: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
+          val r4: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.args, transform_langastExp _)
+          val r5: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
+            MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), ident = r1.getOrElse(o2.ident), rTypes = r2.getOrElse(o2.rTypes), targs = r3.getOrElse(o2.targs), args = r4.getOrElse(o2.args), attr = r5.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.InvokeNamed =>
           val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.receiverOpt, transform_langastExp _)
           val r1: MOption[org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(o2.ident)
-          val r2: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
-          val r3: MOption[IS[Z, org.sireum.lang.ast.NamedArg]] = transformISZ(o2.args, transform_langastNamedArg _)
-          val r4: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
-            MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), ident = r1.getOrElse(o2.ident), targs = r2.getOrElse(o2.targs), args = r3.getOrElse(o2.args), attr = r4.getOrElse(o2.attr)))
+          val r2: MOption[IS[Z, org.sireum.lang.ast.RType]] = transformISZ(o2.rTypes, transform_langastRType _)
+          val r3: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
+          val r4: MOption[IS[Z, org.sireum.lang.ast.NamedArg]] = transformISZ(o2.args, transform_langastNamedArg _)
+          val r5: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
+            MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), ident = r1.getOrElse(o2.ident), rTypes = r2.getOrElse(o2.rTypes), targs = r3.getOrElse(o2.targs), args = r4.getOrElse(o2.args), attr = r5.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.If =>
@@ -11605,17 +11704,19 @@ import MTransformer._
         case o2: org.sireum.lang.ast.Exp.Fun =>
           val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.Fun.Param]] = transformISZ(o2.params, transform_langastExpFunParam _)
           val r1: MOption[org.sireum.lang.ast.AssignExp] = transform_langastAssignExp(o2.exp)
-          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(params = r0.getOrElse(o2.params), exp = r1.getOrElse(o2.exp), attr = r2.getOrElse(o2.attr)))
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r3: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(params = r0.getOrElse(o2.params), exp = r1.getOrElse(o2.exp), annotations = r2.getOrElse(o2.annotations), attr = r3.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.ForYield =>
           val r0: MOption[IS[Z, org.sireum.lang.ast.EnumGen.For]] = transformISZ(o2.enumGens, transform_langastEnumGenFor _)
           val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
-          val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
-          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-            MSome(o2(enumGens = r0.getOrElse(o2.enumGens), exp = r1.getOrElse(o2.exp), attr = r2.getOrElse(o2.attr)))
+          val r2: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+          val r3: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+            MSome(o2(enumGens = r0.getOrElse(o2.enumGens), exp = r1.getOrElse(o2.exp), annotations = r2.getOrElse(o2.annotations), attr = r3.getOrElse(o2.attr)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Exp.QuantType =>
@@ -12146,6 +12247,61 @@ import MTransformer._
     }
   }
 
+  def transform_langastRType(o: org.sireum.lang.ast.RType): MOption[org.sireum.lang.ast.RType] = {
+    val preR: PreResult[org.sireum.lang.ast.RType] = pre_langastRType(o)
+    val r: MOption[org.sireum.lang.ast.RType] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.RType = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val rOpt: MOption[org.sireum.lang.ast.RType] = o2 match {
+        case o2: org.sireum.lang.ast.RType.Var =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.RType.Arena =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.RType.Pool =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.RType.Scope =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id)))
+          else
+            MNone()
+        case o2: org.sireum.lang.ast.RType.Raw =>
+          val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+          if (hasChanged || r0.nonEmpty)
+            MSome(o2(id = r0.getOrElse(o2.id)))
+          else
+            MNone()
+      }
+      rOpt
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.RType = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.RType] = post_langastRType(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transform_langastMethodSig(o: org.sireum.lang.ast.MethodSig): MOption[org.sireum.lang.ast.MethodSig] = {
     val preR: PreResult[org.sireum.lang.ast.MethodSig] = pre_langastMethodSig(o)
     val r: MOption[org.sireum.lang.ast.MethodSig] = if (preR.continu) {
@@ -12153,11 +12309,12 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
       val r1: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
-      val r2: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)
-      val r3: MOption[IS[Z, org.sireum.lang.ast.Param]] = transformISZ(o2.params, transform_langastParam _)
-      val r4: MOption[org.sireum.lang.ast.Type] = transform_langastType(o2.returnType)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
-        MSome(o2(annotations = r0.getOrElse(o2.annotations), id = r1.getOrElse(o2.id), typeParams = r2.getOrElse(o2.typeParams), params = r3.getOrElse(o2.params), returnType = r4.getOrElse(o2.returnType)))
+      val r2: MOption[IS[Z, org.sireum.lang.ast.RType.Var]] = transformISZ(o2.rTypeParams, transform_langastRTypeVar _)
+      val r3: MOption[IS[Z, org.sireum.lang.ast.TypeParam]] = transformISZ(o2.typeParams, transform_langastTypeParam _)
+      val r4: MOption[IS[Z, org.sireum.lang.ast.Param]] = transformISZ(o2.params, transform_langastParam _)
+      val r5: MOption[org.sireum.lang.ast.Type] = transform_langastType(o2.returnType)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
+        MSome(o2(annotations = r0.getOrElse(o2.annotations), id = r1.getOrElse(o2.id), rTypeParams = r2.getOrElse(o2.rTypeParams), typeParams = r3.getOrElse(o2.typeParams), params = r4.getOrElse(o2.params), returnType = r5.getOrElse(o2.returnType)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -13092,9 +13249,10 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val rOpt: MOption[org.sireum.lang.ast.Typed] = o2 match {
         case o2: org.sireum.lang.ast.Typed.Name =>
-          val r0: MOption[IS[Z, org.sireum.lang.ast.Typed]] = transformISZ(o2.args, transform_langastTyped _)
-          if (hasChanged || r0.nonEmpty)
-            MSome(o2(args = r0.getOrElse(o2.args)))
+          val r0: MOption[Option[org.sireum.lang.ast.RType]] = transformOption(o2.rTypeOpt, transform_langastRType _)
+          val r1: MOption[IS[Z, org.sireum.lang.ast.Typed]] = transformISZ(o2.args, transform_langastTyped _)
+          if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+            MSome(o2(rTypeOpt = r0.getOrElse(o2.rTypeOpt), args = r1.getOrElse(o2.args)))
           else
             MNone()
         case o2: org.sireum.lang.ast.Typed.Tuple =>
@@ -20759,10 +20917,11 @@ import MTransformer._
       val o2: org.sireum.lang.ast.Type.Named = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[org.sireum.lang.ast.Name] = transform_langastName(o2.name)
-      val r1: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.typeArgs, transform_langastType _)
-      val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(name = r0.getOrElse(o2.name), typeArgs = r1.getOrElse(o2.typeArgs), attr = r2.getOrElse(o2.attr)))
+      val r1: MOption[Option[org.sireum.lang.ast.RType]] = transformOption(o2.rTypeOpt, transform_langastRType _)
+      val r2: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.typeArgs, transform_langastType _)
+      val r3: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), rTypeOpt = r1.getOrElse(o2.rTypeOpt), typeArgs = r2.getOrElse(o2.typeArgs), attr = r3.getOrElse(o2.attr)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -20905,11 +21064,12 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.receiverOpt, transform_langastExp _)
       val r1: MOption[org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(o2.ident)
-      val r2: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
-      val r3: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.args, transform_langastExp _)
-      val r4: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
-        MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), ident = r1.getOrElse(o2.ident), targs = r2.getOrElse(o2.targs), args = r3.getOrElse(o2.args), attr = r4.getOrElse(o2.attr)))
+      val r2: MOption[IS[Z, org.sireum.lang.ast.RType]] = transformISZ(o2.rTypes, transform_langastRType _)
+      val r3: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
+      val r4: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.args, transform_langastExp _)
+      val r5: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
+        MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), ident = r1.getOrElse(o2.ident), rTypes = r2.getOrElse(o2.rTypes), targs = r3.getOrElse(o2.targs), args = r4.getOrElse(o2.args), attr = r5.getOrElse(o2.attr)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -20944,11 +21104,12 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[Option[org.sireum.lang.ast.Exp]] = transformOption(o2.receiverOpt, transform_langastExp _)
       val r1: MOption[org.sireum.lang.ast.Exp.Ident] = transform_langastExpIdent(o2.ident)
-      val r2: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
-      val r3: MOption[IS[Z, org.sireum.lang.ast.NamedArg]] = transformISZ(o2.args, transform_langastNamedArg _)
-      val r4: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty)
-        MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), ident = r1.getOrElse(o2.ident), targs = r2.getOrElse(o2.targs), args = r3.getOrElse(o2.args), attr = r4.getOrElse(o2.attr)))
+      val r2: MOption[IS[Z, org.sireum.lang.ast.RType]] = transformISZ(o2.rTypes, transform_langastRType _)
+      val r3: MOption[IS[Z, org.sireum.lang.ast.Type]] = transformISZ(o2.targs, transform_langastType _)
+      val r4: MOption[IS[Z, org.sireum.lang.ast.NamedArg]] = transformISZ(o2.args, transform_langastNamedArg _)
+      val r5: MOption[org.sireum.lang.ast.ResolvedAttr] = transform_langastResolvedAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty || r4.nonEmpty || r5.nonEmpty)
+        MSome(o2(receiverOpt = r0.getOrElse(o2.receiverOpt), ident = r1.getOrElse(o2.ident), rTypes = r2.getOrElse(o2.rTypes), targs = r3.getOrElse(o2.targs), args = r4.getOrElse(o2.args), attr = r5.getOrElse(o2.attr)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -21017,9 +21178,10 @@ import MTransformer._
     val r: MOption[org.sireum.lang.ast.Typed.Name] = if (preR.continu) {
       val o2: org.sireum.lang.ast.Typed.Name = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, org.sireum.lang.ast.Typed]] = transformISZ(o2.args, transform_langastTyped _)
-      if (hasChanged || r0.nonEmpty)
-        MSome(o2(args = r0.getOrElse(o2.args)))
+      val r0: MOption[Option[org.sireum.lang.ast.RType]] = transformOption(o2.rTypeOpt, transform_langastRType _)
+      val r1: MOption[IS[Z, org.sireum.lang.ast.Typed]] = transformISZ(o2.args, transform_langastTyped _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty)
+        MSome(o2(rTypeOpt = r0.getOrElse(o2.rTypeOpt), args = r1.getOrElse(o2.args)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -21054,9 +21216,10 @@ import MTransformer._
       val hasChanged: B = preR.resultOpt.nonEmpty
       val r0: MOption[IS[Z, org.sireum.lang.ast.Exp.Fun.Param]] = transformISZ(o2.params, transform_langastExpFunParam _)
       val r1: MOption[org.sireum.lang.ast.AssignExp] = transform_langastAssignExp(o2.exp)
-      val r2: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(params = r0.getOrElse(o2.params), exp = r1.getOrElse(o2.exp), attr = r2.getOrElse(o2.attr)))
+      val r2: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.annotations, transform_langastAnnotation _)
+      val r3: MOption[org.sireum.lang.ast.TypedAttr] = transform_langastTypedAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty || r3.nonEmpty)
+        MSome(o2(params = r0.getOrElse(o2.params), exp = r1.getOrElse(o2.exp), annotations = r2.getOrElse(o2.annotations), attr = r3.getOrElse(o2.attr)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {
@@ -21142,6 +21305,41 @@ import MTransformer._
      case MSome(result: org.sireum.lang.ast.ResolvedInfo.LocalVar) => MSome[org.sireum.lang.ast.ResolvedInfo.LocalVar](result)
      case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.ResolvedInfo.LocalVar")
      case _ => MNone[org.sireum.lang.ast.ResolvedInfo.LocalVar]()
+    }
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transform_langastRTypeVar(o: org.sireum.lang.ast.RType.Var): MOption[org.sireum.lang.ast.RType.Var] = {
+    val preR: PreResult[org.sireum.lang.ast.RType.Var] = pre_langastRTypeVar(o) match {
+     case PreResult(continu, MSome(r: org.sireum.lang.ast.RType.Var)) => PreResult(continu, MSome[org.sireum.lang.ast.RType.Var](r))
+     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.RType.Var")
+     case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.RType.Var]())
+    }
+    val r: MOption[org.sireum.lang.ast.RType.Var] = if (preR.continu) {
+      val o2: org.sireum.lang.ast.RType.Var = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.id)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(id = r0.getOrElse(o2.id)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: org.sireum.lang.ast.RType.Var = r.getOrElse(o)
+    val postR: MOption[org.sireum.lang.ast.RType.Var] = post_langastRTypeVar(o2) match {
+     case MSome(result: org.sireum.lang.ast.RType.Var) => MSome[org.sireum.lang.ast.RType.Var](result)
+     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.RType.Var")
+     case _ => MNone[org.sireum.lang.ast.RType.Var]()
     }
     if (postR.nonEmpty) {
       return postR

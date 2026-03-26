@@ -2600,7 +2600,8 @@ object JSON {
         ("type", st""""org.sireum.lang.ast.TopUnit.Program""""),
         ("fileUriOpt", printOption(T, o.fileUriOpt, printString _)),
         ("packageName", print_langastName(o.packageName)),
-        ("body", print_langastBody(o.body))
+        ("body", print_langastBody(o.body)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _))
       ))
     }
 
@@ -2705,7 +2706,8 @@ object JSON {
 
     @pure def print_langastStmtImportWildcardSelector(o: org.sireum.lang.ast.Stmt.Import.WildcardSelector): ST = {
       return printObject(ISZ(
-        ("type", st""""org.sireum.lang.ast.Stmt.Import.WildcardSelector"""")
+        ("type", st""""org.sireum.lang.ast.Stmt.Import.WildcardSelector""""),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _))
       ))
     }
 
@@ -2713,7 +2715,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.Stmt.Import.NamedSelector""""),
         ("from", print_langastId(o.from)),
-        ("to", print_langastId(o.to))
+        ("to", print_langastId(o.to)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _))
       ))
     }
 
@@ -2725,6 +2728,7 @@ object JSON {
         ("id", print_langastId(o.id)),
         ("tipeOpt", printOption(F, o.tipeOpt, print_langastType _)),
         ("initOpt", printOption(F, o.initOpt, print_langastAssignExp _)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _)),
         ("attr", print_langastResolvedAttr(o.attr))
       ))
     }
@@ -2737,6 +2741,7 @@ object JSON {
         ("pattern", print_langastPattern(o.pattern)),
         ("tipeOpt", printOption(F, o.tipeOpt, print_langastType _)),
         ("init", print_langastAssignExp(o.init)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _)),
         ("attr", print_langastAttr(o.attr))
       ))
     }
@@ -2834,6 +2839,7 @@ object JSON {
         ("extNameOpt", printOption(T, o.extNameOpt, printString _)),
         ("id", print_langastId(o.id)),
         ("stmts", printISZ(F, o.stmts, print_langastStmt _)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _)),
         ("attr", print_langastAttr(o.attr))
       ))
     }
@@ -2848,6 +2854,7 @@ object JSON {
         ("typeParams", printISZ(F, o.typeParams, print_langastTypeParam _)),
         ("parents", printISZ(F, o.parents, print_langastTypeNamed _)),
         ("stmts", printISZ(F, o.stmts, print_langastStmt _)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _)),
         ("attr", print_langastAttr(o.attr))
       ))
     }
@@ -2863,6 +2870,7 @@ object JSON {
         ("params", printISZ(F, o.params, print_langastAdtParam _)),
         ("parents", printISZ(F, o.parents, print_langastTypeNamed _)),
         ("stmts", printISZ(F, o.stmts, print_langastStmt _)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _)),
         ("attr", print_langastAttr(o.attr))
       ))
     }
@@ -2882,6 +2890,7 @@ object JSON {
         ("type", st""""org.sireum.lang.ast.Stmt.Assign""""),
         ("lhs", print_langastExp(o.lhs)),
         ("rhs", print_langastAssignExp(o.rhs)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _)),
         ("attr", print_langastAttr(o.attr))
       ))
     }
@@ -2950,6 +2959,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.Stmt.Return""""),
         ("expOpt", printOption(F, o.expOpt, print_langastExp _)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _)),
         ("attr", print_langastTypedAttr(o.attr))
       ))
     }
@@ -2958,6 +2968,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.Stmt.Expr""""),
         ("exp", print_langastExp(o.exp)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _)),
         ("attr", print_langastTypedAttr(o.attr))
       ))
     }
@@ -3352,7 +3363,8 @@ object JSON {
         ("type", st""""org.sireum.lang.ast.Case""""),
         ("pattern", print_langastPattern(o.pattern)),
         ("condOpt", printOption(F, o.condOpt, print_langastExp _)),
-        ("body", print_langastBody(o.body))
+        ("body", print_langastBody(o.body)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _))
       ))
     }
 
@@ -3367,6 +3379,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.EnumGen.Range.Expr""""),
         ("exp", print_langastExp(o.exp)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _)),
         ("attr", print_langastAttr(o.attr))
       ))
     }
@@ -3378,6 +3391,7 @@ object JSON {
         ("start", print_langastExp(o.start)),
         ("end", print_langastExp(o.end)),
         ("byOpt", printOption(F, o.byOpt, print_langastExp _)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _)),
         ("attr", print_langastAttr(o.attr))
       ))
     }
@@ -3404,6 +3418,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.Type.Named""""),
         ("name", print_langastName(o.name)),
+        ("rTypeOpt", printOption(F, o.rTypeOpt, print_langastRType _)),
         ("typeArgs", printISZ(F, o.typeArgs, print_langastType _)),
         ("attr", print_langastTypedAttr(o.attr))
       ))
@@ -3724,6 +3739,7 @@ object JSON {
         ("type", st""""org.sireum.lang.ast.Exp.Invoke""""),
         ("receiverOpt", printOption(F, o.receiverOpt, print_langastExp _)),
         ("ident", print_langastExpIdent(o.ident)),
+        ("rTypes", printISZ(F, o.rTypes, print_langastRType _)),
         ("targs", printISZ(F, o.targs, print_langastType _)),
         ("args", printISZ(F, o.args, print_langastExp _)),
         ("attr", print_langastResolvedAttr(o.attr))
@@ -3735,6 +3751,7 @@ object JSON {
         ("type", st""""org.sireum.lang.ast.Exp.InvokeNamed""""),
         ("receiverOpt", printOption(F, o.receiverOpt, print_langastExp _)),
         ("ident", print_langastExpIdent(o.ident)),
+        ("rTypes", printISZ(F, o.rTypes, print_langastRType _)),
         ("targs", printISZ(F, o.targs, print_langastType _)),
         ("args", printISZ(F, o.args, print_langastNamedArg _)),
         ("attr", print_langastResolvedAttr(o.attr))
@@ -3783,6 +3800,7 @@ object JSON {
         ("context", printISZ(T, o.context, printString _)),
         ("params", printISZ(F, o.params, print_langastExpFunParam _)),
         ("exp", print_langastAssignExp(o.exp)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _)),
         ("attr", print_langastTypedAttr(o.attr))
       ))
     }
@@ -3792,6 +3810,7 @@ object JSON {
         ("type", st""""org.sireum.lang.ast.Exp.ForYield""""),
         ("enumGens", printISZ(F, o.enumGens, print_langastEnumGenFor _)),
         ("exp", print_langastExp(o.exp)),
+        ("annotations", printISZ(F, o.annotations, print_langastAnnotation _)),
         ("attr", print_langastTypedAttr(o.attr))
       ))
     }
@@ -4000,12 +4019,73 @@ object JSON {
       ))
     }
 
+    @pure def print_langastRTypeKindType(o: org.sireum.lang.ast.RTypeKind.Type): ST = {
+      val value: String = o match {
+        case org.sireum.lang.ast.RTypeKind.Arena => "Arena"
+        case org.sireum.lang.ast.RTypeKind.Pool => "Pool"
+        case org.sireum.lang.ast.RTypeKind.Scope => "Scope"
+        case org.sireum.lang.ast.RTypeKind.Raw => "Raw"
+      }
+      return printObject(ISZ(
+        ("type", printString("org.sireum.lang.ast.RTypeKind")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def print_langastRType(o: org.sireum.lang.ast.RType): ST = {
+      o match {
+        case o: org.sireum.lang.ast.RType.Var => return print_langastRTypeVar(o)
+        case o: org.sireum.lang.ast.RType.Arena => return print_langastRTypeArena(o)
+        case o: org.sireum.lang.ast.RType.Pool => return print_langastRTypePool(o)
+        case o: org.sireum.lang.ast.RType.Scope => return print_langastRTypeScope(o)
+        case o: org.sireum.lang.ast.RType.Raw => return print_langastRTypeRaw(o)
+      }
+    }
+
+    @pure def print_langastRTypeVar(o: org.sireum.lang.ast.RType.Var): ST = {
+      return printObject(ISZ(
+        ("type", st""""org.sireum.lang.ast.RType.Var""""),
+        ("kind", print_langastRTypeKindType(o.kind)),
+        ("id", print_langastId(o.id))
+      ))
+    }
+
+    @pure def print_langastRTypeArena(o: org.sireum.lang.ast.RType.Arena): ST = {
+      return printObject(ISZ(
+        ("type", st""""org.sireum.lang.ast.RType.Arena""""),
+        ("id", print_langastId(o.id))
+      ))
+    }
+
+    @pure def print_langastRTypePool(o: org.sireum.lang.ast.RType.Pool): ST = {
+      return printObject(ISZ(
+        ("type", st""""org.sireum.lang.ast.RType.Pool""""),
+        ("id", print_langastId(o.id)),
+        ("capacity", printZ(o.capacity))
+      ))
+    }
+
+    @pure def print_langastRTypeScope(o: org.sireum.lang.ast.RType.Scope): ST = {
+      return printObject(ISZ(
+        ("type", st""""org.sireum.lang.ast.RType.Scope""""),
+        ("id", print_langastId(o.id))
+      ))
+    }
+
+    @pure def print_langastRTypeRaw(o: org.sireum.lang.ast.RType.Raw): ST = {
+      return printObject(ISZ(
+        ("type", st""""org.sireum.lang.ast.RType.Raw""""),
+        ("id", print_langastId(o.id))
+      ))
+    }
+
     @pure def print_langastMethodSig(o: org.sireum.lang.ast.MethodSig): ST = {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.MethodSig""""),
         ("purity", print_langastPurityType(o.purity)),
         ("annotations", printISZ(F, o.annotations, print_langastAnnotation _)),
         ("id", print_langastId(o.id)),
+        ("rTypeParams", printISZ(F, o.rTypeParams, print_langastRTypeVar _)),
         ("typeParams", printISZ(F, o.typeParams, print_langastTypeParam _)),
         ("hasParams", printB(o.hasParams)),
         ("params", printISZ(F, o.params, print_langastParam _)),
@@ -4383,6 +4463,7 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""org.sireum.lang.ast.Typed.Name""""),
         ("ids", printISZ(T, o.ids, printString _)),
+        ("rTypeOpt", printOption(F, o.rTypeOpt, print_langastRType _)),
         ("args", printISZ(F, o.args, print_langastTyped _))
       ))
     }
@@ -9189,7 +9270,10 @@ object JSON {
       parser.parseObjectKey("body")
       val body = parse_langastBody()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.TopUnit.Program(fileUriOpt, packageName, body)
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
+      return org.sireum.lang.ast.TopUnit.Program(fileUriOpt, packageName, body, annotations)
     }
 
     def parse_langastTopUnitTruthTableUnit(): org.sireum.lang.ast.TopUnit.TruthTableUnit = {
@@ -9368,7 +9452,10 @@ object JSON {
       if (!typeParsed) {
         parser.parseObjectType("org.sireum.lang.ast.Stmt.Import.WildcardSelector")
       }
-      return org.sireum.lang.ast.Stmt.Import.WildcardSelector()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
+      return org.sireum.lang.ast.Stmt.Import.WildcardSelector(annotations)
     }
 
     def parse_langastStmtImportNamedSelector(): org.sireum.lang.ast.Stmt.Import.NamedSelector = {
@@ -9386,7 +9473,10 @@ object JSON {
       parser.parseObjectKey("to")
       val to = parse_langastId()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Stmt.Import.NamedSelector(from, to)
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
+      return org.sireum.lang.ast.Stmt.Import.NamedSelector(from, to, annotations)
     }
 
     def parse_langastStmtVar(): org.sireum.lang.ast.Stmt.Var = {
@@ -9413,10 +9503,13 @@ object JSON {
       parser.parseObjectKey("initOpt")
       val initOpt = parser.parseOption(parse_langastAssignExp _)
       parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastResolvedAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Stmt.Var(isSpec, isVal, id, tipeOpt, initOpt, attr)
+      return org.sireum.lang.ast.Stmt.Var(isSpec, isVal, id, tipeOpt, initOpt, annotations, attr)
     }
 
     def parse_langastStmtVarPattern(): org.sireum.lang.ast.Stmt.VarPattern = {
@@ -9443,10 +9536,13 @@ object JSON {
       parser.parseObjectKey("init")
       val init = parse_langastAssignExp()
       parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Stmt.VarPattern(isSpec, isVal, pattern, tipeOpt, init, attr)
+      return org.sireum.lang.ast.Stmt.VarPattern(isSpec, isVal, pattern, tipeOpt, init, annotations, attr)
     }
 
     def parse_langastStmtSpecVar(): org.sireum.lang.ast.Stmt.SpecVar = {
@@ -9680,10 +9776,13 @@ object JSON {
       parser.parseObjectKey("stmts")
       val stmts = parser.parseISZ(parse_langastStmt _)
       parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Stmt.Object(isApp, extNameOpt, id, stmts, attr)
+      return org.sireum.lang.ast.Stmt.Object(isApp, extNameOpt, id, stmts, annotations, attr)
     }
 
     def parse_langastStmtSig(): org.sireum.lang.ast.Stmt.Sig = {
@@ -9716,10 +9815,13 @@ object JSON {
       parser.parseObjectKey("stmts")
       val stmts = parser.parseISZ(parse_langastStmt _)
       parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Stmt.Sig(isImmutable, isSealed, isExt, id, typeParams, parents, stmts, attr)
+      return org.sireum.lang.ast.Stmt.Sig(isImmutable, isSealed, isExt, id, typeParams, parents, stmts, annotations, attr)
     }
 
     def parse_langastStmtAdt(): org.sireum.lang.ast.Stmt.Adt = {
@@ -9755,10 +9857,13 @@ object JSON {
       parser.parseObjectKey("stmts")
       val stmts = parser.parseISZ(parse_langastStmt _)
       parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Stmt.Adt(isRoot, isDatatype, isUnclonable, id, typeParams, params, parents, stmts, attr)
+      return org.sireum.lang.ast.Stmt.Adt(isRoot, isDatatype, isUnclonable, id, typeParams, params, parents, stmts, annotations, attr)
     }
 
     def parse_langastStmtTypeAlias(): org.sireum.lang.ast.Stmt.TypeAlias = {
@@ -9800,10 +9905,13 @@ object JSON {
       parser.parseObjectKey("rhs")
       val rhs = parse_langastAssignExp()
       parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Stmt.Assign(lhs, rhs, attr)
+      return org.sireum.lang.ast.Stmt.Assign(lhs, rhs, annotations, attr)
     }
 
     def parse_langastStmtBlock(): org.sireum.lang.ast.Stmt.Block = {
@@ -9962,10 +10070,13 @@ object JSON {
       parser.parseObjectKey("expOpt")
       val expOpt = parser.parseOption(parse_langastExp _)
       parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastTypedAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Stmt.Return(expOpt, attr)
+      return org.sireum.lang.ast.Stmt.Return(expOpt, annotations, attr)
     }
 
     def parse_langastStmtExpr(): org.sireum.lang.ast.Stmt.Expr = {
@@ -9980,10 +10091,13 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parse_langastExp()
       parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastTypedAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Stmt.Expr(exp, attr)
+      return org.sireum.lang.ast.Stmt.Expr(exp, annotations, attr)
     }
 
     def parse_langastStmtExprKindType(): org.sireum.lang.ast.Stmt.Expr.Kind.Type = {
@@ -10799,7 +10913,10 @@ object JSON {
       parser.parseObjectKey("body")
       val body = parse_langastBody()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Case(pattern, condOpt, body)
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
+      return org.sireum.lang.ast.Case(pattern, condOpt, body, annotations)
     }
 
     def parse_langastEnumGenRange(): org.sireum.lang.ast.EnumGen.Range = {
@@ -10823,10 +10940,13 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parse_langastExp()
       parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.EnumGen.Range.Expr(exp, attr)
+      return org.sireum.lang.ast.EnumGen.Range.Expr(exp, annotations, attr)
     }
 
     def parse_langastEnumGenRangeStep(): org.sireum.lang.ast.EnumGen.Range.Step = {
@@ -10850,10 +10970,13 @@ object JSON {
       parser.parseObjectKey("byOpt")
       val byOpt = parser.parseOption(parse_langastExp _)
       parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.EnumGen.Range.Step(isInclusive, start, end, byOpt, attr)
+      return org.sireum.lang.ast.EnumGen.Range.Step(isInclusive, start, end, byOpt, annotations, attr)
     }
 
     def parse_langastEnumGenFor(): org.sireum.lang.ast.EnumGen.For = {
@@ -10902,13 +11025,16 @@ object JSON {
       parser.parseObjectKey("name")
       val name = parse_langastName()
       parser.parseObjectNext()
+      parser.parseObjectKey("rTypeOpt")
+      val rTypeOpt = parser.parseOption(parse_langastRType _)
+      parser.parseObjectNext()
       parser.parseObjectKey("typeArgs")
       val typeArgs = parser.parseISZ(parse_langastType _)
       parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastTypedAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Type.Named(name, typeArgs, attr)
+      return org.sireum.lang.ast.Type.Named(name, rTypeOpt, typeArgs, attr)
     }
 
     def parse_langastTypeFun(): org.sireum.lang.ast.Type.Fun = {
@@ -11540,6 +11666,9 @@ object JSON {
       parser.parseObjectKey("ident")
       val ident = parse_langastExpIdent()
       parser.parseObjectNext()
+      parser.parseObjectKey("rTypes")
+      val rTypes = parser.parseISZ(parse_langastRType _)
+      parser.parseObjectNext()
       parser.parseObjectKey("targs")
       val targs = parser.parseISZ(parse_langastType _)
       parser.parseObjectNext()
@@ -11549,7 +11678,7 @@ object JSON {
       parser.parseObjectKey("attr")
       val attr = parse_langastResolvedAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Exp.Invoke(receiverOpt, ident, targs, args, attr)
+      return org.sireum.lang.ast.Exp.Invoke(receiverOpt, ident, rTypes, targs, args, attr)
     }
 
     def parse_langastExpInvokeNamed(): org.sireum.lang.ast.Exp.InvokeNamed = {
@@ -11567,6 +11696,9 @@ object JSON {
       parser.parseObjectKey("ident")
       val ident = parse_langastExpIdent()
       parser.parseObjectNext()
+      parser.parseObjectKey("rTypes")
+      val rTypes = parser.parseISZ(parse_langastRType _)
+      parser.parseObjectNext()
       parser.parseObjectKey("targs")
       val targs = parser.parseISZ(parse_langastType _)
       parser.parseObjectNext()
@@ -11576,7 +11708,7 @@ object JSON {
       parser.parseObjectKey("attr")
       val attr = parse_langastResolvedAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Exp.InvokeNamed(receiverOpt, ident, targs, args, attr)
+      return org.sireum.lang.ast.Exp.InvokeNamed(receiverOpt, ident, rTypes, targs, args, attr)
     }
 
     def parse_langastExpIf(): org.sireum.lang.ast.Exp.If = {
@@ -11681,10 +11813,13 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parse_langastAssignExp()
       parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastTypedAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Exp.Fun(context, params, exp, attr)
+      return org.sireum.lang.ast.Exp.Fun(context, params, exp, annotations, attr)
     }
 
     def parse_langastExpForYield(): org.sireum.lang.ast.Exp.ForYield = {
@@ -11702,10 +11837,13 @@ object JSON {
       parser.parseObjectKey("exp")
       val exp = parse_langastExp()
       parser.parseObjectNext()
+      parser.parseObjectKey("annotations")
+      val annotations = parser.parseISZ(parse_langastAnnotation _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parse_langastTypedAttr()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Exp.ForYield(enumGens, exp, attr)
+      return org.sireum.lang.ast.Exp.ForYield(enumGens, exp, annotations, attr)
     }
 
     def parse_langastExpQuant(): org.sireum.lang.ast.Exp.Quant = {
@@ -12174,6 +12312,120 @@ object JSON {
       return org.sireum.lang.ast.Annotation(name, args)
     }
 
+    def parse_langastRTypeKindType(): org.sireum.lang.ast.RTypeKind.Type = {
+      val r = parse_langastRTypeKindT(F)
+      return r
+    }
+
+    def parse_langastRTypeKindT(typeParsed: B): org.sireum.lang.ast.RTypeKind.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("org.sireum.lang.ast.RTypeKind")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      org.sireum.lang.ast.RTypeKind.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for org.sireum.lang.ast.RTypeKind.")
+          return org.sireum.lang.ast.RTypeKind.byOrdinal(0).get
+      }
+    }
+
+    def parse_langastRType(): org.sireum.lang.ast.RType = {
+      val t = parser.parseObjectTypes(ISZ("org.sireum.lang.ast.RType.Var", "org.sireum.lang.ast.RType.Arena", "org.sireum.lang.ast.RType.Pool", "org.sireum.lang.ast.RType.Scope", "org.sireum.lang.ast.RType.Raw"))
+      t.native match {
+        case "org.sireum.lang.ast.RType.Var" => val r = parse_langastRTypeVarT(T); return r
+        case "org.sireum.lang.ast.RType.Arena" => val r = parse_langastRTypeArenaT(T); return r
+        case "org.sireum.lang.ast.RType.Pool" => val r = parse_langastRTypePoolT(T); return r
+        case "org.sireum.lang.ast.RType.Scope" => val r = parse_langastRTypeScopeT(T); return r
+        case "org.sireum.lang.ast.RType.Raw" => val r = parse_langastRTypeRawT(T); return r
+        case _ => val r = parse_langastRTypeRawT(T); return r
+      }
+    }
+
+    def parse_langastRTypeVar(): org.sireum.lang.ast.RType.Var = {
+      val r = parse_langastRTypeVarT(F)
+      return r
+    }
+
+    def parse_langastRTypeVarT(typeParsed: B): org.sireum.lang.ast.RType.Var = {
+      if (!typeParsed) {
+        parser.parseObjectType("org.sireum.lang.ast.RType.Var")
+      }
+      parser.parseObjectKey("kind")
+      val kind = parse_langastRTypeKindType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("id")
+      val id = parse_langastId()
+      parser.parseObjectNext()
+      return org.sireum.lang.ast.RType.Var(kind, id)
+    }
+
+    def parse_langastRTypeArena(): org.sireum.lang.ast.RType.Arena = {
+      val r = parse_langastRTypeArenaT(F)
+      return r
+    }
+
+    def parse_langastRTypeArenaT(typeParsed: B): org.sireum.lang.ast.RType.Arena = {
+      if (!typeParsed) {
+        parser.parseObjectType("org.sireum.lang.ast.RType.Arena")
+      }
+      parser.parseObjectKey("id")
+      val id = parse_langastId()
+      parser.parseObjectNext()
+      return org.sireum.lang.ast.RType.Arena(id)
+    }
+
+    def parse_langastRTypePool(): org.sireum.lang.ast.RType.Pool = {
+      val r = parse_langastRTypePoolT(F)
+      return r
+    }
+
+    def parse_langastRTypePoolT(typeParsed: B): org.sireum.lang.ast.RType.Pool = {
+      if (!typeParsed) {
+        parser.parseObjectType("org.sireum.lang.ast.RType.Pool")
+      }
+      parser.parseObjectKey("id")
+      val id = parse_langastId()
+      parser.parseObjectNext()
+      parser.parseObjectKey("capacity")
+      val capacity = parser.parseZ()
+      parser.parseObjectNext()
+      return org.sireum.lang.ast.RType.Pool(id, capacity)
+    }
+
+    def parse_langastRTypeScope(): org.sireum.lang.ast.RType.Scope = {
+      val r = parse_langastRTypeScopeT(F)
+      return r
+    }
+
+    def parse_langastRTypeScopeT(typeParsed: B): org.sireum.lang.ast.RType.Scope = {
+      if (!typeParsed) {
+        parser.parseObjectType("org.sireum.lang.ast.RType.Scope")
+      }
+      parser.parseObjectKey("id")
+      val id = parse_langastId()
+      parser.parseObjectNext()
+      return org.sireum.lang.ast.RType.Scope(id)
+    }
+
+    def parse_langastRTypeRaw(): org.sireum.lang.ast.RType.Raw = {
+      val r = parse_langastRTypeRawT(F)
+      return r
+    }
+
+    def parse_langastRTypeRawT(typeParsed: B): org.sireum.lang.ast.RType.Raw = {
+      if (!typeParsed) {
+        parser.parseObjectType("org.sireum.lang.ast.RType.Raw")
+      }
+      parser.parseObjectKey("id")
+      val id = parse_langastId()
+      parser.parseObjectNext()
+      return org.sireum.lang.ast.RType.Raw(id)
+    }
+
     def parse_langastMethodSig(): org.sireum.lang.ast.MethodSig = {
       val r = parse_langastMethodSigT(F)
       return r
@@ -12192,6 +12444,9 @@ object JSON {
       parser.parseObjectKey("id")
       val id = parse_langastId()
       parser.parseObjectNext()
+      parser.parseObjectKey("rTypeParams")
+      val rTypeParams = parser.parseISZ(parse_langastRTypeVar _)
+      parser.parseObjectNext()
       parser.parseObjectKey("typeParams")
       val typeParams = parser.parseISZ(parse_langastTypeParam _)
       parser.parseObjectNext()
@@ -12204,7 +12459,7 @@ object JSON {
       parser.parseObjectKey("returnType")
       val returnType = parse_langastType()
       parser.parseObjectNext()
-      return org.sireum.lang.ast.MethodSig(purity, annotations, id, typeParams, hasParams, params, returnType)
+      return org.sireum.lang.ast.MethodSig(purity, annotations, id, rTypeParams, typeParams, hasParams, params, returnType)
     }
 
     def parse_langastParam(): org.sireum.lang.ast.Param = {
@@ -12836,10 +13091,13 @@ object JSON {
       parser.parseObjectKey("ids")
       val ids = parser.parseISZ(parser.parseString _)
       parser.parseObjectNext()
+      parser.parseObjectKey("rTypeOpt")
+      val rTypeOpt = parser.parseOption(parse_langastRType _)
+      parser.parseObjectNext()
       parser.parseObjectKey("args")
       val args = parser.parseISZ(parse_langastTyped _)
       parser.parseObjectNext()
-      return org.sireum.lang.ast.Typed.Name(ids, args)
+      return org.sireum.lang.ast.Typed.Name(ids, rTypeOpt, args)
     }
 
     def parse_langastTypedTuple(): org.sireum.lang.ast.Typed.Tuple = {
@@ -19636,6 +19894,114 @@ object JSON {
       return r
     }
     val r = to(s, f_langastAnnotation _)
+    return r
+  }
+
+  def from_langastRType(o: org.sireum.lang.ast.RType, isCompact: B): String = {
+    val st = Printer.print_langastRType(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def to_langastRType(s: String): Either[org.sireum.lang.ast.RType, Json.ErrorMsg] = {
+    def f_langastRType(parser: Parser): org.sireum.lang.ast.RType = {
+      val r = parser.parse_langastRType()
+      return r
+    }
+    val r = to(s, f_langastRType _)
+    return r
+  }
+
+  def from_langastRTypeVar(o: org.sireum.lang.ast.RType.Var, isCompact: B): String = {
+    val st = Printer.print_langastRTypeVar(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def to_langastRTypeVar(s: String): Either[org.sireum.lang.ast.RType.Var, Json.ErrorMsg] = {
+    def f_langastRTypeVar(parser: Parser): org.sireum.lang.ast.RType.Var = {
+      val r = parser.parse_langastRTypeVar()
+      return r
+    }
+    val r = to(s, f_langastRTypeVar _)
+    return r
+  }
+
+  def from_langastRTypeArena(o: org.sireum.lang.ast.RType.Arena, isCompact: B): String = {
+    val st = Printer.print_langastRTypeArena(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def to_langastRTypeArena(s: String): Either[org.sireum.lang.ast.RType.Arena, Json.ErrorMsg] = {
+    def f_langastRTypeArena(parser: Parser): org.sireum.lang.ast.RType.Arena = {
+      val r = parser.parse_langastRTypeArena()
+      return r
+    }
+    val r = to(s, f_langastRTypeArena _)
+    return r
+  }
+
+  def from_langastRTypePool(o: org.sireum.lang.ast.RType.Pool, isCompact: B): String = {
+    val st = Printer.print_langastRTypePool(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def to_langastRTypePool(s: String): Either[org.sireum.lang.ast.RType.Pool, Json.ErrorMsg] = {
+    def f_langastRTypePool(parser: Parser): org.sireum.lang.ast.RType.Pool = {
+      val r = parser.parse_langastRTypePool()
+      return r
+    }
+    val r = to(s, f_langastRTypePool _)
+    return r
+  }
+
+  def from_langastRTypeScope(o: org.sireum.lang.ast.RType.Scope, isCompact: B): String = {
+    val st = Printer.print_langastRTypeScope(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def to_langastRTypeScope(s: String): Either[org.sireum.lang.ast.RType.Scope, Json.ErrorMsg] = {
+    def f_langastRTypeScope(parser: Parser): org.sireum.lang.ast.RType.Scope = {
+      val r = parser.parse_langastRTypeScope()
+      return r
+    }
+    val r = to(s, f_langastRTypeScope _)
+    return r
+  }
+
+  def from_langastRTypeRaw(o: org.sireum.lang.ast.RType.Raw, isCompact: B): String = {
+    val st = Printer.print_langastRTypeRaw(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def to_langastRTypeRaw(s: String): Either[org.sireum.lang.ast.RType.Raw, Json.ErrorMsg] = {
+    def f_langastRTypeRaw(parser: Parser): org.sireum.lang.ast.RType.Raw = {
+      val r = parser.parse_langastRTypeRaw()
+      return r
+    }
+    val r = to(s, f_langastRTypeRaw _)
     return r
   }
 

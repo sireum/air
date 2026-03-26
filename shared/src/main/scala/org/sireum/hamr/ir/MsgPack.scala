@@ -3882,8 +3882,9 @@ object MsgPack {
 
     def write_langastAnnotation(o: org.sireum.lang.ast.Annotation): Unit = {
       writer.writeZ(Constants._langastAnnotation)
-      writer.writeISZ(o.name, writer.writeString _)
-      writer.writeISZ(o.args, write_langastLit _)
+      write_langastId(o.name)
+      writer.writeISZ(o.args, write_langastExp _)
+      writer.writeISZ(o.nested, write_langastAnnotation _)
     }
 
     def write_langastRTypeKindType(o: org.sireum.lang.ast.RTypeKind.Type): Unit = {
@@ -3995,16 +3996,19 @@ object MsgPack {
     def write_langastResolvedInfoBuiltIn(o: org.sireum.lang.ast.ResolvedInfo.BuiltIn): Unit = {
       writer.writeZ(Constants._langastResolvedInfoBuiltIn)
       write_langastResolvedInfoBuiltInKindType(o.kind)
+      writer.writeOption(o.defPosOpt, writer.writePosition _)
     }
 
     def write_langastResolvedInfoPackage(o: org.sireum.lang.ast.ResolvedInfo.Package): Unit = {
       writer.writeZ(Constants._langastResolvedInfoPackage)
       writer.writeISZ(o.name, writer.writeString _)
+      writer.writeOption(o.defPosOpt, writer.writePosition _)
     }
 
     def write_langastResolvedInfoEnum(o: org.sireum.lang.ast.ResolvedInfo.Enum): Unit = {
       writer.writeZ(Constants._langastResolvedInfoEnum)
       writer.writeISZ(o.name, writer.writeString _)
+      writer.writeOption(o.defPosOpt, writer.writePosition _)
     }
 
     def write_langastResolvedInfoEnumElement(o: org.sireum.lang.ast.ResolvedInfo.EnumElement): Unit = {
@@ -4012,11 +4016,13 @@ object MsgPack {
       writer.writeISZ(o.owner, writer.writeString _)
       writer.writeString(o.name)
       writer.writeZ(o.ordinal)
+      writer.writeOption(o.defPosOpt, writer.writePosition _)
     }
 
     def write_langastResolvedInfoObject(o: org.sireum.lang.ast.ResolvedInfo.Object): Unit = {
       writer.writeZ(Constants._langastResolvedInfoObject)
       writer.writeISZ(o.name, writer.writeString _)
+      writer.writeOption(o.defPosOpt, writer.writePosition _)
     }
 
     def write_langastResolvedInfoVar(o: org.sireum.lang.ast.ResolvedInfo.Var): Unit = {
@@ -4026,6 +4032,7 @@ object MsgPack {
       writer.writeB(o.isVal)
       writer.writeISZ(o.owner, writer.writeString _)
       writer.writeString(o.id)
+      writer.writeOption(o.defPosOpt, writer.writePosition _)
     }
 
     def write_langastResolvedInfoMethod(o: org.sireum.lang.ast.ResolvedInfo.Method): Unit = {
@@ -4039,17 +4046,20 @@ object MsgPack {
       writer.writeOption(o.tpeOpt, write_langastTypedFun _)
       writer.writeISZ(o.reads, write_langastResolvedInfo _)
       writer.writeISZ(o.writes, write_langastResolvedInfo _)
+      writer.writeOption(o.defPosOpt, writer.writePosition _)
     }
 
     def write_langastResolvedInfoMethods(o: org.sireum.lang.ast.ResolvedInfo.Methods): Unit = {
       writer.writeZ(Constants._langastResolvedInfoMethods)
       writer.writeISZ(o.methods, write_langastResolvedInfoMethod _)
+      writer.writeOption(o.defPosOpt, writer.writePosition _)
     }
 
     def write_langastResolvedInfoTuple(o: org.sireum.lang.ast.ResolvedInfo.Tuple): Unit = {
       writer.writeZ(Constants._langastResolvedInfoTuple)
       writer.writeZ(o.size)
       writer.writeZ(o.index)
+      writer.writeOption(o.defPosOpt, writer.writePosition _)
     }
 
     def write_langastResolvedInfoLocalVarScopeType(o: org.sireum.lang.ast.ResolvedInfo.LocalVar.Scope.Type): Unit = {
@@ -4063,16 +4073,19 @@ object MsgPack {
       writer.writeB(o.isSpec)
       writer.writeB(o.isVal)
       writer.writeString(o.id)
+      writer.writeOption(o.defPosOpt, writer.writePosition _)
     }
 
     def write_langastResolvedInfoFact(o: org.sireum.lang.ast.ResolvedInfo.Fact): Unit = {
       writer.writeZ(Constants._langastResolvedInfoFact)
       writer.writeISZ(o.name, writer.writeString _)
+      writer.writeOption(o.defPosOpt, writer.writePosition _)
     }
 
     def write_langastResolvedInfoTheorem(o: org.sireum.lang.ast.ResolvedInfo.Theorem): Unit = {
       writer.writeZ(Constants._langastResolvedInfoTheorem)
       writer.writeISZ(o.name, writer.writeString _)
+      writer.writeOption(o.defPosOpt, writer.writePosition _)
     }
 
     def write_langastResolvedInfoInv(o: org.sireum.lang.ast.ResolvedInfo.Inv): Unit = {
@@ -4080,6 +4093,7 @@ object MsgPack {
       writer.writeB(o.isInObject)
       writer.writeISZ(o.owner, writer.writeString _)
       writer.writeString(o.id)
+      writer.writeOption(o.defPosOpt, writer.writePosition _)
     }
 
     def write_langastTruthTableRow(o: org.sireum.lang.ast.TruthTable.Row): Unit = {
@@ -10070,9 +10084,10 @@ object MsgPack {
       if (!typeParsed) {
         reader.expectZ(Constants._langastAnnotation)
       }
-      val name = reader.readISZ(reader.readString _)
-      val args = reader.readISZ(read_langastLit _)
-      return org.sireum.lang.ast.Annotation(name, args)
+      val name = read_langastId()
+      val args = reader.readISZ(read_langastExp _)
+      val nested = reader.readISZ(read_langastAnnotation _)
+      return org.sireum.lang.ast.Annotation(name, args, nested)
     }
 
     def read_langastRTypeKindType(): org.sireum.lang.ast.RTypeKind.Type = {
@@ -10293,7 +10308,8 @@ object MsgPack {
         reader.expectZ(Constants._langastResolvedInfoBuiltIn)
       }
       val kind = read_langastResolvedInfoBuiltInKindType()
-      return org.sireum.lang.ast.ResolvedInfo.BuiltIn(kind)
+      val defPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.ResolvedInfo.BuiltIn(kind, defPosOpt)
     }
 
     def read_langastResolvedInfoPackage(): org.sireum.lang.ast.ResolvedInfo.Package = {
@@ -10306,7 +10322,8 @@ object MsgPack {
         reader.expectZ(Constants._langastResolvedInfoPackage)
       }
       val name = reader.readISZ(reader.readString _)
-      return org.sireum.lang.ast.ResolvedInfo.Package(name)
+      val defPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.ResolvedInfo.Package(name, defPosOpt)
     }
 
     def read_langastResolvedInfoEnum(): org.sireum.lang.ast.ResolvedInfo.Enum = {
@@ -10319,7 +10336,8 @@ object MsgPack {
         reader.expectZ(Constants._langastResolvedInfoEnum)
       }
       val name = reader.readISZ(reader.readString _)
-      return org.sireum.lang.ast.ResolvedInfo.Enum(name)
+      val defPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.ResolvedInfo.Enum(name, defPosOpt)
     }
 
     def read_langastResolvedInfoEnumElement(): org.sireum.lang.ast.ResolvedInfo.EnumElement = {
@@ -10334,7 +10352,8 @@ object MsgPack {
       val owner = reader.readISZ(reader.readString _)
       val name = reader.readString()
       val ordinal = reader.readZ()
-      return org.sireum.lang.ast.ResolvedInfo.EnumElement(owner, name, ordinal)
+      val defPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.ResolvedInfo.EnumElement(owner, name, ordinal, defPosOpt)
     }
 
     def read_langastResolvedInfoObject(): org.sireum.lang.ast.ResolvedInfo.Object = {
@@ -10347,7 +10366,8 @@ object MsgPack {
         reader.expectZ(Constants._langastResolvedInfoObject)
       }
       val name = reader.readISZ(reader.readString _)
-      return org.sireum.lang.ast.ResolvedInfo.Object(name)
+      val defPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.ResolvedInfo.Object(name, defPosOpt)
     }
 
     def read_langastResolvedInfoVar(): org.sireum.lang.ast.ResolvedInfo.Var = {
@@ -10364,7 +10384,8 @@ object MsgPack {
       val isVal = reader.readB()
       val owner = reader.readISZ(reader.readString _)
       val id = reader.readString()
-      return org.sireum.lang.ast.ResolvedInfo.Var(isInObject, isSpec, isVal, owner, id)
+      val defPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.ResolvedInfo.Var(isInObject, isSpec, isVal, owner, id, defPosOpt)
     }
 
     def read_langastResolvedInfoMethod(): org.sireum.lang.ast.ResolvedInfo.Method = {
@@ -10385,7 +10406,8 @@ object MsgPack {
       val tpeOpt = reader.readOption(read_langastTypedFun _)
       val reads = reader.readISZ(read_langastResolvedInfo _)
       val writes = reader.readISZ(read_langastResolvedInfo _)
-      return org.sireum.lang.ast.ResolvedInfo.Method(isInObject, mode, typeParams, owner, id, paramNames, tpeOpt, reads, writes)
+      val defPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.ResolvedInfo.Method(isInObject, mode, typeParams, owner, id, paramNames, tpeOpt, reads, writes, defPosOpt)
     }
 
     def read_langastResolvedInfoMethods(): org.sireum.lang.ast.ResolvedInfo.Methods = {
@@ -10398,7 +10420,8 @@ object MsgPack {
         reader.expectZ(Constants._langastResolvedInfoMethods)
       }
       val methods = reader.readISZ(read_langastResolvedInfoMethod _)
-      return org.sireum.lang.ast.ResolvedInfo.Methods(methods)
+      val defPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.ResolvedInfo.Methods(methods, defPosOpt)
     }
 
     def read_langastResolvedInfoTuple(): org.sireum.lang.ast.ResolvedInfo.Tuple = {
@@ -10412,7 +10435,8 @@ object MsgPack {
       }
       val size = reader.readZ()
       val index = reader.readZ()
-      return org.sireum.lang.ast.ResolvedInfo.Tuple(size, index)
+      val defPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.ResolvedInfo.Tuple(size, index, defPosOpt)
     }
 
     def read_langastResolvedInfoLocalVarScopeType(): org.sireum.lang.ast.ResolvedInfo.LocalVar.Scope.Type = {
@@ -10434,7 +10458,8 @@ object MsgPack {
       val isSpec = reader.readB()
       val isVal = reader.readB()
       val id = reader.readString()
-      return org.sireum.lang.ast.ResolvedInfo.LocalVar(context, scope, isSpec, isVal, id)
+      val defPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.ResolvedInfo.LocalVar(context, scope, isSpec, isVal, id, defPosOpt)
     }
 
     def read_langastResolvedInfoFact(): org.sireum.lang.ast.ResolvedInfo.Fact = {
@@ -10447,7 +10472,8 @@ object MsgPack {
         reader.expectZ(Constants._langastResolvedInfoFact)
       }
       val name = reader.readISZ(reader.readString _)
-      return org.sireum.lang.ast.ResolvedInfo.Fact(name)
+      val defPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.ResolvedInfo.Fact(name, defPosOpt)
     }
 
     def read_langastResolvedInfoTheorem(): org.sireum.lang.ast.ResolvedInfo.Theorem = {
@@ -10460,7 +10486,8 @@ object MsgPack {
         reader.expectZ(Constants._langastResolvedInfoTheorem)
       }
       val name = reader.readISZ(reader.readString _)
-      return org.sireum.lang.ast.ResolvedInfo.Theorem(name)
+      val defPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.ResolvedInfo.Theorem(name, defPosOpt)
     }
 
     def read_langastResolvedInfoInv(): org.sireum.lang.ast.ResolvedInfo.Inv = {
@@ -10475,7 +10502,8 @@ object MsgPack {
       val isInObject = reader.readB()
       val owner = reader.readISZ(reader.readString _)
       val id = reader.readString()
-      return org.sireum.lang.ast.ResolvedInfo.Inv(isInObject, owner, id)
+      val defPosOpt = reader.readOption(reader.readPosition _)
+      return org.sireum.lang.ast.ResolvedInfo.Inv(isInObject, owner, id, defPosOpt)
     }
 
     def read_langastTruthTableRow(): org.sireum.lang.ast.TruthTable.Row = {

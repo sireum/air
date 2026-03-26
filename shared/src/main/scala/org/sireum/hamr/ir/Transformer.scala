@@ -10895,11 +10895,13 @@ import Transformer._
     val r: TPostResult[Context, org.sireum.lang.ast.Annotation] = if (preR.continu) {
       val o2: org.sireum.lang.ast.Annotation = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: TPostResult[Context, IS[Z, org.sireum.lang.ast.Lit]] = transformISZ(preR.ctx, o2.args, transform_langastLit _)
-      if (hasChanged || r0.resultOpt.nonEmpty)
-        TPostResult(r0.ctx, Some(o2(args = r0.resultOpt.getOrElse(o2.args))))
+      val r0: TPostResult[Context, org.sireum.lang.ast.Id] = transform_langastId(preR.ctx, o2.name)
+      val r1: TPostResult[Context, IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(r0.ctx, o2.args, transform_langastExp _)
+      val r2: TPostResult[Context, IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(r1.ctx, o2.nested, transform_langastAnnotation _)
+      if (hasChanged || r0.resultOpt.nonEmpty || r1.resultOpt.nonEmpty || r2.resultOpt.nonEmpty)
+        TPostResult(r2.ctx, Some(o2(name = r0.resultOpt.getOrElse(o2.name), args = r1.resultOpt.getOrElse(o2.args), nested = r2.resultOpt.getOrElse(o2.nested))))
       else
-        TPostResult(r0.ctx, None())
+        TPostResult(r2.ctx, None())
     } else if (preR.resultOpt.nonEmpty) {
       TPostResult(preR.ctx, Some(preR.resultOpt.getOrElse(o)))
     } else {

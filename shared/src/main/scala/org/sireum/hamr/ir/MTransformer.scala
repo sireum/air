@@ -12225,9 +12225,11 @@ import MTransformer._
     val r: MOption[org.sireum.lang.ast.Annotation] = if (preR.continu) {
       val o2: org.sireum.lang.ast.Annotation = preR.resultOpt.getOrElse(o)
       val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[IS[Z, org.sireum.lang.ast.Lit]] = transformISZ(o2.args, transform_langastLit _)
-      if (hasChanged || r0.nonEmpty)
-        MSome(o2(args = r0.getOrElse(o2.args)))
+      val r0: MOption[org.sireum.lang.ast.Id] = transform_langastId(o2.name)
+      val r1: MOption[IS[Z, org.sireum.lang.ast.Exp]] = transformISZ(o2.args, transform_langastExp _)
+      val r2: MOption[IS[Z, org.sireum.lang.ast.Annotation]] = transformISZ(o2.nested, transform_langastAnnotation _)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(name = r0.getOrElse(o2.name), args = r1.getOrElse(o2.args), nested = r2.getOrElse(o2.nested)))
       else
         MNone()
     } else if (preR.resultOpt.nonEmpty) {

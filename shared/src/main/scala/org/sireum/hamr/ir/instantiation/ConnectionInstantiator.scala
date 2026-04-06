@@ -30,6 +30,39 @@ object ConnectionInstantiator {
       segments = segments ++ buildSegments(component, ConnectionSegments(component, ISZ(), ISZ()), symbolTable, reporter)
     }
 
+    // Validate hierarchical direction for Out-Out and In-In connection segments
+    var validatedConns: Set[ISZ[String]] = Set.empty
+    for (seg <- segments) {
+      for (connCtx <- seg.segments) {
+        val conn = connCtx._1
+        if (!validatedConns.contains(conn.name.name)) {
+          validatedConns = validatedConns + conn.name.name
+          val srcComponent = symbolTable.componentMap.get(conn.src(0).component.name).get
+          val dstComponent = symbolTable.componentMap.get(conn.dst(0).component.name).get
+          val srcDir = Util.getDirection(symbolTable.featureMap.get(conn.src(0).feature.get.name).get)
+          val dstDir = Util.getDirection(symbolTable.featureMap.get(conn.dst(0).feature.get.name).get)
+          val srcName = srcComponent.identifier.name(srcComponent.identifier.name.lastIndex)
+          val dstName = dstComponent.identifier.name(dstComponent.identifier.name.lastIndex)
+          if (srcDir == ir.Direction.Out && dstDir == ir.Direction.Out && !Util.isSubcomponent(dstComponent, srcComponent)) {
+            // Propagating output upward through hierarchy: src must be a direct subcomponent of dst
+            reporter.error(conn.name.pos, toolName,
+              s"Out-to-Out connection requires source component $srcName to be a direct subcomponent of destination component $dstName")
+          } else if (srcDir == ir.Direction.In && dstDir == ir.Direction.In && !Util.isSubcomponent(srcComponent, dstComponent)) {
+            // Routing input downward through hierarchy: dst must be a direct subcomponent of src
+            reporter.error(conn.name.pos, toolName,
+              s"In-to-In connection requires destination component $dstName to be a direct subcomponent of source component $srcName")
+          } else if (srcDir == ir.Direction.In && dstDir == ir.Direction.Out) {
+            reporter.error(conn.name.pos, toolName,
+              s"Invalid connection: incoming port of $srcName cannot be connected to outgoing port of $dstName")
+          }
+        }
+      }
+    }
+
+    if (reporter.hasError) {
+      return model
+    }
+
     // combine the connectedInPorts into a single collection
     var connectedInPorts: Set[ISZ[String]] = Set.empty
     for (seg <- segments) {

@@ -71,6 +71,11 @@ import org.sireum.message.Position
         st"""integration
             |  ${integration.get.string}""")
       else None()
+    val sinitializes: Option[ST] =
+      if (initializes.nonEmpty) Some(
+        st"""initializes
+            |  ${initializes.get.string}""")
+      else None()
     val scompute: Option[ST] =
       if (compute.nonEmpty) Some(
         st"""compute
@@ -82,6 +87,7 @@ import org.sireum.message.Position
           |$smethods
           |$sinvariants
           |$sintegration
+          |$sinitializes
           |$scompute""")
   }
 }

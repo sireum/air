@@ -43,6 +43,7 @@ import org.sireum.message.Position
                              val initializes: Option[GclInitialize],
                              val integration: Option[GclIntegration],
                              val compute: Option[GclCompute],
+                             val schedule: Option[GclSchedule],
                              @hidden val attr: Attr) extends AnnexClause with GclSymbol {
   @strictpure override def posOpt: Option[Position] = attr.posOpt
 
@@ -81,6 +82,9 @@ import org.sireum.message.Position
         st"""compute
             |  ${compute.get.string}""")
       else None()
+    val sschedule: Option[ST] =
+      if (schedule.nonEmpty) Some(schedule.get.prettyST)
+      else None()
 
     return (
       st"""$sstate
@@ -88,7 +92,8 @@ import org.sireum.message.Position
           |$sinvariants
           |$sintegration
           |$sinitializes
-          |$scompute""")
+          |$scompute
+          |$sschedule""")
   }
 }
 
@@ -341,6 +346,149 @@ import org.sireum.message.Position
           |  $sassumes
           |  $sguarantees
           |  $scases""")
+  }
+}
+
+// ---- Schedule (system-level contracts for system implementations) ----
+
+@datatype class GclSchedule(val componentAliases: ISZ[GclScheduleComponentAlias],
+                            val portAliases: ISZ[GclSchedulePortAlias],
+                            val stateVarAliases: ISZ[GclScheduleStateVarAlias],
+                            val elements: ISZ[GclScheduleElement],
+                            @hidden val attr: Attr) extends GclSymbol {
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @pure def prettyST: ST = {
+    val scomponents: Option[ST] =
+      if (componentAliases.nonEmpty) Some(
+        st"""components
+            |  ${(for (a <- componentAliases) yield a.prettyST, "\n")}""")
+      else None()
+    val sports: Option[ST] =
+      if (portAliases.nonEmpty) Some(
+        st"""ports
+            |  ${(for (a <- portAliases) yield a.prettyST, "\n")}""")
+      else None()
+    val sstatevars: Option[ST] =
+      if (stateVarAliases.nonEmpty) Some(
+        st"""state
+            |  ${(for (a <- stateVarAliases) yield a.prettyST, "\n")}""")
+      else None()
+    return (
+      st"""schedule {
+          |  $scomponents
+          |  $sports
+          |  $sstatevars
+          |  ${(for (e <- elements) yield e.prettyST, "\n")}
+          |}""")
+  }
+}
+
+@datatype class GclScheduleComponentAlias(val name: String,
+                                          val componentPath: Name,
+                                          @hidden val attr: Attr) extends GclNamedElement {
+  @strictpure override def id: String = name
+
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @strictpure def prettyST: ST = st"""$name = ${(componentPath.name, ".")};"""
+}
+
+@datatype class GclSchedulePortAlias(val name: String,
+                                     val portPath: Name,
+                                     @hidden val attr: Attr) extends GclNamedElement {
+  @strictpure override def id: String = name
+
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @strictpure def prettyST: ST = st"""$name = ${(portPath.name, ".")};"""
+}
+
+@datatype class GclScheduleStateVarAlias(val name: String,
+                                         val stateVarPath: Name,
+                                         @hidden val attr: Attr) extends GclNamedElement {
+  @strictpure override def id: String = name
+
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @strictpure def prettyST: ST = st"""$name = ${(stateVarPath.name, ".")};"""
+}
+
+@sig trait GclScheduleElement extends GclSymbol {
+  @pure def prettyST: ST
+}
+
+@datatype class GclScheduleAssert(val id: String,
+                                  val descriptor: Option[String],
+                                  val exp: org.sireum.lang.ast.Exp,
+                                  @hidden val attr: Attr) extends GclScheduleElement with GclClause {
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @pure def prettyST: ST = {
+    return st"""assert $id $descriptor: ${exp.string};"""
+  }
+}
+
+@datatype class GclScheduleComponentRef(val component: Name,
+                                        @hidden val attr: Attr) extends GclScheduleElement {
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @strictpure def prettyST: ST = st"""component ${(component.name, ".")}"""
+}
+
+@datatype class GclScheduleSplitJoin(val sequences: ISZ[GclScheduleSequence],
+                                     @hidden val attr: Attr) extends GclScheduleElement {
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @pure def prettyST: ST = {
+    return (
+      st"""split {
+          |  ${(for (s <- sequences) yield s.prettyST, ",\n")}
+          |}""")
+  }
+}
+
+@datatype class GclScheduleSequence(val elements: ISZ[GclScheduleElement],
+                                    @hidden val attr: Attr) extends GclSymbol {
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @pure def prettyST: ST = {
+    return (
+      st"""sequence {
+          |  ${(for (e <- elements) yield e.prettyST, "\n")}
+          |}""")
   }
 }
 

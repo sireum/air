@@ -161,15 +161,23 @@ import org.sireum.hamr.ir.GclCaseStatement
 import org.sireum.hamr.ir.GclInitialize
 import org.sireum.hamr.ir.GclCompute
 import org.sireum.hamr.ir.GclHandle
-import org.sireum.hamr.ir.GclSchedule
-import org.sireum.hamr.ir.GclScheduleComponentAlias
-import org.sireum.hamr.ir.GclSchedulePortAlias
-import org.sireum.hamr.ir.GclScheduleStateVarAlias
-import org.sireum.hamr.ir.GclScheduleElement
-import org.sireum.hamr.ir.GclScheduleAssert
-import org.sireum.hamr.ir.GclScheduleComponentRef
-import org.sireum.hamr.ir.GclScheduleSplitJoin
-import org.sireum.hamr.ir.GclScheduleSequence
+import org.sireum.hamr.ir.GclComposition
+import org.sireum.hamr.ir.GclCompositionComponentAlias
+import org.sireum.hamr.ir.GclCompositionPortAlias
+import org.sireum.hamr.ir.GclCompositionStateVarAlias
+import org.sireum.hamr.ir.GclSchemaElement
+import org.sireum.hamr.ir.GclSchemaComponentRef
+import org.sireum.hamr.ir.GclSchemaLabel
+import org.sireum.hamr.ir.GclSchemaSplitJoin
+import org.sireum.hamr.ir.GclSchemaSequence
+import org.sireum.hamr.ir.GclCompositionProperty
+import org.sireum.hamr.ir.GclPropertyBinding
+import org.sireum.hamr.ir.GclSchemaPoint
+import org.sireum.hamr.ir.GclPointStart
+import org.sireum.hamr.ir.GclPointEnd
+import org.sireum.hamr.ir.GclPointAt
+import org.sireum.hamr.ir.GclPointBefore
+import org.sireum.hamr.ir.GclPointAfter
 import org.sireum.hamr.ir.GclTODO
 import org.sireum.hamr.ir.GclLib
 import org.sireum.hamr.ir.InfoFlowClause
@@ -1449,14 +1457,21 @@ object JSON {
         case o: GclInitialize => return printGclInitialize(o)
         case o: GclCompute => return printGclCompute(o)
         case o: GclHandle => return printGclHandle(o)
-        case o: GclSchedule => return printGclSchedule(o)
-        case o: GclScheduleComponentAlias => return printGclScheduleComponentAlias(o)
-        case o: GclSchedulePortAlias => return printGclSchedulePortAlias(o)
-        case o: GclScheduleStateVarAlias => return printGclScheduleStateVarAlias(o)
-        case o: GclScheduleAssert => return printGclScheduleAssert(o)
-        case o: GclScheduleComponentRef => return printGclScheduleComponentRef(o)
-        case o: GclScheduleSplitJoin => return printGclScheduleSplitJoin(o)
-        case o: GclScheduleSequence => return printGclScheduleSequence(o)
+        case o: GclComposition => return printGclComposition(o)
+        case o: GclCompositionComponentAlias => return printGclCompositionComponentAlias(o)
+        case o: GclCompositionPortAlias => return printGclCompositionPortAlias(o)
+        case o: GclCompositionStateVarAlias => return printGclCompositionStateVarAlias(o)
+        case o: GclSchemaComponentRef => return printGclSchemaComponentRef(o)
+        case o: GclSchemaLabel => return printGclSchemaLabel(o)
+        case o: GclSchemaSplitJoin => return printGclSchemaSplitJoin(o)
+        case o: GclSchemaSequence => return printGclSchemaSequence(o)
+        case o: GclCompositionProperty => return printGclCompositionProperty(o)
+        case o: GclPropertyBinding => return printGclPropertyBinding(o)
+        case o: GclPointStart => return printGclPointStart(o)
+        case o: GclPointEnd => return printGclPointEnd(o)
+        case o: GclPointAt => return printGclPointAt(o)
+        case o: GclPointBefore => return printGclPointBefore(o)
+        case o: GclPointAfter => return printGclPointAfter(o)
         case o: GclTODO => return printGclTODO(o)
         case o: GclLib => return printGclLib(o)
         case o: InfoFlowClause => return printInfoFlowClause(o)
@@ -1472,10 +1487,12 @@ object JSON {
         case o: GclAssume => return printGclAssume(o)
         case o: GclGuarantee => return printGclGuarantee(o)
         case o: GclCaseStatement => return printGclCaseStatement(o)
-        case o: GclScheduleComponentAlias => return printGclScheduleComponentAlias(o)
-        case o: GclSchedulePortAlias => return printGclSchedulePortAlias(o)
-        case o: GclScheduleStateVarAlias => return printGclScheduleStateVarAlias(o)
-        case o: GclScheduleAssert => return printGclScheduleAssert(o)
+        case o: GclComposition => return printGclComposition(o)
+        case o: GclCompositionComponentAlias => return printGclCompositionComponentAlias(o)
+        case o: GclCompositionPortAlias => return printGclCompositionPortAlias(o)
+        case o: GclCompositionStateVarAlias => return printGclCompositionStateVarAlias(o)
+        case o: GclSchemaLabel => return printGclSchemaLabel(o)
+        case o: GclCompositionProperty => return printGclCompositionProperty(o)
         case o: InfoFlowClause => return printInfoFlowClause(o)
       }
     }
@@ -1489,7 +1506,7 @@ object JSON {
         ("initializes", printOption(F, o.initializes, printGclInitialize _)),
         ("integration", printOption(F, o.integration, printGclIntegration _)),
         ("compute", printOption(F, o.compute, printGclCompute _)),
-        ("schedule", printOption(F, o.schedule, printGclSchedule _)),
+        ("compositions", printISZ(F, o.compositions, printGclComposition _)),
         ("attr", printAttr(o.attr))
       ))
     }
@@ -1529,7 +1546,7 @@ object JSON {
         case o: GclInvariant => return printGclInvariant(o)
         case o: GclAssume => return printGclAssume(o)
         case o: GclGuarantee => return printGclGuarantee(o)
-        case o: GclScheduleAssert => return printGclScheduleAssert(o)
+        case o: GclCompositionProperty => return printGclCompositionProperty(o)
         case o: InfoFlowClause => return printInfoFlowClause(o)
       }
     }
@@ -1633,82 +1650,151 @@ object JSON {
       ))
     }
 
-    @pure def printGclSchedule(o: GclSchedule): ST = {
+    @pure def printGclComposition(o: GclComposition): ST = {
       return printObject(ISZ(
-        ("type", st""""GclSchedule""""),
-        ("componentAliases", printISZ(F, o.componentAliases, printGclScheduleComponentAlias _)),
-        ("portAliases", printISZ(F, o.portAliases, printGclSchedulePortAlias _)),
-        ("stateVarAliases", printISZ(F, o.stateVarAliases, printGclScheduleStateVarAlias _)),
-        ("elements", printISZ(F, o.elements, printGclScheduleElement _)),
+        ("type", st""""GclComposition""""),
+        ("id", printString(o.id)),
+        ("componentAliases", printISZ(F, o.componentAliases, printGclCompositionComponentAlias _)),
+        ("portAliases", printISZ(F, o.portAliases, printGclCompositionPortAlias _)),
+        ("stateVarAliases", printISZ(F, o.stateVarAliases, printGclCompositionStateVarAlias _)),
+        ("schema", printISZ(F, o.schema, printGclSchemaElement _)),
+        ("properties", printISZ(F, o.properties, printGclCompositionProperty _)),
         ("attr", printAttr(o.attr))
       ))
     }
 
-    @pure def printGclScheduleComponentAlias(o: GclScheduleComponentAlias): ST = {
+    @pure def printGclCompositionComponentAlias(o: GclCompositionComponentAlias): ST = {
       return printObject(ISZ(
-        ("type", st""""GclScheduleComponentAlias""""),
+        ("type", st""""GclCompositionComponentAlias""""),
         ("name", printString(o.name)),
         ("componentPath", printName(o.componentPath)),
         ("attr", printAttr(o.attr))
       ))
     }
 
-    @pure def printGclSchedulePortAlias(o: GclSchedulePortAlias): ST = {
+    @pure def printGclCompositionPortAlias(o: GclCompositionPortAlias): ST = {
       return printObject(ISZ(
-        ("type", st""""GclSchedulePortAlias""""),
+        ("type", st""""GclCompositionPortAlias""""),
         ("name", printString(o.name)),
         ("portPath", printName(o.portPath)),
         ("attr", printAttr(o.attr))
       ))
     }
 
-    @pure def printGclScheduleStateVarAlias(o: GclScheduleStateVarAlias): ST = {
+    @pure def printGclCompositionStateVarAlias(o: GclCompositionStateVarAlias): ST = {
       return printObject(ISZ(
-        ("type", st""""GclScheduleStateVarAlias""""),
+        ("type", st""""GclCompositionStateVarAlias""""),
         ("name", printString(o.name)),
         ("stateVarPath", printName(o.stateVarPath)),
         ("attr", printAttr(o.attr))
       ))
     }
 
-    @pure def printGclScheduleElement(o: GclScheduleElement): ST = {
+    @pure def printGclSchemaElement(o: GclSchemaElement): ST = {
       o match {
-        case o: GclScheduleAssert => return printGclScheduleAssert(o)
-        case o: GclScheduleComponentRef => return printGclScheduleComponentRef(o)
-        case o: GclScheduleSplitJoin => return printGclScheduleSplitJoin(o)
+        case o: GclSchemaComponentRef => return printGclSchemaComponentRef(o)
+        case o: GclSchemaLabel => return printGclSchemaLabel(o)
+        case o: GclSchemaSplitJoin => return printGclSchemaSplitJoin(o)
       }
     }
 
-    @pure def printGclScheduleAssert(o: GclScheduleAssert): ST = {
+    @pure def printGclSchemaComponentRef(o: GclSchemaComponentRef): ST = {
       return printObject(ISZ(
-        ("type", st""""GclScheduleAssert""""),
+        ("type", st""""GclSchemaComponentRef""""),
+        ("component", printName(o.component)),
+        ("occurrenceLabelOpt", printOption(T, o.occurrenceLabelOpt, printString _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printGclSchemaLabel(o: GclSchemaLabel): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclSchemaLabel""""),
         ("id", printString(o.id)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printGclSchemaSplitJoin(o: GclSchemaSplitJoin): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclSchemaSplitJoin""""),
+        ("branches", printISZ(F, o.branches, printGclSchemaSequence _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printGclSchemaSequence(o: GclSchemaSequence): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclSchemaSequence""""),
+        ("elements", printISZ(F, o.elements, printGclSchemaElement _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printGclCompositionProperty(o: GclCompositionProperty): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclCompositionProperty""""),
+        ("id", printString(o.id)),
+        ("descriptor", printOption(T, o.descriptor, printString _)),
+        ("bindings", printISZ(F, o.bindings, printGclPropertyBinding _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printGclPropertyBinding(o: GclPropertyBinding): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclPropertyBinding""""),
+        ("point", printGclSchemaPoint(o.point)),
         ("descriptor", printOption(T, o.descriptor, printString _)),
         ("exp", print_langastExp(o.exp)),
         ("attr", printAttr(o.attr))
       ))
     }
 
-    @pure def printGclScheduleComponentRef(o: GclScheduleComponentRef): ST = {
+    @pure def printGclSchemaPoint(o: GclSchemaPoint): ST = {
+      o match {
+        case o: GclPointStart => return printGclPointStart(o)
+        case o: GclPointEnd => return printGclPointEnd(o)
+        case o: GclPointAt => return printGclPointAt(o)
+        case o: GclPointBefore => return printGclPointBefore(o)
+        case o: GclPointAfter => return printGclPointAfter(o)
+      }
+    }
+
+    @pure def printGclPointStart(o: GclPointStart): ST = {
       return printObject(ISZ(
-        ("type", st""""GclScheduleComponentRef""""),
-        ("component", printName(o.component)),
+        ("type", st""""GclPointStart""""),
         ("attr", printAttr(o.attr))
       ))
     }
 
-    @pure def printGclScheduleSplitJoin(o: GclScheduleSplitJoin): ST = {
+    @pure def printGclPointEnd(o: GclPointEnd): ST = {
       return printObject(ISZ(
-        ("type", st""""GclScheduleSplitJoin""""),
-        ("sequences", printISZ(F, o.sequences, printGclScheduleSequence _)),
+        ("type", st""""GclPointEnd""""),
         ("attr", printAttr(o.attr))
       ))
     }
 
-    @pure def printGclScheduleSequence(o: GclScheduleSequence): ST = {
+    @pure def printGclPointAt(o: GclPointAt): ST = {
       return printObject(ISZ(
-        ("type", st""""GclScheduleSequence""""),
-        ("elements", printISZ(F, o.elements, printGclScheduleElement _)),
+        ("type", st""""GclPointAt""""),
+        ("label", printString(o.label)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printGclPointBefore(o: GclPointBefore): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclPointBefore""""),
+        ("occurrence", printString(o.occurrence)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printGclPointAfter(o: GclPointAfter): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclPointAfter""""),
+        ("occurrence", printString(o.occurrence)),
         ("attr", printAttr(o.attr))
       ))
     }
@@ -7080,7 +7166,7 @@ object JSON {
     }
 
     def parseGclSymbol(): GclSymbol = {
-      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclSpecMethod", "GclBodyMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclHandle", "GclSchedule", "GclScheduleComponentAlias", "GclSchedulePortAlias", "GclScheduleStateVarAlias", "GclScheduleAssert", "GclScheduleComponentRef", "GclScheduleSplitJoin", "GclScheduleSequence", "GclTODO", "GclLib", "InfoFlowClause"))
+      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclSpecMethod", "GclBodyMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclHandle", "GclComposition", "GclCompositionComponentAlias", "GclCompositionPortAlias", "GclCompositionStateVarAlias", "GclSchemaComponentRef", "GclSchemaLabel", "GclSchemaSplitJoin", "GclSchemaSequence", "GclCompositionProperty", "GclPropertyBinding", "GclPointStart", "GclPointEnd", "GclPointAt", "GclPointBefore", "GclPointAfter", "GclTODO", "GclLib", "InfoFlowClause"))
       t.native match {
         case "GclSubclause" => val r = parseGclSubclauseT(T); return r
         case "GclSpecMethod" => val r = parseGclSpecMethodT(T); return r
@@ -7094,14 +7180,21 @@ object JSON {
         case "GclInitialize" => val r = parseGclInitializeT(T); return r
         case "GclCompute" => val r = parseGclComputeT(T); return r
         case "GclHandle" => val r = parseGclHandleT(T); return r
-        case "GclSchedule" => val r = parseGclScheduleT(T); return r
-        case "GclScheduleComponentAlias" => val r = parseGclScheduleComponentAliasT(T); return r
-        case "GclSchedulePortAlias" => val r = parseGclSchedulePortAliasT(T); return r
-        case "GclScheduleStateVarAlias" => val r = parseGclScheduleStateVarAliasT(T); return r
-        case "GclScheduleAssert" => val r = parseGclScheduleAssertT(T); return r
-        case "GclScheduleComponentRef" => val r = parseGclScheduleComponentRefT(T); return r
-        case "GclScheduleSplitJoin" => val r = parseGclScheduleSplitJoinT(T); return r
-        case "GclScheduleSequence" => val r = parseGclScheduleSequenceT(T); return r
+        case "GclComposition" => val r = parseGclCompositionT(T); return r
+        case "GclCompositionComponentAlias" => val r = parseGclCompositionComponentAliasT(T); return r
+        case "GclCompositionPortAlias" => val r = parseGclCompositionPortAliasT(T); return r
+        case "GclCompositionStateVarAlias" => val r = parseGclCompositionStateVarAliasT(T); return r
+        case "GclSchemaComponentRef" => val r = parseGclSchemaComponentRefT(T); return r
+        case "GclSchemaLabel" => val r = parseGclSchemaLabelT(T); return r
+        case "GclSchemaSplitJoin" => val r = parseGclSchemaSplitJoinT(T); return r
+        case "GclSchemaSequence" => val r = parseGclSchemaSequenceT(T); return r
+        case "GclCompositionProperty" => val r = parseGclCompositionPropertyT(T); return r
+        case "GclPropertyBinding" => val r = parseGclPropertyBindingT(T); return r
+        case "GclPointStart" => val r = parseGclPointStartT(T); return r
+        case "GclPointEnd" => val r = parseGclPointEndT(T); return r
+        case "GclPointAt" => val r = parseGclPointAtT(T); return r
+        case "GclPointBefore" => val r = parseGclPointBeforeT(T); return r
+        case "GclPointAfter" => val r = parseGclPointAfterT(T); return r
         case "GclTODO" => val r = parseGclTODOT(T); return r
         case "GclLib" => val r = parseGclLibT(T); return r
         case "InfoFlowClause" => val r = parseInfoFlowClauseT(T); return r
@@ -7110,7 +7203,7 @@ object JSON {
     }
 
     def parseGclNamedElement(): GclNamedElement = {
-      val t = parser.parseObjectTypes(ISZ("GclSpecMethod", "GclBodyMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclCaseStatement", "GclScheduleComponentAlias", "GclSchedulePortAlias", "GclScheduleStateVarAlias", "GclScheduleAssert", "InfoFlowClause"))
+      val t = parser.parseObjectTypes(ISZ("GclSpecMethod", "GclBodyMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclCaseStatement", "GclComposition", "GclCompositionComponentAlias", "GclCompositionPortAlias", "GclCompositionStateVarAlias", "GclSchemaLabel", "GclCompositionProperty", "InfoFlowClause"))
       t.native match {
         case "GclSpecMethod" => val r = parseGclSpecMethodT(T); return r
         case "GclBodyMethod" => val r = parseGclBodyMethodT(T); return r
@@ -7119,10 +7212,12 @@ object JSON {
         case "GclAssume" => val r = parseGclAssumeT(T); return r
         case "GclGuarantee" => val r = parseGclGuaranteeT(T); return r
         case "GclCaseStatement" => val r = parseGclCaseStatementT(T); return r
-        case "GclScheduleComponentAlias" => val r = parseGclScheduleComponentAliasT(T); return r
-        case "GclSchedulePortAlias" => val r = parseGclSchedulePortAliasT(T); return r
-        case "GclScheduleStateVarAlias" => val r = parseGclScheduleStateVarAliasT(T); return r
-        case "GclScheduleAssert" => val r = parseGclScheduleAssertT(T); return r
+        case "GclComposition" => val r = parseGclCompositionT(T); return r
+        case "GclCompositionComponentAlias" => val r = parseGclCompositionComponentAliasT(T); return r
+        case "GclCompositionPortAlias" => val r = parseGclCompositionPortAliasT(T); return r
+        case "GclCompositionStateVarAlias" => val r = parseGclCompositionStateVarAliasT(T); return r
+        case "GclSchemaLabel" => val r = parseGclSchemaLabelT(T); return r
+        case "GclCompositionProperty" => val r = parseGclCompositionPropertyT(T); return r
         case "InfoFlowClause" => val r = parseInfoFlowClauseT(T); return r
         case _ => val r = parseInfoFlowClauseT(T); return r
       }
@@ -7155,13 +7250,13 @@ object JSON {
       parser.parseObjectKey("compute")
       val compute = parser.parseOption(parseGclCompute _)
       parser.parseObjectNext()
-      parser.parseObjectKey("schedule")
-      val schedule = parser.parseOption(parseGclSchedule _)
+      parser.parseObjectKey("compositions")
+      val compositions = parser.parseISZ(parseGclComposition _)
       parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclSubclause(state, methods, invariants, initializes, integration, compute, schedule, attr)
+      return GclSubclause(state, methods, invariants, initializes, integration, compute, compositions, attr)
     }
 
     def parseGclMethod(): GclMethod = {
@@ -7225,12 +7320,12 @@ object JSON {
     }
 
     def parseGclClause(): GclClause = {
-      val t = parser.parseObjectTypes(ISZ("GclInvariant", "GclAssume", "GclGuarantee", "GclScheduleAssert", "InfoFlowClause"))
+      val t = parser.parseObjectTypes(ISZ("GclInvariant", "GclAssume", "GclGuarantee", "GclCompositionProperty", "InfoFlowClause"))
       t.native match {
         case "GclInvariant" => val r = parseGclInvariantT(T); return r
         case "GclAssume" => val r = parseGclAssumeT(T); return r
         case "GclGuarantee" => val r = parseGclGuaranteeT(T); return r
-        case "GclScheduleAssert" => val r = parseGclScheduleAssertT(T); return r
+        case "GclCompositionProperty" => val r = parseGclCompositionPropertyT(T); return r
         case "InfoFlowClause" => val r = parseInfoFlowClauseT(T); return r
         case _ => val r = parseInfoFlowClauseT(T); return r
       }
@@ -7459,41 +7554,47 @@ object JSON {
       return GclHandle(port, modifies, assumes, guarantees, cases, attr)
     }
 
-    def parseGclSchedule(): GclSchedule = {
-      val r = parseGclScheduleT(F)
+    def parseGclComposition(): GclComposition = {
+      val r = parseGclCompositionT(F)
       return r
     }
 
-    def parseGclScheduleT(typeParsed: B): GclSchedule = {
+    def parseGclCompositionT(typeParsed: B): GclComposition = {
       if (!typeParsed) {
-        parser.parseObjectType("GclSchedule")
+        parser.parseObjectType("GclComposition")
       }
+      parser.parseObjectKey("id")
+      val id = parser.parseString()
+      parser.parseObjectNext()
       parser.parseObjectKey("componentAliases")
-      val componentAliases = parser.parseISZ(parseGclScheduleComponentAlias _)
+      val componentAliases = parser.parseISZ(parseGclCompositionComponentAlias _)
       parser.parseObjectNext()
       parser.parseObjectKey("portAliases")
-      val portAliases = parser.parseISZ(parseGclSchedulePortAlias _)
+      val portAliases = parser.parseISZ(parseGclCompositionPortAlias _)
       parser.parseObjectNext()
       parser.parseObjectKey("stateVarAliases")
-      val stateVarAliases = parser.parseISZ(parseGclScheduleStateVarAlias _)
+      val stateVarAliases = parser.parseISZ(parseGclCompositionStateVarAlias _)
       parser.parseObjectNext()
-      parser.parseObjectKey("elements")
-      val elements = parser.parseISZ(parseGclScheduleElement _)
+      parser.parseObjectKey("schema")
+      val schema = parser.parseISZ(parseGclSchemaElement _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("properties")
+      val properties = parser.parseISZ(parseGclCompositionProperty _)
       parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclSchedule(componentAliases, portAliases, stateVarAliases, elements, attr)
+      return GclComposition(id, componentAliases, portAliases, stateVarAliases, schema, properties, attr)
     }
 
-    def parseGclScheduleComponentAlias(): GclScheduleComponentAlias = {
-      val r = parseGclScheduleComponentAliasT(F)
+    def parseGclCompositionComponentAlias(): GclCompositionComponentAlias = {
+      val r = parseGclCompositionComponentAliasT(F)
       return r
     }
 
-    def parseGclScheduleComponentAliasT(typeParsed: B): GclScheduleComponentAlias = {
+    def parseGclCompositionComponentAliasT(typeParsed: B): GclCompositionComponentAlias = {
       if (!typeParsed) {
-        parser.parseObjectType("GclScheduleComponentAlias")
+        parser.parseObjectType("GclCompositionComponentAlias")
       }
       parser.parseObjectKey("name")
       val name = parser.parseString()
@@ -7504,17 +7605,17 @@ object JSON {
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclScheduleComponentAlias(name, componentPath, attr)
+      return GclCompositionComponentAlias(name, componentPath, attr)
     }
 
-    def parseGclSchedulePortAlias(): GclSchedulePortAlias = {
-      val r = parseGclSchedulePortAliasT(F)
+    def parseGclCompositionPortAlias(): GclCompositionPortAlias = {
+      val r = parseGclCompositionPortAliasT(F)
       return r
     }
 
-    def parseGclSchedulePortAliasT(typeParsed: B): GclSchedulePortAlias = {
+    def parseGclCompositionPortAliasT(typeParsed: B): GclCompositionPortAlias = {
       if (!typeParsed) {
-        parser.parseObjectType("GclSchedulePortAlias")
+        parser.parseObjectType("GclCompositionPortAlias")
       }
       parser.parseObjectKey("name")
       val name = parser.parseString()
@@ -7525,17 +7626,17 @@ object JSON {
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclSchedulePortAlias(name, portPath, attr)
+      return GclCompositionPortAlias(name, portPath, attr)
     }
 
-    def parseGclScheduleStateVarAlias(): GclScheduleStateVarAlias = {
-      val r = parseGclScheduleStateVarAliasT(F)
+    def parseGclCompositionStateVarAlias(): GclCompositionStateVarAlias = {
+      val r = parseGclCompositionStateVarAliasT(F)
       return r
     }
 
-    def parseGclScheduleStateVarAliasT(typeParsed: B): GclScheduleStateVarAlias = {
+    def parseGclCompositionStateVarAliasT(typeParsed: B): GclCompositionStateVarAlias = {
       if (!typeParsed) {
-        parser.parseObjectType("GclScheduleStateVarAlias")
+        parser.parseObjectType("GclCompositionStateVarAlias")
       }
       parser.parseObjectKey("name")
       val name = parser.parseString()
@@ -7546,30 +7647,129 @@ object JSON {
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclScheduleStateVarAlias(name, stateVarPath, attr)
+      return GclCompositionStateVarAlias(name, stateVarPath, attr)
     }
 
-    def parseGclScheduleElement(): GclScheduleElement = {
-      val t = parser.parseObjectTypes(ISZ("GclScheduleAssert", "GclScheduleComponentRef", "GclScheduleSplitJoin"))
+    def parseGclSchemaElement(): GclSchemaElement = {
+      val t = parser.parseObjectTypes(ISZ("GclSchemaComponentRef", "GclSchemaLabel", "GclSchemaSplitJoin"))
       t.native match {
-        case "GclScheduleAssert" => val r = parseGclScheduleAssertT(T); return r
-        case "GclScheduleComponentRef" => val r = parseGclScheduleComponentRefT(T); return r
-        case "GclScheduleSplitJoin" => val r = parseGclScheduleSplitJoinT(T); return r
-        case _ => val r = parseGclScheduleSplitJoinT(T); return r
+        case "GclSchemaComponentRef" => val r = parseGclSchemaComponentRefT(T); return r
+        case "GclSchemaLabel" => val r = parseGclSchemaLabelT(T); return r
+        case "GclSchemaSplitJoin" => val r = parseGclSchemaSplitJoinT(T); return r
+        case _ => val r = parseGclSchemaSplitJoinT(T); return r
       }
     }
 
-    def parseGclScheduleAssert(): GclScheduleAssert = {
-      val r = parseGclScheduleAssertT(F)
+    def parseGclSchemaComponentRef(): GclSchemaComponentRef = {
+      val r = parseGclSchemaComponentRefT(F)
       return r
     }
 
-    def parseGclScheduleAssertT(typeParsed: B): GclScheduleAssert = {
+    def parseGclSchemaComponentRefT(typeParsed: B): GclSchemaComponentRef = {
       if (!typeParsed) {
-        parser.parseObjectType("GclScheduleAssert")
+        parser.parseObjectType("GclSchemaComponentRef")
+      }
+      parser.parseObjectKey("component")
+      val component = parseName()
+      parser.parseObjectNext()
+      parser.parseObjectKey("occurrenceLabelOpt")
+      val occurrenceLabelOpt = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclSchemaComponentRef(component, occurrenceLabelOpt, attr)
+    }
+
+    def parseGclSchemaLabel(): GclSchemaLabel = {
+      val r = parseGclSchemaLabelT(F)
+      return r
+    }
+
+    def parseGclSchemaLabelT(typeParsed: B): GclSchemaLabel = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclSchemaLabel")
       }
       parser.parseObjectKey("id")
       val id = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclSchemaLabel(id, attr)
+    }
+
+    def parseGclSchemaSplitJoin(): GclSchemaSplitJoin = {
+      val r = parseGclSchemaSplitJoinT(F)
+      return r
+    }
+
+    def parseGclSchemaSplitJoinT(typeParsed: B): GclSchemaSplitJoin = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclSchemaSplitJoin")
+      }
+      parser.parseObjectKey("branches")
+      val branches = parser.parseISZ(parseGclSchemaSequence _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclSchemaSplitJoin(branches, attr)
+    }
+
+    def parseGclSchemaSequence(): GclSchemaSequence = {
+      val r = parseGclSchemaSequenceT(F)
+      return r
+    }
+
+    def parseGclSchemaSequenceT(typeParsed: B): GclSchemaSequence = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclSchemaSequence")
+      }
+      parser.parseObjectKey("elements")
+      val elements = parser.parseISZ(parseGclSchemaElement _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclSchemaSequence(elements, attr)
+    }
+
+    def parseGclCompositionProperty(): GclCompositionProperty = {
+      val r = parseGclCompositionPropertyT(F)
+      return r
+    }
+
+    def parseGclCompositionPropertyT(typeParsed: B): GclCompositionProperty = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclCompositionProperty")
+      }
+      parser.parseObjectKey("id")
+      val id = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("descriptor")
+      val descriptor = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("bindings")
+      val bindings = parser.parseISZ(parseGclPropertyBinding _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclCompositionProperty(id, descriptor, bindings, attr)
+    }
+
+    def parseGclPropertyBinding(): GclPropertyBinding = {
+      val r = parseGclPropertyBindingT(F)
+      return r
+    }
+
+    def parseGclPropertyBindingT(typeParsed: B): GclPropertyBinding = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclPropertyBinding")
+      }
+      parser.parseObjectKey("point")
+      val point = parseGclSchemaPoint()
       parser.parseObjectNext()
       parser.parseObjectKey("descriptor")
       val descriptor = parser.parseOption(parser.parseString _)
@@ -7580,61 +7780,103 @@ object JSON {
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclScheduleAssert(id, descriptor, exp, attr)
+      return GclPropertyBinding(point, descriptor, exp, attr)
     }
 
-    def parseGclScheduleComponentRef(): GclScheduleComponentRef = {
-      val r = parseGclScheduleComponentRefT(F)
+    def parseGclSchemaPoint(): GclSchemaPoint = {
+      val t = parser.parseObjectTypes(ISZ("GclPointStart", "GclPointEnd", "GclPointAt", "GclPointBefore", "GclPointAfter"))
+      t.native match {
+        case "GclPointStart" => val r = parseGclPointStartT(T); return r
+        case "GclPointEnd" => val r = parseGclPointEndT(T); return r
+        case "GclPointAt" => val r = parseGclPointAtT(T); return r
+        case "GclPointBefore" => val r = parseGclPointBeforeT(T); return r
+        case "GclPointAfter" => val r = parseGclPointAfterT(T); return r
+        case _ => val r = parseGclPointAfterT(T); return r
+      }
+    }
+
+    def parseGclPointStart(): GclPointStart = {
+      val r = parseGclPointStartT(F)
       return r
     }
 
-    def parseGclScheduleComponentRefT(typeParsed: B): GclScheduleComponentRef = {
+    def parseGclPointStartT(typeParsed: B): GclPointStart = {
       if (!typeParsed) {
-        parser.parseObjectType("GclScheduleComponentRef")
+        parser.parseObjectType("GclPointStart")
       }
-      parser.parseObjectKey("component")
-      val component = parseName()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclPointStart(attr)
+    }
+
+    def parseGclPointEnd(): GclPointEnd = {
+      val r = parseGclPointEndT(F)
+      return r
+    }
+
+    def parseGclPointEndT(typeParsed: B): GclPointEnd = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclPointEnd")
+      }
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclPointEnd(attr)
+    }
+
+    def parseGclPointAt(): GclPointAt = {
+      val r = parseGclPointAtT(F)
+      return r
+    }
+
+    def parseGclPointAtT(typeParsed: B): GclPointAt = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclPointAt")
+      }
+      parser.parseObjectKey("label")
+      val label = parser.parseString()
       parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclScheduleComponentRef(component, attr)
+      return GclPointAt(label, attr)
     }
 
-    def parseGclScheduleSplitJoin(): GclScheduleSplitJoin = {
-      val r = parseGclScheduleSplitJoinT(F)
+    def parseGclPointBefore(): GclPointBefore = {
+      val r = parseGclPointBeforeT(F)
       return r
     }
 
-    def parseGclScheduleSplitJoinT(typeParsed: B): GclScheduleSplitJoin = {
+    def parseGclPointBeforeT(typeParsed: B): GclPointBefore = {
       if (!typeParsed) {
-        parser.parseObjectType("GclScheduleSplitJoin")
+        parser.parseObjectType("GclPointBefore")
       }
-      parser.parseObjectKey("sequences")
-      val sequences = parser.parseISZ(parseGclScheduleSequence _)
+      parser.parseObjectKey("occurrence")
+      val occurrence = parser.parseString()
       parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclScheduleSplitJoin(sequences, attr)
+      return GclPointBefore(occurrence, attr)
     }
 
-    def parseGclScheduleSequence(): GclScheduleSequence = {
-      val r = parseGclScheduleSequenceT(F)
+    def parseGclPointAfter(): GclPointAfter = {
+      val r = parseGclPointAfterT(F)
       return r
     }
 
-    def parseGclScheduleSequenceT(typeParsed: B): GclScheduleSequence = {
+    def parseGclPointAfterT(typeParsed: B): GclPointAfter = {
       if (!typeParsed) {
-        parser.parseObjectType("GclScheduleSequence")
+        parser.parseObjectType("GclPointAfter")
       }
-      parser.parseObjectKey("elements")
-      val elements = parser.parseISZ(parseGclScheduleElement _)
+      parser.parseObjectKey("occurrence")
+      val occurrence = parser.parseString()
       parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclScheduleSequence(elements, attr)
+      return GclPointAfter(occurrence, attr)
     }
 
     def parseGclTODO(): GclTODO = {
@@ -16002,8 +16244,8 @@ object JSON {
     return r
   }
 
-  def fromGclSchedule(o: GclSchedule, isCompact: B): String = {
-    val st = Printer.printGclSchedule(o)
+  def fromGclComposition(o: GclComposition, isCompact: B): String = {
+    val st = Printer.printGclComposition(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -16011,17 +16253,17 @@ object JSON {
     }
   }
 
-  def toGclSchedule(s: String): Either[GclSchedule, Json.ErrorMsg] = {
-    def fGclSchedule(parser: Parser): GclSchedule = {
-      val r = parser.parseGclSchedule()
+  def toGclComposition(s: String): Either[GclComposition, Json.ErrorMsg] = {
+    def fGclComposition(parser: Parser): GclComposition = {
+      val r = parser.parseGclComposition()
       return r
     }
-    val r = to(s, fGclSchedule _)
+    val r = to(s, fGclComposition _)
     return r
   }
 
-  def fromGclScheduleComponentAlias(o: GclScheduleComponentAlias, isCompact: B): String = {
-    val st = Printer.printGclScheduleComponentAlias(o)
+  def fromGclCompositionComponentAlias(o: GclCompositionComponentAlias, isCompact: B): String = {
+    val st = Printer.printGclCompositionComponentAlias(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -16029,17 +16271,17 @@ object JSON {
     }
   }
 
-  def toGclScheduleComponentAlias(s: String): Either[GclScheduleComponentAlias, Json.ErrorMsg] = {
-    def fGclScheduleComponentAlias(parser: Parser): GclScheduleComponentAlias = {
-      val r = parser.parseGclScheduleComponentAlias()
+  def toGclCompositionComponentAlias(s: String): Either[GclCompositionComponentAlias, Json.ErrorMsg] = {
+    def fGclCompositionComponentAlias(parser: Parser): GclCompositionComponentAlias = {
+      val r = parser.parseGclCompositionComponentAlias()
       return r
     }
-    val r = to(s, fGclScheduleComponentAlias _)
+    val r = to(s, fGclCompositionComponentAlias _)
     return r
   }
 
-  def fromGclSchedulePortAlias(o: GclSchedulePortAlias, isCompact: B): String = {
-    val st = Printer.printGclSchedulePortAlias(o)
+  def fromGclCompositionPortAlias(o: GclCompositionPortAlias, isCompact: B): String = {
+    val st = Printer.printGclCompositionPortAlias(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -16047,17 +16289,17 @@ object JSON {
     }
   }
 
-  def toGclSchedulePortAlias(s: String): Either[GclSchedulePortAlias, Json.ErrorMsg] = {
-    def fGclSchedulePortAlias(parser: Parser): GclSchedulePortAlias = {
-      val r = parser.parseGclSchedulePortAlias()
+  def toGclCompositionPortAlias(s: String): Either[GclCompositionPortAlias, Json.ErrorMsg] = {
+    def fGclCompositionPortAlias(parser: Parser): GclCompositionPortAlias = {
+      val r = parser.parseGclCompositionPortAlias()
       return r
     }
-    val r = to(s, fGclSchedulePortAlias _)
+    val r = to(s, fGclCompositionPortAlias _)
     return r
   }
 
-  def fromGclScheduleStateVarAlias(o: GclScheduleStateVarAlias, isCompact: B): String = {
-    val st = Printer.printGclScheduleStateVarAlias(o)
+  def fromGclCompositionStateVarAlias(o: GclCompositionStateVarAlias, isCompact: B): String = {
+    val st = Printer.printGclCompositionStateVarAlias(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -16065,17 +16307,17 @@ object JSON {
     }
   }
 
-  def toGclScheduleStateVarAlias(s: String): Either[GclScheduleStateVarAlias, Json.ErrorMsg] = {
-    def fGclScheduleStateVarAlias(parser: Parser): GclScheduleStateVarAlias = {
-      val r = parser.parseGclScheduleStateVarAlias()
+  def toGclCompositionStateVarAlias(s: String): Either[GclCompositionStateVarAlias, Json.ErrorMsg] = {
+    def fGclCompositionStateVarAlias(parser: Parser): GclCompositionStateVarAlias = {
+      val r = parser.parseGclCompositionStateVarAlias()
       return r
     }
-    val r = to(s, fGclScheduleStateVarAlias _)
+    val r = to(s, fGclCompositionStateVarAlias _)
     return r
   }
 
-  def fromGclScheduleElement(o: GclScheduleElement, isCompact: B): String = {
-    val st = Printer.printGclScheduleElement(o)
+  def fromGclSchemaElement(o: GclSchemaElement, isCompact: B): String = {
+    val st = Printer.printGclSchemaElement(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -16083,17 +16325,17 @@ object JSON {
     }
   }
 
-  def toGclScheduleElement(s: String): Either[GclScheduleElement, Json.ErrorMsg] = {
-    def fGclScheduleElement(parser: Parser): GclScheduleElement = {
-      val r = parser.parseGclScheduleElement()
+  def toGclSchemaElement(s: String): Either[GclSchemaElement, Json.ErrorMsg] = {
+    def fGclSchemaElement(parser: Parser): GclSchemaElement = {
+      val r = parser.parseGclSchemaElement()
       return r
     }
-    val r = to(s, fGclScheduleElement _)
+    val r = to(s, fGclSchemaElement _)
     return r
   }
 
-  def fromGclScheduleAssert(o: GclScheduleAssert, isCompact: B): String = {
-    val st = Printer.printGclScheduleAssert(o)
+  def fromGclSchemaComponentRef(o: GclSchemaComponentRef, isCompact: B): String = {
+    val st = Printer.printGclSchemaComponentRef(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -16101,17 +16343,17 @@ object JSON {
     }
   }
 
-  def toGclScheduleAssert(s: String): Either[GclScheduleAssert, Json.ErrorMsg] = {
-    def fGclScheduleAssert(parser: Parser): GclScheduleAssert = {
-      val r = parser.parseGclScheduleAssert()
+  def toGclSchemaComponentRef(s: String): Either[GclSchemaComponentRef, Json.ErrorMsg] = {
+    def fGclSchemaComponentRef(parser: Parser): GclSchemaComponentRef = {
+      val r = parser.parseGclSchemaComponentRef()
       return r
     }
-    val r = to(s, fGclScheduleAssert _)
+    val r = to(s, fGclSchemaComponentRef _)
     return r
   }
 
-  def fromGclScheduleComponentRef(o: GclScheduleComponentRef, isCompact: B): String = {
-    val st = Printer.printGclScheduleComponentRef(o)
+  def fromGclSchemaLabel(o: GclSchemaLabel, isCompact: B): String = {
+    val st = Printer.printGclSchemaLabel(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -16119,17 +16361,17 @@ object JSON {
     }
   }
 
-  def toGclScheduleComponentRef(s: String): Either[GclScheduleComponentRef, Json.ErrorMsg] = {
-    def fGclScheduleComponentRef(parser: Parser): GclScheduleComponentRef = {
-      val r = parser.parseGclScheduleComponentRef()
+  def toGclSchemaLabel(s: String): Either[GclSchemaLabel, Json.ErrorMsg] = {
+    def fGclSchemaLabel(parser: Parser): GclSchemaLabel = {
+      val r = parser.parseGclSchemaLabel()
       return r
     }
-    val r = to(s, fGclScheduleComponentRef _)
+    val r = to(s, fGclSchemaLabel _)
     return r
   }
 
-  def fromGclScheduleSplitJoin(o: GclScheduleSplitJoin, isCompact: B): String = {
-    val st = Printer.printGclScheduleSplitJoin(o)
+  def fromGclSchemaSplitJoin(o: GclSchemaSplitJoin, isCompact: B): String = {
+    val st = Printer.printGclSchemaSplitJoin(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -16137,17 +16379,17 @@ object JSON {
     }
   }
 
-  def toGclScheduleSplitJoin(s: String): Either[GclScheduleSplitJoin, Json.ErrorMsg] = {
-    def fGclScheduleSplitJoin(parser: Parser): GclScheduleSplitJoin = {
-      val r = parser.parseGclScheduleSplitJoin()
+  def toGclSchemaSplitJoin(s: String): Either[GclSchemaSplitJoin, Json.ErrorMsg] = {
+    def fGclSchemaSplitJoin(parser: Parser): GclSchemaSplitJoin = {
+      val r = parser.parseGclSchemaSplitJoin()
       return r
     }
-    val r = to(s, fGclScheduleSplitJoin _)
+    val r = to(s, fGclSchemaSplitJoin _)
     return r
   }
 
-  def fromGclScheduleSequence(o: GclScheduleSequence, isCompact: B): String = {
-    val st = Printer.printGclScheduleSequence(o)
+  def fromGclSchemaSequence(o: GclSchemaSequence, isCompact: B): String = {
+    val st = Printer.printGclSchemaSequence(o)
     if (isCompact) {
       return st.renderCompact
     } else {
@@ -16155,12 +16397,156 @@ object JSON {
     }
   }
 
-  def toGclScheduleSequence(s: String): Either[GclScheduleSequence, Json.ErrorMsg] = {
-    def fGclScheduleSequence(parser: Parser): GclScheduleSequence = {
-      val r = parser.parseGclScheduleSequence()
+  def toGclSchemaSequence(s: String): Either[GclSchemaSequence, Json.ErrorMsg] = {
+    def fGclSchemaSequence(parser: Parser): GclSchemaSequence = {
+      val r = parser.parseGclSchemaSequence()
       return r
     }
-    val r = to(s, fGclScheduleSequence _)
+    val r = to(s, fGclSchemaSequence _)
+    return r
+  }
+
+  def fromGclCompositionProperty(o: GclCompositionProperty, isCompact: B): String = {
+    val st = Printer.printGclCompositionProperty(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclCompositionProperty(s: String): Either[GclCompositionProperty, Json.ErrorMsg] = {
+    def fGclCompositionProperty(parser: Parser): GclCompositionProperty = {
+      val r = parser.parseGclCompositionProperty()
+      return r
+    }
+    val r = to(s, fGclCompositionProperty _)
+    return r
+  }
+
+  def fromGclPropertyBinding(o: GclPropertyBinding, isCompact: B): String = {
+    val st = Printer.printGclPropertyBinding(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclPropertyBinding(s: String): Either[GclPropertyBinding, Json.ErrorMsg] = {
+    def fGclPropertyBinding(parser: Parser): GclPropertyBinding = {
+      val r = parser.parseGclPropertyBinding()
+      return r
+    }
+    val r = to(s, fGclPropertyBinding _)
+    return r
+  }
+
+  def fromGclSchemaPoint(o: GclSchemaPoint, isCompact: B): String = {
+    val st = Printer.printGclSchemaPoint(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclSchemaPoint(s: String): Either[GclSchemaPoint, Json.ErrorMsg] = {
+    def fGclSchemaPoint(parser: Parser): GclSchemaPoint = {
+      val r = parser.parseGclSchemaPoint()
+      return r
+    }
+    val r = to(s, fGclSchemaPoint _)
+    return r
+  }
+
+  def fromGclPointStart(o: GclPointStart, isCompact: B): String = {
+    val st = Printer.printGclPointStart(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclPointStart(s: String): Either[GclPointStart, Json.ErrorMsg] = {
+    def fGclPointStart(parser: Parser): GclPointStart = {
+      val r = parser.parseGclPointStart()
+      return r
+    }
+    val r = to(s, fGclPointStart _)
+    return r
+  }
+
+  def fromGclPointEnd(o: GclPointEnd, isCompact: B): String = {
+    val st = Printer.printGclPointEnd(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclPointEnd(s: String): Either[GclPointEnd, Json.ErrorMsg] = {
+    def fGclPointEnd(parser: Parser): GclPointEnd = {
+      val r = parser.parseGclPointEnd()
+      return r
+    }
+    val r = to(s, fGclPointEnd _)
+    return r
+  }
+
+  def fromGclPointAt(o: GclPointAt, isCompact: B): String = {
+    val st = Printer.printGclPointAt(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclPointAt(s: String): Either[GclPointAt, Json.ErrorMsg] = {
+    def fGclPointAt(parser: Parser): GclPointAt = {
+      val r = parser.parseGclPointAt()
+      return r
+    }
+    val r = to(s, fGclPointAt _)
+    return r
+  }
+
+  def fromGclPointBefore(o: GclPointBefore, isCompact: B): String = {
+    val st = Printer.printGclPointBefore(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclPointBefore(s: String): Either[GclPointBefore, Json.ErrorMsg] = {
+    def fGclPointBefore(parser: Parser): GclPointBefore = {
+      val r = parser.parseGclPointBefore()
+      return r
+    }
+    val r = to(s, fGclPointBefore _)
+    return r
+  }
+
+  def fromGclPointAfter(o: GclPointAfter, isCompact: B): String = {
+    val st = Printer.printGclPointAfter(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclPointAfter(s: String): Either[GclPointAfter, Json.ErrorMsg] = {
+    def fGclPointAfter(parser: Parser): GclPointAfter = {
+      val r = parser.parseGclPointAfter()
+      return r
+    }
+    val r = to(s, fGclPointAfter _)
     return r
   }
 

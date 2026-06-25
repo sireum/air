@@ -1735,6 +1735,8 @@ object JSON {
       return printObject(ISZ(
         ("type", st""""GclCompositionProperty""""),
         ("id", printString(o.id)),
+        ("isAbstract", printB(o.isAbstract)),
+        ("extendsOpt", printOption(T, o.extendsOpt, printString _)),
         ("descriptor", printOption(T, o.descriptor, printString _)),
         ("bindings", printISZ(F, o.bindings, printGclPropertyBinding _)),
         ("attr", printAttr(o.attr))
@@ -7747,6 +7749,12 @@ object JSON {
       parser.parseObjectKey("id")
       val id = parser.parseString()
       parser.parseObjectNext()
+      parser.parseObjectKey("isAbstract")
+      val isAbstract = parser.parseB()
+      parser.parseObjectNext()
+      parser.parseObjectKey("extendsOpt")
+      val extendsOpt = parser.parseOption(parser.parseString _)
+      parser.parseObjectNext()
       parser.parseObjectKey("descriptor")
       val descriptor = parser.parseOption(parser.parseString _)
       parser.parseObjectNext()
@@ -7756,7 +7764,7 @@ object JSON {
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclCompositionProperty(id, descriptor, bindings, attr)
+      return GclCompositionProperty(id, isAbstract, extendsOpt, descriptor, bindings, attr)
     }
 
     def parseGclPropertyBinding(): GclPropertyBinding = {

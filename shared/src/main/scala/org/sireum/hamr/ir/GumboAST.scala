@@ -522,7 +522,15 @@ import org.sireum.message.Position
 // A named assertion decoration of the schema. Each property generates its own
 // VC set over the shared net; a property's VCs see only its own bindings, and
 // unbound points lower to `true` (design D5).
+// isAbstract: an abstract property is a base only -- never instantiated, so no VC
+// set or monitor checks are generated for it (design D9).
+// extendsOpt: the single parent property (same composition) this one specializes;
+// the child's effective bindings are the parent's (transitively) plus its own,
+// conjoined per schema point (strengthen-only). Concrete syntax allows
+// ':>' | 'specializes' (SysMLv2 specialization synonyms).
 @datatype class GclCompositionProperty(val id: String,
+                                       val isAbstract: B,
+                                       val extendsOpt: Option[String],
                                        val descriptor: Option[String],
                                        val bindings: ISZ[GclPropertyBinding],
                                        @hidden val attr: Attr) extends GclClause {
@@ -533,8 +541,10 @@ import org.sireum.message.Position
   }
 
   @pure def prettyST: ST = {
+    val abs: String = if (isAbstract) "abstract " else ""
+    val ext: Option[ST] = extendsOpt.map((p: String) => st" :> $p")
     return (
-      st"""property $id $descriptor {
+      st"""${abs}property $id$ext $descriptor {
           |  ${(for (b <- bindings) yield b.prettyST, "\n")}
           |}""")
   }

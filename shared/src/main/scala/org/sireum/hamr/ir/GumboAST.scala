@@ -524,13 +524,14 @@ import org.sireum.message.Position
 // unbound points lower to `true` (design D5).
 // isAbstract: an abstract property is a base only -- never instantiated, so no VC
 // set or monitor checks are generated for it (design D9).
-// extendsOpt: the single parent property (same composition) this one specializes;
-// the child's effective bindings are the parent's (transitively) plus its own,
-// conjoined per schema point (strengthen-only). Concrete syntax allows
-// ':>' | 'specializes' (SysMLv2 specialization synonyms).
+// parents: the parent properties (same composition) this one specializes -- empty
+// when it has no parent. The child's effective bindings are all parents'
+// (transitively, with a shared ancestor folded in once) plus its own, conjoined
+// per schema point (strengthen-only). Concrete syntax allows ':>' | 'specializes'
+// (SysMLv2 specialization synonyms), comma-separated for multiple parents.
 @datatype class GclCompositionProperty(val id: String,
                                        val isAbstract: B,
-                                       val extendsOpt: Option[String],
+                                       val parents: ISZ[String],
                                        val descriptor: Option[String],
                                        val bindings: ISZ[GclPropertyBinding],
                                        @hidden val attr: Attr) extends GclClause {
@@ -542,7 +543,7 @@ import org.sireum.message.Position
 
   @pure def prettyST: ST = {
     val abs: String = if (isAbstract) "abstract " else ""
-    val ext: Option[ST] = extendsOpt.map((p: String) => st" :> $p")
+    val ext: Option[ST] = if (parents.isEmpty) None() else Some(st" :> ${(parents, ", ")}")
     return (
       st"""${abs}property $id$ext $descriptor {
           |  ${(for (b <- bindings) yield b.prettyST, "\n")}

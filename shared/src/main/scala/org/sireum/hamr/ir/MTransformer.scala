@@ -1373,10 +1373,6 @@ object MTransformer {
 
   val PostResultSysmlAstGumboAnnotation: MOption[SysmlAst.GumboAnnotation] = MNone()
 
-  val PreResultGclPropertyBinding: PreResult[GclPropertyBinding] = PreResult(T, MNone())
-
-  val PostResultGclPropertyBinding: MOption[GclPropertyBinding] = MNone()
-
   val PreResultAttr: PreResult[Attr] = PreResult(T, MNone())
 
   val PostResultAttr: MOption[Attr] = MNone()
@@ -1384,6 +1380,10 @@ object MTransformer {
   val PreResultResolvedAttr: PreResult[ResolvedAttr] = PreResult(T, MNone())
 
   val PostResultResolvedAttr: MOption[ResolvedAttr] = MNone()
+
+  val PreResultGclPropertyBinding: PreResult[GclPropertyBinding] = PreResult(T, MNone())
+
+  val PostResultGclPropertyBinding: MOption[GclPropertyBinding] = MNone()
 
   val PreResultResolvedInfoBuiltIn: PreResult[ResolvedInfo] = PreResult(T, MNone())
 
@@ -1409,25 +1409,25 @@ object MTransformer {
 
   val PostResultResolvedInfoAllocationUsage: MOption[ResolvedInfo] = MNone()
 
-  val PreResultGclPointEnd: PreResult[GclPointEnd] = PreResult(T, MNone())
-
-  val PostResultGclPointEnd: MOption[GclPointEnd] = MNone()
-
   val PreResultResolvedInfoAttributeUsage: PreResult[ResolvedInfo] = PreResult(T, MNone())
 
   val PostResultResolvedInfoAttributeUsage: MOption[ResolvedInfo] = MNone()
+
+  val PreResultGclPointEnd: PreResult[GclPointEnd] = PreResult(T, MNone())
+
+  val PostResultGclPointEnd: MOption[GclPointEnd] = MNone()
 
   val PreResultResolvedInfoConnectionUsage: PreResult[ResolvedInfo] = PreResult(T, MNone())
 
   val PostResultResolvedInfoConnectionUsage: MOption[ResolvedInfo] = MNone()
 
-  val PreResultGclPointAt: PreResult[GclPointAt] = PreResult(T, MNone())
-
-  val PostResultGclPointAt: MOption[GclPointAt] = MNone()
-
   val PreResultResolvedInfoItemUsage: PreResult[ResolvedInfo] = PreResult(T, MNone())
 
   val PostResultResolvedInfoItemUsage: MOption[ResolvedInfo] = MNone()
+
+  val PreResultGclPointAt: PreResult[GclPointAt] = PreResult(T, MNone())
+
+  val PostResultGclPointAt: MOption[GclPointAt] = MNone()
 
   val PreResultResolvedInfoPartUsage: PreResult[ResolvedInfo] = PreResult(T, MNone())
 
@@ -1437,13 +1437,13 @@ object MTransformer {
 
   val PostResultResolvedInfoPortUsage: MOption[ResolvedInfo] = MNone()
 
-  val PreResultGclPointBefore: PreResult[GclPointBefore] = PreResult(T, MNone())
-
-  val PostResultGclPointBefore: MOption[GclPointBefore] = MNone()
-
   val PreResultResolvedInfoReferenceUsage: PreResult[ResolvedInfo] = PreResult(T, MNone())
 
   val PostResultResolvedInfoReferenceUsage: MOption[ResolvedInfo] = MNone()
+
+  val PreResultGclPointBefore: PreResult[GclPointBefore] = PreResult(T, MNone())
+
+  val PostResultGclPointBefore: MOption[GclPointBefore] = MNone()
 
   val PreResultGclPointAfter: PreResult[GclPointAfter] = PreResult(T, MNone())
 
@@ -1461,13 +1461,13 @@ object MTransformer {
 
   val PostResultGclLib: MOption[GclLib] = MNone()
 
-  val PreResultInfoFlowClause: PreResult[InfoFlowClause] = PreResult(T, MNone())
-
-  val PostResultInfoFlowClause: MOption[InfoFlowClause] = MNone()
-
   val PreResultTypedAttr: PreResult[TypedAttr] = PreResult(T, MNone())
 
   val PostResultTypedAttr: MOption[TypedAttr] = MNone()
+
+  val PreResultInfoFlowClause: PreResult[InfoFlowClause] = PreResult(T, MNone())
+
+  val PostResultInfoFlowClause: MOption[InfoFlowClause] = MNone()
 
   val PreResultTypedPackage: PreResult[Typed] = PreResult(T, MNone())
 
@@ -5941,16 +5941,16 @@ import MTransformer._
     return PreResultSysmlAstGumboAnnotation
   }
 
-  def preGclPropertyBinding(o: GclPropertyBinding): PreResult[GclPropertyBinding] = {
-    return PreResultGclPropertyBinding
-  }
-
   def preAttr(o: Attr): PreResult[Attr] = {
     return PreResultAttr
   }
 
   def preResolvedAttr(o: ResolvedAttr): PreResult[ResolvedAttr] = {
     return PreResultResolvedAttr
+  }
+
+  def preGclPropertyBinding(o: GclPropertyBinding): PreResult[GclPropertyBinding] = {
+    return PreResultGclPropertyBinding
   }
 
   def preResolvedInfo(o: ResolvedInfo): PreResult[ResolvedInfo] = {
@@ -5979,6 +5979,10 @@ import MTransformer._
 
   def preResolvedInfoEnum(o: ResolvedInfo.Enum): PreResult[ResolvedInfo] = {
     return PreResultResolvedInfoEnum
+  }
+
+  def preResolvedInfoEnumElement(o: ResolvedInfo.EnumElement): PreResult[ResolvedInfo] = {
+    return PreResultResolvedInfoEnumElement
   }
 
   def preGclSchemaPoint(o: GclSchemaPoint): PreResult[GclSchemaPoint] = {
@@ -6021,10 +6025,6 @@ import MTransformer._
     }
   }
 
-  def preResolvedInfoEnumElement(o: ResolvedInfo.EnumElement): PreResult[ResolvedInfo] = {
-    return PreResultResolvedInfoEnumElement
-  }
-
   def preGclPointStart(o: GclPointStart): PreResult[GclPointStart] = {
     return PreResultGclPointStart
   }
@@ -6033,24 +6033,24 @@ import MTransformer._
     return PreResultResolvedInfoAllocationUsage
   }
 
-  def preGclPointEnd(o: GclPointEnd): PreResult[GclPointEnd] = {
-    return PreResultGclPointEnd
-  }
-
   def preResolvedInfoAttributeUsage(o: ResolvedInfo.AttributeUsage): PreResult[ResolvedInfo] = {
     return PreResultResolvedInfoAttributeUsage
+  }
+
+  def preGclPointEnd(o: GclPointEnd): PreResult[GclPointEnd] = {
+    return PreResultGclPointEnd
   }
 
   def preResolvedInfoConnectionUsage(o: ResolvedInfo.ConnectionUsage): PreResult[ResolvedInfo] = {
     return PreResultResolvedInfoConnectionUsage
   }
 
-  def preGclPointAt(o: GclPointAt): PreResult[GclPointAt] = {
-    return PreResultGclPointAt
-  }
-
   def preResolvedInfoItemUsage(o: ResolvedInfo.ItemUsage): PreResult[ResolvedInfo] = {
     return PreResultResolvedInfoItemUsage
+  }
+
+  def preGclPointAt(o: GclPointAt): PreResult[GclPointAt] = {
+    return PreResultGclPointAt
   }
 
   def preResolvedInfoPartUsage(o: ResolvedInfo.PartUsage): PreResult[ResolvedInfo] = {
@@ -6061,12 +6061,12 @@ import MTransformer._
     return PreResultResolvedInfoPortUsage
   }
 
-  def preGclPointBefore(o: GclPointBefore): PreResult[GclPointBefore] = {
-    return PreResultGclPointBefore
-  }
-
   def preResolvedInfoReferenceUsage(o: ResolvedInfo.ReferenceUsage): PreResult[ResolvedInfo] = {
     return PreResultResolvedInfoReferenceUsage
+  }
+
+  def preGclPointBefore(o: GclPointBefore): PreResult[GclPointBefore] = {
+    return PreResultGclPointBefore
   }
 
   def preType(o: Type): PreResult[Type] = {
@@ -6091,12 +6091,12 @@ import MTransformer._
     return PreResultGclLib
   }
 
-  def preInfoFlowClause(o: InfoFlowClause): PreResult[InfoFlowClause] = {
-    return PreResultInfoFlowClause
-  }
-
   def preTypedAttr(o: TypedAttr): PreResult[TypedAttr] = {
     return PreResultTypedAttr
+  }
+
+  def preInfoFlowClause(o: InfoFlowClause): PreResult[InfoFlowClause] = {
+    return PreResultInfoFlowClause
   }
 
   def preTyped(o: Typed): PreResult[Typed] = {
@@ -10573,16 +10573,16 @@ import MTransformer._
     return PostResultSysmlAstGumboAnnotation
   }
 
-  def postGclPropertyBinding(o: GclPropertyBinding): MOption[GclPropertyBinding] = {
-    return PostResultGclPropertyBinding
-  }
-
   def postAttr(o: Attr): MOption[Attr] = {
     return PostResultAttr
   }
 
   def postResolvedAttr(o: ResolvedAttr): MOption[ResolvedAttr] = {
     return PostResultResolvedAttr
+  }
+
+  def postGclPropertyBinding(o: GclPropertyBinding): MOption[GclPropertyBinding] = {
+    return PostResultGclPropertyBinding
   }
 
   def postResolvedInfo(o: ResolvedInfo): MOption[ResolvedInfo] = {
@@ -10611,6 +10611,10 @@ import MTransformer._
 
   def postResolvedInfoEnum(o: ResolvedInfo.Enum): MOption[ResolvedInfo] = {
     return PostResultResolvedInfoEnum
+  }
+
+  def postResolvedInfoEnumElement(o: ResolvedInfo.EnumElement): MOption[ResolvedInfo] = {
+    return PostResultResolvedInfoEnumElement
   }
 
   def postGclSchemaPoint(o: GclSchemaPoint): MOption[GclSchemaPoint] = {
@@ -10653,10 +10657,6 @@ import MTransformer._
     }
   }
 
-  def postResolvedInfoEnumElement(o: ResolvedInfo.EnumElement): MOption[ResolvedInfo] = {
-    return PostResultResolvedInfoEnumElement
-  }
-
   def postGclPointStart(o: GclPointStart): MOption[GclPointStart] = {
     return PostResultGclPointStart
   }
@@ -10665,24 +10665,24 @@ import MTransformer._
     return PostResultResolvedInfoAllocationUsage
   }
 
-  def postGclPointEnd(o: GclPointEnd): MOption[GclPointEnd] = {
-    return PostResultGclPointEnd
-  }
-
   def postResolvedInfoAttributeUsage(o: ResolvedInfo.AttributeUsage): MOption[ResolvedInfo] = {
     return PostResultResolvedInfoAttributeUsage
+  }
+
+  def postGclPointEnd(o: GclPointEnd): MOption[GclPointEnd] = {
+    return PostResultGclPointEnd
   }
 
   def postResolvedInfoConnectionUsage(o: ResolvedInfo.ConnectionUsage): MOption[ResolvedInfo] = {
     return PostResultResolvedInfoConnectionUsage
   }
 
-  def postGclPointAt(o: GclPointAt): MOption[GclPointAt] = {
-    return PostResultGclPointAt
-  }
-
   def postResolvedInfoItemUsage(o: ResolvedInfo.ItemUsage): MOption[ResolvedInfo] = {
     return PostResultResolvedInfoItemUsage
+  }
+
+  def postGclPointAt(o: GclPointAt): MOption[GclPointAt] = {
+    return PostResultGclPointAt
   }
 
   def postResolvedInfoPartUsage(o: ResolvedInfo.PartUsage): MOption[ResolvedInfo] = {
@@ -10693,12 +10693,12 @@ import MTransformer._
     return PostResultResolvedInfoPortUsage
   }
 
-  def postGclPointBefore(o: GclPointBefore): MOption[GclPointBefore] = {
-    return PostResultGclPointBefore
-  }
-
   def postResolvedInfoReferenceUsage(o: ResolvedInfo.ReferenceUsage): MOption[ResolvedInfo] = {
     return PostResultResolvedInfoReferenceUsage
+  }
+
+  def postGclPointBefore(o: GclPointBefore): MOption[GclPointBefore] = {
+    return PostResultGclPointBefore
   }
 
   def postType(o: Type): MOption[Type] = {
@@ -10723,12 +10723,12 @@ import MTransformer._
     return PostResultGclLib
   }
 
-  def postInfoFlowClause(o: InfoFlowClause): MOption[InfoFlowClause] = {
-    return PostResultInfoFlowClause
-  }
-
   def postTypedAttr(o: TypedAttr): MOption[TypedAttr] = {
     return PostResultTypedAttr
+  }
+
+  def postInfoFlowClause(o: InfoFlowClause): MOption[InfoFlowClause] = {
+    return PostResultInfoFlowClause
   }
 
   def postTyped(o: Typed): MOption[Typed] = {
@@ -21635,35 +21635,6 @@ import MTransformer._
     }
   }
 
-  def transformGclPropertyBinding(o: GclPropertyBinding): MOption[GclPropertyBinding] = {
-    val preR: PreResult[GclPropertyBinding] = preGclPropertyBinding(o)
-    val r: MOption[GclPropertyBinding] = if (preR.continu) {
-      val o2: GclPropertyBinding = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[GclSchemaPoint] = transformGclSchemaPoint(o2.point)
-      val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
-      val r2: MOption[Attr] = transformAttr(o2.attr)
-      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
-        MSome(o2(point = r0.getOrElse(o2.point), exp = r1.getOrElse(o2.exp), attr = r2.getOrElse(o2.attr)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: GclPropertyBinding = r.getOrElse(o)
-    val postR: MOption[GclPropertyBinding] = postGclPropertyBinding(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
   def transformAttr(o: Attr): MOption[Attr] = {
     val preR: PreResult[Attr] = preAttr(o)
     val r: MOption[Attr] = if (preR.continu) {
@@ -21709,6 +21680,35 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: ResolvedAttr = r.getOrElse(o)
     val postR: MOption[ResolvedAttr] = postResolvedAttr(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
+  def transformGclPropertyBinding(o: GclPropertyBinding): MOption[GclPropertyBinding] = {
+    val preR: PreResult[GclPropertyBinding] = preGclPropertyBinding(o)
+    val r: MOption[GclPropertyBinding] = if (preR.continu) {
+      val o2: GclPropertyBinding = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[GclSchemaPoint] = transformGclSchemaPoint(o2.point)
+      val r1: MOption[org.sireum.lang.ast.Exp] = transform_langastExp(o2.exp)
+      val r2: MOption[Attr] = transformAttr(o2.attr)
+      if (hasChanged || r0.nonEmpty || r1.nonEmpty || r2.nonEmpty)
+        MSome(o2(point = r0.getOrElse(o2.point), exp = r1.getOrElse(o2.exp), attr = r2.getOrElse(o2.attr)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: GclPropertyBinding = r.getOrElse(o)
+    val postR: MOption[GclPropertyBinding] = postGclPropertyBinding(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {
@@ -22076,6 +22076,33 @@ import MTransformer._
     }
   }
 
+  def transformTypedAttr(o: TypedAttr): MOption[TypedAttr] = {
+    val preR: PreResult[TypedAttr] = preTypedAttr(o)
+    val r: MOption[TypedAttr] = if (preR.continu) {
+      val o2: TypedAttr = preR.resultOpt.getOrElse(o)
+      val hasChanged: B = preR.resultOpt.nonEmpty
+      val r0: MOption[Option[Typed]] = transformOption(o2.typedOpt, transformTyped _)
+      if (hasChanged || r0.nonEmpty)
+        MSome(o2(typedOpt = r0.getOrElse(o2.typedOpt)))
+      else
+        MNone()
+    } else if (preR.resultOpt.nonEmpty) {
+      MSome(preR.resultOpt.getOrElse(o))
+    } else {
+      MNone()
+    }
+    val hasChanged: B = r.nonEmpty
+    val o2: TypedAttr = r.getOrElse(o)
+    val postR: MOption[TypedAttr] = postTypedAttr(o2)
+    if (postR.nonEmpty) {
+      return postR
+    } else if (hasChanged) {
+      return MSome(o2)
+    } else {
+      return MNone()
+    }
+  }
+
   def transformInfoFlowClause(o: InfoFlowClause): MOption[InfoFlowClause] = {
     val preR: PreResult[InfoFlowClause] = preInfoFlowClause(o)
     val r: MOption[InfoFlowClause] = if (preR.continu) {
@@ -22096,33 +22123,6 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: InfoFlowClause = r.getOrElse(o)
     val postR: MOption[InfoFlowClause] = postInfoFlowClause(o2)
-    if (postR.nonEmpty) {
-      return postR
-    } else if (hasChanged) {
-      return MSome(o2)
-    } else {
-      return MNone()
-    }
-  }
-
-  def transformTypedAttr(o: TypedAttr): MOption[TypedAttr] = {
-    val preR: PreResult[TypedAttr] = preTypedAttr(o)
-    val r: MOption[TypedAttr] = if (preR.continu) {
-      val o2: TypedAttr = preR.resultOpt.getOrElse(o)
-      val hasChanged: B = preR.resultOpt.nonEmpty
-      val r0: MOption[Option[Typed]] = transformOption(o2.typedOpt, transformTyped _)
-      if (hasChanged || r0.nonEmpty)
-        MSome(o2(typedOpt = r0.getOrElse(o2.typedOpt)))
-      else
-        MNone()
-    } else if (preR.resultOpt.nonEmpty) {
-      MSome(preR.resultOpt.getOrElse(o))
-    } else {
-      MNone()
-    }
-    val hasChanged: B = r.nonEmpty
-    val o2: TypedAttr = r.getOrElse(o)
-    val postR: MOption[TypedAttr] = postTypedAttr(o2)
     if (postR.nonEmpty) {
       return postR
     } else if (hasChanged) {

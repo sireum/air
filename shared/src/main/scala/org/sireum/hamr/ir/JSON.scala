@@ -160,6 +160,7 @@ import org.sireum.hamr.ir.GclIntegration
 import org.sireum.hamr.ir.GclCaseStatement
 import org.sireum.hamr.ir.GclInitialize
 import org.sireum.hamr.ir.GclCompute
+import org.sireum.hamr.ir.GclAlert
 import org.sireum.hamr.ir.GclMonitor
 import org.sireum.hamr.ir.GclHandle
 import org.sireum.hamr.ir.GclComposition
@@ -1457,6 +1458,7 @@ object JSON {
         case o: GclCaseStatement => return printGclCaseStatement(o)
         case o: GclInitialize => return printGclInitialize(o)
         case o: GclCompute => return printGclCompute(o)
+        case o: GclAlert => return printGclAlert(o)
         case o: GclMonitor => return printGclMonitor(o)
         case o: GclHandle => return printGclHandle(o)
         case o: GclComposition => return printGclComposition(o)
@@ -1641,10 +1643,20 @@ object JSON {
       ))
     }
 
+    @pure def printGclAlert(o: GclAlert): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclAlert""""),
+        ("guaranteeId", printString(o.guaranteeId)),
+        ("portId", printString(o.portId)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
     @pure def printGclMonitor(o: GclMonitor): ST = {
       return printObject(ISZ(
         ("type", st""""GclMonitor""""),
         ("guarantees", printISZ(F, o.guarantees, printGclGuarantee _)),
+        ("alerts", printISZ(F, o.alerts, printGclAlert _)),
         ("attr", printAttr(o.attr))
       ))
     }
@@ -7238,7 +7250,7 @@ object JSON {
     }
 
     def parseGclSymbol(): GclSymbol = {
-      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclSpecMethod", "GclBodyMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclMonitor", "GclHandle", "GclComposition", "GclCompositionComponentAlias", "GclCompositionPortAlias", "GclCompositionStateVarAlias", "GclSchemaComponentRef", "GclSchemaLabel", "GclSchemaSplitJoin", "GclSchemaSequence", "GclCompositionProperty", "GclPropertyBinding", "GclPointStart", "GclPointEnd", "GclPointAt", "GclPointBefore", "GclPointAfter", "GclTODO", "GclLib", "InfoFlowClause"))
+      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclSpecMethod", "GclBodyMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclAlert", "GclMonitor", "GclHandle", "GclComposition", "GclCompositionComponentAlias", "GclCompositionPortAlias", "GclCompositionStateVarAlias", "GclSchemaComponentRef", "GclSchemaLabel", "GclSchemaSplitJoin", "GclSchemaSequence", "GclCompositionProperty", "GclPropertyBinding", "GclPointStart", "GclPointEnd", "GclPointAt", "GclPointBefore", "GclPointAfter", "GclTODO", "GclLib", "InfoFlowClause"))
       t.native match {
         case "GclSubclause" => val r = parseGclSubclauseT(T); return r
         case "GclSpecMethod" => val r = parseGclSpecMethodT(T); return r
@@ -7251,6 +7263,7 @@ object JSON {
         case "GclCaseStatement" => val r = parseGclCaseStatementT(T); return r
         case "GclInitialize" => val r = parseGclInitializeT(T); return r
         case "GclCompute" => val r = parseGclComputeT(T); return r
+        case "GclAlert" => val r = parseGclAlertT(T); return r
         case "GclMonitor" => val r = parseGclMonitorT(T); return r
         case "GclHandle" => val r = parseGclHandleT(T); return r
         case "GclComposition" => val r = parseGclCompositionT(T); return r
@@ -7600,6 +7613,27 @@ object JSON {
       return GclCompute(modifies, assumes, guarantees, cases, handlers, flows, attr)
     }
 
+    def parseGclAlert(): GclAlert = {
+      val r = parseGclAlertT(F)
+      return r
+    }
+
+    def parseGclAlertT(typeParsed: B): GclAlert = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclAlert")
+      }
+      parser.parseObjectKey("guaranteeId")
+      val guaranteeId = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("portId")
+      val portId = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclAlert(guaranteeId, portId, attr)
+    }
+
     def parseGclMonitor(): GclMonitor = {
       val r = parseGclMonitorT(F)
       return r
@@ -7612,10 +7646,13 @@ object JSON {
       parser.parseObjectKey("guarantees")
       val guarantees = parser.parseISZ(parseGclGuarantee _)
       parser.parseObjectNext()
+      parser.parseObjectKey("alerts")
+      val alerts = parser.parseISZ(parseGclAlert _)
+      parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclMonitor(guarantees, attr)
+      return GclMonitor(guarantees, alerts, attr)
     }
 
     def parseGclHandle(): GclHandle = {
@@ -16424,6 +16461,24 @@ object JSON {
       return r
     }
     val r = to(s, fGclCompute _)
+    return r
+  }
+
+  def fromGclAlert(o: GclAlert, isCompact: B): String = {
+    val st = Printer.printGclAlert(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclAlert(s: String): Either[GclAlert, Json.ErrorMsg] = {
+    def fGclAlert(parser: Parser): GclAlert = {
+      val r = parser.parseGclAlert()
+      return r
+    }
+    val r = to(s, fGclAlert _)
     return r
   }
 

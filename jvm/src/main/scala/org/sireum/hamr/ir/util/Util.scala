@@ -168,6 +168,10 @@ object Util {
       return MTransformer.PreResult(T, MSome(o(attr = o.attr(scrubPos(o.posOpt)))))
     }
 
+    override def preGclAlert(o: GclAlert): MTransformer.PreResult[GclAlert] = {
+      return MTransformer.PreResult(T, MSome(o(attr = o.attr(scrubPos(o.posOpt)))))
+    }
+
     override def preGclInvariant(o: GclInvariant): MTransformer.PreResult[GclInvariant] = {
       return MTransformer.PreResult(T, MSome(o(attr = o.attr(scrubPos(o.posOpt)))))
     }

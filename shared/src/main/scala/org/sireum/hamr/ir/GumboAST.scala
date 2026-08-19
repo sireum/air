@@ -317,7 +317,22 @@ import org.sireum.message.Position
   }
 }
 
+@datatype class GclAlert(val guaranteeId: String,
+                         val portId: String,
+                         @hidden val attr: Attr) extends GclSymbol {
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @pure def prettyST: ST = {
+    return st"alert $guaranteeId on $portId"
+  }
+}
+
 @datatype class GclMonitor(val guarantees: ISZ[GclGuarantee],
+                           val alerts: ISZ[GclAlert],
                            @hidden val attr: Attr) extends GclSymbol {
   @strictpure override def posOpt: Option[Position] = attr.posOpt
 
@@ -331,9 +346,14 @@ import org.sireum.message.Position
       if (guarantees.nonEmpty) Some(
         st"${(guarantees, "\n")}")
       else None()
+    val salerts: Option[ST] =
+      if (alerts.nonEmpty) Some(
+        st"${(alerts, "\n")}")
+      else None()
 
     return (
-      st"""$sguarantees""")
+      st"""$sguarantees
+          |$salerts""")
   }
 }
 

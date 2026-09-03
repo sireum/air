@@ -160,6 +160,8 @@ import org.sireum.hamr.ir.GclIntegration
 import org.sireum.hamr.ir.GclCaseStatement
 import org.sireum.hamr.ir.GclInitialize
 import org.sireum.hamr.ir.GclCompute
+import org.sireum.hamr.ir.GclAlert
+import org.sireum.hamr.ir.GclMonitor
 import org.sireum.hamr.ir.GclHandle
 import org.sireum.hamr.ir.GclComposition
 import org.sireum.hamr.ir.GclCompositionComponentAlias
@@ -1456,6 +1458,8 @@ object JSON {
         case o: GclCaseStatement => return printGclCaseStatement(o)
         case o: GclInitialize => return printGclInitialize(o)
         case o: GclCompute => return printGclCompute(o)
+        case o: GclAlert => return printGclAlert(o)
+        case o: GclMonitor => return printGclMonitor(o)
         case o: GclHandle => return printGclHandle(o)
         case o: GclComposition => return printGclComposition(o)
         case o: GclCompositionComponentAlias => return printGclCompositionComponentAlias(o)
@@ -1506,6 +1510,7 @@ object JSON {
         ("initializes", printOption(F, o.initializes, printGclInitialize _)),
         ("integration", printOption(F, o.integration, printGclIntegration _)),
         ("compute", printOption(F, o.compute, printGclCompute _)),
+        ("monitor", printOption(F, o.monitor, printGclMonitor _)),
         ("compositions", printISZ(F, o.compositions, printGclComposition _)),
         ("attr", printAttr(o.attr))
       ))
@@ -1634,6 +1639,24 @@ object JSON {
         ("cases", printISZ(F, o.cases, printGclCaseStatement _)),
         ("handlers", printISZ(F, o.handlers, printGclHandle _)),
         ("flows", printISZ(F, o.flows, printInfoFlowClause _)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printGclAlert(o: GclAlert): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclAlert""""),
+        ("guaranteeId", printString(o.guaranteeId)),
+        ("portId", printString(o.portId)),
+        ("attr", printAttr(o.attr))
+      ))
+    }
+
+    @pure def printGclMonitor(o: GclMonitor): ST = {
+      return printObject(ISZ(
+        ("type", st""""GclMonitor""""),
+        ("guarantees", printISZ(F, o.guarantees, printGclGuarantee _)),
+        ("alerts", printISZ(F, o.alerts, printGclAlert _)),
         ("attr", printAttr(o.attr))
       ))
     }
@@ -3724,6 +3747,8 @@ object JSON {
         case o: org.sireum.lang.ast.Exp.This => return print_langastExpThis(o)
         case o: org.sireum.lang.ast.Exp.Super => return print_langastExpSuper(o)
         case o: org.sireum.lang.ast.Exp.Unary => return print_langastExpUnary(o)
+        case o: org.sireum.lang.ast.Exp.UnaryTemporal => return print_langastExpUnaryTemporal(o)
+        case o: org.sireum.lang.ast.Exp.BinaryTemporal => return print_langastExpBinaryTemporal(o)
         case o: org.sireum.lang.ast.Exp.Binary => return print_langastExpBinary(o)
         case o: org.sireum.lang.ast.Exp.Ident => return print_langastExpIdent(o)
         case o: org.sireum.lang.ast.Exp.Eta => return print_langastExpEta(o)
@@ -3868,6 +3893,55 @@ object JSON {
         ("type", st""""org.sireum.lang.ast.Exp.Unary""""),
         ("op", print_langastExpUnaryOpType(o.op)),
         ("exp", print_langastExp(o.exp)),
+        ("attr", print_langastResolvedAttr(o.attr)),
+        ("opPosOpt", printOption(F, o.opPosOpt, printPosition _))
+      ))
+    }
+
+    @pure def print_langastExpUnaryTemporalOpType(o: org.sireum.lang.ast.Exp.UnaryTemporalOp.Type): ST = {
+      val value: String = o match {
+        case org.sireum.lang.ast.Exp.UnaryTemporalOp.Future => "Future"
+        case org.sireum.lang.ast.Exp.UnaryTemporalOp.Globally => "Globally"
+        case org.sireum.lang.ast.Exp.UnaryTemporalOp.Once => "Once"
+        case org.sireum.lang.ast.Exp.UnaryTemporalOp.Historically => "Historically"
+      }
+      return printObject(ISZ(
+        ("type", printString("org.sireum.lang.ast.Exp.UnaryTemporalOp")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def print_langastExpUnaryTemporal(o: org.sireum.lang.ast.Exp.UnaryTemporal): ST = {
+      return printObject(ISZ(
+        ("type", st""""org.sireum.lang.ast.Exp.UnaryTemporal""""),
+        ("op", print_langastExpUnaryTemporalOpType(o.op)),
+        ("exp", print_langastExp(o.exp)),
+        ("intvl", printString(o.intvl)),
+        ("attr", print_langastResolvedAttr(o.attr)),
+        ("opPosOpt", printOption(F, o.opPosOpt, printPosition _))
+      ))
+    }
+
+    @pure def print_langastExpBinaryTemporalOpType(o: org.sireum.lang.ast.Exp.BinaryTemporalOp.Type): ST = {
+      val value: String = o match {
+        case org.sireum.lang.ast.Exp.BinaryTemporalOp.Until => "Until"
+        case org.sireum.lang.ast.Exp.BinaryTemporalOp.Release => "Release"
+        case org.sireum.lang.ast.Exp.BinaryTemporalOp.Since => "Since"
+        case org.sireum.lang.ast.Exp.BinaryTemporalOp.Trigger => "Trigger"
+      }
+      return printObject(ISZ(
+        ("type", printString("org.sireum.lang.ast.Exp.BinaryTemporalOp")),
+        ("value", printString(value))
+      ))
+    }
+
+    @pure def print_langastExpBinaryTemporal(o: org.sireum.lang.ast.Exp.BinaryTemporal): ST = {
+      return printObject(ISZ(
+        ("type", st""""org.sireum.lang.ast.Exp.BinaryTemporal""""),
+        ("left", print_langastExp(o.left)),
+        ("op", print_langastExpBinaryTemporalOpType(o.op)),
+        ("intvl", printString(o.intvl)),
+        ("right", print_langastExp(o.right)),
         ("attr", print_langastResolvedAttr(o.attr)),
         ("opPosOpt", printOption(F, o.opPosOpt, printPosition _))
       ))
@@ -4400,6 +4474,14 @@ object JSON {
         case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.UnaryMinus => "UnaryMinus"
         case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.UnaryNot => "UnaryNot"
         case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.UnaryComplement => "UnaryComplement"
+        case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.UnaryFuture => "UnaryFuture"
+        case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.UnaryGlobally => "UnaryGlobally"
+        case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.UnaryOnce => "UnaryOnce"
+        case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.UnaryHistorically => "UnaryHistorically"
+        case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.BinaryUntil => "BinaryUntil"
+        case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.BinaryRelease => "BinaryRelease"
+        case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.BinarySince => "BinarySince"
+        case org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind.BinaryTrigger => "BinaryTrigger"
       }
       return printObject(ISZ(
         ("type", printString("org.sireum.lang.ast.ResolvedInfo.BuiltIn.Kind")),
@@ -7168,7 +7250,7 @@ object JSON {
     }
 
     def parseGclSymbol(): GclSymbol = {
-      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclSpecMethod", "GclBodyMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclHandle", "GclComposition", "GclCompositionComponentAlias", "GclCompositionPortAlias", "GclCompositionStateVarAlias", "GclSchemaComponentRef", "GclSchemaLabel", "GclSchemaSplitJoin", "GclSchemaSequence", "GclCompositionProperty", "GclPropertyBinding", "GclPointStart", "GclPointEnd", "GclPointAt", "GclPointBefore", "GclPointAfter", "GclTODO", "GclLib", "InfoFlowClause"))
+      val t = parser.parseObjectTypes(ISZ("GclSubclause", "GclSpecMethod", "GclBodyMethod", "GclStateVar", "GclInvariant", "GclAssume", "GclGuarantee", "GclIntegration", "GclCaseStatement", "GclInitialize", "GclCompute", "GclAlert", "GclMonitor", "GclHandle", "GclComposition", "GclCompositionComponentAlias", "GclCompositionPortAlias", "GclCompositionStateVarAlias", "GclSchemaComponentRef", "GclSchemaLabel", "GclSchemaSplitJoin", "GclSchemaSequence", "GclCompositionProperty", "GclPropertyBinding", "GclPointStart", "GclPointEnd", "GclPointAt", "GclPointBefore", "GclPointAfter", "GclTODO", "GclLib", "InfoFlowClause"))
       t.native match {
         case "GclSubclause" => val r = parseGclSubclauseT(T); return r
         case "GclSpecMethod" => val r = parseGclSpecMethodT(T); return r
@@ -7181,6 +7263,8 @@ object JSON {
         case "GclCaseStatement" => val r = parseGclCaseStatementT(T); return r
         case "GclInitialize" => val r = parseGclInitializeT(T); return r
         case "GclCompute" => val r = parseGclComputeT(T); return r
+        case "GclAlert" => val r = parseGclAlertT(T); return r
+        case "GclMonitor" => val r = parseGclMonitorT(T); return r
         case "GclHandle" => val r = parseGclHandleT(T); return r
         case "GclComposition" => val r = parseGclCompositionT(T); return r
         case "GclCompositionComponentAlias" => val r = parseGclCompositionComponentAliasT(T); return r
@@ -7252,13 +7336,16 @@ object JSON {
       parser.parseObjectKey("compute")
       val compute = parser.parseOption(parseGclCompute _)
       parser.parseObjectNext()
+      parser.parseObjectKey("monitor")
+      val monitor = parser.parseOption(parseGclMonitor _)
+      parser.parseObjectNext()
       parser.parseObjectKey("compositions")
       val compositions = parser.parseISZ(parseGclComposition _)
       parser.parseObjectNext()
       parser.parseObjectKey("attr")
       val attr = parseAttr()
       parser.parseObjectNext()
-      return GclSubclause(state, methods, invariants, initializes, integration, compute, compositions, attr)
+      return GclSubclause(state, methods, invariants, initializes, integration, compute, monitor, compositions, attr)
     }
 
     def parseGclMethod(): GclMethod = {
@@ -7524,6 +7611,48 @@ object JSON {
       val attr = parseAttr()
       parser.parseObjectNext()
       return GclCompute(modifies, assumes, guarantees, cases, handlers, flows, attr)
+    }
+
+    def parseGclAlert(): GclAlert = {
+      val r = parseGclAlertT(F)
+      return r
+    }
+
+    def parseGclAlertT(typeParsed: B): GclAlert = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclAlert")
+      }
+      parser.parseObjectKey("guaranteeId")
+      val guaranteeId = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("portId")
+      val portId = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclAlert(guaranteeId, portId, attr)
+    }
+
+    def parseGclMonitor(): GclMonitor = {
+      val r = parseGclMonitorT(F)
+      return r
+    }
+
+    def parseGclMonitorT(typeParsed: B): GclMonitor = {
+      if (!typeParsed) {
+        parser.parseObjectType("GclMonitor")
+      }
+      parser.parseObjectKey("guarantees")
+      val guarantees = parser.parseISZ(parseGclGuarantee _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("alerts")
+      val alerts = parser.parseISZ(parseGclAlert _)
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parseAttr()
+      parser.parseObjectNext()
+      return GclMonitor(guarantees, alerts, attr)
     }
 
     def parseGclHandle(): GclHandle = {
@@ -11805,7 +11934,7 @@ object JSON {
     }
 
     def parse_langastExp(): org.sireum.lang.ast.Exp = {
-      val t = parser.parseObjectTypes(ISZ("org.sireum.lang.ast.ProofAst.StepId.Num", "org.sireum.lang.ast.ProofAst.StepId.Str", "org.sireum.lang.ast.Exp.LitB", "org.sireum.lang.ast.Exp.LitC", "org.sireum.lang.ast.Exp.LitZ", "org.sireum.lang.ast.Exp.LitF32", "org.sireum.lang.ast.Exp.LitF64", "org.sireum.lang.ast.Exp.LitR", "org.sireum.lang.ast.Exp.LitString", "org.sireum.lang.ast.Exp.StringInterpolate", "org.sireum.lang.ast.Exp.This", "org.sireum.lang.ast.Exp.Super", "org.sireum.lang.ast.Exp.Unary", "org.sireum.lang.ast.Exp.Binary", "org.sireum.lang.ast.Exp.Ident", "org.sireum.lang.ast.Exp.Eta", "org.sireum.lang.ast.Exp.Tuple", "org.sireum.lang.ast.Exp.Select", "org.sireum.lang.ast.Exp.Invoke", "org.sireum.lang.ast.Exp.InvokeNamed", "org.sireum.lang.ast.Exp.If", "org.sireum.lang.ast.Exp.TypeCond", "org.sireum.lang.ast.Exp.Sym", "org.sireum.lang.ast.Exp.Fun", "org.sireum.lang.ast.Exp.ForYield", "org.sireum.lang.ast.Exp.QuantType", "org.sireum.lang.ast.Exp.QuantRange", "org.sireum.lang.ast.Exp.QuantEach", "org.sireum.lang.ast.Exp.Input", "org.sireum.lang.ast.Exp.Old", "org.sireum.lang.ast.Exp.RS", "org.sireum.lang.ast.Exp.At", "org.sireum.lang.ast.Exp.LoopIndex", "org.sireum.lang.ast.Exp.StateSeq", "org.sireum.lang.ast.Exp.Result", "org.sireum.lang.ast.Exp.StrictPureBlock", "org.sireum.lang.ast.Exp.Labeled", "org.sireum.lang.ast.Exp.AssumeAgree", "org.sireum.lang.ast.Exp.AssertAgree", "org.sireum.lang.ast.Exp.InfoFlowInvariant"))
+      val t = parser.parseObjectTypes(ISZ("org.sireum.lang.ast.ProofAst.StepId.Num", "org.sireum.lang.ast.ProofAst.StepId.Str", "org.sireum.lang.ast.Exp.LitB", "org.sireum.lang.ast.Exp.LitC", "org.sireum.lang.ast.Exp.LitZ", "org.sireum.lang.ast.Exp.LitF32", "org.sireum.lang.ast.Exp.LitF64", "org.sireum.lang.ast.Exp.LitR", "org.sireum.lang.ast.Exp.LitString", "org.sireum.lang.ast.Exp.StringInterpolate", "org.sireum.lang.ast.Exp.This", "org.sireum.lang.ast.Exp.Super", "org.sireum.lang.ast.Exp.Unary", "org.sireum.lang.ast.Exp.UnaryTemporal", "org.sireum.lang.ast.Exp.BinaryTemporal", "org.sireum.lang.ast.Exp.Binary", "org.sireum.lang.ast.Exp.Ident", "org.sireum.lang.ast.Exp.Eta", "org.sireum.lang.ast.Exp.Tuple", "org.sireum.lang.ast.Exp.Select", "org.sireum.lang.ast.Exp.Invoke", "org.sireum.lang.ast.Exp.InvokeNamed", "org.sireum.lang.ast.Exp.If", "org.sireum.lang.ast.Exp.TypeCond", "org.sireum.lang.ast.Exp.Sym", "org.sireum.lang.ast.Exp.Fun", "org.sireum.lang.ast.Exp.ForYield", "org.sireum.lang.ast.Exp.QuantType", "org.sireum.lang.ast.Exp.QuantRange", "org.sireum.lang.ast.Exp.QuantEach", "org.sireum.lang.ast.Exp.Input", "org.sireum.lang.ast.Exp.Old", "org.sireum.lang.ast.Exp.RS", "org.sireum.lang.ast.Exp.At", "org.sireum.lang.ast.Exp.LoopIndex", "org.sireum.lang.ast.Exp.StateSeq", "org.sireum.lang.ast.Exp.Result", "org.sireum.lang.ast.Exp.StrictPureBlock", "org.sireum.lang.ast.Exp.Labeled", "org.sireum.lang.ast.Exp.AssumeAgree", "org.sireum.lang.ast.Exp.AssertAgree", "org.sireum.lang.ast.Exp.InfoFlowInvariant"))
       t.native match {
         case "org.sireum.lang.ast.ProofAst.StepId.Num" => val r = parse_langastProofAstStepIdNumT(T); return r
         case "org.sireum.lang.ast.ProofAst.StepId.Str" => val r = parse_langastProofAstStepIdStrT(T); return r
@@ -11820,6 +11949,8 @@ object JSON {
         case "org.sireum.lang.ast.Exp.This" => val r = parse_langastExpThisT(T); return r
         case "org.sireum.lang.ast.Exp.Super" => val r = parse_langastExpSuperT(T); return r
         case "org.sireum.lang.ast.Exp.Unary" => val r = parse_langastExpUnaryT(T); return r
+        case "org.sireum.lang.ast.Exp.UnaryTemporal" => val r = parse_langastExpUnaryTemporalT(T); return r
+        case "org.sireum.lang.ast.Exp.BinaryTemporal" => val r = parse_langastExpBinaryTemporalT(T); return r
         case "org.sireum.lang.ast.Exp.Binary" => val r = parse_langastExpBinaryT(T); return r
         case "org.sireum.lang.ast.Exp.Ident" => val r = parse_langastExpIdentT(T); return r
         case "org.sireum.lang.ast.Exp.Eta" => val r = parse_langastExpEtaT(T); return r
@@ -12096,6 +12227,105 @@ object JSON {
       val opPosOpt = parser.parseOption(parser.parsePosition _)
       parser.parseObjectNext()
       return org.sireum.lang.ast.Exp.Unary(op, exp, attr, opPosOpt)
+    }
+
+    def parse_langastExpUnaryTemporalOpType(): org.sireum.lang.ast.Exp.UnaryTemporalOp.Type = {
+      val r = parse_langastExpUnaryTemporalOpT(F)
+      return r
+    }
+
+    def parse_langastExpUnaryTemporalOpT(typeParsed: B): org.sireum.lang.ast.Exp.UnaryTemporalOp.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("org.sireum.lang.ast.Exp.UnaryTemporalOp")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      org.sireum.lang.ast.Exp.UnaryTemporalOp.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for org.sireum.lang.ast.Exp.UnaryTemporalOp.")
+          return org.sireum.lang.ast.Exp.UnaryTemporalOp.byOrdinal(0).get
+      }
+    }
+
+    def parse_langastExpUnaryTemporal(): org.sireum.lang.ast.Exp.UnaryTemporal = {
+      val r = parse_langastExpUnaryTemporalT(F)
+      return r
+    }
+
+    def parse_langastExpUnaryTemporalT(typeParsed: B): org.sireum.lang.ast.Exp.UnaryTemporal = {
+      if (!typeParsed) {
+        parser.parseObjectType("org.sireum.lang.ast.Exp.UnaryTemporal")
+      }
+      parser.parseObjectKey("op")
+      val op = parse_langastExpUnaryTemporalOpType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("exp")
+      val exp = parse_langastExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("intvl")
+      val intvl = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parse_langastResolvedAttr()
+      parser.parseObjectNext()
+      parser.parseObjectKey("opPosOpt")
+      val opPosOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return org.sireum.lang.ast.Exp.UnaryTemporal(op, exp, intvl, attr, opPosOpt)
+    }
+
+    def parse_langastExpBinaryTemporalOpType(): org.sireum.lang.ast.Exp.BinaryTemporalOp.Type = {
+      val r = parse_langastExpBinaryTemporalOpT(F)
+      return r
+    }
+
+    def parse_langastExpBinaryTemporalOpT(typeParsed: B): org.sireum.lang.ast.Exp.BinaryTemporalOp.Type = {
+      if (!typeParsed) {
+        parser.parseObjectType("org.sireum.lang.ast.Exp.BinaryTemporalOp")
+      }
+      parser.parseObjectKey("value")
+      var i = parser.offset
+      val s = parser.parseString()
+      parser.parseObjectNext()
+      org.sireum.lang.ast.Exp.BinaryTemporalOp.byName(s) match {
+        case Some(r) => return r
+        case _ =>
+          parser.parseException(i, s"Invalid element name '$s' for org.sireum.lang.ast.Exp.BinaryTemporalOp.")
+          return org.sireum.lang.ast.Exp.BinaryTemporalOp.byOrdinal(0).get
+      }
+    }
+
+    def parse_langastExpBinaryTemporal(): org.sireum.lang.ast.Exp.BinaryTemporal = {
+      val r = parse_langastExpBinaryTemporalT(F)
+      return r
+    }
+
+    def parse_langastExpBinaryTemporalT(typeParsed: B): org.sireum.lang.ast.Exp.BinaryTemporal = {
+      if (!typeParsed) {
+        parser.parseObjectType("org.sireum.lang.ast.Exp.BinaryTemporal")
+      }
+      parser.parseObjectKey("left")
+      val left = parse_langastExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("op")
+      val op = parse_langastExpBinaryTemporalOpType()
+      parser.parseObjectNext()
+      parser.parseObjectKey("intvl")
+      val intvl = parser.parseString()
+      parser.parseObjectNext()
+      parser.parseObjectKey("right")
+      val right = parse_langastExp()
+      parser.parseObjectNext()
+      parser.parseObjectKey("attr")
+      val attr = parse_langastResolvedAttr()
+      parser.parseObjectNext()
+      parser.parseObjectKey("opPosOpt")
+      val opPosOpt = parser.parseOption(parser.parsePosition _)
+      parser.parseObjectNext()
+      return org.sireum.lang.ast.Exp.BinaryTemporal(left, op, intvl, right, attr, opPosOpt)
     }
 
     def parse_langastExpRef(): org.sireum.lang.ast.Exp.Ref = {
@@ -16234,6 +16464,42 @@ object JSON {
     return r
   }
 
+  def fromGclAlert(o: GclAlert, isCompact: B): String = {
+    val st = Printer.printGclAlert(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclAlert(s: String): Either[GclAlert, Json.ErrorMsg] = {
+    def fGclAlert(parser: Parser): GclAlert = {
+      val r = parser.parseGclAlert()
+      return r
+    }
+    val r = to(s, fGclAlert _)
+    return r
+  }
+
+  def fromGclMonitor(o: GclMonitor, isCompact: B): String = {
+    val st = Printer.printGclMonitor(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def toGclMonitor(s: String): Either[GclMonitor, Json.ErrorMsg] = {
+    def fGclMonitor(parser: Parser): GclMonitor = {
+      val r = parser.parseGclMonitor()
+      return r
+    }
+    val r = to(s, fGclMonitor _)
+    return r
+  }
+
   def fromGclHandle(o: GclHandle, isCompact: B): String = {
     val st = Printer.printGclHandle(o)
     if (isCompact) {
@@ -20137,6 +20403,42 @@ object JSON {
       return r
     }
     val r = to(s, f_langastExpUnary _)
+    return r
+  }
+
+  def from_langastExpUnaryTemporal(o: org.sireum.lang.ast.Exp.UnaryTemporal, isCompact: B): String = {
+    val st = Printer.print_langastExpUnaryTemporal(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def to_langastExpUnaryTemporal(s: String): Either[org.sireum.lang.ast.Exp.UnaryTemporal, Json.ErrorMsg] = {
+    def f_langastExpUnaryTemporal(parser: Parser): org.sireum.lang.ast.Exp.UnaryTemporal = {
+      val r = parser.parse_langastExpUnaryTemporal()
+      return r
+    }
+    val r = to(s, f_langastExpUnaryTemporal _)
+    return r
+  }
+
+  def from_langastExpBinaryTemporal(o: org.sireum.lang.ast.Exp.BinaryTemporal, isCompact: B): String = {
+    val st = Printer.print_langastExpBinaryTemporal(o)
+    if (isCompact) {
+      return st.renderCompact
+    } else {
+      return st.render
+    }
+  }
+
+  def to_langastExpBinaryTemporal(s: String): Either[org.sireum.lang.ast.Exp.BinaryTemporal, Json.ErrorMsg] = {
+    def f_langastExpBinaryTemporal(parser: Parser): org.sireum.lang.ast.Exp.BinaryTemporal = {
+      val r = parser.parse_langastExpBinaryTemporal()
+      return r
+    }
+    val r = to(s, f_langastExpBinaryTemporal _)
     return r
   }
 

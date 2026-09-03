@@ -43,6 +43,7 @@ import org.sireum.message.Position
                              val initializes: Option[GclInitialize],
                              val integration: Option[GclIntegration],
                              val compute: Option[GclCompute],
+                             val monitor: Option[GclMonitor],
                              val compositions: ISZ[GclComposition],
                              @hidden val attr: Attr) extends AnnexClause with GclSymbol {
   @strictpure override def posOpt: Option[Position] = attr.posOpt
@@ -82,6 +83,11 @@ import org.sireum.message.Position
         st"""compute
             |  ${compute.get.string}""")
       else None()
+    val smonitor: Option[ST] =
+      if (monitor.nonEmpty) Some(
+        st"""monitor
+            |  ${monitor.get.string}""")
+      else None()  
     val scompositions: Option[ST] =
       if (compositions.nonEmpty) Some(st"${(for (c <- compositions) yield c.prettyST, "\n")}")
       else None()
@@ -93,6 +99,7 @@ import org.sireum.message.Position
           |$sintegration
           |$sinitializes
           |$scompute
+          |$smonitor
           |$scompositions""")
   }
 }
@@ -307,6 +314,46 @@ import org.sireum.message.Position
           |$scases
           |$shandles
           |$sflows""")
+  }
+}
+
+@datatype class GclAlert(val guaranteeId: String,
+                         val portId: String,
+                         @hidden val attr: Attr) extends GclSymbol {
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @pure def prettyST: ST = {
+    return st"alert $guaranteeId on $portId"
+  }
+}
+
+@datatype class GclMonitor(val guarantees: ISZ[GclGuarantee],
+                           val alerts: ISZ[GclAlert],
+                           @hidden val attr: Attr) extends GclSymbol {
+  @strictpure override def posOpt: Option[Position] = attr.posOpt
+
+
+  override def string: String = {
+    return prettyST.render
+  }
+
+  @pure def prettyST: ST = {
+    val sguarantees: Option[ST] =
+      if (guarantees.nonEmpty) Some(
+        st"${(guarantees, "\n")}")
+      else None()
+    val salerts: Option[ST] =
+      if (alerts.nonEmpty) Some(
+        st"${(alerts, "\n")}")
+      else None()
+
+    return (
+      st"""$sguarantees
+          |$salerts""")
   }
 }
 

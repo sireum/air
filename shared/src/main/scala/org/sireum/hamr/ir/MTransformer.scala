@@ -40,11 +40,11 @@ object MTransformer {
   def transformISZ[T](s: IS[Z, T], f: T => MOption[T]): MOption[IS[Z, T]] = {
     val s2: MS[Z, T] = s.toMS
     var changed: B = F
-    for (i <- s2.indices) {
-      val e: T = s(i)
+    for (i <- 0 until s.size) {
+      val e: T = s.atZ(i)
       val r: MOption[T] = f(e)
       changed = changed || r.nonEmpty
-      s2(i) = r.getOrElse(e)
+      s2.updateZ(i, r.getOrElse(e))
     }
     if (changed) {
       return MSome(s2.toIS)
@@ -853,6 +853,10 @@ object MTransformer {
 
   val PostResultReferenceProp: MOption[PropertyValue] = MNone()
 
+  val PreResult_langastTypedName: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
+
+  val PostResult_langastTypedName: MOption[org.sireum.lang.ast.Typed] = MNone()
+
   val PreResultUnitProp: PreResult[PropertyValue] = PreResult(T, MNone())
 
   val PostResultUnitProp: MOption[PropertyValue] = MNone()
@@ -872,10 +876,6 @@ object MTransformer {
   val PreResultAnnex: PreResult[Annex] = PreResult(T, MNone())
 
   val PostResultAnnex: MOption[Annex] = MNone()
-
-  val PreResult_langastTypedName: PreResult[org.sireum.lang.ast.Typed] = PreResult(T, MNone())
-
-  val PostResult_langastTypedName: MOption[org.sireum.lang.ast.Typed] = MNone()
 
   val PreResultOtherAnnex: PreResult[OtherAnnex] = PreResult(T, MNone())
 
@@ -1525,15 +1525,21 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.VarPattern => return pre_langastStmtVarPattern(o)
       case o: org.sireum.lang.ast.Stmt.SpecVar =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtSpecVar(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.RsVal =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtRsVal(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
@@ -1541,15 +1547,21 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.ExtMethod => return pre_langastStmtExtMethod(o)
       case o: org.sireum.lang.ast.Stmt.JustMethod =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtJustMethod(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.SpecMethod =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtSpecMethod(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
@@ -1564,8 +1576,11 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.If => return pre_langastStmtIf(o)
       case o: org.sireum.lang.ast.Stmt.Induct =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtInduct(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
@@ -1576,64 +1591,91 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.Expr => return pre_langastStmtExpr(o)
       case o: org.sireum.lang.ast.Stmt.Fact =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtFact(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.Inv =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtInv(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.Theorem =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtTheorem(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.DataRefinement =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtDataRefinement(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.SpecLabel =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtSpecLabel(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.SpecBlock =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtSpecBlock(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.DeduceSequent =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtDeduceSequent(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.DeduceSteps =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtDeduceSteps(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.Havoc =>
         val r: PreResult[org.sireum.lang.ast.Stmt] = pre_langastStmtHavoc(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Stmt => PreResult(continu, MSome[org.sireum.lang.ast.Stmt](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt]())
         }
         return r
@@ -1644,22 +1686,31 @@ import MTransformer._
     o match {
       case o: org.sireum.lang.ast.LoopContract =>
         val r: PreResult[org.sireum.lang.ast.HasModifies] = pre_langastLoopContract(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.HasModifies)) => PreResult(continu, MSome[org.sireum.lang.ast.HasModifies](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.HasModifies => PreResult(continu, MSome[org.sireum.lang.ast.HasModifies](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.HasModifies]())
         }
         return r
       case o: org.sireum.lang.ast.MethodContract.Simple =>
         val r: PreResult[org.sireum.lang.ast.HasModifies] = pre_langastMethodContractSimple(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.HasModifies)) => PreResult(continu, MSome[org.sireum.lang.ast.HasModifies](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.HasModifies => PreResult(continu, MSome[org.sireum.lang.ast.HasModifies](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.HasModifies]())
         }
         return r
       case o: org.sireum.lang.ast.MethodContract.Cases =>
         val r: PreResult[org.sireum.lang.ast.HasModifies] = pre_langastMethodContractCases(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.HasModifies)) => PreResult(continu, MSome[org.sireum.lang.ast.HasModifies](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.HasModifies => PreResult(continu, MSome[org.sireum.lang.ast.HasModifies](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.HasModifies]())
         }
         return r
@@ -1981,36 +2032,51 @@ import MTransformer._
     o match {
       case o: org.sireum.lang.ast.Stmt.Block =>
         val r: PreResult[org.sireum.lang.ast.AssignExp] = pre_langastStmtBlock(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.AssignExp)) => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.AssignExp => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.AssignExp]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.If =>
         val r: PreResult[org.sireum.lang.ast.AssignExp] = pre_langastStmtIf(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.AssignExp)) => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.AssignExp => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.AssignExp]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.Match =>
         val r: PreResult[org.sireum.lang.ast.AssignExp] = pre_langastStmtMatch(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.AssignExp)) => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.AssignExp => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.AssignExp]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.Return =>
         val r: PreResult[org.sireum.lang.ast.AssignExp] = pre_langastStmtReturn(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.AssignExp)) => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.AssignExp => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.AssignExp]())
         }
         return r
       case o: org.sireum.lang.ast.Stmt.Expr =>
         val r: PreResult[org.sireum.lang.ast.AssignExp] = pre_langastStmtExpr(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.AssignExp)) => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.AssignExp => PreResult(continu, MSome[org.sireum.lang.ast.AssignExp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.AssignExp]())
         }
         return r
@@ -2104,64 +2170,91 @@ import MTransformer._
     o match {
       case o: org.sireum.lang.ast.ProofAst.StepId.Num =>
         val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastProofAstStepIdNum(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
         }
         return r
       case o: org.sireum.lang.ast.ProofAst.StepId.Str =>
         val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastProofAstStepIdStr(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitB =>
         val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitB(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitC =>
         val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitC(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitZ =>
         val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitZ(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitF32 =>
         val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitF32(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitF64 =>
         val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitF64(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitR =>
         val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitR(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitString =>
         val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpLitString(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
         }
         return r
@@ -2185,22 +2278,31 @@ import MTransformer._
       case o: org.sireum.lang.ast.Exp.ForYield => return pre_langastExpForYield(o)
       case o: org.sireum.lang.ast.Exp.QuantType =>
         val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpQuantType(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
         }
         return r
       case o: org.sireum.lang.ast.Exp.QuantRange =>
         val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpQuantRange(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
         }
         return r
       case o: org.sireum.lang.ast.Exp.QuantEach =>
         val r: PreResult[org.sireum.lang.ast.Exp] = pre_langastExpQuantEach(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp => PreResult(continu, MSome[org.sireum.lang.ast.Exp](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp]())
         }
         return r
@@ -2223,15 +2325,21 @@ import MTransformer._
     o match {
       case o: org.sireum.lang.ast.ProofAst.StepId.Num =>
         val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastProofAstStepIdNum(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Lit => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
         }
         return r
       case o: org.sireum.lang.ast.ProofAst.StepId.Str =>
         val r: PreResult[org.sireum.lang.ast.Lit] = pre_langastProofAstStepIdStr(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Lit)) => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Lit => PreResult(continu, MSome[org.sireum.lang.ast.Lit](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Lit]())
         }
         return r
@@ -2301,15 +2409,21 @@ import MTransformer._
     o match {
       case o: org.sireum.lang.ast.Exp.Ident =>
         val r: PreResult[org.sireum.lang.ast.Exp.Ref] = pre_langastExpIdent(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.Ref)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Ref](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ref")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp.Ref => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Ref](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ref")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.Ref]())
         }
         return r
       case o: org.sireum.lang.ast.Exp.Select =>
         val r: PreResult[org.sireum.lang.ast.Exp.Ref] = pre_langastExpSelect(o) match {
-         case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.Ref)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Ref](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ref")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: org.sireum.lang.ast.Exp.Ref => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Ref](r))
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ref")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.Ref]())
         }
         return r
@@ -2625,29 +2739,41 @@ import MTransformer._
     o match {
       case o: SmfClause =>
         val r: PreResult[SmfAnnex] = preSmfClause(o) match {
-         case PreResult(continu, MSome(r: SmfAnnex)) => PreResult(continu, MSome[SmfAnnex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SmfAnnex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SmfAnnex => PreResult(continu, MSome[SmfAnnex](r))
+             case _ => halt("Can only produce object of type SmfAnnex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SmfAnnex]())
         }
         return r
       case o: SmfClassification =>
         val r: PreResult[SmfAnnex] = preSmfClassification(o) match {
-         case PreResult(continu, MSome(r: SmfAnnex)) => PreResult(continu, MSome[SmfAnnex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SmfAnnex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SmfAnnex => PreResult(continu, MSome[SmfAnnex](r))
+             case _ => halt("Can only produce object of type SmfAnnex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SmfAnnex]())
         }
         return r
       case o: SmfDeclass =>
         val r: PreResult[SmfAnnex] = preSmfDeclass(o) match {
-         case PreResult(continu, MSome(r: SmfAnnex)) => PreResult(continu, MSome[SmfAnnex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SmfAnnex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SmfAnnex => PreResult(continu, MSome[SmfAnnex](r))
+             case _ => halt("Can only produce object of type SmfAnnex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SmfAnnex]())
         }
         return r
       case o: SmfType =>
         val r: PreResult[SmfAnnex] = preSmfType(o) match {
-         case PreResult(continu, MSome(r: SmfAnnex)) => PreResult(continu, MSome[SmfAnnex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SmfAnnex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SmfAnnex => PreResult(continu, MSome[SmfAnnex](r))
+             case _ => halt("Can only produce object of type SmfAnnex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SmfAnnex]())
         }
         return r
@@ -2658,8 +2784,11 @@ import MTransformer._
     o match {
       case o: SmfLibrary =>
         val r: PreResult[SmfLib] = preSmfLibrary(o) match {
-         case PreResult(continu, MSome(r: SmfLib)) => PreResult(continu, MSome[SmfLib](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SmfLib")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SmfLib => PreResult(continu, MSome[SmfLib](r))
+             case _ => halt("Can only produce object of type SmfLib")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SmfLib]())
         }
         return r
@@ -2690,57 +2819,81 @@ import MTransformer._
     o match {
       case o: Component =>
         val r: PreResult[AadlInstInfo] = preComponent(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AadlInstInfo => PreResult(continu, MSome[AadlInstInfo](r))
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
         }
         return r
       case o: ErrorTypeDef =>
         val r: PreResult[AadlInstInfo] = preErrorTypeDef(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AadlInstInfo => PreResult(continu, MSome[AadlInstInfo](r))
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
         }
         return r
       case o: FeatureEnd =>
         val r: PreResult[AadlInstInfo] = preFeatureEnd(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AadlInstInfo => PreResult(continu, MSome[AadlInstInfo](r))
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
         }
         return r
       case o: FeatureGroup =>
         val r: PreResult[AadlInstInfo] = preFeatureGroup(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AadlInstInfo => PreResult(continu, MSome[AadlInstInfo](r))
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
         }
         return r
       case o: FeatureAccess =>
         val r: PreResult[AadlInstInfo] = preFeatureAccess(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AadlInstInfo => PreResult(continu, MSome[AadlInstInfo](r))
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
         }
         return r
       case o: Connection =>
         val r: PreResult[AadlInstInfo] = preConnection(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AadlInstInfo => PreResult(continu, MSome[AadlInstInfo](r))
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
         }
         return r
       case o: Emv2Flow =>
         val r: PreResult[AadlInstInfo] = preEmv2Flow(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AadlInstInfo => PreResult(continu, MSome[AadlInstInfo](r))
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
         }
         return r
       case o: Flow =>
         val r: PreResult[AadlInstInfo] = preFlow(o) match {
-         case PreResult(continu, MSome(r: AadlInstInfo)) => PreResult(continu, MSome[AadlInstInfo](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AadlInstInfo")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AadlInstInfo => PreResult(continu, MSome[AadlInstInfo](r))
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AadlInstInfo]())
         }
         return r
@@ -2751,127 +2904,181 @@ import MTransformer._
     o match {
       case o: ErrorTypeDef =>
         val r: PreResult[Emv2Annex] = preErrorTypeDef(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: ErrorAliasDef =>
         val r: PreResult[Emv2Annex] = preErrorAliasDef(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: ErrorTypeSetDef =>
         val r: PreResult[Emv2Annex] = preErrorTypeSetDef(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: BehaveStateMachine =>
         val r: PreResult[Emv2Annex] = preBehaveStateMachine(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: ErrorEvent =>
         val r: PreResult[Emv2Annex] = preErrorEvent(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: ErrorState =>
         val r: PreResult[Emv2Annex] = preErrorState(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: ErrorTransition =>
         val r: PreResult[Emv2Annex] = preErrorTransition(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: ConditionTrigger =>
         val r: PreResult[Emv2Annex] = preConditionTrigger(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: AndCondition =>
         val r: PreResult[Emv2Annex] = preAndCondition(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: OrCondition =>
         val r: PreResult[Emv2Annex] = preOrCondition(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: AllCondition =>
         val r: PreResult[Emv2Annex] = preAllCondition(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: OrMoreCondition =>
         val r: PreResult[Emv2Annex] = preOrMoreCondition(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: OrLessCondition =>
         val r: PreResult[Emv2Annex] = preOrLessCondition(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: Emv2Clause =>
         val r: PreResult[Emv2Annex] = preEmv2Clause(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: Emv2Propagation =>
         val r: PreResult[Emv2Annex] = preEmv2Propagation(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: Emv2Flow =>
         val r: PreResult[Emv2Annex] = preEmv2Flow(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: Emv2BehaviorSection =>
         val r: PreResult[Emv2Annex] = preEmv2BehaviorSection(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
       case o: ErrorPropagation =>
         val r: PreResult[Emv2Annex] = preErrorPropagation(o) match {
-         case PreResult(continu, MSome(r: Emv2Annex)) => PreResult(continu, MSome[Emv2Annex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Annex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Annex => PreResult(continu, MSome[Emv2Annex](r))
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Annex]())
         }
         return r
@@ -2882,8 +3089,11 @@ import MTransformer._
     o match {
       case o: Emv2Library =>
         val r: PreResult[Emv2Lib] = preEmv2Library(o) match {
-         case PreResult(continu, MSome(r: Emv2Lib)) => PreResult(continu, MSome[Emv2Lib](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Emv2Lib")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Emv2Lib => PreResult(continu, MSome[Emv2Lib](r))
+             case _ => halt("Can only produce object of type Emv2Lib")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Emv2Lib]())
         }
         return r
@@ -2947,22 +3157,31 @@ import MTransformer._
     o match {
       case o: FeatureEnd =>
         val r: PreResult[Feature] = preFeatureEnd(o) match {
-         case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Feature => PreResult(continu, MSome[Feature](r))
+             case _ => halt("Can only produce object of type Feature")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
         }
         return r
       case o: FeatureGroup =>
         val r: PreResult[Feature] = preFeatureGroup(o) match {
-         case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Feature => PreResult(continu, MSome[Feature](r))
+             case _ => halt("Can only produce object of type Feature")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
         }
         return r
       case o: FeatureAccess =>
         val r: PreResult[Feature] = preFeatureAccess(o) match {
-         case PreResult(continu, MSome(r: Feature)) => PreResult(continu, MSome[Feature](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type Feature")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: Feature => PreResult(continu, MSome[Feature](r))
+             case _ => halt("Can only produce object of type Feature")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[Feature]())
         }
         return r
@@ -2997,43 +3216,61 @@ import MTransformer._
     o match {
       case o: ConditionTrigger =>
         val r: PreResult[ErrorCondition] = preConditionTrigger(o) match {
-         case PreResult(continu, MSome(r: ErrorCondition)) => PreResult(continu, MSome[ErrorCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type ErrorCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: ErrorCondition => PreResult(continu, MSome[ErrorCondition](r))
+             case _ => halt("Can only produce object of type ErrorCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[ErrorCondition]())
         }
         return r
       case o: AndCondition =>
         val r: PreResult[ErrorCondition] = preAndCondition(o) match {
-         case PreResult(continu, MSome(r: ErrorCondition)) => PreResult(continu, MSome[ErrorCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type ErrorCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: ErrorCondition => PreResult(continu, MSome[ErrorCondition](r))
+             case _ => halt("Can only produce object of type ErrorCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[ErrorCondition]())
         }
         return r
       case o: OrCondition =>
         val r: PreResult[ErrorCondition] = preOrCondition(o) match {
-         case PreResult(continu, MSome(r: ErrorCondition)) => PreResult(continu, MSome[ErrorCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type ErrorCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: ErrorCondition => PreResult(continu, MSome[ErrorCondition](r))
+             case _ => halt("Can only produce object of type ErrorCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[ErrorCondition]())
         }
         return r
       case o: AllCondition =>
         val r: PreResult[ErrorCondition] = preAllCondition(o) match {
-         case PreResult(continu, MSome(r: ErrorCondition)) => PreResult(continu, MSome[ErrorCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type ErrorCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: ErrorCondition => PreResult(continu, MSome[ErrorCondition](r))
+             case _ => halt("Can only produce object of type ErrorCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[ErrorCondition]())
         }
         return r
       case o: OrMoreCondition =>
         val r: PreResult[ErrorCondition] = preOrMoreCondition(o) match {
-         case PreResult(continu, MSome(r: ErrorCondition)) => PreResult(continu, MSome[ErrorCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type ErrorCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: ErrorCondition => PreResult(continu, MSome[ErrorCondition](r))
+             case _ => halt("Can only produce object of type ErrorCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[ErrorCondition]())
         }
         return r
       case o: OrLessCondition =>
         val r: PreResult[ErrorCondition] = preOrLessCondition(o) match {
-         case PreResult(continu, MSome(r: ErrorCondition)) => PreResult(continu, MSome[ErrorCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type ErrorCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: ErrorCondition => PreResult(continu, MSome[ErrorCondition](r))
+             case _ => halt("Can only produce object of type ErrorCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[ErrorCondition]())
         }
         return r
@@ -3112,15 +3349,21 @@ import MTransformer._
     o match {
       case o: Emv2ElementRef =>
         val r: PreResult[ElementRef] = preEmv2ElementRef(o) match {
-         case PreResult(continu, MSome(r: ElementRef)) => PreResult(continu, MSome[ElementRef](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type ElementRef")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: ElementRef => PreResult(continu, MSome[ElementRef](r))
+             case _ => halt("Can only produce object of type ElementRef")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[ElementRef]())
         }
         return r
       case o: AadlElementRef =>
         val r: PreResult[ElementRef] = preAadlElementRef(o) match {
-         case PreResult(continu, MSome(r: ElementRef)) => PreResult(continu, MSome[ElementRef](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type ElementRef")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: ElementRef => PreResult(continu, MSome[ElementRef](r))
+             case _ => halt("Can only produce object of type ElementRef")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[ElementRef]())
         }
         return r
@@ -3158,6 +3401,10 @@ import MTransformer._
     return PreResultReferenceProp
   }
 
+  def pre_langastTypedName(o: org.sireum.lang.ast.Typed.Name): PreResult[org.sireum.lang.ast.Typed] = {
+    return PreResult_langastTypedName
+  }
+
   def preUnitProp(o: UnitProp): PreResult[PropertyValue] = {
     return PreResultUnitProp
   }
@@ -3178,191 +3425,265 @@ import MTransformer._
     return PreResultAnnex
   }
 
-  def pre_langastTypedName(o: org.sireum.lang.ast.Typed.Name): PreResult[org.sireum.lang.ast.Typed] = {
-    return PreResult_langastTypedName
-  }
-
   def preAnnexClause(o: AnnexClause): PreResult[AnnexClause] = {
     o match {
       case o: SmfClause =>
         val r: PreResult[AnnexClause] = preSmfClause(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: SmfClassification =>
         val r: PreResult[AnnexClause] = preSmfClassification(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: SmfDeclass =>
         val r: PreResult[AnnexClause] = preSmfDeclass(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: SmfType =>
         val r: PreResult[AnnexClause] = preSmfType(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: ErrorTypeDef =>
         val r: PreResult[AnnexClause] = preErrorTypeDef(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: ErrorAliasDef =>
         val r: PreResult[AnnexClause] = preErrorAliasDef(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: ErrorTypeSetDef =>
         val r: PreResult[AnnexClause] = preErrorTypeSetDef(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: BehaveStateMachine =>
         val r: PreResult[AnnexClause] = preBehaveStateMachine(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: ErrorEvent =>
         val r: PreResult[AnnexClause] = preErrorEvent(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: ErrorState =>
         val r: PreResult[AnnexClause] = preErrorState(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: ErrorTransition =>
         val r: PreResult[AnnexClause] = preErrorTransition(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: ConditionTrigger =>
         val r: PreResult[AnnexClause] = preConditionTrigger(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: AndCondition =>
         val r: PreResult[AnnexClause] = preAndCondition(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: OrCondition =>
         val r: PreResult[AnnexClause] = preOrCondition(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: AllCondition =>
         val r: PreResult[AnnexClause] = preAllCondition(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: OrMoreCondition =>
         val r: PreResult[AnnexClause] = preOrMoreCondition(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: OrLessCondition =>
         val r: PreResult[AnnexClause] = preOrLessCondition(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: Emv2Clause =>
         val r: PreResult[AnnexClause] = preEmv2Clause(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: Emv2Propagation =>
         val r: PreResult[AnnexClause] = preEmv2Propagation(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: Emv2Flow =>
         val r: PreResult[AnnexClause] = preEmv2Flow(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: Emv2BehaviorSection =>
         val r: PreResult[AnnexClause] = preEmv2BehaviorSection(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: ErrorPropagation =>
         val r: PreResult[AnnexClause] = preErrorPropagation(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: OtherAnnex =>
         val r: PreResult[AnnexClause] = preOtherAnnex(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: GclSubclause =>
         val r: PreResult[AnnexClause] = preGclSubclause(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: BTSSubclauseBehaviorProvider =>
         val r: PreResult[AnnexClause] = preBTSSubclauseBehaviorProvider(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
       case o: BTSBLESSAnnexClause =>
         val r: PreResult[AnnexClause] = preBTSBLESSAnnexClause(o) match {
-         case PreResult(continu, MSome(r: AnnexClause)) => PreResult(continu, MSome[AnnexClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexClause => PreResult(continu, MSome[AnnexClause](r))
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexClause]())
         }
         return r
@@ -3373,29 +3694,41 @@ import MTransformer._
     o match {
       case o: SmfLibrary =>
         val r: PreResult[AnnexLib] = preSmfLibrary(o) match {
-         case PreResult(continu, MSome(r: AnnexLib)) => PreResult(continu, MSome[AnnexLib](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexLib")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexLib => PreResult(continu, MSome[AnnexLib](r))
+             case _ => halt("Can only produce object of type AnnexLib")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexLib]())
         }
         return r
       case o: Emv2Library =>
         val r: PreResult[AnnexLib] = preEmv2Library(o) match {
-         case PreResult(continu, MSome(r: AnnexLib)) => PreResult(continu, MSome[AnnexLib](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexLib")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexLib => PreResult(continu, MSome[AnnexLib](r))
+             case _ => halt("Can only produce object of type AnnexLib")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexLib]())
         }
         return r
       case o: OtherLib =>
         val r: PreResult[AnnexLib] = preOtherLib(o) match {
-         case PreResult(continu, MSome(r: AnnexLib)) => PreResult(continu, MSome[AnnexLib](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexLib")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexLib => PreResult(continu, MSome[AnnexLib](r))
+             case _ => halt("Can only produce object of type AnnexLib")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexLib]())
         }
         return r
       case o: GclLib =>
         val r: PreResult[AnnexLib] = preGclLib(o) match {
-         case PreResult(continu, MSome(r: AnnexLib)) => PreResult(continu, MSome[AnnexLib](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type AnnexLib")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: AnnexLib => PreResult(continu, MSome[AnnexLib](r))
+             case _ => halt("Can only produce object of type AnnexLib")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[AnnexLib]())
         }
         return r
@@ -3470,162 +3803,231 @@ import MTransformer._
     o match {
       case o: SysmlAst.Import =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstImport(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.AliasMember =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstAliasMember(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.Identification =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstIdentification(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.Package =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstPackage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.AttributeDefinition =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstAttributeDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.AllocationDefinition =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstAllocationDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.ConnectionDefinition =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstConnectionDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.InterfaceDefinition =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstInterfaceDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.EnumerationDefinition =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstEnumerationDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.PartDefinition =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstPartDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.PortDefinition =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstPortDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.MetadataDefinition =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstMetadataDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.AttributeUsage =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstAttributeUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstReferenceUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.AllocationUsage =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstAllocationUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstConnectionUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstItemUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstPartUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstPortUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.Comment =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstComment(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstDocumentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstTextualRepresentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: PreResult[SysmlAst.AttrNode] = preSysmlAstGumboAnnotation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AttrNode)) => PreResult(continu, MSome[SysmlAst.AttrNode](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AttrNode => PreResult(continu, MSome[SysmlAst.AttrNode](r))
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AttrNode]())
         }
         return r
@@ -3636,155 +4038,221 @@ import MTransformer._
     o match {
       case o: SysmlAst.Import =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstImport(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.AliasMember =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstAliasMember(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.Package =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstPackage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.AttributeDefinition =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstAttributeDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.AllocationDefinition =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstAllocationDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.ConnectionDefinition =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstConnectionDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.InterfaceDefinition =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstInterfaceDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.EnumerationDefinition =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstEnumerationDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.PartDefinition =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstPartDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.PortDefinition =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstPortDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.MetadataDefinition =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstMetadataDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.AttributeUsage =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstAttributeUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstReferenceUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.AllocationUsage =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstAllocationUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstConnectionUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstItemUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstPartUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstPortUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.Comment =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstComment(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstDocumentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstTextualRepresentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: PreResult[SysmlAst.PackageBodyElement] = preSysmlAstGumboAnnotation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageBodyElement)) => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageBodyElement => PreResult(continu, MSome[SysmlAst.PackageBodyElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageBodyElement]())
         }
         return r
@@ -3795,155 +4263,221 @@ import MTransformer._
     o match {
       case o: SysmlAst.Import =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstImport(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.AliasMember =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstAliasMember(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.Package =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstPackage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.AttributeDefinition =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstAttributeDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.AllocationDefinition =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstAllocationDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.ConnectionDefinition =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstConnectionDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.InterfaceDefinition =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstInterfaceDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.EnumerationDefinition =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstEnumerationDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.PartDefinition =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstPartDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.PortDefinition =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstPortDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.MetadataDefinition =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstMetadataDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.AttributeUsage =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstAttributeUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstReferenceUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.AllocationUsage =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstAllocationUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstConnectionUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstItemUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstPartUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstPortUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.Comment =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstComment(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstDocumentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstTextualRepresentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: PreResult[SysmlAst.DefinitionBodyItem] = preSysmlAstGumboAnnotation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionBodyItem)) => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionBodyItem => PreResult(continu, MSome[SysmlAst.DefinitionBodyItem](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionBodyItem]())
         }
         return r
@@ -3962,225 +4496,321 @@ import MTransformer._
     o match {
       case o: GclSubclause =>
         val r: PreResult[GclSymbol] = preGclSubclause(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclSpecMethod =>
         val r: PreResult[GclSymbol] = preGclSpecMethod(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclBodyMethod =>
         val r: PreResult[GclSymbol] = preGclBodyMethod(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclStateVar =>
         val r: PreResult[GclSymbol] = preGclStateVar(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclInvariant =>
         val r: PreResult[GclSymbol] = preGclInvariant(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclAssume =>
         val r: PreResult[GclSymbol] = preGclAssume(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclGuarantee =>
         val r: PreResult[GclSymbol] = preGclGuarantee(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclIntegration =>
         val r: PreResult[GclSymbol] = preGclIntegration(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclCaseStatement =>
         val r: PreResult[GclSymbol] = preGclCaseStatement(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclInitialize =>
         val r: PreResult[GclSymbol] = preGclInitialize(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclCompute =>
         val r: PreResult[GclSymbol] = preGclCompute(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclAlert =>
         val r: PreResult[GclSymbol] = preGclAlert(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclMonitor =>
         val r: PreResult[GclSymbol] = preGclMonitor(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclHandle =>
         val r: PreResult[GclSymbol] = preGclHandle(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclComposition =>
         val r: PreResult[GclSymbol] = preGclComposition(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclCompositionComponentAlias =>
         val r: PreResult[GclSymbol] = preGclCompositionComponentAlias(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclCompositionPortAlias =>
         val r: PreResult[GclSymbol] = preGclCompositionPortAlias(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclCompositionStateVarAlias =>
         val r: PreResult[GclSymbol] = preGclCompositionStateVarAlias(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclSchemaComponentRef =>
         val r: PreResult[GclSymbol] = preGclSchemaComponentRef(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclSchemaLabel =>
         val r: PreResult[GclSymbol] = preGclSchemaLabel(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclSchemaSplitJoin =>
         val r: PreResult[GclSymbol] = preGclSchemaSplitJoin(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclSchemaSequence =>
         val r: PreResult[GclSymbol] = preGclSchemaSequence(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclCompositionProperty =>
         val r: PreResult[GclSymbol] = preGclCompositionProperty(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclPropertyBinding =>
         val r: PreResult[GclSymbol] = preGclPropertyBinding(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclPointStart =>
         val r: PreResult[GclSymbol] = preGclPointStart(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclPointEnd =>
         val r: PreResult[GclSymbol] = preGclPointEnd(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclPointAt =>
         val r: PreResult[GclSymbol] = preGclPointAt(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclPointBefore =>
         val r: PreResult[GclSymbol] = preGclPointBefore(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclPointAfter =>
         val r: PreResult[GclSymbol] = preGclPointAfter(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclTODO =>
         val r: PreResult[GclSymbol] = preGclTODO(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: GclLib =>
         val r: PreResult[GclSymbol] = preGclLib(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
       case o: InfoFlowClause =>
         val r: PreResult[GclSymbol] = preInfoFlowClause(o) match {
-         case PreResult(continu, MSome(r: GclSymbol)) => PreResult(continu, MSome[GclSymbol](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSymbol")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSymbol => PreResult(continu, MSome[GclSymbol](r))
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSymbol]())
         }
         return r
@@ -4191,99 +4821,141 @@ import MTransformer._
     o match {
       case o: GclSpecMethod =>
         val r: PreResult[GclNamedElement] = preGclSpecMethod(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
       case o: GclBodyMethod =>
         val r: PreResult[GclNamedElement] = preGclBodyMethod(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
       case o: GclStateVar =>
         val r: PreResult[GclNamedElement] = preGclStateVar(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
       case o: GclInvariant =>
         val r: PreResult[GclNamedElement] = preGclInvariant(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
       case o: GclAssume =>
         val r: PreResult[GclNamedElement] = preGclAssume(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
       case o: GclGuarantee =>
         val r: PreResult[GclNamedElement] = preGclGuarantee(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
       case o: GclCaseStatement =>
         val r: PreResult[GclNamedElement] = preGclCaseStatement(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
       case o: GclComposition =>
         val r: PreResult[GclNamedElement] = preGclComposition(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
       case o: GclCompositionComponentAlias =>
         val r: PreResult[GclNamedElement] = preGclCompositionComponentAlias(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
       case o: GclCompositionPortAlias =>
         val r: PreResult[GclNamedElement] = preGclCompositionPortAlias(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
       case o: GclCompositionStateVarAlias =>
         val r: PreResult[GclNamedElement] = preGclCompositionStateVarAlias(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
       case o: GclSchemaLabel =>
         val r: PreResult[GclNamedElement] = preGclSchemaLabel(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
       case o: GclCompositionProperty =>
         val r: PreResult[GclNamedElement] = preGclCompositionProperty(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
       case o: InfoFlowClause =>
         val r: PreResult[GclNamedElement] = preInfoFlowClause(o) match {
-         case PreResult(continu, MSome(r: GclNamedElement)) => PreResult(continu, MSome[GclNamedElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclNamedElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclNamedElement => PreResult(continu, MSome[GclNamedElement](r))
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclNamedElement]())
         }
         return r
@@ -4298,15 +4970,21 @@ import MTransformer._
     o match {
       case o: BTSSubclauseBehaviorProvider =>
         val r: PreResult[BLESSAnnex] = preBTSSubclauseBehaviorProvider(o) match {
-         case PreResult(continu, MSome(r: BLESSAnnex)) => PreResult(continu, MSome[BLESSAnnex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BLESSAnnex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BLESSAnnex => PreResult(continu, MSome[BLESSAnnex](r))
+             case _ => halt("Can only produce object of type BLESSAnnex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BLESSAnnex]())
         }
         return r
       case o: BTSBLESSAnnexClause =>
         val r: PreResult[BLESSAnnex] = preBTSBLESSAnnexClause(o) match {
-         case PreResult(continu, MSome(r: BLESSAnnex)) => PreResult(continu, MSome[BLESSAnnex](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BLESSAnnex")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BLESSAnnex => PreResult(continu, MSome[BLESSAnnex](r))
+             case _ => halt("Can only produce object of type BLESSAnnex")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BLESSAnnex]())
         }
         return r
@@ -4329,15 +5007,21 @@ import MTransformer._
     o match {
       case o: BTSText =>
         val r: PreResult[BTSResource] = preBTSText(o) match {
-         case PreResult(continu, MSome(r: BTSResource)) => PreResult(continu, MSome[BTSResource](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSResource")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSResource => PreResult(continu, MSome[BTSResource](r))
+             case _ => halt("Can only produce object of type BTSResource")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSResource]())
         }
         return r
       case o: BTSPath =>
         val r: PreResult[BTSResource] = preBTSPath(o) match {
-         case PreResult(continu, MSome(r: BTSResource)) => PreResult(continu, MSome[BTSResource](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSResource")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSResource => PreResult(continu, MSome[BTSResource](r))
+             case _ => halt("Can only produce object of type BTSResource")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSResource]())
         }
         return r
@@ -4364,141 +5048,201 @@ import MTransformer._
     o match {
       case o: SysmlAst.Package =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstPackage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.AttributeDefinition =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstAttributeDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.AllocationDefinition =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstAllocationDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.ConnectionDefinition =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstConnectionDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.InterfaceDefinition =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstInterfaceDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.EnumerationDefinition =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstEnumerationDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.PartDefinition =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstPartDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.PortDefinition =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstPortDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.MetadataDefinition =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstMetadataDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.AttributeUsage =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstAttributeUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstReferenceUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.AllocationUsage =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstAllocationUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstConnectionUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstItemUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstPartUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstPortUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.Comment =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstComment(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstDocumentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstTextualRepresentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: PreResult[SysmlAst.PackageMember] = preSysmlAstGumboAnnotation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.PackageMember)) => PreResult(continu, MSome[SysmlAst.PackageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.PackageMember => PreResult(continu, MSome[SysmlAst.PackageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.PackageMember]())
         }
         return r
@@ -4509,15 +5253,21 @@ import MTransformer._
     o match {
       case o: SysmlAst.BinaryConnectorPart =>
         val r: PreResult[SysmlAst.ConnectorPart] = preSysmlAstBinaryConnectorPart(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.ConnectorPart)) => PreResult(continu, MSome[SysmlAst.ConnectorPart](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.ConnectorPart")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.ConnectorPart => PreResult(continu, MSome[SysmlAst.ConnectorPart](r))
+             case _ => halt("Can only produce object of type SysmlAst.ConnectorPart")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.ConnectorPart]())
         }
         return r
       case o: SysmlAst.NaryConnectorPart =>
         val r: PreResult[SysmlAst.ConnectorPart] = preSysmlAstNaryConnectorPart(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.ConnectorPart)) => PreResult(continu, MSome[SysmlAst.ConnectorPart](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.ConnectorPart")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.ConnectorPart => PreResult(continu, MSome[SysmlAst.ConnectorPart](r))
+             case _ => halt("Can only produce object of type SysmlAst.ConnectorPart")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.ConnectorPart]())
         }
         return r
@@ -4540,15 +5290,21 @@ import MTransformer._
     o match {
       case o: GclSpecMethod =>
         val r: PreResult[GclMethod] = preGclSpecMethod(o) match {
-         case PreResult(continu, MSome(r: GclMethod)) => PreResult(continu, MSome[GclMethod](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclMethod")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclMethod => PreResult(continu, MSome[GclMethod](r))
+             case _ => halt("Can only produce object of type GclMethod")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclMethod]())
         }
         return r
       case o: GclBodyMethod =>
         val r: PreResult[GclMethod] = preGclBodyMethod(o) match {
-         case PreResult(continu, MSome(r: GclMethod)) => PreResult(continu, MSome[GclMethod](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclMethod")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclMethod => PreResult(continu, MSome[GclMethod](r))
+             case _ => halt("Can only produce object of type GclMethod")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclMethod]())
         }
         return r
@@ -4559,15 +5315,21 @@ import MTransformer._
     o match {
       case o: SysmlAst.MultiplicityNonRange =>
         val r: PreResult[SysmlAst.Multiplicity] = preSysmlAstMultiplicityNonRange(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.Multiplicity)) => PreResult(continu, MSome[SysmlAst.Multiplicity](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.Multiplicity")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.Multiplicity => PreResult(continu, MSome[SysmlAst.Multiplicity](r))
+             case _ => halt("Can only produce object of type SysmlAst.Multiplicity")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.Multiplicity]())
         }
         return r
       case o: SysmlAst.MultiplicityRange =>
         val r: PreResult[SysmlAst.Multiplicity] = preSysmlAstMultiplicityRange(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.Multiplicity)) => PreResult(continu, MSome[SysmlAst.Multiplicity](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.Multiplicity")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.Multiplicity => PreResult(continu, MSome[SysmlAst.Multiplicity](r))
+             case _ => halt("Can only produce object of type SysmlAst.Multiplicity")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.Multiplicity]())
         }
         return r
@@ -4598,36 +5360,51 @@ import MTransformer._
     o match {
       case o: SysmlAst.TypingsSpecialization =>
         val r: PreResult[SysmlAst.FeatureSpecialization] = preSysmlAstTypingsSpecialization(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.FeatureSpecialization)) => PreResult(continu, MSome[SysmlAst.FeatureSpecialization](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.FeatureSpecialization => PreResult(continu, MSome[SysmlAst.FeatureSpecialization](r))
+             case _ => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.FeatureSpecialization]())
         }
         return r
       case o: SysmlAst.SubsettingsSpecialization =>
         val r: PreResult[SysmlAst.FeatureSpecialization] = preSysmlAstSubsettingsSpecialization(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.FeatureSpecialization)) => PreResult(continu, MSome[SysmlAst.FeatureSpecialization](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.FeatureSpecialization => PreResult(continu, MSome[SysmlAst.FeatureSpecialization](r))
+             case _ => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.FeatureSpecialization]())
         }
         return r
       case o: SysmlAst.ReferencesSpecialization =>
         val r: PreResult[SysmlAst.FeatureSpecialization] = preSysmlAstReferencesSpecialization(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.FeatureSpecialization)) => PreResult(continu, MSome[SysmlAst.FeatureSpecialization](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.FeatureSpecialization => PreResult(continu, MSome[SysmlAst.FeatureSpecialization](r))
+             case _ => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.FeatureSpecialization]())
         }
         return r
       case o: SysmlAst.CrossingsSpecialization =>
         val r: PreResult[SysmlAst.FeatureSpecialization] = preSysmlAstCrossingsSpecialization(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.FeatureSpecialization)) => PreResult(continu, MSome[SysmlAst.FeatureSpecialization](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.FeatureSpecialization => PreResult(continu, MSome[SysmlAst.FeatureSpecialization](r))
+             case _ => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.FeatureSpecialization]())
         }
         return r
       case o: SysmlAst.RedefinitionsSpecialization =>
         val r: PreResult[SysmlAst.FeatureSpecialization] = preSysmlAstRedefinitionsSpecialization(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.FeatureSpecialization)) => PreResult(continu, MSome[SysmlAst.FeatureSpecialization](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.FeatureSpecialization => PreResult(continu, MSome[SysmlAst.FeatureSpecialization](r))
+             case _ => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.FeatureSpecialization]())
         }
         return r
@@ -4658,36 +5435,51 @@ import MTransformer._
     o match {
       case o: GclInvariant =>
         val r: PreResult[GclClause] = preGclInvariant(o) match {
-         case PreResult(continu, MSome(r: GclClause)) => PreResult(continu, MSome[GclClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclClause => PreResult(continu, MSome[GclClause](r))
+             case _ => halt("Can only produce object of type GclClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclClause]())
         }
         return r
       case o: GclAssume =>
         val r: PreResult[GclClause] = preGclAssume(o) match {
-         case PreResult(continu, MSome(r: GclClause)) => PreResult(continu, MSome[GclClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclClause => PreResult(continu, MSome[GclClause](r))
+             case _ => halt("Can only produce object of type GclClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclClause]())
         }
         return r
       case o: GclGuarantee =>
         val r: PreResult[GclClause] = preGclGuarantee(o) match {
-         case PreResult(continu, MSome(r: GclClause)) => PreResult(continu, MSome[GclClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclClause => PreResult(continu, MSome[GclClause](r))
+             case _ => halt("Can only produce object of type GclClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclClause]())
         }
         return r
       case o: GclCompositionProperty =>
         val r: PreResult[GclClause] = preGclCompositionProperty(o) match {
-         case PreResult(continu, MSome(r: GclClause)) => PreResult(continu, MSome[GclClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclClause => PreResult(continu, MSome[GclClause](r))
+             case _ => halt("Can only produce object of type GclClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclClause]())
         }
         return r
       case o: InfoFlowClause =>
         val r: PreResult[GclClause] = preInfoFlowClause(o) match {
-         case PreResult(continu, MSome(r: GclClause)) => PreResult(continu, MSome[GclClause](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclClause")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclClause => PreResult(continu, MSome[GclClause](r))
+             case _ => halt("Can only produce object of type GclClause")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclClause]())
         }
         return r
@@ -4702,22 +5494,31 @@ import MTransformer._
     o match {
       case o: GclInvariant =>
         val r: PreResult[GclSpec] = preGclInvariant(o) match {
-         case PreResult(continu, MSome(r: GclSpec)) => PreResult(continu, MSome[GclSpec](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSpec")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSpec => PreResult(continu, MSome[GclSpec](r))
+             case _ => halt("Can only produce object of type GclSpec")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSpec]())
         }
         return r
       case o: GclAssume =>
         val r: PreResult[GclSpec] = preGclAssume(o) match {
-         case PreResult(continu, MSome(r: GclSpec)) => PreResult(continu, MSome[GclSpec](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSpec")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSpec => PreResult(continu, MSome[GclSpec](r))
+             case _ => halt("Can only produce object of type GclSpec")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSpec]())
         }
         return r
       case o: GclGuarantee =>
         val r: PreResult[GclSpec] = preGclGuarantee(o) match {
-         case PreResult(continu, MSome(r: GclSpec)) => PreResult(continu, MSome[GclSpec](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSpec")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSpec => PreResult(continu, MSome[GclSpec](r))
+             case _ => halt("Can only produce object of type GclSpec")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSpec]())
         }
         return r
@@ -4732,92 +5533,131 @@ import MTransformer._
     o match {
       case o: SysmlAst.Package =>
         val r: PreResult[SysmlAst.DefinitionMember] = preSysmlAstPackage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionMember)) => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionMember => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionMember]())
         }
         return r
       case o: SysmlAst.AttributeDefinition =>
         val r: PreResult[SysmlAst.DefinitionMember] = preSysmlAstAttributeDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionMember)) => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionMember => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionMember]())
         }
         return r
       case o: SysmlAst.AllocationDefinition =>
         val r: PreResult[SysmlAst.DefinitionMember] = preSysmlAstAllocationDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionMember)) => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionMember => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionMember]())
         }
         return r
       case o: SysmlAst.ConnectionDefinition =>
         val r: PreResult[SysmlAst.DefinitionMember] = preSysmlAstConnectionDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionMember)) => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionMember => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionMember]())
         }
         return r
       case o: SysmlAst.InterfaceDefinition =>
         val r: PreResult[SysmlAst.DefinitionMember] = preSysmlAstInterfaceDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionMember)) => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionMember => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionMember]())
         }
         return r
       case o: SysmlAst.EnumerationDefinition =>
         val r: PreResult[SysmlAst.DefinitionMember] = preSysmlAstEnumerationDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionMember)) => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionMember => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionMember]())
         }
         return r
       case o: SysmlAst.PartDefinition =>
         val r: PreResult[SysmlAst.DefinitionMember] = preSysmlAstPartDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionMember)) => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionMember => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionMember]())
         }
         return r
       case o: SysmlAst.PortDefinition =>
         val r: PreResult[SysmlAst.DefinitionMember] = preSysmlAstPortDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionMember)) => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionMember => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionMember]())
         }
         return r
       case o: SysmlAst.MetadataDefinition =>
         val r: PreResult[SysmlAst.DefinitionMember] = preSysmlAstMetadataDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionMember)) => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionMember => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionMember]())
         }
         return r
       case o: SysmlAst.Comment =>
         val r: PreResult[SysmlAst.DefinitionMember] = preSysmlAstComment(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionMember)) => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionMember => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionMember]())
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: PreResult[SysmlAst.DefinitionMember] = preSysmlAstDocumentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionMember)) => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionMember => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionMember]())
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: PreResult[SysmlAst.DefinitionMember] = preSysmlAstTextualRepresentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionMember)) => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionMember => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionMember]())
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: PreResult[SysmlAst.DefinitionMember] = preSysmlAstGumboAnnotation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionMember)) => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionMember => PreResult(continu, MSome[SysmlAst.DefinitionMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionMember]())
         }
         return r
@@ -4828,92 +5668,131 @@ import MTransformer._
     o match {
       case o: SysmlAst.Package =>
         val r: PreResult[SysmlAst.DefinitionElement] = preSysmlAstPackage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionElement)) => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionElement => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionElement]())
         }
         return r
       case o: SysmlAst.AttributeDefinition =>
         val r: PreResult[SysmlAst.DefinitionElement] = preSysmlAstAttributeDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionElement)) => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionElement => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionElement]())
         }
         return r
       case o: SysmlAst.AllocationDefinition =>
         val r: PreResult[SysmlAst.DefinitionElement] = preSysmlAstAllocationDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionElement)) => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionElement => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionElement]())
         }
         return r
       case o: SysmlAst.ConnectionDefinition =>
         val r: PreResult[SysmlAst.DefinitionElement] = preSysmlAstConnectionDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionElement)) => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionElement => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionElement]())
         }
         return r
       case o: SysmlAst.InterfaceDefinition =>
         val r: PreResult[SysmlAst.DefinitionElement] = preSysmlAstInterfaceDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionElement)) => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionElement => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionElement]())
         }
         return r
       case o: SysmlAst.EnumerationDefinition =>
         val r: PreResult[SysmlAst.DefinitionElement] = preSysmlAstEnumerationDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionElement)) => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionElement => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionElement]())
         }
         return r
       case o: SysmlAst.PartDefinition =>
         val r: PreResult[SysmlAst.DefinitionElement] = preSysmlAstPartDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionElement)) => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionElement => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionElement]())
         }
         return r
       case o: SysmlAst.PortDefinition =>
         val r: PreResult[SysmlAst.DefinitionElement] = preSysmlAstPortDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionElement)) => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionElement => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionElement]())
         }
         return r
       case o: SysmlAst.MetadataDefinition =>
         val r: PreResult[SysmlAst.DefinitionElement] = preSysmlAstMetadataDefinition(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionElement)) => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionElement => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionElement]())
         }
         return r
       case o: SysmlAst.Comment =>
         val r: PreResult[SysmlAst.DefinitionElement] = preSysmlAstComment(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionElement)) => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionElement => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionElement]())
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: PreResult[SysmlAst.DefinitionElement] = preSysmlAstDocumentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionElement)) => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionElement => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionElement]())
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: PreResult[SysmlAst.DefinitionElement] = preSysmlAstTextualRepresentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionElement)) => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionElement => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionElement]())
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: PreResult[SysmlAst.DefinitionElement] = preSysmlAstGumboAnnotation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.DefinitionElement)) => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.DefinitionElement => PreResult(continu, MSome[SysmlAst.DefinitionElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.DefinitionElement]())
         }
         return r
@@ -4928,8 +5807,11 @@ import MTransformer._
     o match {
       case o: BTSClassifier =>
         val r: PreResult[BTSType] = preBTSClassifier(o) match {
-         case PreResult(continu, MSome(r: BTSType)) => PreResult(continu, MSome[BTSType](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSType")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSType => PreResult(continu, MSome[BTSType](r))
+             case _ => halt("Can only produce object of type BTSType")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSType]())
         }
         return r
@@ -4944,15 +5826,21 @@ import MTransformer._
     o match {
       case o: GclAssume =>
         val r: PreResult[GclComputeSpec] = preGclAssume(o) match {
-         case PreResult(continu, MSome(r: GclComputeSpec)) => PreResult(continu, MSome[GclComputeSpec](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclComputeSpec")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclComputeSpec => PreResult(continu, MSome[GclComputeSpec](r))
+             case _ => halt("Can only produce object of type GclComputeSpec")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclComputeSpec]())
         }
         return r
       case o: GclGuarantee =>
         val r: PreResult[GclComputeSpec] = preGclGuarantee(o) match {
-         case PreResult(continu, MSome(r: GclComputeSpec)) => PreResult(continu, MSome[GclComputeSpec](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclComputeSpec")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclComputeSpec => PreResult(continu, MSome[GclComputeSpec](r))
+             case _ => halt("Can only produce object of type GclComputeSpec")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclComputeSpec]())
         }
         return r
@@ -5031,43 +5919,61 @@ import MTransformer._
     o match {
       case o: BTSDispatchCondition =>
         val r: PreResult[BTSTransitionCondition] = preBTSDispatchCondition(o) match {
-         case PreResult(continu, MSome(r: BTSTransitionCondition)) => PreResult(continu, MSome[BTSTransitionCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSTransitionCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSTransitionCondition => PreResult(continu, MSome[BTSTransitionCondition](r))
+             case _ => halt("Can only produce object of type BTSTransitionCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSTransitionCondition]())
         }
         return r
       case o: BTSExecuteConditionExp =>
         val r: PreResult[BTSTransitionCondition] = preBTSExecuteConditionExp(o) match {
-         case PreResult(continu, MSome(r: BTSTransitionCondition)) => PreResult(continu, MSome[BTSTransitionCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSTransitionCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSTransitionCondition => PreResult(continu, MSome[BTSTransitionCondition](r))
+             case _ => halt("Can only produce object of type BTSTransitionCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSTransitionCondition]())
         }
         return r
       case o: BTSExecuteConditionTimeout =>
         val r: PreResult[BTSTransitionCondition] = preBTSExecuteConditionTimeout(o) match {
-         case PreResult(continu, MSome(r: BTSTransitionCondition)) => PreResult(continu, MSome[BTSTransitionCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSTransitionCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSTransitionCondition => PreResult(continu, MSome[BTSTransitionCondition](r))
+             case _ => halt("Can only produce object of type BTSTransitionCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSTransitionCondition]())
         }
         return r
       case o: BTSExecuteConditionOtherwise =>
         val r: PreResult[BTSTransitionCondition] = preBTSExecuteConditionOtherwise(o) match {
-         case PreResult(continu, MSome(r: BTSTransitionCondition)) => PreResult(continu, MSome[BTSTransitionCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSTransitionCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSTransitionCondition => PreResult(continu, MSome[BTSTransitionCondition](r))
+             case _ => halt("Can only produce object of type BTSTransitionCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSTransitionCondition]())
         }
         return r
       case o: BTSModeCondition =>
         val r: PreResult[BTSTransitionCondition] = preBTSModeCondition(o) match {
-         case PreResult(continu, MSome(r: BTSTransitionCondition)) => PreResult(continu, MSome[BTSTransitionCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSTransitionCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSTransitionCondition => PreResult(continu, MSome[BTSTransitionCondition](r))
+             case _ => halt("Can only produce object of type BTSTransitionCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSTransitionCondition]())
         }
         return r
       case o: BTSInternalCondition =>
         val r: PreResult[BTSTransitionCondition] = preBTSInternalCondition(o) match {
-         case PreResult(continu, MSome(r: BTSTransitionCondition)) => PreResult(continu, MSome[BTSTransitionCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSTransitionCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSTransitionCondition => PreResult(continu, MSome[BTSTransitionCondition](r))
+             case _ => halt("Can only produce object of type BTSTransitionCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSTransitionCondition]())
         }
         return r
@@ -5086,22 +5992,31 @@ import MTransformer._
     o match {
       case o: BTSDispatchTriggerStop =>
         val r: PreResult[BTSDispatchTrigger] = preBTSDispatchTriggerStop(o) match {
-         case PreResult(continu, MSome(r: BTSDispatchTrigger)) => PreResult(continu, MSome[BTSDispatchTrigger](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSDispatchTrigger")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSDispatchTrigger => PreResult(continu, MSome[BTSDispatchTrigger](r))
+             case _ => halt("Can only produce object of type BTSDispatchTrigger")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSDispatchTrigger]())
         }
         return r
       case o: BTSDispatchTriggerPort =>
         val r: PreResult[BTSDispatchTrigger] = preBTSDispatchTriggerPort(o) match {
-         case PreResult(continu, MSome(r: BTSDispatchTrigger)) => PreResult(continu, MSome[BTSDispatchTrigger](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSDispatchTrigger")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSDispatchTrigger => PreResult(continu, MSome[BTSDispatchTrigger](r))
+             case _ => halt("Can only produce object of type BTSDispatchTrigger")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSDispatchTrigger]())
         }
         return r
       case o: BTSDispatchTriggerTimeout =>
         val r: PreResult[BTSDispatchTrigger] = preBTSDispatchTriggerTimeout(o) match {
-         case PreResult(continu, MSome(r: BTSDispatchTrigger)) => PreResult(continu, MSome[BTSDispatchTrigger](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSDispatchTrigger")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSDispatchTrigger => PreResult(continu, MSome[BTSDispatchTrigger](r))
+             case _ => halt("Can only produce object of type BTSDispatchTrigger")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSDispatchTrigger]())
         }
         return r
@@ -5136,22 +6051,31 @@ import MTransformer._
     o match {
       case o: BTSExecuteConditionExp =>
         val r: PreResult[BTSExecuteCondition] = preBTSExecuteConditionExp(o) match {
-         case PreResult(continu, MSome(r: BTSExecuteCondition)) => PreResult(continu, MSome[BTSExecuteCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExecuteCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSExecuteCondition => PreResult(continu, MSome[BTSExecuteCondition](r))
+             case _ => halt("Can only produce object of type BTSExecuteCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSExecuteCondition]())
         }
         return r
       case o: BTSExecuteConditionTimeout =>
         val r: PreResult[BTSExecuteCondition] = preBTSExecuteConditionTimeout(o) match {
-         case PreResult(continu, MSome(r: BTSExecuteCondition)) => PreResult(continu, MSome[BTSExecuteCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExecuteCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSExecuteCondition => PreResult(continu, MSome[BTSExecuteCondition](r))
+             case _ => halt("Can only produce object of type BTSExecuteCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSExecuteCondition]())
         }
         return r
       case o: BTSExecuteConditionOtherwise =>
         val r: PreResult[BTSExecuteCondition] = preBTSExecuteConditionOtherwise(o) match {
-         case PreResult(continu, MSome(r: BTSExecuteCondition)) => PreResult(continu, MSome[BTSExecuteCondition](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExecuteCondition")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSExecuteCondition => PreResult(continu, MSome[BTSExecuteCondition](r))
+             case _ => halt("Can only produce object of type BTSExecuteCondition")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSExecuteCondition]())
         }
         return r
@@ -5190,50 +6114,71 @@ import MTransformer._
     o match {
       case o: SysmlAst.AttributeUsage =>
         val r: PreResult[SysmlAst.UsageElement] = preSysmlAstAttributeUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageElement)) => PreResult(continu, MSome[SysmlAst.UsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageElement => PreResult(continu, MSome[SysmlAst.UsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageElement]())
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: PreResult[SysmlAst.UsageElement] = preSysmlAstReferenceUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageElement)) => PreResult(continu, MSome[SysmlAst.UsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageElement => PreResult(continu, MSome[SysmlAst.UsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageElement]())
         }
         return r
       case o: SysmlAst.AllocationUsage =>
         val r: PreResult[SysmlAst.UsageElement] = preSysmlAstAllocationUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageElement)) => PreResult(continu, MSome[SysmlAst.UsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageElement => PreResult(continu, MSome[SysmlAst.UsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageElement]())
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: PreResult[SysmlAst.UsageElement] = preSysmlAstConnectionUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageElement)) => PreResult(continu, MSome[SysmlAst.UsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageElement => PreResult(continu, MSome[SysmlAst.UsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageElement]())
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: PreResult[SysmlAst.UsageElement] = preSysmlAstItemUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageElement)) => PreResult(continu, MSome[SysmlAst.UsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageElement => PreResult(continu, MSome[SysmlAst.UsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageElement]())
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: PreResult[SysmlAst.UsageElement] = preSysmlAstPartUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageElement)) => PreResult(continu, MSome[SysmlAst.UsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageElement => PreResult(continu, MSome[SysmlAst.UsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageElement]())
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: PreResult[SysmlAst.UsageElement] = preSysmlAstPortUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageElement)) => PreResult(continu, MSome[SysmlAst.UsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageElement => PreResult(continu, MSome[SysmlAst.UsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageElement]())
         }
         return r
@@ -5264,71 +6209,101 @@ import MTransformer._
     o match {
       case o: BTSSkipAction =>
         val r: PreResult[BTSAction] = preBTSSkipAction(o) match {
-         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSAction => PreResult(continu, MSome[BTSAction](r))
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
         }
         return r
       case o: BTSAssignmentAction =>
         val r: PreResult[BTSAction] = preBTSAssignmentAction(o) match {
-         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSAction => PreResult(continu, MSome[BTSAction](r))
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
         }
         return r
       case o: BTSSubprogramCallAction =>
         val r: PreResult[BTSAction] = preBTSSubprogramCallAction(o) match {
-         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSAction => PreResult(continu, MSome[BTSAction](r))
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
         }
         return r
       case o: BTSPortOutAction =>
         val r: PreResult[BTSAction] = preBTSPortOutAction(o) match {
-         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSAction => PreResult(continu, MSome[BTSAction](r))
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
         }
         return r
       case o: BTSPortInAction =>
         val r: PreResult[BTSAction] = preBTSPortInAction(o) match {
-         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSAction => PreResult(continu, MSome[BTSAction](r))
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
         }
         return r
       case o: BTSFrozenPortAction =>
         val r: PreResult[BTSAction] = preBTSFrozenPortAction(o) match {
-         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSAction => PreResult(continu, MSome[BTSAction](r))
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
         }
         return r
       case o: BTSIfBLESSAction =>
         val r: PreResult[BTSAction] = preBTSIfBLESSAction(o) match {
-         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSAction => PreResult(continu, MSome[BTSAction](r))
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
         }
         return r
       case o: BTSIfBAAction =>
         val r: PreResult[BTSAction] = preBTSIfBAAction(o) match {
-         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSAction => PreResult(continu, MSome[BTSAction](r))
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
         }
         return r
       case o: BTSExistentialLatticeQuantification =>
         val r: PreResult[BTSAction] = preBTSExistentialLatticeQuantification(o) match {
-         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSAction => PreResult(continu, MSome[BTSAction](r))
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
         }
         return r
       case o: BTSUniversalLatticeQuantification =>
         val r: PreResult[BTSAction] = preBTSUniversalLatticeQuantification(o) match {
-         case PreResult(continu, MSome(r: BTSAction)) => PreResult(continu, MSome[BTSAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSAction => PreResult(continu, MSome[BTSAction](r))
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSAction]())
         }
         return r
@@ -5339,43 +6314,61 @@ import MTransformer._
     o match {
       case o: BTSSkipAction =>
         val r: PreResult[BTSBasicAction] = preBTSSkipAction(o) match {
-         case PreResult(continu, MSome(r: BTSBasicAction)) => PreResult(continu, MSome[BTSBasicAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSBasicAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSBasicAction => PreResult(continu, MSome[BTSBasicAction](r))
+             case _ => halt("Can only produce object of type BTSBasicAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSBasicAction]())
         }
         return r
       case o: BTSAssignmentAction =>
         val r: PreResult[BTSBasicAction] = preBTSAssignmentAction(o) match {
-         case PreResult(continu, MSome(r: BTSBasicAction)) => PreResult(continu, MSome[BTSBasicAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSBasicAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSBasicAction => PreResult(continu, MSome[BTSBasicAction](r))
+             case _ => halt("Can only produce object of type BTSBasicAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSBasicAction]())
         }
         return r
       case o: BTSSubprogramCallAction =>
         val r: PreResult[BTSBasicAction] = preBTSSubprogramCallAction(o) match {
-         case PreResult(continu, MSome(r: BTSBasicAction)) => PreResult(continu, MSome[BTSBasicAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSBasicAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSBasicAction => PreResult(continu, MSome[BTSBasicAction](r))
+             case _ => halt("Can only produce object of type BTSBasicAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSBasicAction]())
         }
         return r
       case o: BTSPortOutAction =>
         val r: PreResult[BTSBasicAction] = preBTSPortOutAction(o) match {
-         case PreResult(continu, MSome(r: BTSBasicAction)) => PreResult(continu, MSome[BTSBasicAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSBasicAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSBasicAction => PreResult(continu, MSome[BTSBasicAction](r))
+             case _ => halt("Can only produce object of type BTSBasicAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSBasicAction]())
         }
         return r
       case o: BTSPortInAction =>
         val r: PreResult[BTSBasicAction] = preBTSPortInAction(o) match {
-         case PreResult(continu, MSome(r: BTSBasicAction)) => PreResult(continu, MSome[BTSBasicAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSBasicAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSBasicAction => PreResult(continu, MSome[BTSBasicAction](r))
+             case _ => halt("Can only produce object of type BTSBasicAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSBasicAction]())
         }
         return r
       case o: BTSFrozenPortAction =>
         val r: PreResult[BTSBasicAction] = preBTSFrozenPortAction(o) match {
-         case PreResult(continu, MSome(r: BTSBasicAction)) => PreResult(continu, MSome[BTSBasicAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSBasicAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSBasicAction => PreResult(continu, MSome[BTSBasicAction](r))
+             case _ => halt("Can only produce object of type BTSBasicAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSBasicAction]())
         }
         return r
@@ -5386,50 +6379,71 @@ import MTransformer._
     o match {
       case o: SysmlAst.AttributeUsage =>
         val r: PreResult[SysmlAst.UsageMember] = preSysmlAstAttributeUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageMember => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: PreResult[SysmlAst.UsageMember] = preSysmlAstReferenceUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageMember => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
         }
         return r
       case o: SysmlAst.AllocationUsage =>
         val r: PreResult[SysmlAst.UsageMember] = preSysmlAstAllocationUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageMember => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: PreResult[SysmlAst.UsageMember] = preSysmlAstConnectionUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageMember => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: PreResult[SysmlAst.UsageMember] = preSysmlAstItemUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageMember => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: PreResult[SysmlAst.UsageMember] = preSysmlAstPartUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageMember => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: PreResult[SysmlAst.UsageMember] = preSysmlAstPortUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.UsageMember)) => PreResult(continu, MSome[SysmlAst.UsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.UsageMember => PreResult(continu, MSome[SysmlAst.UsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.UsageMember]())
         }
         return r
@@ -5444,15 +6458,21 @@ import MTransformer._
     o match {
       case o: SysmlAst.AttributeUsage =>
         val r: PreResult[SysmlAst.NonOccurrenceUsageMember] = preSysmlAstAttributeUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.NonOccurrenceUsageMember)) => PreResult(continu, MSome[SysmlAst.NonOccurrenceUsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.NonOccurrenceUsageMember => PreResult(continu, MSome[SysmlAst.NonOccurrenceUsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.NonOccurrenceUsageMember]())
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: PreResult[SysmlAst.NonOccurrenceUsageMember] = preSysmlAstReferenceUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.NonOccurrenceUsageMember)) => PreResult(continu, MSome[SysmlAst.NonOccurrenceUsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.NonOccurrenceUsageMember => PreResult(continu, MSome[SysmlAst.NonOccurrenceUsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.NonOccurrenceUsageMember]())
         }
         return r
@@ -5467,15 +6487,21 @@ import MTransformer._
     o match {
       case o: SysmlAst.AttributeUsage =>
         val r: PreResult[SysmlAst.NonOccurrenceUsageElement] = preSysmlAstAttributeUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.NonOccurrenceUsageElement)) => PreResult(continu, MSome[SysmlAst.NonOccurrenceUsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.NonOccurrenceUsageElement => PreResult(continu, MSome[SysmlAst.NonOccurrenceUsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.NonOccurrenceUsageElement]())
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: PreResult[SysmlAst.NonOccurrenceUsageElement] = preSysmlAstReferenceUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.NonOccurrenceUsageElement)) => PreResult(continu, MSome[SysmlAst.NonOccurrenceUsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.NonOccurrenceUsageElement => PreResult(continu, MSome[SysmlAst.NonOccurrenceUsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.NonOccurrenceUsageElement]())
         }
         return r
@@ -5486,29 +6512,41 @@ import MTransformer._
     o match {
       case o: BTSSubprogramCallAction =>
         val r: PreResult[BTSCommunicationAction] = preBTSSubprogramCallAction(o) match {
-         case PreResult(continu, MSome(r: BTSCommunicationAction)) => PreResult(continu, MSome[BTSCommunicationAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSCommunicationAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSCommunicationAction => PreResult(continu, MSome[BTSCommunicationAction](r))
+             case _ => halt("Can only produce object of type BTSCommunicationAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSCommunicationAction]())
         }
         return r
       case o: BTSPortOutAction =>
         val r: PreResult[BTSCommunicationAction] = preBTSPortOutAction(o) match {
-         case PreResult(continu, MSome(r: BTSCommunicationAction)) => PreResult(continu, MSome[BTSCommunicationAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSCommunicationAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSCommunicationAction => PreResult(continu, MSome[BTSCommunicationAction](r))
+             case _ => halt("Can only produce object of type BTSCommunicationAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSCommunicationAction]())
         }
         return r
       case o: BTSPortInAction =>
         val r: PreResult[BTSCommunicationAction] = preBTSPortInAction(o) match {
-         case PreResult(continu, MSome(r: BTSCommunicationAction)) => PreResult(continu, MSome[BTSCommunicationAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSCommunicationAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSCommunicationAction => PreResult(continu, MSome[BTSCommunicationAction](r))
+             case _ => halt("Can only produce object of type BTSCommunicationAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSCommunicationAction]())
         }
         return r
       case o: BTSFrozenPortAction =>
         val r: PreResult[BTSCommunicationAction] = preBTSFrozenPortAction(o) match {
-         case PreResult(continu, MSome(r: BTSCommunicationAction)) => PreResult(continu, MSome[BTSCommunicationAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSCommunicationAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSCommunicationAction => PreResult(continu, MSome[BTSCommunicationAction](r))
+             case _ => halt("Can only produce object of type BTSCommunicationAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSCommunicationAction]())
         }
         return r
@@ -5551,15 +6589,21 @@ import MTransformer._
     o match {
       case o: BTSIfBLESSAction =>
         val r: PreResult[BTSControlAction] = preBTSIfBLESSAction(o) match {
-         case PreResult(continu, MSome(r: BTSControlAction)) => PreResult(continu, MSome[BTSControlAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSControlAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSControlAction => PreResult(continu, MSome[BTSControlAction](r))
+             case _ => halt("Can only produce object of type BTSControlAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSControlAction]())
         }
         return r
       case o: BTSIfBAAction =>
         val r: PreResult[BTSControlAction] = preBTSIfBAAction(o) match {
-         case PreResult(continu, MSome(r: BTSControlAction)) => PreResult(continu, MSome[BTSControlAction](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSControlAction")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSControlAction => PreResult(continu, MSome[BTSControlAction](r))
+             case _ => halt("Can only produce object of type BTSControlAction")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSControlAction]())
         }
         return r
@@ -5594,15 +6638,21 @@ import MTransformer._
     o match {
       case o: BTSExistentialLatticeQuantification =>
         val r: PreResult[BTSQuantificationActions] = preBTSExistentialLatticeQuantification(o) match {
-         case PreResult(continu, MSome(r: BTSQuantificationActions)) => PreResult(continu, MSome[BTSQuantificationActions](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSQuantificationActions")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSQuantificationActions => PreResult(continu, MSome[BTSQuantificationActions](r))
+             case _ => halt("Can only produce object of type BTSQuantificationActions")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSQuantificationActions]())
         }
         return r
       case o: BTSUniversalLatticeQuantification =>
         val r: PreResult[BTSQuantificationActions] = preBTSUniversalLatticeQuantification(o) match {
-         case PreResult(continu, MSome(r: BTSQuantificationActions)) => PreResult(continu, MSome[BTSQuantificationActions](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSQuantificationActions")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSQuantificationActions => PreResult(continu, MSome[BTSQuantificationActions](r))
+             case _ => halt("Can only produce object of type BTSQuantificationActions")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSQuantificationActions]())
         }
         return r
@@ -5613,36 +6663,51 @@ import MTransformer._
     o match {
       case o: SysmlAst.AllocationUsage =>
         val r: PreResult[SysmlAst.OccurrenceUsageMember] = preSysmlAstAllocationUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.OccurrenceUsageMember)) => PreResult(continu, MSome[SysmlAst.OccurrenceUsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.OccurrenceUsageMember => PreResult(continu, MSome[SysmlAst.OccurrenceUsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.OccurrenceUsageMember]())
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: PreResult[SysmlAst.OccurrenceUsageMember] = preSysmlAstConnectionUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.OccurrenceUsageMember)) => PreResult(continu, MSome[SysmlAst.OccurrenceUsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.OccurrenceUsageMember => PreResult(continu, MSome[SysmlAst.OccurrenceUsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.OccurrenceUsageMember]())
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: PreResult[SysmlAst.OccurrenceUsageMember] = preSysmlAstItemUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.OccurrenceUsageMember)) => PreResult(continu, MSome[SysmlAst.OccurrenceUsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.OccurrenceUsageMember => PreResult(continu, MSome[SysmlAst.OccurrenceUsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.OccurrenceUsageMember]())
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: PreResult[SysmlAst.OccurrenceUsageMember] = preSysmlAstPartUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.OccurrenceUsageMember)) => PreResult(continu, MSome[SysmlAst.OccurrenceUsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.OccurrenceUsageMember => PreResult(continu, MSome[SysmlAst.OccurrenceUsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.OccurrenceUsageMember]())
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: PreResult[SysmlAst.OccurrenceUsageMember] = preSysmlAstPortUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.OccurrenceUsageMember)) => PreResult(continu, MSome[SysmlAst.OccurrenceUsageMember](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.OccurrenceUsageMember => PreResult(continu, MSome[SysmlAst.OccurrenceUsageMember](r))
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.OccurrenceUsageMember]())
         }
         return r
@@ -5657,36 +6722,51 @@ import MTransformer._
     o match {
       case o: SysmlAst.AllocationUsage =>
         val r: PreResult[SysmlAst.OccurrenceUsageElement] = preSysmlAstAllocationUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.OccurrenceUsageElement)) => PreResult(continu, MSome[SysmlAst.OccurrenceUsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.OccurrenceUsageElement => PreResult(continu, MSome[SysmlAst.OccurrenceUsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.OccurrenceUsageElement]())
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: PreResult[SysmlAst.OccurrenceUsageElement] = preSysmlAstConnectionUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.OccurrenceUsageElement)) => PreResult(continu, MSome[SysmlAst.OccurrenceUsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.OccurrenceUsageElement => PreResult(continu, MSome[SysmlAst.OccurrenceUsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.OccurrenceUsageElement]())
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: PreResult[SysmlAst.OccurrenceUsageElement] = preSysmlAstItemUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.OccurrenceUsageElement)) => PreResult(continu, MSome[SysmlAst.OccurrenceUsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.OccurrenceUsageElement => PreResult(continu, MSome[SysmlAst.OccurrenceUsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.OccurrenceUsageElement]())
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: PreResult[SysmlAst.OccurrenceUsageElement] = preSysmlAstPartUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.OccurrenceUsageElement)) => PreResult(continu, MSome[SysmlAst.OccurrenceUsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.OccurrenceUsageElement => PreResult(continu, MSome[SysmlAst.OccurrenceUsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.OccurrenceUsageElement]())
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: PreResult[SysmlAst.OccurrenceUsageElement] = preSysmlAstPortUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.OccurrenceUsageElement)) => PreResult(continu, MSome[SysmlAst.OccurrenceUsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.OccurrenceUsageElement => PreResult(continu, MSome[SysmlAst.OccurrenceUsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.OccurrenceUsageElement]())
         }
         return r
@@ -5697,36 +6777,51 @@ import MTransformer._
     o match {
       case o: SysmlAst.AllocationUsage =>
         val r: PreResult[SysmlAst.StructureUsageElement] = preSysmlAstAllocationUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.StructureUsageElement)) => PreResult(continu, MSome[SysmlAst.StructureUsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.StructureUsageElement => PreResult(continu, MSome[SysmlAst.StructureUsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.StructureUsageElement]())
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: PreResult[SysmlAst.StructureUsageElement] = preSysmlAstConnectionUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.StructureUsageElement)) => PreResult(continu, MSome[SysmlAst.StructureUsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.StructureUsageElement => PreResult(continu, MSome[SysmlAst.StructureUsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.StructureUsageElement]())
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: PreResult[SysmlAst.StructureUsageElement] = preSysmlAstItemUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.StructureUsageElement)) => PreResult(continu, MSome[SysmlAst.StructureUsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.StructureUsageElement => PreResult(continu, MSome[SysmlAst.StructureUsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.StructureUsageElement]())
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: PreResult[SysmlAst.StructureUsageElement] = preSysmlAstPartUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.StructureUsageElement)) => PreResult(continu, MSome[SysmlAst.StructureUsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.StructureUsageElement => PreResult(continu, MSome[SysmlAst.StructureUsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.StructureUsageElement]())
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: PreResult[SysmlAst.StructureUsageElement] = preSysmlAstPortUsage(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.StructureUsageElement)) => PreResult(continu, MSome[SysmlAst.StructureUsageElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.StructureUsageElement => PreResult(continu, MSome[SysmlAst.StructureUsageElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.StructureUsageElement]())
         }
         return r
@@ -5737,15 +6832,21 @@ import MTransformer._
     o match {
       case o: SysmlAst.OccurrenceBasicUsagePrefix =>
         val r: PreResult[SysmlAst.OccurrenceUsagePrefix] = preSysmlAstOccurrenceBasicUsagePrefix(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.OccurrenceUsagePrefix)) => PreResult(continu, MSome[SysmlAst.OccurrenceUsagePrefix](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.OccurrenceUsagePrefix")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.OccurrenceUsagePrefix => PreResult(continu, MSome[SysmlAst.OccurrenceUsagePrefix](r))
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsagePrefix")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.OccurrenceUsagePrefix]())
         }
         return r
       case o: SysmlAst.OccurrenceEndUsagePrefix =>
         val r: PreResult[SysmlAst.OccurrenceUsagePrefix] = preSysmlAstOccurrenceEndUsagePrefix(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.OccurrenceUsagePrefix)) => PreResult(continu, MSome[SysmlAst.OccurrenceUsagePrefix](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.OccurrenceUsagePrefix")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.OccurrenceUsagePrefix => PreResult(continu, MSome[SysmlAst.OccurrenceUsagePrefix](r))
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsagePrefix")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.OccurrenceUsagePrefix]())
         }
         return r
@@ -5772,50 +6873,71 @@ import MTransformer._
     o match {
       case o: BTSUnaryExp =>
         val r: PreResult[BTSExp] = preBTSUnaryExp(o) match {
-         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSExp => PreResult(continu, MSome[BTSExp](r))
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
         }
         return r
       case o: BTSBinaryExp =>
         val r: PreResult[BTSExp] = preBTSBinaryExp(o) match {
-         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSExp => PreResult(continu, MSome[BTSExp](r))
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
         }
         return r
       case o: BTSLiteralExp =>
         val r: PreResult[BTSExp] = preBTSLiteralExp(o) match {
-         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSExp => PreResult(continu, MSome[BTSExp](r))
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
         }
         return r
       case o: BTSNameExp =>
         val r: PreResult[BTSExp] = preBTSNameExp(o) match {
-         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSExp => PreResult(continu, MSome[BTSExp](r))
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
         }
         return r
       case o: BTSIndexingExp =>
         val r: PreResult[BTSExp] = preBTSIndexingExp(o) match {
-         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSExp => PreResult(continu, MSome[BTSExp](r))
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
         }
         return r
       case o: BTSAccessExp =>
         val r: PreResult[BTSExp] = preBTSAccessExp(o) match {
-         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSExp => PreResult(continu, MSome[BTSExp](r))
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
         }
         return r
       case o: BTSFunctionCall =>
         val r: PreResult[BTSExp] = preBTSFunctionCall(o) match {
-         case PreResult(continu, MSome(r: BTSExp)) => PreResult(continu, MSome[BTSExp](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type BTSExp")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: BTSExp => PreResult(continu, MSome[BTSExp](r))
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[BTSExp]())
         }
         return r
@@ -5866,22 +6988,31 @@ import MTransformer._
     o match {
       case o: GclSchemaComponentRef =>
         val r: PreResult[GclSchemaElement] = preGclSchemaComponentRef(o) match {
-         case PreResult(continu, MSome(r: GclSchemaElement)) => PreResult(continu, MSome[GclSchemaElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSchemaElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSchemaElement => PreResult(continu, MSome[GclSchemaElement](r))
+             case _ => halt("Can only produce object of type GclSchemaElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSchemaElement]())
         }
         return r
       case o: GclSchemaLabel =>
         val r: PreResult[GclSchemaElement] = preGclSchemaLabel(o) match {
-         case PreResult(continu, MSome(r: GclSchemaElement)) => PreResult(continu, MSome[GclSchemaElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSchemaElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSchemaElement => PreResult(continu, MSome[GclSchemaElement](r))
+             case _ => halt("Can only produce object of type GclSchemaElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSchemaElement]())
         }
         return r
       case o: GclSchemaSplitJoin =>
         val r: PreResult[GclSchemaElement] = preGclSchemaSplitJoin(o) match {
-         case PreResult(continu, MSome(r: GclSchemaElement)) => PreResult(continu, MSome[GclSchemaElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSchemaElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSchemaElement => PreResult(continu, MSome[GclSchemaElement](r))
+             case _ => halt("Can only produce object of type GclSchemaElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSchemaElement]())
         }
         return r
@@ -5928,29 +7059,41 @@ import MTransformer._
     o match {
       case o: SysmlAst.Comment =>
         val r: PreResult[SysmlAst.AnnotatingElement] = preSysmlAstComment(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AnnotatingElement)) => PreResult(continu, MSome[SysmlAst.AnnotatingElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AnnotatingElement => PreResult(continu, MSome[SysmlAst.AnnotatingElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AnnotatingElement]())
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: PreResult[SysmlAst.AnnotatingElement] = preSysmlAstDocumentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AnnotatingElement)) => PreResult(continu, MSome[SysmlAst.AnnotatingElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AnnotatingElement => PreResult(continu, MSome[SysmlAst.AnnotatingElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AnnotatingElement]())
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: PreResult[SysmlAst.AnnotatingElement] = preSysmlAstTextualRepresentation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AnnotatingElement)) => PreResult(continu, MSome[SysmlAst.AnnotatingElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AnnotatingElement => PreResult(continu, MSome[SysmlAst.AnnotatingElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AnnotatingElement]())
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: PreResult[SysmlAst.AnnotatingElement] = preSysmlAstGumboAnnotation(o) match {
-         case PreResult(continu, MSome(r: SysmlAst.AnnotatingElement)) => PreResult(continu, MSome[SysmlAst.AnnotatingElement](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: SysmlAst.AnnotatingElement => PreResult(continu, MSome[SysmlAst.AnnotatingElement](r))
+             case _ => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[SysmlAst.AnnotatingElement]())
         }
         return r
@@ -6065,36 +7208,51 @@ import MTransformer._
     o match {
       case o: GclPointStart =>
         val r: PreResult[GclSchemaPoint] = preGclPointStart(o) match {
-         case PreResult(continu, MSome(r: GclSchemaPoint)) => PreResult(continu, MSome[GclSchemaPoint](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSchemaPoint")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSchemaPoint => PreResult(continu, MSome[GclSchemaPoint](r))
+             case _ => halt("Can only produce object of type GclSchemaPoint")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSchemaPoint]())
         }
         return r
       case o: GclPointEnd =>
         val r: PreResult[GclSchemaPoint] = preGclPointEnd(o) match {
-         case PreResult(continu, MSome(r: GclSchemaPoint)) => PreResult(continu, MSome[GclSchemaPoint](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSchemaPoint")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSchemaPoint => PreResult(continu, MSome[GclSchemaPoint](r))
+             case _ => halt("Can only produce object of type GclSchemaPoint")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSchemaPoint]())
         }
         return r
       case o: GclPointAt =>
         val r: PreResult[GclSchemaPoint] = preGclPointAt(o) match {
-         case PreResult(continu, MSome(r: GclSchemaPoint)) => PreResult(continu, MSome[GclSchemaPoint](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSchemaPoint")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSchemaPoint => PreResult(continu, MSome[GclSchemaPoint](r))
+             case _ => halt("Can only produce object of type GclSchemaPoint")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSchemaPoint]())
         }
         return r
       case o: GclPointBefore =>
         val r: PreResult[GclSchemaPoint] = preGclPointBefore(o) match {
-         case PreResult(continu, MSome(r: GclSchemaPoint)) => PreResult(continu, MSome[GclSchemaPoint](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSchemaPoint")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSchemaPoint => PreResult(continu, MSome[GclSchemaPoint](r))
+             case _ => halt("Can only produce object of type GclSchemaPoint")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSchemaPoint]())
         }
         return r
       case o: GclPointAfter =>
         val r: PreResult[GclSchemaPoint] = preGclPointAfter(o) match {
-         case PreResult(continu, MSome(r: GclSchemaPoint)) => PreResult(continu, MSome[GclSchemaPoint](r))
-         case PreResult(_, MSome(_)) => halt("Can only produce object of type GclSchemaPoint")
+         case PreResult(continu, MSome(r)) =>
+           r match {
+             case r: GclSchemaPoint => PreResult(continu, MSome[GclSchemaPoint](r))
+             case _ => halt("Can only produce object of type GclSchemaPoint")
+           }
          case PreResult(continu, _) => PreResult(continu, MNone[GclSchemaPoint]())
         }
         return r
@@ -6189,15 +7347,21 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.VarPattern => return post_langastStmtVarPattern(o)
       case o: org.sireum.lang.ast.Stmt.SpecVar =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtSpecVar(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.RsVal =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtRsVal(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
@@ -6205,15 +7369,21 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.ExtMethod => return post_langastStmtExtMethod(o)
       case o: org.sireum.lang.ast.Stmt.JustMethod =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtJustMethod(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.SpecMethod =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtSpecMethod(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
@@ -6228,8 +7398,11 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.If => return post_langastStmtIf(o)
       case o: org.sireum.lang.ast.Stmt.Induct =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtInduct(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
@@ -6240,64 +7413,91 @@ import MTransformer._
       case o: org.sireum.lang.ast.Stmt.Expr => return post_langastStmtExpr(o)
       case o: org.sireum.lang.ast.Stmt.Fact =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtFact(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.Inv =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtInv(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.Theorem =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtTheorem(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.DataRefinement =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtDataRefinement(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.SpecLabel =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtSpecLabel(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.SpecBlock =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtSpecBlock(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.DeduceSequent =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtDeduceSequent(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.DeduceSteps =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtDeduceSteps(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.Havoc =>
         val r: MOption[org.sireum.lang.ast.Stmt] = post_langastStmtHavoc(o) match {
-         case MSome(result: org.sireum.lang.ast.Stmt) => MSome[org.sireum.lang.ast.Stmt](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Stmt => MSome[org.sireum.lang.ast.Stmt](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt")
+           }
          case _ => MNone[org.sireum.lang.ast.Stmt]()
         }
         return r
@@ -6308,22 +7508,31 @@ import MTransformer._
     o match {
       case o: org.sireum.lang.ast.LoopContract =>
         val r: MOption[org.sireum.lang.ast.HasModifies] = post_langastLoopContract(o) match {
-         case MSome(result: org.sireum.lang.ast.HasModifies) => MSome[org.sireum.lang.ast.HasModifies](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.HasModifies => MSome[org.sireum.lang.ast.HasModifies](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+           }
          case _ => MNone[org.sireum.lang.ast.HasModifies]()
         }
         return r
       case o: org.sireum.lang.ast.MethodContract.Simple =>
         val r: MOption[org.sireum.lang.ast.HasModifies] = post_langastMethodContractSimple(o) match {
-         case MSome(result: org.sireum.lang.ast.HasModifies) => MSome[org.sireum.lang.ast.HasModifies](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.HasModifies => MSome[org.sireum.lang.ast.HasModifies](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+           }
          case _ => MNone[org.sireum.lang.ast.HasModifies]()
         }
         return r
       case o: org.sireum.lang.ast.MethodContract.Cases =>
         val r: MOption[org.sireum.lang.ast.HasModifies] = post_langastMethodContractCases(o) match {
-         case MSome(result: org.sireum.lang.ast.HasModifies) => MSome[org.sireum.lang.ast.HasModifies](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.HasModifies => MSome[org.sireum.lang.ast.HasModifies](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.HasModifies")
+           }
          case _ => MNone[org.sireum.lang.ast.HasModifies]()
         }
         return r
@@ -6645,36 +7854,51 @@ import MTransformer._
     o match {
       case o: org.sireum.lang.ast.Stmt.Block =>
         val r: MOption[org.sireum.lang.ast.AssignExp] = post_langastStmtBlock(o) match {
-         case MSome(result: org.sireum.lang.ast.AssignExp) => MSome[org.sireum.lang.ast.AssignExp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.AssignExp => MSome[org.sireum.lang.ast.AssignExp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+           }
          case _ => MNone[org.sireum.lang.ast.AssignExp]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.If =>
         val r: MOption[org.sireum.lang.ast.AssignExp] = post_langastStmtIf(o) match {
-         case MSome(result: org.sireum.lang.ast.AssignExp) => MSome[org.sireum.lang.ast.AssignExp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.AssignExp => MSome[org.sireum.lang.ast.AssignExp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+           }
          case _ => MNone[org.sireum.lang.ast.AssignExp]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.Match =>
         val r: MOption[org.sireum.lang.ast.AssignExp] = post_langastStmtMatch(o) match {
-         case MSome(result: org.sireum.lang.ast.AssignExp) => MSome[org.sireum.lang.ast.AssignExp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.AssignExp => MSome[org.sireum.lang.ast.AssignExp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+           }
          case _ => MNone[org.sireum.lang.ast.AssignExp]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.Return =>
         val r: MOption[org.sireum.lang.ast.AssignExp] = post_langastStmtReturn(o) match {
-         case MSome(result: org.sireum.lang.ast.AssignExp) => MSome[org.sireum.lang.ast.AssignExp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.AssignExp => MSome[org.sireum.lang.ast.AssignExp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+           }
          case _ => MNone[org.sireum.lang.ast.AssignExp]()
         }
         return r
       case o: org.sireum.lang.ast.Stmt.Expr =>
         val r: MOption[org.sireum.lang.ast.AssignExp] = post_langastStmtExpr(o) match {
-         case MSome(result: org.sireum.lang.ast.AssignExp) => MSome[org.sireum.lang.ast.AssignExp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.AssignExp => MSome[org.sireum.lang.ast.AssignExp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.AssignExp")
+           }
          case _ => MNone[org.sireum.lang.ast.AssignExp]()
         }
         return r
@@ -6768,64 +7992,91 @@ import MTransformer._
     o match {
       case o: org.sireum.lang.ast.ProofAst.StepId.Num =>
         val r: MOption[org.sireum.lang.ast.Exp] = post_langastProofAstStepIdNum(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp => MSome[org.sireum.lang.ast.Exp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp]()
         }
         return r
       case o: org.sireum.lang.ast.ProofAst.StepId.Str =>
         val r: MOption[org.sireum.lang.ast.Exp] = post_langastProofAstStepIdStr(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp => MSome[org.sireum.lang.ast.Exp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp]()
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitB =>
         val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitB(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp => MSome[org.sireum.lang.ast.Exp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp]()
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitC =>
         val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitC(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp => MSome[org.sireum.lang.ast.Exp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp]()
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitZ =>
         val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitZ(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp => MSome[org.sireum.lang.ast.Exp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp]()
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitF32 =>
         val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitF32(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp => MSome[org.sireum.lang.ast.Exp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp]()
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitF64 =>
         val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitF64(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp => MSome[org.sireum.lang.ast.Exp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp]()
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitR =>
         val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitR(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp => MSome[org.sireum.lang.ast.Exp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp]()
         }
         return r
       case o: org.sireum.lang.ast.Exp.LitString =>
         val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpLitString(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp => MSome[org.sireum.lang.ast.Exp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp]()
         }
         return r
@@ -6849,22 +8100,31 @@ import MTransformer._
       case o: org.sireum.lang.ast.Exp.ForYield => return post_langastExpForYield(o)
       case o: org.sireum.lang.ast.Exp.QuantType =>
         val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpQuantType(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp => MSome[org.sireum.lang.ast.Exp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp]()
         }
         return r
       case o: org.sireum.lang.ast.Exp.QuantRange =>
         val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpQuantRange(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp => MSome[org.sireum.lang.ast.Exp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp]()
         }
         return r
       case o: org.sireum.lang.ast.Exp.QuantEach =>
         val r: MOption[org.sireum.lang.ast.Exp] = post_langastExpQuantEach(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp) => MSome[org.sireum.lang.ast.Exp](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp => MSome[org.sireum.lang.ast.Exp](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp]()
         }
         return r
@@ -6887,15 +8147,21 @@ import MTransformer._
     o match {
       case o: org.sireum.lang.ast.ProofAst.StepId.Num =>
         val r: MOption[org.sireum.lang.ast.Lit] = post_langastProofAstStepIdNum(o) match {
-         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Lit => MSome[org.sireum.lang.ast.Lit](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+           }
          case _ => MNone[org.sireum.lang.ast.Lit]()
         }
         return r
       case o: org.sireum.lang.ast.ProofAst.StepId.Str =>
         val r: MOption[org.sireum.lang.ast.Lit] = post_langastProofAstStepIdStr(o) match {
-         case MSome(result: org.sireum.lang.ast.Lit) => MSome[org.sireum.lang.ast.Lit](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Lit => MSome[org.sireum.lang.ast.Lit](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Lit")
+           }
          case _ => MNone[org.sireum.lang.ast.Lit]()
         }
         return r
@@ -6965,15 +8231,21 @@ import MTransformer._
     o match {
       case o: org.sireum.lang.ast.Exp.Ident =>
         val r: MOption[org.sireum.lang.ast.Exp.Ref] = post_langastExpIdent(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp.Ref) => MSome[org.sireum.lang.ast.Exp.Ref](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ref")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp.Ref => MSome[org.sireum.lang.ast.Exp.Ref](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ref")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp.Ref]()
         }
         return r
       case o: org.sireum.lang.ast.Exp.Select =>
         val r: MOption[org.sireum.lang.ast.Exp.Ref] = post_langastExpSelect(o) match {
-         case MSome(result: org.sireum.lang.ast.Exp.Ref) => MSome[org.sireum.lang.ast.Exp.Ref](result)
-         case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ref")
+         case MSome(result) =>
+           result match {
+             case result: org.sireum.lang.ast.Exp.Ref => MSome[org.sireum.lang.ast.Exp.Ref](result)
+             case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ref")
+           }
          case _ => MNone[org.sireum.lang.ast.Exp.Ref]()
         }
         return r
@@ -7289,29 +8561,41 @@ import MTransformer._
     o match {
       case o: SmfClause =>
         val r: MOption[SmfAnnex] = postSmfClause(o) match {
-         case MSome(result: SmfAnnex) => MSome[SmfAnnex](result)
-         case MSome(_) => halt("Can only produce object of type SmfAnnex")
+         case MSome(result) =>
+           result match {
+             case result: SmfAnnex => MSome[SmfAnnex](result)
+             case _ => halt("Can only produce object of type SmfAnnex")
+           }
          case _ => MNone[SmfAnnex]()
         }
         return r
       case o: SmfClassification =>
         val r: MOption[SmfAnnex] = postSmfClassification(o) match {
-         case MSome(result: SmfAnnex) => MSome[SmfAnnex](result)
-         case MSome(_) => halt("Can only produce object of type SmfAnnex")
+         case MSome(result) =>
+           result match {
+             case result: SmfAnnex => MSome[SmfAnnex](result)
+             case _ => halt("Can only produce object of type SmfAnnex")
+           }
          case _ => MNone[SmfAnnex]()
         }
         return r
       case o: SmfDeclass =>
         val r: MOption[SmfAnnex] = postSmfDeclass(o) match {
-         case MSome(result: SmfAnnex) => MSome[SmfAnnex](result)
-         case MSome(_) => halt("Can only produce object of type SmfAnnex")
+         case MSome(result) =>
+           result match {
+             case result: SmfAnnex => MSome[SmfAnnex](result)
+             case _ => halt("Can only produce object of type SmfAnnex")
+           }
          case _ => MNone[SmfAnnex]()
         }
         return r
       case o: SmfType =>
         val r: MOption[SmfAnnex] = postSmfType(o) match {
-         case MSome(result: SmfAnnex) => MSome[SmfAnnex](result)
-         case MSome(_) => halt("Can only produce object of type SmfAnnex")
+         case MSome(result) =>
+           result match {
+             case result: SmfAnnex => MSome[SmfAnnex](result)
+             case _ => halt("Can only produce object of type SmfAnnex")
+           }
          case _ => MNone[SmfAnnex]()
         }
         return r
@@ -7322,8 +8606,11 @@ import MTransformer._
     o match {
       case o: SmfLibrary =>
         val r: MOption[SmfLib] = postSmfLibrary(o) match {
-         case MSome(result: SmfLib) => MSome[SmfLib](result)
-         case MSome(_) => halt("Can only produce object of type SmfLib")
+         case MSome(result) =>
+           result match {
+             case result: SmfLib => MSome[SmfLib](result)
+             case _ => halt("Can only produce object of type SmfLib")
+           }
          case _ => MNone[SmfLib]()
         }
         return r
@@ -7354,57 +8641,81 @@ import MTransformer._
     o match {
       case o: Component =>
         val r: MOption[AadlInstInfo] = postComponent(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case MSome(result) =>
+           result match {
+             case result: AadlInstInfo => MSome[AadlInstInfo](result)
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case _ => MNone[AadlInstInfo]()
         }
         return r
       case o: ErrorTypeDef =>
         val r: MOption[AadlInstInfo] = postErrorTypeDef(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case MSome(result) =>
+           result match {
+             case result: AadlInstInfo => MSome[AadlInstInfo](result)
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case _ => MNone[AadlInstInfo]()
         }
         return r
       case o: FeatureEnd =>
         val r: MOption[AadlInstInfo] = postFeatureEnd(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case MSome(result) =>
+           result match {
+             case result: AadlInstInfo => MSome[AadlInstInfo](result)
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case _ => MNone[AadlInstInfo]()
         }
         return r
       case o: FeatureGroup =>
         val r: MOption[AadlInstInfo] = postFeatureGroup(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case MSome(result) =>
+           result match {
+             case result: AadlInstInfo => MSome[AadlInstInfo](result)
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case _ => MNone[AadlInstInfo]()
         }
         return r
       case o: FeatureAccess =>
         val r: MOption[AadlInstInfo] = postFeatureAccess(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case MSome(result) =>
+           result match {
+             case result: AadlInstInfo => MSome[AadlInstInfo](result)
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case _ => MNone[AadlInstInfo]()
         }
         return r
       case o: Connection =>
         val r: MOption[AadlInstInfo] = postConnection(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case MSome(result) =>
+           result match {
+             case result: AadlInstInfo => MSome[AadlInstInfo](result)
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case _ => MNone[AadlInstInfo]()
         }
         return r
       case o: Emv2Flow =>
         val r: MOption[AadlInstInfo] = postEmv2Flow(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case MSome(result) =>
+           result match {
+             case result: AadlInstInfo => MSome[AadlInstInfo](result)
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case _ => MNone[AadlInstInfo]()
         }
         return r
       case o: Flow =>
         val r: MOption[AadlInstInfo] = postFlow(o) match {
-         case MSome(result: AadlInstInfo) => MSome[AadlInstInfo](result)
-         case MSome(_) => halt("Can only produce object of type AadlInstInfo")
+         case MSome(result) =>
+           result match {
+             case result: AadlInstInfo => MSome[AadlInstInfo](result)
+             case _ => halt("Can only produce object of type AadlInstInfo")
+           }
          case _ => MNone[AadlInstInfo]()
         }
         return r
@@ -7415,127 +8726,181 @@ import MTransformer._
     o match {
       case o: ErrorTypeDef =>
         val r: MOption[Emv2Annex] = postErrorTypeDef(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: ErrorAliasDef =>
         val r: MOption[Emv2Annex] = postErrorAliasDef(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: ErrorTypeSetDef =>
         val r: MOption[Emv2Annex] = postErrorTypeSetDef(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: BehaveStateMachine =>
         val r: MOption[Emv2Annex] = postBehaveStateMachine(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: ErrorEvent =>
         val r: MOption[Emv2Annex] = postErrorEvent(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: ErrorState =>
         val r: MOption[Emv2Annex] = postErrorState(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: ErrorTransition =>
         val r: MOption[Emv2Annex] = postErrorTransition(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: ConditionTrigger =>
         val r: MOption[Emv2Annex] = postConditionTrigger(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: AndCondition =>
         val r: MOption[Emv2Annex] = postAndCondition(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: OrCondition =>
         val r: MOption[Emv2Annex] = postOrCondition(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: AllCondition =>
         val r: MOption[Emv2Annex] = postAllCondition(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: OrMoreCondition =>
         val r: MOption[Emv2Annex] = postOrMoreCondition(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: OrLessCondition =>
         val r: MOption[Emv2Annex] = postOrLessCondition(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: Emv2Clause =>
         val r: MOption[Emv2Annex] = postEmv2Clause(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: Emv2Propagation =>
         val r: MOption[Emv2Annex] = postEmv2Propagation(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: Emv2Flow =>
         val r: MOption[Emv2Annex] = postEmv2Flow(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: Emv2BehaviorSection =>
         val r: MOption[Emv2Annex] = postEmv2BehaviorSection(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
       case o: ErrorPropagation =>
         val r: MOption[Emv2Annex] = postErrorPropagation(o) match {
-         case MSome(result: Emv2Annex) => MSome[Emv2Annex](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Annex")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Annex => MSome[Emv2Annex](result)
+             case _ => halt("Can only produce object of type Emv2Annex")
+           }
          case _ => MNone[Emv2Annex]()
         }
         return r
@@ -7546,8 +8911,11 @@ import MTransformer._
     o match {
       case o: Emv2Library =>
         val r: MOption[Emv2Lib] = postEmv2Library(o) match {
-         case MSome(result: Emv2Lib) => MSome[Emv2Lib](result)
-         case MSome(_) => halt("Can only produce object of type Emv2Lib")
+         case MSome(result) =>
+           result match {
+             case result: Emv2Lib => MSome[Emv2Lib](result)
+             case _ => halt("Can only produce object of type Emv2Lib")
+           }
          case _ => MNone[Emv2Lib]()
         }
         return r
@@ -7611,22 +8979,31 @@ import MTransformer._
     o match {
       case o: FeatureEnd =>
         val r: MOption[Feature] = postFeatureEnd(o) match {
-         case MSome(result: Feature) => MSome[Feature](result)
-         case MSome(_) => halt("Can only produce object of type Feature")
+         case MSome(result) =>
+           result match {
+             case result: Feature => MSome[Feature](result)
+             case _ => halt("Can only produce object of type Feature")
+           }
          case _ => MNone[Feature]()
         }
         return r
       case o: FeatureGroup =>
         val r: MOption[Feature] = postFeatureGroup(o) match {
-         case MSome(result: Feature) => MSome[Feature](result)
-         case MSome(_) => halt("Can only produce object of type Feature")
+         case MSome(result) =>
+           result match {
+             case result: Feature => MSome[Feature](result)
+             case _ => halt("Can only produce object of type Feature")
+           }
          case _ => MNone[Feature]()
         }
         return r
       case o: FeatureAccess =>
         val r: MOption[Feature] = postFeatureAccess(o) match {
-         case MSome(result: Feature) => MSome[Feature](result)
-         case MSome(_) => halt("Can only produce object of type Feature")
+         case MSome(result) =>
+           result match {
+             case result: Feature => MSome[Feature](result)
+             case _ => halt("Can only produce object of type Feature")
+           }
          case _ => MNone[Feature]()
         }
         return r
@@ -7661,43 +9038,61 @@ import MTransformer._
     o match {
       case o: ConditionTrigger =>
         val r: MOption[ErrorCondition] = postConditionTrigger(o) match {
-         case MSome(result: ErrorCondition) => MSome[ErrorCondition](result)
-         case MSome(_) => halt("Can only produce object of type ErrorCondition")
+         case MSome(result) =>
+           result match {
+             case result: ErrorCondition => MSome[ErrorCondition](result)
+             case _ => halt("Can only produce object of type ErrorCondition")
+           }
          case _ => MNone[ErrorCondition]()
         }
         return r
       case o: AndCondition =>
         val r: MOption[ErrorCondition] = postAndCondition(o) match {
-         case MSome(result: ErrorCondition) => MSome[ErrorCondition](result)
-         case MSome(_) => halt("Can only produce object of type ErrorCondition")
+         case MSome(result) =>
+           result match {
+             case result: ErrorCondition => MSome[ErrorCondition](result)
+             case _ => halt("Can only produce object of type ErrorCondition")
+           }
          case _ => MNone[ErrorCondition]()
         }
         return r
       case o: OrCondition =>
         val r: MOption[ErrorCondition] = postOrCondition(o) match {
-         case MSome(result: ErrorCondition) => MSome[ErrorCondition](result)
-         case MSome(_) => halt("Can only produce object of type ErrorCondition")
+         case MSome(result) =>
+           result match {
+             case result: ErrorCondition => MSome[ErrorCondition](result)
+             case _ => halt("Can only produce object of type ErrorCondition")
+           }
          case _ => MNone[ErrorCondition]()
         }
         return r
       case o: AllCondition =>
         val r: MOption[ErrorCondition] = postAllCondition(o) match {
-         case MSome(result: ErrorCondition) => MSome[ErrorCondition](result)
-         case MSome(_) => halt("Can only produce object of type ErrorCondition")
+         case MSome(result) =>
+           result match {
+             case result: ErrorCondition => MSome[ErrorCondition](result)
+             case _ => halt("Can only produce object of type ErrorCondition")
+           }
          case _ => MNone[ErrorCondition]()
         }
         return r
       case o: OrMoreCondition =>
         val r: MOption[ErrorCondition] = postOrMoreCondition(o) match {
-         case MSome(result: ErrorCondition) => MSome[ErrorCondition](result)
-         case MSome(_) => halt("Can only produce object of type ErrorCondition")
+         case MSome(result) =>
+           result match {
+             case result: ErrorCondition => MSome[ErrorCondition](result)
+             case _ => halt("Can only produce object of type ErrorCondition")
+           }
          case _ => MNone[ErrorCondition]()
         }
         return r
       case o: OrLessCondition =>
         val r: MOption[ErrorCondition] = postOrLessCondition(o) match {
-         case MSome(result: ErrorCondition) => MSome[ErrorCondition](result)
-         case MSome(_) => halt("Can only produce object of type ErrorCondition")
+         case MSome(result) =>
+           result match {
+             case result: ErrorCondition => MSome[ErrorCondition](result)
+             case _ => halt("Can only produce object of type ErrorCondition")
+           }
          case _ => MNone[ErrorCondition]()
         }
         return r
@@ -7776,15 +9171,21 @@ import MTransformer._
     o match {
       case o: Emv2ElementRef =>
         val r: MOption[ElementRef] = postEmv2ElementRef(o) match {
-         case MSome(result: ElementRef) => MSome[ElementRef](result)
-         case MSome(_) => halt("Can only produce object of type ElementRef")
+         case MSome(result) =>
+           result match {
+             case result: ElementRef => MSome[ElementRef](result)
+             case _ => halt("Can only produce object of type ElementRef")
+           }
          case _ => MNone[ElementRef]()
         }
         return r
       case o: AadlElementRef =>
         val r: MOption[ElementRef] = postAadlElementRef(o) match {
-         case MSome(result: ElementRef) => MSome[ElementRef](result)
-         case MSome(_) => halt("Can only produce object of type ElementRef")
+         case MSome(result) =>
+           result match {
+             case result: ElementRef => MSome[ElementRef](result)
+             case _ => halt("Can only produce object of type ElementRef")
+           }
          case _ => MNone[ElementRef]()
         }
         return r
@@ -7822,6 +9223,10 @@ import MTransformer._
     return PostResultReferenceProp
   }
 
+  def post_langastTypedName(o: org.sireum.lang.ast.Typed.Name): MOption[org.sireum.lang.ast.Typed] = {
+    return PostResult_langastTypedName
+  }
+
   def postUnitProp(o: UnitProp): MOption[PropertyValue] = {
     return PostResultUnitProp
   }
@@ -7842,191 +9247,265 @@ import MTransformer._
     return PostResultAnnex
   }
 
-  def post_langastTypedName(o: org.sireum.lang.ast.Typed.Name): MOption[org.sireum.lang.ast.Typed] = {
-    return PostResult_langastTypedName
-  }
-
   def postAnnexClause(o: AnnexClause): MOption[AnnexClause] = {
     o match {
       case o: SmfClause =>
         val r: MOption[AnnexClause] = postSmfClause(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: SmfClassification =>
         val r: MOption[AnnexClause] = postSmfClassification(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: SmfDeclass =>
         val r: MOption[AnnexClause] = postSmfDeclass(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: SmfType =>
         val r: MOption[AnnexClause] = postSmfType(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: ErrorTypeDef =>
         val r: MOption[AnnexClause] = postErrorTypeDef(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: ErrorAliasDef =>
         val r: MOption[AnnexClause] = postErrorAliasDef(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: ErrorTypeSetDef =>
         val r: MOption[AnnexClause] = postErrorTypeSetDef(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: BehaveStateMachine =>
         val r: MOption[AnnexClause] = postBehaveStateMachine(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: ErrorEvent =>
         val r: MOption[AnnexClause] = postErrorEvent(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: ErrorState =>
         val r: MOption[AnnexClause] = postErrorState(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: ErrorTransition =>
         val r: MOption[AnnexClause] = postErrorTransition(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: ConditionTrigger =>
         val r: MOption[AnnexClause] = postConditionTrigger(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: AndCondition =>
         val r: MOption[AnnexClause] = postAndCondition(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: OrCondition =>
         val r: MOption[AnnexClause] = postOrCondition(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: AllCondition =>
         val r: MOption[AnnexClause] = postAllCondition(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: OrMoreCondition =>
         val r: MOption[AnnexClause] = postOrMoreCondition(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: OrLessCondition =>
         val r: MOption[AnnexClause] = postOrLessCondition(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: Emv2Clause =>
         val r: MOption[AnnexClause] = postEmv2Clause(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: Emv2Propagation =>
         val r: MOption[AnnexClause] = postEmv2Propagation(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: Emv2Flow =>
         val r: MOption[AnnexClause] = postEmv2Flow(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: Emv2BehaviorSection =>
         val r: MOption[AnnexClause] = postEmv2BehaviorSection(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: ErrorPropagation =>
         val r: MOption[AnnexClause] = postErrorPropagation(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: OtherAnnex =>
         val r: MOption[AnnexClause] = postOtherAnnex(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: GclSubclause =>
         val r: MOption[AnnexClause] = postGclSubclause(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: BTSSubclauseBehaviorProvider =>
         val r: MOption[AnnexClause] = postBTSSubclauseBehaviorProvider(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
       case o: BTSBLESSAnnexClause =>
         val r: MOption[AnnexClause] = postBTSBLESSAnnexClause(o) match {
-         case MSome(result: AnnexClause) => MSome[AnnexClause](result)
-         case MSome(_) => halt("Can only produce object of type AnnexClause")
+         case MSome(result) =>
+           result match {
+             case result: AnnexClause => MSome[AnnexClause](result)
+             case _ => halt("Can only produce object of type AnnexClause")
+           }
          case _ => MNone[AnnexClause]()
         }
         return r
@@ -8037,29 +9516,41 @@ import MTransformer._
     o match {
       case o: SmfLibrary =>
         val r: MOption[AnnexLib] = postSmfLibrary(o) match {
-         case MSome(result: AnnexLib) => MSome[AnnexLib](result)
-         case MSome(_) => halt("Can only produce object of type AnnexLib")
+         case MSome(result) =>
+           result match {
+             case result: AnnexLib => MSome[AnnexLib](result)
+             case _ => halt("Can only produce object of type AnnexLib")
+           }
          case _ => MNone[AnnexLib]()
         }
         return r
       case o: Emv2Library =>
         val r: MOption[AnnexLib] = postEmv2Library(o) match {
-         case MSome(result: AnnexLib) => MSome[AnnexLib](result)
-         case MSome(_) => halt("Can only produce object of type AnnexLib")
+         case MSome(result) =>
+           result match {
+             case result: AnnexLib => MSome[AnnexLib](result)
+             case _ => halt("Can only produce object of type AnnexLib")
+           }
          case _ => MNone[AnnexLib]()
         }
         return r
       case o: OtherLib =>
         val r: MOption[AnnexLib] = postOtherLib(o) match {
-         case MSome(result: AnnexLib) => MSome[AnnexLib](result)
-         case MSome(_) => halt("Can only produce object of type AnnexLib")
+         case MSome(result) =>
+           result match {
+             case result: AnnexLib => MSome[AnnexLib](result)
+             case _ => halt("Can only produce object of type AnnexLib")
+           }
          case _ => MNone[AnnexLib]()
         }
         return r
       case o: GclLib =>
         val r: MOption[AnnexLib] = postGclLib(o) match {
-         case MSome(result: AnnexLib) => MSome[AnnexLib](result)
-         case MSome(_) => halt("Can only produce object of type AnnexLib")
+         case MSome(result) =>
+           result match {
+             case result: AnnexLib => MSome[AnnexLib](result)
+             case _ => halt("Can only produce object of type AnnexLib")
+           }
          case _ => MNone[AnnexLib]()
         }
         return r
@@ -8134,162 +9625,231 @@ import MTransformer._
     o match {
       case o: SysmlAst.Import =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstImport(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.AliasMember =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstAliasMember(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.Identification =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstIdentification(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.Package =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstPackage(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.AttributeDefinition =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstAttributeDefinition(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.AllocationDefinition =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstAllocationDefinition(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.ConnectionDefinition =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstConnectionDefinition(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.InterfaceDefinition =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstInterfaceDefinition(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.EnumerationDefinition =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstEnumerationDefinition(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.PartDefinition =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstPartDefinition(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.PortDefinition =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstPortDefinition(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.MetadataDefinition =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstMetadataDefinition(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.AttributeUsage =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstAttributeUsage(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstReferenceUsage(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.AllocationUsage =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstAllocationUsage(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstConnectionUsage(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstItemUsage(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstPartUsage(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstPortUsage(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.Comment =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstComment(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstDocumentation(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstTextualRepresentation(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: MOption[SysmlAst.AttrNode] = postSysmlAstGumboAnnotation(o) match {
-         case MSome(result: SysmlAst.AttrNode) => MSome[SysmlAst.AttrNode](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AttrNode")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AttrNode => MSome[SysmlAst.AttrNode](result)
+             case _ => halt("Can only produce object of type SysmlAst.AttrNode")
+           }
          case _ => MNone[SysmlAst.AttrNode]()
         }
         return r
@@ -8300,155 +9860,221 @@ import MTransformer._
     o match {
       case o: SysmlAst.Import =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstImport(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.AliasMember =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstAliasMember(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.Package =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstPackage(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.AttributeDefinition =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstAttributeDefinition(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.AllocationDefinition =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstAllocationDefinition(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.ConnectionDefinition =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstConnectionDefinition(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.InterfaceDefinition =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstInterfaceDefinition(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.EnumerationDefinition =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstEnumerationDefinition(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.PartDefinition =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstPartDefinition(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.PortDefinition =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstPortDefinition(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.MetadataDefinition =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstMetadataDefinition(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.AttributeUsage =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstAttributeUsage(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstReferenceUsage(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.AllocationUsage =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstAllocationUsage(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstConnectionUsage(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstItemUsage(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstPartUsage(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstPortUsage(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.Comment =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstComment(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstDocumentation(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstTextualRepresentation(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: MOption[SysmlAst.PackageBodyElement] = postSysmlAstGumboAnnotation(o) match {
-         case MSome(result: SysmlAst.PackageBodyElement) => MSome[SysmlAst.PackageBodyElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageBodyElement => MSome[SysmlAst.PackageBodyElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageBodyElement")
+           }
          case _ => MNone[SysmlAst.PackageBodyElement]()
         }
         return r
@@ -8459,155 +10085,221 @@ import MTransformer._
     o match {
       case o: SysmlAst.Import =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstImport(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.AliasMember =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstAliasMember(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.Package =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstPackage(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.AttributeDefinition =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstAttributeDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.AllocationDefinition =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstAllocationDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.ConnectionDefinition =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstConnectionDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.InterfaceDefinition =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstInterfaceDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.EnumerationDefinition =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstEnumerationDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.PartDefinition =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstPartDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.PortDefinition =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstPortDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.MetadataDefinition =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstMetadataDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.AttributeUsage =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstAttributeUsage(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstReferenceUsage(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.AllocationUsage =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstAllocationUsage(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstConnectionUsage(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstItemUsage(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstPartUsage(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstPortUsage(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.Comment =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstComment(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstDocumentation(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstTextualRepresentation(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: MOption[SysmlAst.DefinitionBodyItem] = postSysmlAstGumboAnnotation(o) match {
-         case MSome(result: SysmlAst.DefinitionBodyItem) => MSome[SysmlAst.DefinitionBodyItem](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionBodyItem => MSome[SysmlAst.DefinitionBodyItem](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionBodyItem")
+           }
          case _ => MNone[SysmlAst.DefinitionBodyItem]()
         }
         return r
@@ -8626,225 +10318,321 @@ import MTransformer._
     o match {
       case o: GclSubclause =>
         val r: MOption[GclSymbol] = postGclSubclause(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclSpecMethod =>
         val r: MOption[GclSymbol] = postGclSpecMethod(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclBodyMethod =>
         val r: MOption[GclSymbol] = postGclBodyMethod(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclStateVar =>
         val r: MOption[GclSymbol] = postGclStateVar(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclInvariant =>
         val r: MOption[GclSymbol] = postGclInvariant(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclAssume =>
         val r: MOption[GclSymbol] = postGclAssume(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclGuarantee =>
         val r: MOption[GclSymbol] = postGclGuarantee(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclIntegration =>
         val r: MOption[GclSymbol] = postGclIntegration(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclCaseStatement =>
         val r: MOption[GclSymbol] = postGclCaseStatement(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclInitialize =>
         val r: MOption[GclSymbol] = postGclInitialize(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclCompute =>
         val r: MOption[GclSymbol] = postGclCompute(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclAlert =>
         val r: MOption[GclSymbol] = postGclAlert(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclMonitor =>
         val r: MOption[GclSymbol] = postGclMonitor(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclHandle =>
         val r: MOption[GclSymbol] = postGclHandle(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclComposition =>
         val r: MOption[GclSymbol] = postGclComposition(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclCompositionComponentAlias =>
         val r: MOption[GclSymbol] = postGclCompositionComponentAlias(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclCompositionPortAlias =>
         val r: MOption[GclSymbol] = postGclCompositionPortAlias(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclCompositionStateVarAlias =>
         val r: MOption[GclSymbol] = postGclCompositionStateVarAlias(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclSchemaComponentRef =>
         val r: MOption[GclSymbol] = postGclSchemaComponentRef(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclSchemaLabel =>
         val r: MOption[GclSymbol] = postGclSchemaLabel(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclSchemaSplitJoin =>
         val r: MOption[GclSymbol] = postGclSchemaSplitJoin(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclSchemaSequence =>
         val r: MOption[GclSymbol] = postGclSchemaSequence(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclCompositionProperty =>
         val r: MOption[GclSymbol] = postGclCompositionProperty(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclPropertyBinding =>
         val r: MOption[GclSymbol] = postGclPropertyBinding(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclPointStart =>
         val r: MOption[GclSymbol] = postGclPointStart(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclPointEnd =>
         val r: MOption[GclSymbol] = postGclPointEnd(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclPointAt =>
         val r: MOption[GclSymbol] = postGclPointAt(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclPointBefore =>
         val r: MOption[GclSymbol] = postGclPointBefore(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclPointAfter =>
         val r: MOption[GclSymbol] = postGclPointAfter(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclTODO =>
         val r: MOption[GclSymbol] = postGclTODO(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: GclLib =>
         val r: MOption[GclSymbol] = postGclLib(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
       case o: InfoFlowClause =>
         val r: MOption[GclSymbol] = postInfoFlowClause(o) match {
-         case MSome(result: GclSymbol) => MSome[GclSymbol](result)
-         case MSome(_) => halt("Can only produce object of type GclSymbol")
+         case MSome(result) =>
+           result match {
+             case result: GclSymbol => MSome[GclSymbol](result)
+             case _ => halt("Can only produce object of type GclSymbol")
+           }
          case _ => MNone[GclSymbol]()
         }
         return r
@@ -8855,99 +10643,141 @@ import MTransformer._
     o match {
       case o: GclSpecMethod =>
         val r: MOption[GclNamedElement] = postGclSpecMethod(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
       case o: GclBodyMethod =>
         val r: MOption[GclNamedElement] = postGclBodyMethod(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
       case o: GclStateVar =>
         val r: MOption[GclNamedElement] = postGclStateVar(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
       case o: GclInvariant =>
         val r: MOption[GclNamedElement] = postGclInvariant(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
       case o: GclAssume =>
         val r: MOption[GclNamedElement] = postGclAssume(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
       case o: GclGuarantee =>
         val r: MOption[GclNamedElement] = postGclGuarantee(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
       case o: GclCaseStatement =>
         val r: MOption[GclNamedElement] = postGclCaseStatement(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
       case o: GclComposition =>
         val r: MOption[GclNamedElement] = postGclComposition(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
       case o: GclCompositionComponentAlias =>
         val r: MOption[GclNamedElement] = postGclCompositionComponentAlias(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
       case o: GclCompositionPortAlias =>
         val r: MOption[GclNamedElement] = postGclCompositionPortAlias(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
       case o: GclCompositionStateVarAlias =>
         val r: MOption[GclNamedElement] = postGclCompositionStateVarAlias(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
       case o: GclSchemaLabel =>
         val r: MOption[GclNamedElement] = postGclSchemaLabel(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
       case o: GclCompositionProperty =>
         val r: MOption[GclNamedElement] = postGclCompositionProperty(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
       case o: InfoFlowClause =>
         val r: MOption[GclNamedElement] = postInfoFlowClause(o) match {
-         case MSome(result: GclNamedElement) => MSome[GclNamedElement](result)
-         case MSome(_) => halt("Can only produce object of type GclNamedElement")
+         case MSome(result) =>
+           result match {
+             case result: GclNamedElement => MSome[GclNamedElement](result)
+             case _ => halt("Can only produce object of type GclNamedElement")
+           }
          case _ => MNone[GclNamedElement]()
         }
         return r
@@ -8962,15 +10792,21 @@ import MTransformer._
     o match {
       case o: BTSSubclauseBehaviorProvider =>
         val r: MOption[BLESSAnnex] = postBTSSubclauseBehaviorProvider(o) match {
-         case MSome(result: BLESSAnnex) => MSome[BLESSAnnex](result)
-         case MSome(_) => halt("Can only produce object of type BLESSAnnex")
+         case MSome(result) =>
+           result match {
+             case result: BLESSAnnex => MSome[BLESSAnnex](result)
+             case _ => halt("Can only produce object of type BLESSAnnex")
+           }
          case _ => MNone[BLESSAnnex]()
         }
         return r
       case o: BTSBLESSAnnexClause =>
         val r: MOption[BLESSAnnex] = postBTSBLESSAnnexClause(o) match {
-         case MSome(result: BLESSAnnex) => MSome[BLESSAnnex](result)
-         case MSome(_) => halt("Can only produce object of type BLESSAnnex")
+         case MSome(result) =>
+           result match {
+             case result: BLESSAnnex => MSome[BLESSAnnex](result)
+             case _ => halt("Can only produce object of type BLESSAnnex")
+           }
          case _ => MNone[BLESSAnnex]()
         }
         return r
@@ -8993,15 +10829,21 @@ import MTransformer._
     o match {
       case o: BTSText =>
         val r: MOption[BTSResource] = postBTSText(o) match {
-         case MSome(result: BTSResource) => MSome[BTSResource](result)
-         case MSome(_) => halt("Can only produce object of type BTSResource")
+         case MSome(result) =>
+           result match {
+             case result: BTSResource => MSome[BTSResource](result)
+             case _ => halt("Can only produce object of type BTSResource")
+           }
          case _ => MNone[BTSResource]()
         }
         return r
       case o: BTSPath =>
         val r: MOption[BTSResource] = postBTSPath(o) match {
-         case MSome(result: BTSResource) => MSome[BTSResource](result)
-         case MSome(_) => halt("Can only produce object of type BTSResource")
+         case MSome(result) =>
+           result match {
+             case result: BTSResource => MSome[BTSResource](result)
+             case _ => halt("Can only produce object of type BTSResource")
+           }
          case _ => MNone[BTSResource]()
         }
         return r
@@ -9028,141 +10870,201 @@ import MTransformer._
     o match {
       case o: SysmlAst.Package =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstPackage(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.AttributeDefinition =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstAttributeDefinition(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.AllocationDefinition =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstAllocationDefinition(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.ConnectionDefinition =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstConnectionDefinition(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.InterfaceDefinition =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstInterfaceDefinition(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.EnumerationDefinition =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstEnumerationDefinition(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.PartDefinition =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstPartDefinition(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.PortDefinition =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstPortDefinition(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.MetadataDefinition =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstMetadataDefinition(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.AttributeUsage =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstAttributeUsage(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstReferenceUsage(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.AllocationUsage =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstAllocationUsage(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstConnectionUsage(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstItemUsage(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstPartUsage(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstPortUsage(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.Comment =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstComment(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstDocumentation(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstTextualRepresentation(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: MOption[SysmlAst.PackageMember] = postSysmlAstGumboAnnotation(o) match {
-         case MSome(result: SysmlAst.PackageMember) => MSome[SysmlAst.PackageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.PackageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.PackageMember => MSome[SysmlAst.PackageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.PackageMember")
+           }
          case _ => MNone[SysmlAst.PackageMember]()
         }
         return r
@@ -9173,15 +11075,21 @@ import MTransformer._
     o match {
       case o: SysmlAst.BinaryConnectorPart =>
         val r: MOption[SysmlAst.ConnectorPart] = postSysmlAstBinaryConnectorPart(o) match {
-         case MSome(result: SysmlAst.ConnectorPart) => MSome[SysmlAst.ConnectorPart](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.ConnectorPart")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.ConnectorPart => MSome[SysmlAst.ConnectorPart](result)
+             case _ => halt("Can only produce object of type SysmlAst.ConnectorPart")
+           }
          case _ => MNone[SysmlAst.ConnectorPart]()
         }
         return r
       case o: SysmlAst.NaryConnectorPart =>
         val r: MOption[SysmlAst.ConnectorPart] = postSysmlAstNaryConnectorPart(o) match {
-         case MSome(result: SysmlAst.ConnectorPart) => MSome[SysmlAst.ConnectorPart](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.ConnectorPart")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.ConnectorPart => MSome[SysmlAst.ConnectorPart](result)
+             case _ => halt("Can only produce object of type SysmlAst.ConnectorPart")
+           }
          case _ => MNone[SysmlAst.ConnectorPart]()
         }
         return r
@@ -9204,15 +11112,21 @@ import MTransformer._
     o match {
       case o: GclSpecMethod =>
         val r: MOption[GclMethod] = postGclSpecMethod(o) match {
-         case MSome(result: GclMethod) => MSome[GclMethod](result)
-         case MSome(_) => halt("Can only produce object of type GclMethod")
+         case MSome(result) =>
+           result match {
+             case result: GclMethod => MSome[GclMethod](result)
+             case _ => halt("Can only produce object of type GclMethod")
+           }
          case _ => MNone[GclMethod]()
         }
         return r
       case o: GclBodyMethod =>
         val r: MOption[GclMethod] = postGclBodyMethod(o) match {
-         case MSome(result: GclMethod) => MSome[GclMethod](result)
-         case MSome(_) => halt("Can only produce object of type GclMethod")
+         case MSome(result) =>
+           result match {
+             case result: GclMethod => MSome[GclMethod](result)
+             case _ => halt("Can only produce object of type GclMethod")
+           }
          case _ => MNone[GclMethod]()
         }
         return r
@@ -9223,15 +11137,21 @@ import MTransformer._
     o match {
       case o: SysmlAst.MultiplicityNonRange =>
         val r: MOption[SysmlAst.Multiplicity] = postSysmlAstMultiplicityNonRange(o) match {
-         case MSome(result: SysmlAst.Multiplicity) => MSome[SysmlAst.Multiplicity](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.Multiplicity")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.Multiplicity => MSome[SysmlAst.Multiplicity](result)
+             case _ => halt("Can only produce object of type SysmlAst.Multiplicity")
+           }
          case _ => MNone[SysmlAst.Multiplicity]()
         }
         return r
       case o: SysmlAst.MultiplicityRange =>
         val r: MOption[SysmlAst.Multiplicity] = postSysmlAstMultiplicityRange(o) match {
-         case MSome(result: SysmlAst.Multiplicity) => MSome[SysmlAst.Multiplicity](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.Multiplicity")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.Multiplicity => MSome[SysmlAst.Multiplicity](result)
+             case _ => halt("Can only produce object of type SysmlAst.Multiplicity")
+           }
          case _ => MNone[SysmlAst.Multiplicity]()
         }
         return r
@@ -9262,36 +11182,51 @@ import MTransformer._
     o match {
       case o: SysmlAst.TypingsSpecialization =>
         val r: MOption[SysmlAst.FeatureSpecialization] = postSysmlAstTypingsSpecialization(o) match {
-         case MSome(result: SysmlAst.FeatureSpecialization) => MSome[SysmlAst.FeatureSpecialization](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.FeatureSpecialization => MSome[SysmlAst.FeatureSpecialization](result)
+             case _ => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+           }
          case _ => MNone[SysmlAst.FeatureSpecialization]()
         }
         return r
       case o: SysmlAst.SubsettingsSpecialization =>
         val r: MOption[SysmlAst.FeatureSpecialization] = postSysmlAstSubsettingsSpecialization(o) match {
-         case MSome(result: SysmlAst.FeatureSpecialization) => MSome[SysmlAst.FeatureSpecialization](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.FeatureSpecialization => MSome[SysmlAst.FeatureSpecialization](result)
+             case _ => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+           }
          case _ => MNone[SysmlAst.FeatureSpecialization]()
         }
         return r
       case o: SysmlAst.ReferencesSpecialization =>
         val r: MOption[SysmlAst.FeatureSpecialization] = postSysmlAstReferencesSpecialization(o) match {
-         case MSome(result: SysmlAst.FeatureSpecialization) => MSome[SysmlAst.FeatureSpecialization](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.FeatureSpecialization => MSome[SysmlAst.FeatureSpecialization](result)
+             case _ => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+           }
          case _ => MNone[SysmlAst.FeatureSpecialization]()
         }
         return r
       case o: SysmlAst.CrossingsSpecialization =>
         val r: MOption[SysmlAst.FeatureSpecialization] = postSysmlAstCrossingsSpecialization(o) match {
-         case MSome(result: SysmlAst.FeatureSpecialization) => MSome[SysmlAst.FeatureSpecialization](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.FeatureSpecialization => MSome[SysmlAst.FeatureSpecialization](result)
+             case _ => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+           }
          case _ => MNone[SysmlAst.FeatureSpecialization]()
         }
         return r
       case o: SysmlAst.RedefinitionsSpecialization =>
         val r: MOption[SysmlAst.FeatureSpecialization] = postSysmlAstRedefinitionsSpecialization(o) match {
-         case MSome(result: SysmlAst.FeatureSpecialization) => MSome[SysmlAst.FeatureSpecialization](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.FeatureSpecialization => MSome[SysmlAst.FeatureSpecialization](result)
+             case _ => halt("Can only produce object of type SysmlAst.FeatureSpecialization")
+           }
          case _ => MNone[SysmlAst.FeatureSpecialization]()
         }
         return r
@@ -9322,36 +11257,51 @@ import MTransformer._
     o match {
       case o: GclInvariant =>
         val r: MOption[GclClause] = postGclInvariant(o) match {
-         case MSome(result: GclClause) => MSome[GclClause](result)
-         case MSome(_) => halt("Can only produce object of type GclClause")
+         case MSome(result) =>
+           result match {
+             case result: GclClause => MSome[GclClause](result)
+             case _ => halt("Can only produce object of type GclClause")
+           }
          case _ => MNone[GclClause]()
         }
         return r
       case o: GclAssume =>
         val r: MOption[GclClause] = postGclAssume(o) match {
-         case MSome(result: GclClause) => MSome[GclClause](result)
-         case MSome(_) => halt("Can only produce object of type GclClause")
+         case MSome(result) =>
+           result match {
+             case result: GclClause => MSome[GclClause](result)
+             case _ => halt("Can only produce object of type GclClause")
+           }
          case _ => MNone[GclClause]()
         }
         return r
       case o: GclGuarantee =>
         val r: MOption[GclClause] = postGclGuarantee(o) match {
-         case MSome(result: GclClause) => MSome[GclClause](result)
-         case MSome(_) => halt("Can only produce object of type GclClause")
+         case MSome(result) =>
+           result match {
+             case result: GclClause => MSome[GclClause](result)
+             case _ => halt("Can only produce object of type GclClause")
+           }
          case _ => MNone[GclClause]()
         }
         return r
       case o: GclCompositionProperty =>
         val r: MOption[GclClause] = postGclCompositionProperty(o) match {
-         case MSome(result: GclClause) => MSome[GclClause](result)
-         case MSome(_) => halt("Can only produce object of type GclClause")
+         case MSome(result) =>
+           result match {
+             case result: GclClause => MSome[GclClause](result)
+             case _ => halt("Can only produce object of type GclClause")
+           }
          case _ => MNone[GclClause]()
         }
         return r
       case o: InfoFlowClause =>
         val r: MOption[GclClause] = postInfoFlowClause(o) match {
-         case MSome(result: GclClause) => MSome[GclClause](result)
-         case MSome(_) => halt("Can only produce object of type GclClause")
+         case MSome(result) =>
+           result match {
+             case result: GclClause => MSome[GclClause](result)
+             case _ => halt("Can only produce object of type GclClause")
+           }
          case _ => MNone[GclClause]()
         }
         return r
@@ -9366,22 +11316,31 @@ import MTransformer._
     o match {
       case o: GclInvariant =>
         val r: MOption[GclSpec] = postGclInvariant(o) match {
-         case MSome(result: GclSpec) => MSome[GclSpec](result)
-         case MSome(_) => halt("Can only produce object of type GclSpec")
+         case MSome(result) =>
+           result match {
+             case result: GclSpec => MSome[GclSpec](result)
+             case _ => halt("Can only produce object of type GclSpec")
+           }
          case _ => MNone[GclSpec]()
         }
         return r
       case o: GclAssume =>
         val r: MOption[GclSpec] = postGclAssume(o) match {
-         case MSome(result: GclSpec) => MSome[GclSpec](result)
-         case MSome(_) => halt("Can only produce object of type GclSpec")
+         case MSome(result) =>
+           result match {
+             case result: GclSpec => MSome[GclSpec](result)
+             case _ => halt("Can only produce object of type GclSpec")
+           }
          case _ => MNone[GclSpec]()
         }
         return r
       case o: GclGuarantee =>
         val r: MOption[GclSpec] = postGclGuarantee(o) match {
-         case MSome(result: GclSpec) => MSome[GclSpec](result)
-         case MSome(_) => halt("Can only produce object of type GclSpec")
+         case MSome(result) =>
+           result match {
+             case result: GclSpec => MSome[GclSpec](result)
+             case _ => halt("Can only produce object of type GclSpec")
+           }
          case _ => MNone[GclSpec]()
         }
         return r
@@ -9396,92 +11355,131 @@ import MTransformer._
     o match {
       case o: SysmlAst.Package =>
         val r: MOption[SysmlAst.DefinitionMember] = postSysmlAstPackage(o) match {
-         case MSome(result: SysmlAst.DefinitionMember) => MSome[SysmlAst.DefinitionMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionMember => MSome[SysmlAst.DefinitionMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case _ => MNone[SysmlAst.DefinitionMember]()
         }
         return r
       case o: SysmlAst.AttributeDefinition =>
         val r: MOption[SysmlAst.DefinitionMember] = postSysmlAstAttributeDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionMember) => MSome[SysmlAst.DefinitionMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionMember => MSome[SysmlAst.DefinitionMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case _ => MNone[SysmlAst.DefinitionMember]()
         }
         return r
       case o: SysmlAst.AllocationDefinition =>
         val r: MOption[SysmlAst.DefinitionMember] = postSysmlAstAllocationDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionMember) => MSome[SysmlAst.DefinitionMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionMember => MSome[SysmlAst.DefinitionMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case _ => MNone[SysmlAst.DefinitionMember]()
         }
         return r
       case o: SysmlAst.ConnectionDefinition =>
         val r: MOption[SysmlAst.DefinitionMember] = postSysmlAstConnectionDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionMember) => MSome[SysmlAst.DefinitionMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionMember => MSome[SysmlAst.DefinitionMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case _ => MNone[SysmlAst.DefinitionMember]()
         }
         return r
       case o: SysmlAst.InterfaceDefinition =>
         val r: MOption[SysmlAst.DefinitionMember] = postSysmlAstInterfaceDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionMember) => MSome[SysmlAst.DefinitionMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionMember => MSome[SysmlAst.DefinitionMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case _ => MNone[SysmlAst.DefinitionMember]()
         }
         return r
       case o: SysmlAst.EnumerationDefinition =>
         val r: MOption[SysmlAst.DefinitionMember] = postSysmlAstEnumerationDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionMember) => MSome[SysmlAst.DefinitionMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionMember => MSome[SysmlAst.DefinitionMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case _ => MNone[SysmlAst.DefinitionMember]()
         }
         return r
       case o: SysmlAst.PartDefinition =>
         val r: MOption[SysmlAst.DefinitionMember] = postSysmlAstPartDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionMember) => MSome[SysmlAst.DefinitionMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionMember => MSome[SysmlAst.DefinitionMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case _ => MNone[SysmlAst.DefinitionMember]()
         }
         return r
       case o: SysmlAst.PortDefinition =>
         val r: MOption[SysmlAst.DefinitionMember] = postSysmlAstPortDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionMember) => MSome[SysmlAst.DefinitionMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionMember => MSome[SysmlAst.DefinitionMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case _ => MNone[SysmlAst.DefinitionMember]()
         }
         return r
       case o: SysmlAst.MetadataDefinition =>
         val r: MOption[SysmlAst.DefinitionMember] = postSysmlAstMetadataDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionMember) => MSome[SysmlAst.DefinitionMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionMember => MSome[SysmlAst.DefinitionMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case _ => MNone[SysmlAst.DefinitionMember]()
         }
         return r
       case o: SysmlAst.Comment =>
         val r: MOption[SysmlAst.DefinitionMember] = postSysmlAstComment(o) match {
-         case MSome(result: SysmlAst.DefinitionMember) => MSome[SysmlAst.DefinitionMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionMember => MSome[SysmlAst.DefinitionMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case _ => MNone[SysmlAst.DefinitionMember]()
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: MOption[SysmlAst.DefinitionMember] = postSysmlAstDocumentation(o) match {
-         case MSome(result: SysmlAst.DefinitionMember) => MSome[SysmlAst.DefinitionMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionMember => MSome[SysmlAst.DefinitionMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case _ => MNone[SysmlAst.DefinitionMember]()
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: MOption[SysmlAst.DefinitionMember] = postSysmlAstTextualRepresentation(o) match {
-         case MSome(result: SysmlAst.DefinitionMember) => MSome[SysmlAst.DefinitionMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionMember => MSome[SysmlAst.DefinitionMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case _ => MNone[SysmlAst.DefinitionMember]()
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: MOption[SysmlAst.DefinitionMember] = postSysmlAstGumboAnnotation(o) match {
-         case MSome(result: SysmlAst.DefinitionMember) => MSome[SysmlAst.DefinitionMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionMember => MSome[SysmlAst.DefinitionMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionMember")
+           }
          case _ => MNone[SysmlAst.DefinitionMember]()
         }
         return r
@@ -9492,92 +11490,131 @@ import MTransformer._
     o match {
       case o: SysmlAst.Package =>
         val r: MOption[SysmlAst.DefinitionElement] = postSysmlAstPackage(o) match {
-         case MSome(result: SysmlAst.DefinitionElement) => MSome[SysmlAst.DefinitionElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionElement => MSome[SysmlAst.DefinitionElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case _ => MNone[SysmlAst.DefinitionElement]()
         }
         return r
       case o: SysmlAst.AttributeDefinition =>
         val r: MOption[SysmlAst.DefinitionElement] = postSysmlAstAttributeDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionElement) => MSome[SysmlAst.DefinitionElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionElement => MSome[SysmlAst.DefinitionElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case _ => MNone[SysmlAst.DefinitionElement]()
         }
         return r
       case o: SysmlAst.AllocationDefinition =>
         val r: MOption[SysmlAst.DefinitionElement] = postSysmlAstAllocationDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionElement) => MSome[SysmlAst.DefinitionElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionElement => MSome[SysmlAst.DefinitionElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case _ => MNone[SysmlAst.DefinitionElement]()
         }
         return r
       case o: SysmlAst.ConnectionDefinition =>
         val r: MOption[SysmlAst.DefinitionElement] = postSysmlAstConnectionDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionElement) => MSome[SysmlAst.DefinitionElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionElement => MSome[SysmlAst.DefinitionElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case _ => MNone[SysmlAst.DefinitionElement]()
         }
         return r
       case o: SysmlAst.InterfaceDefinition =>
         val r: MOption[SysmlAst.DefinitionElement] = postSysmlAstInterfaceDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionElement) => MSome[SysmlAst.DefinitionElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionElement => MSome[SysmlAst.DefinitionElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case _ => MNone[SysmlAst.DefinitionElement]()
         }
         return r
       case o: SysmlAst.EnumerationDefinition =>
         val r: MOption[SysmlAst.DefinitionElement] = postSysmlAstEnumerationDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionElement) => MSome[SysmlAst.DefinitionElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionElement => MSome[SysmlAst.DefinitionElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case _ => MNone[SysmlAst.DefinitionElement]()
         }
         return r
       case o: SysmlAst.PartDefinition =>
         val r: MOption[SysmlAst.DefinitionElement] = postSysmlAstPartDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionElement) => MSome[SysmlAst.DefinitionElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionElement => MSome[SysmlAst.DefinitionElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case _ => MNone[SysmlAst.DefinitionElement]()
         }
         return r
       case o: SysmlAst.PortDefinition =>
         val r: MOption[SysmlAst.DefinitionElement] = postSysmlAstPortDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionElement) => MSome[SysmlAst.DefinitionElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionElement => MSome[SysmlAst.DefinitionElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case _ => MNone[SysmlAst.DefinitionElement]()
         }
         return r
       case o: SysmlAst.MetadataDefinition =>
         val r: MOption[SysmlAst.DefinitionElement] = postSysmlAstMetadataDefinition(o) match {
-         case MSome(result: SysmlAst.DefinitionElement) => MSome[SysmlAst.DefinitionElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionElement => MSome[SysmlAst.DefinitionElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case _ => MNone[SysmlAst.DefinitionElement]()
         }
         return r
       case o: SysmlAst.Comment =>
         val r: MOption[SysmlAst.DefinitionElement] = postSysmlAstComment(o) match {
-         case MSome(result: SysmlAst.DefinitionElement) => MSome[SysmlAst.DefinitionElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionElement => MSome[SysmlAst.DefinitionElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case _ => MNone[SysmlAst.DefinitionElement]()
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: MOption[SysmlAst.DefinitionElement] = postSysmlAstDocumentation(o) match {
-         case MSome(result: SysmlAst.DefinitionElement) => MSome[SysmlAst.DefinitionElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionElement => MSome[SysmlAst.DefinitionElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case _ => MNone[SysmlAst.DefinitionElement]()
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: MOption[SysmlAst.DefinitionElement] = postSysmlAstTextualRepresentation(o) match {
-         case MSome(result: SysmlAst.DefinitionElement) => MSome[SysmlAst.DefinitionElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionElement => MSome[SysmlAst.DefinitionElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case _ => MNone[SysmlAst.DefinitionElement]()
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: MOption[SysmlAst.DefinitionElement] = postSysmlAstGumboAnnotation(o) match {
-         case MSome(result: SysmlAst.DefinitionElement) => MSome[SysmlAst.DefinitionElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.DefinitionElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.DefinitionElement => MSome[SysmlAst.DefinitionElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.DefinitionElement")
+           }
          case _ => MNone[SysmlAst.DefinitionElement]()
         }
         return r
@@ -9592,8 +11629,11 @@ import MTransformer._
     o match {
       case o: BTSClassifier =>
         val r: MOption[BTSType] = postBTSClassifier(o) match {
-         case MSome(result: BTSType) => MSome[BTSType](result)
-         case MSome(_) => halt("Can only produce object of type BTSType")
+         case MSome(result) =>
+           result match {
+             case result: BTSType => MSome[BTSType](result)
+             case _ => halt("Can only produce object of type BTSType")
+           }
          case _ => MNone[BTSType]()
         }
         return r
@@ -9608,15 +11648,21 @@ import MTransformer._
     o match {
       case o: GclAssume =>
         val r: MOption[GclComputeSpec] = postGclAssume(o) match {
-         case MSome(result: GclComputeSpec) => MSome[GclComputeSpec](result)
-         case MSome(_) => halt("Can only produce object of type GclComputeSpec")
+         case MSome(result) =>
+           result match {
+             case result: GclComputeSpec => MSome[GclComputeSpec](result)
+             case _ => halt("Can only produce object of type GclComputeSpec")
+           }
          case _ => MNone[GclComputeSpec]()
         }
         return r
       case o: GclGuarantee =>
         val r: MOption[GclComputeSpec] = postGclGuarantee(o) match {
-         case MSome(result: GclComputeSpec) => MSome[GclComputeSpec](result)
-         case MSome(_) => halt("Can only produce object of type GclComputeSpec")
+         case MSome(result) =>
+           result match {
+             case result: GclComputeSpec => MSome[GclComputeSpec](result)
+             case _ => halt("Can only produce object of type GclComputeSpec")
+           }
          case _ => MNone[GclComputeSpec]()
         }
         return r
@@ -9695,43 +11741,61 @@ import MTransformer._
     o match {
       case o: BTSDispatchCondition =>
         val r: MOption[BTSTransitionCondition] = postBTSDispatchCondition(o) match {
-         case MSome(result: BTSTransitionCondition) => MSome[BTSTransitionCondition](result)
-         case MSome(_) => halt("Can only produce object of type BTSTransitionCondition")
+         case MSome(result) =>
+           result match {
+             case result: BTSTransitionCondition => MSome[BTSTransitionCondition](result)
+             case _ => halt("Can only produce object of type BTSTransitionCondition")
+           }
          case _ => MNone[BTSTransitionCondition]()
         }
         return r
       case o: BTSExecuteConditionExp =>
         val r: MOption[BTSTransitionCondition] = postBTSExecuteConditionExp(o) match {
-         case MSome(result: BTSTransitionCondition) => MSome[BTSTransitionCondition](result)
-         case MSome(_) => halt("Can only produce object of type BTSTransitionCondition")
+         case MSome(result) =>
+           result match {
+             case result: BTSTransitionCondition => MSome[BTSTransitionCondition](result)
+             case _ => halt("Can only produce object of type BTSTransitionCondition")
+           }
          case _ => MNone[BTSTransitionCondition]()
         }
         return r
       case o: BTSExecuteConditionTimeout =>
         val r: MOption[BTSTransitionCondition] = postBTSExecuteConditionTimeout(o) match {
-         case MSome(result: BTSTransitionCondition) => MSome[BTSTransitionCondition](result)
-         case MSome(_) => halt("Can only produce object of type BTSTransitionCondition")
+         case MSome(result) =>
+           result match {
+             case result: BTSTransitionCondition => MSome[BTSTransitionCondition](result)
+             case _ => halt("Can only produce object of type BTSTransitionCondition")
+           }
          case _ => MNone[BTSTransitionCondition]()
         }
         return r
       case o: BTSExecuteConditionOtherwise =>
         val r: MOption[BTSTransitionCondition] = postBTSExecuteConditionOtherwise(o) match {
-         case MSome(result: BTSTransitionCondition) => MSome[BTSTransitionCondition](result)
-         case MSome(_) => halt("Can only produce object of type BTSTransitionCondition")
+         case MSome(result) =>
+           result match {
+             case result: BTSTransitionCondition => MSome[BTSTransitionCondition](result)
+             case _ => halt("Can only produce object of type BTSTransitionCondition")
+           }
          case _ => MNone[BTSTransitionCondition]()
         }
         return r
       case o: BTSModeCondition =>
         val r: MOption[BTSTransitionCondition] = postBTSModeCondition(o) match {
-         case MSome(result: BTSTransitionCondition) => MSome[BTSTransitionCondition](result)
-         case MSome(_) => halt("Can only produce object of type BTSTransitionCondition")
+         case MSome(result) =>
+           result match {
+             case result: BTSTransitionCondition => MSome[BTSTransitionCondition](result)
+             case _ => halt("Can only produce object of type BTSTransitionCondition")
+           }
          case _ => MNone[BTSTransitionCondition]()
         }
         return r
       case o: BTSInternalCondition =>
         val r: MOption[BTSTransitionCondition] = postBTSInternalCondition(o) match {
-         case MSome(result: BTSTransitionCondition) => MSome[BTSTransitionCondition](result)
-         case MSome(_) => halt("Can only produce object of type BTSTransitionCondition")
+         case MSome(result) =>
+           result match {
+             case result: BTSTransitionCondition => MSome[BTSTransitionCondition](result)
+             case _ => halt("Can only produce object of type BTSTransitionCondition")
+           }
          case _ => MNone[BTSTransitionCondition]()
         }
         return r
@@ -9750,22 +11814,31 @@ import MTransformer._
     o match {
       case o: BTSDispatchTriggerStop =>
         val r: MOption[BTSDispatchTrigger] = postBTSDispatchTriggerStop(o) match {
-         case MSome(result: BTSDispatchTrigger) => MSome[BTSDispatchTrigger](result)
-         case MSome(_) => halt("Can only produce object of type BTSDispatchTrigger")
+         case MSome(result) =>
+           result match {
+             case result: BTSDispatchTrigger => MSome[BTSDispatchTrigger](result)
+             case _ => halt("Can only produce object of type BTSDispatchTrigger")
+           }
          case _ => MNone[BTSDispatchTrigger]()
         }
         return r
       case o: BTSDispatchTriggerPort =>
         val r: MOption[BTSDispatchTrigger] = postBTSDispatchTriggerPort(o) match {
-         case MSome(result: BTSDispatchTrigger) => MSome[BTSDispatchTrigger](result)
-         case MSome(_) => halt("Can only produce object of type BTSDispatchTrigger")
+         case MSome(result) =>
+           result match {
+             case result: BTSDispatchTrigger => MSome[BTSDispatchTrigger](result)
+             case _ => halt("Can only produce object of type BTSDispatchTrigger")
+           }
          case _ => MNone[BTSDispatchTrigger]()
         }
         return r
       case o: BTSDispatchTriggerTimeout =>
         val r: MOption[BTSDispatchTrigger] = postBTSDispatchTriggerTimeout(o) match {
-         case MSome(result: BTSDispatchTrigger) => MSome[BTSDispatchTrigger](result)
-         case MSome(_) => halt("Can only produce object of type BTSDispatchTrigger")
+         case MSome(result) =>
+           result match {
+             case result: BTSDispatchTrigger => MSome[BTSDispatchTrigger](result)
+             case _ => halt("Can only produce object of type BTSDispatchTrigger")
+           }
          case _ => MNone[BTSDispatchTrigger]()
         }
         return r
@@ -9800,22 +11873,31 @@ import MTransformer._
     o match {
       case o: BTSExecuteConditionExp =>
         val r: MOption[BTSExecuteCondition] = postBTSExecuteConditionExp(o) match {
-         case MSome(result: BTSExecuteCondition) => MSome[BTSExecuteCondition](result)
-         case MSome(_) => halt("Can only produce object of type BTSExecuteCondition")
+         case MSome(result) =>
+           result match {
+             case result: BTSExecuteCondition => MSome[BTSExecuteCondition](result)
+             case _ => halt("Can only produce object of type BTSExecuteCondition")
+           }
          case _ => MNone[BTSExecuteCondition]()
         }
         return r
       case o: BTSExecuteConditionTimeout =>
         val r: MOption[BTSExecuteCondition] = postBTSExecuteConditionTimeout(o) match {
-         case MSome(result: BTSExecuteCondition) => MSome[BTSExecuteCondition](result)
-         case MSome(_) => halt("Can only produce object of type BTSExecuteCondition")
+         case MSome(result) =>
+           result match {
+             case result: BTSExecuteCondition => MSome[BTSExecuteCondition](result)
+             case _ => halt("Can only produce object of type BTSExecuteCondition")
+           }
          case _ => MNone[BTSExecuteCondition]()
         }
         return r
       case o: BTSExecuteConditionOtherwise =>
         val r: MOption[BTSExecuteCondition] = postBTSExecuteConditionOtherwise(o) match {
-         case MSome(result: BTSExecuteCondition) => MSome[BTSExecuteCondition](result)
-         case MSome(_) => halt("Can only produce object of type BTSExecuteCondition")
+         case MSome(result) =>
+           result match {
+             case result: BTSExecuteCondition => MSome[BTSExecuteCondition](result)
+             case _ => halt("Can only produce object of type BTSExecuteCondition")
+           }
          case _ => MNone[BTSExecuteCondition]()
         }
         return r
@@ -9854,50 +11936,71 @@ import MTransformer._
     o match {
       case o: SysmlAst.AttributeUsage =>
         val r: MOption[SysmlAst.UsageElement] = postSysmlAstAttributeUsage(o) match {
-         case MSome(result: SysmlAst.UsageElement) => MSome[SysmlAst.UsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageElement => MSome[SysmlAst.UsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case _ => MNone[SysmlAst.UsageElement]()
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: MOption[SysmlAst.UsageElement] = postSysmlAstReferenceUsage(o) match {
-         case MSome(result: SysmlAst.UsageElement) => MSome[SysmlAst.UsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageElement => MSome[SysmlAst.UsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case _ => MNone[SysmlAst.UsageElement]()
         }
         return r
       case o: SysmlAst.AllocationUsage =>
         val r: MOption[SysmlAst.UsageElement] = postSysmlAstAllocationUsage(o) match {
-         case MSome(result: SysmlAst.UsageElement) => MSome[SysmlAst.UsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageElement => MSome[SysmlAst.UsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case _ => MNone[SysmlAst.UsageElement]()
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: MOption[SysmlAst.UsageElement] = postSysmlAstConnectionUsage(o) match {
-         case MSome(result: SysmlAst.UsageElement) => MSome[SysmlAst.UsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageElement => MSome[SysmlAst.UsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case _ => MNone[SysmlAst.UsageElement]()
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: MOption[SysmlAst.UsageElement] = postSysmlAstItemUsage(o) match {
-         case MSome(result: SysmlAst.UsageElement) => MSome[SysmlAst.UsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageElement => MSome[SysmlAst.UsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case _ => MNone[SysmlAst.UsageElement]()
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: MOption[SysmlAst.UsageElement] = postSysmlAstPartUsage(o) match {
-         case MSome(result: SysmlAst.UsageElement) => MSome[SysmlAst.UsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageElement => MSome[SysmlAst.UsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case _ => MNone[SysmlAst.UsageElement]()
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: MOption[SysmlAst.UsageElement] = postSysmlAstPortUsage(o) match {
-         case MSome(result: SysmlAst.UsageElement) => MSome[SysmlAst.UsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageElement => MSome[SysmlAst.UsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageElement")
+           }
          case _ => MNone[SysmlAst.UsageElement]()
         }
         return r
@@ -9928,71 +12031,101 @@ import MTransformer._
     o match {
       case o: BTSSkipAction =>
         val r: MOption[BTSAction] = postBTSSkipAction(o) match {
-         case MSome(result: BTSAction) => MSome[BTSAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSAction => MSome[BTSAction](result)
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case _ => MNone[BTSAction]()
         }
         return r
       case o: BTSAssignmentAction =>
         val r: MOption[BTSAction] = postBTSAssignmentAction(o) match {
-         case MSome(result: BTSAction) => MSome[BTSAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSAction => MSome[BTSAction](result)
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case _ => MNone[BTSAction]()
         }
         return r
       case o: BTSSubprogramCallAction =>
         val r: MOption[BTSAction] = postBTSSubprogramCallAction(o) match {
-         case MSome(result: BTSAction) => MSome[BTSAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSAction => MSome[BTSAction](result)
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case _ => MNone[BTSAction]()
         }
         return r
       case o: BTSPortOutAction =>
         val r: MOption[BTSAction] = postBTSPortOutAction(o) match {
-         case MSome(result: BTSAction) => MSome[BTSAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSAction => MSome[BTSAction](result)
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case _ => MNone[BTSAction]()
         }
         return r
       case o: BTSPortInAction =>
         val r: MOption[BTSAction] = postBTSPortInAction(o) match {
-         case MSome(result: BTSAction) => MSome[BTSAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSAction => MSome[BTSAction](result)
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case _ => MNone[BTSAction]()
         }
         return r
       case o: BTSFrozenPortAction =>
         val r: MOption[BTSAction] = postBTSFrozenPortAction(o) match {
-         case MSome(result: BTSAction) => MSome[BTSAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSAction => MSome[BTSAction](result)
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case _ => MNone[BTSAction]()
         }
         return r
       case o: BTSIfBLESSAction =>
         val r: MOption[BTSAction] = postBTSIfBLESSAction(o) match {
-         case MSome(result: BTSAction) => MSome[BTSAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSAction => MSome[BTSAction](result)
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case _ => MNone[BTSAction]()
         }
         return r
       case o: BTSIfBAAction =>
         val r: MOption[BTSAction] = postBTSIfBAAction(o) match {
-         case MSome(result: BTSAction) => MSome[BTSAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSAction => MSome[BTSAction](result)
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case _ => MNone[BTSAction]()
         }
         return r
       case o: BTSExistentialLatticeQuantification =>
         val r: MOption[BTSAction] = postBTSExistentialLatticeQuantification(o) match {
-         case MSome(result: BTSAction) => MSome[BTSAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSAction => MSome[BTSAction](result)
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case _ => MNone[BTSAction]()
         }
         return r
       case o: BTSUniversalLatticeQuantification =>
         val r: MOption[BTSAction] = postBTSUniversalLatticeQuantification(o) match {
-         case MSome(result: BTSAction) => MSome[BTSAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSAction => MSome[BTSAction](result)
+             case _ => halt("Can only produce object of type BTSAction")
+           }
          case _ => MNone[BTSAction]()
         }
         return r
@@ -10003,43 +12136,61 @@ import MTransformer._
     o match {
       case o: BTSSkipAction =>
         val r: MOption[BTSBasicAction] = postBTSSkipAction(o) match {
-         case MSome(result: BTSBasicAction) => MSome[BTSBasicAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSBasicAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSBasicAction => MSome[BTSBasicAction](result)
+             case _ => halt("Can only produce object of type BTSBasicAction")
+           }
          case _ => MNone[BTSBasicAction]()
         }
         return r
       case o: BTSAssignmentAction =>
         val r: MOption[BTSBasicAction] = postBTSAssignmentAction(o) match {
-         case MSome(result: BTSBasicAction) => MSome[BTSBasicAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSBasicAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSBasicAction => MSome[BTSBasicAction](result)
+             case _ => halt("Can only produce object of type BTSBasicAction")
+           }
          case _ => MNone[BTSBasicAction]()
         }
         return r
       case o: BTSSubprogramCallAction =>
         val r: MOption[BTSBasicAction] = postBTSSubprogramCallAction(o) match {
-         case MSome(result: BTSBasicAction) => MSome[BTSBasicAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSBasicAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSBasicAction => MSome[BTSBasicAction](result)
+             case _ => halt("Can only produce object of type BTSBasicAction")
+           }
          case _ => MNone[BTSBasicAction]()
         }
         return r
       case o: BTSPortOutAction =>
         val r: MOption[BTSBasicAction] = postBTSPortOutAction(o) match {
-         case MSome(result: BTSBasicAction) => MSome[BTSBasicAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSBasicAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSBasicAction => MSome[BTSBasicAction](result)
+             case _ => halt("Can only produce object of type BTSBasicAction")
+           }
          case _ => MNone[BTSBasicAction]()
         }
         return r
       case o: BTSPortInAction =>
         val r: MOption[BTSBasicAction] = postBTSPortInAction(o) match {
-         case MSome(result: BTSBasicAction) => MSome[BTSBasicAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSBasicAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSBasicAction => MSome[BTSBasicAction](result)
+             case _ => halt("Can only produce object of type BTSBasicAction")
+           }
          case _ => MNone[BTSBasicAction]()
         }
         return r
       case o: BTSFrozenPortAction =>
         val r: MOption[BTSBasicAction] = postBTSFrozenPortAction(o) match {
-         case MSome(result: BTSBasicAction) => MSome[BTSBasicAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSBasicAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSBasicAction => MSome[BTSBasicAction](result)
+             case _ => halt("Can only produce object of type BTSBasicAction")
+           }
          case _ => MNone[BTSBasicAction]()
         }
         return r
@@ -10050,50 +12201,71 @@ import MTransformer._
     o match {
       case o: SysmlAst.AttributeUsage =>
         val r: MOption[SysmlAst.UsageMember] = postSysmlAstAttributeUsage(o) match {
-         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageMember => MSome[SysmlAst.UsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case _ => MNone[SysmlAst.UsageMember]()
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: MOption[SysmlAst.UsageMember] = postSysmlAstReferenceUsage(o) match {
-         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageMember => MSome[SysmlAst.UsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case _ => MNone[SysmlAst.UsageMember]()
         }
         return r
       case o: SysmlAst.AllocationUsage =>
         val r: MOption[SysmlAst.UsageMember] = postSysmlAstAllocationUsage(o) match {
-         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageMember => MSome[SysmlAst.UsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case _ => MNone[SysmlAst.UsageMember]()
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: MOption[SysmlAst.UsageMember] = postSysmlAstConnectionUsage(o) match {
-         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageMember => MSome[SysmlAst.UsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case _ => MNone[SysmlAst.UsageMember]()
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: MOption[SysmlAst.UsageMember] = postSysmlAstItemUsage(o) match {
-         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageMember => MSome[SysmlAst.UsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case _ => MNone[SysmlAst.UsageMember]()
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: MOption[SysmlAst.UsageMember] = postSysmlAstPartUsage(o) match {
-         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageMember => MSome[SysmlAst.UsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case _ => MNone[SysmlAst.UsageMember]()
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: MOption[SysmlAst.UsageMember] = postSysmlAstPortUsage(o) match {
-         case MSome(result: SysmlAst.UsageMember) => MSome[SysmlAst.UsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.UsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.UsageMember => MSome[SysmlAst.UsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.UsageMember")
+           }
          case _ => MNone[SysmlAst.UsageMember]()
         }
         return r
@@ -10108,15 +12280,21 @@ import MTransformer._
     o match {
       case o: SysmlAst.AttributeUsage =>
         val r: MOption[SysmlAst.NonOccurrenceUsageMember] = postSysmlAstAttributeUsage(o) match {
-         case MSome(result: SysmlAst.NonOccurrenceUsageMember) => MSome[SysmlAst.NonOccurrenceUsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.NonOccurrenceUsageMember => MSome[SysmlAst.NonOccurrenceUsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageMember")
+           }
          case _ => MNone[SysmlAst.NonOccurrenceUsageMember]()
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: MOption[SysmlAst.NonOccurrenceUsageMember] = postSysmlAstReferenceUsage(o) match {
-         case MSome(result: SysmlAst.NonOccurrenceUsageMember) => MSome[SysmlAst.NonOccurrenceUsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.NonOccurrenceUsageMember => MSome[SysmlAst.NonOccurrenceUsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageMember")
+           }
          case _ => MNone[SysmlAst.NonOccurrenceUsageMember]()
         }
         return r
@@ -10131,15 +12309,21 @@ import MTransformer._
     o match {
       case o: SysmlAst.AttributeUsage =>
         val r: MOption[SysmlAst.NonOccurrenceUsageElement] = postSysmlAstAttributeUsage(o) match {
-         case MSome(result: SysmlAst.NonOccurrenceUsageElement) => MSome[SysmlAst.NonOccurrenceUsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.NonOccurrenceUsageElement => MSome[SysmlAst.NonOccurrenceUsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageElement")
+           }
          case _ => MNone[SysmlAst.NonOccurrenceUsageElement]()
         }
         return r
       case o: SysmlAst.ReferenceUsage =>
         val r: MOption[SysmlAst.NonOccurrenceUsageElement] = postSysmlAstReferenceUsage(o) match {
-         case MSome(result: SysmlAst.NonOccurrenceUsageElement) => MSome[SysmlAst.NonOccurrenceUsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.NonOccurrenceUsageElement => MSome[SysmlAst.NonOccurrenceUsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.NonOccurrenceUsageElement")
+           }
          case _ => MNone[SysmlAst.NonOccurrenceUsageElement]()
         }
         return r
@@ -10150,29 +12334,41 @@ import MTransformer._
     o match {
       case o: BTSSubprogramCallAction =>
         val r: MOption[BTSCommunicationAction] = postBTSSubprogramCallAction(o) match {
-         case MSome(result: BTSCommunicationAction) => MSome[BTSCommunicationAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSCommunicationAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSCommunicationAction => MSome[BTSCommunicationAction](result)
+             case _ => halt("Can only produce object of type BTSCommunicationAction")
+           }
          case _ => MNone[BTSCommunicationAction]()
         }
         return r
       case o: BTSPortOutAction =>
         val r: MOption[BTSCommunicationAction] = postBTSPortOutAction(o) match {
-         case MSome(result: BTSCommunicationAction) => MSome[BTSCommunicationAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSCommunicationAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSCommunicationAction => MSome[BTSCommunicationAction](result)
+             case _ => halt("Can only produce object of type BTSCommunicationAction")
+           }
          case _ => MNone[BTSCommunicationAction]()
         }
         return r
       case o: BTSPortInAction =>
         val r: MOption[BTSCommunicationAction] = postBTSPortInAction(o) match {
-         case MSome(result: BTSCommunicationAction) => MSome[BTSCommunicationAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSCommunicationAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSCommunicationAction => MSome[BTSCommunicationAction](result)
+             case _ => halt("Can only produce object of type BTSCommunicationAction")
+           }
          case _ => MNone[BTSCommunicationAction]()
         }
         return r
       case o: BTSFrozenPortAction =>
         val r: MOption[BTSCommunicationAction] = postBTSFrozenPortAction(o) match {
-         case MSome(result: BTSCommunicationAction) => MSome[BTSCommunicationAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSCommunicationAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSCommunicationAction => MSome[BTSCommunicationAction](result)
+             case _ => halt("Can only produce object of type BTSCommunicationAction")
+           }
          case _ => MNone[BTSCommunicationAction]()
         }
         return r
@@ -10215,15 +12411,21 @@ import MTransformer._
     o match {
       case o: BTSIfBLESSAction =>
         val r: MOption[BTSControlAction] = postBTSIfBLESSAction(o) match {
-         case MSome(result: BTSControlAction) => MSome[BTSControlAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSControlAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSControlAction => MSome[BTSControlAction](result)
+             case _ => halt("Can only produce object of type BTSControlAction")
+           }
          case _ => MNone[BTSControlAction]()
         }
         return r
       case o: BTSIfBAAction =>
         val r: MOption[BTSControlAction] = postBTSIfBAAction(o) match {
-         case MSome(result: BTSControlAction) => MSome[BTSControlAction](result)
-         case MSome(_) => halt("Can only produce object of type BTSControlAction")
+         case MSome(result) =>
+           result match {
+             case result: BTSControlAction => MSome[BTSControlAction](result)
+             case _ => halt("Can only produce object of type BTSControlAction")
+           }
          case _ => MNone[BTSControlAction]()
         }
         return r
@@ -10258,15 +12460,21 @@ import MTransformer._
     o match {
       case o: BTSExistentialLatticeQuantification =>
         val r: MOption[BTSQuantificationActions] = postBTSExistentialLatticeQuantification(o) match {
-         case MSome(result: BTSQuantificationActions) => MSome[BTSQuantificationActions](result)
-         case MSome(_) => halt("Can only produce object of type BTSQuantificationActions")
+         case MSome(result) =>
+           result match {
+             case result: BTSQuantificationActions => MSome[BTSQuantificationActions](result)
+             case _ => halt("Can only produce object of type BTSQuantificationActions")
+           }
          case _ => MNone[BTSQuantificationActions]()
         }
         return r
       case o: BTSUniversalLatticeQuantification =>
         val r: MOption[BTSQuantificationActions] = postBTSUniversalLatticeQuantification(o) match {
-         case MSome(result: BTSQuantificationActions) => MSome[BTSQuantificationActions](result)
-         case MSome(_) => halt("Can only produce object of type BTSQuantificationActions")
+         case MSome(result) =>
+           result match {
+             case result: BTSQuantificationActions => MSome[BTSQuantificationActions](result)
+             case _ => halt("Can only produce object of type BTSQuantificationActions")
+           }
          case _ => MNone[BTSQuantificationActions]()
         }
         return r
@@ -10277,36 +12485,51 @@ import MTransformer._
     o match {
       case o: SysmlAst.AllocationUsage =>
         val r: MOption[SysmlAst.OccurrenceUsageMember] = postSysmlAstAllocationUsage(o) match {
-         case MSome(result: SysmlAst.OccurrenceUsageMember) => MSome[SysmlAst.OccurrenceUsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.OccurrenceUsageMember => MSome[SysmlAst.OccurrenceUsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+           }
          case _ => MNone[SysmlAst.OccurrenceUsageMember]()
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: MOption[SysmlAst.OccurrenceUsageMember] = postSysmlAstConnectionUsage(o) match {
-         case MSome(result: SysmlAst.OccurrenceUsageMember) => MSome[SysmlAst.OccurrenceUsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.OccurrenceUsageMember => MSome[SysmlAst.OccurrenceUsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+           }
          case _ => MNone[SysmlAst.OccurrenceUsageMember]()
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: MOption[SysmlAst.OccurrenceUsageMember] = postSysmlAstItemUsage(o) match {
-         case MSome(result: SysmlAst.OccurrenceUsageMember) => MSome[SysmlAst.OccurrenceUsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.OccurrenceUsageMember => MSome[SysmlAst.OccurrenceUsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+           }
          case _ => MNone[SysmlAst.OccurrenceUsageMember]()
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: MOption[SysmlAst.OccurrenceUsageMember] = postSysmlAstPartUsage(o) match {
-         case MSome(result: SysmlAst.OccurrenceUsageMember) => MSome[SysmlAst.OccurrenceUsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.OccurrenceUsageMember => MSome[SysmlAst.OccurrenceUsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+           }
          case _ => MNone[SysmlAst.OccurrenceUsageMember]()
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: MOption[SysmlAst.OccurrenceUsageMember] = postSysmlAstPortUsage(o) match {
-         case MSome(result: SysmlAst.OccurrenceUsageMember) => MSome[SysmlAst.OccurrenceUsageMember](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.OccurrenceUsageMember => MSome[SysmlAst.OccurrenceUsageMember](result)
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageMember")
+           }
          case _ => MNone[SysmlAst.OccurrenceUsageMember]()
         }
         return r
@@ -10321,36 +12544,51 @@ import MTransformer._
     o match {
       case o: SysmlAst.AllocationUsage =>
         val r: MOption[SysmlAst.OccurrenceUsageElement] = postSysmlAstAllocationUsage(o) match {
-         case MSome(result: SysmlAst.OccurrenceUsageElement) => MSome[SysmlAst.OccurrenceUsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.OccurrenceUsageElement => MSome[SysmlAst.OccurrenceUsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+           }
          case _ => MNone[SysmlAst.OccurrenceUsageElement]()
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: MOption[SysmlAst.OccurrenceUsageElement] = postSysmlAstConnectionUsage(o) match {
-         case MSome(result: SysmlAst.OccurrenceUsageElement) => MSome[SysmlAst.OccurrenceUsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.OccurrenceUsageElement => MSome[SysmlAst.OccurrenceUsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+           }
          case _ => MNone[SysmlAst.OccurrenceUsageElement]()
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: MOption[SysmlAst.OccurrenceUsageElement] = postSysmlAstItemUsage(o) match {
-         case MSome(result: SysmlAst.OccurrenceUsageElement) => MSome[SysmlAst.OccurrenceUsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.OccurrenceUsageElement => MSome[SysmlAst.OccurrenceUsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+           }
          case _ => MNone[SysmlAst.OccurrenceUsageElement]()
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: MOption[SysmlAst.OccurrenceUsageElement] = postSysmlAstPartUsage(o) match {
-         case MSome(result: SysmlAst.OccurrenceUsageElement) => MSome[SysmlAst.OccurrenceUsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.OccurrenceUsageElement => MSome[SysmlAst.OccurrenceUsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+           }
          case _ => MNone[SysmlAst.OccurrenceUsageElement]()
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: MOption[SysmlAst.OccurrenceUsageElement] = postSysmlAstPortUsage(o) match {
-         case MSome(result: SysmlAst.OccurrenceUsageElement) => MSome[SysmlAst.OccurrenceUsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.OccurrenceUsageElement => MSome[SysmlAst.OccurrenceUsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsageElement")
+           }
          case _ => MNone[SysmlAst.OccurrenceUsageElement]()
         }
         return r
@@ -10361,36 +12599,51 @@ import MTransformer._
     o match {
       case o: SysmlAst.AllocationUsage =>
         val r: MOption[SysmlAst.StructureUsageElement] = postSysmlAstAllocationUsage(o) match {
-         case MSome(result: SysmlAst.StructureUsageElement) => MSome[SysmlAst.StructureUsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.StructureUsageElement => MSome[SysmlAst.StructureUsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+           }
          case _ => MNone[SysmlAst.StructureUsageElement]()
         }
         return r
       case o: SysmlAst.ConnectionUsage =>
         val r: MOption[SysmlAst.StructureUsageElement] = postSysmlAstConnectionUsage(o) match {
-         case MSome(result: SysmlAst.StructureUsageElement) => MSome[SysmlAst.StructureUsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.StructureUsageElement => MSome[SysmlAst.StructureUsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+           }
          case _ => MNone[SysmlAst.StructureUsageElement]()
         }
         return r
       case o: SysmlAst.ItemUsage =>
         val r: MOption[SysmlAst.StructureUsageElement] = postSysmlAstItemUsage(o) match {
-         case MSome(result: SysmlAst.StructureUsageElement) => MSome[SysmlAst.StructureUsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.StructureUsageElement => MSome[SysmlAst.StructureUsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+           }
          case _ => MNone[SysmlAst.StructureUsageElement]()
         }
         return r
       case o: SysmlAst.PartUsage =>
         val r: MOption[SysmlAst.StructureUsageElement] = postSysmlAstPartUsage(o) match {
-         case MSome(result: SysmlAst.StructureUsageElement) => MSome[SysmlAst.StructureUsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.StructureUsageElement => MSome[SysmlAst.StructureUsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+           }
          case _ => MNone[SysmlAst.StructureUsageElement]()
         }
         return r
       case o: SysmlAst.PortUsage =>
         val r: MOption[SysmlAst.StructureUsageElement] = postSysmlAstPortUsage(o) match {
-         case MSome(result: SysmlAst.StructureUsageElement) => MSome[SysmlAst.StructureUsageElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.StructureUsageElement => MSome[SysmlAst.StructureUsageElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.StructureUsageElement")
+           }
          case _ => MNone[SysmlAst.StructureUsageElement]()
         }
         return r
@@ -10401,15 +12654,21 @@ import MTransformer._
     o match {
       case o: SysmlAst.OccurrenceBasicUsagePrefix =>
         val r: MOption[SysmlAst.OccurrenceUsagePrefix] = postSysmlAstOccurrenceBasicUsagePrefix(o) match {
-         case MSome(result: SysmlAst.OccurrenceUsagePrefix) => MSome[SysmlAst.OccurrenceUsagePrefix](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.OccurrenceUsagePrefix")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.OccurrenceUsagePrefix => MSome[SysmlAst.OccurrenceUsagePrefix](result)
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsagePrefix")
+           }
          case _ => MNone[SysmlAst.OccurrenceUsagePrefix]()
         }
         return r
       case o: SysmlAst.OccurrenceEndUsagePrefix =>
         val r: MOption[SysmlAst.OccurrenceUsagePrefix] = postSysmlAstOccurrenceEndUsagePrefix(o) match {
-         case MSome(result: SysmlAst.OccurrenceUsagePrefix) => MSome[SysmlAst.OccurrenceUsagePrefix](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.OccurrenceUsagePrefix")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.OccurrenceUsagePrefix => MSome[SysmlAst.OccurrenceUsagePrefix](result)
+             case _ => halt("Can only produce object of type SysmlAst.OccurrenceUsagePrefix")
+           }
          case _ => MNone[SysmlAst.OccurrenceUsagePrefix]()
         }
         return r
@@ -10436,50 +12695,71 @@ import MTransformer._
     o match {
       case o: BTSUnaryExp =>
         val r: MOption[BTSExp] = postBTSUnaryExp(o) match {
-         case MSome(result: BTSExp) => MSome[BTSExp](result)
-         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case MSome(result) =>
+           result match {
+             case result: BTSExp => MSome[BTSExp](result)
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case _ => MNone[BTSExp]()
         }
         return r
       case o: BTSBinaryExp =>
         val r: MOption[BTSExp] = postBTSBinaryExp(o) match {
-         case MSome(result: BTSExp) => MSome[BTSExp](result)
-         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case MSome(result) =>
+           result match {
+             case result: BTSExp => MSome[BTSExp](result)
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case _ => MNone[BTSExp]()
         }
         return r
       case o: BTSLiteralExp =>
         val r: MOption[BTSExp] = postBTSLiteralExp(o) match {
-         case MSome(result: BTSExp) => MSome[BTSExp](result)
-         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case MSome(result) =>
+           result match {
+             case result: BTSExp => MSome[BTSExp](result)
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case _ => MNone[BTSExp]()
         }
         return r
       case o: BTSNameExp =>
         val r: MOption[BTSExp] = postBTSNameExp(o) match {
-         case MSome(result: BTSExp) => MSome[BTSExp](result)
-         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case MSome(result) =>
+           result match {
+             case result: BTSExp => MSome[BTSExp](result)
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case _ => MNone[BTSExp]()
         }
         return r
       case o: BTSIndexingExp =>
         val r: MOption[BTSExp] = postBTSIndexingExp(o) match {
-         case MSome(result: BTSExp) => MSome[BTSExp](result)
-         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case MSome(result) =>
+           result match {
+             case result: BTSExp => MSome[BTSExp](result)
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case _ => MNone[BTSExp]()
         }
         return r
       case o: BTSAccessExp =>
         val r: MOption[BTSExp] = postBTSAccessExp(o) match {
-         case MSome(result: BTSExp) => MSome[BTSExp](result)
-         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case MSome(result) =>
+           result match {
+             case result: BTSExp => MSome[BTSExp](result)
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case _ => MNone[BTSExp]()
         }
         return r
       case o: BTSFunctionCall =>
         val r: MOption[BTSExp] = postBTSFunctionCall(o) match {
-         case MSome(result: BTSExp) => MSome[BTSExp](result)
-         case MSome(_) => halt("Can only produce object of type BTSExp")
+         case MSome(result) =>
+           result match {
+             case result: BTSExp => MSome[BTSExp](result)
+             case _ => halt("Can only produce object of type BTSExp")
+           }
          case _ => MNone[BTSExp]()
         }
         return r
@@ -10530,22 +12810,31 @@ import MTransformer._
     o match {
       case o: GclSchemaComponentRef =>
         val r: MOption[GclSchemaElement] = postGclSchemaComponentRef(o) match {
-         case MSome(result: GclSchemaElement) => MSome[GclSchemaElement](result)
-         case MSome(_) => halt("Can only produce object of type GclSchemaElement")
+         case MSome(result) =>
+           result match {
+             case result: GclSchemaElement => MSome[GclSchemaElement](result)
+             case _ => halt("Can only produce object of type GclSchemaElement")
+           }
          case _ => MNone[GclSchemaElement]()
         }
         return r
       case o: GclSchemaLabel =>
         val r: MOption[GclSchemaElement] = postGclSchemaLabel(o) match {
-         case MSome(result: GclSchemaElement) => MSome[GclSchemaElement](result)
-         case MSome(_) => halt("Can only produce object of type GclSchemaElement")
+         case MSome(result) =>
+           result match {
+             case result: GclSchemaElement => MSome[GclSchemaElement](result)
+             case _ => halt("Can only produce object of type GclSchemaElement")
+           }
          case _ => MNone[GclSchemaElement]()
         }
         return r
       case o: GclSchemaSplitJoin =>
         val r: MOption[GclSchemaElement] = postGclSchemaSplitJoin(o) match {
-         case MSome(result: GclSchemaElement) => MSome[GclSchemaElement](result)
-         case MSome(_) => halt("Can only produce object of type GclSchemaElement")
+         case MSome(result) =>
+           result match {
+             case result: GclSchemaElement => MSome[GclSchemaElement](result)
+             case _ => halt("Can only produce object of type GclSchemaElement")
+           }
          case _ => MNone[GclSchemaElement]()
         }
         return r
@@ -10592,29 +12881,41 @@ import MTransformer._
     o match {
       case o: SysmlAst.Comment =>
         val r: MOption[SysmlAst.AnnotatingElement] = postSysmlAstComment(o) match {
-         case MSome(result: SysmlAst.AnnotatingElement) => MSome[SysmlAst.AnnotatingElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AnnotatingElement => MSome[SysmlAst.AnnotatingElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+           }
          case _ => MNone[SysmlAst.AnnotatingElement]()
         }
         return r
       case o: SysmlAst.Documentation =>
         val r: MOption[SysmlAst.AnnotatingElement] = postSysmlAstDocumentation(o) match {
-         case MSome(result: SysmlAst.AnnotatingElement) => MSome[SysmlAst.AnnotatingElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AnnotatingElement => MSome[SysmlAst.AnnotatingElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+           }
          case _ => MNone[SysmlAst.AnnotatingElement]()
         }
         return r
       case o: SysmlAst.TextualRepresentation =>
         val r: MOption[SysmlAst.AnnotatingElement] = postSysmlAstTextualRepresentation(o) match {
-         case MSome(result: SysmlAst.AnnotatingElement) => MSome[SysmlAst.AnnotatingElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AnnotatingElement => MSome[SysmlAst.AnnotatingElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+           }
          case _ => MNone[SysmlAst.AnnotatingElement]()
         }
         return r
       case o: SysmlAst.GumboAnnotation =>
         val r: MOption[SysmlAst.AnnotatingElement] = postSysmlAstGumboAnnotation(o) match {
-         case MSome(result: SysmlAst.AnnotatingElement) => MSome[SysmlAst.AnnotatingElement](result)
-         case MSome(_) => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+         case MSome(result) =>
+           result match {
+             case result: SysmlAst.AnnotatingElement => MSome[SysmlAst.AnnotatingElement](result)
+             case _ => halt("Can only produce object of type SysmlAst.AnnotatingElement")
+           }
          case _ => MNone[SysmlAst.AnnotatingElement]()
         }
         return r
@@ -10729,36 +13030,51 @@ import MTransformer._
     o match {
       case o: GclPointStart =>
         val r: MOption[GclSchemaPoint] = postGclPointStart(o) match {
-         case MSome(result: GclSchemaPoint) => MSome[GclSchemaPoint](result)
-         case MSome(_) => halt("Can only produce object of type GclSchemaPoint")
+         case MSome(result) =>
+           result match {
+             case result: GclSchemaPoint => MSome[GclSchemaPoint](result)
+             case _ => halt("Can only produce object of type GclSchemaPoint")
+           }
          case _ => MNone[GclSchemaPoint]()
         }
         return r
       case o: GclPointEnd =>
         val r: MOption[GclSchemaPoint] = postGclPointEnd(o) match {
-         case MSome(result: GclSchemaPoint) => MSome[GclSchemaPoint](result)
-         case MSome(_) => halt("Can only produce object of type GclSchemaPoint")
+         case MSome(result) =>
+           result match {
+             case result: GclSchemaPoint => MSome[GclSchemaPoint](result)
+             case _ => halt("Can only produce object of type GclSchemaPoint")
+           }
          case _ => MNone[GclSchemaPoint]()
         }
         return r
       case o: GclPointAt =>
         val r: MOption[GclSchemaPoint] = postGclPointAt(o) match {
-         case MSome(result: GclSchemaPoint) => MSome[GclSchemaPoint](result)
-         case MSome(_) => halt("Can only produce object of type GclSchemaPoint")
+         case MSome(result) =>
+           result match {
+             case result: GclSchemaPoint => MSome[GclSchemaPoint](result)
+             case _ => halt("Can only produce object of type GclSchemaPoint")
+           }
          case _ => MNone[GclSchemaPoint]()
         }
         return r
       case o: GclPointBefore =>
         val r: MOption[GclSchemaPoint] = postGclPointBefore(o) match {
-         case MSome(result: GclSchemaPoint) => MSome[GclSchemaPoint](result)
-         case MSome(_) => halt("Can only produce object of type GclSchemaPoint")
+         case MSome(result) =>
+           result match {
+             case result: GclSchemaPoint => MSome[GclSchemaPoint](result)
+             case _ => halt("Can only produce object of type GclSchemaPoint")
+           }
          case _ => MNone[GclSchemaPoint]()
         }
         return r
       case o: GclPointAfter =>
         val r: MOption[GclSchemaPoint] = postGclPointAfter(o) match {
-         case MSome(result: GclSchemaPoint) => MSome[GclSchemaPoint](result)
-         case MSome(_) => halt("Can only produce object of type GclSchemaPoint")
+         case MSome(result) =>
+           result match {
+             case result: GclSchemaPoint => MSome[GclSchemaPoint](result)
+             case _ => halt("Can only produce object of type GclSchemaPoint")
+           }
          case _ => MNone[GclSchemaPoint]()
         }
         return r
@@ -22342,8 +24658,11 @@ import MTransformer._
 
   def transform_langastExpLitString(o: org.sireum.lang.ast.Exp.LitString): MOption[org.sireum.lang.ast.Exp.LitString] = {
     val preR: PreResult[org.sireum.lang.ast.Exp.LitString] = pre_langastExpLitString(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.LitString)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.LitString](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitString")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Exp.LitString => PreResult(continu, MSome[org.sireum.lang.ast.Exp.LitString](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitString")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.LitString]())
     }
     val r: MOption[org.sireum.lang.ast.Exp.LitString] = if (preR.continu) {
@@ -22362,8 +24681,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Exp.LitString = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Exp.LitString] = post_langastExpLitString(o2) match {
-     case MSome(result: org.sireum.lang.ast.Exp.LitString) => MSome[org.sireum.lang.ast.Exp.LitString](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitString")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Exp.LitString => MSome[org.sireum.lang.ast.Exp.LitString](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitString")
+       }
      case _ => MNone[org.sireum.lang.ast.Exp.LitString]()
     }
     if (postR.nonEmpty) {
@@ -22377,8 +24699,11 @@ import MTransformer._
 
   def transform_langastTypeNamed(o: org.sireum.lang.ast.Type.Named): MOption[org.sireum.lang.ast.Type.Named] = {
     val preR: PreResult[org.sireum.lang.ast.Type.Named] = pre_langastTypeNamed(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Type.Named)) => PreResult(continu, MSome[org.sireum.lang.ast.Type.Named](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Type.Named")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Type.Named => PreResult(continu, MSome[org.sireum.lang.ast.Type.Named](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Type.Named")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Type.Named]())
     }
     val r: MOption[org.sireum.lang.ast.Type.Named] = if (preR.continu) {
@@ -22400,8 +24725,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Type.Named = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Type.Named] = post_langastTypeNamed(o2) match {
-     case MSome(result: org.sireum.lang.ast.Type.Named) => MSome[org.sireum.lang.ast.Type.Named](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Type.Named")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Type.Named => MSome[org.sireum.lang.ast.Type.Named](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Type.Named")
+       }
      case _ => MNone[org.sireum.lang.ast.Type.Named]()
     }
     if (postR.nonEmpty) {
@@ -22415,8 +24743,11 @@ import MTransformer._
 
   def transform_langastStmtBlock(o: org.sireum.lang.ast.Stmt.Block): MOption[org.sireum.lang.ast.Stmt.Block] = {
     val preR: PreResult[org.sireum.lang.ast.Stmt.Block] = pre_langastStmtBlock(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt.Block)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt.Block](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Block")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Stmt.Block => PreResult(continu, MSome[org.sireum.lang.ast.Stmt.Block](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Block")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt.Block]())
     }
     val r: MOption[org.sireum.lang.ast.Stmt.Block] = if (preR.continu) {
@@ -22437,8 +24768,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Stmt.Block = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Stmt.Block] = post_langastStmtBlock(o2) match {
-     case MSome(result: org.sireum.lang.ast.Stmt.Block) => MSome[org.sireum.lang.ast.Stmt.Block](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Block")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Stmt.Block => MSome[org.sireum.lang.ast.Stmt.Block](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Block")
+       }
      case _ => MNone[org.sireum.lang.ast.Stmt.Block]()
     }
     if (postR.nonEmpty) {
@@ -22452,8 +24786,11 @@ import MTransformer._
 
   def transform_langastExpLitZ(o: org.sireum.lang.ast.Exp.LitZ): MOption[org.sireum.lang.ast.Exp.LitZ] = {
     val preR: PreResult[org.sireum.lang.ast.Exp.LitZ] = pre_langastExpLitZ(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.LitZ)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.LitZ](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitZ")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Exp.LitZ => PreResult(continu, MSome[org.sireum.lang.ast.Exp.LitZ](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitZ")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.LitZ]())
     }
     val r: MOption[org.sireum.lang.ast.Exp.LitZ] = if (preR.continu) {
@@ -22472,8 +24809,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Exp.LitZ = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Exp.LitZ] = post_langastExpLitZ(o2) match {
-     case MSome(result: org.sireum.lang.ast.Exp.LitZ) => MSome[org.sireum.lang.ast.Exp.LitZ](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitZ")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Exp.LitZ => MSome[org.sireum.lang.ast.Exp.LitZ](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitZ")
+       }
      case _ => MNone[org.sireum.lang.ast.Exp.LitZ]()
     }
     if (postR.nonEmpty) {
@@ -22487,8 +24827,11 @@ import MTransformer._
 
   def transform_langastExpIdent(o: org.sireum.lang.ast.Exp.Ident): MOption[org.sireum.lang.ast.Exp.Ident] = {
     val preR: PreResult[org.sireum.lang.ast.Exp.Ident] = pre_langastExpIdent(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.Ident)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Ident](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ident")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Exp.Ident => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Ident](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ident")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.Ident]())
     }
     val r: MOption[org.sireum.lang.ast.Exp.Ident] = if (preR.continu) {
@@ -22508,8 +24851,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Exp.Ident = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Exp.Ident] = post_langastExpIdent(o2) match {
-     case MSome(result: org.sireum.lang.ast.Exp.Ident) => MSome[org.sireum.lang.ast.Exp.Ident](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ident")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Exp.Ident => MSome[org.sireum.lang.ast.Exp.Ident](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.Ident")
+       }
      case _ => MNone[org.sireum.lang.ast.Exp.Ident]()
     }
     if (postR.nonEmpty) {
@@ -22523,8 +24869,11 @@ import MTransformer._
 
   def transform_langastExpInvoke(o: org.sireum.lang.ast.Exp.Invoke): MOption[org.sireum.lang.ast.Exp.Invoke] = {
     val preR: PreResult[org.sireum.lang.ast.Exp.Invoke] = pre_langastExpInvoke(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.Invoke)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Invoke](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Invoke")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Exp.Invoke => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Invoke](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.Invoke")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.Invoke]())
     }
     val r: MOption[org.sireum.lang.ast.Exp.Invoke] = if (preR.continu) {
@@ -22548,8 +24897,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Exp.Invoke = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Exp.Invoke] = post_langastExpInvoke(o2) match {
-     case MSome(result: org.sireum.lang.ast.Exp.Invoke) => MSome[org.sireum.lang.ast.Exp.Invoke](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Invoke")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Exp.Invoke => MSome[org.sireum.lang.ast.Exp.Invoke](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.Invoke")
+       }
      case _ => MNone[org.sireum.lang.ast.Exp.Invoke]()
     }
     if (postR.nonEmpty) {
@@ -22563,8 +24915,11 @@ import MTransformer._
 
   def transform_langastExpInvokeNamed(o: org.sireum.lang.ast.Exp.InvokeNamed): MOption[org.sireum.lang.ast.Exp.InvokeNamed] = {
     val preR: PreResult[org.sireum.lang.ast.Exp.InvokeNamed] = pre_langastExpInvokeNamed(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.InvokeNamed)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.InvokeNamed](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.InvokeNamed")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Exp.InvokeNamed => PreResult(continu, MSome[org.sireum.lang.ast.Exp.InvokeNamed](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.InvokeNamed")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.InvokeNamed]())
     }
     val r: MOption[org.sireum.lang.ast.Exp.InvokeNamed] = if (preR.continu) {
@@ -22588,8 +24943,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Exp.InvokeNamed = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Exp.InvokeNamed] = post_langastExpInvokeNamed(o2) match {
-     case MSome(result: org.sireum.lang.ast.Exp.InvokeNamed) => MSome[org.sireum.lang.ast.Exp.InvokeNamed](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.InvokeNamed")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Exp.InvokeNamed => MSome[org.sireum.lang.ast.Exp.InvokeNamed](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.InvokeNamed")
+       }
      case _ => MNone[org.sireum.lang.ast.Exp.InvokeNamed]()
     }
     if (postR.nonEmpty) {
@@ -22603,8 +24961,11 @@ import MTransformer._
 
   def transform_langastExpEta(o: org.sireum.lang.ast.Exp.Eta): MOption[org.sireum.lang.ast.Exp.Eta] = {
     val preR: PreResult[org.sireum.lang.ast.Exp.Eta] = pre_langastExpEta(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.Eta)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Eta](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Eta")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Exp.Eta => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Eta](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.Eta")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.Eta]())
     }
     val r: MOption[org.sireum.lang.ast.Exp.Eta] = if (preR.continu) {
@@ -22624,8 +24985,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Exp.Eta = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Exp.Eta] = post_langastExpEta(o2) match {
-     case MSome(result: org.sireum.lang.ast.Exp.Eta) => MSome[org.sireum.lang.ast.Exp.Eta](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Eta")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Exp.Eta => MSome[org.sireum.lang.ast.Exp.Eta](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.Eta")
+       }
      case _ => MNone[org.sireum.lang.ast.Exp.Eta]()
     }
     if (postR.nonEmpty) {
@@ -22639,8 +25003,11 @@ import MTransformer._
 
   def transform_langastTypedName(o: org.sireum.lang.ast.Typed.Name): MOption[org.sireum.lang.ast.Typed.Name] = {
     val preR: PreResult[org.sireum.lang.ast.Typed.Name] = pre_langastTypedName(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Typed.Name)) => PreResult(continu, MSome[org.sireum.lang.ast.Typed.Name](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Name")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Typed.Name => PreResult(continu, MSome[org.sireum.lang.ast.Typed.Name](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Typed.Name")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Typed.Name]())
     }
     val r: MOption[org.sireum.lang.ast.Typed.Name] = if (preR.continu) {
@@ -22660,8 +25027,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Typed.Name = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Typed.Name] = post_langastTypedName(o2) match {
-     case MSome(result: org.sireum.lang.ast.Typed.Name) => MSome[org.sireum.lang.ast.Typed.Name](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Name")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Typed.Name => MSome[org.sireum.lang.ast.Typed.Name](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Typed.Name")
+       }
      case _ => MNone[org.sireum.lang.ast.Typed.Name]()
     }
     if (postR.nonEmpty) {
@@ -22675,8 +25045,11 @@ import MTransformer._
 
   def transform_langastExpFun(o: org.sireum.lang.ast.Exp.Fun): MOption[org.sireum.lang.ast.Exp.Fun] = {
     val preR: PreResult[org.sireum.lang.ast.Exp.Fun] = pre_langastExpFun(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.Fun)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Fun](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Fun")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Exp.Fun => PreResult(continu, MSome[org.sireum.lang.ast.Exp.Fun](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.Fun")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.Fun]())
     }
     val r: MOption[org.sireum.lang.ast.Exp.Fun] = if (preR.continu) {
@@ -22698,8 +25071,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Exp.Fun = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Exp.Fun] = post_langastExpFun(o2) match {
-     case MSome(result: org.sireum.lang.ast.Exp.Fun) => MSome[org.sireum.lang.ast.Exp.Fun](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.Fun")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Exp.Fun => MSome[org.sireum.lang.ast.Exp.Fun](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.Fun")
+       }
      case _ => MNone[org.sireum.lang.ast.Exp.Fun]()
     }
     if (postR.nonEmpty) {
@@ -22713,8 +25089,11 @@ import MTransformer._
 
   def transform_langastMethodContractInfoFlowCase(o: org.sireum.lang.ast.MethodContract.InfoFlowCase): MOption[org.sireum.lang.ast.MethodContract.InfoFlowCase] = {
     val preR: PreResult[org.sireum.lang.ast.MethodContract.InfoFlowCase] = pre_langastMethodContractInfoFlowCase(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.MethodContract.InfoFlowCase)) => PreResult(continu, MSome[org.sireum.lang.ast.MethodContract.InfoFlowCase](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.MethodContract.InfoFlowCase")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.MethodContract.InfoFlowCase => PreResult(continu, MSome[org.sireum.lang.ast.MethodContract.InfoFlowCase](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.MethodContract.InfoFlowCase")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.MethodContract.InfoFlowCase]())
     }
     val r: MOption[org.sireum.lang.ast.MethodContract.InfoFlowCase] = if (preR.continu) {
@@ -22736,8 +25115,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.MethodContract.InfoFlowCase = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.MethodContract.InfoFlowCase] = post_langastMethodContractInfoFlowCase(o2) match {
-     case MSome(result: org.sireum.lang.ast.MethodContract.InfoFlowCase) => MSome[org.sireum.lang.ast.MethodContract.InfoFlowCase](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.MethodContract.InfoFlowCase")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.MethodContract.InfoFlowCase => MSome[org.sireum.lang.ast.MethodContract.InfoFlowCase](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.MethodContract.InfoFlowCase")
+       }
      case _ => MNone[org.sireum.lang.ast.MethodContract.InfoFlowCase]()
     }
     if (postR.nonEmpty) {
@@ -22751,8 +25133,11 @@ import MTransformer._
 
   def transform_langastResolvedInfoLocalVar(o: org.sireum.lang.ast.ResolvedInfo.LocalVar): MOption[org.sireum.lang.ast.ResolvedInfo.LocalVar] = {
     val preR: PreResult[org.sireum.lang.ast.ResolvedInfo.LocalVar] = pre_langastResolvedInfoLocalVar(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.ResolvedInfo.LocalVar)) => PreResult(continu, MSome[org.sireum.lang.ast.ResolvedInfo.LocalVar](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.ResolvedInfo.LocalVar")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.ResolvedInfo.LocalVar => PreResult(continu, MSome[org.sireum.lang.ast.ResolvedInfo.LocalVar](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.ResolvedInfo.LocalVar")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.ResolvedInfo.LocalVar]())
     }
     val r: MOption[org.sireum.lang.ast.ResolvedInfo.LocalVar] = if (preR.continu) {
@@ -22770,8 +25155,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.ResolvedInfo.LocalVar = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.ResolvedInfo.LocalVar] = post_langastResolvedInfoLocalVar(o2) match {
-     case MSome(result: org.sireum.lang.ast.ResolvedInfo.LocalVar) => MSome[org.sireum.lang.ast.ResolvedInfo.LocalVar](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.ResolvedInfo.LocalVar")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.ResolvedInfo.LocalVar => MSome[org.sireum.lang.ast.ResolvedInfo.LocalVar](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.ResolvedInfo.LocalVar")
+       }
      case _ => MNone[org.sireum.lang.ast.ResolvedInfo.LocalVar]()
     }
     if (postR.nonEmpty) {
@@ -22785,8 +25173,11 @@ import MTransformer._
 
   def transform_langastRTypeVar(o: org.sireum.lang.ast.RType.Var): MOption[org.sireum.lang.ast.RType.Var] = {
     val preR: PreResult[org.sireum.lang.ast.RType.Var] = pre_langastRTypeVar(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.RType.Var)) => PreResult(continu, MSome[org.sireum.lang.ast.RType.Var](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.RType.Var")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.RType.Var => PreResult(continu, MSome[org.sireum.lang.ast.RType.Var](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.RType.Var")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.RType.Var]())
     }
     val r: MOption[org.sireum.lang.ast.RType.Var] = if (preR.continu) {
@@ -22805,8 +25196,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.RType.Var = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.RType.Var] = post_langastRTypeVar(o2) match {
-     case MSome(result: org.sireum.lang.ast.RType.Var) => MSome[org.sireum.lang.ast.RType.Var](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.RType.Var")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.RType.Var => MSome[org.sireum.lang.ast.RType.Var](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.RType.Var")
+       }
      case _ => MNone[org.sireum.lang.ast.RType.Var]()
     }
     if (postR.nonEmpty) {
@@ -22820,8 +25214,11 @@ import MTransformer._
 
   def transform_langastTypedFun(o: org.sireum.lang.ast.Typed.Fun): MOption[org.sireum.lang.ast.Typed.Fun] = {
     val preR: PreResult[org.sireum.lang.ast.Typed.Fun] = pre_langastTypedFun(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Typed.Fun)) => PreResult(continu, MSome[org.sireum.lang.ast.Typed.Fun](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Fun")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Typed.Fun => PreResult(continu, MSome[org.sireum.lang.ast.Typed.Fun](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Typed.Fun")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Typed.Fun]())
     }
     val r: MOption[org.sireum.lang.ast.Typed.Fun] = if (preR.continu) {
@@ -22841,8 +25238,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Typed.Fun = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Typed.Fun] = post_langastTypedFun(o2) match {
-     case MSome(result: org.sireum.lang.ast.Typed.Fun) => MSome[org.sireum.lang.ast.Typed.Fun](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Fun")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Typed.Fun => MSome[org.sireum.lang.ast.Typed.Fun](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Typed.Fun")
+       }
      case _ => MNone[org.sireum.lang.ast.Typed.Fun]()
     }
     if (postR.nonEmpty) {
@@ -22856,8 +25256,11 @@ import MTransformer._
 
   def transform_langastResolvedInfoMethod(o: org.sireum.lang.ast.ResolvedInfo.Method): MOption[org.sireum.lang.ast.ResolvedInfo.Method] = {
     val preR: PreResult[org.sireum.lang.ast.ResolvedInfo.Method] = pre_langastResolvedInfoMethod(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.ResolvedInfo.Method)) => PreResult(continu, MSome[org.sireum.lang.ast.ResolvedInfo.Method](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.ResolvedInfo.Method")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.ResolvedInfo.Method => PreResult(continu, MSome[org.sireum.lang.ast.ResolvedInfo.Method](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.ResolvedInfo.Method")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.ResolvedInfo.Method]())
     }
     val r: MOption[org.sireum.lang.ast.ResolvedInfo.Method] = if (preR.continu) {
@@ -22878,8 +25281,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.ResolvedInfo.Method = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.ResolvedInfo.Method] = post_langastResolvedInfoMethod(o2) match {
-     case MSome(result: org.sireum.lang.ast.ResolvedInfo.Method) => MSome[org.sireum.lang.ast.ResolvedInfo.Method](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.ResolvedInfo.Method")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.ResolvedInfo.Method => MSome[org.sireum.lang.ast.ResolvedInfo.Method](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.ResolvedInfo.Method")
+       }
      case _ => MNone[org.sireum.lang.ast.ResolvedInfo.Method]()
     }
     if (postR.nonEmpty) {
@@ -22893,8 +25299,11 @@ import MTransformer._
 
   def transform_langastExpLitB(o: org.sireum.lang.ast.Exp.LitB): MOption[org.sireum.lang.ast.Exp.LitB] = {
     val preR: PreResult[org.sireum.lang.ast.Exp.LitB] = pre_langastExpLitB(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Exp.LitB)) => PreResult(continu, MSome[org.sireum.lang.ast.Exp.LitB](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitB")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Exp.LitB => PreResult(continu, MSome[org.sireum.lang.ast.Exp.LitB](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitB")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Exp.LitB]())
     }
     val r: MOption[org.sireum.lang.ast.Exp.LitB] = if (preR.continu) {
@@ -22913,8 +25322,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Exp.LitB = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Exp.LitB] = post_langastExpLitB(o2) match {
-     case MSome(result: org.sireum.lang.ast.Exp.LitB) => MSome[org.sireum.lang.ast.Exp.LitB](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitB")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Exp.LitB => MSome[org.sireum.lang.ast.Exp.LitB](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Exp.LitB")
+       }
      case _ => MNone[org.sireum.lang.ast.Exp.LitB]()
     }
     if (postR.nonEmpty) {
@@ -22928,8 +25340,11 @@ import MTransformer._
 
   def transform_langastTypedMethod(o: org.sireum.lang.ast.Typed.Method): MOption[org.sireum.lang.ast.Typed.Method] = {
     val preR: PreResult[org.sireum.lang.ast.Typed.Method] = pre_langastTypedMethod(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Typed.Method)) => PreResult(continu, MSome[org.sireum.lang.ast.Typed.Method](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Method")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Typed.Method => PreResult(continu, MSome[org.sireum.lang.ast.Typed.Method](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Typed.Method")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Typed.Method]())
     }
     val r: MOption[org.sireum.lang.ast.Typed.Method] = if (preR.continu) {
@@ -22948,8 +25363,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Typed.Method = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Typed.Method] = post_langastTypedMethod(o2) match {
-     case MSome(result: org.sireum.lang.ast.Typed.Method) => MSome[org.sireum.lang.ast.Typed.Method](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Typed.Method")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Typed.Method => MSome[org.sireum.lang.ast.Typed.Method](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Typed.Method")
+       }
      case _ => MNone[org.sireum.lang.ast.Typed.Method]()
     }
     if (postR.nonEmpty) {
@@ -22963,8 +25381,11 @@ import MTransformer._
 
   def transformUnitProp(o: UnitProp): MOption[UnitProp] = {
     val preR: PreResult[UnitProp] = preUnitProp(o) match {
-     case PreResult(continu, MSome(r: UnitProp)) => PreResult(continu, MSome[UnitProp](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type UnitProp")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: UnitProp => PreResult(continu, MSome[UnitProp](r))
+         case _ => halt("Can only produce object of type UnitProp")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[UnitProp]())
     }
     val r: MOption[UnitProp] = if (preR.continu) {
@@ -22982,8 +25403,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: UnitProp = r.getOrElse(o)
     val postR: MOption[UnitProp] = postUnitProp(o2) match {
-     case MSome(result: UnitProp) => MSome[UnitProp](result)
-     case MSome(_) => halt("Can only produce object of type UnitProp")
+     case MSome(result) =>
+       result match {
+         case result: UnitProp => MSome[UnitProp](result)
+         case _ => halt("Can only produce object of type UnitProp")
+       }
      case _ => MNone[UnitProp]()
     }
     if (postR.nonEmpty) {
@@ -22997,8 +25421,11 @@ import MTransformer._
 
   def transformTypeNamed(o: Type.Named): MOption[Type.Named] = {
     val preR: PreResult[Type.Named] = preTypeNamed(o) match {
-     case PreResult(continu, MSome(r: Type.Named)) => PreResult(continu, MSome[Type.Named](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type Type.Named")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: Type.Named => PreResult(continu, MSome[Type.Named](r))
+         case _ => halt("Can only produce object of type Type.Named")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[Type.Named]())
     }
     val r: MOption[Type.Named] = if (preR.continu) {
@@ -23019,8 +25446,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: Type.Named = r.getOrElse(o)
     val postR: MOption[Type.Named] = postTypeNamed(o2) match {
-     case MSome(result: Type.Named) => MSome[Type.Named](result)
-     case MSome(_) => halt("Can only produce object of type Type.Named")
+     case MSome(result) =>
+       result match {
+         case result: Type.Named => MSome[Type.Named](result)
+         case _ => halt("Can only produce object of type Type.Named")
+       }
      case _ => MNone[Type.Named]()
     }
     if (postR.nonEmpty) {
@@ -23034,8 +25464,11 @@ import MTransformer._
 
   def transform_langastStmtSpecMethod(o: org.sireum.lang.ast.Stmt.SpecMethod): MOption[org.sireum.lang.ast.Stmt.SpecMethod] = {
     val preR: PreResult[org.sireum.lang.ast.Stmt.SpecMethod] = pre_langastStmtSpecMethod(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt.SpecMethod)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt.SpecMethod](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt.SpecMethod")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Stmt.SpecMethod => PreResult(continu, MSome[org.sireum.lang.ast.Stmt.SpecMethod](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt.SpecMethod")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt.SpecMethod]())
     }
     val r: MOption[org.sireum.lang.ast.Stmt.SpecMethod] = if (preR.continu) {
@@ -23055,8 +25488,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Stmt.SpecMethod = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Stmt.SpecMethod] = post_langastStmtSpecMethod(o2) match {
-     case MSome(result: org.sireum.lang.ast.Stmt.SpecMethod) => MSome[org.sireum.lang.ast.Stmt.SpecMethod](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt.SpecMethod")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Stmt.SpecMethod => MSome[org.sireum.lang.ast.Stmt.SpecMethod](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt.SpecMethod")
+       }
      case _ => MNone[org.sireum.lang.ast.Stmt.SpecMethod]()
     }
     if (postR.nonEmpty) {
@@ -23070,8 +25506,11 @@ import MTransformer._
 
   def transform_langastStmtMethod(o: org.sireum.lang.ast.Stmt.Method): MOption[org.sireum.lang.ast.Stmt.Method] = {
     val preR: PreResult[org.sireum.lang.ast.Stmt.Method] = pre_langastStmtMethod(o) match {
-     case PreResult(continu, MSome(r: org.sireum.lang.ast.Stmt.Method)) => PreResult(continu, MSome[org.sireum.lang.ast.Stmt.Method](r))
-     case PreResult(_, MSome(_)) => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Method")
+     case PreResult(continu, MSome(r)) =>
+       r match {
+         case r: org.sireum.lang.ast.Stmt.Method => PreResult(continu, MSome[org.sireum.lang.ast.Stmt.Method](r))
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Method")
+       }
      case PreResult(continu, _) => PreResult(continu, MNone[org.sireum.lang.ast.Stmt.Method]())
     }
     val r: MOption[org.sireum.lang.ast.Stmt.Method] = if (preR.continu) {
@@ -23093,8 +25532,11 @@ import MTransformer._
     val hasChanged: B = r.nonEmpty
     val o2: org.sireum.lang.ast.Stmt.Method = r.getOrElse(o)
     val postR: MOption[org.sireum.lang.ast.Stmt.Method] = post_langastStmtMethod(o2) match {
-     case MSome(result: org.sireum.lang.ast.Stmt.Method) => MSome[org.sireum.lang.ast.Stmt.Method](result)
-     case MSome(_) => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Method")
+     case MSome(result) =>
+       result match {
+         case result: org.sireum.lang.ast.Stmt.Method => MSome[org.sireum.lang.ast.Stmt.Method](result)
+         case _ => halt("Can only produce object of type org.sireum.lang.ast.Stmt.Method")
+       }
      case _ => MNone[org.sireum.lang.ast.Stmt.Method]()
     }
     if (postR.nonEmpty) {

@@ -1714,6 +1714,10 @@ object Transformer {
       return PreResult(ctx, T, None())
     }
 
+    @pure def pre_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): PreResult[Context, org.sireum.lang.ast.Typed] = {
+      return PreResult(ctx, T, None())
+    }
+
     @pure def preUnitProp(ctx: Context, o: UnitProp): PreResult[Context, PropertyValue] = {
       return PreResult(ctx, T, None())
     }
@@ -1731,10 +1735,6 @@ object Transformer {
     }
 
     @pure def preAnnex(ctx: Context, o: Annex): PreResult[Context, Annex] = {
-      return PreResult(ctx, T, None())
-    }
-
-    @pure def pre_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): PreResult[Context, org.sireum.lang.ast.Typed] = {
       return PreResult(ctx, T, None())
     }
 
@@ -6378,6 +6378,10 @@ object Transformer {
       return TPostResult(ctx, None())
     }
 
+    @pure def post_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): TPostResult[Context, org.sireum.lang.ast.Typed] = {
+      return TPostResult(ctx, None())
+    }
+
     @pure def postUnitProp(ctx: Context, o: UnitProp): TPostResult[Context, PropertyValue] = {
       return TPostResult(ctx, None())
     }
@@ -6395,10 +6399,6 @@ object Transformer {
     }
 
     @pure def postAnnex(ctx: Context, o: Annex): TPostResult[Context, Annex] = {
-      return TPostResult(ctx, None())
-    }
-
-    @pure def post_langastTypedName(ctx: Context, o: org.sireum.lang.ast.Typed.Name): TPostResult[Context, org.sireum.lang.ast.Typed] = {
       return TPostResult(ctx, None())
     }
 
@@ -9393,12 +9393,12 @@ object Transformer {
     val s2: MS[Z, T] = s.toMS
     var changed: B = F
     var ctxi = ctx
-    for (i <- s2.indices) {
-      val e: T = s(i)
+    for (i <- 0 until s.size) {
+      val e: T = s.atZ(i)
       val r: TPostResult[Context, T] = f(ctxi, e)
       ctxi = r.ctx
       changed = changed || r.resultOpt.nonEmpty
-      s2(i) = r.resultOpt.getOrElse(e)
+      s2.updateZ(i, r.resultOpt.getOrElse(e))
     }
     if (changed) {
       return TPostResult(ctxi, Some(s2.toIS))
